@@ -221,7 +221,7 @@ SET IDENTITY_INSERT [dbo].[RoleOption] OFF
 
 ------------------------------[User]---------------------------------
 SET IDENTITY_INSERT [dbo].[User] ON
-INSERT [dbo].[User] ([ID], [SystemStatus], [Name], [Email], [LoginPwd], [Address], [Phone], [HeadImagePath], [AccountStatusID], [IdentityCard], [AccountMainID]) VALUES (1, 0, N'武双琦', N'd537@163.com', N'8ZjHBEPwxeqwCrxssgd2cQ==', NULL, NULL, "", 1, NULL, 1)
+INSERT [dbo].[User] ([ID], [SystemStatus], [Name], [Email], [LoginPwd], [Address], [Phone], [HeadImagePath], [AccountStatusID], [IdentityCard], [AccountMainID]) VALUES (1, 0, N'武双琦', N'd537@163.com', N'8ZjHBEPwxeqwCrxssgd2cQ==', NULL, NULL, '', 1, NULL, 1)
 SET IDENTITY_INSERT [dbo].[User] OFF
 ------------------------------[ClientInfo]---------------------------------
 SET IDENTITY_INSERT [dbo].[ClientInfo] ON
