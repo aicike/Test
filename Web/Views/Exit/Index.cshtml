@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "AccountExit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section head{
+    <script>
+        $(function () {
+            if ($.browser.chrome) {
+                history.pushState(null, "Exit", location.href);
+                history.pushState(null, "Exit", location.href);
+                history.pushState(null, "Exit", location.href);
+                history.pushState(null, "Exit", location.href);
+                history.pushState(null, "Exit", location.href);
+                history.pushState(null, "Exit", location.href);
+                history.pushState(null, "Exit", location.href);
+                history.pushState(null, "Exit", location.href);
+                history.pushState(null, "Exit", location.href);
+                history.pushState(null, "Exit", location.href);
+                history.pushState(null, "Exit", location.href);
+                history.pushState(null, "Exit", location.href);
+                history.pushState(null, "Exit", location.href);
+                history.pushState(null, "Exit", location.href);
+                history.pushState(null, "Exit", location.href);
+                history.pushState(null, "Exit", location.href);
+            }
+            $("#btnExit").click();
+        });        
+    </script>
+}
+<div class="main20">
+    正在退出...
+    @using (Html.BeginForm("Index", "Exit", new { type = @ViewBag.Type, FormMethod.Post }))
+    {
+        <input type="submit" style="visibility: hidden" id="btnExit" />
+    }
+</div>

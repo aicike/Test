@@ -1,0 +1,120 @@
+﻿@{
+    ViewBag.Title = "Permission";
+    Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
+}
+@section head{
+    <link href="@Url.Content("~/Scripts/treeview/jquery.treeview.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/treeview/jquery.treeview.js")"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#browser").treeview({
+                toggle: function () {
+                    console.log("%s was toggled.", $(this).find(">span").text());
+                }
+            });
+            $(":checkbox").change(function () {
+                if ($(this).attr("checked") == "checked") {
+                    $(this).parent("span").nextAll("ul").find(":checkbox").attr("checked", true); //全选
+                    $(this).parent("span").parent("li").parent("ul").prevAll("span").find(":checkbox").attr("checked", true); //选中父级
+                } else {
+                    $(this).parent("span").nextAll("ul").find(":checkbox").attr("checked", false); //全不选
+                    //当没有子级选中时，取消选中父级
+                    var length = $(this).parent("span").parent("li").parent("ul").find(":checkbox:checked").length//同级别
+                    if (length == 0) {
+                        $(this).parent("span").parent("li").parent("ul").prevAll("span").find(":checkbox").attr("checked", false); //选中父级
+                    }
+                }
+            });
+        });
+    </script>
+}
+@model List<Poco.SystemUserMenu>
+@{
+    var currentRoleMenuList = ViewBag.CurrentRoleMenuList as List<int>;
+    var currentRoleOptionList = ViewBag.CurrentRoleOptionList as List<int>;
+}
+<div class="title">
+    分配权限 ( @ViewBag.Role.Name )</div>
+<div class="body">
+    @using (Ajax.BeginForm("Permission", "SystemUserRole", new { Area = "System"}, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {
+        <input type="hidden" value="@ViewBag.Role.ID" name="hidRoleID"/>
+        <fieldset style="border: 1px solid #d3d3d3;">
+            <legend>分配权限</legend>
+            <table>
+                <tr>
+                    <td>
+                        <ul id="browser">
+                            @foreach (var menu in Model)
+                            {
+                                <li id="li1"><span style="font-size: 16px;">
+                                    @if (currentRoleMenuList.Contains(menu.ID))
+                                    {
+                                        <input type="checkbox" id="menu_@menu.ID" name="checkboxMenu" value="@menu.ID" checked="checked"/>
+                                    }
+                                    else
+                                    { 
+                                        <input type="checkbox" id="menu_@menu.ID" name="checkboxMenu" value="@menu.ID"/>
+                                    }
+                                    <label for="option_@menu.ID">@menu.Name</label></span>
+                                    <ul id="ul1">
+                                        @{
+                                    var options = menu.SystemUserMenuOptions.Where(a => a.SystemStatus == 0);
+                                        }
+                                        @foreach (var option in options)
+                                        {
+                                            <li><span style="font-size: 14px;">
+                                                @if (currentRoleOptionList.Contains(option.ID))
+                                                {
+                                                    <input type="checkbox" id="option_@option.ID" name="checkboxOption" value="@option.ID" checked="checked"/>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="option_@option.ID" name="checkboxOption" value="@option.ID"/>
+                                                }
+                                                <label for="option_@option.ID">@option.Name</label> </li>
+                                        }
+                                        @foreach (var subMenu in menu.SystemUserMenus.Where(a => a.SystemStatus == 0))
+                                        {
+                                            <li><span style="font-size: 16px;">
+                                                @if (currentRoleMenuList.Contains(subMenu.ID))
+                                                {
+                                                    <input type="checkbox" id="menu_@subMenu.ID" name="checkboxMenu" value="@subMenu.ID" checked="checked"/>
+                                                }
+                                                else
+                                                { 
+                                                    <input type="checkbox" id="menu_@subMenu.ID" name="checkboxMenu" value="@subMenu.ID"/>
+                                                }
+                                                <label for="option_@subMenu.ID">@subMenu.Name</label></span>
+                                                <ul>
+                                                    @{
+                                                var subMenuOptions = subMenu.SystemUserMenuOptions.Where(a => a.SystemStatus == 0);
+                                                    }
+                                                    @foreach (var option in subMenuOptions)
+                                                    {
+                                                        <li><span style="font-size: 14px;">
+                                                            @if (currentRoleOptionList.Contains(option.ID))
+                                                            {
+                                                                <input type="checkbox" id="option_@option.ID" name="checkboxOption" value="@option.ID" checked="checked"/>
+                                                            }
+                                                            else
+                                                            { 
+                                                                <input type="checkbox" id="option_@option.ID" name="checkboxOption" value="@option.ID"/>
+                                                            }
+                                                            <label for="option_@option.ID">@option.Name</label> </li>
+                                                    }
+                                                </ul>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="submit" id="btnSubmit" value="保存" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }</div>

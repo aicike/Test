@@ -1,0 +1,121 @@
+﻿@{
+    ViewBag.Title = "EditAccount";
+    Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+        $(function () {
+
+            $("#HeadImagePathFile").change(function () {
+                var fileName = $("#HeadImagePathFile").val();
+                $("#HeadImagePath").val(fileName);
+                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+                $("span[data-valmsg-for='HeadImagePath']").empty().attr("class", "field-validation-valid");
+                switch (suffix) {
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".gif":
+                    case ".bmp":
+                        break;
+                    default:
+                        $("span[data-valmsg-for='HeadImagePath']").text("支持下列图片格式：.jpg|.jpeg|.png|.gif|.bmp").attr("class", "field-validation-error");
+                        break;
+                }
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#imgLogo").attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+                return false;
+            });
+
+            $("#LoginPwdPage,#LoginPwdPageCompare").val('@Common.DESEncrypt.Decrypt(Model.LoginPwd)');
+        });
+    </script>
+}
+@model Poco.Account
+<div class="title">
+    修改账号</div>
+<div class="body">
+    @using (Html.BeginForm("EditAccount", "AccountManage", new {Area="System", accountMainId = ViewBag.AccountMainID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <fieldset style="border: 1px solid #d3d3d3;">
+            <legend>账号信息</legend>
+            <table>
+                <tr>
+                    <td class="tdTitle">
+                        名称
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.ID)@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.IsActivated)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        邮箱
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.Email)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Email)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        密码
+                    </td>
+                    <td>@Html.PasswordFor(a => a.LoginPwdPage)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.LoginPwdPage)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        确认密码
+                    </td>
+                    <td>@Html.PasswordFor(a => a.LoginPwdPageCompare)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.LoginPwdPageCompare)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        电话
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.Phone)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Phone)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        头像
+                    </td>
+                    <td>
+                        <img id="imgLogo" style="max-width: 80px; max-height: 80px; float: left" src="@Url.Content(Model.HeadImagePath)"/>
+                        <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" />
+                        @Html.TextBoxFor(a => a.HeadImagePath, new { style = "width:0px;visibility:hidden" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HeadImagePath)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        角色
+                    </td>
+                    <td>@Html.DropDownListFor(a => a.RoleID, ViewData["Roles"] as List<SelectListItem>, new {  })
+                    </td>
+                    <td id="tdRoleValidation">
+                        @Html.ValidationMessageFor(a => a.RoleID)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="submit" id="btnSubmit" value="保存" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }</div>

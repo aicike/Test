@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
+}
+@section head{
+}
+@model Poco.SystemUserRole
+<div class="title">
+    添加角色</div>
+<div class="body">
+    @using (Ajax.BeginForm("Add", "SystemUserRole", new { Area = "System" }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {
+        <fieldset style="border: 1px solid #d3d3d3;">
+            <legend>角色</legend>
+            <table>
+                <tr>
+                    <td class="tdTitle">
+                        名称
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Name)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Name)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="submit" id="btnSubmit" value="保存" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }</div>

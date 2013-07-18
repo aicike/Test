@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "AccountMainManage";
+    Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
+}
+@model PagedList<Poco.AccountMain>
+<div class="title">
+    售楼部管理</div>
+<div class="body">
+    <div class="option">@Html.ActionLink("添加", "AddAccountMain", "AccountMainManage", new { Area = "System" }, null, true)</div>
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th style="width: 90px;">
+                Logo
+            </th>
+            <th style="width: 250px;">
+                名称
+            </th>
+            <th style="width: 150px;">
+                电话
+            </th>
+            <th style="width: 150px;">
+                省市区
+            </th>
+            <th style="width: 55px;">
+                状态
+            </th>
+            <th style="width: 200px;">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img id="imgLogo" style="max-width:80px;max-height:80px;" src="@Url.Content(@item.LogoImageThumbnailPath)" />
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Phone
+                </td>
+                <td>
+                    @item.Province.Name @item.City.Name @item.District.Name
+                </td>
+                <td>
+                    @if (@item.AccountStatus.Token == Poco.Enum.EnumAccountStatus.Disabled.ToString())
+                    {
+                        @Ajax.ActionLink(@item.AccountStatus.Value, "SetAccountMainStatus", "AccountMainManage", new
+                        {
+                            Area = "System",
+                            accountMainID = item.ID,
+                            status = Poco.Enum.EnumAccountStatus.Enabled.ToString()
+                        },
+                        new AjaxOptions()
+                        {
+                            UpdateTargetId = "alert",
+                            OnBegin = "return AppDelete('确定要启用?','" + Url.Action("SetAccountMainStatus", "AccountMainManage",
+                                new
+                                {
+                                    Area = "System",
+                                    accountMainID = item.ID,
+                                    status = Poco.Enum.EnumAccountStatus.Enabled.ToString()
+                                }) + "',null)"
+                        }, true, true)
+                    }
+                    else
+                    {
+                        @Ajax.ActionLink(@item.AccountStatus.Value, "SetAccountMainStatus", "AccountMainManage", new
+                        {
+                            Area = "System",
+                            accountMainID = item.ID,
+                            status = Poco.Enum.EnumAccountStatus.Disabled.ToString()
+                        },
+                        new AjaxOptions()
+                        {
+                            UpdateTargetId = "alert",
+                            OnBegin = "return AppDelete('确定要禁用?','" + Url.Action("SetAccountMainStatus", "AccountMainManage",
+                                new
+                                {
+                                    Area = "System",
+                                    accountMainID = item.ID,
+                                    status = Poco.Enum.EnumAccountStatus.Disabled.ToString()
+                                }) + "',null)"
+                        }, true, true)
+                    }
+                </td>
+                <td class="operation">
+                    @Html.ActionLink("详细", "ViewAccountMain", "AccountMainManage", new { Area = "System", id = item.ID }, null,true)
+                    @Html.ActionLink("修改", "EditAccountMain", "AccountMainManage", new { Area = "System", id = item.ID }, null, true)
+                    @Ajax.ActionLink("删除", "DeleteAccountMain", "AccountMainManage", new { Area = "System", id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("DeleteAccountMain", "AccountMainManage", new { Area = "System", id = item.ID }) + "',null)" }, true)
+                    @Html.ActionLink("账号管理", "Index", "AccountManage", new { Area = "System", accountMainId = item.ID }, null, true)
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+           {
+               PageIndexParameterName = "ID",
+               CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+               NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+               NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+               CssClass = "manage_pages pages",
+               SeparatorHtml = "&nbsp;",
+               AutoHide = false,
+               /*LastPageText = "Last",
+               FirstPageText = "First",
+               PrevPageText = "Back",
+               NextPageText = "Next",*/
+               PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+               ShowFirstLast = false
+           })
+    </div>
+</div>

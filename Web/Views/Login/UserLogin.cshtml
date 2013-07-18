@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "UserLogin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section head{
+    <script>
+        $(function () {
+            $("#Email").val("zhangsan@163.com");
+            $("#LoginPwdPage").val("password");
+        });
+    </script>
+}
+@model Poco.Account
+<div>
+    <div style="background-color: #F3F3F3; height: 70px">
+        <div style="width: 960px; margin: 0px auto 0px auto;">
+        </div>
+    </div>
+    <div style="background-color: #459935; height: 40px">
+    </div>
+</div>
+<div class="main">
+    <div class="main20">
+        @using (Ajax.BeginForm(new AjaxOptions() { UpdateTargetId = "alert" }))
+        {   
+            <fieldset style="border: 1px solid #d3d3d3;">
+                <legend>售楼部登录</legend>
+                <div>
+                    邮箱 @Html.TextBoxFor(a => a.Email) @Html.ValidationMessageFor(a => a.Email)
+                </div>
+                <div>
+                    密码 @Html.PasswordFor(a => a.LoginPwdPage) @Html.ValidationMessageFor(a => a.LoginPwdPage)
+                </div>
+                <div>
+                    <input type="submit" value="登录" />
+                </div>
+            </fieldset>
+        }
+    </div>
+</div>

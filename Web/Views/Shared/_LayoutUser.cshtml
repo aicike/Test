@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section head{
+    @RenderSection("head", required: false)
+}
+@{
+    var account = Session[Poco.SystemConst.Session.LoginAccount] as Poco.Account;
+}
+<div>
+    <div style="background-color: #F3F3F3; height: 70px">
+        <div style="width: 960px; margin: 0px auto 0px auto;">
+            <div style="float: right; margin-top: 40px;">
+                @if (account != null)
+                { 
+                    <a id="btnLogOut" type="user">退出</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div style="background-color: #459935; height: 40px">
+        @Html.Partial("Menu")
+    </div>
+</div>
+<div class="main">
+    @RenderBody()
+</div>

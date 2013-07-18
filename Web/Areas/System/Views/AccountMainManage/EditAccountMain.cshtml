@@ -1,0 +1,337 @@
+﻿@{
+    ViewBag.Title = "EditAccountMain";
+    Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+        $(function () {
+            var pinyinUrl = '@Url.Action("GetHostName", "AccountMainManage", new { Area = "System" })';
+            $("#ProvinceID").Province({ value: '@Model.ProvinceID' });
+            $("#CityID").City({ parent: "ProvinceID", value: '@Model.CityID' });
+            $("#DistrictID").District({ parent: "CityID", value: '@Model.DistrictID' });
+
+            $("#AccountMainExpandInfo_OpeningDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                onSelect: function (selectedDate) {
+                    $("#AccountMainExpandInfo_CheckInDate").datepicker("option", "minDate", selectedDate);
+                    $("#AccountMainExpandInfo_CompletedDate").datepicker("option", "minDate", selectedDate);
+                }
+            });
+
+            $("#AccountMainExpandInfo_CompletedDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                onSelect: function (selectedDate) {
+                    $("#AccountMainExpandInfo_OpeningDate").datepicker("option", "maxDate", selectedDate);
+                }
+            });
+
+            $("#AccountMainExpandInfo_CheckInDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                onSelect: function (selectedDate) {
+                    $("#AccountMainExpandInfo_OpeningDate").datepicker("option", "maxDate", selectedDate);
+                }
+            });
+            $("#LogoImagePathFile").change(function () {
+                var fileName = $("#LogoImagePathFile").val();
+                $("#LogoImagePath").val(fileName);
+                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+                $("span[data-valmsg-for='LogoImagePath']").empty().attr("class", "field-validation-valid");
+                switch (suffix) {
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".gif":
+                    case ".bmp":
+                        break;
+                    default:
+                        $("span[data-valmsg-for='LogoImagePath']").text("支持下列图片格式：.jpg|.jpeg|.png|.gif|.bmp").attr("class", "field-validation-error");
+                        break;
+                }
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#imgLogo").attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+                return false;
+            });
+
+            $("#Name").focusout(function () {
+                if ($("#Name").length > 0) {
+                    $.ajax({
+                        type: "get",
+                        data: { value: $("#Name").val() },
+                        url: pinyinUrl,
+                        success: function (result) {
+                            $("#HostName").val(result);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+@model Poco.AccountMain
+<div class="title">
+    修改售楼部信息</div>
+<div class="body">
+    @using (Html.BeginForm("EditAccountMain", "AccountMainManage", new { Area = "System" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <fieldset style="border: 1px solid #d3d3d3;">
+            <legend>基本信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        项目名称
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.CreateTime)@Html.HiddenFor(a => a.SystemUserID)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        二级域名或目录名称
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.HostName)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HostName)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        电话
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.Phone)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Phone)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        省份
+                    </td>
+                    <td>@Html.DropDownListFor(a => a.ProvinceID)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.ProvinceID)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        城市
+                    </td>
+                    <td>@Html.DropDownListFor(a => a.CityID)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.CityID)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        地区
+                    </td>
+                    <td>@Html.DropDownListFor(a => a.DistrictID)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.DistrictID)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Logo
+                    </td>
+                    <td>
+                        <img id="imgLogo" style="max-width:80px;max-height:80px; float: left" src="@Url.Content(@Model.LogoImagePath)" />
+                        <input type="file" id="LogoImagePathFile" name="LogoImagePathFile" />
+                        @Html.TextBoxFor(a => a.LogoImagePath, new { style = "width:0px;visibility:hidden" })
+                        @Html.HiddenFor(a => a.LogoImageThumbnailPath)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.LogoImagePath)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        素材库容量
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.FileLimit)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.FileLimit)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset style="border: 1px solid #d3d3d3; margin-top: 15px;">
+            <legend>业务信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        开发商名称
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.AccountMainExpandInfo.BuildCompany)@Html.HiddenFor(a => a.AccountMainExpandInfo.ID)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.BuildCompany)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        投资商名称
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.AccountMainExpandInfo.Investor)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.Investor)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        项目地址
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.AccountMainExpandInfo.ProductAddress)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.ProductAddress)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        售楼地址
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.AccountMainExpandInfo.SaleAddress)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.SaleAddress)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        开盘时间
+                    </td>
+                    <td>@Html.TextBox("AccountMainExpandInfo.OpeningDate", Model.AccountMainExpandInfo.OpeningDate.ToString("yyyy-MM-dd"), new { @readonly = "readonly", id = "AccountMainExpandInfo_OpeningDate" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.OpeningDate)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        竣工时间
+                    </td>
+                    <td>@Html.TextBox("AccountMainExpandInfo.CompletedDate", Model.AccountMainExpandInfo.CompletedDate.ToString("yyyy-MM-dd"), new { @readonly = "readonly", id = "AccountMainExpandInfo_CompletedDate" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.CompletedDate)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        入住时间
+                    </td>
+                    <td>
+                        @Html.TextBox("AccountMainExpandInfo.CheckInDate", Model.AccountMainExpandInfo.CheckInDate.ToString("yyyy-MM-dd"), new { @readonly = "readonly", id = "AccountMainExpandInfo_CheckInDate" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.CheckInDate)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        产权年限
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.AccountMainExpandInfo.PropertyRight)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.PropertyRight)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        总户数
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.AccountMainExpandInfo.HouseholdsCount)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.HouseholdsCount)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        占用面积
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.AccountMainExpandInfo.OccupyArea)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.OccupyArea)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        建筑面积
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.AccountMainExpandInfo.BuildingArea)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.BuildingArea)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        项目介绍
+                    </td>
+                    <td>@Html.TextAreaFor(a => a.AccountMainExpandInfo.Description)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.Description)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        项目配套
+                    </td>
+                    <td>@Html.TextAreaFor(a => a.AccountMainExpandInfo.ProjectSupport)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.ProjectSupport)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        交通状况
+                    </td>
+                    <td>@Html.TextAreaFor(a => a.AccountMainExpandInfo.TrafficInfo)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.TrafficInfo)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        建材装修
+                    </td>
+                    <td>@Html.TextAreaFor(a => a.AccountMainExpandInfo.BuildingMaterials)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.BuildingMaterials)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        楼层概述
+                    </td>
+                    <td>@Html.TextAreaFor(a => a.AccountMainExpandInfo.FloorInfo)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.FloorInfo)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        车位信息
+                    </td>
+                    <td>@Html.TextAreaFor(a => a.AccountMainExpandInfo.StallInfo)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.StallInfo)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        工程进度
+                    </td>
+                    <td>@Html.TextAreaFor(a => a.AccountMainExpandInfo.ProjectSchedule)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.ProjectSchedule)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="submit" id="btnSubmit" value="保存" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }</div>

@@ -1,0 +1,54 @@
+﻿<objects xmlns="http://www.springframework.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.net http://www.springframework.net/xsd/spring-objects.xsd">
+  <object id="DbContext" type="EF.Context,EF" scope="request" singleton="false">
+  </object>
+  <object id="EFModel" type="Business.EFModel" singleton="false">
+    <property name="Context" ref="DbContext"/>
+  </object>
+  <object id="CommonModel" type="Business.CommonModel" parent="EFModel" singleton="false"></object>
+  <object id="MessageModel" type="Business.MessageModel" parent="EFModel" singleton="false"></object>
+  <object id="SystemUserModel" type="Business.SystemUserModel" parent="EFModel" singleton="false"></object>
+  <object id="AccountMainModel" type="Business.AccountMainModel" parent="EFModel" singleton="false"></object>
+  <object id="AccountMainExpandInfoModel" type="Business.AccountMainExpandInfoModel" parent="EFModel" singleton="false"></object>
+  <object id="AccountModel" type="Business.AccountModel" parent="EFModel" singleton="false"></object>
+  <object id="ProvinceModel" type="Business.ProvinceModel" parent="EFModel" singleton="false"></object>
+  <object id="CityModel" type="Business.CityModel" parent="EFModel" singleton="false"></object>
+  <object id="DistrictModel" type="Business.DistrictModel" parent="EFModel" singleton="false"></object>
+  <object id="LookupOptionModel" type="Business.LookupOptionModel" parent="EFModel" singleton="false"></object>
+  <object id="LookupFactory" type="Business.LookupFactory" singleton="true">
+    <property name="LookupOptionModel" ref="LookupOptionModel"/>
+  </object>
+  <object id="RoleModel" type="Business.RoleModel" parent="EFModel" singleton="false"></object>
+  <object id="Account_AccountMainModel" type="Business.Account_AccountMainModel" parent="EFModel" singleton="false"></object>
+  <object id="ActivateEmailModel" type="Business.ActivateEmailModel" parent="EFModel" singleton="false"></object>
+  <object id="AutoMessage_AddModel" type="Business.AutoMessage_AddModel" parent="EFModel" singleton="false"></object>
+  <object id="AutoMessage_KeywordModel" type="Business.AutoMessage_KeywordModel" parent="EFModel" singleton="false"></object>
+  <object id="AutoMessage_ReplyModel" type="Business.AutoMessage_ReplyModel" parent="EFModel" singleton="false"></object>
+  <object id="ClientInfoModel" type="Business.ClientInfoModel" parent="EFModel" singleton="false"></object>
+  <object id="GroupModel" type="Business.GroupModel" parent="EFModel" singleton="false"></object>
+  <object id="LibraryImageModel" type="Business.LibraryImageModel" parent="EFModel" singleton="false"></object>
+  <object id="LibraryImageTextModel" type="Business.LibraryImageTextModel" parent="EFModel" singleton="false"></object>
+  <object id="LibraryTextModel" type="Business.LibraryTextModel" parent="EFModel" singleton="false"></object>
+  <object id="LibraryVideoModel" type="Business.LibraryVideoModel" parent="EFModel" singleton="false"></object>
+  <object id="LibraryVoiceModel" type="Business.LibraryVoiceModel" parent="EFModel" singleton="false"></object>
+  <object id="SystemMessageModel" type="Business.SystemMessageModel" parent="EFModel" singleton="false"></object>
+  <object id="SystemUserRoleModel" type="Business.SystemUserRoleModel" parent="EFModel" singleton="false"></object>
+  <object id="SystemUserMenuModel" type="Business.SystemUserMenuModel" parent="EFModel" singleton="false"></object>
+  <object id="SystemUserMenuOptionModel" type="Business.SystemUserMenuOptionModel" parent="EFModel" singleton="false"></object>
+  <object id="SystemUserRole_SystemUserMenuModel" type="Business.SystemUserRole_SystemUserMenuModel" parent="EFModel" singleton="false"></object>
+  <object id="SystemUserRole_OptionModel" type="Business.SystemUserRole_OptionModel" parent="EFModel" singleton="false"></object>
+  <object id="RoleOptionModel" type="Business.RoleOptionModel" parent="EFModel" singleton="false"></object>
+  <object id="RoleMenuModel" type="Business.RoleMenuModel" parent="EFModel" singleton="false"></object>
+  <object id="MenuOptionModel" type="Business.MenuOptionModel" parent="EFModel" singleton="false"></object>
+  <object id="MenuModel" type="Business.MenuModel" parent="EFModel" singleton="false"></object>
+  <object id="UserModel" type="Business.UserModel" parent="EFModel" singleton="false"></object>
+  <object id="User_GroupModel" type="Business.User_GroupModel" parent="EFModel" singleton="false"></object>
+
+  
+
+  <!--<object id="UserModel" type="NightClubBooth.Business.UserModel" parent="EFModel" singleton="false">
+    <property name="LookupOptionModel" ref="LookupOptionModel"/>
+    <property name="RoleModel" ref="RoleModel"/>
+    <property name="UserMappingModel" ref="UserMappingModel"/>
+  </object>-->
+</objects>

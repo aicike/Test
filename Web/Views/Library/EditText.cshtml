@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "EditText";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    var libraryType = ViewBag.LibraryType as List<Poco.LibraryType>;
+}
+@section head{
+    <script type="text/javascript">
+    </script>
+    <style>
+        #ulGroup li
+        {
+            position: relative;
+        }
+        .span_option
+        {
+            font-size: 13px;
+            float: right;
+            display: none;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+        }
+        .span_option span
+        {
+            margin: 0px 3px 0px 0px;
+            cursor: pointer;
+        }
+    </style>
+}
+@model Poco.LibraryText
+<div class="title">
+    素材管理</div>
+<div class="bodyLeft">
+    <ul class="ulList" id="ulGroup">
+        @foreach (var item in libraryType)
+        {
+            if (item.ID == (int)Poco.Enum.EnumMessageType.Text)
+            { 
+            <li class="select"><a href="@Url.Action("Text", "Library", new { HostName = ViewBag.HostName })">@item.Name&nbsp;(0)</a>
+            </li>
+            }
+            else
+            {  
+            <li><a href="@Url.Action("Text", "Library", new { HostName = ViewBag.HostName })">@item.Name&nbsp;(0)</a>
+            </li>
+            }
+        }
+    </ul>
+</div>
+<div class="bodyRight">
+    @using (Ajax.BeginForm("EditText", "Library", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {
+        <fieldset style="border: 1px solid #d3d3d3;">
+            <legend>文字</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        标题
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Title)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Title)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        内容
+                    </td>
+                    <td class="tdField">@Html.TextAreaFor(a => a.Content)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Content)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="submit" id="btnSubmit" value="保存" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }
+</div>
+<div style="clear: both">
+</div>

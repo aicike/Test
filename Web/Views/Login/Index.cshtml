@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<div>
+    <div style="background-color: #F3F3F3; height: 70px">
+        <div style="width: 960px; margin: 0px auto 0px auto;">
+            
+        </div>
+    </div>
+    <div style="background-color: #459935; height: 40px">
+        
+    </div>
+</div>
+<div class="main">
+    <div class="main20">
+        @using (Ajax.BeginForm(new AjaxOptions() { UpdateTargetId = "alert" }))
+        {   
+            @Html.ActionLink("平台登录地址", "SystemLogin", "login", new { Area = "" }, null)<br />
+            <br />
+            @Html.ActionLink("售楼部登录地址", "UserLogin", "login", new { Area = "" }, null)
+        }
+    </div>
+</div>

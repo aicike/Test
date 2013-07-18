@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>EzValidation</id>
+    <version>1.0.2</version>
+    <title>EzValidation MVC Validtion Extensions</title>
+    <authors>kburnell (Keith Burnell)</authors>
+    <owners>kburnell (Keith Burnell)</owners>
+    <projectUrl>http://ezvalidation.codeplex.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Custom validation extensions for ASP.NET MVC 3. Includes server and client side model based validation attributes for:
+-- Equal To
+-- Not Equal To
+-- Greater Than
+-- Greater Than or Equal To
+-- Less Than
+-- Less Than or Equal To
+
+Supports validating against:
+-- Another Model Field
+-- A Specific Value
+-- Current Date/Yesterday/Tomorrow (for Dates and Strings)</description>
+    <summary>Custom validation extensions for ASP.NET MVC 3.</summary>
+  </metadata>
+</package>

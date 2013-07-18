@@ -1,0 +1,21 @@
+﻿@{
+    var loginSystemUser = Session[Poco.SystemConst.Session.LoginSystemUser] as Poco.SystemUser;
+    List<Poco.SystemUserMenu> systemUserMenuList = new List<Poco.SystemUserMenu>();
+    if (loginSystemUser != null)
+    {
+        systemUserMenuList = Injection.Factory.Get<Interface.ISystemUserMenuModel>(Poco.SystemConst.IOC_Model.SystemUserMenuModel).GetMenuByRoleID(loginSystemUser.SystemUserRoleID);
+    }
+}
+<div style="width: 960px; margin: 0px auto 0px auto; height: 40px">
+    @{
+        if (loginSystemUser != null)
+        {
+        <ul class="menu">
+            @foreach (var item in systemUserMenuList)
+            {
+                <li>@Html.ActionLink(item.Name, item.Action, item.Controller, new { Area = item.Area }, null)</li>   
+            }
+        </ul>
+        }
+    }
+</div>

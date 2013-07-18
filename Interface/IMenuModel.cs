@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Poco;
+
+namespace Interface
+{
+    public interface IMenuModel : IBaseModel<Menu>
+    {
+        List<Menu> GetMenuByRoleID(int roleID, int? parentMenuID = null);
+        List<Menu> GetAllMenuByRoleID(int roleID);
+        List<Menu> List_Cache();
+        bool CheckHasPermissions(int roleID, string action, string controller, string area);
+    }
+}

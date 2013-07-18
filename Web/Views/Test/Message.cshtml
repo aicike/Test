@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Poco.Message
+@foreach (var item in ViewBag.List)
+{
+    @item.ID @: @item.Content<br />
+}
+@using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId="alert"}))
+{ 
+    @*@Html.TextAreaFor(a => a.Content) *@
+    @Html.TextBoxFor(a => a.Content)
+    @Html.ValidationMessageFor(a => a.Content)
+
+    <input type="submit" value="submit" id="submit" />
+}

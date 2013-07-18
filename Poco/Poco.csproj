@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DDFA1F60-3A1E-42BD-AD5C-64E5F5CCDEEE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Poco</RootNamespace>
+    <AssemblyName>Poco</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EzValidation.Core">
+      <HintPath>..\packages\EzValidation.1.0.2\lib\EzValidation.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account.cs" />
+    <Compile Include="AccountMain.cs" />
+    <Compile Include="AccountMainExpandInfo.cs" />
+    <Compile Include="AccountMainHouseInfo.cs" />
+    <Compile Include="AccountMainHouseInfoDetail.cs" />
+    <Compile Include="Account_User.cs" />
+    <Compile Include="ActivateEmail.cs" />
+    <Compile Include="AutoMessage_Add.cs" />
+    <Compile Include="AutoMessage_Keyword.cs" />
+    <Compile Include="AutoMessage_Reply.cs" />
+    <Compile Include="ClientInfo.cs" />
+    <Compile Include="Dialog.cs" />
+    <Compile Include="EmailInfo.cs" />
+    <Compile Include="Enum\EnumAccountStatus.cs" />
+    <Compile Include="Enum\EnumClientSystemType.cs" />
+    <Compile Include="Enum\EnumClientUserType.cs" />
+    <Compile Include="Enum\EnumMessageType.cs" />
+    <Compile Include="Enum\EnumMessageSendDirection.cs" />
+    <Compile Include="Enum\EnumSystemStatus.cs" />
+    <Compile Include="Group.cs" />
+    <Compile Include="AccountMainHouseType.cs" />
+    <Compile Include="IBaseEntity.cs" />
+    <Compile Include="ILibrary.cs" />
+    <Compile Include="LibraryImage.cs" />
+    <Compile Include="LibraryImageText.cs" />
+    <Compile Include="LibraryType.cs" />
+    <Compile Include="Lookup.cs" />
+    <Compile Include="LookupOption.cs" />
+    <Compile Include="_MenuOption.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="Account_AccountMain.cs" />
+    <Compile Include="SystemUserMenu.cs" />
+    <Compile Include="SystemUserMenuOption.cs" />
+    <Compile Include="SystemUserRole.cs" />
+    <Compile Include="SystemUserRole_Option.cs" />
+    <Compile Include="SystemUserRole_SystemUserMenu.cs" />
+    <Compile Include="User_Group.cs" />
+    <Compile Include="Validation\DropDownListAttribute.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Province.cs" />
+    <Compile Include="Result.cs" />
+    <Compile Include="_Role.cs" />
+    <Compile Include="SystemConst.cs" />
+    <Compile Include="LibraryText.cs" />
+    <Compile Include="SystemMessage.cs" />
+    <Compile Include="SystemUser.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="LibraryVoice.cs" />
+    <Compile Include="LibraryVideo.cs" />
+    <Compile Include="Validation\RemotePlusAttribute.cs" />
+    <Compile Include="_Menu.cs" />
+    <Compile Include="_RoleMenu.cs" />
+    <Compile Include="_RoleOption.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="WebAPI_Poco\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
