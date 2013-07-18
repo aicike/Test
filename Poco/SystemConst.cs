@@ -77,8 +77,9 @@ namespace Poco
             public const string MenuModel = "MenuModel";
             public const string MenuOptionModel = "MenuOptionModel";
             public const string UserModel = "UserModel";
-            public const string User_GroupModel = "User_GroupModel";
             public const string ClientInfoModel = "ClientInfoModel";
+            public const string Account_UserModel = "Account_UserModel";
+            public const string UserLoginInfoModel = "UserLoginInfoModel";
             
             
 

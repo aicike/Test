@@ -19,12 +19,12 @@ namespace Web.Controllers
             return accountMainModel.List().ToList().Select(a => new AccountMain() { Name = a.Name }).ToList();
         }
 
-        public User PostLogin(User user)
+        public UserLoginInfo PostLogin(UserLoginInfo user)
         {
-            var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
-            var result = userModel.Login(user.Email, user.LoginPwd);
-            user = result.Entity as User;
-            User entity = new User();
+            var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
+            var result = userLoginInfoModel.Login(user.Email, user.LoginPwd);
+            user = result.Entity as UserLoginInfo;
+            UserLoginInfo entity = new UserLoginInfo();
             entity.ID = user.ID;
             return entity;
         }

@@ -34,6 +34,7 @@ namespace Business
         {
             return GetAccountListByAccountMain(accountMainID).Where(a => a.RoleID == 1);
         }
+
         public IQueryable<Account> GetAccountAdminListByAccountMain(AccountMain accountMain)
         {
             return accountMain.Account_AccountMains.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Select(a => a.Account).Where(a => a.RoleID == 1).AsQueryable();
@@ -45,6 +46,7 @@ namespace Business
         {
             return GetAccountListByAccountMain(accountMainID).Where(a => a.RoleID == roleID);
         }
+
         public IQueryable<Account> GetAccountListByAccountMain_RoleID(AccountMain accountMain, int roleID)
         {
             return accountMain.Account_AccountMains.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Select(a => a.Account).Where(a => a.RoleID == roleID).AsQueryable();
@@ -163,7 +165,6 @@ namespace Business
             return Edit(entity);
         }
 
-
         public Result Login(string email, string pwd)
         {
             Result result = new Result();
@@ -181,6 +182,16 @@ namespace Business
                 HttpContext.Current.Session[SystemConst.Session.LoginAccount] = account;
             }
             return result;
+        }
+
+        /// <summary>
+        /// 检查是否有权限操作该数据数据
+        /// </summary>
+        /// <param name="accountMainID">售楼部登录账号ID</param>
+        /// <returns>ture:有权 false:无权</returns>
+        public bool CheckHasPermissions_User(int accountID, int userID)
+        {
+            return true;
         }
     }
 }

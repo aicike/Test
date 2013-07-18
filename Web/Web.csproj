@@ -424,6 +424,12 @@
   <ItemGroup>
     <Content Include="Views\Library\EditText.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\UserManage\EditUser.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\UserManage\ViewUser.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

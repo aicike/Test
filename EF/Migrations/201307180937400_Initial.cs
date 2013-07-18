@@ -485,17 +485,20 @@ namespace EF.Migrations
                 .Index(t => t.AccountMainID);
             
             CreateTable(
-                "dbo.User_Group",
+                "dbo.Account_User",
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
                         SystemStatus = c.Int(nullable: false),
+                        AccountID = c.Int(nullable: false),
                         UserID = c.Int(nullable: false),
                         GroupID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Account", t => t.AccountID)
                 .ForeignKey("dbo.User", t => t.UserID)
                 .ForeignKey("dbo.Group", t => t.GroupID)
+                .Index(t => t.AccountID)
                 .Index(t => t.UserID)
                 .Index(t => t.GroupID);
             
@@ -506,20 +509,33 @@ namespace EF.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         SystemStatus = c.Int(nullable: false),
                         Name = c.String(maxLength: 10),
-                        Email = c.String(nullable: false, maxLength: 50),
-                        LoginPwd = c.String(nullable: false, maxLength: 100),
                         Address = c.String(maxLength: 50),
                         Phone = c.String(maxLength: 20),
                         HeadImagePath = c.String(maxLength: 500),
                         AccountStatusID = c.Int(nullable: false),
                         IdentityCard = c.String(maxLength: 30),
                         AccountMainID = c.Int(nullable: false),
+                        UserLoginInfoID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.LookupOption", t => t.AccountStatusID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
+                .ForeignKey("dbo.UserLoginInfo", t => t.UserLoginInfoID)
                 .Index(t => t.AccountStatusID)
-                .Index(t => t.AccountMainID);
+                .Index(t => t.AccountMainID)
+                .Index(t => t.UserLoginInfoID);
+            
+            CreateTable(
+                "dbo.UserLoginInfo",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        LoginName = c.String(nullable: false, maxLength: 20),
+                        Email = c.String(nullable: false, maxLength: 50),
+                        LoginPwd = c.String(nullable: false, maxLength: 100),
+                    })
+                .PrimaryKey(t => t.ID);
             
             CreateTable(
                 "dbo.SystemMessage",
@@ -569,21 +585,6 @@ namespace EF.Migrations
                 .Index(t => t.FromUserID)
                 .Index(t => t.ToAccountID)
                 .Index(t => t.ToUserID);
-            
-            CreateTable(
-                "dbo.Account_User",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        SystemStatus = c.Int(nullable: false),
-                        AccountID = c.Int(nullable: false),
-                        UserID = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Account", t => t.AccountID)
-                .ForeignKey("dbo.User", t => t.UserID)
-                .Index(t => t.AccountID)
-                .Index(t => t.UserID);
             
             CreateTable(
                 "dbo.Account_AccountMain",
@@ -711,8 +712,6 @@ namespace EF.Migrations
             DropIndex("dbo.AccountMainHouseType", new[] { "AccountMainID" });
             DropIndex("dbo.Account_AccountMain", new[] { "AccountMainID" });
             DropIndex("dbo.Account_AccountMain", new[] { "AccountID" });
-            DropIndex("dbo.Account_User", new[] { "UserID" });
-            DropIndex("dbo.Account_User", new[] { "AccountID" });
             DropIndex("dbo.Message", new[] { "ToUserID" });
             DropIndex("dbo.Message", new[] { "ToAccountID" });
             DropIndex("dbo.Message", new[] { "FromUserID" });
@@ -721,10 +720,12 @@ namespace EF.Migrations
             DropIndex("dbo.Message", new[] { "EnumMessageSendDirectionID" });
             DropIndex("dbo.SystemMessage", new[] { "UserID" });
             DropIndex("dbo.SystemMessage", new[] { "AccountID" });
+            DropIndex("dbo.User", new[] { "UserLoginInfoID" });
             DropIndex("dbo.User", new[] { "AccountMainID" });
             DropIndex("dbo.User", new[] { "AccountStatusID" });
-            DropIndex("dbo.User_Group", new[] { "GroupID" });
-            DropIndex("dbo.User_Group", new[] { "UserID" });
+            DropIndex("dbo.Account_User", new[] { "GroupID" });
+            DropIndex("dbo.Account_User", new[] { "UserID" });
+            DropIndex("dbo.Account_User", new[] { "AccountID" });
             DropIndex("dbo.Group", new[] { "AccountMainID" });
             DropIndex("dbo.Group", new[] { "AccountID" });
             DropIndex("dbo.KeywordAutoMessage", new[] { "AutoMessage_KeywordID" });
@@ -775,8 +776,6 @@ namespace EF.Migrations
             DropForeignKey("dbo.AccountMainHouseType", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.Account_AccountMain", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.Account_AccountMain", "AccountID", "dbo.Account");
-            DropForeignKey("dbo.Account_User", "UserID", "dbo.User");
-            DropForeignKey("dbo.Account_User", "AccountID", "dbo.Account");
             DropForeignKey("dbo.Message", "ToUserID", "dbo.User");
             DropForeignKey("dbo.Message", "ToAccountID", "dbo.Account");
             DropForeignKey("dbo.Message", "FromUserID", "dbo.User");
@@ -785,10 +784,12 @@ namespace EF.Migrations
             DropForeignKey("dbo.Message", "EnumMessageSendDirectionID", "dbo.LookupOption");
             DropForeignKey("dbo.SystemMessage", "UserID", "dbo.User");
             DropForeignKey("dbo.SystemMessage", "AccountID", "dbo.Account");
+            DropForeignKey("dbo.User", "UserLoginInfoID", "dbo.UserLoginInfo");
             DropForeignKey("dbo.User", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.User", "AccountStatusID", "dbo.LookupOption");
-            DropForeignKey("dbo.User_Group", "GroupID", "dbo.Group");
-            DropForeignKey("dbo.User_Group", "UserID", "dbo.User");
+            DropForeignKey("dbo.Account_User", "GroupID", "dbo.Group");
+            DropForeignKey("dbo.Account_User", "UserID", "dbo.User");
+            DropForeignKey("dbo.Account_User", "AccountID", "dbo.Account");
             DropForeignKey("dbo.Group", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.Group", "AccountID", "dbo.Account");
             DropForeignKey("dbo.KeywordAutoMessage", "AutoMessage_KeywordID", "dbo.AutoMessage_Keyword");
@@ -836,11 +837,11 @@ namespace EF.Migrations
             DropTable("dbo.AccountMainHouseInfoDetail");
             DropTable("dbo.AccountMainHouseType");
             DropTable("dbo.Account_AccountMain");
-            DropTable("dbo.Account_User");
             DropTable("dbo.Message");
             DropTable("dbo.SystemMessage");
+            DropTable("dbo.UserLoginInfo");
             DropTable("dbo.User");
-            DropTable("dbo.User_Group");
+            DropTable("dbo.Account_User");
             DropTable("dbo.Group");
             DropTable("dbo.KeywordAutoMessage");
             DropTable("dbo.Keyword");

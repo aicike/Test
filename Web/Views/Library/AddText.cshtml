@@ -3,30 +3,6 @@
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
     var libraryType = ViewBag.LibraryType as List<Poco.LibraryType>;
 }
-@section head{
-    <script type="text/javascript">
-    </script>
-    <style>
-        #ulGroup li
-        {
-            position: relative;
-        }
-        .span_option
-        {
-            font-size: 13px;
-            float: right;
-            display: none;
-            position: absolute;
-            top: 0px;
-            right: 0px;
-        }
-        .span_option span
-        {
-            margin: 0px 3px 0px 0px;
-            cursor: pointer;
-        }
-    </style>
-}
 @model Poco.LibraryText
 <div class="title">
     素材管理</div>

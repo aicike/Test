@@ -45,6 +45,7 @@ namespace EF
             modelBuilder.Configurations.Add(new AccountMainMap());
             modelBuilder.Configurations.Add(new AccountMap());
             modelBuilder.Configurations.Add(new UserMap());
+            modelBuilder.Configurations.Add(new UserLoginInfoMap());
             
         }
     }

@@ -1,34 +1,35 @@
 ﻿@{
-    ViewBag.Title = "EditText";
+    ViewBag.Title = "EditUser";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
-    var libraryType = ViewBag.LibraryType as List<Poco.LibraryType>;
+    var groupList = ViewBag.GroupList as List<Poco.Group>;
+    var hostName = ViewBag.HostName;
 }
-@model Poco.LibraryText
+@model Poco.User
 <div class="title">
-    素材管理</div>
+    用户管理</div>
 <div class="bodyLeft">
     <ul class="ulList" id="ulGroup">
-        @foreach (var item in libraryType)
+        @foreach (var item in groupList)
         {
-            if (item.ID == (int)Poco.Enum.EnumMessageType.Text)
+            if (item.IsDefaultGroup)
             { 
-            <li class="select"><a href="@Url.Action("Text", "Library", new { HostName = ViewBag.HostName })">@item.Name&nbsp;(0)</a>
+            <li class="select"><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())</a>
             </li>
             }
             else
             {  
-            <li><a href="@Url.Action("Text", "Library", new { HostName = ViewBag.HostName })">@item.Name&nbsp;(0)</a>
+            <li><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())</a>
             </li>
             }
         }
     </ul>
 </div>
 <div class="bodyRight">
-    @using (Ajax.BeginForm("EditText", "Library", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    @using (Ajax.BeginForm("EditUser", "UserManage", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
         <fieldset style="border: 1px solid #d3d3d3;">
-            <legend>文字</legend>
-            <table class="tableForm">
+            <legend>用户</legend>
+            @*<table class="tableForm">
                 <tr>
                     <td class="tdTitle">
                         标题
@@ -47,7 +48,7 @@
                     <td>@Html.ValidationMessageFor(a => a.Content)
                     </td>
                 </tr>
-            </table>
+            </table>*@
         </fieldset>
         <div class="action">
             <input type="submit" id="btnSubmit" value="保存" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />

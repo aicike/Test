@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "ViewUser";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    var groupList = ViewBag.GroupList as List<Poco.Group>;
+    var hostName = ViewBag.HostName;
+}
+@model Poco.User
+<div class="title">
+    用户管理</div>
+<div class="bodyLeft">
+    <ul class="ulList" id="ulGroup">
+        @foreach (var item in groupList)
+        {
+            if (item.IsDefaultGroup)
+            { 
+            <li class="select"><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())</a>
+            </li>
+            }
+            else
+            {  
+            <li><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())</a>
+            </li>
+            }
+        }
+    </ul>
+</div>
+<div class="bodyRight">
+    <fieldset style="border: 1px solid #d3d3d3;">
+        <legend>用户</legend>
+        <table class="tableForm">
+            <tr>
+                <td class="tdTitle">
+                    名称
+                </td>
+                <td class="tdField">@Model.Name
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    头像
+                </td>
+                <td>
+                    @if (string.IsNullOrEmpty(Model.HeadImagePath) == false)
+                    { 
+                        <img style="max-width:80px;max-height:80px; float: left" src="@Url.Content(Model.HeadImagePath)" />
+                    }
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    住址
+                </td>
+                <td>
+                    @Model.Address
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    电话
+                </td>
+                <td>
+                    @Model.Phone
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    身份证信息
+                </td>
+                <td>
+                    @Model.IdentityCard
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <div class="action">
+        <input type="submit" id="btnSubmit" value="保存" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
+    </div>
+</div>
+<div style="clear: both">
+</div>

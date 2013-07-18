@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="AccountMainModel.cs" />
     <Compile Include="AccountModel.cs" />
+    <Compile Include="Account_UserModel.cs" />
     <Compile Include="CommonModel.cs" />
     <Compile Include="BaseModel.cs" />
     <Compile Include="CityModel.cs" />
@@ -76,7 +77,7 @@
     <Compile Include="MenuOptionModel.cs" />
     <Compile Include="RoleOptionModel.cs" />
     <Compile Include="UserModel.cs" />
-    <Compile Include="User_GroupModel.cs" />
+    <Compile Include="UserLoginInfoModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

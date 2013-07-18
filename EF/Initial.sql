@@ -154,6 +154,9 @@ INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  (
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,2,'新建分组','AddGroup',2)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,2,'编辑分组','EditGroup',3)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,2,'删除分组','DeleteGroup',4)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,2,'更改用户分组','ChangeGroup',5)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,2,'修改用户信息','EditUser',6)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,2,'查看用户信息','ViewUser',7)
 
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,3,'列表','Index',1)
 
@@ -216,19 +219,25 @@ INSERT [dbo].[RoleOption] ([ID], [SystemStatus], [RoleID], [MenuOptionID]) VALUE
 INSERT [dbo].[RoleOption] ([ID], [SystemStatus], [RoleID], [MenuOptionID]) VALUES (23, 0, 1, 23)
 INSERT [dbo].[RoleOption] ([ID], [SystemStatus], [RoleID], [MenuOptionID]) VALUES (24, 0, 1, 24)
 INSERT [dbo].[RoleOption] ([ID], [SystemStatus], [RoleID], [MenuOptionID]) VALUES (25, 0, 1, 25)
+INSERT [dbo].[RoleOption] ([ID], [SystemStatus], [RoleID], [MenuOptionID]) VALUES (26, 0, 1, 26)
+INSERT [dbo].[RoleOption] ([ID], [SystemStatus], [RoleID], [MenuOptionID]) VALUES (27, 0, 1, 27)
+INSERT [dbo].[RoleOption] ([ID], [SystemStatus], [RoleID], [MenuOptionID]) VALUES (28, 0, 1, 28)
 SET IDENTITY_INSERT [dbo].[RoleOption] OFF
 
-
+------------------------------[UserLoginInfo]---------------------------------
+SET IDENTITY_INSERT [dbo].[UserLoginInfo] ON
+INSERT [dbo].[UserLoginInfo] ([ID], [SystemStatus], [LoginName], [Email], [LoginPwd]) VALUES (1, 0, N'wushuangqi', N'd537@163.com', N'8ZjHBEPwxeqwCrxssgd2cQ==')
+SET IDENTITY_INSERT [dbo].[UserLoginInfo] OFF
 ------------------------------[User]---------------------------------
 SET IDENTITY_INSERT [dbo].[User] ON
-INSERT [dbo].[User] ([ID], [SystemStatus], [Name], [Email], [LoginPwd], [Address], [Phone], [HeadImagePath], [AccountStatusID], [IdentityCard], [AccountMainID]) VALUES (1, 0, N'武双琦', N'd537@163.com', N'8ZjHBEPwxeqwCrxssgd2cQ==', NULL, NULL, "", 1, NULL, 1)
+INSERT [dbo].[User] ([ID], [SystemStatus], [Name], [Address], [Phone], [HeadImagePath], [AccountStatusID], [IdentityCard], [AccountMainID],[UserLoginInfoID]) VALUES (1, 0, N'武双琦', NULL, NULL, '', 1, NULL, 1,1)
 SET IDENTITY_INSERT [dbo].[User] OFF
 ------------------------------[ClientInfo]---------------------------------
 SET IDENTITY_INSERT [dbo].[ClientInfo] ON
 INSERT [dbo].[ClientInfo] ([ID], [SystemStatus], [IMEI], [EnumClientSystemTypeID], [SetupTiem], [EnumClientUserTypeID], [Tag], [EntityID]) VALUES (1, 0, NULL, 10, CAST(0x0000A1FE00000000 AS DateTime), 16, NULL, 1)
 SET IDENTITY_INSERT [dbo].[ClientInfo] OFF
-------------------------------[User_Group]---------------------------------
-INSERT INTO dbo.User_Group( SystemStatus, UserID, GroupID )VALUES  ( 0,1,1)
+------------------------------[Account_User]---------------------------------
+INSERT INTO dbo.Account_User( SystemStatus, AccountID, UserID,GroupID ) VALUES  ( 0,1,1,1)
 
 ------------------------------Other---------------------------------
 CREATE INDEX IX_HostName ON AccountMain (HostName)

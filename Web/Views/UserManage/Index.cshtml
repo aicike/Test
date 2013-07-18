@@ -10,9 +10,10 @@
 @section head{
     <script type="text/javascript">
         $(function () {
-            var addGroupUrl = '@Url.Action("AddGroup", "UserManage", new { HostName = ViewBag.HostName })';
-            var editGroupUrl = '@Url.Action("EditGroup", "UserManage", new { HostName = ViewBag.HostName })';
-            var deleteGroupUrl = '@Url.Action("DeleteGroup", "UserManage", new { HostName = ViewBag.HostName })';
+            var addGroupUrl = '@Url.Action("AddGroup", "UserManage", new { HostName = ViewBag.HostName, currentGroupID = groupID })';
+            var editGroupUrl = '@Url.Action("EditGroup", "UserManage", new { HostName = ViewBag.HostName, currentGroupID = groupID })';
+            var deleteGroupUrl = '@Url.Action("DeleteGroup", "UserManage", new { HostName = ViewBag.HostName, currentGroupID = groupID })';
+            var changeGroupUrl = '@Url.Action("ChangeGroup", "UserManage", new { HostName = ViewBag.HostName, currentGroupID = groupID })';
             $("#btnAddGroup").toggle(function () {
                 $("#divAddGroup").show();
                 $("#txtGroup").focus();
@@ -42,6 +43,10 @@
                     });
                 }
                 $("#btnAddGroup").click();
+            }).keydown(function () {
+                if (event.keyCode == 13) {
+                    $(this).blur();
+                }
             });
 
             $("#ulGroup li").live("mouseover", function () {
@@ -97,6 +102,30 @@
                     BtnCancelClick: "$(this).dialog('close');"
                 });
             });
+            $(".spanChangeGroup").click(function () {
+                var rawGroupID = $(this).attr("rawGroup");
+                var userID = $(this).attr("value");
+                var newGroupID = $(this).prev().val();
+                if (rawGroupID != newGroupID) {
+                    $.ajax({
+                        type: "post",
+                        data: { userID: userID, groupID: newGroupID },
+                        url: changeGroupUrl,
+                        success: function (result) {
+                            if (result != undefined && result != null && result.length > 0) {
+                                eval(result);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            JAlert({
+                                Message: "Internal Server Error.",
+                                DialogType: "Ok",
+                                BtnOk: "确定"
+                            });
+                        }
+                    });
+                }
+            });
         });
     </script>
     <style>
@@ -129,7 +158,7 @@
         {
             if (item.ID == groupID)
             { 
-            <li class="select"><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(0)</a>
+            <li class="select"><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())</a>
                 @if (item.ID != defaultGroupID)
                 {
                     <span class="span_option"><span class="span_edit" value="@item.GroupName" gID="@item.ID">
@@ -139,7 +168,7 @@
             }
             else
             {  
-            <li><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(0)</a>
+            <li><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())</a>
                 @if (item.ID != defaultGroupID)
                 {
                     <span class="span_option"><span class="span_edit" value="@item.GroupName" gID="@item.ID">
@@ -162,9 +191,9 @@
     </div>
     <table class="tableList" cellpadding="0" cellspacing="0">
         <tr>
-            <th style="width: 80px;">
+            @*<th style="width: 80px;">
                 <input type="checkbox" />全选
-            </th>
+            </th>*@
             <th style="width: 90px;">
                 头像
             </th>
@@ -186,9 +215,9 @@
             foreach (var item in Model)
             {
             <tr>
-                <td>
+                @*<td>
                     <input type="checkbox" />
-                </td>
+                </td>*@
                 <td>
                     @if (!string.IsNullOrEmpty(item.HeadImagePath))
                     { 
@@ -204,23 +233,28 @@
                 </td>
                 <td>
                     <select>
+                        @{
+                    int rawGroupID = 0;
+                        }
                         @foreach (var groupItem in groupList)
                         {
-                            var gID = item.User_Groups.Where(a => a.Group.AccountID == loginAccountID && a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Select(a => a.GroupID).FirstOrDefault();
-                            if (groupItem.ID == gID)
+                            rawGroupID = item.Account_Users.Where(a => a.AccountID == loginAccountID && a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Select(a => a.GroupID).FirstOrDefault();
+                            if (groupItem.ID == rawGroupID)
                             { 
-                            <option selected="selected">@groupItem.GroupName</option>
+                            <option selected="selected" value="@groupItem.ID">@groupItem.GroupName</option>
                             }
-                            else { 
-                            <option>@groupItem.GroupName</option>
+                            else
+                            { 
+                            <option value="@groupItem.ID">@groupItem.GroupName</option>
                             }
                         }
                     </select>
-                    <span style="cursor: pointer">放入</span>
+                    <span style="cursor: pointer" class="spanChangeGroup" value="@item.ID" rawGroup="@rawGroupID">
+                        放入</span>
                 </td>
                 <td class="operation">
-                    @Html.ActionLink("详细", "View", "UserManage", new { Area = "User", userID = item.ID }, null)
-                    @Html.ActionLink("修改", "Edit", "UserManage", new { Area = "User", userID = item.ID }, null)
+                    @Html.ActionLink("详细", "ViewUser", "UserManage", new { HostName = hostName, userID = item.ID }, null)
+                    @Html.ActionLink("修改", "EditUser", "UserManage", new { HostName = hostName, userID = item.ID }, null)
                 </td>
             </tr>
             }

@@ -35,5 +35,7 @@ namespace Interface
         Result Login(string email, string pwd);
 
         Result Delete(int id);
+
+        bool CheckHasPermissions_User(int accountID, int userID);
     }
 }

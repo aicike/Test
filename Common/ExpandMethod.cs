@@ -46,6 +46,23 @@ namespace System
         }
 
         /// <summary>
+        /// 截取字符串,只显示设置长度的文字，超出用token字符串显示
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="length"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public static string Show(this string value, int length, string token = "")
+        {
+            if (value.Length<= length)
+            {
+                return value;
+            }
+            value = value.Substring(0,length) + token;
+            return value;
+        }
+
+        /// <summary>
         /// false 发生没有权限异常
         /// </summary>
         /// <param name="value"></param>

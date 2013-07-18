@@ -6,6 +6,7 @@ using Poco;
 using Injection;
 using Interface;
 using Injection.Transaction;
+using Poco.Enum;
 
 namespace Business
 {
@@ -40,12 +41,10 @@ namespace Business
             Result result = new Result();
             try
             {
-                var groupIDs = List().Where(a => a.AccountID == accountID).Select(a => a.ID).ToList();
-
                 //检查是否可以删除
                 //User_Group
-                var userGroupModel = Factory.Get<IUser_GroupModel>(SystemConst.IOC_Model.User_GroupModel);
-                var isCanDelete = !userGroupModel.List().Any(a => groupIDs.Contains(a.GroupID));
+                var account_UserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
+                var isCanDelete = !account_UserModel.List().Any(a => a.AccountID == accountID && a.SystemStatus == (int)EnumSystemStatus.Active);
                 if (isCanDelete == false)
                 {
                     result.Error = "该组下存在用户，无法删除";
@@ -104,25 +103,10 @@ namespace Business
                 return result;
             }
             CommonModel commonModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
-            //获取该分组下所有user，并转移到未分组中
-            var userIDs = group.User_Groups.Select(a => a.UserID).ToArray();
-            if (userIDs.Length > 0)
-            {
-                //删除旧关系
-                string deleteUserGroupSql = "DELETE dbo.User_Group WHERE GroupID=" + groupID;
-                commonModel.SqlExecute(deleteUserGroupSql);
-                //添加新关系
-                int defaultGroupID = List().Where(a => a.IsDefaultGroup).SingleOrDefault().ID;
-                StringBuilder sb = new StringBuilder();
-                sb.Append("INSERT INTO dbo.User_Group( SystemStatus, UserID, GroupID )");
-                foreach (var item in userIDs)
-                {
-                    sb.AppendFormat(" SELECT  0, {0}, {1} UNION ALL", item, defaultGroupID);
-                }
-                string addUserGroupSql = sb.ToString();
-                addUserGroupSql = addUserGroupSql.Remove(addUserGroupSql.Length - " UNION ALL".Length);
-                commonModel.SqlExecute(deleteUserGroupSql);
-            }
+            //更改用户分组
+            int defaultGroupID =GetGroupListByAccountID(accountID,accountMainID).Where(a => a.IsDefaultGroup).SingleOrDefault().ID;
+            string sql = string.Format("UPDATE dbo.Account_User SET groupID={0} WHERE GroupID={1}", defaultGroupID, groupID);
+            commonModel.SqlExecute(sql);
             result = CompleteDelete(groupID);
             return result;
         }

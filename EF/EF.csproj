@@ -52,9 +52,10 @@
     <Compile Include="Mapping\AccountMainExpandInfoMap.cs" />
     <Compile Include="Mapping\AccountMap.cs" />
     <Compile Include="Mapping\UserMap.cs" />
-    <Compile Include="Migrations\201307170811281_Initial.cs" />
-    <Compile Include="Migrations\201307170811281_Initial.Designer.cs">
-      <DependentUpon>201307170811281_Initial.cs</DependentUpon>
+    <Compile Include="Mapping\UserLoginInfoMap.cs" />
+    <Compile Include="Migrations\201307180937400_Initial.cs" />
+    <Compile Include="Migrations\201307180937400_Initial.Designer.cs">
+      <DependentUpon>201307180937400_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,8 +75,8 @@
     <Content Include="InitialProvince.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201307170811281_Initial.resx">
-      <DependentUpon>201307170811281_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201307180937400_Initial.resx">
+      <DependentUpon>201307180937400_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

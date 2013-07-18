@@ -15,13 +15,5 @@ namespace Interface
         /// <param name="groupID"></param>
         /// <returns></returns>
         IQueryable<User> GetUserByAccountID(int accountID, int groupID);
-
-        /// <summary>
-        /// 登录
-        /// </summary>
-        /// <param name="loginToken">邮箱</param>
-        /// <param name="pwd">密码</param>
-        /// <returns></returns>
-        Result Login(string email, string pwd);
     }
 }

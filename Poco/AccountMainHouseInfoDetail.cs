@@ -6,9 +6,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Poco
 {
+    /// <summary>
+    /// 房间信息
+    /// </summary>
     public class AccountMainHouseInfoDetail : IBaseEntity
     {
-
         public int ID { get; set; }
 
         public int SystemStatus { get; set; }

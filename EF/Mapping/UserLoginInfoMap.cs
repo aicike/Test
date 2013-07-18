@@ -7,12 +7,11 @@ using Poco;
 
 namespace EF.Mapping
 {
-    public class UserMap : EntityTypeConfiguration<User>
+    public class UserLoginInfoMap : EntityTypeConfiguration<UserLoginInfo>
     {
-        public UserMap()
+        public UserLoginInfoMap()
         {
-            this.Ignore(a => a.Business_AccountID);
-            this.Ignore(a => a.Business_GroupID);
+            this.Ignore(a => a.LoginPwdPage);
         }
     }
 }

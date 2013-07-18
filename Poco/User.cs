@@ -6,7 +6,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Poco
 {
-
     public class User : IBaseEntity
     {
         public int ID { get; set; }
@@ -16,23 +15,6 @@ namespace Poco
         [Display(Name = "名称")]
         [StringLength(10, ErrorMessage = "长度小于10")]
         public string Name { get; set; }
-
-        [Display(Name = "邮箱")]
-        [StringLength(50, ErrorMessage = "长度小于50")]
-        [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "请输入有效的邮箱")]
-        [Required]
-        public string Email { get; set; }
-
-        [Display(Name = "密码")]
-        [Required(ErrorMessage = "请输入密码")]
-        [StringLength(100)]
-        public string LoginPwd { get; set; }
-
-        [Display(Name = "密码")]
-        [Required(ErrorMessage = "请输入密码")]
-        [StringLength(20, MinimumLength = 6, ErrorMessage = "长度大于6小于20")]
-        [RegularExpression("^[a-zA-Z0-9_\u4E00-\u9FA5]*$", ErrorMessage = "请输入有效的密码")]
-        public string LoginPwdPage { get; set; }
 
         [Display(Name = "地址")]
         [StringLength(50, ErrorMessage = "长度小于50")]
@@ -73,13 +55,15 @@ namespace Poco
         /// </summary>
         public int? Business_GroupID { get; set; }
 
+        public int UserLoginInfoID { get; set; }
+
+        public virtual UserLoginInfo UserLoginInfo { get; set; }
+
         public virtual ICollection<SystemMessage> SystemMessages { get; set; }
 
         public virtual ICollection<Message> SendMessages { get; set; }
 
         public virtual ICollection<Message> ReceiveMessages { get; set; }
-
-        public virtual ICollection<User_Group> User_Groups { get; set; }
 
         public virtual ICollection<Account_User> Account_Users { get; set; }
     }

@@ -29,8 +29,9 @@
         .tableList div
         {
             width: 500px;
+            height: 60px;
             text-overflow: ellipsis;
-            text-align:left;
+            text-align: left;
             overflow: hidden;
             word-break: break-all;
             -o-text-overflow: ellipsis; /* for Opera */
@@ -89,7 +90,7 @@
                 </td>
                 <td>
                     <div title="@item.Content">
-                        @item.Content</div>
+                        @item.Content.Show(10)</div>
                 </td>
                 <td class="operation">
                     @Html.ActionLink("修改", "EditText", "Library", new { HostName = ViewBag.HostName, id = item.ID }, null, true)

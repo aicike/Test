@@ -39,6 +39,6 @@ namespace Poco
         /// </summary>
         public bool IsCanDelete { get; set; }
 
-        public virtual ICollection<User_Group> User_Groups { get; set; }
+        public virtual ICollection<Account_User> Account_Users { get; set; }
     }
 }
