@@ -33,8 +33,12 @@ namespace Poco
         [Display(Name = "公摊比例")]
         public double GongTan { get; set; }
 
+        
         [Display(Name = "售出状态")]
-        public bool isSelled { get; set; }
+        public int EnumSoldStateID { get; set; }
+        public virtual LookupOption EnumSoldState { get; set; }
+
+
 
         [Display(Name = "单价")]
         public decimal Price { get; set; }

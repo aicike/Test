@@ -52,6 +52,7 @@
     <Compile Include="AccountMainExpandInfo.cs" />
     <Compile Include="AccountMainHouseInfo.cs" />
     <Compile Include="AccountMainHouseInfoDetail.cs" />
+    <Compile Include="AccountMainHouses.cs" />
     <Compile Include="Account_User.cs" />
     <Compile Include="ActivateEmail.cs" />
     <Compile Include="AutoMessage_Add.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Enum\EnumClientUserType.cs" />
     <Compile Include="Enum\EnumMessageType.cs" />
     <Compile Include="Enum\EnumMessageSendDirection.cs" />
+    <Compile Include="Enum\EnumSoldState.cs" />
     <Compile Include="Enum\EnumSystemStatus.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="AccountMainHouseType.cs" />

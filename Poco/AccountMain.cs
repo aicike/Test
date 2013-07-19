@@ -118,5 +118,7 @@ namespace Poco
         public virtual ICollection<AccountMainHouseInfo> AccountMainHouseInfos { get; set; }
 
         public virtual ICollection<User> Users { get; set; }
+
+        public virtual ICollection<AccountMainHouses> AccountMainHousess { get; set; }
     }
 }
