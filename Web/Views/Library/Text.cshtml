@@ -6,26 +6,7 @@
 @section head{
     <script type="text/javascript">
     </script>
-    <style>
-        #ulGroup li
-        {
-            position: relative;
-        }
-        .span_option
-        {
-            font-size: 13px;
-            float: right;
-            display: none;
-            position: absolute;
-            top: 0px;
-            right: 0px;
-        }
-        .span_option span
-        {
-            margin: 0px 3px 0px 0px;
-            cursor: pointer;
-        }
-        
+    <style>        
         .tableList div
         {
             width: 500px;
@@ -53,12 +34,12 @@
         {
             if (item.ID == (int)Poco.Enum.EnumMessageType.Text)
             { 
-            <li class="select"><a href="@Url.Action("Text", "Library", new { HostName = ViewBag.HostName })">@item.Name&nbsp;(0)</a>
+            <li class="select"><a href="@Url.Action("Text", "Library", new { HostName = ViewBag.HostName })">@item.Name&nbsp;(@item.Count)</a>
             </li>
             }
             else
             {  
-            <li><a href="@Url.Action("Text", "Library", new { HostName = ViewBag.HostName })">@item.Name&nbsp;(0)</a>
+            <li><a href="@Url.Action("Text", "Library", new { HostName = ViewBag.HostName })">@item.Name&nbsp;(@item.Count)</a>
             </li>
             }
         }

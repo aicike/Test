@@ -31,5 +31,7 @@ namespace Interface
         bool CheckHasPermissions(int loginSystemUserID, params int[] accountMainID);
 
         double GetFileLimitUseInfo(int accountMainID);
+
+        AccountMainLibraryInfo GetAccountMainLibraryInfo(int accountMainID);
     }
 }

@@ -15,7 +15,6 @@ namespace Business
 {
     public class AccountMainModel : BaseModel<AccountMain>, IAccountMainModel
     {
-
         public IQueryable<AccountMain> List_Permission(int loginSystemUserID = 0)
         {
             if (loginSystemUserID != 0)
@@ -246,6 +245,23 @@ namespace Business
             double value_Byte = Convert.ToDouble(fso.GetFolder(path).Size);
             double value_GB = value_Byte / 1024 / 1024 / 1024;
             return value_GB;
+        }
+
+        public AccountMainLibraryInfo GetAccountMainLibraryInfo(int accountMainID)
+        {
+            var accountMain = Get(accountMainID);
+            if (accountMain != null)
+            {
+                AccountMainLibraryInfo entity = new AccountMainLibraryInfo();
+                entity.AccountMainID = accountMainID;
+                entity.LibraryTextCount = accountMain.LibraryTexts.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Count();
+                entity.LibraryImageCount = accountMain.LibraryImages.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Count();
+                entity.LibraryImageTextCount = accountMain.LibraryImageTexts.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Count();
+                entity.LibraryVideoCount = accountMain.LibraryVideos.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Count();
+                entity.LibraryVoiceCount = accountMain.LibraryVoices.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Count();
+                return entity;
+            }
+            return null;
         }
     }
 }

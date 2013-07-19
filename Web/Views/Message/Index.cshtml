@@ -1,0 +1,156 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    var groupList = ViewBag.GroupList as List<Poco.Group>;
+}
+@section head{
+    <script type="text/javascript">
+        $(function () {
+            $("#tabs").tabs();
+            $("#selectUser").change(function () {
+                var value = $(this).val();
+                $("#selectGroup").hide();
+                switch (value) {
+                    case "all":
+                        break;
+                    case "group":
+                        $("#selectGroup").show();
+                        break;
+                    case "user":
+                        $("#dialogUser").dialog({
+                            resizable: false,
+                            height: 600,
+                            width: 800,
+                            modal: true,
+                            buttons: {
+                                "确定": function () {
+                                    $(this).dialog("close");
+                                },
+                                "取消": function () {
+                                    $(this).dialog("close");
+                                }
+                            }
+                        });
+                        break;
+                }
+            });
+            $("#txtText").keyup(function () {
+                var length = 500 - $("#txtText").val().trim().length;
+                console.log(length);
+                $("#divTextInfo").html("还可以输入" + length + "字");
+            });
+        });
+    </script>
+    <style>
+        .ulUser
+        {
+            padding: 0px;
+            margin: 5px 0px;
+        }
+        .ulUser li
+        {
+            list-style-type: none;
+        }
+        .ulUserTitle
+        {
+            height: 30px;
+            line-height: 30px;
+        }
+        .ulUserList
+        {
+            min-height: 30px;
+            border-bottom: 1px solid #d3d3d3;
+        }
+    </style>
+}
+<div class="title">
+    消息管理</div>
+<div class="bodyLeft">
+    <ul class="ulList">
+        <li class="select"><a>新建消息</a> </li>
+        <li><a>已发送</a> </li>
+</div>
+<div class="bodyRight">
+    <div class="option">
+        发送对象：<select id="selectUser">
+            <option value="all">全部用户</option>
+            <option value="group">用户分组</option>
+            <option value="user">指定用户</option>
+        </select>
+        <select id="selectGroup" style="display: none">
+            @foreach (var item in groupList)
+            {
+                <option value="@item.ID">@item.GroupName</option>
+            }
+        </select>
+    </div>
+    <div class="tableList" id="tabs">
+        <ul>
+            <li><a href="#tabs-1">文字</a></li>
+            <li><a href="#tabs-2">语音</a></li>
+            <li><a href="#tabs-3">图片</a></li>
+            <li><a href="#tabs-4">视频</a></li>
+            <li><a href="#tabs-5">图片消息</a></li>
+        </ul>
+        <div id="tabs-1">
+            <textarea style="width: 99%" rows="12" id="txtText"></textarea>
+            <div style="float: right" id="divTextInfo">
+                还可以输入500字</div>
+            <div style="clear: both">
+            </div>
+        </div>
+        <div id="tabs-2">
+            <p>
+                Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra
+                massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget
+                luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean
+                aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent
+                in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat
+                nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque
+                convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod
+                felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+        </div>
+        <div id="tabs-3">
+            <p>
+                Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate,
+                pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem.
+                Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia
+                nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo
+                pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem
+                enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+        </div>
+        <div id="tabs-4">
+            <p>
+                Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate,
+                pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem.
+                Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia
+                nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo
+                pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem
+                enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+        </div>
+        <div id="tabs-5">
+            <p>
+                Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate,
+                pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem.
+                Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia
+                nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo
+                pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem
+                enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+        </div>
+    </div>
+    <input type="button" value="发送消息" />
+</div>
+<div style="clear: both">
+</div>
+<div id="dialogUser" title="选择用户" style="display: none">
+    <ul class="ulUser">
+        @foreach (var item in groupList)
+        {
+            <li>
+                <div class="ulUserTitle">@item.GroupName</div>
+                <div class="ulUserList">
+                </div>
+            </li>
+        }
+    </ul>
+</div>

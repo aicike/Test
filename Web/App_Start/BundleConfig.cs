@@ -25,7 +25,7 @@ namespace Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/site.css",
-                "~/Content/themes/base/jquery-ui-1.10.3.custom.min"));
+                "~/Content/themes/base/jquery-ui-1.10.2.custom.min"));
 
             //bundles.Add(new StyleBundle("~/Content/themes").Include(
             //            "~/Content/themes/base/jquery-ui-1.10.3.custom.min.css"            

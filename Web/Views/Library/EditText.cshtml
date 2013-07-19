@@ -12,12 +12,12 @@
         {
             if (item.ID == (int)Poco.Enum.EnumMessageType.Text)
             { 
-            <li class="select"><a href="@Url.Action("Text", "Library", new { HostName = ViewBag.HostName })">@item.Name&nbsp;(0)</a>
+            <li class="select"><a href="@Url.Action("Text", "Library", new { HostName = ViewBag.HostName })">@item.Name&nbsp;(@item.Count)</a>
             </li>
             }
             else
             {  
-            <li><a href="@Url.Action("Text", "Library", new { HostName = ViewBag.HostName })">@item.Name&nbsp;(0)</a>
+            <li><a href="@Url.Action("Text", "Library", new { HostName = ViewBag.HostName })">@item.Name&nbsp;(@item.Count)</a>
             </li>
             }
         }

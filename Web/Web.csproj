@@ -148,6 +148,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\BaseController\ManageAccountController.cs" />
     <Compile Include="Controllers\BaseController\ManageSystemUserController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\UserManageController.cs" />
     <Compile Include="Controllers\WebAPI_UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -160,12 +161,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\IOC.xml" />
-    <Content Include="ReadMe.txt" />
-    <Content Include="Scripts\treeview\ajax-loader.gif" />
-    <Content Include="Scripts\treeview\file.gif" />
-    <Content Include="Scripts\treeview\folder-closed.gif" />
-    <Content Include="Scripts\treeview\folder.gif" />
-    <Content Include="Scripts\treeview\jquery.treeview.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_000_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_100_000_40x100.png" />
@@ -190,6 +185,12 @@
     <Content Include="Content\themes\base\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\themes\base\jquery-ui-1.10.2.custom.css" />
     <Content Include="Content\themes\base\jquery-ui-1.10.2.custom.min.css" />
+    <Content Include="ReadMe.txt" />
+    <Content Include="Scripts\treeview\ajax-loader.gif" />
+    <Content Include="Scripts\treeview\file.gif" />
+    <Content Include="Scripts\treeview\folder-closed.gif" />
+    <Content Include="Scripts\treeview\folder.gif" />
+    <Content Include="Scripts\treeview\jquery.treeview.css" />
     <Content Include="Scripts\treeview\treeview-black-line.gif" />
     <Content Include="Scripts\treeview\treeview-black.gif" />
     <Content Include="Scripts\treeview\treeview-default-line.gif" />
@@ -429,6 +430,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\UserManage\ViewUser.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Message\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
