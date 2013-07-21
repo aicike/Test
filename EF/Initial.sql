@@ -223,7 +223,7 @@ INSERT [dbo].[RoleOption] ([ID], [SystemStatus], [RoleID], [MenuOptionID]) VALUE
 INSERT [dbo].[RoleOption] ([ID], [SystemStatus], [RoleID], [MenuOptionID]) VALUES (26, 0, 1, 26)
 INSERT [dbo].[RoleOption] ([ID], [SystemStatus], [RoleID], [MenuOptionID]) VALUES (27, 0, 1, 27)
 INSERT [dbo].[RoleOption] ([ID], [SystemStatus], [RoleID], [MenuOptionID]) VALUES (28, 0, 1, 28)
-INSERT [dbo].[RoleOption] ([ID], [SystemStatus], [RoleID], [MenuOptionID]) VALUES (28, 0, 1, 29)
+INSERT [dbo].[RoleOption] ([ID], [SystemStatus], [RoleID], [MenuOptionID]) VALUES (29, 0, 1, 29)
 SET IDENTITY_INSERT [dbo].[RoleOption] OFF
 
 ------------------------------[UserLoginInfo]---------------------------------
@@ -232,7 +232,7 @@ INSERT [dbo].[UserLoginInfo] ([ID], [SystemStatus], [LoginName], [Email], [Login
 SET IDENTITY_INSERT [dbo].[UserLoginInfo] OFF
 ------------------------------[User]---------------------------------
 SET IDENTITY_INSERT [dbo].[User] ON
-INSERT [dbo].[User] ([ID], [SystemStatus], [Name], [Email], [LoginPwd], [Address], [Phone], [HeadImagePath], [AccountStatusID], [IdentityCard], [AccountMainID]) VALUES (1, 0, N'武双琦', N'd537@163.com', N'8ZjHBEPwxeqwCrxssgd2cQ==', NULL, NULL, "", 1, NULL, 1)
+INSERT [dbo].[User] ([ID], [SystemStatus], [Name], [Address], [Phone], [HeadImagePath], [AccountStatusID], [IdentityCard], [AccountMainID],UserLoginInfoID) VALUES (1, 0, N'武双琦', NULL, NULL, '', 1, NULL, 1,1)
 SET IDENTITY_INSERT [dbo].[User] OFF
 ------------------------------[ClientInfo]---------------------------------
 SET IDENTITY_INSERT [dbo].[ClientInfo] ON
