@@ -137,6 +137,7 @@
     <Compile Include="Areas\System\Controllers\AccountMainManageController.cs" />
     <Compile Include="Areas\System\Controllers\AccountManageController.cs" />
     <Compile Include="Areas\System\Controllers\RoleController.cs" />
+    <Compile Include="Areas\System\Controllers\SetController.cs" />
     <Compile Include="Areas\System\Controllers\SystemUserHomeController.cs" />
     <Compile Include="Areas\System\Controllers\SystemUserRoleController.cs" />
     <Compile Include="Areas\System\SystemAreaRegistration.cs" />
@@ -144,11 +145,13 @@
     <Compile Include="Controllers\BaseController\BaseController.cs" />
     <Compile Include="Controllers\ExitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LibraryImageController.cs" />
     <Compile Include="Controllers\LibraryController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\BaseController\ManageAccountController.cs" />
     <Compile Include="Controllers\BaseController\ManageSystemUserController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
+    <Compile Include="Controllers\LibraryTextController.cs" />
     <Compile Include="Controllers\UserManageController.cs" />
     <Compile Include="Controllers\WebAPI_UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -186,6 +189,11 @@
     <Content Include="Content\themes\base\jquery-ui-1.10.2.custom.css" />
     <Content Include="Content\themes\base\jquery-ui-1.10.2.custom.min.css" />
     <Content Include="ReadMe.txt" />
+    <Content Include="Scripts\jquery.overlay.min.js" />
+    <Content Include="Scripts\uploadify\jquery.uploadify.js" />
+    <Content Include="Scripts\uploadify\jquery.uploadify.min.js" />
+    <Content Include="Scripts\uploadify\uploadify.css" />
+    <Content Include="Scripts\uploadify\uploadify.swf" />
     <Content Include="Scripts\treeview\ajax-loader.gif" />
     <Content Include="Scripts\treeview\file.gif" />
     <Content Include="Scripts\treeview\folder-closed.gif" />
@@ -298,6 +306,7 @@
     <Folder Include="Areas\System\Models\" />
     <Folder Include="Areas\System\Views\Shared\" />
     <Folder Include="File\" />
+    <Folder Include="Views\Library\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -419,15 +428,6 @@
     <Content Include="Views\UserManage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Library\Text.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Library\AddText.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Library\EditText.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\UserManage\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -435,6 +435,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Message\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\LibraryText\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\LibraryText\Add.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\LibraryText\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\LibraryImage\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\System\Views\Set\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

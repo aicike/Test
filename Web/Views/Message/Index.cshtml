@@ -6,6 +6,7 @@
 @section head{
     <script type="text/javascript">
         $(function () {
+            var urlText = "@Url.Action("SendText", "Message")";
             $("#tabs").tabs();
             $("#selectUser").change(function () {
                 var value = $(this).val();
@@ -36,8 +37,40 @@
             });
             $("#txtText").keyup(function () {
                 var length = 500 - $("#txtText").val().trim().length;
-                console.log(length);
                 $("#divTextInfo").html("还可以输入" + length + "字");
+            });
+            $("#btnSend").click(function () {
+                var active = $("#tabs").tabs("option", "active");
+                switch (active) {
+                    case 0:
+                        var content=$("#txtText").val();
+                        $.ajax({
+                            type: "post",
+                            data: { content: content},
+                            url: urlText,
+                            success: function (result) {
+                                if (result != undefined && result != null && result.length > 0) {
+                                    eval(result);
+                                }
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                JAlert({
+                                    Message: "Internal Server Error.",
+                                    DialogType: "Ok",
+                                    BtnOk: "确定"
+                                });
+                            }
+                        });
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                }
             });
         });
     </script>
@@ -138,7 +171,7 @@
                 enim, pretium nec, feugiat nec, luctus a, lacus.</p>
         </div>
     </div>
-    <input type="button" value="发送消息" />
+    <input type="button" value="发送消息" id="btnSend" />
 </div>
 <div style="clear: both">
 </div>

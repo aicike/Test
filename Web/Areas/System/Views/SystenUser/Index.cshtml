@@ -1,0 +1,135 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@model PagedList<Poco.SystemUser>
+<div class="title">
+    用户管理</div>
+<div class="bodyLeft">
+    <ul class="ulList" id="ulGroup">
+        @foreach (var item in groupList)
+        {
+            if (item.ID == groupID)
+            { 
+            <li class="select"><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())</a>
+                @if (item.ID != defaultGroupID)
+                {
+                    <span class="span_option"><span class="span_edit" value="@item.GroupName" gID="@item.ID">
+                        编辑</span><span class="span_delete" gID="@item.ID">删除</span></span>
+                }
+            </li>
+            }
+            else
+            {  
+            <li><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())</a>
+                @if (item.ID != defaultGroupID)
+                {
+                    <span class="span_option"><span class="span_edit" value="@item.GroupName" gID="@item.ID">
+                        编辑</span><span class="span_delete" gID="@item.ID">删除</span></span>
+                }
+            </li>
+            }
+        }
+    </ul>
+    <div id="divAddGroup" style="height: 35px; border-top: none; padding-left: 15px;
+        cursor: pointer; display: none">
+        <input id="txtGroup" type="text" style="height: 24px; margin-top: 2px; width: 165px" />
+    </div>
+    <div id="btnAddGroup" style="height: 35px; line-height: 35px; border-top: 1px solid #d3d3d3;
+        border-bottom: 1px solid #d3d3d3; padding-left: 15px; cursor: pointer">
+        新建分组</div>
+</div>
+<div class="bodyRight">
+    <div class="option">
+    </div>
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            @*<th style="width: 80px;">
+                <input type="checkbox" />全选
+            </th>*@
+            <th style="width: 90px;">
+                头像
+            </th>
+            <th style="width: 150px;">
+                名称
+            </th>
+            <th style="width: 150px;">
+                电话
+            </th>
+            <th style="width: 150px;">
+                分组
+            </th>
+            <th style="width: 150px;">
+                操作
+            </th>
+        </tr>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+            <tr>
+                @*<td>
+                    <input type="checkbox" />
+                </td>*@
+                <td>
+                    @if (!string.IsNullOrEmpty(item.HeadImagePath))
+                    { 
+                        <img id="imgLogo" style="max-width:80px;max-height:80px;"
+                src="@Url.Content(item.HeadImagePath)" />
+                    }
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Phone
+                </td>
+                <td>
+                    <select>
+                        @{
+                    int rawGroupID = 0;
+                        }
+                        @foreach (var groupItem in groupList)
+                        {
+                            rawGroupID = item.Account_Users.Where(a => a.AccountID == loginAccountID && a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Select(a => a.GroupID).FirstOrDefault();
+                            if (groupItem.ID == rawGroupID)
+                            { 
+                            <option selected="selected" value="@groupItem.ID">@groupItem.GroupName</option>
+                            }
+                            else
+                            { 
+                            <option value="@groupItem.ID">@groupItem.GroupName</option>
+                            }
+                        }
+                    </select>
+                    <span style="cursor: pointer" class="spanChangeGroup" value="@item.ID" rawGroup="@rawGroupID">
+                        放入</span>
+                </td>
+                <td class="operation">
+                    @Html.ActionLink("详细", "ViewUser", "UserManage", new { HostName = hostName, userID = item.ID }, null)
+                    @Html.ActionLink("修改", "EditUser", "UserManage", new { HostName = hostName, userID = item.ID }, null)
+                </td>
+            </tr>
+            }
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
+<div style="clear: both">
+</div>

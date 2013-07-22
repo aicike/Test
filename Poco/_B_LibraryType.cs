@@ -11,6 +11,8 @@ namespace Poco
 
         public string Name { get; set; }
 
+        public string Token { get; set; }
+
         public int Count { get; set; }
     }
 }
