@@ -144,6 +144,7 @@
     <Compile Include="Controllers\BaseController\BaseController.cs" />
     <Compile Include="Controllers\ExitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HousesMangeController.cs" />
     <Compile Include="Controllers\LibraryController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\BaseController\ManageAccountController.cs" />
@@ -423,6 +424,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Library\EditText.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\HousesMange\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\HousesMange\Add.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\HousesMange\Select.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\HousesMange\Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

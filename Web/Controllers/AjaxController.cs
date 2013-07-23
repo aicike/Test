@@ -68,7 +68,20 @@ namespace Web.Controllers
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
             return Json(true, JsonRequestBehavior.AllowGet);
-        }        
+        }
+
+        [HttpGet]
+        public ActionResult CheckHousesRepeat()
+        {
+            if (Request.UrlReferrer.LocalPath.IndexOf("HousesMange/Add/")>=0)
+            {
+                string HName = Request.QueryString[0];
+                CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+                var result = model.CheckIsUnique("AccountMainHouses", "HName", HName);
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
 
         private bool IsCheck(params string[] path)
         {

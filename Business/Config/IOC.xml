@@ -43,7 +43,7 @@
   <object id="MenuModel" type="Business.MenuModel" parent="EFModel" singleton="false"></object>
   <object id="UserModel" type="Business.UserModel" parent="EFModel" singleton="false"></object>
   <object id="User_GroupModel" type="Business.User_GroupModel" parent="EFModel" singleton="false"></object>
-
+  <object id="AccountMainHousesModel" type="Business.AccountMainHousesModel" parent="EFModel" singleton="false"></object>
   
 
   <!--<object id="UserModel" type="NightClubBooth.Business.UserModel" parent="EFModel" singleton="false">

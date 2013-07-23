@@ -79,7 +79,7 @@ namespace Poco
             public const string UserModel = "UserModel";
             public const string User_GroupModel = "User_GroupModel";
             public const string ClientInfoModel = "ClientInfoModel";
-            
+            public const string AccountMainHousesModel = "AccountMainHousesModel";
             
 
 

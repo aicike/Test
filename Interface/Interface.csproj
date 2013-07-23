@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAccountMainHousesModel.cs" />
     <Compile Include="IAccountMainModel.cs" />
     <Compile Include="IAccountModel.cs" />
     <Compile Include="IBaseModel.cs" />

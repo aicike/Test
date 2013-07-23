@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = "Select";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+@section head{
+
+}
+
+@model Poco.AccountMainHouses
+<div class="title">
+    楼盘详细信息</div>
+
+    <div class="body">
+ 
+    <fieldset style="border: 1px solid #d3d3d3;">
+            <legend> @Model.HName</legend>
+            <table  border="0" cellpadding="0" cellspacing="0" style=" line-height:25px" width="100%">
+                <tr>
+                    <td width="80px">
+                        开盘时间：
+                    </td>
+                    <td   >
+                         @Model.HOpeningDate
+                    </td>
+                    <td  width="80px" >
+                        入住时间：
+                    </td>
+                    <td  >
+                        @Model.HCheckInDate
+                    </td>
+                    <td  width="80px" >
+                         竣工时间：
+                    </td>
+                    <td   >
+                        @Model.HCompletedDate
+                    </td>
+                </tr>
+                 <tr>
+                    <td >
+                        单元数：
+                    </td>
+                    <td   >
+                         @Model.HHouseCount
+                    </td>
+                    <td  >
+                        总户数：
+                    </td>
+                    <td  >
+                        @Model.HHouseholdsCount
+                    </td>
+                    <td   >
+                         车位数：
+                    </td>
+                    <td   >
+                        @Model.HParkingCount
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        占用面积：
+                    </td>
+                    <td   >
+                         @Model.HOccupyArea
+                    </td>
+                    <td  >
+                        建筑面积：
+                    </td>
+                    <td  >
+                        @Model.HBuildingArea
+                    </td>
+                    <td   >
+                         绿化面积：
+                    </td>
+                    <td   >
+                        @Model.HGreeningArea
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        产权年限：
+                    </td>
+                    <td   colspan="4" >
+                         @Model.PropertyRight
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        楼盘地址：
+                    </td>
+                    <td  colspan="4" >
+                         @Model.HAddress
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        楼盘介绍：
+                    </td>
+                    <td  colspan="4"  >
+                         @Model.HIntroduce
+                    </td>
+                </tr>
+                 <tr>
+                    <td >
+                        开发商：
+                    </td>
+                    <td   >
+                         @Model.HBuildCompany
+                    </td>
+                    <td  >
+                        投资商：
+                    </td>
+                    <td  >
+                        @Model.HInvestor
+                    </td>
+                    <td   >
+                    </td>
+                    <td   >
+                    </td>
+                </tr>
+            </table>
+    </fieldset>
+     </div>
+     <div class="action">
+            <input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>

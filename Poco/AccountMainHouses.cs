@@ -19,6 +19,7 @@ namespace Poco
 
         [Display(Name = "楼盘名称")]
         [Required(ErrorMessage = "请输入楼盘名称")]
+        [RemotePlus("CheckHousesRepeat", "Ajax", "", "Default", ErrorMessage = "名称已存在")]
         public string HName { get; set; }
 
         [Display(Name = "楼盘介绍")]
