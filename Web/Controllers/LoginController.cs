@@ -64,7 +64,7 @@ namespace Web.Controllers
                 return Alert(new Dialog(result.Error));
             }
             var account = Session[SystemConst.Session.LoginAccount] as Account;
-            var url = Url.RouteUrl("User", new { action = "Index", controller = "Home", HostName = account.Account_AccountMains.FirstOrDefault().AccountMain.HostName });
+            var url = Url.RouteUrl("User", new { action = "Index", controller = "Home", HostName = account.HostName });
             return JavaScript("window.location.href='" + url + "'");
         }
 

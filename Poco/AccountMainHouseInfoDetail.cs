@@ -9,6 +9,7 @@ namespace Poco
     /// <summary>
     /// 房间信息
     /// </summary>
+    [Serializable]
     public class AccountMainHouseInfoDetail : IBaseEntity
     {
         public int ID { get; set; }

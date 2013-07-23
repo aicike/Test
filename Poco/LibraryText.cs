@@ -9,6 +9,7 @@ namespace Poco
     /// <summary>
     /// 文本库
     /// </summary>
+    [Serializable]
     public class LibraryText : IBaseEntity
     {
         public int ID { get; set; }

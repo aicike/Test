@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Poco
 {
+    [Serializable]
     public class Province : IBaseEntity
     {
         public int ID { get; set; }
@@ -22,6 +23,7 @@ namespace Poco
         public virtual ICollection<City> Citys { get; set; }
     }
 
+    [Serializable]
     public class City : IBaseEntity
     {
         public int ID { get; set; }
@@ -47,6 +49,7 @@ namespace Poco
         public virtual ICollection<AccountMain> AccountMains { get; set; }
     }
 
+    [Serializable]
     public class District : IBaseEntity
     {
         public int ID { get; set; }

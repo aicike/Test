@@ -177,9 +177,20 @@ namespace Business
             else
             {
                 //todo:以后可能会出现一个销售账号管理多个售楼部，需要先选择售楼部才能登录系统，目前默认选择第一个售楼部。
-                account.HostName = account.Account_AccountMains.FirstOrDefault().AccountMain.HostName;
-                account.CurrentAccountMainID = account.Account_AccountMains.FirstOrDefault().AccountMain.ID;
-                HttpContext.Current.Session[SystemConst.Session.LoginAccount] = account;
+                Account entity = new Account();
+                entity.ID = account.ID;
+                entity.SystemStatus = account.SystemStatus;
+                entity.Name = account.Name;
+                entity.LoginPwd = account.LoginPwd;
+                entity.Phone = account.Phone;
+                entity.HeadImagePath = account.HeadImagePath;
+                entity.Email = account.Email;
+                entity.RoleID = account.RoleID;
+                entity.AccountStatusID = account.AccountStatusID;
+                entity.IsActivated = account.IsActivated;
+                entity.HostName = account.Account_AccountMains.FirstOrDefault().AccountMain.HostName;
+                entity.CurrentAccountMainID = account.Account_AccountMains.FirstOrDefault().AccountMain.ID;
+                HttpContext.Current.Session[SystemConst.Session.LoginAccount] = entity;
             }
             return result;
         }

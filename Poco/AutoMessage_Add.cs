@@ -9,6 +9,7 @@ namespace Poco
     /// <summary>
     /// 自动消息，被添加时自动回复
     /// </summary>
+    [Serializable]
     public class AutoMessage_Add : IBaseEntity
     {
         public int ID { get; set; }

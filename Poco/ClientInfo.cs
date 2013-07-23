@@ -9,6 +9,7 @@ namespace Poco
     /// <summary>
     /// 客户端(APP)信息
     /// </summary>
+    [Serializable]
     public class ClientInfo : IBaseEntity
     {
         public int ID { get; set; }

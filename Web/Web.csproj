@@ -155,6 +155,9 @@
     <Compile Include="Controllers\LibraryTextController.cs" />
     <Compile Include="Controllers\UserManageController.cs" />
     <Compile Include="Controllers\WebAPI_UserController.cs" />
+    <Compile Include="Controllers\LibraryVoiceController.cs" />
+    <Compile Include="Controllers\LibraryVideoController.cs" />
+    <Compile Include="Controllers\LibraryImageTextController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -191,6 +194,28 @@
     <Content Include="Content\themes\base\jquery-ui-1.10.2.custom.min.css" />
     <Content Include="ReadMe.txt" />
     <Content Include="Scripts\jquery.overlay.min.js" />
+    <Content Include="Scripts\MediaElement\background.png" />
+    <Content Include="Scripts\MediaElement\bigplay.png" />
+    <Content Include="Scripts\MediaElement\bigplay.svg" />
+    <Content Include="Scripts\MediaElement\controls-ted.png" />
+    <Content Include="Scripts\MediaElement\controls-wmp-bg.png" />
+    <Content Include="Scripts\MediaElement\controls-wmp.png" />
+    <Content Include="Scripts\MediaElement\controls.png" />
+    <Content Include="Scripts\MediaElement\controls.svg" />
+    <Content Include="Scripts\MediaElement\DO NOT CHANGE THESE FILES. USE -src- FOLDER.txt" />
+    <Content Include="Scripts\MediaElement\flashmediaelement.swf" />
+    <Content Include="Scripts\MediaElement\jquery.js" />
+    <Content Include="Scripts\MediaElement\loading.gif" />
+    <Content Include="Scripts\MediaElement\mediaelement-and-player.js" />
+    <Content Include="Scripts\MediaElement\mediaelement-and-player.min.js" />
+    <Content Include="Scripts\MediaElement\mediaelement.js" />
+    <Content Include="Scripts\MediaElement\mediaelement.min.js" />
+    <Content Include="Scripts\MediaElement\mediaelementplayer.css" />
+    <Content Include="Scripts\MediaElement\mediaelementplayer.js" />
+    <Content Include="Scripts\MediaElement\mediaelementplayer.min.css" />
+    <Content Include="Scripts\MediaElement\mediaelementplayer.min.js" />
+    <Content Include="Scripts\MediaElement\mejs-skins.css" />
+    <Content Include="Scripts\MediaElement\silverlightmediaelement.xap" />
     <Content Include="Scripts\uploadify\jquery.uploadify.js" />
     <Content Include="Scripts\uploadify\jquery.uploadify.min.js" />
     <Content Include="Scripts\uploadify\uploadify.css" />
@@ -454,6 +479,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\System\Views\SystenUser\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\LibraryVoice\Index.cshtml">
+      <SubType>
+      </SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\LibraryVideo\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\LibraryImageText\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\LibraryImageText\Add.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

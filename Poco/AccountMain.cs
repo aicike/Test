@@ -11,6 +11,7 @@ namespace Poco
     /// <summary>
     /// 账号总表（房地产公司基本信息）
     /// </summary>
+    [Serializable]
     public class AccountMain : IBaseEntity
     {
         public int ID { get; set; }

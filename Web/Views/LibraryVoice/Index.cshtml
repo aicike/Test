@@ -1,0 +1,193 @@
+﻿@{
+    ViewBag.Title = "Image";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    var libraryType = ViewBag.LibraryType as List<Poco.LibraryType>;
+}
+@section head{
+    <link href="@Url.Content("~/Scripts/uploadify/uploadify.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/uploadify/jquery.uploadify.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Scripts/MediaElement/mediaelementplayer.min.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/MediaElement/mediaelement-and-player.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        var uploadUrl = '@Url.Action("Upload", "LibraryVoice", new { HostName = ViewBag.HostName })';
+        var renameUrl = '@Url.Action("ReName", "LibraryVoice", new { HostName = ViewBag.HostName })';
+        $(function () {
+            $("#file_upload").uploadify({
+                height: 30,
+                swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
+                uploader: uploadUrl,
+                width: 80,
+                fileTypeExts: '*.mp3;*.wma;*.wav;*.amr',
+                onUploadSuccess: function (file, data, response) {
+                    eval(data);
+                }
+            });
+            $("#file_upload-button").after('<div id="div_message" style="position: absolute;top: 5px;left: 100px;width:260px">格式限制：mp3, wma, wav, amr</div>');
+            $("a[name='btnReName']").click(function () {
+                var tr = $(this).parent().parent();
+                tr.find(".spanFileName").hide();
+                tr.find(".txtFileName").show().focus();
+                return false;
+            });
+            $(".txtFileName").blur(function () {
+                var value = $(this).val().trim();
+                var rvalue = $(this).attr("rawValue").trim();
+                if (value.length <= 0) {
+                    JAlert({
+                        Message: "素材名必须为1到50个字符",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return;
+                }
+                var id = $(this).attr("rawID");
+                if (value != rvalue) {
+                    $.ajax({
+                        type: "post",
+                        data: { id: id, name: value },
+                        url: renameUrl,
+                        success: function (result) {
+                            if (result != undefined && result != null && result.length > 0) {
+                                eval(result);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            JAlert({
+                                Message: "Internal Server Error.",
+                                DialogType: "Ok",
+                                BtnOk: "确定"
+                            });
+                        }
+                    });
+                }
+                var tr = $(this).parent().parent();
+                tr.find(".txtFileName").hide();
+                tr.find(".spanFileName").show();
+            });
+
+            $(".btnPlay").click(function () {
+                $('video, audio').each(function () {
+                    if ($(this)[0].player != undefined) {
+                        //$(this)[0].player.pause();
+                        $(this)[0].player.setCurrentTime(99999999);
+                    }
+                });
+                var obj = $(this);
+                var type = obj.attr("isshow");
+                $(".btnPlay").attr("isshow", "false");
+                if (type == "false") {
+                    obj.attr("isshow", "true");
+                } else {
+                    obj.attr("isshow", "false");
+                }
+                var tr = obj.parent().parent();
+                var mediaDiv = tr.find(".media");
+                $(".media[id!='" + mediaDiv[0].id + "']").slideUp("fast");
+                mediaDiv.slideToggle("fast", function () {
+                    if (mediaDiv.is(':hidden') == false) {
+                        mediaDiv.find('audio,video').mediaelementplayer({
+                            audioWidth: '100%',
+                            enableKeyboard:false,
+                            success: function (me) {
+                                me.play();
+                                obj.click(function () {
+                                    if ($(this).attr("isshow") == "true") {
+                                        if (me.paused || me.ended) {
+                                            me.play();
+                                        }
+                                        else {
+                                            //me.pause();
+                                            me.setCurrentTime(99999999);
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+
+                    }
+                });
+            });
+        });
+    </script>
+}
+@model PagedList<Poco.LibraryVoice>
+<div class="title">
+    素材管理</div>
+<div class="bodyLeft">
+    <ul class="ulList" id="ulGroup">
+        @foreach (var item in libraryType)
+        {
+            if (item.ID == (int)Poco.Enum.EnumMessageType.Voice)
+            { 
+            <li class="select"><a href="@Url.Action("Index", item.Token, new { HostName = ViewBag.HostName })">@item.Name&nbsp;(@item.Count)</a>
+            </li>
+            }
+            else
+            {  
+            <li><a href="@Url.Action("Index", item.Token, new { HostName = ViewBag.HostName })">@item.Name&nbsp;(@item.Count)</a>
+            </li>
+            }
+        }
+    </ul>
+</div>
+<div class="bodyRight">
+    <div class="option">
+        @if (MVCExpandMethod.CheckHasPermissions(this.ViewContext, "Upload", "LibraryVoice"))
+        { 
+            <input id="file_upload" name="file_upload" type="file" multiple="false" />
+        }
+    </div>
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th style="width: 500px;">
+                文件名
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+            <tr>
+                <td style="padding: 0px">
+                    <div class="spanFileName" style="display: block; height: 28px; padding-top: 15px">@item.FileName</div>
+                    <input class="txtFileName" type="text" rawID="@item.ID" rawValue="@item.FileName" value="@item.FileName" style="display:none" />
+                    <div class="media" id="divMedia_@item.ID" style="display: none;">
+                        <audio style="width:100%" id="player2" src="@Url.Content(item.FilePath)" 
+                            controls="controls"></audio>
+                    </div>
+                </td>
+                <td class="operation">
+                    <a class="btnPlay" isshow="false">点击播放</a>
+                    @Html.ActionLink("重命名", "ReName", "LibraryVoice", new { HostName = ViewBag.HostName, id = item.ID }, new { name = "btnReName" }, true)
+                    @Ajax.ActionLink("删除", "Delete", "LibraryVoice", new { HostName = ViewBag.HostName, id = item.ID },
+                         new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "LibraryVoice", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
+                </td>
+            </tr>
+            }
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
+<div style="clear: both">
+</div>

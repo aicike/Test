@@ -9,6 +9,7 @@ namespace Poco
     /// <summary>
     /// 平台账号
     /// </summary>
+    [Serializable]
     public class SystemUser : IBaseEntity
     {
         public int ID { get; set; }

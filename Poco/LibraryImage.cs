@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Poco
 {
+    [Serializable]
     public class LibraryImage : IBaseEntity, ILibrary
     {
         public int ID { get; set; }

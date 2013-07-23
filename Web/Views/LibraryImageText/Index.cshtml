@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    var libraryType = ViewBag.LibraryType as List<Poco.LibraryType>;
+}
+@section head{
+    <script type="text/javascript">
+    </script>
+}
+@model PagedList<Poco.LibraryImageText>
+<div class="title">
+    素材管理</div>
+<div class="bodyLeft">
+    <ul class="ulList" id="ulGroup">
+        @foreach (var item in libraryType)
+        {
+            if (item.ID == (int)Poco.Enum.EnumMessageType.ImageText)
+            { 
+            <li class="select"><a href="@Url.Action("Index", item.Token, new { HostName = ViewBag.HostName })">@item.Name&nbsp;(@item.Count)</a>
+            </li>
+            }
+            else
+            {  
+            <li><a href="@Url.Action("Index", item.Token, new { HostName = ViewBag.HostName })">@item.Name&nbsp;(@item.Count)</a>
+            </li>
+            }
+        }
+    </ul>
+</div>
+<div class="bodyRight">
+    <div class="option">
+        @Html.ActionLink("单图文消息", "Add", "LibraryImageText", new
+   {
+       HostName = ViewBag.HostName,
+       isSingle = true
+   }, null, true)
+        @Html.ActionLink("多图文消息", "Add", "LibraryImageText", new
+   {
+       HostName = ViewBag.HostName,
+       isSingle = false
+   }, null, true)
+    </div>
+    <div class="tableList">
+        sdfsdf
+    </div>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
+<div style="clear: both">
+</div>

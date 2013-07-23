@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace Poco
 {
+    [Serializable]
     public class Account : IBaseEntity
     {
         public int ID { get; set; }

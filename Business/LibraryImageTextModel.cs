@@ -12,7 +12,7 @@ namespace Business
     {
         public IQueryable<LibraryImageText> GetLibraryList(int accountMainID)
         {
-            throw new NotImplementedException();
+            return List().Where(a => a.AccountMainID == accountMainID);
         }
     }
 }

@@ -14,6 +14,8 @@ namespace System.Web.Mvc.Html
     {
         public static bool CheckHasPermissions(ViewContext viewContext, string action, string controller = null, object routeValues = null)
         {
+            //var session = HttpContext.Current.Session;
+             
             var loginSystemUser = HttpContext.Current.Session[Poco.SystemConst.Session.LoginSystemUser] as Poco.SystemUser;
             var loginAccount = HttpContext.Current.Session[Poco.SystemConst.Session.LoginAccount] as Poco.Account;
             if (loginSystemUser == null && loginAccount == null)

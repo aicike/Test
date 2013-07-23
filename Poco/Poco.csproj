@@ -52,7 +52,7 @@
     <Compile Include="AccountMainExpandInfo.cs" />
     <Compile Include="AccountMainHouseInfo.cs" />
     <Compile Include="AccountMainHouseInfoDetail.cs" />
-    <Compile Include="PushMessage.cs" />
+    <Compile Include="_B_PushMessage.cs" />
     <Compile Include="_B_AccountMainLibraryInfo.cs" />
     <Compile Include="Account_User.cs" />
     <Compile Include="ActivateEmail.cs" />

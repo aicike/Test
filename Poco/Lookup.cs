@@ -9,6 +9,7 @@ namespace Poco
     /// <summary>
     /// 系统Lookup数据
     /// </summary>
+    [Serializable]
     public class Lookup : IBaseEntity
     {
         public int ID { get; set; }

@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Poco
 {
+    [Serializable]
     public class AutoMessage_Keyword : IBaseEntity
     {
         public int ID { get; set; }

@@ -22,7 +22,17 @@ namespace Business
             }
             else
             {
-                HttpContext.Current.Session[SystemConst.Session.LoginSystemUser] = systemUser;
+                SystemUser entity = new SystemUser();
+                entity.ID = systemUser.ID;
+                entity.SystemStatus = systemUser.SystemStatus;
+                entity.Name = systemUser.Name;
+                entity.Email = systemUser.Email;
+                entity.LoginPwd = systemUser.LoginPwd;
+                entity.HeadImage = systemUser.HeadImage;
+                entity.Phone = systemUser.Phone;
+                entity.AccountStatusID = systemUser.AccountStatusID;
+                entity.SystemUserRoleID = systemUser.SystemUserRoleID;
+                HttpContext.Current.Session[SystemConst.Session.LoginSystemUser] = entity;
             }
             return result;
         }

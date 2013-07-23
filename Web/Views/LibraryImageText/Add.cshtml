@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@section head{
+    <style>
+        .divPreview
+        {
+            width: 320px;
+            padding: 10px; /*margin-bottom: 26px;*/
+            border: 1px solid #d3d3d3;
+            background-color: #fff;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+            -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+            -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            float: left;
+        }
+        .divEdit
+        {
+            width: 525px;
+            padding: 10px; /*margin-bottom: 26px;*/
+            border: 1px solid #d3d3d3;
+            background-color: #F4F4F4;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+            -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+            -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            margin-left: 25px;
+            float: left;
+        }
+        .divEdit > *
+        {
+            width: 100%;
+        }
+    </style>
+}
+@model Poco.Role
+<div class="title">
+    单图文消息</div>
+<div class="body">
+    <div class="divPreview">
+        <div>
+            标题</div>
+        <div style="height: 160px">
+        </div>
+        <div>
+            摘要
+        </div>
+    </div>
+    <div class="divEdit">
+        <label>
+            标题</label>
+        <input type="text" />
+        <label>
+            封面</label>
+        <input type="text" />
+        <label>
+            摘要</label>
+        <input type="text" />
+        <label>
+            正文</label>
+        <textarea>
+            
+        </textarea>
+    </div>
+    <div style="clear: both">
+    </div>
+</div>
