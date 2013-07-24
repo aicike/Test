@@ -14,8 +14,8 @@ namespace Poco
             public const string iv = "12345678";
             public const string DefaultLogo = "DefaultLogo";
             public const string DefaultHeadImage = "DefaultHeadImage";
-            public const string PathBase = "~\\File\\{0}\\Base\\";
-            public const string PathAccount = "~\\File\\{0}\\Account\\";
+            public const string PathBase = "~/File/{0}/Base/";
+            public const string PathAccount = "~/File/{0}/Account/";
             public const string DefaultGroup = "未分组";
         }
 

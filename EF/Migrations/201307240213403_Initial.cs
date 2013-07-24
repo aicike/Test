@@ -373,7 +373,8 @@ namespace EF.Migrations
                         SystemStatus = c.Int(nullable: false),
                         Title = c.String(nullable: false, maxLength: 50),
                         ImagePath = c.String(nullable: false, maxLength: 500),
-                        Content = c.String(nullable: false, maxLength: 4000),
+                        Summary = c.String(nullable: false, maxLength: 200),
+                        Content = c.String(nullable: false),
                         LibraryImageTextParentID = c.Int(),
                         AccountMainID = c.Int(nullable: false),
                     })

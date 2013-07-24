@@ -23,11 +23,15 @@ namespace Poco
         [StringLength(500, ErrorMessage = "长度小于500")]
         public string ImagePath { get; set; }
 
+        [Display(Name = "摘要")]
+        [Required(ErrorMessage = "请输入摘要")]
+        [StringLength(200, ErrorMessage = "长度小于200")]
+        public string Summary { get; set; }
+
         [Display(Name = "正文")]
         [Required(ErrorMessage = "请输入正文")]
-        [StringLength(4000, ErrorMessage = "长度小于4000")]
         public string Content { get; set; }
-
+        
         public int? LibraryImageTextParentID { get; set; }
 
         public virtual LibraryImageText LibraryImageTextParent { get; set; }

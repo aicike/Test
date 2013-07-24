@@ -12,7 +12,7 @@ namespace Controllers
 {
     public class ManageAccountController : BaseController
     {
-         protected Account LoginAccount
+        protected Account LoginAccount
         {
             get
             {
@@ -23,10 +23,10 @@ namespace Controllers
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
-         {
-             var controller = filterContext.RequestContext.RouteData.Values["controller"] as string;
-             var action = filterContext.RequestContext.RouteData.Values["action"] as string;
-             var area = filterContext.RouteData.DataTokens["area"] as string;
+        {
+            var controller = filterContext.RequestContext.RouteData.Values["controller"] as string;
+            var action = filterContext.RequestContext.RouteData.Values["action"] as string;
+            var area = filterContext.RouteData.DataTokens["area"] as string;
 
             if ((LoginAccount == null)
                 //&& ((controller != null && (controller.Equals("Account", StringComparison.OrdinalIgnoreCase) == false && controller.Equals("Home", StringComparison.OrdinalIgnoreCase) == false && controller.Equals("Area", StringComparison.OrdinalIgnoreCase) == false))
@@ -40,9 +40,23 @@ namespace Controllers
                 });
                 return;
             }
+
             //权限
-            var menuModel = Factory.Get<IMenuModel>(SystemConst.IOC_Model.MenuModel);
-            menuModel.CheckHasPermissions(LoginAccount.RoleID, action, controller, area).NotAuthorizedPage();
+            bool isCheckPermissions = true;
+            var attrs = filterContext.ActionDescriptor.GetCustomAttributes(typeof(AllowCheckPermissionsAttribute), false);
+            if (attrs != null && attrs.Length > 0)
+            {
+                AllowCheckPermissionsAttribute acp = attrs[0] as AllowCheckPermissionsAttribute;
+                if (acp != null)
+                {
+                    isCheckPermissions = acp.AllowCheckPermissions;
+                }
+            }
+            if (isCheckPermissions)
+            {
+                var menuModel = Factory.Get<IMenuModel>(SystemConst.IOC_Model.MenuModel);
+                menuModel.CheckHasPermissions(LoginAccount.RoleID, action, controller, area).NotAuthorizedPage();
+            }
 
             //上一次请求信息
             var request = filterContext.RequestContext.HttpContext.Request;

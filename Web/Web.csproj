@@ -165,6 +165,7 @@
     <Compile Include="Models\MVCExpandMethod.cs" />
     <Compile Include="Models\NoClientCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="ueditor\net\Uploader.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\IOC.xml" />
@@ -216,6 +217,66 @@
     <Content Include="Scripts\MediaElement\mediaelementplayer.min.js" />
     <Content Include="Scripts\MediaElement\mejs-skins.css" />
     <Content Include="Scripts\MediaElement\silverlightmediaelement.xap" />
+    <Content Include="ueditor\dialogs\image\image.css" />
+    <Content Include="ueditor\dialogs\image\image.html" />
+    <Content Include="ueditor\dialogs\image\image.js" />
+    <Content Include="ueditor\dialogs\image\images\center_focus.jpg" />
+    <Content Include="ueditor\dialogs\image\images\left_focus.jpg" />
+    <Content Include="ueditor\dialogs\image\images\none_focus.jpg" />
+    <Content Include="ueditor\dialogs\image\images\right_focus.jpg" />
+    <Content Include="ueditor\dialogs\image\imageUploader.swf" />
+    <Content Include="ueditor\dialogs\internal.js" />
+    <Content Include="ueditor\dialogs\tangram.js" />
+    <Content Include="ueditor\dialogs\video\images\center_focus.jpg" />
+    <Content Include="ueditor\dialogs\video\images\left_focus.jpg" />
+    <Content Include="ueditor\dialogs\video\images\none_focus.jpg" />
+    <Content Include="ueditor\dialogs\video\images\right_focus.jpg" />
+    <Content Include="ueditor\dialogs\video\video.css" />
+    <Content Include="ueditor\dialogs\video\video.html" />
+    <Content Include="ueditor\dialogs\video\video.js" />
+    <Content Include="ueditor\lang\zh-cn\images\copy.png" />
+    <Content Include="ueditor\lang\zh-cn\images\imglabel.png" />
+    <Content Include="ueditor\lang\zh-cn\images\localimage.png" />
+    <Content Include="ueditor\lang\zh-cn\images\music.png" />
+    <Content Include="ueditor\lang\zh-cn\images\upload.png" />
+    <Content Include="ueditor\lang\zh-cn\zh-cn.js" />
+    <Content Include="ueditor\themes\default\css\ueditor.css" />
+    <Content Include="ueditor\themes\default\dialogbase.css" />
+    <Content Include="ueditor\themes\default\images\anchor.gif" />
+    <Content Include="ueditor\themes\default\images\arrow.png" />
+    <Content Include="ueditor\themes\default\images\arrow_down.png" />
+    <Content Include="ueditor\themes\default\images\arrow_up.png" />
+    <Content Include="ueditor\themes\default\images\button-bg.gif" />
+    <Content Include="ueditor\themes\default\images\cancelbutton.gif" />
+    <Content Include="ueditor\themes\default\images\cursor_h.gif" />
+    <Content Include="ueditor\themes\default\images\cursor_h.png" />
+    <Content Include="ueditor\themes\default\images\cursor_v.gif" />
+    <Content Include="ueditor\themes\default\images\cursor_v.png" />
+    <Content Include="ueditor\themes\default\images\dialog-title-bg.png" />
+    <Content Include="ueditor\themes\default\images\filescan.png" />
+    <Content Include="ueditor\themes\default\images\highlighted.gif" />
+    <Content Include="ueditor\themes\default\images\icons-all.gif" />
+    <Content Include="ueditor\themes\default\images\icons.gif" />
+    <Content Include="ueditor\themes\default\images\icons.png" />
+    <Content Include="ueditor\themes\default\images\lock.gif" />
+    <Content Include="ueditor\themes\default\images\neweditor-tab-bg.png" />
+    <Content Include="ueditor\themes\default\images\pagebreak.gif" />
+    <Content Include="ueditor\themes\default\images\scale.png" />
+    <Content Include="ueditor\themes\default\images\spacer.gif" />
+    <Content Include="ueditor\themes\default\images\sparator_v.png" />
+    <Content Include="ueditor\themes\default\images\table-cell-align.png" />
+    <Content Include="ueditor\themes\default\images\tangram-colorpicker.png" />
+    <Content Include="ueditor\themes\default\images\toolbar_bg.png" />
+    <Content Include="ueditor\themes\default\images\unhighlighted.gif" />
+    <Content Include="ueditor\themes\default\images\upload.png" />
+    <Content Include="ueditor\themes\default\images\videologo.gif" />
+    <Content Include="ueditor\themes\default\images\word.gif" />
+    <Content Include="ueditor\themes\default\images\wordpaste.png" />
+    <Content Include="ueditor\themes\iframe.css" />
+    <Content Include="ueditor\ueditor.all.js" />
+    <Content Include="ueditor\ueditor.all.min.js" />
+    <Content Include="ueditor\ueditor.config.js" />
+    <Content Include="ueditor\ueditor.parse.js" />
     <Content Include="Scripts\uploadify\jquery.uploadify.js" />
     <Content Include="Scripts\uploadify\jquery.uploadify.min.js" />
     <Content Include="Scripts\uploadify\uploadify.css" />
@@ -495,6 +556,21 @@
   <ItemGroup>
     <Content Include="Views\LibraryImageText\Add.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="ueditor\net\fileUp.ashx" />
+    <Content Include="ueditor\net\getContent.ashx" />
+    <Content Include="ueditor\net\getMovie.ashx" />
+    <Content Include="ueditor\net\getRemoteImage.ashx" />
+    <Content Include="ueditor\net\imageManager.ashx" />
+    <Content Include="ueditor\net\imageUp.ashx" />
+    <Content Include="ueditor\net\scrawlUp.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ueditor\net\imageUp_LibraryImageText.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ueditor\net\imageManager_LibraryImageText.ashx" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -513,7 +589,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>30062</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://192.168.1.100:8080/</IISUrl>
+          <IISUrl>http://127.0.0.1/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

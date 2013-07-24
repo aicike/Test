@@ -8,7 +8,6 @@
 
             $("#HeadImagePathFile").change(function () {
                 var fileName = $("#HeadImagePathFile").val();
-                $("#HeadImagePath").val(fileName);
                 var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
                 $("span[data-valmsg-for='HeadImagePath']").empty().attr("class", "field-validation-valid");
                 switch (suffix) {

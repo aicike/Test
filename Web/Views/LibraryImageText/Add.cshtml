@@ -3,6 +3,10 @@
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 @section head{
+    <link href="@Url.Content("~/Scripts/uploadify/uploadify.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/uploadify/jquery.uploadify.js")" type="text/javascript"></script>
+    <script src="@Url.Content("/ueditor/ueditor.config.js")" type="text/javascript"></script>
+    <script src="@Url.Content("/ueditor/ueditor.all.js")" type="text/javascript"></script>
     <style>
         .divPreview
         {
@@ -33,13 +37,94 @@
             margin-left: 25px;
             float: left;
         }
-        .divEdit > *
+        .divEdit > form > div > *
         {
             width: 100%;
         }
+        .divEdit > form > div
+        {
+            margin: 5px 0px 10px 0px;
+        }
+        .div_title
+        {
+            margin-bottom: 5px;
+        }
+        .divPreview div
+        {
+            height: 20px;
+        }
     </style>
+    <script type="text/javascript">
+        $(function () {
+            var uploadUrl = '@Url.Action("Upload", "LibraryImageText", new { HostName = ViewBag.HostName })';
+            window.UEDITOR_HOME_URL = "/ueditor/";
+            //实例化编辑器
+            var options = {
+                initialFrameWidth: '100%',
+                initialFrameHeight: 300,
+                imageUrl: UEDITOR_HOME_URL + "net/imageUp_LibraryImageText.ashx",
+                imagePath: "",
+                imageManagerUrl: UEDITOR_HOME_URL + "net/imageManager_LibraryImageText.ashx",
+                imageManagerPath: "",
+                initialContent: ""
+            };
+
+            var ue = UE.getEditor('editor', options);
+
+            $("#CoverImagePathFile").change(function () {
+                var fileName = $("#CoverImagePathFile").val();
+                if (fileName.length == 0) { return false; }
+                $("#ImagePath").val(fileName);
+                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+                switch (suffix) {
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".gif":
+                    case ".bmp":
+                        break;
+                    default:
+                        JAlert({
+                            Message: "格式限制：jpg, jpge, gif, png, bmp",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return false;
+                        break;
+                }
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#imgCoverPreview").attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+                return false;
+            });
+            $("#btnAdd").click(function () {
+                if ($("#ImagePath").val().length <= 0) {
+                    JAlert({
+                        Message: "请上传封面图片",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return false;
+                }
+                return true;
+            });
+
+            $("#Title").focus();
+            $("#btnAdd").click(function () {
+                $("#valContent").hide();
+                if ($.trim(ue.getContentTxt()).length <= 0) {
+                    $("#valContent").show();
+                }
+            });
+        });
+    </script>
 }
-@model Poco.Role
+@model Poco.LibraryImageText
 <div class="title">
     单图文消息</div>
 <div class="body">
@@ -47,26 +132,43 @@
         <div>
             标题</div>
         <div style="height: 160px">
+            <img id="imgCoverPreview" style="width: 320px; max-height: 160px; margin: auto 0px;" />
         </div>
         <div>
             摘要
         </div>
     </div>
     <div class="divEdit">
-        <label>
-            标题</label>
-        <input type="text" />
-        <label>
-            封面</label>
-        <input type="text" />
-        <label>
-            摘要</label>
-        <input type="text" />
-        <label>
-            正文</label>
-        <textarea>
-            
-        </textarea>
+        @using (Html.BeginForm("Add", "LibraryImageText", new { }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div>
+                <div class="div_title">
+                    标题 @Html.ValidationMessageFor(a => a.Title)</div>
+                @Html.TextBoxFor(a => a.Title)
+            </div>
+            <div>
+                <div class="div_title">
+                    封面</div>
+                <input type="button" value="选择文件" onclick="$('#CoverImagePathFile').click()" class="button" />
+                <input type="file" id="CoverImagePathFile" name="CoverImagePathFile" style="visibility: hidden;
+                    float: left; width: 0px;" />
+                @Html.TextBoxFor(a => a.ImagePath, new { style = "width:0px;visibility:hidden" })
+            </div>
+            <div>
+                <div class="div_title">
+                    摘要 @Html.ValidationMessageFor(a => a.Summary)</div>
+                @Html.TextAreaFor(a => a.Summary)
+            </div>
+            <div>
+                <div class="div_title" id="divContent">
+                    正文 <span id="valContent" style="display: none" class="field-validation-error" data-valmsg-for="Content"
+                        data-valmsg-replace="true"><span for="Summary" generated="true" class="">请输入正文</span></span></div>
+                <script type="text/plain" id="editor" height="300px" name="Content"></script>
+            </div>
+            <div>
+                <input type="submit" value="完成" id="btnAdd" class="button" />
+            </div>
+        }
     </div>
     <div style="clear: both">
     </div>

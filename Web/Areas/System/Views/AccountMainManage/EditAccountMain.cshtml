@@ -36,7 +36,6 @@
             });
             $("#LogoImagePathFile").change(function () {
                 var fileName = $("#LogoImagePathFile").val();
-                $("#LogoImagePath").val(fileName);
                 var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
                 $("span[data-valmsg-for='LogoImagePath']").empty().attr("class", "field-validation-valid");
                 switch (suffix) {
