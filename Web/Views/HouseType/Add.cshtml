@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@section head{
+<script type="text/javascript">
+    $(function () { 
+    
+    $("#HousTypeImagePathFile").change(function () {
+        var fileName = $("#HousTypeImagePathFile").val();
+                $("#HouseTypeImagePath").val(fileName);
+                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+                $("span[data-valmsg-for='HouseTypeImagePath']").empty().attr("class", "field-validation-valid");
+                switch (suffix) {
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".gif":
+                    case ".bmp":
+                        break;
+                    default:
+                        $("span[data-valmsg-for='HouseTypeImagePath']").text("支持下列图片格式：.jpg|.jpeg|.png|.gif|.bmp").attr("class", "field-validation-error");
+                        break;
+                }
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#imgHousType").attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+                return false;
+            });
+        });
+</script>
+}
+
+@model Poco.AccountMainHouseType
+<div class="title">
+     @ViewBag.HostTitle->添加户型
+</div>
+
+<div class="body">
+
+@using (Html.BeginForm("Add", "HouseType", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+    <fieldset style="border: 1px solid #d3d3d3;">
+            <legend>基本信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        户型名称
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.HName) @Html.HiddenFor(a => a.AccountMainHousesID)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HName)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        户型图
+                    </td>
+                    <td class="tdField">
+                        <img id="imgHousType" style="max-width: 80px; max-height: 80px; float: left" />
+                        <input type="file" id="HousTypeImagePathFile" name="HousTypeImagePathFile" />
+                        @Html.TextBoxFor(a => a.HouseTypeImagePath, new { style = "width:0px;visibility:hidden" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HouseTypeImagePath)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        户型说明
+                    </td>
+                    <td class="tdField">@Html.TextAreaFor(a => a.HouseTypeDescription)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HouseTypeDescription)
+                    </td>
+                </tr>
+            </table>
+    </fieldset>
+     
+     
+      <div class="action">
+            <input type="submit" id="btnSubmit"  class="button" value="保存" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+       </div>
+ }
+</div>

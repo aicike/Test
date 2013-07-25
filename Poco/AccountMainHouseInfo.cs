@@ -27,7 +27,7 @@ namespace Poco
         [Display(Name = "电梯数")]
         public int NumberOfTheElevator { get; set; }
 
-        [Display(Name = "每层户数")]
+        [Display(Name = "户数")]
         public string NumberOfFamily { get; set; }
 
         public virtual ICollection<AccountMainHouseInfoDetail> AccountMainHouseInfoDetails { get; set; }

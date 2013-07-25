@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+@model Poco.AccountMainHouseInfo
+<div class="title">
+     @ViewBag.HostTitle->添加单元
+</div>
+
+<div class="body">
+ @using (Ajax.BeginForm("Add", "HouseInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+ {
+    <fieldset style="border: 1px solid #d3d3d3;">
+            <legend>基本信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        栋数
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Building) @Html.HiddenFor(a => a.AccountMainHousessID)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Building)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        单元
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Cell)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Cell)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        层数
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.NumberOfLayers)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.NumberOfLayers)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        电梯数
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.NumberOfTheElevator)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.NumberOfTheElevator)
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="tdTitle">
+                        户数
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.NumberOfFamily)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.NumberOfFamily)
+                    </td>
+                </tr>
+            </table>
+    </fieldset>
+     
+     
+      <div class="action">
+            <input type="submit" id="btnSubmit"  class="button" value="保存" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+       </div>
+ }
+</div>

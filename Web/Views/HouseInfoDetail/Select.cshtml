@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "Select";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@section head{
+
+}
+
+@model Poco.AccountMainHouseInfoDetail
+<div class="title">
+     @ViewBag.HostHTitle->@ViewBag.HostDTitle->房屋信息</div>
+
+    <div class="body">
+ 
+    <fieldset style="border: 1px solid #d3d3d3;">
+            <legend>基本信息</legend>
+            <table  border="0" cellpadding="0" cellspacing="0" style=" line-height:25px" width="100%">
+                <tr>
+                    <td width="80px">
+                        楼盘：
+                    </td>
+                    <td  width="217px" >
+                        @ViewBag.HostHTitle
+                    </td>
+                    <td  width="80px" >
+                        楼栋(楼号)：
+                    </td>
+                    <td  width="217px" >
+                        @ViewBag.HostDs
+                    </td>
+                    <td  width="80px" >
+                         单元：
+                    </td>
+                    <td   >
+                       @ViewBag.HostDYs
+                    </td>
+                </tr>
+                 <tr>
+                    <td >
+                        楼层：
+                    </td>
+                    <td   >
+                         @Model.Layer
+                    </td>
+                    <td  >
+                        房间号：
+                    </td>
+                    <td  >
+                        @Model.RoomNumber
+                    </td>
+                    <td   >
+                         售出状态：
+                    </td>
+                    <td   >
+                        @Model.EnumSoldState.Value
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        建筑面积：
+                    </td>
+                    <td   >
+                         @Model.BuildingArea
+                    </td>
+                    <td  >
+                        实际面积：
+                    </td>
+                    <td  >
+                        @Model.RealityArea
+                    </td>
+                    <td   >
+                         公摊比例：
+                    </td>
+                    <td   >
+                        @Model.GongTan
+                    </td>
+                </tr>
+                 <tr>
+                    <td >
+                        单价：
+                    </td>
+                    <td   >
+                         @Model.Price
+                    </td>
+                    <td  >
+                        总价：
+                    </td>
+                    <td  >
+                        @Model.TotalPrice
+                    </td>
+                    <td   >
+                    </td>
+                    <td   >
+                    </td>
+                </tr>
+            </table>
+    </fieldset>
+    <br />
+    <fieldset style="border: 1px solid #d3d3d3;">
+            <legend>户型信息</legend>
+            <table  border="0" cellpadding="0" cellspacing="0" style=" line-height:25px" width="100%">
+                <tr>
+                    <td style=" width:80px">户型名称:</td>
+                    <td>
+                        @Model.AccountMainHouseType.HName
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">户型图</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <img id="imgHousType" style="max-width: 890px; max-height: 600px; float: left" src="@Url.Content(Model.AccountMainHouseType.HouseTypeImagePath)" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style=" width:80px">户型说明:</td>
+                    <td>
+                        @Model.AccountMainHouseType.HouseTypeDescription
+                    </td>
+                </tr>
+            </table>
+    </fieldset>
+    <div class="action">
+            <input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+     </div>
+     

@@ -18,5 +18,12 @@ namespace Business
         {
             return LookupOptionModel.GetIdByToken(value);
         }
+
+        public static List<LookupOption> GetLookupOptionList(Type emumType)
+        {
+            string typeName = emumType.Name;
+            return LookupOptionModel.List().Where(a => a.Lookup.Token.Equals(typeName, StringComparison.CurrentCultureIgnoreCase)).ToList();
+        }
+
     }
 }

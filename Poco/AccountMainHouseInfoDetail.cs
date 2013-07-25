@@ -14,13 +14,18 @@ namespace Poco
         public int SystemStatus { get; set; }
 
         public int AccountMainHouseInfoID { get; set; }
-
         public virtual AccountMainHouseInfo AccountMainHouseInfo { get; set; }
 
         [Display(Name = "楼层")]
         public int Layer { get; set; }
 
+        [Display(Name = "房间号")]
+        [Required(ErrorMessage = "请输入房间号")]
+        public string RoomNumber { get; set; }
+
         [Display(Name = "户型")]
+        [Required(ErrorMessage="请选择户型")]
+        [Range(1, double.MaxValue, ErrorMessage = "请选择户型")]
         public int AccountMainHouseTypeID { get; set; }
         public virtual AccountMainHouseType AccountMainHouseType { get; set; }
         
@@ -37,7 +42,6 @@ namespace Poco
         [Display(Name = "售出状态")]
         public int EnumSoldStateID { get; set; }
         public virtual LookupOption EnumSoldState { get; set; }
-
 
 
         [Display(Name = "单价")]

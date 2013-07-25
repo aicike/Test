@@ -7,20 +7,18 @@
 <div class="title">
     楼盘管理管理</div>
 <div class="body">
-    <div class="option">@Html.ActionLink("添加", "Add", "HousesMange", new { HostName = ViewBag.HostName }, null)</div>
+    <div class="option">@Html.ActionLink("添加", "Add", "HousesMange", new { HostName = ViewBag.HostName }, null, true)</div>
     <table class="tableList" cellpadding="0" cellspacing="0">
         <tr>
             <th style="width: 300px;">
                 名称
             </th>
             <th>
-                单元设置
+                单元管理
             </th>
+           
             <th>
-                房屋设置
-            </th>
-            <th>
-                户型设置
+                户型管理
             </th>
             <th style="width: 200px;">
                 操作
@@ -30,22 +28,20 @@
         {
             <tr>
                 <td>
-                    @Html.ActionLink(item.HName, "Select", "HousesMange", new { HostName = ViewBag.HostName, id = item.ID }, null)
+                    @Html.ActionLink(item.HName, "Select", "HousesMange", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
                 </td>
                 <td>
-                    @Html.ActionLink("查看", "Select", "HousesMange", new { HostName = ViewBag.HostName, id = item.ID }, null)
+                    @Html.ActionLink("查看", "Index", "HouseInfo", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
                 </td>
+               
                 <td>
-                    @Html.ActionLink("查看", "Edit", "HousesMange", new { HostName = ViewBag.HostName, id = item.ID }, null)
-                </td>
-                <td>
-                    @Html.ActionLink("查看", "Edit", "HousesMange", new { HostName = ViewBag.HostName, id = item.ID }, null)
+                    @Html.ActionLink("查看", "Index", "HouseType", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
                 </td>
                 <td class="operation">
 
-                    @Html.ActionLink("修改", "Edit", "HousesMange", new { HostName = ViewBag.HostName, id = item.ID }, new { style="padding-right:15px"})
+                    @Html.ActionLink("修改", "Edit", "HousesMange", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:15px" }, true)
                    
-                    @Ajax.ActionLink("删除", "Delete", "HousesMange", new { HostName = ViewBag.HostName, id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "HousesMange", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" })
+                    @Ajax.ActionLink("删除", "Delete", "HousesMange", new { HostName = ViewBag.HostName, id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "HousesMange", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
                     
                 </td>
             </tr>

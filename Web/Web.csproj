@@ -144,7 +144,10 @@
     <Compile Include="Controllers\BaseController\BaseController.cs" />
     <Compile Include="Controllers\ExitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HouseInfoController.cs" />
+    <Compile Include="Controllers\HouseInfoDetailController.cs" />
     <Compile Include="Controllers\HousesMangeController.cs" />
+    <Compile Include="Controllers\HouseTypeController.cs" />
     <Compile Include="Controllers\LibraryController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\BaseController\ManageAccountController.cs" />
@@ -436,6 +439,36 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\HousesMange\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\HouseInfo\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\HouseInfo\Add.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\HouseInfo\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\HouseType\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\HouseType\Add.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\HouseType\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\HouseInfoDetail\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\HouseInfoDetail\Add.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\HouseInfoDetail\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\HouseInfoDetail\Select.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

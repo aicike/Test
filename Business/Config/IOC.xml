@@ -44,8 +44,10 @@
   <object id="UserModel" type="Business.UserModel" parent="EFModel" singleton="false"></object>
   <object id="User_GroupModel" type="Business.User_GroupModel" parent="EFModel" singleton="false"></object>
   <object id="AccountMainHousesModel" type="Business.AccountMainHousesModel" parent="EFModel" singleton="false"></object>
+  <object id="AccountMainHouseInfoModel" type="Business.AccountMainHouseInfoModel" parent="EFModel" singleton="false"></object>
+  <object id="AccountMainHouseTypeModel" type="Business.AccountMainHouseTypeModel" parent="EFModel" singleton="false"></object>
+  <object id="AccountMainHouseInfoDetailModel" type="Business.AccountMainHouseInfoDetailModel" parent="EFModel" singleton="false"></object>
   
-
   <!--<object id="UserModel" type="NightClubBooth.Business.UserModel" parent="EFModel" singleton="false">
     <property name="LookupOptionModel" ref="LookupOptionModel"/>
     <property name="RoleModel" ref="RoleModel"/>
