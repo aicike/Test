@@ -30,13 +30,28 @@ public class imageUp_LibraryImageText : IHttpHandler, System.Web.SessionState.IR
         }
 
 
-        var tempPath = Poco.SystemConst.Business.PathBase.Replace("~", "");
+        var tempPath = Poco.SystemConst.Business.PathFileLibrary.Replace("~", "");
         var path = string.Format(tempPath, account.CurrentAccountMainID);
-                
+
         info = up.upFile(context, path, filetype, size);                   //获取上传状态
 
         string title = up.getOtherInfo(context, "pictitle");                   //获取图片描述
         string oriName = up.getOtherInfo(context, "fileName");                //获取原始文件名
+
+        try
+        {
+            //上传到图片库
+            var libraryImageModel = Injection.Factory.Get<Interface.ILibraryImageModel>(Poco.SystemConst.IOC_Model.LibraryImageModel);
+            Poco.LibraryImage entity = new Poco.LibraryImage();
+            entity.FileName = title;
+            entity.FilePath = info["url"].ToString();
+            entity.AccountMainID = account.CurrentAccountMainID;
+            libraryImageModel.Add(entity);
+        }
+        catch (Exception ex)
+        {
+        }
+
 
 
         HttpContext.Current.Response.Write("{'url':'" + info["url"] + "','title':'" + title + "','original':'" + oriName + "','state':'" + info["state"] + "'}");  //向浏览器返回数据json数据

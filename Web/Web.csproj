@@ -162,6 +162,7 @@
     <Compile Include="Controllers\LibraryVoiceController.cs" />
     <Compile Include="Controllers\LibraryVideoController.cs" />
     <Compile Include="Controllers\LibraryImageTextController.cs" />
+    <Compile Include="Controllers\WebRequestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -169,7 +170,10 @@
     <Compile Include="Models\MVCExpandMethod.cs" />
     <Compile Include="Models\NoClientCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Content Include="ueditor\net\Uploader.cs" />
+    <Content Include="ueditor\net\Uploader.cs">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Content\Style.css" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\IOC.xml" />

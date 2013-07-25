@@ -16,6 +16,7 @@ namespace Poco
             public const string DefaultHeadImage = "DefaultHeadImage";
             public const string PathBase = "~/File/{0}/Base/";
             public const string PathAccount = "~/File/{0}/Account/";
+            public const string PathFileLibrary = "~/File/{0}/FileLibrary/";
             public const string DefaultGroup = "未分组";
         }
 
@@ -24,6 +25,8 @@ namespace Poco
             private Cache() { }
             public const string SystemUserMenu = "SystemUserMenu";
             public const string Menu = "Menu";
+            public const string RoleMenu = "RoleMenu";
+            public const string RoleOption = "RoleOption";            
         }
 
         public class Notice

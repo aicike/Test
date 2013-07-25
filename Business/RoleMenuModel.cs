@@ -13,6 +13,18 @@ namespace Business
 {
     public class RoleMenuModel : BaseModel<RoleMenu>, IRoleMenuModel
     {
+        public List<RoleMenu> List_Cache()
+        {
+            var obj = CacheModel.GetCache<List<RoleMenu>>(SystemConst.Cache.RoleMenu);
+            if (obj != null)
+            {
+                return obj;
+            }
+            var list = base.List().ToList();
+            CacheModel.SetCache(SystemConst.Cache.RoleMenu, list);
+            return list;
+        }
+
         [Transaction]
         public void BindPermission(int roleID, int[] menuIDs, int[] menuOptionIDs)
         {
@@ -49,6 +61,8 @@ namespace Business
                 commonModel.SqlExecute(addOptionListSQL);
             }
             CacheModel.ClearCache(SystemConst.Cache.Menu);
+            CacheModel.ClearCache(SystemConst.Cache.RoleMenu);
+            CacheModel.ClearCache(SystemConst.Cache.RoleOption);
         }
     }
 }

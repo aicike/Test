@@ -8,6 +8,7 @@ namespace Interface
 {
     public interface IRoleMenuModel : IBaseModel<RoleMenu>
     {
+        List<RoleMenu> List_Cache();
         void BindPermission(int roleID, int[]menuIDs, int[] menuOptionIDs);
     }
 }

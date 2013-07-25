@@ -27,18 +27,18 @@ namespace Poco
         /// <summary>
         /// 客户端系统类型
         /// </summary>
-        public int EnumClientSystemTypeID { get; set; }
+        public int? EnumClientSystemTypeID { get; set; }
         public virtual LookupOption EnumClientSystemType { get; set; }
-        
+
         /// <summary>
         /// 安装时间
         /// </summary>
-        public DateTime SetupTiem { get; set; }
+        public DateTime? SetupTiem { get; set; }
 
         /// <summary>
         /// 客户端账号类型
         /// </summary>
-        public int EnumClientUserTypeID { get; set; }
+        public int? EnumClientUserTypeID { get; set; }
         public virtual LookupOption EnumClientUserType { get; set; }
 
         /// <summary>
@@ -48,6 +48,10 @@ namespace Poco
         [StringLength(50, ErrorMessage = "长度小于50")]
         public string Tag { get; set; }
 
+        [Display(Name = "客户端ID")]
+        [StringLength(50, ErrorMessage = "长度小于50")]
+        public string ClientID { get; set; }
+
         #endregion
 
 
@@ -55,7 +59,7 @@ namespace Poco
         /// <summary>
         /// 账号ID
         /// </summary>
-        public int EntityID { get; set; }
+        public int? EntityID { get; set; }
         /// <summary>
         /// 账号对象
         /// </summary>

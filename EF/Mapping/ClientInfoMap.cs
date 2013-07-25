@@ -11,11 +11,11 @@ namespace EF.Mapping
     {
         public ClientInfoMap()
         {
-            this.HasRequired(a => a.EnumClientSystemType)
+            this.HasOptional(a => a.EnumClientSystemType)
             .WithMany(a => a.ClientInfoEnumClientSystemType)
             .HasForeignKey(a => a.EnumClientSystemTypeID);
 
-            this.HasRequired(a => a.EnumClientSystemType)
+            this.HasOptional(a => a.EnumClientSystemType)
             .WithMany(a => a.ClientInfoEnumClientSystemType)
             .HasForeignKey(a => a.EnumClientSystemTypeID);
         }

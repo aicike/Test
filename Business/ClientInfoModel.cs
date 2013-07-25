@@ -55,5 +55,15 @@ namespace Business
         //    }
         //    return resule;
         //}
+        public void PostClientID(string clientID)
+        {
+            bool isHas = List().Any(a => a.ClientID == clientID);
+            if (!isHas)
+            {
+                ClientInfo clientInfo = new ClientInfo();
+                clientInfo.ClientID = clientID;
+                var result = base.Add(clientInfo);
+            }
+        }
     }
 }

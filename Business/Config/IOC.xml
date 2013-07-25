@@ -47,6 +47,7 @@
   <object id="AccountMainHouseInfoModel" type="Business.AccountMainHouseInfoModel" parent="EFModel" singleton="false"></object>
   <object id="AccountMainHouseTypeModel" type="Business.AccountMainHouseTypeModel" parent="EFModel" singleton="false"></object>
   <object id="AccountMainHouseInfoDetailModel" type="Business.AccountMainHouseInfoDetailModel" parent="EFModel" singleton="false"></object>
+  <object id="UserLoginInfoModel" type="Business.UserLoginInfoModel" parent="EFModel" singleton="false"></object>
   
   <!--<object id="UserModel" type="NightClubBooth.Business.UserModel" parent="EFModel" singleton="false">
     <property name="LookupOptionModel" ref="LookupOptionModel"/>

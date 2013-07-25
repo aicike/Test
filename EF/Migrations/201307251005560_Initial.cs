@@ -457,6 +457,7 @@ namespace EF.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         SystemStatus = c.Int(nullable: false),
                         EnumMessageTypeID = c.Int(nullable: false),
+                        Describe = c.String(nullable: false, maxLength: 100),
                         MessageID = c.Int(nullable: false),
                         AutoMessage_KeywordID = c.Int(nullable: false),
                         Order = c.Int(nullable: false),
@@ -696,11 +697,12 @@ namespace EF.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         SystemStatus = c.Int(nullable: false),
                         IMEI = c.String(maxLength: 16),
-                        EnumClientSystemTypeID = c.Int(nullable: false),
-                        SetupTiem = c.DateTime(nullable: false),
-                        EnumClientUserTypeID = c.Int(nullable: false),
+                        EnumClientSystemTypeID = c.Int(),
+                        SetupTiem = c.DateTime(),
+                        EnumClientUserTypeID = c.Int(),
                         Tag = c.String(maxLength: 50),
-                        EntityID = c.Int(nullable: false),
+                        ClientID = c.String(maxLength: 50),
+                        EntityID = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.LookupOption", t => t.EnumClientSystemTypeID)
@@ -723,7 +725,6 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
-
 
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };

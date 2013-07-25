@@ -33,19 +33,28 @@ public class imageManager_LibraryImageText : IHttpHandler, System.Web.SessionSta
                 false.NotAuthorizedPage();
             }
 
-            var tempPath = Poco.SystemConst.Business.PathBase.Replace("~","");
+            var tempPath = Poco.SystemConst.Business.PathFileLibrary.Replace("~","");
             var path = string.Format(tempPath, account.CurrentAccountMainID);
             DirectoryInfo info = new DirectoryInfo(context.Server.MapPath(path));
 
             //目录验证
             if (info.Exists)
             {
+                foreach (FileInfo fi in info.GetFiles())
+                {
+                    if (Array.IndexOf(filetype, fi.Extension.ToLower()) != -1)
+                    {
+                        str += path + "/"  + fi.Name + "ue_separate_ue";
+                    }
+                }
+                
+                
                 DirectoryInfo[] infoArr = info.GetDirectories();
                 foreach (DirectoryInfo tmpInfo in infoArr)
                 {
                     foreach (FileInfo fi in tmpInfo.GetFiles())
                     {
-                        if (Array.IndexOf(filetype, fi.Extension) != -1)
+                        if (Array.IndexOf(filetype, fi.Extension.ToLower()) != -1)
                         {
                             str += path + "/" + tmpInfo.Name + "/" + fi.Name + "ue_separate_ue";
                         }

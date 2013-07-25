@@ -22,17 +22,6 @@ namespace Web.Controllers
             return View(list);
         }
 
-        public ActionResult Delete(int id)
-        {
-            var libraryModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
-            var result = libraryModel.Delete(id);
-            if (result.HasError)
-            {
-                return Alert(new Dialog(result.Error));
-            }
-            return JavaScript("window.location.href='" + Url.Action("Index", "LibraryImageText", new { HostName = LoginAccount.HostName }) + "'");
-        }
-
         public ActionResult Add(bool isSingle)
         {
             return View();
@@ -70,6 +59,18 @@ namespace Web.Controllers
                 throw new ApplicationException(result.Error);
             }
             return RedirectToAction("Index", "LibraryImageText", new { HostName = LoginAccount.HostName });
+        }
+
+
+        public ActionResult Delete(int id)
+        {
+            var libraryModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
+            var result = libraryModel.Delete(id, LoginAccount.CurrentAccountMainID);
+            if (result.HasError)
+            {
+                return Alert(new Dialog(result.Error));
+            }
+            return JavaScript("window.location.href='" + Url.Action("Index", "LibraryImageText", new { HostName = LoginAccount.HostName }) + "'");
         }
     }
 }

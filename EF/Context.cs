@@ -31,6 +31,7 @@ namespace EF
         public DbSet<SystemUser> SystemUser { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Account_AccountMain> Account_AccountMain { get; set; }
+        public DbSet<ClientInfo> ClientInfo { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

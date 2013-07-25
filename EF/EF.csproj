@@ -36,6 +36,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
+    <Compile Include="Context.Views.cs" />
     <Compile Include="Mapping\LibraryImageTextMap.cs" />
     <Compile Include="Mapping\MessageMap.cs" />
     <Compile Include="Mapping\SystemUserMap.cs" />
@@ -53,9 +55,9 @@
     <Compile Include="Mapping\AccountMap.cs" />
     <Compile Include="Mapping\UserMap.cs" />
     <Compile Include="Mapping\UserLoginInfoMap.cs" />
-    <Compile Include="Migrations\201307250116249_Initial.cs" />
-    <Compile Include="Migrations\201307250116249_Initial.Designer.cs">
-      <DependentUpon>201307250116249_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201307251005560_Initial.cs" />
+    <Compile Include="Migrations\201307251005560_Initial.Designer.cs">
+      <DependentUpon>201307251005560_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,8 +77,8 @@
     <Content Include="InitialProvince.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201307250116249_Initial.resx">
-      <DependentUpon>201307250116249_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201307251005560_Initial.resx">
+      <DependentUpon>201307251005560_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

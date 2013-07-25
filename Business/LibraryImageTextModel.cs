@@ -26,7 +26,7 @@ namespace Business
                 //保存封面图片
                 var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                 var imageName = string.Format("{0}_{1}", token, coverImagePathFile.FileName);
-                var imagePath = string.Format("{0}\\{1}", string.Format(SystemConst.Business.PathBase, libraryImageText.AccountMainID), imageName);
+                var imagePath = string.Format("{0}\\{1}", string.Format(SystemConst.Business.PathFileLibrary, libraryImageText.AccountMainID), imageName);
                 var savePath = HttpContext.Current.Server.MapPath(imagePath);
                 coverImagePathFile.SaveAs(savePath);
                 libraryImageText.ImagePath = imagePath;
@@ -55,7 +55,7 @@ namespace Business
                     //保存封面图片
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                     var imageName = string.Format("{0}_{1}", token, coverImagePathFile.FileName);
-                    var imagePath = string.Format("{0}\\{1}", string.Format(SystemConst.Business.PathBase, libraryImageText.AccountMainID), imageName);
+                    var imagePath = string.Format("{0}\\{1}", string.Format(SystemConst.Business.PathFileLibrary, libraryImageText.AccountMainID), imageName);
                     var savePath = HttpContext.Current.Server.MapPath(imagePath);
                     coverImagePathFile.SaveAs(savePath);
                     libraryImageText.ImagePath = imagePath;
@@ -66,6 +66,25 @@ namespace Business
             {
                 throw ex;
             }
+        }
+
+        public Result Delete(int id, int accountMainID)
+        {
+            var result = new Result();
+            var entity = Get(id);
+            if (entity.AccountMainID != accountMainID)
+            {
+                result.Error = SystemConst.Notice.NotAuthorized;
+                return result;
+            }
+
+            //删除原封面图片
+            var rawImagePath = HttpContext.Current.Server.MapPath(entity.ImagePath);
+            if (File.Exists(rawImagePath))
+            {
+                File.Delete(rawImagePath);
+            }
+            return base.Delete(id);
         }
     }
 }

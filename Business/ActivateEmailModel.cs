@@ -10,6 +10,5 @@ namespace Business
 {
     public class ActivateEmailModel : BaseModel<ActivateEmail>, IActivateEmailModel
     {
-        
     }
 }

@@ -56,15 +56,15 @@ namespace Business
         {
             //判断有没有权限操作当前菜单(Contorller)
             IRoleMenuModel roleMenuModel = Factory.Get<IRoleMenuModel>(SystemConst.IOC_Model.RoleMenuModel);
-            var menu = roleMenuModel.List().Where(a => a.RoleID == roleID &&
-                                                       (a.Menu.Area.Equals(area, StringComparison.CurrentCultureIgnoreCase) || (area == null && a.Menu.Area == null)) &&
+            var menu = roleMenuModel.List_Cache().Where(a => a.RoleID == roleID &&
+                                                       ((area != null && a.Menu.Area.Equals(area, StringComparison.CurrentCultureIgnoreCase)) || (area == null && a.Menu.Area == null)) &&
                                                        a.Menu.Controller.Equals(controller, StringComparison.CurrentCultureIgnoreCase)).Select(a => a.Menu).SingleOrDefault();
 
             if (menu == null) { return false; }
 
             //判断有没有权限操作当前功能(Action)
             IRoleOptionModel roleOptionModel = Factory.Get<IRoleOptionModel>(SystemConst.IOC_Model.RoleOptionModel);
-            var result = roleOptionModel.List().Any(a => a.RoleID == roleID &&
+            var result = roleOptionModel.List_Cache().Any(a => a.RoleID == roleID &&
                                                          a.MenuOption.MenuID == menu.ID &&
                                                          a.MenuOption.Action.Equals(action, StringComparison.CurrentCultureIgnoreCase));
             return result;
