@@ -10,5 +10,7 @@ namespace Interface
     public interface ILibraryImageTextModel : IBaseModel<LibraryImageText>, ILibraryModel<LibraryImageText>
     {
         Result Add(LibraryImageText libraryImageText, HttpPostedFileBase coverImagePathFile);
+
+        Result Edit(LibraryImageText libraryImageText, HttpPostedFileBase coverImagePathFile);
     }
 }

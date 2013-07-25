@@ -35,7 +35,6 @@ namespace Web.Controllers
 
         public ActionResult Add(bool isSingle)
         {
-            ViewBag.AccountMainID = LoginAccount.CurrentAccountMainID;
             return View();
         }
 
@@ -46,6 +45,26 @@ namespace Web.Controllers
             libraryImageText.AccountMainID = LoginAccount.ID;
             var libraryModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
             var result = libraryModel.Add(libraryImageText, CoverImagePathFile);
+            if (result.HasError)
+            {
+                throw new ApplicationException(result.Error);
+            }
+            return RedirectToAction("Index", "LibraryImageText", new { HostName = LoginAccount.HostName });
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var libraryModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
+            var entity = libraryModel.Get(id);
+            return View(entity);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Edit(LibraryImageText libraryImageText, HttpPostedFileBase CoverImagePathFile)
+        {
+            var libraryModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
+            var result = libraryModel.Edit(libraryImageText, CoverImagePathFile);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);
