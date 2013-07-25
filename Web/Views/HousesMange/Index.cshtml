@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+@model PagedList<Poco.AccountMainHouses>
+<div class="title">
+    楼盘管理管理</div>
+<div class="body">
+    <div class="option">@Html.ActionLink("添加", "Add", "HousesMange", new { HostName = ViewBag.HostName }, null, true)</div>
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th style="width: 300px;">
+                名称
+            </th>
+            <th>
+                单元管理
+            </th>
+           
+            <th>
+                户型管理
+            </th>
+            <th style="width: 200px;">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.HName, "Select", "HousesMange", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
+                </td>
+                <td>
+                    @Html.ActionLink("查看", "Index", "HouseInfo", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
+                </td>
+               
+                <td>
+                    @Html.ActionLink("查看", "Index", "HouseType", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
+                </td>
+                <td class="operation">
+
+                    @Html.ActionLink("修改", "Edit", "HousesMange", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:15px" }, true)
+                   
+                    @Ajax.ActionLink("删除", "Delete", "HousesMange", new { HostName = ViewBag.HostName, id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "HousesMange", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
+                    
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>

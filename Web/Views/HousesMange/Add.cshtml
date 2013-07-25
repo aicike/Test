@@ -1,0 +1,199 @@
+﻿@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@section head{
+<script type="text/javascript">
+    $(function () {
+        $("#HOpeningDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            onSelect: function (selectedDate) {
+                $("#HCheckInDate").datepicker("option", "minDate", selectedDate);
+            }
+        });
+
+        $("#HCheckInDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            onSelect: function (selectedDate) {
+                $("#HOpeningDate").datepicker("option", "maxDate", selectedDate);
+                $("#HCompletedDate").datepicker("option", "maxDate", selectedDate);
+            }
+        });
+
+        $("#HCompletedDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+//            onSelect: function (selectedDate) {
+//                $("#HCheckInDate").datepicker("option", "maxDate", selectedDate);
+//            }
+        });
+
+
+    });
+</script>
+
+
+}
+
+@model Poco.AccountMainHouses
+<div class="title">
+    添加楼盘
+</div>
+<div class="body">
+ @using (Ajax.BeginForm("Add", "HousesMange", new {HostName = ViewBag.HostName  }, new AjaxOptions() { UpdateTargetId = "alert" }))
+ {
+    <fieldset style="border: 1px solid #d3d3d3;">
+            <legend>基本信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        楼盘名称
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.HName)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HName)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        开盘时间
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.HOpeningDate, new { @readonly = "readonly" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HOpeningDate)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        入住时间
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.HCheckInDate, new { @readonly = "readonly" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HCheckInDate)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        竣工时间
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.HCompletedDate, new { @readonly = "readonly" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HCompletedDate)
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="tdTitle">
+                        产权年限
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.PropertyRight)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.PropertyRight)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        楼盘地址
+                    </td>
+                    <td class="tdField">@Html.TextAreaFor(a => a.HAddress)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HAddress)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        楼盘介绍
+                    </td>
+                    <td class="tdField">@Html.TextAreaFor(a => a.HIntroduce)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HIntroduce)
+                    </td>
+                </tr>
+                
+            </table>
+    </fieldset>
+     
+     <fieldset style="border: 1px solid #d3d3d3; margin-top: 15px;">
+            <legend>业务信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        单元数
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.HHouseCount)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HHouseCount)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        总户数
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.HHouseholdsCount)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HHouseholdsCount)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        车位数
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.HParkingCount)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HParkingCount)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        占用面积
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.HOccupyArea)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HOccupyArea)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        建筑面积
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.HBuildingArea)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HBuildingArea)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        绿化面积
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.HGreeningArea)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HGreeningArea)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        开发商
+                    </td>
+                    <td class="tdField">@Html.TextAreaFor(a => a.HBuildCompany)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HBuildCompany)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        投资商
+                    </td>
+                    <td class="tdField">@Html.TextAreaFor(a => a.HInvestor)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HInvestor)
+                    </td>
+                </tr>
+            </table>
+     </fieldset>
+      <div class="action">
+            <input type="submit" id="btnSubmit" value="保存"  class="button" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+       </div>
+ }
+</div>

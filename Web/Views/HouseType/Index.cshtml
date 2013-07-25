@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+
+@model PagedList<Poco.AccountMainHouseType>
+<div class="title">
+   @ViewBag.HostTitle->户型管理</div>
+
+    <div class="body">
+    <div class="option">@Html.ActionLink("添加", "Add", "HouseType", new { HostName = ViewBag.HostName, id = ViewBag.HID }, null, true)</div>
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th style="width: 110px;">
+                户型图
+            </th>
+            <th style="width: 230px;">
+                户型名称
+            </th>
+            <th>
+                户型说明
+            </th>
+
+            <th style="width: 100px;">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td >
+                    <img id="imgHousType" style="max-width: 100px; max-height: 80px; " src="@Url.Content(item.HouseTypeImagePath)" /> 
+                </td>
+                <td>
+                    @item.HName
+                </td>
+                <td align="left">
+                   @item.HouseTypeDescription
+                </td>
+                <td class="operation">
+
+                    @Html.ActionLink("修改", "Edit", "HouseType", new { HostName = ViewBag.HostName, id = item.ID, hid = item.AccountMainHousesID }, new { style = "padding-right:15px" }, true)
+                   
+                    @Ajax.ActionLink("删除", "Delete", "HouseType", new { HostName = ViewBag.HostName, id = item.ID, hid = item.AccountMainHousesID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "HouseType", new { HostName = ViewBag.HostName, id = item.ID, hid = item.AccountMainHousesID }) + "',null)" }, true)
+                    
+                </td>
+            </tr>
+        }
+    </table>
+    <input type="button" value="返回"  class="button" onclick="location.href='@Url.Action("Index", "HousesMange", new { HostName = ViewBag.HostName })'" />
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>

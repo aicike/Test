@@ -80,12 +80,11 @@ namespace Poco
             public const string ClientInfoModel = "ClientInfoModel";
             public const string Account_UserModel = "Account_UserModel";
             public const string UserLoginInfoModel = "UserLoginInfoModel";
+            public const string AccountMainHousesModel = "AccountMainHousesModel";
+            public const string AccountMainHouseInfoModel = "AccountMainHouseInfoModel";
+            public const string AccountMainHouseTypeModel = "AccountMainHouseTypeModel";
+            public const string AccountMainHouseInfoDetailModel = "AccountMainHouseInfoDetailModel";
             
-            
-
-
-
-
         }
     }
 }

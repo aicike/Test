@@ -13,6 +13,10 @@ namespace Poco
 
         public int SystemStatus { get; set; }
 
+        [Display(Name = "户型名称")]
+        [Required(ErrorMessage = "请输入户型名称")]
+        public string HName { get; set; }
+
         [Display(Name = "户型图")]
         [Required(ErrorMessage = "请上传户型图")]
         [StringLength(500, ErrorMessage = "长度小于500")]
@@ -23,9 +27,9 @@ namespace Poco
         [StringLength(200, ErrorMessage = "长度小于200")]
         public string HouseTypeDescription { get; set; }
 
-        [Display(Name = "所属售楼部")]
-        public int AccountMainID { get; set; }
-        public virtual AccountMain AccountMain { get; set; }
+        [Display(Name = "所属楼盘")]
+        public int AccountMainHousesID { get; set; }
+        public virtual AccountMainHouses AccountMainHouses { get; set; }
 
         public virtual ICollection<AccountMainHouseInfoDetail> AccountMainHouseInfoDetails { get; set; }
     }

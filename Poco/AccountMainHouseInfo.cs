@@ -16,8 +16,14 @@ namespace Poco
 
         public int SystemStatus { get; set; }
 
-        public int AccountMainID { get; set; }
-        public virtual AccountMain AccountMain { get; set; }
+        public int AccountMainHousessID { get; set; }
+        public virtual AccountMainHouses AccountMainHousess { get; set; }
+
+        [Display(Name = "栋数")]
+        public string Building { get; set; }
+
+        [Display(Name = "单元")]
+        public string Cell { get; set; }
 
         [Display(Name = "层数")]
         public int NumberOfLayers { get; set; }
@@ -25,8 +31,8 @@ namespace Poco
         [Display(Name = "电梯数")]
         public int NumberOfTheElevator { get; set; }
 
-        [Display(Name = "每层户数")]
-        public int NumberOfFamily { get; set; }
+        [Display(Name = "户数")]
+        public string NumberOfFamily { get; set; }
 
         public virtual ICollection<AccountMainHouseInfoDetail> AccountMainHouseInfoDetails { get; set; }
     }
