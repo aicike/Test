@@ -608,13 +608,61 @@ namespace EF.Migrations
                     {
                         ID = c.Int(nullable: false, identity: true),
                         SystemStatus = c.Int(nullable: false),
+                        HName = c.String(nullable: false),
                         HouseTypeImagePath = c.String(nullable: false, maxLength: 500),
                         HouseTypeDescription = c.String(nullable: false, maxLength: 200),
+                        AccountMainHousesID = c.Int(nullable: false),
+                        AccountMain_ID = c.Int(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AccountMainHouses", t => t.AccountMainHousesID)
+                .ForeignKey("dbo.AccountMain", t => t.AccountMain_ID)
+                .Index(t => t.AccountMainHousesID)
+                .Index(t => t.AccountMain_ID);
+            
+            CreateTable(
+                "dbo.AccountMainHouses",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
                         AccountMainID = c.Int(nullable: false),
+                        HName = c.String(nullable: false),
+                        HIntroduce = c.String(maxLength: 2000),
+                        HAddress = c.String(nullable: false, maxLength: 200),
+                        HHouseCount = c.Int(nullable: false),
+                        HHouseholdsCount = c.Int(),
+                        HParkingCount = c.Int(nullable: false),
+                        HOpeningDate = c.DateTime(nullable: false),
+                        HCheckInDate = c.DateTime(nullable: false),
+                        HCompletedDate = c.DateTime(nullable: false),
+                        HOccupyArea = c.Double(),
+                        HBuildingArea = c.Double(),
+                        HGreeningArea = c.Double(),
+                        PropertyRight = c.Int(nullable: false),
+                        HBuildCompany = c.String(nullable: false, maxLength: 200),
+                        HInvestor = c.String(nullable: false, maxLength: 200),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
+            
+            CreateTable(
+                "dbo.AccountMainHouseInfo",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        AccountMainHousessID = c.Int(nullable: false),
+                        Building = c.String(),
+                        Cell = c.String(),
+                        NumberOfLayers = c.Int(nullable: false),
+                        NumberOfTheElevator = c.Int(nullable: false),
+                        NumberOfFamily = c.String(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AccountMainHouses", t => t.AccountMainHousessID)
+                .Index(t => t.AccountMainHousessID);
             
             CreateTable(
                 "dbo.AccountMainHouseInfoDetail",
@@ -624,34 +672,22 @@ namespace EF.Migrations
                         SystemStatus = c.Int(nullable: false),
                         AccountMainHouseInfoID = c.Int(nullable: false),
                         Layer = c.Int(nullable: false),
+                        RoomNumber = c.String(nullable: false),
                         AccountMainHouseTypeID = c.Int(nullable: false),
                         BuildingArea = c.Double(nullable: false),
                         RealityArea = c.Double(nullable: false),
                         GongTan = c.Double(nullable: false),
-                        isSelled = c.Boolean(nullable: false),
+                        EnumSoldStateID = c.Int(nullable: false),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
                         TotalPrice = c.Decimal(nullable: false, precision: 18, scale: 2),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMainHouseInfo", t => t.AccountMainHouseInfoID)
                 .ForeignKey("dbo.AccountMainHouseType", t => t.AccountMainHouseTypeID)
+                .ForeignKey("dbo.LookupOption", t => t.EnumSoldStateID)
                 .Index(t => t.AccountMainHouseInfoID)
-                .Index(t => t.AccountMainHouseTypeID);
-            
-            CreateTable(
-                "dbo.AccountMainHouseInfo",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        SystemStatus = c.Int(nullable: false),
-                        AccountMainID = c.Int(nullable: false),
-                        NumberOfLayers = c.Int(nullable: false),
-                        NumberOfTheElevator = c.Int(nullable: false),
-                        NumberOfFamily = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
-                .Index(t => t.AccountMainID);
+                .Index(t => t.AccountMainHouseTypeID)
+                .Index(t => t.EnumSoldStateID);
             
             CreateTable(
                 "dbo.ClientInfo",
@@ -688,6 +724,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
 
+
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };
             foreach (var file in ddlSqlFiles)
@@ -707,10 +744,13 @@ namespace EF.Migrations
             DropIndex("dbo.ActivateEmail", new[] { "AccountID" });
             DropIndex("dbo.ClientInfo", new[] { "EnumClientUserTypeID" });
             DropIndex("dbo.ClientInfo", new[] { "EnumClientSystemTypeID" });
-            DropIndex("dbo.AccountMainHouseInfo", new[] { "AccountMainID" });
+            DropIndex("dbo.AccountMainHouseInfoDetail", new[] { "EnumSoldStateID" });
             DropIndex("dbo.AccountMainHouseInfoDetail", new[] { "AccountMainHouseTypeID" });
             DropIndex("dbo.AccountMainHouseInfoDetail", new[] { "AccountMainHouseInfoID" });
-            DropIndex("dbo.AccountMainHouseType", new[] { "AccountMainID" });
+            DropIndex("dbo.AccountMainHouseInfo", new[] { "AccountMainHousessID" });
+            DropIndex("dbo.AccountMainHouses", new[] { "AccountMainID" });
+            DropIndex("dbo.AccountMainHouseType", new[] { "AccountMain_ID" });
+            DropIndex("dbo.AccountMainHouseType", new[] { "AccountMainHousesID" });
             DropIndex("dbo.Account_AccountMain", new[] { "AccountMainID" });
             DropIndex("dbo.Account_AccountMain", new[] { "AccountID" });
             DropIndex("dbo.Message", new[] { "ToUserID" });
@@ -771,10 +811,13 @@ namespace EF.Migrations
             DropForeignKey("dbo.ActivateEmail", "AccountID", "dbo.Account");
             DropForeignKey("dbo.ClientInfo", "EnumClientUserTypeID", "dbo.LookupOption");
             DropForeignKey("dbo.ClientInfo", "EnumClientSystemTypeID", "dbo.LookupOption");
-            DropForeignKey("dbo.AccountMainHouseInfo", "AccountMainID", "dbo.AccountMain");
+            DropForeignKey("dbo.AccountMainHouseInfoDetail", "EnumSoldStateID", "dbo.LookupOption");
             DropForeignKey("dbo.AccountMainHouseInfoDetail", "AccountMainHouseTypeID", "dbo.AccountMainHouseType");
             DropForeignKey("dbo.AccountMainHouseInfoDetail", "AccountMainHouseInfoID", "dbo.AccountMainHouseInfo");
-            DropForeignKey("dbo.AccountMainHouseType", "AccountMainID", "dbo.AccountMain");
+            DropForeignKey("dbo.AccountMainHouseInfo", "AccountMainHousessID", "dbo.AccountMainHouses");
+            DropForeignKey("dbo.AccountMainHouses", "AccountMainID", "dbo.AccountMain");
+            DropForeignKey("dbo.AccountMainHouseType", "AccountMain_ID", "dbo.AccountMain");
+            DropForeignKey("dbo.AccountMainHouseType", "AccountMainHousesID", "dbo.AccountMainHouses");
             DropForeignKey("dbo.Account_AccountMain", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.Account_AccountMain", "AccountID", "dbo.Account");
             DropForeignKey("dbo.Message", "ToUserID", "dbo.User");
@@ -834,8 +877,9 @@ namespace EF.Migrations
             DropForeignKey("dbo.Account", "RoleID", "dbo.Role");
             DropTable("dbo.ActivateEmail");
             DropTable("dbo.ClientInfo");
-            DropTable("dbo.AccountMainHouseInfo");
             DropTable("dbo.AccountMainHouseInfoDetail");
+            DropTable("dbo.AccountMainHouseInfo");
+            DropTable("dbo.AccountMainHouses");
             DropTable("dbo.AccountMainHouseType");
             DropTable("dbo.Account_AccountMain");
             DropTable("dbo.Message");

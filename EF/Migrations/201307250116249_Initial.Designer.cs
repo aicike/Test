@@ -5,13 +5,13 @@ namespace EF.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    public sealed partial class uphouse : IMigrationMetadata
+    public sealed partial class Initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(uphouse));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201307241127387_uphouse"; }
+            get { return "201307250116249_Initial"; }
         }
         
         string IMigrationMetadata.Source
