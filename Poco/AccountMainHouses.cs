@@ -17,21 +17,21 @@ namespace Poco
         public virtual AccountMain AccountMain { get; set; }
 
 
-        [Display(Name = "楼盘名称")]
-        [Required(ErrorMessage = "请输入楼盘名称")]
+        [Display(Name = "项目名称")]
+        [Required(ErrorMessage = "请输入项目名称")]
         [RemotePlus("CheckHousesRepeat", "Ajax", "", "Default", ErrorMessage = "名称已存在")]
         public string HName { get; set; }
 
-        [Display(Name = "楼盘介绍")]
+        [Display(Name = "项目介绍")]
         [StringLength(2000, ErrorMessage = "长度小于2000")]
         public string HIntroduce { get; set; }
 
-        [Display(Name = "楼盘地址")]
+        [Display(Name = "项目地址")]
         [Required(ErrorMessage = "请输入楼盘地址")]
         [StringLength(200, ErrorMessage = "长度小于200")]
         public string HAddress { get; set; }
 
-        [Display(Name = "单元数")]
+        [Display(Name = "栋数")]
         public int HHouseCount { get; set; }
 
         [Display(Name = "总户数")]
@@ -76,6 +76,42 @@ namespace Poco
         [StringLength(200, ErrorMessage = "长度小于200")]
         public string HInvestor { get; set; }
 
+        [Display(Name = "建筑类别")]
+        [Required(ErrorMessage = "请选择建筑类别")]
+        public string BuildingType { get; set; }
+
+        [Display(Name = "装修情况")]
+        [Required(ErrorMessage = "请选择装修情况")]
+        public string Decoration { get; set; }
+
+        [Display(Name = "交通状况")]
+        [Required(ErrorMessage = "请输入交通状况")]
+        [StringLength(1000, ErrorMessage = "长度小于1000")]
+        public string Traffic { get; set; }
+
+        [Display(Name = "物业公司")]
+        [Required(ErrorMessage = "请输入物业公司")]
+        [StringLength(200, ErrorMessage = "长度小于200")]
+        public string ProPertyCom { get; set; }
+
+
+        [Display(Name = "物业费")]
+        [Required(ErrorMessage = "请输入物业费")]
+        [StringLength(200, ErrorMessage = "长度小于200")]
+        public string PropetyFee { get; set; }
+
+
+        [Display(Name = "预售证")]
+        [Required(ErrorMessage = "请输入预售证")]
+        [StringLength(2000, ErrorMessage = "长度小于2000")]
+        public string PreSalePermit { get; set; }
+
+        /// <summary>
+        /// 销售状态 0 在售 1已售完
+        /// </summary>
+        [Display(Name = "销售状态")]
+        [Required(ErrorMessage = "请选择销售状态")]
+        public bool SalesState { get; set; }
 
         public virtual ICollection<AccountMainHouseInfo> AccountMainHouseInfos { get; set; }
 

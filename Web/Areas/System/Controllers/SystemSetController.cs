@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Web.Areas.System.Controllers
 {
-    public class SetController : Controller
+    public class SystemSetController : Controller
     {
         public ActionResult Index()
         {

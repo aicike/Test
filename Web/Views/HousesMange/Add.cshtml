@@ -39,7 +39,7 @@
 
 @model Poco.AccountMainHouses
 <div class="title">
-    添加楼盘
+    添加项目
 </div>
 <div class="body">
  @using (Ajax.BeginForm("Add", "HousesMange", new {HostName = ViewBag.HostName  }, new AjaxOptions() { UpdateTargetId = "alert" }))
@@ -49,7 +49,7 @@
             <table class="tableForm">
                 <tr>
                     <td class="tdTitle">
-                        楼盘名称
+                        项目名称
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.HName)
                     </td>
@@ -120,7 +120,7 @@
             <table class="tableForm">
                 <tr>
                     <td class="tdTitle">
-                        单元数
+                        栋数
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.HHouseCount)
                     </td>
@@ -193,7 +193,7 @@
             </table>
      </fieldset>
       <div class="action">
-            <input type="submit" id="btnSubmit" value="保存"  class="button" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+            <input type="submit" id="btnSubmit" value="保存"  class="button" style=" margin-right:20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
        </div>
  }
 </div>

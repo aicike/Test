@@ -5,20 +5,20 @@
 
 @model PagedList<Poco.AccountMainHouses>
 <div class="title">
-    楼盘管理管理</div>
+    项目管理</div>
 <div class="body">
     <div class="option">@Html.ActionLink("添加", "Add", "HousesMange", new { HostName = ViewBag.HostName }, null, true)</div>
     <table class="tableList" cellpadding="0" cellspacing="0">
         <tr>
             <th style="width: 300px;">
-                名称
+                项目名称
             </th>
             <th>
-                单元管理
+                单元信息
             </th>
            
             <th>
-                户型管理
+                户型信息
             </th>
             <th style="width: 200px;">
                 操作
