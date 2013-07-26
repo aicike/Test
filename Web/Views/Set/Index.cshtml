@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<div class="title">
+    设置</div>
+<div class="bodyLeft">
+    <ul class="ulList">
+        <li><a href="@Url.Action("Index", "InstallAppReply", new{ HostName=ViewBag.HostName })">安装App自动回复</a> </li>
+    </ul>
+</div>
+<div class="body">
+
+</div>
