@@ -367,6 +367,17 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="test.html" />
+    <Content Include="video-js\demo.html" />
+    <Content Include="video-js\font\vjs.svg" />
+    <Content Include="video-js\video-js.css" />
+    <Content Include="video-js\video-js.min.css" />
+    <Content Include="video-js\video-js.png" />
+    <Content Include="video-js\video-js.swf" />
+    <Content Include="video-js\video.dev.js" />
+    <Content Include="video-js\video.js" />
+    <Content Include="video-js\video2.flv" />
+    <Content Include="video-js\video3.wmv" />
+    <Content Include="video-js\video4.mp4" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -623,6 +634,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\HouseInfoDetail\Select.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="video-js\demo.captions.vtt" />
+    <None Include="video-js\demo.html.bak" />
+    <None Include="video-js\font\vjs.eot" />
+    <None Include="video-js\font\vjs.ttf" />
+    <None Include="video-js\font\vjs.woff" />
+    <None Include="video-js\video1.rmvb" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
