@@ -147,6 +147,7 @@
     <Compile Include="Controllers\ExitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstallAppReplyController.cs" />
+    <Compile Include="Controllers\KeywordMessageController.cs" />
     <Compile Include="Controllers\LibraryImageController.cs" />
     <Compile Include="Controllers\HouseInfoController.cs" />
     <Compile Include="Controllers\HouseInfoDetailController.cs" />
@@ -642,6 +643,7 @@
     <None Include="video-js\font\vjs.woff" />
     <None Include="video-js\video1.rmvb" />
     <Content Include="Views\Set\Index.cshtml" />
+    <Content Include="Views\KeywordMessage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

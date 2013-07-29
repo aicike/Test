@@ -87,7 +87,10 @@ namespace Poco
             public const string AccountMainHouseInfoModel = "AccountMainHouseInfoModel";
             public const string AccountMainHouseTypeModel = "AccountMainHouseTypeModel";
             public const string AccountMainHouseInfoDetailModel = "AccountMainHouseInfoDetailModel";
-            
+            public const string KeywordModel = "KeywordModel";
+            public const string TextReplyModel = "TextReplyModel";
+
+
         }
     }
 }

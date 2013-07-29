@@ -18,13 +18,26 @@ namespace Poco
         [StringLength(30, ErrorMessage = "长度小于30")]
         public string RuleName { get; set; }
 
+        [Display(Name = "规则编号")]
+        [Required(ErrorMessage = "请输入规则编号")]
+        [StringLength(50, ErrorMessage = "长度小于50")]
+        public string RuleNo { get; set; }
+
         public int AccountMainID { get; set; }
 
         public virtual AccountMain AccountMain { get; set; }
 
+        public int? ParentAutoMessage_KeywordID { get; set; }
+
+        public virtual AutoMessage_Keyword ParentAutoMessage_Keyword { get; set; }
+
         public virtual ICollection<Keyword> Keywords { get; set; }
 
         public virtual ICollection<KeywordAutoMessage> KeywordAutoMessages { get; set; }
+
+        public virtual ICollection<AutoMessage_Keyword> AutoMessage_KeywordsKeyword { get; set; }
+
+        public virtual ICollection<TextReply> TextReplys { get; set; }
     }
 
     /// <summary>
@@ -59,6 +72,10 @@ namespace Poco
         [Required(ErrorMessage = "请输入消息")]
         [StringLength(4000, ErrorMessage = "长度小于4000")]
         public string Content { get; set; }
+
+        public int AutoMessage_KeywordID { get; set; }
+
+        public virtual AutoMessage_Keyword AutoMessage_Keyword { get; set; }
     }
 
     /// <summary>

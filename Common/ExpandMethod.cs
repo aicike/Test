@@ -45,6 +45,18 @@ namespace System
             return array;
         }
 
+        public static string ConvertToString<T>(this IList<T> list, string split)
+        {
+            StringBuilder str = new StringBuilder();
+            foreach (var item in list)
+            {
+                str.AppendFormat("{0}{1}", item, split);
+            }
+            string value = str.ToString();
+            value = value.Remove(value.Length - split.Length);
+            return value;
+        }
+
         /// <summary>
         /// 截取字符串,只显示设置长度的文字，超出用token字符串显示
         /// </summary>
@@ -54,11 +66,11 @@ namespace System
         /// <returns></returns>
         public static string Show(this string value, int length, string token = "")
         {
-            if (value.Length<= length)
+            if (value.Length <= length)
             {
                 return value;
             }
-            value = value.Substring(0,length) + token;
+            value = value.Substring(0, length) + token;
             return value;
         }
 

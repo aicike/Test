@@ -179,6 +179,9 @@ INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (13, 0, N'房屋管理', NULL, N'HouseInfoDetail', N'Index', 2, 10)
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (14, 0, N'户型管理', NULL, N'HouseType', N'Index', 3, 10)
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (15, 0, N'安装APP自动回复', NULL, N'InstallAppReply', N'Index', 1, 11)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (16, 0, N'关键词自动回复', NULL, N'KeywordMessage', N'Index', 2, 11)
+
+
 SET IDENTITY_INSERT [dbo].[Menu] OFF
 
 -----------------------------[MenuOption]--------------------------
@@ -245,6 +248,8 @@ INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  (
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,15,'安装APP自动回复','Index',1)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,15,'保存安装APP自动回复','AddOrUpd',2)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,15,'删除安装APP自动回复','Delete',3)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,16,'关键词自动回复','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,16,'保存关键词自动回复','Add',2)
 -----------------------------RoleMenu--------------------------
 SET IDENTITY_INSERT [dbo].[RoleMenu] ON
 INSERT [dbo].[RoleMenu] ([ID], [SystemStatus], [RoleID], [MenuID]) VALUES (1, 0, 1, 1)
@@ -262,6 +267,7 @@ INSERT [dbo].[RoleMenu] ([ID], [SystemStatus], [RoleID], [MenuID]) VALUES (12, 0
 INSERT [dbo].[RoleMenu] ([ID], [SystemStatus], [RoleID], [MenuID]) VALUES (13, 0, 1, 13)
 INSERT [dbo].[RoleMenu] ([ID], [SystemStatus], [RoleID], [MenuID]) VALUES (14, 0, 1, 14)
 INSERT [dbo].[RoleMenu] ([ID], [SystemStatus], [RoleID], [MenuID]) VALUES (15, 0, 1, 15)
+INSERT [dbo].[RoleMenu] ([ID], [SystemStatus], [RoleID], [MenuID]) VALUES (16, 0, 1, 16)
 SET IDENTITY_INSERT [dbo].[RoleMenu] OFF
 
 -----------------------------RoleOption--------------------------
@@ -322,6 +328,8 @@ INSERT [dbo].[RoleOption] ([ID], [SystemStatus], [RoleID], [MenuOptionID]) VALUE
 INSERT [dbo].[RoleOption] ([ID], [SystemStatus], [RoleID], [MenuOptionID]) VALUES (54, 0, 1, 54)
 INSERT [dbo].[RoleOption] ([ID], [SystemStatus], [RoleID], [MenuOptionID]) VALUES (55, 0, 1, 55)
 INSERT [dbo].[RoleOption] ([ID], [SystemStatus], [RoleID], [MenuOptionID]) VALUES (56, 0, 1, 56)
+INSERT [dbo].[RoleOption] ([ID], [SystemStatus], [RoleID], [MenuOptionID]) VALUES (57, 0, 1, 57)
+INSERT [dbo].[RoleOption] ([ID], [SystemStatus], [RoleID], [MenuOptionID]) VALUES (58, 0, 1, 58)
 SET IDENTITY_INSERT [dbo].[RoleOption] OFF
 
 ------------------------------[UserLoginInfo]---------------------------------

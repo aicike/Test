@@ -32,6 +32,10 @@ namespace EF
         public DbSet<User> User { get; set; }
         public DbSet<Account_AccountMain> Account_AccountMain { get; set; }
         public DbSet<ClientInfo> ClientInfo { get; set; }
+        public DbSet<Keyword> Keyword { get; set; }
+        public DbSet<TextReply> TextReply { get; set; }
+
+        
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -47,6 +51,7 @@ namespace EF
             modelBuilder.Configurations.Add(new AccountMap());
             modelBuilder.Configurations.Add(new UserMap());
             modelBuilder.Configurations.Add(new UserLoginInfoMap());
+            
             
         }
     }
