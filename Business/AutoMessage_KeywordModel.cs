@@ -12,14 +12,16 @@ namespace Business
     public class AutoMessage_KeywordModel : BaseModel<AutoMessage_Keyword>, IAutoMessage_KeywordModel
     {
         [Transaction]
-        public Result Add(string ruleName, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int accountMainID)
+        public Result Add(AutoMessage_Keyword entity, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int accountMainID)
         {
             Result result = new Result();
             //添加回复规则
             AutoMessage_Keyword msg = new AutoMessage_Keyword();
-            msg.RuleName = ruleName;
-            msg.RuleNo = "1";
+            msg.RuleName = entity.RuleName;
+            msg.RuleNo = entity.RuleNo;
+            msg.FullRuleNo = entity.FullRuleNo;
             msg.AccountMainID = accountMainID;
+            msg.ParentAutoMessage_KeywordID = entity.ParentAutoMessage_KeywordID;
             result = base.Add(msg);
             if (result.HasError)
             {
@@ -61,7 +63,66 @@ namespace Business
 
         public IQueryable<AutoMessage_Keyword> List(int accoutMainID)
         {
-            return List().Where(a => a.AccountMainID == accoutMainID);
+            return List().Where(a => a.AccountMainID == accoutMainID && a.ParentAutoMessage_KeywordID.HasValue == false);
+        }
+
+        public int GetRuleNo(int accountMainID, int? parentAutoMessage_KeywordID)
+        {
+            int ruleNo = 0;
+            if (parentAutoMessage_KeywordID.HasValue == false)
+            {
+                ruleNo = List().Where(a => a.AccountMainID == accountMainID && a.ParentAutoMessage_KeywordID.HasValue == false).OrderByDescending(a => a.RuleNo).Select(a => a.RuleNo).FirstOrDefault();
+                if (ruleNo == 0)
+                {
+                    ruleNo = 1;
+                }
+                else
+                {
+                    ruleNo += 1;
+                }
+            }
+            else
+            {
+                ruleNo = List().Where(a => a.AccountMainID == accountMainID && a.ParentAutoMessage_KeywordID.Value == parentAutoMessage_KeywordID.Value).OrderByDescending(a => a.RuleNo).Select(a => a.RuleNo).FirstOrDefault();
+                if (ruleNo == 0)
+                {
+                    ruleNo = 1;
+                }
+                else
+                {
+                    ruleNo += 1;
+                }
+            }
+            return ruleNo;
+        }
+
+
+        public string GetFullRuleNo(int accountMainID, string fullRuleNo)
+        {
+            if (string.IsNullOrEmpty(fullRuleNo))
+            {
+                throw new ApplicationException(SystemConst.Notice.NotAuthorized);
+            }
+            var lastIDStr = fullRuleNo.Split(',').LastOrDefault();
+            int lastID = 0;
+            bool isOk = int.TryParse(lastIDStr, out lastID);
+            if (isOk == false)
+            {
+                throw new ApplicationException(SystemConst.Notice.NotAuthorized);
+            }
+            int ruleNo = GetRuleNo(accountMainID, lastID);
+            return string.Format("{0}-{1}", fullRuleNo, ruleNo);
+        }
+
+
+        public AutoMessage_Keyword GetByID_AccountMainID(int id, int accountMainID)
+        {
+            var entity = List().Where(a => a.ID == id && a.AccountMainID == accountMainID).FirstOrDefault();
+            if (entity == null)
+            {
+                throw new ApplicationException(SystemConst.Notice.NotAuthorized);
+            }
+            return entity;
         }
     }
 }

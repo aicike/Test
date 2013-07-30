@@ -431,21 +431,16 @@ namespace EF.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         SystemStatus = c.Int(nullable: false),
                         RuleName = c.String(nullable: false, maxLength: 30),
-                        RuleNo = c.String(nullable: false, maxLength: 50),
+                        RuleNo = c.Int(nullable: false),
+                        FullRuleNo = c.String(nullable: false, maxLength: 50),
                         AccountMainID = c.Int(nullable: false),
                         ParentAutoMessage_KeywordID = c.Int(),
-                        AutoMessage_Keyword_ID = c.Int(),
-                        AutoMessage_Keyword_ID1 = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .ForeignKey("dbo.AutoMessage_Keyword", t => t.ParentAutoMessage_KeywordID)
-                .ForeignKey("dbo.AutoMessage_Keyword", t => t.AutoMessage_Keyword_ID)
-                .ForeignKey("dbo.AutoMessage_Keyword", t => t.AutoMessage_Keyword_ID1)
                 .Index(t => t.AccountMainID)
-                .Index(t => t.ParentAutoMessage_KeywordID)
-                .Index(t => t.AutoMessage_Keyword_ID)
-                .Index(t => t.AutoMessage_Keyword_ID1);
+                .Index(t => t.ParentAutoMessage_KeywordID);
             
             CreateTable(
                 "dbo.Keyword",
@@ -476,6 +471,19 @@ namespace EF.Migrations
                 .ForeignKey("dbo.LookupOption", t => t.EnumMessageTypeID)
                 .ForeignKey("dbo.AutoMessage_Keyword", t => t.AutoMessage_KeywordID)
                 .Index(t => t.EnumMessageTypeID)
+                .Index(t => t.AutoMessage_KeywordID);
+            
+            CreateTable(
+                "dbo.TextReply",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        Content = c.String(nullable: false, maxLength: 4000),
+                        AutoMessage_KeywordID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AutoMessage_Keyword", t => t.AutoMessage_KeywordID)
                 .Index(t => t.AutoMessage_KeywordID);
             
             CreateTable(
@@ -742,19 +750,6 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
-            
-            CreateTable(
-                "dbo.TextReply",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        SystemStatus = c.Int(nullable: false),
-                        Content = c.String(nullable: false, maxLength: 4000),
-                        AutoMessage_KeywordID = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.AutoMessage_Keyword", t => t.AutoMessage_KeywordID)
-                .Index(t => t.AutoMessage_KeywordID);
 
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };
@@ -772,7 +767,6 @@ namespace EF.Migrations
         
         public override void Down()
         {
-            DropIndex("dbo.TextReply", new[] { "AutoMessage_KeywordID" });
             DropIndex("dbo.ActivateEmail", new[] { "AccountID" });
             DropIndex("dbo.ClientInfo", new[] { "EnumClientUserTypeID" });
             DropIndex("dbo.ClientInfo", new[] { "EnumClientSystemTypeID" });
@@ -801,11 +795,10 @@ namespace EF.Migrations
             DropIndex("dbo.Account_User", new[] { "AccountID" });
             DropIndex("dbo.Group", new[] { "AccountMainID" });
             DropIndex("dbo.Group", new[] { "AccountID" });
+            DropIndex("dbo.TextReply", new[] { "AutoMessage_KeywordID" });
             DropIndex("dbo.KeywordAutoMessage", new[] { "AutoMessage_KeywordID" });
             DropIndex("dbo.KeywordAutoMessage", new[] { "EnumMessageTypeID" });
             DropIndex("dbo.Keyword", new[] { "AutoMessage_KeywordID" });
-            DropIndex("dbo.AutoMessage_Keyword", new[] { "AutoMessage_Keyword_ID1" });
-            DropIndex("dbo.AutoMessage_Keyword", new[] { "AutoMessage_Keyword_ID" });
             DropIndex("dbo.AutoMessage_Keyword", new[] { "ParentAutoMessage_KeywordID" });
             DropIndex("dbo.AutoMessage_Keyword", new[] { "AccountMainID" });
             DropIndex("dbo.AutoMessage_Reply", new[] { "AccountMainID" });
@@ -843,7 +836,6 @@ namespace EF.Migrations
             DropIndex("dbo.Role", new[] { "ParentRoleID" });
             DropIndex("dbo.Account", new[] { "AccountStatusID" });
             DropIndex("dbo.Account", new[] { "RoleID" });
-            DropForeignKey("dbo.TextReply", "AutoMessage_KeywordID", "dbo.AutoMessage_Keyword");
             DropForeignKey("dbo.ActivateEmail", "AccountID", "dbo.Account");
             DropForeignKey("dbo.ClientInfo", "EnumClientUserTypeID", "dbo.LookupOption");
             DropForeignKey("dbo.ClientInfo", "EnumClientSystemTypeID", "dbo.LookupOption");
@@ -872,11 +864,10 @@ namespace EF.Migrations
             DropForeignKey("dbo.Account_User", "AccountID", "dbo.Account");
             DropForeignKey("dbo.Group", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.Group", "AccountID", "dbo.Account");
+            DropForeignKey("dbo.TextReply", "AutoMessage_KeywordID", "dbo.AutoMessage_Keyword");
             DropForeignKey("dbo.KeywordAutoMessage", "AutoMessage_KeywordID", "dbo.AutoMessage_Keyword");
             DropForeignKey("dbo.KeywordAutoMessage", "EnumMessageTypeID", "dbo.LookupOption");
             DropForeignKey("dbo.Keyword", "AutoMessage_KeywordID", "dbo.AutoMessage_Keyword");
-            DropForeignKey("dbo.AutoMessage_Keyword", "AutoMessage_Keyword_ID1", "dbo.AutoMessage_Keyword");
-            DropForeignKey("dbo.AutoMessage_Keyword", "AutoMessage_Keyword_ID", "dbo.AutoMessage_Keyword");
             DropForeignKey("dbo.AutoMessage_Keyword", "ParentAutoMessage_KeywordID", "dbo.AutoMessage_Keyword");
             DropForeignKey("dbo.AutoMessage_Keyword", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.AutoMessage_Reply", "AccountMainID", "dbo.AccountMain");
@@ -914,7 +905,6 @@ namespace EF.Migrations
             DropForeignKey("dbo.Role", "ParentRoleID", "dbo.Role");
             DropForeignKey("dbo.Account", "AccountStatusID", "dbo.LookupOption");
             DropForeignKey("dbo.Account", "RoleID", "dbo.Role");
-            DropTable("dbo.TextReply");
             DropTable("dbo.ActivateEmail");
             DropTable("dbo.ClientInfo");
             DropTable("dbo.AccountMainHouseInfoDetail");
@@ -928,6 +918,7 @@ namespace EF.Migrations
             DropTable("dbo.User");
             DropTable("dbo.Account_User");
             DropTable("dbo.Group");
+            DropTable("dbo.TextReply");
             DropTable("dbo.KeywordAutoMessage");
             DropTable("dbo.Keyword");
             DropTable("dbo.AutoMessage_Keyword");

@@ -19,9 +19,12 @@ namespace Poco
         public string RuleName { get; set; }
 
         [Display(Name = "规则编号")]
+        public int RuleNo { get; set; }
+
+        [Display(Name = "规则编号")]
         [Required(ErrorMessage = "请输入规则编号")]
         [StringLength(50, ErrorMessage = "长度小于50")]
-        public string RuleNo { get; set; }
+        public string FullRuleNo { get; set; }
 
         public int AccountMainID { get; set; }
 
