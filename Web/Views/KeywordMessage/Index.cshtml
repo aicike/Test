@@ -2,19 +2,33 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
-@model PagedList<Poco.AutoMessage_Keyword>
+@model List<Poco.AutoMessage_Keyword>
 @section head{
+    <link href="@Url.Content("~/Scripts/treeview/jquery.treeview.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/treeview/jquery.treeview.js")"></script>
     <style>
-        .keyItem:first-child
+        .keyLeft
         {
-            margin-top: 0px !important;
+            width: 350px;
+            border: 1px solid #d3d3d3;
+            float: left;
+            min-height: 600px;
+            overflow-x: auto;
         }
-        .keyItem
+        .keyRigth
+        {
+            width: 545px;
+            border: 1px solid #d3d3d3;
+            float: left;
+            margin-left: 20px;
+            min-height: 600px;
+        }
+        #div_addKeyrule
         {
             width: 100%;
+            min-height: 430px;
             background-color: White;
-            margin-top: 10px;
-            border: 1px solid #d3d3d3;
+            display: none;
         }
         .keyTitle
         {
@@ -23,26 +37,6 @@
             line-height: 30px;
             padding: 0px 5px;
             border-bottom: 1px solid #d3d3d3;
-        }
-        .keyword
-        {
-            margin: 10px 5px 5px 5px;
-            height: 20px;
-            max-height: 60px;
-        }
-        .keyMessage
-        {
-            margin: 5px 5px 10px 5px;
-            max-height: 60px;
-            line-height: 20px;
-        }
-        #div_addKeyrule
-        {
-            width: 100%;
-            min-height: 430px;
-            background-color: White;
-            border: 1px solid #d3d3d3;
-            display: none;
         }
         .keyRight
         {
@@ -63,144 +57,128 @@
         {
             cursor: pointer;
         }
+        .keyLiTitle
+        {
+            text-overflow: ellipsis;
+            text-align: left;
+            overflow: hidden;
+            word-break: break-all;
+            -o-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+        }
     </style>
     <script type="text/javascript">
+        var addUrl = '@Url.Action("Add", "KeywordMessage")';
+        var editUrl = '@Url.Action("Edit", "KeywordMessage")';
+        var getRuleNoUrl = '@Url.Action("GetRuleNoString", "KeywordMessage")';
+        var getEntityUrl = '@Url.Action("Get", "KeywordMessage")';
+        var deleteUrl = '@Url.Action("Delete", "KeywordMessage")';
         $(function () {
-            var addUrl = '@Url.Action("Add", "KeywordMessage")';
-            var getRuleNoUrl = '@Url.Action("GetRuleNoString", "KeywordMessage")';
-            var getEntityUrl = '@Url.Action("Get", "KeywordMessage")';
-            $("#btnAddRule").click(function () {
-                if ($("#div_addKeyrule:hidden").length == 0) {
-                    $("#div_addKeyrule").slideToggle(1, function () {
-                        $("#txtRuleNo").val("");
-                        $("#hidRuleNo").val("");
-                        $("#hidParentID").val("");
-                    });
-                }
-                $("#div_addKeyrule").slideToggle(1, function () {
-                    if ($("#div_addKeyrule:hidden").length == 0) {
-                        $.ajax({
-                            type: "get",
-                            data: { fullRuleNo: null },
-                            url: getRuleNoUrl,
-                            success: function (result) {
-                                if (result != undefined && result != null && result.length > 0) {
-                                    $("#txtRuleNo").val(result);
-                                    $("#hidRuleNo").val(result);
-                                }
-                            },
-                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $("#browser").treeview({
+                toggle: function () {
+                },
+                collapsed: true,
+            });
+
+            $("#btnAddText").click(function () {
+                $("#dialogText").dialog({
+                    resizable: false,
+                    height: 219,
+                    width: 579,
+                    modal: true,
+                    draggable: false,
+                    buttons: {
+                        "确定": function () {
+                            var txtMsgText = $("#txtMsgText").val().trim();
+                            if (txtMsgText.length == 0) {
                                 JAlert({
-                                    Message: "Internal Server Error.",
+                                    Message: "内容不能为空。",
                                     DialogType: "Ok",
                                     BtnOk: "确定"
                                 });
+                            } else {
+                                $("#msgContent").append('<div class="keyMessageItem"><label class="msgText">' + txtMsgText + '</label><span style="float: right;cursor: pointer;" onclick="delText(this)">删除</span></div>');
+                                $("#txtMsgText").val("");
+                                $(this).dialog("close");
                             }
-                        });
-                    } else {
-                        $("#txtRuleNo").val("");
-                        $("#hidRuleNo").val("");
-                        $("#hidParentID").val("");
+
+                        },
+                        "取消": function () {
+                            $(this).dialog("close");
+                        }
                     }
                 });
             });
 
-            $(".btnAddSub").click(function () {
-                if ($("#div_addKeyrule:hidden").length == 0) {
-                    $("#div_addKeyrule").slideToggle(1, function () {
-                        $("#txtRuleNo").val("");
-                        $("#hidRuleNo").val("");
-                        $("#hidParentID").val("");
+            $("#btnAddRule").click(function () {
+                $("#div_addKeyrule").show();
+                $("#txtRuleName").focus();
+                clearText();
+                $.ajax({
+                    type: "get",
+                    data: { fullRuleNo: null },
+                    url: getRuleNoUrl,
+                    success: function (result) {
+                        if (result != undefined && result != null && result.length > 0) {
+                            $("#txtRuleNo").val(result);
+                            $("#hidRuleNo").val(result);
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        JAlert({
+                            Message: "Internal Server Error.",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                    }
+                });
+            });
+
+            $(".btnEdit").click(function () {
+                clearText();
+                $("#div_addKeyrule").show();
+                $("#labTitlt").text("修改规则");
+                var keyId = $(this).attr("keyID");
+                $.get(getEntityUrl, { id: keyId }, function (result) {
+                    $("#txtRuleName").val(result.RuleName);
+                    $("#txtRuleNo").val(result.FullRuleNo);
+                    $("#txtKey").val(result.Keywords);
+                    $("#hidKeyID").val(keyId);
+                    var content = "";
+                    var textReplysJSON = JSON.parse(result.TextReplys).TextReplys;
+                    $.each(textReplysJSON, function (i, n) {
+                        content += '<div class="keyMessageItem"><label class="msgText">' + n + '</label><span style="float: right;cursor: pointer;" onclick="delText(this)">删除</span></div>';
                     });
-                }
+                    $("#msgContent").append(content);
+                }, "json");
+            });
+
+            $(".btnAddSub").click(function () {
+                clearText();
+                $("#div_addKeyrule").show();
                 var fullRuleNo = $(this).attr("fullRuleNo");
                 var ruleNo = $(this).attr("ruleNo");
                 var parentID = $(this).attr("parentID");
                 $("#hidRuleNo").val(ruleNo);
                 $("#hidParentID").val(parentID);
-                $("#div_addKeyrule").slideToggle(1, function () {
-                    if ($("#div_addKeyrule:hidden").length == 0) {
-                        $.ajax({
-                            type: "get",
-                            data: { fullRuleNo: fullRuleNo },
-                            url: getRuleNoUrl,
-                            success: function (result) {
-                                if (result != undefined && result != null && result.length > 0) {
-                                    $("#txtRuleNo").val(result);
-                                }
-                            },
-                            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                                JAlert({
-                                    Message: "Internal Server Error.",
-                                    DialogType: "Ok",
-                                    BtnOk: "确定"
-                                });
-                            }
+                $.ajax({
+                    type: "get",
+                    data: { fullRuleNo: fullRuleNo },
+                    url: getRuleNoUrl,
+                    success: function (result) {
+                        if (result != undefined && result != null && result.length > 0) {
+                            $("#txtRuleNo").val(result);
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        JAlert({
+                            Message: "Internal Server Error.",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
                         });
-                    } else {
-                        $("#txtRuleNo").val("");
-                        $("#hidRuleNo").val("");
-                        $("#hidParentID").val("");
                     }
                 });
             });
-
-            $(".btnEditSub").click(function () {
-                if ($("#div_addKeyrule:hidden").length == 0) {
-                    $("#div_addKeyrule").slideToggle(1, function () {
-                        $("#txtRuleNo").val("");
-                        $("#hidRuleNo").val("");
-                        $("#hidParentID").val("");
-                    });
-                }
-                var keyId = $(this).attr("keyID");
-                $.get(getEntityUrl, { id: keyId }, function (result) {
-                    console.log(result);
-                    $("#div_addKeyrule").slideToggle(1, function () {
-                        if ($("#div_addKeyrule:hidden").length == 0) {
-                            $("#txtRuleName").val(result.RuleName);
-                            $("#txtRuleNo").val(result.FullRuleNo);
-                            $("#txtKey").val(result.Keywords);
-
-                            var content="";
-                            $.each(result.TextReplys, function (i, n) {
-                                content = '<div class="keyMessageItem"><label class="msgText">' + n + '</label><span style="float: right;cursor: pointer;" onclick="delText(this)">删除</span></div>';
-                            });
-                            $("#msgContent").append(content);
-                            //                            $("txtRuleNo").val(result.FullRuleNo);
-                            //                            $("txtRuleNo").val(result.FullRuleNo);
-                            //                            $("txtRuleNo").val(result.FullRuleNo);
-
-
-
-
-                        } else {
-                            //                            $("#txtRuleNo").val("");
-                            //                            $("#hidRuleNo").val("");
-                            //                            $("#hidParentID").val("");
-                        }
-                    });
-                }, "json")
-
-
-
-
-
-
-
-
-                //                var fullRuleNo = $(this).attr("fullRuleNo");
-                //                var ruleNo = $(this).attr("ruleNo");
-                //                var parentID = $(this).attr("parentID");
-                //                $("#hidRuleNo").val(ruleNo);
-                //                $("#hidParentID").val(parentID);
-
-            });
-
-            $("#btnCancel").click(function () {
-                $("#div_addKeyrule").slideToggle(1, function () { });
-            });
-
 
             $("#btnSaveRule").click(function () {
                 var ruleName = $("#txtRuleName").val().trim();
@@ -242,161 +220,126 @@
                 $.each($(".msgText"), function (i, n) {
                     msgTexts += $(n).text() + "|";
                 });
-
-                $.ajax({
-                    type: "post",
-                    data: { ruleName: ruleName, ruleNo: hidRuleNo, fullRuleNo: fullRuleNo, parentID: parentID, keys: key, messageTexts: msgTexts, messageFileIDs: null, messageImageTextIDs: null },
-                    url: addUrl,
-                    success: function (result) {
-                        if (result != undefined && result != null && result.length > 0) {
-                            eval(result);
+                var keyId = $("#hidKeyID").val().trim();
+                if (keyId.length > 0) {
+                    $.ajax({
+                        type: "post",
+                        data: { keyID: keyId, ruleName: ruleName, keys: key, messageTexts: msgTexts, messageFileIDs: null, messageImageTextIDs: null },
+                        url: editUrl,
+                        success: function (result) {
+                            if (result != undefined && result != null && result.length > 0) {
+                                eval(result);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            JAlert({
+                                Message: "Internal Server Error.",
+                                DialogType: "Ok",
+                                BtnOk: "确定"
+                            });
                         }
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        JAlert({
-                            Message: "Internal Server Error.",
-                            DialogType: "Ok",
-                            BtnOk: "确定"
-                        });
-                    }
-                });
+                    });
+                } else {
+                    $.ajax({
+                        type: "post",
+                        data: { ruleName: ruleName, ruleNo: hidRuleNo, fullRuleNo: fullRuleNo, parentID: parentID, keys: key, messageTexts: msgTexts, messageFileIDs: null, messageImageTextIDs: null },
+                        url: addUrl,
+                        success: function (result) {
+                            if (result != undefined && result != null && result.length > 0) {
+                                eval(result);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            JAlert({
+                                Message: "Internal Server Error.",
+                                DialogType: "Ok",
+                                BtnOk: "确定"
+                            });
+                        }
+                    });
+                }
             });
 
-            $("#btnAddText").click(function () {
-                $("#dialogText").dialog({
-                    resizable: false,
-                    height: 219,
-                    width: 579,
-                    modal: true,
-                    draggable: false,
-                    buttons: {
-                        "确定": function () {
-                            var txtMsgText = $("#txtMsgText").val().trim();
-                            if (txtMsgText.length == 0) {
-                                JAlert({
-                                    Message: "内容不能为空。",
-                                    DialogType: "Ok",
-                                    BtnOk: "确定"
-                                });
-                            } else {
-                                $("#msgContent").append('<div class="keyMessageItem"><label class="msgText">' + txtMsgText + '</label><span style="float: right;cursor: pointer;" onclick="delText(this)">删除</span></div>');
-                                $("#txtMsgText").val("");
-                                $(this).dialog("close");
-                            }
 
-                        },
-                        "取消": function () {
-                            $(this).dialog("close");
-                        }
-                    }
-                });
+            $("#btnCancel").click(function () {
+                $("#div_addKeyrule").hide();
             });
         });
+        function clearText() {
+            $("#labTitlt").text("新规则");
+            $("#txtRuleNo").val("");
+            $("#hidRuleNo").val("");
+            $("#hidParentID").val("");
+            $("#hidKeyID").val("");
+
+            $("#txtRuleName").val("");
+            $("#txtRuleNo").val("");
+            $("#txtKey").val("");
+            $("#msgContent").empty();
+        }
         function delText(obj) {
             $(obj).parent().remove();
+        }
+        function deleteItem(id){
+            return AppDelete('确定删除?',deleteUrl+"/"+id);
         }
     </script>
 }
 <div class="title">
-    设置</div>
-<div class="bodyLeft">
-    <ul class="ulList">
-        <li><a href="@Url.Action("Index", "InstallAppReply", new { HostName = ViewBag.HostName })">
-            安装App自动回复</a></li>
-        <li class="select"><a href="@Url.Action("Index", "KeywordMessage", new { HostName = ViewBag.HostName })">
-            关键词自动回复</a></li>
-    </ul>
-</div>
-<div class="bodyRight" style="height: auto;">
+    关键词自动回复</div>
+<div class="body">
     <div class="option">
-        <input id="btnAddRule" value="添加规则" type="button" />
+        <a id="btnAddRule">添加规则</a>
     </div>
-    <div id="div_addKeyrule">
-        <div class="keyTitle">
-            新规则
-        </div>
-        <div style="padding: 10px 5px 0px 10px;">
-            规则名：<input id="txtRuleName" type="text" />&nbsp;(规则名最多30个字)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;规则编号：<input
-                type="text" id="txtRuleNo" readonly="readonly" /><input type="hidden" id="hidRuleNo" /><input
-                    type="hidden" id="hidParentID" />
-            <div>
-                <span style="vertical-align: top">关键字：</span><textarea id="txtKey" rows="3" cols="87"></textarea>
-            </div>
-        </div>
-        <div style="padding: 5px 5px 0px 10px;">
-            <div class="keyRight">
-                <div class="keyTitle">
-                    回复<div style="float: right">
-                        文字(0)&nbsp;&nbsp;文件(0)&nbsp;&nbsp;图文(0)</div>
-                </div>
-                <div id="msgContent">
-                </div>
-                <div class="keyMessageItem" style="margin-bottom: 60px;">
-                    新增回复&nbsp;>&nbsp;&nbsp;<span class="newAddBtn" id="btnAddText">文字</span>&nbsp;&nbsp;<span
-                        class="newAddBtn">文件</span>&nbsp;&nbsp;<span class="newAddBtn">图文</span></div>
-            </div>
-        </div>
-        <div style="padding: 10px 5px 10px 10px; float: right; width: 180px">
-            <input class="button" value="保存" type="button" id="btnSaveRule" />&nbsp;&nbsp;<input
-                class="button" type="button" value="取消" id="btnCancel" />
-        </div>
-        <div style="clear: both">
-        </div>
+    <div class="keyLeft">
+        @Html.Raw(ViewBag.Tree)
     </div>
-    <div style="margin: 10px auto 15px auto;">
-        @foreach (var item in Model)
-        {
-            <div class="keyItem">
-                <div class="keyTitle">
-                    规&nbsp;&nbsp;&nbsp;则：@item.RuleName [@item.FullRuleNo]
-                    <div style="float: right">
-                        <a>查看子项</a>&nbsp;&nbsp;<a class="btnAddSub" fullRuleNo="@item.FullRuleNo" ruleNo="@item.RuleNo" parentID="@item.ID">
-                            添加子项</a>&nbsp;&nbsp;<a class="btnEditSub" keyID="@item.ID" fullRuleNo="@item.FullRuleNo" ruleNo="@item.RuleNo" parentID="@item.ID">修改</a>&nbsp;&nbsp;<a>删除</a>
-                    </div>
-                </div>
-                <div class="keyContent">
-                    <div class="keyword">
-                        关键词：@item.Keywords.Select(a => a.Token).ToList().ConvertToString(",")
-                    </div>
-                    <div class="keyMessage">
-                        <div style="width: 63px; float: left; margin-left: 1px">
-                            回&nbsp;&nbsp;&nbsp;复：</div>
-                        <div style="width: 620px; float: left">
-                            @foreach (var textItem in item.TextReplys)
-                            {
-                                <div>
-                                    @textItem.Content.Show(30, "...")
-                                </div>
-                            }
-                        </div>
-                        <div style="clear: both">
-                        </div>
-                    </div>
+    <div class="keyRigth">
+        <div id="div_addKeyrule">
+            <div class="keyTitle">
+                <label id="labTitlt">
+                    新规则</label>
+            </div>
+            <div style="padding: 10px 5px 0px 10px;">
+                <div>
+                    <div style="width: 58px; text-align: right; float: left">
+                        规则名：</div>
+                    <input id="txtRuleName" type="text" />&nbsp;(规则名最多30个字)</div>
+                <div>
+                    <div style="width: 58px; text-align: right; float: left">
+                        编号：</div>
+                    <input type="text" id="txtRuleNo" readonly="readonly" /><input type="hidden" id="hidRuleNo" /><input
+                        type="hidden" id="hidParentID" /><input type="hidden" id="hidKeyID" /></div>
+                <div>
+                    <div style="width: 58px; text-align: right; float: left">
+                        关键字：</div>
+                    <textarea id="txtKey" rows="3" cols="70"></textarea>
                 </div>
             </div>
-        }
+            <div style="padding: 5px 5px 0px 10px;">
+                <div class="keyRight">
+                    <div class="keyTitle">
+                        回复<div style="float: right">
+                            文字(0)&nbsp;&nbsp;文件(0)&nbsp;&nbsp;图文(0)</div>
+                    </div>
+                    <div id="msgContent">
+                    </div>
+                    <div class="keyMessageItem" style="margin-bottom: 60px;">
+                        新增回复&nbsp;>&nbsp;&nbsp;<span class="newAddBtn" id="btnAddText">文字</span>&nbsp;&nbsp;<span
+                            class="newAddBtn">文件</span>&nbsp;&nbsp;<span class="newAddBtn">图文</span></div>
+                </div>
+            </div>
+            <div style="padding: 10px 5px 10px 10px; float: right; width: 180px">
+                <input class="button" value="保存" type="button" id="btnSaveRule" />&nbsp;&nbsp;<input
+                    class="button" type="button" value="取消" id="btnCancel" />
+            </div>
+            <div style="clear: both">
+            </div>
+        </div>
     </div>
-    <div class="pages">
-        @Html.Pager(Model, new PagerOptions
-   {
-       PageIndexParameterName = "ID",
-       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
-       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
-       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
-       CssClass = "manage_pages pages",
-       SeparatorHtml = "&nbsp;",
-       AutoHide = false,
-       /*LastPageText = "Last",
-       FirstPageText = "First",
-       PrevPageText = "Back",
-       NextPageText = "Next",*/
-       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
-       ShowFirstLast = false
-   })
+    <div style="clear: both">
     </div>
-</div>
-<div style="clear: both">
-</div>
-<div id="dialogText" title="添加回复文字" style="display: none">
-    <textarea cols="75" rows="6" id="txtMsgText"></textarea>
+    <div id="dialogText" title="添加回复文字" style="display: none">
+        <textarea cols="75" rows="6" id="txtMsgText"></textarea>
+    </div>
 </div>

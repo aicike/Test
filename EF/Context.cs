@@ -35,7 +35,7 @@ namespace EF
         public DbSet<Keyword> Keyword { get; set; }
         public DbSet<TextReply> TextReply { get; set; }
 
-        
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -51,8 +51,12 @@ namespace EF
             modelBuilder.Configurations.Add(new AccountMap());
             modelBuilder.Configurations.Add(new UserMap());
             modelBuilder.Configurations.Add(new UserLoginInfoMap());
-            
-            
+            modelBuilder.Configurations.Add(new AutoMessage_KeywordMap());
+            modelBuilder.Configurations.Add(new KeywordAutoMessageMap());
+            modelBuilder.Configurations.Add(new KeywordMap());
+            modelBuilder.Configurations.Add(new TextReplyMap());
+
+
         }
     }
 }

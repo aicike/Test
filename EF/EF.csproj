@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Context.cs" />
     <Compile Include="Context.Views.cs" />
+    <Compile Include="Mapping\AutoMessage_KeywordMap.cs" />
     <Compile Include="Mapping\LibraryImageTextMap.cs" />
     <Compile Include="Mapping\MessageMap.cs" />
     <Compile Include="Mapping\SystemUserMap.cs" />
@@ -55,9 +56,16 @@
     <Compile Include="Mapping\AccountMap.cs" />
     <Compile Include="Mapping\UserMap.cs" />
     <Compile Include="Mapping\UserLoginInfoMap.cs" />
+    <Compile Include="Mapping\KeywordMap.cs" />
+    <Compile Include="Mapping\TextReplyMap.cs" />
+    <Compile Include="Mapping\KeywordAutoMessageMap.cs" />
     <Compile Include="Migrations\201307300145038_Initial.cs" />
     <Compile Include="Migrations\201307300145038_Initial.Designer.cs">
       <DependentUpon>201307300145038_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201307310351379_TT.cs" />
+    <Compile Include="Migrations\201307310351379_TT.Designer.cs">
+      <DependentUpon>201307310351379_TT.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,6 +87,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201307300145038_Initial.resx">
       <DependentUpon>201307300145038_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307310351379_TT.resx">
+      <DependentUpon>201307310351379_TT.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

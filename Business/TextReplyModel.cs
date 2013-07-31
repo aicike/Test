@@ -5,6 +5,7 @@ using System.Text;
 using Poco;
 using Interface;
 using Poco.Enum;
+using Injection.Transaction;
 
 namespace Business
 {
@@ -21,6 +22,22 @@ namespace Business
                     Context.TextReply.Add(item);
                 }
                 Context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                result.Error = ex.Message;
+            }
+            return result;
+        }
+
+        [Transaction]
+        public Result DeleteByAutoMessage_KeywordID(int autoMessage_KeywordID)
+        {
+            Result result = new Result();
+            try
+            {
+                string sql = "DELETE dbo.TextReply WHERE AutoMessage_KeywordID =" + autoMessage_KeywordID;
+                base.SqlExecute(sql);
             }
             catch (Exception ex)
             {

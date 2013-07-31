@@ -30,5 +30,21 @@ namespace Business
             }
             return result;
         }
+
+        [Transaction]
+        public Result DeleteByAutoMessage_KeywordID(int autoMessage_KeywordID)
+        {
+            Result result = new Result();
+            try
+            {
+                string sql = "DELETE dbo.Keyword WHERE AutoMessage_KeywordID =" + autoMessage_KeywordID;
+                base.SqlExecute(sql);
+            }
+            catch (Exception ex)
+            {
+                result.Error = ex.Message;
+            }
+            return result;
+        }
     }
 }

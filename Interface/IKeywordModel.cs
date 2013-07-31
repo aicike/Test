@@ -9,5 +9,6 @@ namespace Interface
     public interface IKeywordModel : IBaseModel<Keyword>
     {
         Result AddList(IList<Keyword> keywords);
+        Result DeleteByAutoMessage_KeywordID(int autoMessage_KeywordID);
     }
 }

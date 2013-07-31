@@ -7,16 +7,44 @@ using Interface;
 using Poco;
 using Injection;
 using Controllers;
+using System.Text;
 
 namespace Web.Controllers
 {
     public class KeywordMessageController : ManageAccountController
     {
-        public ActionResult Index(int? index)
+        public ActionResult Index()
         {
             var autoMessage_KeywordModel = Factory.Get<IAutoMessage_KeywordModel>(SystemConst.IOC_Model.AutoMessage_KeywordModel);
-            var list = autoMessage_KeywordModel.List(LoginAccount.CurrentAccountMainID).ToPagedList(index ?? 1, 15);
+            var list = autoMessage_KeywordModel.List(LoginAccount.CurrentAccountMainID).Where(a => a.ParentAutoMessage_KeywordID.HasValue == false).OrderBy(a => a.ID).ToList();
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<ul id='browser'>");
+            foreach (var item in list)
+            {
+                sb.AppendFormat("<li><div class='keyLiTitle'>({0})&nbsp;&nbsp;<label>{1}</label>&nbsp;&nbsp;<a class='btnAddSub' fullRuleNo='{0}' ruleNo='{4}' parentID='{2}'>[添加子项]</a>&nbsp;<a class='btnEdit' keyID='{2}' fullRuleNo='{0}' ruleNo='{4}' parentID='{2}'>[修改]</a>&nbsp;<a onclick='return deleteItem({2})'>[删除]</a></div>{3}</li>",
+                    item.FullRuleNo, item.RuleName.Show(10, "..."), item.ID, GetHtml(item.AutoMessage_KeywordsKeyword), item.RuleNo);
+            }
+            sb.Append("</ul>");
+            ViewBag.Tree = sb.ToString();
             return View(list);
+        }
+
+        private string GetHtml(ICollection<AutoMessage_Keyword> entitys)
+        {
+            if (entitys.Count == 0)
+            {
+                return "";
+            }
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<ul>");
+            foreach (var item in entitys)
+            {
+                sb.AppendFormat("<li><div class='keyLiTitle'>({0})&nbsp;&nbsp;<label>{1}</label>&nbsp;&nbsp;<a class='btnAddSub' fullRuleNo='{0}' ruleNo='{4}' parentID='{2}'>[添加子项]</a>&nbsp;<a class='btnEdit' keyID='{2}' fullRuleNo='{0}' ruleNo='{4}' parentID='{2}'>[修改]</a>&nbsp;<a onclick='return deleteItem({2})'>[删除]</a></div>{3}</li>",
+                    item.FullRuleNo, item.RuleName.Show(10, "..."), item.ID, GetHtml(item.AutoMessage_KeywordsKeyword), item.RuleNo);
+            }
+            sb.Append("</ul>");
+            return sb.ToString();
         }
 
         [HttpPost]
@@ -30,6 +58,19 @@ namespace Web.Controllers
             msg.FullRuleNo = fullRuleNo;
             msg.ParentAutoMessage_KeywordID = parentID;
             var result = autoMessage_KeywordModel.Add(msg, keys, messageTexts, messageFileIDs, messageImageTextIDs, LoginAccount.CurrentAccountMainID);
+            if (result.HasError)
+            {
+                return AlertJS_NoTag(new Dialog(result.Error));
+            }
+            return "window.location.href='" + Url.Action("Index", "KeywordMessage", new { HostName = LoginAccount.HostName }) + "'";
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public string Edit(int keyID, string ruleName, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs)
+        {
+            var autoMessage_KeywordModel = Factory.Get<IAutoMessage_KeywordModel>(SystemConst.IOC_Model.AutoMessage_KeywordModel);
+            var result = autoMessage_KeywordModel.Edit(keyID, ruleName, keys, messageTexts, messageFileIDs, messageImageTextIDs, LoginAccount.CurrentAccountMainID);
             if (result.HasError)
             {
                 return AlertJS_NoTag(new Dialog(result.Error));
@@ -69,6 +110,17 @@ namespace Web.Controllers
                 TextReplys = entity.TextReplys.Select(a => a.Content).ToList().ObjectToJson("TextReplys")
             };
             return Json(json, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            var autoMessage_KeywordModel = Factory.Get<IAutoMessage_KeywordModel>(SystemConst.IOC_Model.AutoMessage_KeywordModel);
+            var result = autoMessage_KeywordModel.Delete(id, LoginAccount.CurrentAccountMainID);
+            if (result.HasError)
+            {
+                return Alert(new Dialog(result.Error));
+            }
+            return JavaScript("window.location.href='" + Url.Action("Index", "KeywordMessage", new { HostName = LoginAccount.HostName }) + "'");
         }
     }
 }
