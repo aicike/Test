@@ -55,6 +55,8 @@
     <Compile Include="Enum\EnumBuildingType.cs" />
     <Compile Include="Enum\EnumDecoration.cs" />
     <Compile Include="Validation\AllowCheckPermissionsAttribute.cs" />
+    <Compile Include="WebAPI_Poco\App_ResultMsg.cs" />
+    <Compile Include="WebAPI_Poco\App_UserLoginInfo.cs" />
     <Compile Include="_B_PushMessage.cs" />
     <Compile Include="_B_AccountMainLibraryInfo.cs" />
     <Compile Include="AccountMainHouses.cs" />
@@ -108,9 +110,7 @@
     <Compile Include="_RoleMenu.cs" />
     <Compile Include="_RoleOption.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="WebAPI_Poco\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

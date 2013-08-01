@@ -12,10 +12,10 @@ namespace Web.Controllers
     public class WebRequestController : Controller
     {
         [HttpPost]
-        public void PostClientID(string clientID)
+        public void PostClientID(string clientID, int? userID)
         {
             var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
-            clientInfoModel.PostClientID(clientID);
+            clientInfoModel.PostClientID(clientID, userID);
         }
     }
 }

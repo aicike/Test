@@ -10,10 +10,10 @@ namespace Poco.Enum
     /// </summary>
     public enum EnumClientSystemType
     {
-        IOS,
-        Android,
-        WindowsPhone,
-        Windows,
-        Other
+        IOS=0,
+        Android=1,
+        WindowsPhone=2,
+        Windows=3,
+        Other=4
     }
 }

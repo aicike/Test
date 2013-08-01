@@ -1,5 +1,5 @@
 ﻿-----------------------------Role--------------------------
-INSERT INTO dbo.Role ( SystemStatus, NAME,IsCanDelete ) VALUES  ( 0,'管理员',0)
+INSERT INTO dbo.Role ( SystemStatus, NAME,IsCanDelete,Token ) VALUES  ( 0,'管理员',0,'AccountAdmin')
 INSERT INTO dbo.Role ( SystemStatus, Name,IsCanDelete  ) VALUES  ( 0,'销售经理',1)
 INSERT INTO dbo.Role ( SystemStatus, NAME,ParentRoleID,IsCanDelete  ) VALUES  ( 0,'销售代表',1,1)
 

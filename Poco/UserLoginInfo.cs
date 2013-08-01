@@ -13,15 +13,30 @@ namespace Poco
 
         public int SystemStatus { get; set; }
 
-        [Display(Name = "登录名")]
-        [StringLength(20, ErrorMessage = "长度小于20")]
+        [Display(Name = "名称")]
+        [StringLength(10, ErrorMessage = "长度小于10")]
         [Required]
-        public string LoginName { get; set; }
+        public string Name { get; set; }
+
+        [Display(Name = "地址")]
+        [StringLength(50, ErrorMessage = "长度小于50")]
+        public string Address { get; set; }
+
+        [Display(Name = "电话")]
+        [StringLength(20, ErrorMessage = "长度小于20")]
+        public string Phone { get; set; }
+
+        [Display(Name = "头像")]
+        [StringLength(500, ErrorMessage = "长度小于500")]
+        public string HeadImagePath { get; set; }
+
+        [Display(Name = "证件号码")]
+        [StringLength(30, ErrorMessage = "长度小于30")]
+        public string IdentityCard { get; set; }
 
         [Display(Name = "邮箱")]
         [StringLength(50, ErrorMessage = "长度小于50")]
         [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "请输入有效的邮箱")]
-        [Required]
         public string Email { get; set; }
 
         [Display(Name = "密码")]
@@ -34,6 +49,12 @@ namespace Poco
         [StringLength(20, MinimumLength = 6, ErrorMessage = "长度大于6小于20")]
         [RegularExpression("^[a-zA-Z0-9_\u4E00-\u9FA5]*$", ErrorMessage = "请输入有效的密码")]
         public string LoginPwdPage { get; set; }
+
+        /// <summary>
+        /// 业务字段，不会再数据库中生成
+        /// （一个userloginInfo对应多个User,但一个APP登录只绑定一个跟AccountMain关联的信息）
+        /// </summary>
+        public User CurrenRelatedUser { get; set; }
 
         public virtual ICollection<User> Users { get; set; }
     }

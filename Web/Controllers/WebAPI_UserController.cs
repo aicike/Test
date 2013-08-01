@@ -8,6 +8,7 @@ using Poco;
 using Interface;
 using Injection;
 using Poco.Enum;
+using Poco.WebAPI_Poco;
 
 namespace Web.Controllers
 {
@@ -19,14 +20,18 @@ namespace Web.Controllers
             return accountMainModel.List().ToList().Select(a => new AccountMain() { Name = a.Name }).ToList();
         }
 
-        public UserLoginInfo PostLogin(UserLoginInfo user)
+        [HttpGet]
+        public Result GetLogin(App_UserLoginInfo user)
         {
             var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
-            var result = userLoginInfoModel.Login(user.Email, user.LoginPwd);
-            user = result.Entity as UserLoginInfo;
-            UserLoginInfo entity = new UserLoginInfo();
-            entity.ID = user.ID;
-            return entity;
+            var result = userLoginInfoModel.App_Login(user);
+            return result;
+        }
+
+        [HttpPost]
+        public Result PostRegister(App_UserLoginInfo user)
+        {
+            return new Result();
         }
 
         //// GET api/values

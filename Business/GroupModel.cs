@@ -14,14 +14,23 @@ namespace Business
     {
         public List<Group> GetGroupListByAccountID(int accountID, int? accountMainID = null)
         {
+            List<Group> list = new List<Group>();
+            var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
+            var account = accountModel.Get(accountID);
+            if (account.Role.Token == SystemConst.Business.AccountAdmin)
+            {
+                list.Add(new Group() { GroupName = "安装App,未注册账号" });
+            }
+
             if (accountMainID != null && accountMainID.HasValue)
             {
-                return List().Where(a => a.AccountID == accountID && a.AccountMainID == accountMainID).OrderBy(a => a.ID).ToList();
+                list.AddRange(List().Where(a => a.AccountID == accountID && a.AccountMainID == accountMainID).OrderBy(a => a.ID).ToList());
             }
             else
             {
-                return List().Where(a => a.AccountID == accountID).OrderBy(a => a.ID).ToList();
+                list.AddRange(List().Where(a => a.AccountID == accountID).OrderBy(a => a.ID).ToList());
             }
+            return list;
         }
 
         public Result AddDefaultGroup(int accountID, int accountMainID)
@@ -104,7 +113,7 @@ namespace Business
             }
             CommonModel commonModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
             //更改用户分组
-            int defaultGroupID =GetGroupListByAccountID(accountID,accountMainID).Where(a => a.IsDefaultGroup).SingleOrDefault().ID;
+            int defaultGroupID = GetGroupListByAccountID(accountID, accountMainID).Where(a => a.IsDefaultGroup).SingleOrDefault().ID;
             string sql = string.Format("UPDATE dbo.Account_User SET groupID={0} WHERE GroupID={1}", defaultGroupID, groupID);
             commonModel.SqlExecute(sql);
             result = CompleteDelete(groupID);

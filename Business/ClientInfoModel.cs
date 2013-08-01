@@ -55,14 +55,30 @@ namespace Business
         //    }
         //    return resule;
         //}
-        public void PostClientID(string clientID)
+        public void PostClientID(string clientID, int? userID)
         {
-            bool isHas = List().Any(a => a.ClientID == clientID);
-            if (!isHas)
+            bool isHas = true;
+            if (userID!=null&&userID.HasValue&&userID > 0)
             {
-                ClientInfo clientInfo = new ClientInfo();
-                clientInfo.ClientID = clientID;
-                var result = base.Add(clientInfo);
+                isHas = List().Any(a => a.ClientID == clientID && a.EntityID == userID);
+
+                if (isHas == false)
+                {
+                    ClientInfo clientInfo = new ClientInfo();
+                    clientInfo.ClientID = clientID;
+                    clientInfo.EntityID = userID;
+                    var result = base.Add(clientInfo);
+                }
+            }
+            else
+            {
+                isHas = List().Any(a => a.ClientID == clientID);
+                if (isHas == false)
+                {
+                    ClientInfo clientInfo = new ClientInfo();
+                    clientInfo.ClientID = clientID;
+                    var result = base.Add(clientInfo);
+                }
             }
         }
     }

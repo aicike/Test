@@ -18,6 +18,7 @@ namespace Poco
             public const string PathAccount = "~/File/{0}/Account/";
             public const string PathFileLibrary = "~/File/{0}/FileLibrary/";
             public const string DefaultGroup = "未分组";
+            public const string AccountAdmin = "AccountAdmin";            
         }
 
         public class Cache
@@ -33,6 +34,7 @@ namespace Poco
         {
             private Notice() { }
             public const string NotAuthorized = "无权操作。";
+            public const string MultipleAccountMainAdminAccount= "只能创建一个有效的管理员账号，请先禁用其他管理员账号再添管理员账号加或选择其他角色创建账号。";
         }
 
         public class Session

@@ -6,6 +6,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Poco
 {
+    /// <summary>
+    /// 售楼部-用户表
+    /// </summary>
     [Serializable]
     public class User : IBaseEntity
     {
@@ -28,6 +31,11 @@ namespace Poco
         [Display(Name = "头像")]
         [StringLength(500, ErrorMessage = "长度小于500")]
         public string HeadImagePath { get; set; }
+
+        [Display(Name = "邮箱")]
+        [StringLength(50, ErrorMessage = "长度小于50")]
+        [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "请输入有效的邮箱")]
+        public string Email { get; set; }
 
         /// <summary>
         /// 账号类型，启用禁用

@@ -37,6 +37,7 @@ namespace EF.Migrations
                         Name = c.String(nullable: false, maxLength: 50),
                         ParentRoleID = c.Int(),
                         IsCanDelete = c.Boolean(nullable: false),
+                        Token = c.String(maxLength: 50),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Role", t => t.ParentRoleID)
@@ -452,7 +453,7 @@ namespace EF.Migrations
                         Token = c.String(nullable: false, maxLength: 20),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.AutoMessage_Keyword", t => t.AutoMessage_KeywordID)
+                .ForeignKey("dbo.AutoMessage_Keyword", t => t.AutoMessage_KeywordID, cascadeDelete: true)
                 .Index(t => t.AutoMessage_KeywordID);
             
             CreateTable(
@@ -469,7 +470,7 @@ namespace EF.Migrations
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.LookupOption", t => t.EnumMessageTypeID)
-                .ForeignKey("dbo.AutoMessage_Keyword", t => t.AutoMessage_KeywordID)
+                .ForeignKey("dbo.AutoMessage_Keyword", t => t.AutoMessage_KeywordID, cascadeDelete: true)
                 .Index(t => t.EnumMessageTypeID)
                 .Index(t => t.AutoMessage_KeywordID);
             
@@ -483,7 +484,7 @@ namespace EF.Migrations
                         AutoMessage_KeywordID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.AutoMessage_Keyword", t => t.AutoMessage_KeywordID)
+                .ForeignKey("dbo.AutoMessage_Keyword", t => t.AutoMessage_KeywordID, cascadeDelete: true)
                 .Index(t => t.AutoMessage_KeywordID);
             
             CreateTable(

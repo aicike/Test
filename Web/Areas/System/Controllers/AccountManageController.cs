@@ -127,7 +127,7 @@ namespace Web.Areas.System.Controllers
 
             IAccountModel model = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             EnumAccountStatus accountStatus = (EnumAccountStatus)Enum.Parse(typeof(EnumAccountStatus), status);
-            var result = model.ChangeStatus(accountID, accountStatus);
+            var result = model.ChangeStatus(accountID, accountStatus,accountMainID);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));

@@ -10,5 +10,6 @@ namespace Interface
     public interface IAccount_AccountMainModel : IBaseModel<Account_AccountMain>
     {
         Result Add(Account_AccountMain account_accountMain, HttpPostedFileBase HeadImagePathFile);
+        bool CheckIsExistAccountAdmin(int accountMainID,int? accountID=null);
     }
 }

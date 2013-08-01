@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Poco
 {
+    /// <summary>
+    /// Account管理的User数据
+    /// </summary>
     [Serializable]
     public class Account_User : IBaseEntity
     {

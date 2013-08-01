@@ -55,11 +55,21 @@ namespace Business
         [Transaction]
         public Result Add(Account account, int accountMainID, System.Web.HttpPostedFileBase HeadImagePathFile)
         {
+            Result result = new Result();
+            if (account.RoleID == 1)
+            {
+                var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
+                if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID))
+                {
+                    result.Error = SystemConst.Notice.MultipleAccountMainAdminAccount;
+                    return result;
+                }
+            }
             account.HeadImagePath = SystemConst.Business.DefaultHeadImage;
             account.AccountStatusID = LookupFactory.GetLookupOptionIdByToken(EnumAccountStatus.Enabled);
             account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
             account.IsActivated = true;
-            var result = base.Add(account);
+            result = base.Add(account);
             if (result.HasError == false && HeadImagePathFile != null)
             {
                 try
@@ -93,8 +103,18 @@ namespace Business
 
         public Result Edit(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile)
         {
+            Result result = new Result();
+            if (account.RoleID == 1)
+            {
+                var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
+                if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID, account.ID))
+                {
+                    result.Error = SystemConst.Notice.MultipleAccountMainAdminAccount;
+                    return result;
+                }
+            }
             account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
-            var result = base.Edit(account);
+            result = base.Edit(account);
             if (result.HasError == false && HeadImagePathFile != null)
             {
                 try
@@ -157,8 +177,15 @@ namespace Business
             return result;
         }
 
-        public Result ChangeStatus(int accountID, EnumAccountStatus status)
+        public Result ChangeStatus(int accountID, EnumAccountStatus status, int accountMainID)
         {
+            Result result = new Result();
+            var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
+            if (status == EnumAccountStatus.Enabled && account_accountMainModel.CheckIsExistAccountAdmin(accountMainID))
+            {
+                result.Error = SystemConst.Notice.MultipleAccountMainAdminAccount;
+                return result;
+            }
             var entity = Get(accountID);
             base.Context.Configuration.ValidateOnSaveEnabled = false;
             entity.AccountStatusID = LookupFactory.GetLookupOptionIdByToken(status);

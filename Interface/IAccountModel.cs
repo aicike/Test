@@ -30,7 +30,7 @@ namespace Interface
 
         Result Edit(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile);
 
-        Result ChangeStatus(int accountID, EnumAccountStatus status);
+        Result ChangeStatus(int accountID, EnumAccountStatus status, int accountMainID);
 
         Result Login(string email, string pwd);
 

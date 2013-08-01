@@ -6,6 +6,7 @@ using Poco;
 using Interface;
 using Injection;
 using Injection.Transaction;
+using Poco.Enum;
 
 namespace Business
 {
@@ -36,6 +37,18 @@ namespace Business
                 result = base.Add(entity);
             }
             return result;
+        }
+
+        public bool CheckIsExistAccountAdmin(int accountMainID, int? accountID = null)
+        {
+            
+            int accountStatusID = LookupFactory.GetLookupOptionIdByToken(EnumAccountStatus.Enabled);
+            if (accountID != null && accountID.HasValue)
+            {
+                return List().Any(a => a.AccountMainID == accountMainID && (a.Account.Role.Token.Equals(SystemConst.Business.AccountAdmin) || a.Account.Role.ID == 1) && a.Account.SystemStatus == (int)EnumSystemStatus.Active && a.Account.AccountStatusID == accountStatusID
+                    && a.AccountID != accountID);
+            }
+            return List().Any(a => a.AccountMainID == accountMainID && (a.Account.Role.Token.Equals(SystemConst.Business.AccountAdmin) || a.Account.Role.ID == 1) && a.Account.SystemStatus == (int)EnumSystemStatus.Active && a.Account.AccountStatusID == accountStatusID);
         }
     }
 }

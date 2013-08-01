@@ -24,6 +24,10 @@ namespace Poco
 
         public bool IsCanDelete { get; set; }
 
+        [Display(Name = "Token")]
+        [StringLength(50, ErrorMessage = "长度小于50")]
+        public string Token { get; set; }
+
         public virtual ICollection<Role> SubRoles { get; set; }
 
         public virtual ICollection<Account> Accounts { get; set; }
