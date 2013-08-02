@@ -83,6 +83,13 @@ namespace Poco
         public int AccountMainExpandInfoID { get; set; }
         public virtual AccountMainExpandInfo AccountMainExpandInfo { get; set; }
 
+
+        /// <summary>
+        /// 数据更新信息
+        /// </summary>
+        public int AppUpdateID { get; set; }
+        public virtual AppUpdate AppUpdate { get; set; }
+
         /// <summary>
         /// 创建者
         /// </summary>

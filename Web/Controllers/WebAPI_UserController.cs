@@ -31,7 +31,9 @@ namespace Web.Controllers
         [HttpPost]
         public Result PostRegister(App_UserLoginInfo user)
         {
-            return new Result();
+            var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
+            var result = userLoginInfoModel.Register(user);
+            return result;
         }
 
         //// GET api/values

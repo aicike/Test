@@ -533,6 +533,7 @@ namespace EF.Migrations
                         Address = c.String(maxLength: 50),
                         Phone = c.String(maxLength: 20),
                         HeadImagePath = c.String(maxLength: 500),
+                        Email = c.String(maxLength: 50),
                         AccountStatusID = c.Int(nullable: false),
                         IdentityCard = c.String(maxLength: 30),
                         AccountMainID = c.Int(nullable: false),
@@ -552,8 +553,12 @@ namespace EF.Migrations
                     {
                         ID = c.Int(nullable: false, identity: true),
                         SystemStatus = c.Int(nullable: false),
-                        LoginName = c.String(nullable: false, maxLength: 20),
-                        Email = c.String(nullable: false, maxLength: 50),
+                        Name = c.String(nullable: false, maxLength: 10),
+                        Address = c.String(maxLength: 50),
+                        Phone = c.String(maxLength: 20),
+                        HeadImagePath = c.String(maxLength: 500),
+                        IdentityCard = c.String(maxLength: 30),
+                        Email = c.String(maxLength: 50),
                         LoginPwd = c.String(nullable: false, maxLength: 100),
                     })
                 .PrimaryKey(t => t.ID);

@@ -338,7 +338,7 @@ SET IDENTITY_INSERT [dbo].[RoleOption] OFF
 
 ------------------------------[UserLoginInfo]---------------------------------
 SET IDENTITY_INSERT [dbo].[UserLoginInfo] ON
-INSERT [dbo].[UserLoginInfo] ([ID], [SystemStatus], [LoginName], [Email], [LoginPwd]) VALUES (1, 0, N'wushuangqi', N'd537@163.com', N'8ZjHBEPwxeqwCrxssgd2cQ==')
+INSERT [dbo].[UserLoginInfo] ([ID], [SystemStatus], [Name], [Email], [LoginPwd]) VALUES (1, 0, N'wushuangqi', N'd537@163.com', N'8ZjHBEPwxeqwCrxssgd2cQ==')
 SET IDENTITY_INSERT [dbo].[UserLoginInfo] OFF
 ------------------------------[User]---------------------------------
 SET IDENTITY_INSERT [dbo].[User] ON

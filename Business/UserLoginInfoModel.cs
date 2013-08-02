@@ -8,22 +8,95 @@ using Injection;
 using Poco.Enum;
 using Common;
 using Injection.Transaction;
+using Poco.WebAPI_Poco;
 
 namespace Business
 {
     public class UserLoginInfoModel : BaseModel<UserLoginInfo>, IUserLoginInfoModel
     {
         [Transaction]
-        public Result Register(UserLoginInfo userLoginInfo)
+        public Result Register(App_UserLoginInfo userLoginInfo)
         {
-            userLoginInfo.LoginPwd = DESEncrypt.Encrypt(userLoginInfo.LoginPwd);
-            Result result = base.Add(userLoginInfo);
-            if (result.HasError == false)
+            Result result = new Result();
+            //检查邮箱是否通过，是否可以注册
+            bool isExist = List().Any(a => a.Email.Equals(userLoginInfo.Email, StringComparison.CurrentCultureIgnoreCase));
+            if (isExist)
             {
-                User user = new User();
-                user.UserLoginInfoID = userLoginInfo.ID;
-                var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
-                result = userModel.Add(user);
+                result.Error = "该邮箱已存在,不能创建账号.";
+                return result;
+            }
+            //添加用户登录信息UserLoginInfo
+            UserLoginInfo userlogin = new UserLoginInfo();
+            userlogin.LoginPwd = DESEncrypt.Encrypt(userLoginInfo.Pwd);
+            userlogin.LoginPwdPage = "aaaaaa";
+            userlogin.Name = userLoginInfo.Name;
+            userlogin.Email = userLoginInfo.Email;
+            result = base.Add(userlogin);
+            if (result.HasError)
+            {
+                return result;
+            }
+            //添加用户User
+            User user = new User();
+            user.UserLoginInfoID = userlogin.ID;
+            user.Name = userlogin.Name;
+            user.Email = userlogin.Email;
+            user.AccountMainID = userLoginInfo.AccountMainID;
+            var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+            result = userModel.Add(user);
+            if (result.HasError)
+            {
+                return result;
+            }
+            //添加用户和Account关系
+            if (userLoginInfo.AccountID != null && userLoginInfo.AccountID.HasValue)
+            {
+                var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
+                var account = accountModel.Get(userLoginInfo.AccountID.Value);
+                var group = account.Groups.Where(a => a.IsDefaultGroup == true).FirstOrDefault();
+
+                var account_UserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
+                Account_User accountUser = new Account_User();
+                accountUser.AccountID = userLoginInfo.AccountID.Value;
+                accountUser.UserID = user.ID;
+                accountUser.GroupID = group.ID;
+                result = account_UserModel.Add(accountUser);
+            }
+            if (result.HasError)
+            {
+                return result;
+            }
+            //添加用户和ClientInfo信息
+            var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
+            var client = clientInfoModel.List().Where(a => a.ClientID.Equals(userLoginInfo.ClientID)).FirstOrDefault();
+            int enumClientSystemTypeID = LookupFactory.GetLookupOptionIdByToken((EnumClientSystemType)userLoginInfo.EnumClientSystemType);
+            int enumClientUserTypeID = LookupFactory.GetLookupOptionIdByToken((EnumClientUserType)userLoginInfo.EnumClientUserType);
+            if (client == null)
+            {
+                //数据库中没有client信息，需要新增
+                ClientInfo clientInfo = new ClientInfo();
+                clientInfo.EnumClientSystemTypeID = enumClientSystemTypeID;
+                clientInfo.SetupTiem = DateTime.Now;
+                clientInfo.EnumClientUserTypeID = enumClientUserTypeID;
+                clientInfo.ClientID = userLoginInfo.ClientID;
+                clientInfo.EntityID = user.ID;
+                result = clientInfoModel.Add(clientInfo);
+                if (result.HasError)
+                {
+                    return result;
+                }
+            }
+            else
+            {
+                //数据库中有client信息，需要绑定
+                client.EnumClientSystemTypeID = enumClientSystemTypeID;
+                client.EnumClientUserTypeID = enumClientUserTypeID;
+                client.EntityID = user.ID;
+                result = clientInfoModel.Edit(client);
+                if (result.HasError)
+                {
+                    return result;
+                }
             }
             return result;
         }
@@ -45,7 +118,7 @@ namespace Business
 
             UserLoginInfo newUser = new UserLoginInfo()
             {
-                ID=user.ID,
+                ID = user.ID,
             };
             result.Entity = newUser;
             return result;

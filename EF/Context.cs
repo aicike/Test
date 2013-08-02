@@ -55,7 +55,8 @@ namespace EF
             modelBuilder.Configurations.Add(new KeywordAutoMessageMap());
             modelBuilder.Configurations.Add(new KeywordMap());
             modelBuilder.Configurations.Add(new TextReplyMap());
-
+            modelBuilder.Configurations.Add(new AppUpdateMap
+());
 
         }
     }

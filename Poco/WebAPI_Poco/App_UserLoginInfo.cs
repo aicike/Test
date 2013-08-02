@@ -7,6 +7,8 @@ namespace Poco.WebAPI_Poco
 {
     public class App_UserLoginInfo
     {
+        public string Name { get; set; }
+
         public string Email { get; set; }
 
         public string Pwd { get; set; }
@@ -14,6 +16,8 @@ namespace Poco.WebAPI_Poco
         public int AccountMainID { get; set; }
 
         public string IMEI { get; set; }
+
+        public int? AccountID { get; set; }
 
         /// <summary>
         /// 客户端系统类型

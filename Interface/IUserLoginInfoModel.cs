@@ -11,6 +11,6 @@ namespace Interface
     {
         Result App_Login(App_UserLoginInfo app_UserLoginInfo);
 
-        Result Register(UserLoginInfo userLoginInfo);
+        Result Register(App_UserLoginInfo userLoginInfo);
     }
 }
