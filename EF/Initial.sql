@@ -148,8 +148,8 @@ INSERT [dbo].[AccountMainExpandInfo] ([ID], [SystemStatus], [AccountMainID], [Pr
 
 -----------------------------[Account]--------------------------
 SET IDENTITY_INSERT [dbo].[Account] ON
-INSERT [dbo].[Account] ([ID], [SystemStatus], [Name], [LoginPwd], [Phone], [HeadImagePath], [Email], [RoleID], [AccountStatusID], [IsActivated]) VALUES (1, 0, N'张三', N'8ZjHBEPwxeqwCrxssgd2cQ==', N'1111', N'~\File\1\Account\张三_20130712165054_80_QQ截图20130712095702.jpg', N'zhangsan@163.com', 1, 1, 1)
-INSERT [dbo].[Account] ([ID], [SystemStatus], [Name], [LoginPwd], [Phone], [HeadImagePath], [Email], [RoleID], [AccountStatusID], [IsActivated]) VALUES (2, 0, N'李四（销售经理）', N'8ZjHBEPwxeqwCrxssgd2cQ==', N'123456', N'~\File\1\Account\李四（销售经理）_20130712165157_80_logo2.jpg', N'lisi@163.com', 2, 1, 1)
+INSERT [dbo].[Account] ([ID], [SystemStatus], [Name], [LoginPwd], [Phone], [HeadImagePath], [Email], [RoleID], [AccountStatusID], [IsActivated]) VALUES (1, 0, N'张三', N'8ZjHBEPwxeqwCrxssgd2cQ==', N'1111', N'~\File\1\Account\20130712165054_80_QQ20130712095702.jpg', N'zhangsan@163.com', 1, 1, 1)
+INSERT [dbo].[Account] ([ID], [SystemStatus], [Name], [LoginPwd], [Phone], [HeadImagePath], [Email], [RoleID], [AccountStatusID], [IsActivated]) VALUES (2, 0, N'李四（销售经理）', N'8ZjHBEPwxeqwCrxssgd2cQ==', N'123456', N'~\File\1\Account\20130712165157_80_logo2.jpg', N'lisi@163.com', 2, 1, 1)
 SET IDENTITY_INSERT [dbo].[Account] OFF
 
 -----------------------------[Account_AccountMain]--------------------------

@@ -41,7 +41,7 @@ namespace Business
 
         public bool CheckIsExistAccountAdmin(int accountMainID, int? accountID = null)
         {
-            
+
             int accountStatusID = LookupFactory.GetLookupOptionIdByToken(EnumAccountStatus.Enabled);
             if (accountID != null && accountID.HasValue)
             {
@@ -49,6 +49,13 @@ namespace Business
                     && a.AccountID != accountID);
             }
             return List().Any(a => a.AccountMainID == accountMainID && (a.Account.Role.Token.Equals(SystemConst.Business.AccountAdmin) || a.Account.Role.ID == 1) && a.Account.SystemStatus == (int)EnumSystemStatus.Active && a.Account.AccountStatusID == accountStatusID);
+        }
+
+        public List<Account> GetAccountListByAccountMainID(int accountMainID)
+        {
+            string accountStatus = EnumAccountStatus.Enabled.ToString();
+            return List().Where(a => a.AccountMainID == accountMainID && a.Account.SystemStatus == (int)EnumSystemStatus.Active &&
+                a.Account.AccountStatus.Token.Equals(accountStatus) && a.AccountMain.AccountStatus.Token.Equals(accountStatus)).Select(a => a.Account).ToList();
         }
     }
 }
