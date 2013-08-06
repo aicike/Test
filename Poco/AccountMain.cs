@@ -87,7 +87,7 @@ namespace Poco
         /// <summary>
         /// 数据更新信息
         /// </summary>
-        public int AppUpdateID { get; set; }
+        public int? AppUpdateID { get; set; }
         public virtual AppUpdate AppUpdate { get; set; }
 
         /// <summary>

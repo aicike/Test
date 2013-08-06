@@ -27,6 +27,16 @@ namespace Web.Controllers
             }
             sb.Append("</ul>");
             ViewBag.Tree = sb.ToString();
+
+
+            var accountMainHousesModel = Factory.Get<IAccountMainHousesModel>(SystemConst.IOC_Model.AccountMainHousesModel);
+            var projectList= accountMainHousesModel.GetList(LoginAccount.CurrentAccountMainID).OrderBy(a=>a.ID).ToList();
+            var selectListProjects = new SelectList(projectList, "ID", "HName");
+            List<SelectListItem> newProjectList = new List<SelectListItem>();
+            newProjectList.Add(new SelectListItem { Text = "请选择", Value = "select", Selected = true });
+            newProjectList.AddRange(selectListProjects);
+            ViewData["Project"] = newProjectList;
+            
             return View(list);
         }
 

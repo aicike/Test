@@ -112,7 +112,7 @@
 
             $("#btnAddRule").click(function () {
                 $("#div_addKeyrule").show();
-                $("#txtRuleName").focus();
+                $("#AccountMainHousesID").focus();
                 clearText();
                 $.ajax({
                     type: "get",
@@ -301,6 +301,11 @@
                     新规则</label>
             </div>
             <div style="padding: 10px 5px 0px 10px;">
+                <div>
+                    <div style="width: 58px; text-align: right; float: left">
+                        项目：</div>
+                    @Html.DropDownList("AccountMainHousesID", ViewData["Project"] as List<SelectListItem>, new { })
+                    </div>
                 <div>
                     <div style="width: 58px; text-align: right; float: left">
                         规则名：</div>
