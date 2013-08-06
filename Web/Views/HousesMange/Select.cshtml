@@ -1,127 +1,237 @@
 ﻿@{
     ViewBag.Title = "Select";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    var ckTypeList = ViewBag.Building as List<Poco.LookupOption>;
+    var ckDicList = ViewBag.Decoration as List<Poco.LookupOption>;
+    string dicText = "";
+    string[] dics = Model.Decoration.Split(',');
+    string typeText = "";
+    string[] types = Model.BuildingType.Split(',');
 }
-
 @section head{
-
 }
-
 @model Poco.AccountMainHouses
 <div class="title">
     楼盘详细信息</div>
-
-    <div class="body">
- 
+<div class="body">
     <fieldset style="border: 1px solid #d3d3d3;">
-            <legend> @Model.HName</legend>
-            <table  border="0" cellpadding="0" cellspacing="0" style=" line-height:25px" width="100%">
-                <tr>
-                    <td width="80px">
-                        开盘时间：
-                    </td>
-                    <td  width="217px"  >
-                         @Model.HOpeningDate
-                    </td>
-                    <td  width="80px" >
-                        入住时间：
-                    </td>
-                    <td width="217px"  >
-                        @Model.HCheckInDate
-                    </td>
-                    <td  width="80px" >
-                         竣工时间：
-                    </td>
-                    <td   >
-                        @Model.HCompletedDate
-                    </td>
-                </tr>
-                 <tr>
-                    <td >
-                        单元数：
-                    </td>
-                    <td   >
-                         @Model.HHouseCount
-                    </td>
-                    <td  >
-                        总户数：
-                    </td>
-                    <td  >
-                        @Model.HHouseholdsCount
-                    </td>
-                    <td   >
-                         车位数：
-                    </td>
-                    <td   >
-                        @Model.HParkingCount
-                    </td>
-                </tr>
-                <tr>
-                    <td >
-                        占用面积：
-                    </td>
-                    <td   >
-                         @Model.HOccupyArea
-                    </td>
-                    <td  >
-                        建筑面积：
-                    </td>
-                    <td  >
-                        @Model.HBuildingArea
-                    </td>
-                    <td   >
-                         绿化面积：
-                    </td>
-                    <td   >
-                        @Model.HGreeningArea
-                    </td>
-                </tr>
-                <tr>
-                    <td >
-                        产权年限：
-                    </td>
-                    <td   colspan="4" >
-                         @Model.PropertyRight
-                    </td>
-                </tr>
-                <tr>
-                    <td >
-                        楼盘地址：
-                    </td>
-                    <td  colspan="5" >
-                         @Model.HAddress
-                    </td>
-                </tr>
-                <tr>
-                    <td valign="top">
-                        楼盘介绍：
-                    </td>
-                    <td  colspan="5"  >
-                         @Model.HIntroduce
-                    </td>
-                </tr>
-                 <tr>
-                    <td >
-                        开发商：
-                    </td>
-                    <td   >
-                         @Model.HBuildCompany
-                    </td>
-                    <td  >
-                        投资商：
-                    </td>
-                    <td  >
-                        @Model.HInvestor
-                    </td>
-                    <td   >
-                    </td>
-                    <td   >
-                    </td>
-                </tr>
-            </table>
+        <legend>@Model.HName</legend>
+        <table border="0" cellpadding="0" cellspacing="0" style="line-height: 25px" width="100%">
+            <tr>
+                
+                <td width="80px">
+                    装修情况：
+                </td>
+                <td width="217px" >
+                    @foreach (var item in ckDicList)
+                    {
+                        foreach (var str in dics)
+                        {
+                            if (item.ID.ToString() == str)
+                            {
+                                dicText += item.Value + "、";
+                            }
+                        }
+                        
+                    }
+                    
+                    @dicText.TrimEnd('、')
+                </td>
+                <td width="80px">
+                    建筑类别：
+                </td>
+                <td  colspan="3">
+                    @foreach (var item in ckTypeList)
+                    {
+                        foreach (var str in types)
+                        {
+                            if (item.ID.ToString() == str)
+                            {
+                                typeText += item.Value + "、";
+                            }
+                        }
+                        
+                    }
+                    
+                     @typeText.TrimEnd('、')
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    项目地址：
+                </td>
+                <td colspan="5">
+                    @Model.HAddress
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    交通状况：
+                </td>
+                <td colspan="5">
+                    @Model.Traffic
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">
+                    项目介绍：
+                </td>
+                <td colspan="5">
+                    @Model.HIntroduce
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    物业公司：
+                </td>
+                <td>
+                    @Model.ProPertyCom
+                </td>
+                <td>
+                    物业费：
+                </td>
+                <td>
+                    @Model.PropetyFee
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    开发商：
+                </td>
+                <td>
+                    @Model.HBuildCompany
+                </td>
+                <td>
+                    投资商：
+                </td>
+                <td>
+                    @Model.HInvestor
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <br />
+    <fieldset style="border: 1px solid #d3d3d3;">
+        <legend>销售信息</legend>
+        <table border="0" cellpadding="0" cellspacing="0" style="line-height: 25px" width="100%">
+            <tr>
+                <td width="80px">
+                    销售状态：
+                </td>
+                <td width="217px">
+                    @if (Model.SalesState)
+                    {
+                        @:在售
+                    }
+                    else
+                    {
+                        @:已售完
+                    }
+                </td>
+                <td width="80px">
+                    售楼电话：
+                </td>
+                <td width="217px">
+                    @Model.TelSales
+                </td>
+                <td width="80px">
+                </td>
+                <td width="217px">
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">
+                    预售证：
+                </td>
+                <td colspan="5">
+                    @Model.PreSalePermit
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <br />
+    <fieldset style="border: 1px solid #d3d3d3;">
+        <legend>详细信息</legend>
+        <table border="0" cellpadding="0" cellspacing="0" style="line-height: 25px" width="100%">
+            <tr>
+                <td width="80px">
+                    开盘时间：
+                </td>
+                <td width="217px">
+                    @Model.HOpeningDate
+                </td>
+                <td width="80px">
+                    入住时间：
+                </td>
+                <td width="217px">
+                    @Model.HCheckInDate
+                </td>
+                <td width="80px">
+                    竣工时间：
+                </td>
+                <td>
+                    @Model.HCompletedDate
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    单元数：
+                </td>
+                <td>
+                    @Model.HHouseCount
+                </td>
+                <td>
+                    总户数：
+                </td>
+                <td>
+                    @Model.HHouseholdsCount
+                </td>
+                <td>
+                    车位数：
+                </td>
+                <td>
+                    @Model.HParkingCount
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    占用面积：
+                </td>
+                <td>
+                    @Model.HOccupyArea
+                </td>
+                <td>
+                    建筑面积：
+                </td>
+                <td>
+                    @Model.HBuildingArea
+                </td>
+                <td>
+                    绿化面积：
+                </td>
+                <td>
+                    @Model.HGreeningArea
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    产权年限：
+                </td>
+                <td colspan="4">
+                    @Model.PropertyRight
+                </td>
+            </tr>
+        </table>
     </fieldset>
     <div class="action">
-            <input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
-        </div>
-     </div>
-     
+        <input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+    </div>
+</div>

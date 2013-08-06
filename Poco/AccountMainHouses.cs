@@ -114,6 +114,10 @@ namespace Poco
         [Required(ErrorMessage = "请选择销售状态")]
         public bool SalesState { get; set; }
 
+        [Display(Name = "售楼电话")]
+        [Required(ErrorMessage = "请输入售楼电话")]
+        public string TelSales { get; set; }
+
         public virtual ICollection<AccountMainHouseInfo> AccountMainHouseInfos { get; set; }
 
         public virtual ICollection<AccountMainHouseType> AccountMainHouseTypes { get; set; }

@@ -20,6 +20,9 @@
             <th>
                 户型信息
             </th>
+            <th>
+                销售状态
+            </th>
             <th style="width: 200px;">
                 操作
             </th>
@@ -36,6 +39,17 @@
                
                 <td>
                     @Html.ActionLink("查看", "Index", "HouseType", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
+                </td>
+                <td>
+                    @if (item.SalesState)
+                    {
+                        @:在售
+                    }
+                    else
+                    {
+                        @:已售完                    
+                    }
+                    
                 </td>
                 <td class="operation">
 

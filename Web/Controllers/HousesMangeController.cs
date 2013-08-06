@@ -7,6 +7,8 @@ using Controllers;
 using Injection;
 using Interface;
 using Poco;
+using Business;
+using Poco.Enum;
 
 namespace Web.Controllers
 {
@@ -27,12 +29,24 @@ namespace Web.Controllers
         {
             var hounsesModel = Factory.Get<IAccountMainHousesModel>(SystemConst.IOC_Model.AccountMainHousesModel);
             var Hounses = hounsesModel.Get(id);
+            //建筑类型
+            var LookupBuilding = LookupFactory.GetLookupOptionList(typeof(EnumBuildingType));
+            ViewBag.Building = LookupBuilding;
+            //装修类型
+            var LookupDecoration = LookupFactory.GetLookupOptionList(typeof(EnumDecoration));
+            ViewBag.Decoration = LookupDecoration;
             return View(Hounses);
         }
 
         public ActionResult Add()
         {
             ViewBag.HostName = LoginAccount.HostName;
+            //建筑类型
+            var LookupBuilding = LookupFactory.GetLookupOptionList(typeof(EnumBuildingType));
+            ViewBag.Building = LookupBuilding;
+            //装修类型
+            var LookupDecoration = LookupFactory.GetLookupOptionList(typeof(EnumDecoration));
+            ViewBag.Decoration = LookupDecoration;
             return View();
         }
 
@@ -41,6 +55,8 @@ namespace Web.Controllers
         {
             Hounses.AccountMainID = LoginAccount.CurrentAccountMainID;
             var hounsesModel = Factory.Get<IAccountMainHousesModel>(SystemConst.IOC_Model.AccountMainHousesModel);
+            Hounses.BuildingType = Request.Form["BuildingType"];
+            Hounses.Decoration = Request.Form["Decoration"];
             var result = hounsesModel.Add(Hounses);
             if (result.HasError)
             {
@@ -55,6 +71,12 @@ namespace Web.Controllers
             var hounsesModel = Factory.Get<IAccountMainHousesModel>(SystemConst.IOC_Model.AccountMainHousesModel);
             var Hounses = hounsesModel.Get(id);
             ViewBag.HostName = LoginAccount.HostName;
+            //建筑类型
+            var LookupBuilding = LookupFactory.GetLookupOptionList(typeof(EnumBuildingType));
+            ViewBag.Building = LookupBuilding;
+            //装修类型
+            var LookupDecoration = LookupFactory.GetLookupOptionList(typeof(EnumDecoration));
+            ViewBag.Decoration = LookupDecoration;
             return View(Hounses);
         }
 
@@ -62,6 +84,8 @@ namespace Web.Controllers
         public ActionResult Edit(AccountMainHouses Hounses)
         {
             var hounsesModel = Factory.Get<IAccountMainHousesModel>(SystemConst.IOC_Model.AccountMainHousesModel);
+            Hounses.BuildingType = Request.Form["BuildingType"];
+            Hounses.Decoration = Request.Form["Decoration"];
             var result = hounsesModel.Edit(Hounses);
             if (result.HasError)
             {
