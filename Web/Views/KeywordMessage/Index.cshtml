@@ -143,6 +143,7 @@
                     $("#txtRuleName").val(result.RuleName);
                     $("#txtRuleNo").val(result.FullRuleNo);
                     $("#txtKey").val(result.Keywords);
+                    $("#AccountMainHousesID").val(result.ProjectID);
                     $("#hidKeyID").val(keyId);
                     var content = "";
                     var textReplysJSON = JSON.parse(result.TextReplys).TextReplys;
@@ -179,14 +180,24 @@
                     }
                 });
             });
-
+            
             $("#btnSaveRule").click(function () {
                 var ruleName = $("#txtRuleName").val().trim();
                 var hidRuleNo = $("#hidRuleNo").val().trim();
                 var fullRuleNo = $("#txtRuleNo").val().trim();
                 var parentID = $("#hidParentID").val().trim();
+                var projectID=$("#AccountMainHousesID").val();
                 if (parentID.length == 0) {
                     parentID = null;
+                }
+                if(projectID=="0"){
+                    $(this).focus();
+                    JAlert({
+                        Message: "请选择项目。",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return false;
                 }
                 if (ruleName.length == 0) {
                     $("#txtRuleName").focus();
@@ -224,7 +235,7 @@
                 if (keyId.length > 0) {
                     $.ajax({
                         type: "post",
-                        data: { keyID: keyId, ruleName: ruleName, keys: key, messageTexts: msgTexts, messageFileIDs: null, messageImageTextIDs: null },
+                        data: { keyID: keyId, ruleName: ruleName, keys: key, messageTexts: msgTexts, messageFileIDs: null, messageImageTextIDs: null,projectID:projectID  },
                         url: editUrl,
                         success: function (result) {
                             if (result != undefined && result != null && result.length > 0) {
@@ -242,7 +253,7 @@
                 } else {
                     $.ajax({
                         type: "post",
-                        data: { ruleName: ruleName, ruleNo: hidRuleNo, fullRuleNo: fullRuleNo, parentID: parentID, keys: key, messageTexts: msgTexts, messageFileIDs: null, messageImageTextIDs: null },
+                        data: { ruleName: ruleName, ruleNo: hidRuleNo, fullRuleNo: fullRuleNo, parentID: parentID, keys: key, messageTexts: msgTexts, messageFileIDs: null, messageImageTextIDs: null,projectID:projectID },
                         url: addUrl,
                         success: function (result) {
                             if (result != undefined && result != null && result.length > 0) {
@@ -305,7 +316,7 @@
                     <div style="width: 58px; text-align: right; float: left">
                         项目：</div>
                     @Html.DropDownList("AccountMainHousesID", ViewData["Project"] as List<SelectListItem>, new { })
-                    </div>
+                </div>
                 <div>
                     <div style="width: 58px; text-align: right; float: left">
                         规则名：</div>

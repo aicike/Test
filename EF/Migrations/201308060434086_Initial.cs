@@ -471,7 +471,7 @@ namespace EF.Migrations
                         HAddress = c.String(nullable: false, maxLength: 200),
                         HHouseCount = c.Int(nullable: false),
                         HHouseholdsCount = c.Int(),
-                        HParkingCount = c.Int(nullable: false),
+                        HParkingCount = c.Int(),
                         HOpeningDate = c.DateTime(nullable: false),
                         HCheckInDate = c.DateTime(nullable: false),
                         HCompletedDate = c.DateTime(nullable: false),
@@ -488,6 +488,7 @@ namespace EF.Migrations
                         PropetyFee = c.String(nullable: false, maxLength: 200),
                         PreSalePermit = c.String(nullable: false, maxLength: 2000),
                         SalesState = c.Boolean(nullable: false),
+                        TelSales = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
@@ -772,7 +773,6 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
-
 
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };

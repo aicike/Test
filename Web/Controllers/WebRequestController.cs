@@ -12,6 +12,9 @@ namespace Web.Controllers
 {
     public class WebRequestController : Controller
     {
+        /// <summary>
+        /// 每次打开应用时，提交的clientID
+        /// </summary>
         [HttpPost]
         public void PostClientID(string clientID, int? userID)
         {
@@ -19,6 +22,9 @@ namespace Web.Controllers
             clientInfoModel.PostClientID(clientID, userID);
         }
 
+        /// <summary>
+        /// 检查邮箱是否已存在
+        /// </summary>
         [HttpPost]
         public string CheckEmailOnRegister(string email, int? userLoginInfoID)
         {
@@ -26,6 +32,9 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(userLoginInfoModel.CheckEmailOnRegister(email));
         }
 
+        /// <summary>
+        /// 获取销售人员信息
+        /// </summary>
         [HttpPost]
         public string GetAccountList(int accountMainID)
         {
@@ -41,6 +50,20 @@ namespace Web.Controllers
                 Email = a.Email
             });
             return Newtonsoft.Json.JsonConvert.SerializeObject(accountList);
+        }
+
+        /// <summary>
+        /// 获取项目列表信息
+        /// </summary>
+        public string GetProjectList(int accountMainID)
+        {
+            var accountMainHousesModel = Factory.Get<IAccountMainHousesModel>(SystemConst.IOC_Model.AccountMainHousesModel);
+            var list = accountMainHousesModel.GetList(accountMainID).OrderBy(a => a.ID).Select(a => new App_AccountMainHouse
+            {
+                ID = a.ID,
+                HName = a.HName
+            }).ToList();
+            return Newtonsoft.Json.JsonConvert.SerializeObject(list);
         }
     }
 }

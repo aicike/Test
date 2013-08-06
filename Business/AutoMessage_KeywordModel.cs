@@ -22,6 +22,7 @@ namespace Business
             msg.FullRuleNo = entity.FullRuleNo;
             msg.AccountMainID = accountMainID;
             msg.ParentAutoMessage_KeywordID = entity.ParentAutoMessage_KeywordID;
+            msg.AccountMainHousesID = entity.AccountMainHousesID;
             result = base.Add(msg);
             if (result.HasError)
             {
@@ -126,11 +127,12 @@ namespace Business
         }
 
         [Transaction]
-        public Result Edit(int keyID, string ruleName, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int accountMainID)
+        public Result Edit(int keyID, string ruleName,int projectID, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int accountMainID)
         {
             Result result = new Result();
 
             var autoMessage_Keyword = Get(keyID);
+            autoMessage_Keyword.AccountMainHousesID = projectID;
             autoMessage_Keyword.RuleName = ruleName;
             //添加回复规则
             result = base.Edit(autoMessage_Keyword);
@@ -211,5 +213,6 @@ namespace Business
             }
             return sb.ToString();
         }
+
     }
 }

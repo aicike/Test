@@ -57,6 +57,7 @@
     <Compile Include="Validation\AllowCheckPermissionsAttribute.cs" />
     <Compile Include="AppUpdate.cs" />
     <Compile Include="WebAPI_Poco\App_Account.cs" />
+    <Compile Include="WebAPI_Poco\App_AccountMainHouse.cs" />
     <Compile Include="WebAPI_Poco\App_UserLoginInfo.cs" />
     <Compile Include="_B_PushMessage.cs" />
     <Compile Include="_B_AccountMainLibraryInfo.cs" />
