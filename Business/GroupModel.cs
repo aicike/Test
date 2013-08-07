@@ -16,12 +16,6 @@ namespace Business
         {
             List<Group> list = new List<Group>();
             var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-            var account = accountModel.Get(accountID);
-            if (account.Role.Token == SystemConst.Business.AccountAdmin)
-            {
-                list.Add(new Group() { GroupName = "安装App,未注册账号" });
-            }
-
             if (accountMainID != null && accountMainID.HasValue)
             {
                 list.AddRange(List().Where(a => a.AccountID == accountID && a.AccountMainID == accountMainID).OrderBy(a => a.ID).ToList());
