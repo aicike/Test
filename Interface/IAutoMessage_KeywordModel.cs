@@ -9,7 +9,7 @@ namespace Interface
     public interface IAutoMessage_KeywordModel : IBaseModel<AutoMessage_Keyword>
     {
         Result Add(AutoMessage_Keyword entity, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int accountMainID);
-        Result Edit(int keyID, string ruleName, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int accountMainID);
+        Result Edit(int keyID, string ruleName, int projectID, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int accountMainID);
         IQueryable<AutoMessage_Keyword> List(int accoutMainID);
         int GetRuleNo(int accountMainID, int? parentAutoMessage_KeywordID);
         string GetFullRuleNo(int accountMainID, string fullRuleNo);

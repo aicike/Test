@@ -123,5 +123,28 @@ namespace Business
             result.Entity = newUser;
             return result;
         }
+
+
+        public Result CheckEmailOnRegister(string email, int? userLoginInfoID = null)
+        {
+            Result result = new Result();
+            if (userLoginInfoID != null && userLoginInfoID.HasValue && userLoginInfoID.Value > 0)
+            {
+                var exist = List().Any(a => a.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase) && a.ID != userLoginInfoID.Value);
+                if (exist)
+                {
+                    result.Error = "该邮箱已存在。";
+                }
+            }
+            else
+            {
+                var exist = List().Any(a => a.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase));
+                if (exist)
+                {
+                    result.Error = "该邮箱已存在。";
+                }
+            }
+            return result;
+        }
     }
 }

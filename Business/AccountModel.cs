@@ -78,9 +78,9 @@ namespace Business
                     var accountPath = HttpContext.Current.Server.MapPath(path);
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                     var width = 80;
-                    var imageName = string.Format("{0}_{1}_{2}", account.Name, token, HeadImagePathFile.FileName);
+                    var imageName = string.Format("{0}_{1}",  token, HeadImagePathFile.FileName);
                     var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
-                    var imageThumbnailName = string.Format("{0}_{1}_{2}_{3}", account.Name, token, width, HeadImagePathFile.FileName);
+                    var imageThumbnailName = string.Format("{0}_{1}_{2}",  token, width, HeadImagePathFile.FileName);
                     var imageThumbnailPath = string.Format("{0}\\{1}", accountPath, imageThumbnailName);
                     HeadImagePathFile.SaveAs(imagePath);
                     //缩略图

@@ -11,5 +11,6 @@ namespace Interface
     {
         Result Add(Account_AccountMain account_accountMain, HttpPostedFileBase HeadImagePathFile);
         bool CheckIsExistAccountAdmin(int accountMainID,int? accountID=null);
+        List<Account> GetAccountListByAccountMainID(int accountMainID);
     }
 }

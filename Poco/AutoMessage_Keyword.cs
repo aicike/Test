@@ -32,6 +32,10 @@ namespace Poco
 
         public int? ParentAutoMessage_KeywordID { get; set; }
 
+        public int AccountMainHousesID { get; set; }
+
+        public virtual AccountMainHouses AccountMainHouses { get; set; }
+
         public virtual AutoMessage_Keyword ParentAutoMessage_Keyword { get; set; }
 
         public virtual ICollection<Keyword> Keywords { get; set; }

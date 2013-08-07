@@ -12,5 +12,7 @@ namespace Interface
         Result App_Login(App_UserLoginInfo app_UserLoginInfo);
 
         Result Register(App_UserLoginInfo userLoginInfo);
+
+        Result CheckEmailOnRegister(string email, int? userLoginInfoID = null);
     }
 }

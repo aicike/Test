@@ -6,16 +6,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Poco
 {
+    /// <summary>
+    /// 项目表
+    /// </summary>
     public class AccountMainHouses : IBaseEntity
     {
         public int ID { get; set; }
 
         public int SystemStatus { get; set; }
 
-
         public int AccountMainID { get; set; }
         public virtual AccountMain AccountMain { get; set; }
-
 
         [Display(Name = "项目名称")]
         [Required(ErrorMessage = "请输入项目名称")]
@@ -38,7 +39,7 @@ namespace Poco
         public int? HHouseholdsCount { get; set; }
 
         [Display(Name = "车位数")]
-        public int HParkingCount { get; set; }
+        public int? HParkingCount { get; set; }
 
         [Display(Name = "开盘时间")]
         [Required(ErrorMessage = "请输入开盘时间")]
@@ -113,8 +114,14 @@ namespace Poco
         [Required(ErrorMessage = "请选择销售状态")]
         public bool SalesState { get; set; }
 
+        [Display(Name = "售楼电话")]
+        [Required(ErrorMessage = "请输入售楼电话")]
+        public string TelSales { get; set; }
+
         public virtual ICollection<AccountMainHouseInfo> AccountMainHouseInfos { get; set; }
 
         public virtual ICollection<AccountMainHouseType> AccountMainHouseTypes { get; set; }
+
+        public virtual ICollection<AutoMessage_Keyword> AutoMessage_Keywords { get; set; }
     }
 }
