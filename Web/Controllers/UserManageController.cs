@@ -17,18 +17,6 @@ namespace Web.Controllers
             var groupModel = Factory.Get<IGroupModel>(SystemConst.IOC_Model.GroupModel);
             var groupList = groupModel.GetGroupListByAccountID(LoginAccount.ID, null);
             ViewBag.GroupList = groupList;
-
-            if(LoginAccount.Role.Token== SystemConst.Business.AccountAdmin)
-            {
-                Group g = new Group();
-                g.GroupName = "未注册账号";
-                
-            }
-
-
-
-
-
             int defaultGroupID = groupList.Where(a => a.IsDefaultGroup).FirstOrDefault().ID;
             groupID = groupID ?? defaultGroupID;
             ViewBag.DefaultGroupID = defaultGroupID;

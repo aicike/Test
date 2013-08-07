@@ -172,7 +172,7 @@ INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (6, 0, N'素材管理', NULL, N'LibraryVoice', N'Index', 2, 4)
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (7, 0, N'素材管理', NULL, N'LibraryVideo', N'Index', 3, 4)
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (8, 0, N'素材管理', NULL, N'LibraryImageText', N'Index', 4, 4)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (9, 0, N'账号管理', NULL, N'AccountMange', N'Index', 5, NULL)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (9, 0, N'账号管理', NULL, N'Account', N'Index', 5, NULL)
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (10, 0, N'项目管理', NULL, N'HousesMange', N'Index', 6, NULL)
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (11, 0, N'设置', NULL, N'Set', N'Index', 7, NULL)
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (12, 0, N'单元管理', NULL, N'HouseInfo', N'Index', 1, 10)

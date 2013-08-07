@@ -142,6 +142,7 @@
     <Compile Include="Areas\System\Controllers\SystemUserRoleController.cs" />
     <Compile Include="Areas\System\Controllers\SystenUserController.cs" />
     <Compile Include="Areas\System\SystemAreaRegistration.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AjaxController.cs" />
     <Compile Include="Controllers\BaseController\BaseController.cs" />
     <Compile Include="Controllers\ExitController.cs" />
@@ -486,13 +487,13 @@
     <Content Include="Areas\System\Views\AccountMainManage\ViewAccountMain.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\System\Views\AccountManage\AddAccount.cshtml" />
+    <Content Include="Areas\System\Views\AccountMain\AddAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\System\Views\AccountManage\EditAccount.cshtml" />
+    <Content Include="Areas\System\Views\AccountMain\EditAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\System\Views\AccountManage\Index.cshtml" />
+    <Content Include="Areas\System\Views\AccountMain\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\System\Views\SystemUserHome\Index.cshtml" />
@@ -645,6 +646,7 @@
     <None Include="video-js\video1.rmvb" />
     <Content Include="Views\Set\Index.cshtml" />
     <Content Include="Views\KeywordMessage\Index.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
