@@ -143,6 +143,9 @@
                     $("#txtRuleName").val(result.RuleName);
                     $("#txtRuleNo").val(result.FullRuleNo);
                     $("#txtKey").val(result.Keywords);
+                    if(result.IsFistAutoMessage==true){
+                        $("#cbFirst").attr("checked","checked");
+                    }
                     $("#AccountMainHousesID").val(result.ProjectID);
                     $("#hidKeyID").val(keyId);
                     var content = "";
@@ -187,6 +190,11 @@
                 var fullRuleNo = $("#txtRuleNo").val().trim();
                 var parentID = $("#hidParentID").val().trim();
                 var projectID=$("#AccountMainHousesID").val();
+                var cbFirst=$("#cbFirst:checked").length;
+                var isFirstAutoMsg=false;
+                if(cbFirst>0){
+                    isFirstAutoMsg=true;
+                }
                 if (parentID.length == 0) {
                     parentID = null;
                 }
@@ -235,7 +243,7 @@
                 if (keyId.length > 0) {
                     $.ajax({
                         type: "post",
-                        data: { keyID: keyId, ruleName: ruleName, keys: key, messageTexts: msgTexts, messageFileIDs: null, messageImageTextIDs: null,projectID:projectID  },
+                        data: { keyID: keyId, ruleName: ruleName, keys: key, messageTexts: msgTexts, messageFileIDs: null, messageImageTextIDs: null,projectID:projectID,isFirstAutoMsg:isFirstAutoMsg},
                         url: editUrl,
                         success: function (result) {
                             if (result != undefined && result != null && result.length > 0) {
@@ -253,7 +261,7 @@
                 } else {
                     $.ajax({
                         type: "post",
-                        data: { ruleName: ruleName, ruleNo: hidRuleNo, fullRuleNo: fullRuleNo, parentID: parentID, keys: key, messageTexts: msgTexts, messageFileIDs: null, messageImageTextIDs: null,projectID:projectID },
+                        data: { ruleName: ruleName, ruleNo: hidRuleNo, fullRuleNo: fullRuleNo, parentID: parentID, keys: key, messageTexts: msgTexts, messageFileIDs: null, messageImageTextIDs: null,projectID:projectID,isFirstAutoMsg:isFirstAutoMsg },
                         url: addUrl,
                         success: function (result) {
                             if (result != undefined && result != null && result.length > 0) {
@@ -325,11 +333,14 @@
                     <div style="width: 58px; text-align: right; float: left">
                         编号：</div>
                     <input type="text" id="txtRuleNo" readonly="readonly" /><input type="hidden" id="hidRuleNo" /><input
-                        type="hidden" id="hidParentID" /><input type="hidden" id="hidKeyID" /></div>
+                        type="hidden" id="hidParentID" /><input type="hidden" id="hidKeyID" />
+                    <div style="float: right; margin-right: 20px;">
+                        <input type="checkbox" id="cbFirst" />引导消息</div>
+                </div>
                 <div>
                     <div style="width: 58px; text-align: right; float: left">
                         关键字：</div>
-                    <textarea id="txtKey" rows="3" cols="70"></textarea>
+                    <textarea id="txtKey" rows="3" cols="72"></textarea>
                 </div>
             </div>
             <div style="padding: 5px 5px 0px 10px;">

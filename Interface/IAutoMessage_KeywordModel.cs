@@ -9,11 +9,12 @@ namespace Interface
     public interface IAutoMessage_KeywordModel : IBaseModel<AutoMessage_Keyword>
     {
         Result Add(AutoMessage_Keyword entity, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int accountMainID);
-        Result Edit(int keyID, string ruleName, int projectID, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int accountMainID);
+        Result Edit(int keyID, string ruleName, int projectID, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int accountMainID, bool isFistAutoMessage);
         IQueryable<AutoMessage_Keyword> List(int accoutMainID);
         int GetRuleNo(int accountMainID, int? parentAutoMessage_KeywordID);
         string GetFullRuleNo(int accountMainID, string fullRuleNo);
         AutoMessage_Keyword GetByID_AccountMainID(int id, int accountMainID);
         Result Delete(int id, int accountMainID);
+        List<AutoMessage_Keyword> GetFirstAutoMessage(int accountMainID);
     }
 }

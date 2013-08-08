@@ -33,8 +33,12 @@ namespace Poco
         public int? ParentAutoMessage_KeywordID { get; set; }
 
         public int AccountMainHousesID { get; set; }
-
         public virtual AccountMainHouses AccountMainHouses { get; set; }
+
+        /// <summary>
+        /// 是否是第一条自助回复信息
+        /// </summary>
+        public bool? IsFistAutoMessage { get; set; }
 
         public virtual AutoMessage_Keyword ParentAutoMessage_Keyword { get; set; }
 

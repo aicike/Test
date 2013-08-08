@@ -59,7 +59,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public string Add(string ruleName, int ruleNo, string fullRuleNo, int? parentID, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int projectID)
+        public string Add(string ruleName, int ruleNo, string fullRuleNo, int? parentID, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int projectID, bool isFirstAutoMsg)
         {
             var autoMessage_KeywordModel = Factory.Get<IAutoMessage_KeywordModel>(SystemConst.IOC_Model.AutoMessage_KeywordModel);
             AutoMessage_Keyword msg = new AutoMessage_Keyword();
@@ -68,6 +68,7 @@ namespace Web.Controllers
             msg.FullRuleNo = fullRuleNo;
             msg.ParentAutoMessage_KeywordID = parentID;
             msg.AccountMainHousesID = projectID;
+            msg.IsFistAutoMessage = isFirstAutoMsg;
             var result = autoMessage_KeywordModel.Add(msg, keys, messageTexts, messageFileIDs, messageImageTextIDs, LoginAccount.CurrentAccountMainID);
             if (result.HasError)
             {
@@ -78,10 +79,10 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public string Edit(int keyID, string ruleName, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs,int projectID)
+        public string Edit(int keyID, string ruleName, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int projectID, bool isFirstAutoMsg)
         {
             var autoMessage_KeywordModel = Factory.Get<IAutoMessage_KeywordModel>(SystemConst.IOC_Model.AutoMessage_KeywordModel);
-            var result = autoMessage_KeywordModel.Edit(keyID, ruleName,projectID, keys, messageTexts, messageFileIDs, messageImageTextIDs, LoginAccount.CurrentAccountMainID);
+            var result = autoMessage_KeywordModel.Edit(keyID, ruleName, projectID, keys, messageTexts, messageFileIDs, messageImageTextIDs, LoginAccount.CurrentAccountMainID, isFirstAutoMsg);
             if (result.HasError)
             {
                 return AlertJS_NoTag(new Dialog(result.Error));
@@ -116,7 +117,8 @@ namespace Web.Controllers
                 RuleName = entity.RuleName,
                 RuleNo = entity.RuleNo,
                 FullRuleNo = entity.FullRuleNo,
-                ProjectID=entity.AccountMainHousesID,
+                ProjectID = entity.AccountMainHousesID,
+                IsFistAutoMessage = entity.IsFistAutoMessage,
                 Keywords = entity.Keywords.Select(a => a.Token).ToList().ConvertToString(","),
                 //KeywordAutoMessages = entity.KeywordAutoMessages.Select(a => new KeywordAutoMessage { ID = a.ID }).ToList().ObjectToJson("KeywordAutoMessages"),
                 TextReplys = entity.TextReplys.Select(a => a.Content).ToList().ObjectToJson("TextReplys")

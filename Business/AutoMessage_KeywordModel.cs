@@ -23,6 +23,7 @@ namespace Business
             msg.AccountMainID = accountMainID;
             msg.ParentAutoMessage_KeywordID = entity.ParentAutoMessage_KeywordID;
             msg.AccountMainHousesID = entity.AccountMainHousesID;
+            msg.IsFistAutoMessage = entity.IsFistAutoMessage;
             result = base.Add(msg);
             if (result.HasError)
             {
@@ -127,13 +128,14 @@ namespace Business
         }
 
         [Transaction]
-        public Result Edit(int keyID, string ruleName,int projectID, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int accountMainID)
+        public Result Edit(int keyID, string ruleName, int projectID, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int accountMainID, bool isFistAutoMessage)
         {
             Result result = new Result();
 
             var autoMessage_Keyword = Get(keyID);
             autoMessage_Keyword.AccountMainHousesID = projectID;
             autoMessage_Keyword.RuleName = ruleName;
+            autoMessage_Keyword.IsFistAutoMessage = isFistAutoMessage;
             //添加回复规则
             result = base.Edit(autoMessage_Keyword);
             if (result.HasError) return result;
@@ -212,6 +214,11 @@ namespace Business
                 sb.Append(GetIDString(item.AutoMessage_KeywordsKeyword));
             }
             return sb.ToString();
+        }
+
+        public List<AutoMessage_Keyword> GetFirstAutoMessage(int accountMainID)
+        {
+            return List().Where(a => a.AccountMainID == accountMainID).OrderBy(a => a.ID).ToList();
         }
 
     }
