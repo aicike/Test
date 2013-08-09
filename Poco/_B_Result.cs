@@ -36,6 +36,8 @@ namespace Poco
             }
         }
 
+        public string EntityType { get; set; }
+
         public object Entity { get; set; }
     }
 }

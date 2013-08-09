@@ -16,5 +16,6 @@ namespace Interface
         AutoMessage_Keyword GetByID_AccountMainID(int id, int accountMainID);
         Result Delete(int id, int accountMainID);
         List<AutoMessage_Keyword> GetFirstAutoMessage(int accountMainID);
+        List<AutoMessage_Keyword> GetAutoMessageByKey(int accountMainID,string key);
     }
 }

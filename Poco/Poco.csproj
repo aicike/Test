@@ -59,6 +59,7 @@
     <Compile Include="WebAPI_Poco\App_Account.cs" />
     <Compile Include="WebAPI_Poco\App_AccountMainHouse.cs" />
     <Compile Include="WebAPI_Poco\App_AutoMessage.cs" />
+    <Compile Include="WebAPI_Poco\App_AutoMessageReplyContent.cs" />
     <Compile Include="WebAPI_Poco\App_HistoryChat.cs" />
     <Compile Include="WebAPI_Poco\App_Chat.cs" />
     <Compile Include="WebAPI_Poco\App_User.cs" />

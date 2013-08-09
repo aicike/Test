@@ -221,5 +221,11 @@ namespace Business
             return List().Where(a => a.AccountMainID == accountMainID).OrderBy(a => a.ID).ToList();
         }
 
+        public List<AutoMessage_Keyword> GetAutoMessageByKey(int accountMainID, string key)
+        {
+            var keywordList = Factory.Get<IKeywordModel>(SystemConst.IOC_Model.KeywordModel).List();
+            var list = keywordList.Where(a => a.AutoMessage_Keyword.AccountMainHousesID == accountMainID && a.Token.Contains(key)).Select(a => a.AutoMessage_Keyword).OrderBy(a => a.ID).ToList();
+            return list;
+        }
     }
 }
