@@ -110,6 +110,10 @@
                 });
             });
 
+            $("#btnAddFile").click(function(){
+                
+            });
+
             $("#btnAddRule").click(function () {
                 $("#div_addKeyrule").show();
                 $("#AccountMainHousesID").focus();
@@ -290,6 +294,7 @@
             $("#hidRuleNo").val("");
             $("#hidParentID").val("");
             $("#hidKeyID").val("");
+            $("#cbFirst").removeAttr("checked");
 
             $("#txtRuleName").val("");
             $("#txtRuleNo").val("");
@@ -347,18 +352,24 @@
                 <div class="keyRight">
                     <div class="keyTitle">
                         回复<div style="float: right">
-                            文字(0)&nbsp;&nbsp;文件(0)&nbsp;&nbsp;图文(0)</div>
+                            @*文字(0)&nbsp;&nbsp;文件(0)&nbsp;&nbsp;图文(0)*@
+                        </div>
                     </div>
                     <div id="msgContent">
                     </div>
-                    <div class="keyMessageItem" style="margin-bottom: 60px;">
-                        新增回复&nbsp;>&nbsp;&nbsp;<span class="newAddBtn" id="btnAddText">文字</span>&nbsp;&nbsp;<span
-                            class="newAddBtn">文件</span>&nbsp;&nbsp;<span class="newAddBtn">图文</span></div>
                 </div>
             </div>
-            <div style="padding: 10px 5px 10px 10px; float: right; width: 180px">
-                <input class="button" value="保存" type="button" id="btnSaveRule" />&nbsp;&nbsp;<input
-                    class="button" type="button" value="取消" id="btnCancel" />
+            <div style="padding: 10px 5px 10px 10px;">
+                <div style="float: left">
+                    新增回复&nbsp;>
+                    <input class="button" value="文字" type="button" id="btnAddText" style="width: 40px !important;" />
+                    <input class="button" value="文件" type="button" id="btnAddFile" style="width: 40px !important;" />
+                    <input class="button" value="图文" type="button" id="btnAddImgText" style="width: 40px !important;" /></div>
+                <div style="float: right">
+                    <input class="button" value="保存" type="button" id="btnSaveRule" />&nbsp;&nbsp;<input
+                        class="button" type="button" value="取消" id="btnCancel" /></div>
+                <div style="clear: both">
+                </div>
             </div>
             <div style="clear: both">
             </div>

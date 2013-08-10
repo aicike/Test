@@ -13,6 +13,22 @@ namespace Web.Controllers
 {
     public class LibraryController : ManageAccountController
     {
+        [AllowCheckPermissions(false)]
+        public ActionResult Index()
+        {
+            var libraryImageModel = Factory.Get<ILibraryImageModel>(SystemConst.IOC_Model.LibraryImageModel);
+            var libraryImageTextModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
+            var libraryVideoModel = Factory.Get<ILibraryVideoModel>(SystemConst.IOC_Model.LibraryVideoModel);
+            var libraryVoiceModel = Factory.Get<ILibraryVoiceModel>(SystemConst.IOC_Model.LibraryVoiceModel);
+
+            var imageList = libraryImageModel.GetLibraryList(LoginAccount.CurrentAccountMainID).ToList();
+            ViewBag.ImageList = imageList;
+
+
+
+            return View();
+        }
+
         protected List<LibraryType> LibraryType()
         {
             var accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);

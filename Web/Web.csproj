@@ -416,7 +416,6 @@
     <Folder Include="Areas\System\Models\" />
     <Folder Include="Areas\System\Views\Shared\" />
     <Folder Include="File\" />
-    <Folder Include="Views\Library\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -647,6 +646,7 @@
     <Content Include="Views\Set\Index.cshtml" />
     <Content Include="Views\KeywordMessage\Index.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Library\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
