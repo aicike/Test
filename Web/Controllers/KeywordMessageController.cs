@@ -36,7 +36,7 @@ namespace Web.Controllers
             newProjectList.Add(new SelectListItem { Text = "请选择", Value = "0", Selected = true });
             newProjectList.AddRange(selectListProjects);
             ViewData["Project"] = newProjectList;
-
+            ViewBag.HostName = LoginAccount.HostName;
             return View(list);
         }
 
@@ -59,7 +59,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public string Add(string ruleName, int ruleNo, string fullRuleNo, int? parentID, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int projectID, bool isFirstAutoMsg)
+        public string Add(string ruleName, int ruleNo, string fullRuleNo, int? parentID, string keys, string messageFileIDs, string messageImageTextIDs, int projectID, bool isFirstAutoMsg, string files)
         {
             var autoMessage_KeywordModel = Factory.Get<IAutoMessage_KeywordModel>(SystemConst.IOC_Model.AutoMessage_KeywordModel);
             AutoMessage_Keyword msg = new AutoMessage_Keyword();
@@ -69,7 +69,8 @@ namespace Web.Controllers
             msg.ParentAutoMessage_KeywordID = parentID;
             msg.AccountMainHousesID = projectID;
             msg.IsFistAutoMessage = isFirstAutoMsg;
-            var result = autoMessage_KeywordModel.Add(msg, keys, messageTexts, messageFileIDs, messageImageTextIDs, LoginAccount.CurrentAccountMainID);
+            List<Files> fileList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Files>>(files);
+            var result = autoMessage_KeywordModel.Add(msg, keys, messageFileIDs, messageImageTextIDs, LoginAccount.CurrentAccountMainID, fileList);
             if (result.HasError)
             {
                 return AlertJS_NoTag(new Dialog(result.Error));
@@ -79,10 +80,11 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public string Edit(int keyID, string ruleName, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int projectID, bool isFirstAutoMsg)
+        public string Edit(int keyID, string ruleName, string keys, string messageFileIDs, string messageImageTextIDs, int projectID, bool isFirstAutoMsg, string files)
         {
             var autoMessage_KeywordModel = Factory.Get<IAutoMessage_KeywordModel>(SystemConst.IOC_Model.AutoMessage_KeywordModel);
-            var result = autoMessage_KeywordModel.Edit(keyID, ruleName, projectID, keys, messageTexts, messageFileIDs, messageImageTextIDs, LoginAccount.CurrentAccountMainID, isFirstAutoMsg);
+            List<Files> fileList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Files>>(files);
+            var result = autoMessage_KeywordModel.Edit(keyID, ruleName, projectID, keys, messageFileIDs, messageImageTextIDs, LoginAccount.CurrentAccountMainID, isFirstAutoMsg, fileList);
             if (result.HasError)
             {
                 return AlertJS_NoTag(new Dialog(result.Error));
@@ -111,6 +113,50 @@ namespace Web.Controllers
         {
             var autoMessage_KeywordModel = Factory.Get<IAutoMessage_KeywordModel>(SystemConst.IOC_Model.AutoMessage_KeywordModel);
             var entity = autoMessage_KeywordModel.GetByID_AccountMainID(id, LoginAccount.ID);
+            List<Files> files = new List<Files>();
+            if (entity.KeywordAutoMessages.Count > 0)
+            {
+                var libraryImageModel = Factory.Get<ILibraryImageModel>(SystemConst.IOC_Model.LibraryImageModel);
+                var libraryImageTextModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
+                var libraryVideoModel = Factory.Get<ILibraryVideoModel>(SystemConst.IOC_Model.LibraryVideoModel);
+                var libraryVoiceModel = Factory.Get<ILibraryVoiceModel>(SystemConst.IOC_Model.LibraryVoiceModel);
+                foreach (var item in entity.KeywordAutoMessages)
+                {
+                    Files file = new Files();
+                    file.id = item.MessageID;
+                    switch (item.EnumMessageType.Token)
+                    {
+                        case "Text":
+                            file.type = "LibraryText";
+                            file.content = item.TextReply;
+                            break;
+                        case "Image":
+                            file.type = "LibraryImage";
+                            var img = libraryImageModel.Get(item.MessageID);
+                            file.url = Url.Content(img.FilePath);
+                            file.fileTitle = img.FileName;
+                            break;
+                        case "Video":
+                            file.type = "LibraryVideo";
+                            var video = libraryVideoModel.Get(item.MessageID);
+                            file.url = Url.Content(video.FilePath);
+                            file.fileTitle = video.FileName;
+                            break;
+                        case "Voice":
+                            file.type = "LibraryVoice";
+                            var voice = libraryVoiceModel.Get(item.MessageID);
+                            file.url = Url.Content(voice.FilePath);
+                            file.fileTitle = voice.FileName;
+                            break;
+                        case "ImageText":
+                            file.type = "LibraryImageText";
+                            //file.url = Url.Content(libraryImageTextModel.Get(item.MessageID).FilePath);
+                            break;
+                    }
+                    files.Add(file);
+                }
+            }
+
             var json = new
             {
                 ID = entity.ID,
@@ -120,8 +166,7 @@ namespace Web.Controllers
                 ProjectID = entity.AccountMainHousesID,
                 IsFistAutoMessage = entity.IsFistAutoMessage,
                 Keywords = entity.Keywords.Select(a => a.Token).ToList().ConvertToString(","),
-                //KeywordAutoMessages = entity.KeywordAutoMessages.Select(a => new KeywordAutoMessage { ID = a.ID }).ToList().ObjectToJson("KeywordAutoMessages"),
-                TextReplys = entity.TextReplys.Select(a => a.Content).ToList().ObjectToJson("TextReplys")
+                KeywordAutoMessages = files.ObjectToJson("Files")
             };
             return Json(json, JsonRequestBehavior.AllowGet);
         }

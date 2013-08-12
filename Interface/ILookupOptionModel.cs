@@ -8,6 +8,7 @@ namespace Interface
 {
     public interface ILookupOptionModel : IBaseModel<LookupOption>
     {
+        List<LookupOption> List_Cache();
         int GetIdByToken(Enum value);
     }
 }

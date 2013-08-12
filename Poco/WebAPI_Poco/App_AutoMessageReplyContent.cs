@@ -14,6 +14,10 @@ namespace Poco.WebAPI_Poco
         /// </summary>
         public int Type { get; set; }
 
+        public string FileTitle { get; set; }
+
+        public string FileUrl { get; set; }
+
         public string Content { get; set; }
     }
 }

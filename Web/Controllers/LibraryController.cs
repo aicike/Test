@@ -14,7 +14,7 @@ namespace Web.Controllers
     public class LibraryController : ManageAccountController
     {
         [AllowCheckPermissions(false)]
-        public ActionResult Index()
+        public ActionResult Manage()
         {
             var libraryImageModel = Factory.Get<ILibraryImageModel>(SystemConst.IOC_Model.LibraryImageModel);
             var libraryImageTextModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);

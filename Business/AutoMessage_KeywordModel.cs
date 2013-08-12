@@ -6,13 +6,14 @@ using Poco;
 using Injection;
 using Interface;
 using Injection.Transaction;
+using Poco.Enum;
 
 namespace Business
 {
     public class AutoMessage_KeywordModel : BaseModel<AutoMessage_Keyword>, IAutoMessage_KeywordModel
     {
         [Transaction]
-        public Result Add(AutoMessage_Keyword entity, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int accountMainID)
+        public Result Add(AutoMessage_Keyword entity, string keys, string messageFileIDs, string messageImageTextIDs, int accountMainID, List<Files> files)
         {
             Result result = new Result();
             //添加回复规则
@@ -45,20 +46,51 @@ namespace Business
             {
                 return result;
             }
-            //添加回复(文本)
-            var textReplyModel = Factory.Get<ITextReplyModel>(SystemConst.IOC_Model.TextReplyModel);
-            var msgArray = messageTexts.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
-            List<TextReply> textReply = new List<TextReply>();
-            foreach (var item in msgArray)
+            if (result.HasError)
             {
-                TextReply text = new TextReply();
-                text.Content = item;
-                text.AutoMessage_KeywordID = msg.ID;
-                textReply.Add(text);
+                return result;
             }
-            result = textReplyModel.AddList(textReply);
-            //添加回复（文件）
-
+            if (files != null)
+            {
+                var keywordAutoMessageModel = Factory.Get<IKeywordAutoMessageModel>(SystemConst.IOC_Model.KeywordAutoMessageModel);
+                var libraryText = LookupFactory.GetLookupOptionIdByToken(EnumMessageType.Text);
+                var libraryImage = LookupFactory.GetLookupOptionIdByToken(EnumMessageType.Image);
+                var libraryVideo = LookupFactory.GetLookupOptionIdByToken(EnumMessageType.Video);
+                var libraryVoice = LookupFactory.GetLookupOptionIdByToken(EnumMessageType.Voice);
+                var libraryImageText = LookupFactory.GetLookupOptionIdByToken(EnumMessageType.ImageText);
+                List<KeywordAutoMessage> keywordAutoMessageList = new List<KeywordAutoMessage>();
+                for (int i = 0; i < files.Count; i++)
+                {
+                    KeywordAutoMessage kam = new KeywordAutoMessage();
+                    kam.AutoMessage_KeywordID = msg.ID;
+                    kam.Order = i + 1;
+                    kam.MessageID = files[i].id;
+                    switch (files[i].type)
+                    {
+                        case "LibraryText":
+                            kam.EnumMessageTypeID = libraryText;
+                            kam.TextReply = files[i].content;
+                            break;
+                        case "LibraryImage":
+                            kam.EnumMessageTypeID = libraryImage;
+                            break;
+                        case "LibraryVideo":
+                            kam.EnumMessageTypeID = libraryVideo;
+                            break;
+                        case "LibraryVoice":
+                            kam.EnumMessageTypeID = libraryVoice;
+                            break;
+                        case "LibraryImageText":
+                            kam.EnumMessageTypeID = libraryImageText;
+                            break;
+                    }
+                    keywordAutoMessageList.Add(kam);
+                }
+                if (keywordAutoMessageList.Count > 0)
+                {
+                    result = keywordAutoMessageModel.AddList(keywordAutoMessageList);
+                }
+            }
             //添加回复（图文）
             return result;
         }
@@ -128,7 +160,7 @@ namespace Business
         }
 
         [Transaction]
-        public Result Edit(int keyID, string ruleName, int projectID, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int accountMainID, bool isFistAutoMessage)
+        public Result Edit(int keyID, string ruleName, int projectID, string keys, string messageFileIDs, string messageImageTextIDs, int accountMainID, bool isFistAutoMessage, List<Files> files)
         {
             Result result = new Result();
 
@@ -157,24 +189,50 @@ namespace Business
             result = keywordModel.AddList(keywords);
             if (result.HasError) return result;
 
-            //添加回复(文本)
-            var textReplyModel = Factory.Get<ITextReplyModel>(SystemConst.IOC_Model.TextReplyModel);
-            var msgArray = messageTexts.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
-            List<TextReply> textReply = new List<TextReply>();
-            foreach (var item in msgArray)
-            {
-                TextReply text = new TextReply();
-                text.Content = item;
-                text.AutoMessage_KeywordID = keyID;
-                textReply.Add(text);
-            }
-            result = textReplyModel.DeleteByAutoMessage_KeywordID(keyID);
+            //添加回复
+            var keywordAutoMessageModel = Factory.Get<IKeywordAutoMessageModel>(SystemConst.IOC_Model.KeywordAutoMessageModel);
+            result = keywordAutoMessageModel.DeleteByAutoMessage_KeywordID(keyID);
             if (result.HasError) return result;
-
-            result = textReplyModel.AddList(textReply);
-            //添加回复（文件）
-
-            //添加回复（图文）
+            if (files != null)
+            {
+                var libraryText = LookupFactory.GetLookupOptionIdByToken(EnumMessageType.Text);
+                var libraryImage = LookupFactory.GetLookupOptionIdByToken(EnumMessageType.Image);
+                var libraryVideo = LookupFactory.GetLookupOptionIdByToken(EnumMessageType.Video);
+                var libraryVoice = LookupFactory.GetLookupOptionIdByToken(EnumMessageType.Voice);
+                var libraryImageText = LookupFactory.GetLookupOptionIdByToken(EnumMessageType.ImageText);
+                List<KeywordAutoMessage> keywordAutoMessageList = new List<KeywordAutoMessage>();
+                for (int i = 0; i < files.Count; i++)
+                {
+                    KeywordAutoMessage kam = new KeywordAutoMessage();
+                    kam.AutoMessage_KeywordID = keyID;
+                    kam.Order = i + 1;
+                    kam.MessageID = files[i].id;
+                    switch (files[i].type)
+                    {
+                        case "LibraryText":
+                            kam.EnumMessageTypeID = libraryText;
+                            kam.TextReply = files[i].content;
+                            break;
+                        case "LibraryImage":
+                            kam.EnumMessageTypeID = libraryImage;
+                            break;
+                        case "LibraryVideo":
+                            kam.EnumMessageTypeID = libraryVideo;
+                            break;
+                        case "LibraryVoice":
+                            kam.EnumMessageTypeID = libraryVoice;
+                            break;
+                        case "LibraryImageText":
+                            kam.EnumMessageTypeID = libraryImageText;
+                            break;
+                    }
+                    keywordAutoMessageList.Add(kam);
+                }
+                if (keywordAutoMessageList.Count > 0)
+                {
+                    result = keywordAutoMessageModel.AddList(keywordAutoMessageList);
+                }
+            }
             return result;
         }
 
@@ -189,13 +247,33 @@ namespace Business
             }
             try
             {
-                string ids = GetIDString(entity.AutoMessage_KeywordsKeyword);
-                if (ids.Length > 0)
+                CommonModel commonModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+                //删除关联项
+                if (entity.AutoMessage_KeywordsKeyword.Count > 0)
                 {
-                    ids += id;
+                    string ids = GetIDString(entity.AutoMessage_KeywordsKeyword);
+                    if (ids.Length > 0)
+                    {
+                        ids += 0;
+                    }
+                    //删除引用的KeywordAutoMessage
+                    string deleteKeywordAutoMessage = string.Format("DELETE dbo.KeywordAutoMessage WHERE AutoMessage_KeywordID in({0})", ids);
+                    commonModel.SqlExecute(deleteKeywordAutoMessage);
+                    //删除引用的Keyword
+                    string deleteKeyword = string.Format("DELETE dbo.Keyword WHERE AutoMessage_KeywordID in({0})", ids);
+                    commonModel.SqlExecute(deleteKeyword);
+                    //删除子项
+                    string deleteSQL = string.Format("DELETE dbo.AutoMessage_Keyword WHERE ID IN ({0})", ids);
+                    base.SqlExecute(deleteSQL);
                 }
-                string deleteSQL = string.Format("DELETE dbo.AutoMessage_Keyword WHERE ID IN ({0})", ids);
-                base.SqlExecute(deleteSQL);
+                //删除引用的KeywordAutoMessage
+                string deleteKeywordAutoMessageMain = string.Format("DELETE dbo.KeywordAutoMessage WHERE AutoMessage_KeywordID ={0}", id);
+                commonModel.SqlExecute(deleteKeywordAutoMessageMain);
+                //删除引用的Keyword
+                string deleteKeywordMain = string.Format("DELETE dbo.Keyword WHERE AutoMessage_KeywordID ={0}", id);
+                commonModel.SqlExecute(deleteKeywordMain);
+                //删除自身对象
+                result = base.CompleteDelete(id);
             }
             catch (Exception ex)
             {

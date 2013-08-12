@@ -49,9 +49,9 @@
         .keyMessageItem
         {
             border-bottom: 1px solid #d3d3d3;
-            height: 30px;
+            max-height: 80px;
             line-height: 30px;
-            padding: 0px 5px 0px 5px;
+            padding: 3px 5px 3px 5px;
         }
         .newAddBtn
         {
@@ -97,7 +97,7 @@
                                     BtnOk: "确定"
                                 });
                             } else {
-                                $("#msgContent").append('<div class="keyMessageItem"><label class="msgText">' + txtMsgText + '</label><span style="float: right;cursor: pointer;" onclick="delText(this)">删除</span></div>');
+                                $("#msgContent").append('<div class="keyMessageItem"><input type="hidden" class="hidFile" fileType="LibraryText" value="0" textval="'+txtMsgText+'"><label class="msgText">' + txtMsgText + '</label><span style="float: right;cursor: pointer;" onclick="delText(this)">删除</span></div>');
                                 $("#txtMsgText").val("");
                                 $(this).dialog("close");
                             }
@@ -111,7 +111,40 @@
             });
 
             $("#btnAddFile").click(function(){
-                
+                var src=$("#iframeLibrary").attr("src");
+                $("#iframeLibrary").attr("src",src);
+                $("#dialogFile").dialog({
+                    resizable: false,
+                    height: 650,
+                    width: 829,
+                    modal: true,
+                    draggable: false,
+                    buttons: {
+                        "确定": function () {
+                            var subDocument = $(window.frames[0].document);
+                            var index= subDocument.find(".ui-tabs-active").attr("t");
+                            var sel=subDocument.find("#"+index).find(":checked")
+                            if(sel.length<=0){
+                                JAlert({
+                                    Message: "请选择一个素材。",
+                                    DialogType: "Ok",
+                                    BtnOk: "确定"
+                                });
+                                return;
+                            }
+                            var title=sel.parent().find("label").text();
+                            var hidObj=sel.parent().find(":hidden")
+                            var url=hidObj.val();
+                            var id=hidObj.attr("fileID");
+                            var type=hidObj.attr("fileType")
+                            $("#msgContent").append('<div class="keyMessageItem"><img style="max-width: 100px;max-height:80px;vertical-align:middle" src="'+url+'" /><input type="hidden" class="hidFile" fileType="'+type+'" value="'+id+'"><label class="msgText">' + title + '</label><span style="float: right;cursor: pointer;" onclick="delText(this)">删除</span></div>');
+                            $(this).dialog("close");
+                        },
+                        "取消": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
             });
 
             $("#btnAddRule").click(function () {
@@ -152,12 +185,17 @@
                     }
                     $("#AccountMainHousesID").val(result.ProjectID);
                     $("#hidKeyID").val(keyId);
-                    var content = "";
-                    var textReplysJSON = JSON.parse(result.TextReplys).TextReplys;
-                    $.each(textReplysJSON, function (i, n) {
-                        content += '<div class="keyMessageItem"><label class="msgText">' + n + '</label><span style="float: right;cursor: pointer;" onclick="delText(this)">删除</span></div>';
+                    var files = JSON.parse(result.KeywordAutoMessages).Files;
+                    $.each(files,function(i,n){
+                        switch (n.type) {
+                            case "LibraryText":
+                                $("#msgContent").append('<div class="keyMessageItem"><input type="hidden" class="hidFile" fileType="LibraryText" value="0" textval="'+n.content+'"><label class="msgText">' + n.content + '</label><span style="float: right;cursor: pointer;" onclick="delText(this)">删除</span></div>');
+                                break;
+                            default:
+                                $("#msgContent").append('<div class="keyMessageItem"><img style="max-width: 100px;max-height:80px;vertical-align:middle" src="'+n.url+'" /><input type="hidden" class="hidFile" fileType="'+n.type+'" value="'+n.id+'"><label class="msgText">' + n.fileTitle + '</label><span style="float: right;cursor: pointer;" onclick="delText(this)">删除</span></div>');
+                                break;
+                        }
                     });
-                    $("#msgContent").append(content);
                 }, "json");
             });
 
@@ -194,6 +232,14 @@
                 var fullRuleNo = $("#txtRuleNo").val().trim();
                 var parentID = $("#hidParentID").val().trim();
                 var projectID=$("#AccountMainHousesID").val();
+                var fileArray=new Array();
+                $.each($(".hidFile"),function(i,n){
+                    var file = new Object(); 
+                    file.type = $(n).attr("fileType");
+                    file.id = $(n).val(); 
+                    file.content=$(n).attr("textval");
+                    fileArray.push(file);
+                });
                 var cbFirst=$("#cbFirst:checked").length;
                 var isFirstAutoMsg=false;
                 if(cbFirst>0){
@@ -231,7 +277,7 @@
                     return false;
                 }
                 var messageCount = $(".keyMessageItem").length;
-                if (messageCount <= 1) {
+                if (messageCount <=0) {
                     JAlert({
                         Message: "请添加回复消息。",
                         DialogType: "Ok",
@@ -239,15 +285,11 @@
                     });
                     return false;
                 }
-                var msgTexts = "";
-                $.each($(".msgText"), function (i, n) {
-                    msgTexts += $(n).text() + "|";
-                });
                 var keyId = $("#hidKeyID").val().trim();
                 if (keyId.length > 0) {
                     $.ajax({
                         type: "post",
-                        data: { keyID: keyId, ruleName: ruleName, keys: key, messageTexts: msgTexts, messageFileIDs: null, messageImageTextIDs: null,projectID:projectID,isFirstAutoMsg:isFirstAutoMsg},
+                        data: { keyID: keyId, ruleName: ruleName, keys: key, messageFileIDs: null, messageImageTextIDs: null,projectID:projectID,isFirstAutoMsg:isFirstAutoMsg,files:JSON.stringify(fileArray)},
                         url: editUrl,
                         success: function (result) {
                             if (result != undefined && result != null && result.length > 0) {
@@ -265,7 +307,7 @@
                 } else {
                     $.ajax({
                         type: "post",
-                        data: { ruleName: ruleName, ruleNo: hidRuleNo, fullRuleNo: fullRuleNo, parentID: parentID, keys: key, messageTexts: msgTexts, messageFileIDs: null, messageImageTextIDs: null,projectID:projectID,isFirstAutoMsg:isFirstAutoMsg },
+                        data: { ruleName: ruleName, ruleNo: hidRuleNo, fullRuleNo: fullRuleNo, parentID: parentID, keys: key,  messageFileIDs: null, messageImageTextIDs: null,projectID:projectID,isFirstAutoMsg:isFirstAutoMsg,files:JSON.stringify(fileArray) },
                         url: addUrl,
                         success: function (result) {
                             if (result != undefined && result != null && result.length > 0) {
@@ -302,11 +344,13 @@
             $("#msgContent").empty();
         }
         function delText(obj) {
+            console.log($(obj).parent());
             $(obj).parent().remove();
         }
         function deleteItem(id){
             return AppDelete('确定删除?',deleteUrl+"/"+id);
         }
+
     </script>
 }
 <div class="title">
@@ -379,5 +423,9 @@
     </div>
     <div id="dialogText" title="添加回复文字" style="display: none">
         <textarea cols="75" rows="6" id="txtMsgText"></textarea>
+    </div>
+    <div id="dialogFile" title="选择文件素材" style="display: none">
+        <iframe id="iframeLibrary" src="@Url.Action("Manage", "Library", new { HostName = ViewBag.HostName })" style="width:800px;height:530px;border:none;overflow:hidden">
+        </iframe>
     </div>
 </div>

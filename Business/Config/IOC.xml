@@ -49,7 +49,7 @@
   <object id="AccountMainHouseInfoDetailModel" type="Business.AccountMainHouseInfoDetailModel" parent="EFModel" singleton="false"></object>
   <object id="UserLoginInfoModel" type="Business.UserLoginInfoModel" parent="EFModel" singleton="false"></object>
   <object id="KeywordModel" type="Business.KeywordModel" parent="EFModel" singleton="false"></object>
-  <object id="TextReplyModel" type="Business.TextReplyModel" parent="EFModel" singleton="false"></object>
+  <object id="KeywordAutoMessageModel" type="Business.KeywordAutoMessageModel" parent="EFModel" singleton="false"></object>
   
   <!--<object id="UserModel" type="NightClubBooth.Business.UserModel" parent="EFModel" singleton="false">
     <property name="LookupOptionModel" ref="LookupOptionModel"/>

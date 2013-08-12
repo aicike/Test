@@ -33,7 +33,6 @@ namespace EF
         public DbSet<Account_AccountMain> Account_AccountMain { get; set; }
         public DbSet<ClientInfo> ClientInfo { get; set; }
         public DbSet<Keyword> Keyword { get; set; }
-        public DbSet<TextReply> TextReply { get; set; }
 
 
 
@@ -54,7 +53,6 @@ namespace EF
             modelBuilder.Configurations.Add(new AutoMessage_KeywordMap());
             modelBuilder.Configurations.Add(new KeywordAutoMessageMap());
             modelBuilder.Configurations.Add(new KeywordMap());
-            modelBuilder.Configurations.Add(new TextReplyMap());
             modelBuilder.Configurations.Add(new AppUpdateMap
 ());
 

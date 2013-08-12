@@ -49,6 +49,7 @@
     <Compile Include="IAccountMainModel.cs" />
     <Compile Include="IAccountModel.cs" />
     <Compile Include="IBaseModel.cs" />
+    <Compile Include="IKeywordAutoMessageModel.cs" />
     <Compile Include="IKeywordModel.cs" />
     <Compile Include="ILibraryModel.cs" />
     <Compile Include="ILookupOptionModel.cs" />
@@ -58,7 +59,6 @@
     <Compile Include="ISystemUserModel.cs" />
     <Compile Include="ISystemUserRoleModel.cs" />
     <Compile Include="ISystemUserRole_SystemUserMenuModel.cs" />
-    <Compile Include="ITextReplyModel.cs" />
     <Compile Include="IUserLoginInfoModel.cs" />
     <Compile Include="IUserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

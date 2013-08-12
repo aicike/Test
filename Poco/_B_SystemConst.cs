@@ -27,7 +27,8 @@ namespace Poco
             public const string SystemUserMenu = "SystemUserMenu";
             public const string Menu = "Menu";
             public const string RoleMenu = "RoleMenu";
-            public const string RoleOption = "RoleOption";            
+            public const string RoleOption = "RoleOption";
+            public const string LookupOption = "LookupOption";  
         }
 
         public class Notice
@@ -90,9 +91,9 @@ namespace Poco
             public const string AccountMainHouseTypeModel = "AccountMainHouseTypeModel";
             public const string AccountMainHouseInfoDetailModel = "AccountMainHouseInfoDetailModel";
             public const string KeywordModel = "KeywordModel";
-            public const string TextReplyModel = "TextReplyModel";
+            public const string KeywordAutoMessageModel = "KeywordAutoMessageModel";
 
-
+            
         }
     }
 }

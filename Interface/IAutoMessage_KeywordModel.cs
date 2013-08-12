@@ -8,8 +8,8 @@ namespace Interface
 {
     public interface IAutoMessage_KeywordModel : IBaseModel<AutoMessage_Keyword>
     {
-        Result Add(AutoMessage_Keyword entity, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int accountMainID);
-        Result Edit(int keyID, string ruleName, int projectID, string keys, string messageTexts, string messageFileIDs, string messageImageTextIDs, int accountMainID, bool isFistAutoMessage);
+        Result Add(AutoMessage_Keyword entity, string keys,string messageFileIDs, string messageImageTextIDs, int accountMainID,List<Files> files);
+        Result Edit(int keyID, string ruleName, int projectID, string keys,string messageFileIDs, string messageImageTextIDs, int accountMainID, bool isFistAutoMessage,List<Files> files);
         IQueryable<AutoMessage_Keyword> List(int accoutMainID);
         int GetRuleNo(int accountMainID, int? parentAutoMessage_KeywordID);
         string GetFullRuleNo(int accountMainID, string fullRuleNo);

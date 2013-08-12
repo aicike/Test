@@ -37,6 +37,9 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
+        /// <summary>
+        /// 根据编号返回答案
+        /// </summary>
         [HttpPost]
         public string GetAutoMessageByID(int autoMessageID)
         {
@@ -44,26 +47,17 @@ namespace Web.Controllers
             Result result = new Result();
             try
             {
-
                 var obj = autoMessage_KeywordModel.Get(autoMessageID);
                 List<App_AutoMessageReplyContent> replayList = new List<App_AutoMessageReplyContent>();
 
-                //普通文本
-                foreach (var item in obj.TextReplys)
-                {
-                    App_AutoMessageReplyContent rep = new App_AutoMessageReplyContent();
-                    rep.ID = item.ID;
-                    rep.Type = (int)EnumMessageType.Text;
-                    rep.Content = item.Content;
-                    replayList.Add(rep);
-                }
-                //其他类型回复
                 var otherReply = obj.KeywordAutoMessages.OrderBy(a => a.Order);
+                const string Text = "Text";
                 const string Image = "Image";
                 const string Video = "Video";
                 const string Voice = "Voice";
                 const string ImageText = "ImageText";
 
+                var libraryTextModel = Factory.Get<ILibraryTextModel>(SystemConst.IOC_Model.LibraryTextModel);
                 var libraryImageModel = Factory.Get<ILibraryImageModel>(SystemConst.IOC_Model.LibraryImageModel);
                 var libraryImageTextModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
                 var libraryVideoModel = Factory.Get<ILibraryVideoModel>(SystemConst.IOC_Model.LibraryVideoModel);
@@ -75,12 +69,18 @@ namespace Web.Controllers
                     App_AutoMessageReplyContent rep = new App_AutoMessageReplyContent();
                     switch (item.EnumMessageType.Token)
                     {
+                        case Text:
+                            rep.ID = item.ID;
+                            rep.Type = (int)EnumMessageType.Text;
+                            rep.Content =item.TextReply;
+                            break;
                         case Image:
                             var img = libraryImageModel.Get(item.MessageID);
                             if (img != null)
                             {
                                 rep.Type = (int)EnumMessageType.Image;
-                                rep.Content = hostUrl + Url.Content(img.FilePath);
+                                rep.FileUrl = hostUrl + Url.Content(img.FilePath);
+                                rep.FileTitle =img.FileName;
                             }
                             break;
                         case Video:
@@ -88,7 +88,8 @@ namespace Web.Controllers
                             if (video != null)
                             {
                                 rep.Type = (int)EnumMessageType.Video;
-                                rep.Content = hostUrl + Url.Content(video.FilePath);
+                                rep.FileUrl = hostUrl + Url.Content(video.FilePath);
+                                rep.FileTitle = video.FileName;
                             }
                             break;
                         case Voice:
@@ -96,7 +97,8 @@ namespace Web.Controllers
                             if (voice != null)
                             {
                                 rep.Type = (int)EnumMessageType.Voice;
-                                rep.Content = hostUrl + Url.Content(voice.FilePath);
+                                rep.FileUrl = hostUrl + Url.Content(voice.FilePath);
+                                rep.FileTitle = voice.FileName;
                             }
                             break;
                         case ImageText:
@@ -122,6 +124,10 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
+
+        /// <summary>
+        /// 根据关键字返回答案
+        /// </summary>
         [HttpPost]
         public string GetAutoMessageByKey(int accountMainID, string key)
         {
@@ -157,22 +163,14 @@ namespace Web.Controllers
                 {
                     //单条，推送答案
                     var replay = list.FirstOrDefault();
-                    //普通文本
-                    foreach (var reply in replay.TextReplys)
-                    {
-                        App_AutoMessageReplyContent rep = new App_AutoMessageReplyContent();
-                        rep.ID = reply.ID;
-                        rep.Type = (int)EnumMessageType.Text;
-                        rep.Content = reply.Content;
-                        replayList.Add(rep);
-                    }
-                    //其他类型回复
                     var otherReply = replay.KeywordAutoMessages.OrderBy(a => a.Order);
+                    const string Text = "Text";
                     const string Image = "Image";
                     const string Video = "Video";
                     const string Voice = "Voice";
                     const string ImageText = "ImageText";
 
+                    var libraryTextModel = Factory.Get<ILibraryTextModel>(SystemConst.IOC_Model.LibraryTextModel);
                     var libraryImageModel = Factory.Get<ILibraryImageModel>(SystemConst.IOC_Model.LibraryImageModel);
                     var libraryImageTextModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
                     var libraryVideoModel = Factory.Get<ILibraryVideoModel>(SystemConst.IOC_Model.LibraryVideoModel);
@@ -184,6 +182,11 @@ namespace Web.Controllers
                         App_AutoMessageReplyContent rep = new App_AutoMessageReplyContent();
                         switch (item.EnumMessageType.Token)
                         {
+                            case Text:
+                                rep.ID = item.ID;
+                                rep.Type = (int)EnumMessageType.Text;
+                                rep.Content = item.TextReply;
+                                break;
                             case Image:
                                 var img = libraryImageModel.Get(item.MessageID);
                                 if (img != null)

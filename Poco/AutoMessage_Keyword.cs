@@ -47,8 +47,6 @@ namespace Poco
         public virtual ICollection<KeywordAutoMessage> KeywordAutoMessages { get; set; }
 
         public virtual ICollection<AutoMessage_Keyword> AutoMessage_KeywordsKeyword { get; set; }
-
-        public virtual ICollection<TextReply> TextReplys { get; set; }
     }
 
     /// <summary>
@@ -71,25 +69,6 @@ namespace Poco
     }
 
     /// <summary>
-    /// 普通文本自动回复
-    /// </summary>
-    public class TextReply : IBaseEntity
-    {
-        public int ID { get; set; }
-
-        public int SystemStatus { get; set; }
-
-        [Display(Name = "消息")]
-        [Required(ErrorMessage = "请输入消息")]
-        [StringLength(4000, ErrorMessage = "长度小于4000")]
-        public string Content { get; set; }
-
-        public int AutoMessage_KeywordID { get; set; }
-
-        public virtual AutoMessage_Keyword AutoMessage_Keyword { get; set; }
-    }
-
-    /// <summary>
     /// 关键字回复内容
     /// </summary>
     public class KeywordAutoMessage : IBaseEntity
@@ -103,10 +82,9 @@ namespace Poco
 
         public virtual LookupOption EnumMessageType { get; set; }
 
-        [Display(Name = "描述")]
-        [Required(ErrorMessage = "请输入描述")]
-        [StringLength(100, ErrorMessage = "长度小于100")]
-        public string Describe { get; set; }
+        [Display(Name = "文字消息")]
+        [StringLength(4000, ErrorMessage = "长度小于4000")]
+        public string TextReply { get; set; }
 
         /// <summary>
         /// 引用的消息的主键值
