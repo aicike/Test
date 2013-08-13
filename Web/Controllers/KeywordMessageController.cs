@@ -133,18 +133,29 @@ namespace Web.Controllers
                         case "Image":
                             file.type = "LibraryImage";
                             var img = libraryImageModel.Get(item.MessageID);
+                            if (img == null) {
+                                continue;
+                            }
                             file.url = Url.Content(img.FilePath);
                             file.fileTitle = img.FileName;
                             break;
                         case "Video":
                             file.type = "LibraryVideo";
                             var video = libraryVideoModel.Get(item.MessageID);
+                            if (video == null)
+                            {
+                                continue;
+                            }
                             file.url = Url.Content(video.FilePath);
                             file.fileTitle = video.FileName;
                             break;
                         case "Voice":
                             file.type = "LibraryVoice";
                             var voice = libraryVoiceModel.Get(item.MessageID);
+                            if (voice == null)
+                            {
+                                continue;
+                            }
                             file.url = Url.Content(voice.FilePath);
                             file.fileTitle = voice.FileName;
                             break;

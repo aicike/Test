@@ -2,6 +2,8 @@
     ViewBag.Title = "Index";
     Layout = null;
     List<Poco.LibraryImage> imageList = ViewBag.ImageList as List<Poco.LibraryImage>;
+    List<Poco.LibraryVoice> voiceList = ViewBag.VoiceList as List<Poco.LibraryVoice>;
+    List<Poco.LibraryVideo> videoList = ViewBag.VideoList as List<Poco.LibraryVideo>;
 }
 <link href="@Url.Content("~/Content/themes/base/jquery-ui-1.10.2.custom.min.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~//Content/Style.css")" rel="stylesheet" type="text/css" />
@@ -17,6 +19,11 @@
     {
         margin-bottom: 10px;
     }
+    .tabdiv
+    {
+        height: 465px;
+        overflow-y: auto;
+    }
 </style>
 <div>
     <div id="tabs" style="width: 793px; height: 523px;">
@@ -26,19 +33,34 @@
             <li t="tabs-3"><a href="#tabs-3">视频</a></li>
             <li t="tabs-4"><a href="#tabs-4">图片消息</a></li>
         </ul>
-        <div id="tabs-1">
+        <div id="tabs-1" class="tabdiv">
             @foreach (var item in imageList)
             {
                 <div class="item">
-                    <input type="hidden" fileID="@item.ID" fileType="LibraryImage" value="@Url.Content(item.FilePath)" /><input type="radio" name="radioImg" />&nbsp;&nbsp;<img style="max-width: 200px;max-height:200px;vertical-align:middle" src="@Url.Content(item.FilePath)" />&nbsp;&nbsp;<label>@item.FileName</label>
+                    <input type="hidden" fileID="@item.ID" fileType="LibraryImage" value="@Url.Content(item.FilePath)" /><input
+                        type="radio" name="radioImg" />&nbsp;&nbsp;<img style="max-width: 200px;max-height:200px;vertical-align:middle" src="@Url.Content(item.FilePath)" />&nbsp;&nbsp;<label>@item.FileName</label>
                 </div>        
             }
         </div>
-        <div id="tabs-2">
+        <div id="tabs-2" class="tabdiv">
+            @foreach (var item in voiceList)
+            {
+                <div class="item">
+                    <input type="hidden" fileID="@item.ID" fileType="LibraryVoice" value="@Url.Content(item.FilePath)" /><input
+                        type="radio" name="radioImg" />&nbsp;&nbsp;<span>点击播放</span>&nbsp;&nbsp;<label>@item.FileName</label>
+                </div>        
+            }
         </div>
-        <div id="tabs-3">
+        <div id="tabs-3" class="tabdiv">
+            @foreach (var item in videoList)
+            {
+                <div class="item">
+                    <input type="hidden" fileID="@item.ID" fileType="LibraryVideo" value="@Url.Content(item.FilePath)" /><input
+                        type="radio" name="radioImg" />&nbsp;&nbsp;<span>点击播放</span>&nbsp;&nbsp;<label>@item.FileName</label>
+                </div>        
+            }
         </div>
-        <div id="tabs-4">
+        <div id="tabs-4" class="tabdiv">
         </div>
     </div>
 </div>

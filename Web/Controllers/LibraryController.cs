@@ -20,11 +20,15 @@ namespace Web.Controllers
             var libraryImageTextModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
             var libraryVideoModel = Factory.Get<ILibraryVideoModel>(SystemConst.IOC_Model.LibraryVideoModel);
             var libraryVoiceModel = Factory.Get<ILibraryVoiceModel>(SystemConst.IOC_Model.LibraryVoiceModel);
-
+            //图片
             var imageList = libraryImageModel.GetLibraryList(LoginAccount.CurrentAccountMainID).ToList();
             ViewBag.ImageList = imageList;
-
-
+            //语音
+            var voiceList = libraryVoiceModel.GetLibraryList(LoginAccount.CurrentAccountMainID).ToList();
+            ViewBag.VoiceList = voiceList;
+            //视频
+            var videoList = libraryVideoModel.GetLibraryList(LoginAccount.CurrentAccountMainID).ToList();
+            ViewBag.VideoList = videoList;
 
             return View();
         }
