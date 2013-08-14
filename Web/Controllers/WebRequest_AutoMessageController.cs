@@ -178,9 +178,26 @@ namespace Web.Controllers
                         var itext = libraryImageTextModel.Get(item.MessageID);
                         if (itext != null)
                         {
+                            rep.ID = itext.ID;
                             rep.Type = (int)EnumMessageType.ImageText;
-                            var headImage = hostUrl + Url.Content(itext.ImagePath);
-                            rep.Content = string.Format("|{0}|/n{1}", headImage, itext.Summary);
+                            rep.FileTitle = itext.Title;
+                            rep.Summary = itext.Summary;
+                            rep.FileUrl = hostUrl + Url.Content(itext.ImagePath);
+                            if (itext.LibraryImageTexts.Count > 0)
+                            {
+                                List<App_AutoMessageReplyContent> subImageText = new List<App_AutoMessageReplyContent>();
+                                foreach (var it in itext.LibraryImageTexts)
+                                {
+                                    App_AutoMessageReplyContent rep_it = new App_AutoMessageReplyContent();
+                                    rep_it.ID = it.ID;
+                                    rep_it.Type = (int)EnumMessageType.ImageText;
+                                    rep_it.FileTitle = it.Title;
+                                    rep_it.FileUrl = hostUrl + Url.Content(it.ImagePath);
+                                    subImageText.Add(rep_it);
+                                }
+                                rep.SubContent = Newtonsoft.Json.JsonConvert.SerializeObject(subImageText);
+                            }
+                            rep.Content = itext.Content;
                         }
                         break;
                 }

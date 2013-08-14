@@ -22,12 +22,13 @@ namespace Business
         public Result Upload(LibraryImage entity, System.Web.HttpPostedFileBase image)
         {
             var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+
             var fileName = string.Format("{0}_{1}", token, image.FileName);
             var filePath = string.Format("~/File/{0}/FileLibrary/{1}", entity.AccountMainID, fileName);
             var pathIO = HttpContext.Current.Server.MapPath(filePath);
             image.SaveAs(pathIO);
 
-            entity.FileName = image.FileName;
+            entity.FileName = image.FileName.Substring(0, image.FileName.LastIndexOf('.'));
             entity.FilePath = filePath;
             return base.Add(entity);
         }

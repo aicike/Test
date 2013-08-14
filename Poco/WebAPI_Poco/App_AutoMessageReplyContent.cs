@@ -19,5 +19,15 @@ namespace Poco.WebAPI_Poco
         public string FileUrl { get; set; }
 
         public string Content { get; set; }
+
+        /// <summary>
+        /// 只有图文消息使用的字段
+        /// </summary>
+        public string Summary { get; set; }
+
+        /// <summary>
+        /// 只有图文消息使用的字段
+        /// </summary>
+        public string SubContent { get; set; }
     }
 }

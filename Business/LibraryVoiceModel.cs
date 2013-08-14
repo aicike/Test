@@ -20,7 +20,7 @@ namespace Business
             var pathIO = HttpContext.Current.Server.MapPath(filePath);
             voice.SaveAs(pathIO);
 
-            entity.FileName = voice.FileName;
+            entity.FileName = voice.FileName.Substring(0, voice.FileName.LastIndexOf('.'));
             entity.FilePath = filePath;
             return base.Add(entity);
         }
