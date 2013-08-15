@@ -30,7 +30,9 @@ namespace Web.Controllers
             //视频
             var videoList = libraryVideoModel.GetLibraryList(LoginAccount.CurrentAccountMainID).ToList();
             ViewBag.VideoList = videoList;
-
+            //图文
+            var imageTextList = libraryImageTextModel.GetLibraryList(LoginAccount.CurrentAccountMainID).ToList();
+            ViewBag.ImageTextList = imageTextList;
             return View();
         }
 

@@ -19,7 +19,6 @@ namespace Web.Controllers
         const string Video = "Video";
         const string Voice = "Voice";
         const string ImageText = "ImageText";
-        private string hostUrl = null;
 
         /// <summary>
         /// 获取首次引导信息
@@ -57,12 +56,6 @@ namespace Web.Controllers
                 var obj = autoMessage_KeywordModel.Get(autoMessageID);
 
                 var otherReply = obj.KeywordAutoMessages.OrderBy(a => a.Order);
-                const string Text = "Text";
-                const string Image = "Image";
-                const string Video = "Video";
-                const string Voice = "Voice";
-                const string ImageText = "ImageText";
-                hostUrl = string.Format("http://{0}:{1}", Request.Url.Host, Request.Url.Port);
                 result.Entity = GetReplayList(otherReply.ToList());
             }
             catch (Exception ex)
@@ -114,7 +107,6 @@ namespace Web.Controllers
                     var replay = list.FirstOrDefault();
                     var otherReply = replay.KeywordAutoMessages.OrderBy(a => a.Order);
 
-                    string hostUrl = string.Format("http://{0}:{1}", Request.Url.Host, Request.Url.Port);
 
                     result.EntityType = "App_AutoMessageReplyContent";
                     result.Entity = GetReplayList(otherReply.ToList());
@@ -136,6 +128,7 @@ namespace Web.Controllers
             var libraryVideoModel = Factory.Get<ILibraryVideoModel>(SystemConst.IOC_Model.LibraryVideoModel);
             var libraryVoiceModel = Factory.Get<ILibraryVoiceModel>(SystemConst.IOC_Model.LibraryVoiceModel);
 
+            string hostUrl = string.Format("http://{0}:{1}", Request.Url.Host, Request.Url.Port);
             List<App_AutoMessageReplyContent> replayList = new List<App_AutoMessageReplyContent>();
             foreach (var item in list)
             {

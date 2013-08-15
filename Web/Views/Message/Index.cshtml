@@ -21,6 +21,13 @@
                             modal: true,
                             buttons: {
                                 "确定": function () {
+                                    var uids="";
+                                    $.each($("#dialogUser").find(":checked"),function(i,n){
+                                        uids+=$(n).val()+",";
+                                    });
+                                    if(uids.length>0){
+                                        $("#hidUserID").val(uids);
+                                    }
                                     $(this).dialog("close");
                                 },
                                 "取消": function () {
@@ -36,13 +43,33 @@
                 $("#divTextInfo").html("还可以输入" + length + "字");
             });
             $("#btnSend").click(function () {
+                var su= $("#selectUser").val();
+                if(su=="user"){
+                    var uids= $("#hidUserID").val();
+                    if(uids.length<=0){
+                        JAlert({
+                            Message: "未指定用户",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        }); 
+                        return false;
+                    }
+                }
                 var active = $("#tabs").tabs("option", "active");
                 switch (active) {
                     case 0:
-                        var content=$("#txtText").val();
+                        var content=$("#txtText").val().trim();
+                        if(content.length<=0){
+                           JAlert({
+                                    Message: "请输入文字信息",
+                                    DialogType: "Ok",
+                                    BtnOk: "确定"
+                                }); 
+                           return false;
+                        }
                         $.ajax({
                             type: "post",
-                            data: { content: content},
+                            data: { content: content,type:"text"},
                             url: urlText,
                             success: function (result) {
                                 if (result != undefined && result != null && result.length > 0) {
@@ -171,8 +198,13 @@
             <li>
                 <div class="ulUserTitle">@item.GroupName</div>
                 <div class="ulUserList">
+                    @foreach (var user in item.Account_Users)
+                    {
+                        <input type="checkbox" id="cb_@user.UserID" value="@user.UserID" /><label for="cb_@user.UserID">@user.User.Name</label>
+                    }
                 </div>
             </li>
         }
     </ul>
 </div>
+<input type="hidden" id="hidUserID" />

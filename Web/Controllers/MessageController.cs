@@ -21,8 +21,25 @@ namespace Web.Controllers
             return View();
         }
 
-        public string SendText(string content)
+        public string SendText(string content, string text)
         {
+            switch (text)
+            {
+                case "text":
+                    break;
+                case "image":
+                    break;
+                case "voice":
+                    break;
+                case "video":
+                    break;
+                case "imagetext":
+                    break;
+            }
+
+
+
+
             string CLIENTID = "03b2ac5b2c55619f7c29f87eabff771f";
             PushMessage message = new PushMessage();
             message.Title = "测试推送";

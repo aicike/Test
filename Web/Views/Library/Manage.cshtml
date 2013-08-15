@@ -4,6 +4,9 @@
     List<Poco.LibraryImage> imageList = ViewBag.ImageList as List<Poco.LibraryImage>;
     List<Poco.LibraryVoice> voiceList = ViewBag.VoiceList as List<Poco.LibraryVoice>;
     List<Poco.LibraryVideo> videoList = ViewBag.VideoList as List<Poco.LibraryVideo>;
+    List<Poco.LibraryImageText> mmageTextList = ViewBag.ImageTextList as List<Poco.LibraryImageText>;
+
+
 }
 <link href="@Url.Content("~/Content/themes/base/jquery-ui-1.10.2.custom.min.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~//Content/Style.css")" rel="stylesheet" type="text/css" />
@@ -31,7 +34,7 @@
             <li t="tabs-1"><a href="#tabs-1">图片</a></li>
             <li t="tabs-2"><a href="#tabs-2">语音</a></li>
             <li t="tabs-3"><a href="#tabs-3">视频</a></li>
-            <li t="tabs-4"><a href="#tabs-4">图片消息</a></li>
+            <li t="tabs-4"><a href="#tabs-4">图文消息</a></li>
         </ul>
         <div id="tabs-1" class="tabdiv">
             @foreach (var item in imageList)
@@ -61,6 +64,13 @@
             }
         </div>
         <div id="tabs-4" class="tabdiv">
+            @foreach (var item in mmageTextList)
+            {
+                <div class="item">
+                    <input type="hidden" fileID="@item.ID" fileType="LibraryImageText" value="@Url.Content(item.ImagePath)" /><input
+                        type="radio" name="radioImg" />&nbsp;&nbsp;<img style="max-width: 200px;max-height:200px;vertical-align:middle" src="@Url.Content(item.ImagePath)" />&nbsp;&nbsp;<label>@item.Title</label>
+                </div>        
+            }
         </div>
     </div>
 </div>
