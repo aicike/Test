@@ -13,6 +13,8 @@ namespace Poco
 
         public string Logo { get; set; }
 
+        public string MessageJson { get; set; }
+
         /// <summary>
         /// 动作
         /// </summary>

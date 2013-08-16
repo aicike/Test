@@ -54,6 +54,7 @@
     <Compile Include="AccountMainHouseInfoDetail.cs" />
     <Compile Include="Enum\EnumBuildingType.cs" />
     <Compile Include="Enum\EnumDecoration.cs" />
+    <Compile Include="Enum\EnumPushType.cs" />
     <Compile Include="Validation\AllowCheckPermissionsAttribute.cs" />
     <Compile Include="AppUpdate.cs" />
     <Compile Include="WebAPI_Poco\App_Account.cs" />

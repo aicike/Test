@@ -55,6 +55,7 @@
     <Compile Include="ILookupOptionModel.cs" />
     <Compile Include="IMessageModel.cs" />
     <Compile Include="IProvinceModel.cs" />
+    <Compile Include="IPushModel.cs" />
     <Compile Include="ISystemUserMenuModel.cs" />
     <Compile Include="ISystemUserModel.cs" />
     <Compile Include="ISystemUserRoleModel.cs" />

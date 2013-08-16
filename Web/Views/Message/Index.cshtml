@@ -27,10 +27,20 @@
                                     });
                                     if(uids.length>0){
                                         $("#hidUserID").val(uids);
+                                        $(this).dialog("close");
+                                    }else{
+                                        JAlert({
+                                            Message: "未指定用户",
+                                            DialogType: "Ok",
+                                            BtnOk: "确定"
+                                        }); 
                                     }
-                                    $(this).dialog("close");
                                 },
                                 "取消": function () {
+                                    var l= $("#hidUserID").val().length;
+                                    if(l<=0){
+                                         $("#selectUser").val("all");
+                                    }
                                     $(this).dialog("close");
                                 }
                             }
@@ -44,8 +54,8 @@
             });
             $("#btnSend").click(function () {
                 var su= $("#selectUser").val();
+                var uids=$("#hidUserID").val();
                 if(su=="user"){
-                    var uids= $("#hidUserID").val();
                     if(uids.length<=0){
                         JAlert({
                             Message: "未指定用户",
@@ -69,7 +79,7 @@
                         }
                         $.ajax({
                             type: "post",
-                            data: { content: content,type:"text"},
+                            data: { content: content,type:"text",sendType:su,uids:uids},
                             url: urlText,
                             success: function (result) {
                                 if (result != undefined && result != null && result.length > 0) {

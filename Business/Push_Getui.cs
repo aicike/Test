@@ -6,10 +6,11 @@ using com.igetui.api.openservice;
 using com.igetui.api.openservice.igetui.template;
 using com.igetui.api.openservice.igetui;
 using Poco;
+using Interface;
 
 namespace Business
 {
-    public class Push_Getui
+    public class Push_Getui : IPushModel
     {
         private Push_Getui() { }
 
@@ -27,16 +28,15 @@ namespace Business
             try
             {
                 IGtPush push = new IGtPush(HOST, APPKEY, MASTERSECRET);
-
                 ListMessage message = new ListMessage();
                 NotificationTemplate template = new NotificationTemplate();
                 template.AppId = APPID;                             // 应用APPID
                 template.AppKey = APPKEY;                           // 应用APPKEY
                 template.Title = pushMessage.Title;                // 通知标题
                 template.Text = pushMessage.Text;                 // 通知内容
-                template.Logo = "push.png";                         // 应用Logo
+                template.Logo = pushMessage.Logo;                         // 应用Logo
                 template.TransmissionType = ((int)pushMessage.EnumEvent).ToString();                    // 收到消息是否立即启动应用，1为立即启动，2则广播等待客户端自启动
-                template.TransmissionContent = "你需要透传的内容";  // 需要透传的内容
+                template.TransmissionContent = pushMessage.MessageJson;  // 封装的消息json                
                 template.IsRing = pushMessage.IsRing;					// 收到通知是否响铃，可选，默认响铃
                 template.IsVibrate = pushMessage.IsVibrate;					// 收到通知是否震动，可选，默认振动
                 template.IsClearable = pushMessage.IsClearable;				// 通知是否可清除，可选，默认可清除

@@ -21,11 +21,13 @@ namespace Web.Controllers
             return View();
         }
 
-        public string SendText(string content, string text)
+        public string SendText(string content, string type, string sendType, string uids)
         {
-            switch (text)
+            PushModel pushModel = new PushModel();
+            switch (type)
             {
                 case "text":
+                    pushModel.Push_Text(content, sendType, LoginAccount.ID, uids, LoginAccount.CurrentAccountMainID);
                     break;
                 case "image":
                     break;
@@ -37,18 +39,6 @@ namespace Web.Controllers
                     break;
             }
 
-
-
-
-            string CLIENTID = "03b2ac5b2c55619f7c29f87eabff771f";
-            PushMessage message = new PushMessage();
-            message.Title = "测试推送";
-            message.Text = content;
-            var result = Push_Getui.SendMessage(message, CLIENTID);
-            if (result.HasError)
-            {
-                return AlertJS_NoTag(new Dialog(result.Error));
-            }
             return "window.location.href='" + Url.Action("Index", "Message", new { HostName = LoginAccount.HostName }) + "'";
         }
     }

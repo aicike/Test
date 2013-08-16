@@ -31,6 +31,9 @@ namespace System
             return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json);
         }
 
+        /// <summary>
+        /// 字符串转成整型数组
+        /// </summary>
         public static int[] ConvertToIntArray(this string[] value)
         {
             if (value == null)
@@ -45,6 +48,9 @@ namespace System
             return array;
         }
 
+        /// <summary>
+        /// 集合拼接成字符串
+        /// </summary>
         public static string ConvertToString<T>(this IList<T> list, string split)
         {
             StringBuilder str = new StringBuilder();
@@ -55,6 +61,21 @@ namespace System
             string value = str.ToString();
             value = value.Remove(value.Length - split.Length);
             return value;
+        }
+
+        public static int[] ConvertToIntArray(this string value, char split)
+        {
+            if (string.IsNullOrEmpty(value) == false)
+            {
+                string[] str_array = value.Split(new char[] { split }, StringSplitOptions.RemoveEmptyEntries);
+                int[] array = new int[str_array.Length];
+                for (int i = 0; i < str_array.Length; i++)
+                {
+                    array[i] = int.Parse(str_array[i]);
+                }
+                return array;
+            }
+            return null;
         }
 
         /// <summary>
