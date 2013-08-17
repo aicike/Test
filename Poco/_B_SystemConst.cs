@@ -91,7 +91,9 @@ namespace Poco
             public const string AccountMainHouseInfoDetailModel = "AccountMainHouseInfoDetailModel";
             public const string KeywordModel = "KeywordModel";
             public const string TextReplyModel = "TextReplyModel";
-
+            public const string PendingMessagesModel = "PendingMessagesModel";
+            public const string MessageModel = "MessageModel";
+            public const string TemporayInstantMes = "TemporayInstantMesModel";
 
         }
     }

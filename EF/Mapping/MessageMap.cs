@@ -27,13 +27,6 @@ namespace EF.Mapping
             .WithMany(a => a.ReceiveMessages)
             .HasForeignKey(a => a.ToUserID);
 
-            this.HasRequired(a => a.EnumMessageSendDirection)
-            .WithMany(a => a.MessageEnumMessageSendDirection)
-            .HasForeignKey(a => a.EnumMessageSendDirectionID);
-
-            this.HasRequired(a => a.EnumMessageType)
-            .WithMany(a => a.MessageEnumMessageType)
-            .HasForeignKey(a => a.EnumMessageTypeID);
         }
     }
 }

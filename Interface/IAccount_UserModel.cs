@@ -11,5 +11,8 @@ namespace Interface
     public interface IAccount_UserModel : IBaseModel<Account_User>
     {
         Result ChangeGroup(int userID,int accountID, int groupID);
+
+
+        bool ChickUserInAccount(int SID, int UID);
     }
 }

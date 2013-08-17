@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="agsXMPP, Version=0.9.0.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\agsXMPP\agsXMPP.dll</HintPath>
+    </Reference>
     <Reference Include="EzValidation.Core">
       <HintPath>..\packages\EzValidation.1.0.2\lib\EzValidation.Core.dll</HintPath>
     </Reference>
@@ -148,6 +152,7 @@
     <Compile Include="Controllers\ExitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstallAppReplyController.cs" />
+    <Compile Include="Controllers\InstantMesController.cs" />
     <Compile Include="Controllers\KeywordMessageController.cs" />
     <Compile Include="Controllers\LibraryImageController.cs" />
     <Compile Include="Controllers\HouseInfoController.cs" />
@@ -161,6 +166,7 @@
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\LibraryTextController.cs" />
     <Compile Include="Controllers\SetController.cs" />
+    <Compile Include="Controllers\SingleChatController.cs" />
     <Compile Include="Controllers\UserManageController.cs" />
     <Compile Include="Controllers\WebAPI_UserController.cs" />
     <Compile Include="Controllers\LibraryVoiceController.cs" />
@@ -175,6 +181,7 @@
     <Compile Include="Models\MVCExpandMethod.cs" />
     <Compile Include="Models\NoClientCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Images\Unread.png" />
     <Content Include="ueditor\net\Uploader.cs">
       <SubType>Code</SubType>
     </Content>
@@ -647,6 +654,9 @@
     <Content Include="Views\Set\Index.cshtml" />
     <Content Include="Views\KeywordMessage\Index.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\SingleChat\Index.cshtml" />
+    <Content Include="Views\SingleChat\ChatPartialView.cshtml" />
+    <Content Include="Views\InstantMes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
@@ -665,7 +675,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>30062</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

@@ -1,0 +1,156 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+        var checkMessageUrl = '@Url.Action("CheckMessage", "SingleChat")';
+        $(function () {
+            //更改main 宽度
+            var main = $('.main');
+            main.attr("style", "width:770px")
+
+            //输入文字字数校验
+            $("#tabs").tabs();
+            $("#Content").keyup(function () {
+                var length = 500 - $("#Content").val().trim().length;
+                $("#divTextInfo").html(length);
+            });
+            $("#Content").keyup();
+            //验证文本是否输入
+            $("#btnSubmit").click(function () {
+                var length = $.trim($("#Content").val()).length;
+                if (length == 0) {
+                    alert("请输入数据！");
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            });
+
+            //鼠标移动改变背景色
+            $('.div_item').hover(function () {
+                $(this).addClass('tabOver');
+            }, function () {
+                $(this).removeClass('tabOver');
+            });
+
+        });
+
+        function ReadMessage() {
+//            $.get(checkMessageUrl, {}, function (data) {
+//                if (data && data == "1") {
+                    $("#btnSelData").click();
+//                }
+//            });
+        }
+
+        setInterval(ReadMessage, "5000");
+
+
+        function EmptyContent() {
+            
+            $("#Content").val("");
+            $("#Content").keyup();
+        }
+
+    </script>
+    <style>
+        .div_item
+        {
+            border-bottom: 1px solid #d3d3d3;
+            font-family: @@微软雅黑;
+            padding: 15px 0px 25px 0px;
+        }
+        /*.div_td
+        {
+            width: 730px;
+            line-height: 25px;
+            border: 0;
+            border-bottom: 1px solid #d3d3d3;
+            font-family: @@微软雅黑;
+            margin-top:10px;
+            margin-bottom:10px;
+        }*/
+        
+        .tabOver
+        {
+            background-color: #f1f1f1;
+        }
+    </style>
+}
+<div class="title">
+    与 "@ViewBag.UName" 的聊天
+</div>
+<div class="body">
+    @using (Ajax.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID}, new AjaxOptions() { UpdateTargetId = "div_data", OnSuccess = "EmptyContent()" }))
+    {
+        <div class="tableList" id="tabs" style="width: 725px; height: 220px">
+            <ul>
+                <li><a href="#tabs-1">文字</a></li>
+                <li style="display: none"><a href="#tabs-2">语音</a></li>
+                <li style="display: none"><a href="#tabs-3">图片</a></li>
+                <li style="display: none"><a href="#tabs-4">视频</a></li>
+                <li style="display: none"><a href="#tabs-5">图片消息</a></li>
+            </ul>
+            <div id="tabs-1">
+                <textarea id="Content" name="Content" rows="8" style="width: 100%; height: 80px"></textarea>
+                <div style="float: left">
+                </div>
+                <div style="float: right;">
+                    还可以输入 <span id="divTextInfo" style="font-weight: bold; font-size: 16px">500</span>
+                    字
+                </div>
+                <div style="clear: both">
+                </div>
+            </div>
+            <div id="tabs-2">
+                <p>
+                    Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra
+                    massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget
+                    luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean
+                    aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent
+                    in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat
+                    nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque
+                    convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod
+                    felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+            </div>
+            <div id="tabs-3">
+                <p>
+                    Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate,
+                    pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem.
+                    Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia
+                    nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo
+                    pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem
+                    enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+            </div>
+            <div id="tabs-4">
+                <p>
+                    Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate,
+                    pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem.
+                    Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia
+                    nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo
+                    pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem
+                    enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+            </div>
+            <div id="tabs-5">
+                <p>
+                    Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate,
+                    pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem.
+                    Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia
+                    nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo
+                    pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem
+                    enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+            </div>
+            <input type="submit" id="btnSubmit" value="发送" class="button" style="margin-left: 18px" />
+        </div>
+    }
+    @using (Ajax.BeginForm("ReadMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID }, new AjaxOptions() { UpdateTargetId = "div_data" }))
+    { 
+        <input type="submit" id="btnSelData" style="visibility: hidden" />
+    }
+    <div id="div_data" style="padding: 0px 0px 25px 0px; margin-top: -40px">
+        @{Html.RenderAction("ChatPartialView", new { id = ViewBag.ID, userID = ViewBag.UserID });}
+    </div>
+</div>

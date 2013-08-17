@@ -15,26 +15,13 @@ namespace Poco
 
         [Display(Name = "文字")]
         [Required(ErrorMessage = "请输入文字")]
-        [StringLength(500, ErrorMessage = "长度小于500")]
         public string TextContent { get; set; }
 
         [Display(Name = "消息发送方向")]
         public int EnumMessageSendDirectionID { get; set; }
-        public virtual LookupOption EnumMessageSendDirection { get; set; }
 
         [Display(Name = "消息类型")]
         public int EnumMessageTypeID { get; set; }
-        public virtual LookupOption EnumMessageType { get; set; }
-
-        /// <summary>
-        /// 引用的消息的主键值(可以是文本库，音频，视频，图文)
-        /// </summary>
-        public int MessageObjID { get; set; }
-
-        /// <summary>
-        /// 消息对象，需要修改get方法
-        /// </summary>
-        public IBaseEntity MessageObj { get; private set; }
 
         /// <summary>
         /// （发送）售楼部账号
@@ -68,5 +55,7 @@ namespace Poco
 
         [Display(Name = "发送时间")]
         public DateTime ReceiveTime { get; set; }
+
+        public virtual ICollection<PendingMessages> PendingMessages { get; set; }
     }
 }

@@ -9,14 +9,34 @@ using Injection.Transaction;
 
 namespace Business
 {
-    public class MessageModel : BaseModel<Message>
+    public class MessageModel : BaseModel<Message>, IMessageModel
     {
-        [Transaction]
-        public void Delete()
+        /// <summary>
+        /// 查询当前数据
+        /// </summary>
+        /// <param name="SID">售楼部ID</param>
+        /// <param name="UID">当前聊天人ID</param>
+        /// <returns></returns>
+        public IQueryable<Message> GetList(int SID, int UID)
         {
-            Delete(1);
-            IAccountMainModel amm = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
-            amm.Delete(1);
+            var list = List().Where(a => (a.FromAccountID == SID && a.ToUserID == UID) || (a.ToAccountID == SID && a.FromUserID == UID)).OrderByDescending(a => a.SendTime);
+            return list;
         }
+
+        /// <summary>
+        /// 修改聊天状态 并删除未读记录
+        /// </summary>
+        /// <param name="SID"></param>
+        /// <param name="UID"></param>
+        /// <returns></returns>
+        public int UpAndDelData(int SID, int UID)
+        {
+            string sql = "update dbo.Message set isReceive = 1 where  fromUserID = " + UID + " and ToAccountID =" + SID
+                        + " delete PendingMessages where  FromUserID =  " + UID + " and ToAccountID = " + SID;
+            return base.SqlExecute(sql);
+        }
+
+
+
     }
 }

@@ -6,10 +6,15 @@ using System.Web.Mvc;
 using Poco;
 using Interface;
 using Injection;
+using agsXMPP;
+using System.Threading;
+using agsXMPP.protocol.client;
+using System.Threading.Tasks;
+using agsXMPP.Xml.Dom;
 
 namespace Web.Controllers
 {
-    public class LoginController : BaseController
+    public class LoginController : BaseController, System.Web.SessionState.IRequiresSessionState
     {
         #region 平台
 
@@ -45,12 +50,14 @@ namespace Web.Controllers
 
         #region 售楼部
 
+
         /// <summary>
         /// 售楼部登录
         /// </summary>
         /// <returns></returns>
         public ActionResult UserLogin()
         {
+            Session["IsHaveMessage"] = "0";
             return View();
         }
 
@@ -65,8 +72,13 @@ namespace Web.Controllers
             }
             var account = Session[SystemConst.Session.LoginAccount] as Account;
             var url = Url.RouteUrl("User", new { action = "Index", controller = "Home", HostName = account.HostName });
+
+            
+           
+
             return JavaScript("window.location.href='" + url + "'");
         }
+        
 
         #endregion
     }

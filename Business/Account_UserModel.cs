@@ -19,5 +19,24 @@ namespace Business
             entity.GroupID = groupID;
             return Edit(entity);
         }
+
+        /// <summary>
+        /// 判断当前用户是否属于该销售代表
+        /// </summary>
+        /// <param name="SID"></param>
+        /// <param name="UID"></param>
+        /// <returns></returns>
+        public bool ChickUserInAccount(int SID, int UID)
+        {
+            var axcountUser = List().Where(a => a.AccountID == SID && a.UserID == UID);
+            if (axcountUser == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }

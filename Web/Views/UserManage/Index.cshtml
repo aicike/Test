@@ -154,6 +154,14 @@
     用户管理</div>
 <div class="bodyLeft">
     <ul class="ulList" id="ulGroup">
+        <li  >
+            <a href="@Url.Action("Index", "InstantMes", new { HostName = ViewBag.HostName})">
+                销售消息 
+            </a>
+        </li>
+        <li style="height:10px; background-color:#f0f0f0 ;border-bottom:1px solid #d3d3d3; border-top:1px solid #d3d3d3">
+            
+        </li>
         @foreach (var item in groupList)
         {
             if (item.ID == groupID)

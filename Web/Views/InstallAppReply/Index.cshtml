@@ -55,7 +55,7 @@
     </ul>
 </div>
 <div class="bodyRight">
- @using (Ajax.BeginForm("AddOrUpd", "InstallAppReply", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+ @using (Ajax.BeginForm("index", "SingleChat", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
  {
     <div class="option" style=" font-weight:bold; border-bottom:1px solid #d3d3d3; padding-bottom:10px">
         安装App自动回复

@@ -7,6 +7,13 @@ using System.Web.Routing;
 using Poco;
 using Injection;
 using Interface;
+using System.Web.UI;
+using System.Threading;
+using agsXMPP;
+using agsXMPP.protocol.client;
+using agsXMPP.Xml.Dom;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Controllers
 {
