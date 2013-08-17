@@ -495,13 +495,13 @@
     <Content Include="Areas\System\Views\AccountMainManage\ViewAccountMain.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\System\Views\AccountMain\AddAccount.cshtml" />
+    <Content Include="Areas\System\Views\AccountManage\AddAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\System\Views\AccountMain\EditAccount.cshtml" />
+    <Content Include="Areas\System\Views\AccountManage\EditAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\System\Views\AccountMain\Index.cshtml" />
+    <Content Include="Areas\System\Views\AccountManage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\System\Views\SystemUserHome\Index.cshtml" />
