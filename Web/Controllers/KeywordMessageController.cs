@@ -161,7 +161,9 @@ namespace Web.Controllers
                             break;
                         case "ImageText":
                             file.type = "LibraryImageText";
-                            //file.url = Url.Content(libraryImageTextModel.Get(item.MessageID).FilePath);
+                            var imageText = libraryImageTextModel.Get(item.MessageID);
+                            file.url = Url.Content(imageText.ImagePath);
+                            file.fileTitle = imageText.Title;
                             break;
                     }
                     files.Add(file);

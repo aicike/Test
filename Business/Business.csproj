@@ -37,6 +37,9 @@
     <Reference Include="GetuiServerApiSDK">
       <HintPath>..\packages\Getui\GetuiServerApiSDK.dll</HintPath>
     </Reference>
+    <Reference Include="Gma.QrCodeNet.Encoding">
+      <HintPath>..\packages\QrCode.Net 0.4 Pre-Release\Gma.QrCodeNet.Encoder\Gma.QrCodeNet.Encoding.dll</HintPath>
+    </Reference>
     <Reference Include="Google.ProtocolBuffers">
       <HintPath>..\packages\Getui\Google.ProtocolBuffers.dll</HintPath>
     </Reference>
@@ -50,6 +53,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -83,6 +87,7 @@
     <Compile Include="PushModel.cs" />
     <Compile Include="Push_Getui.cs" />
     <Compile Include="Push_IOS.cs" />
+    <Compile Include="QrCodeModel.cs" />
     <Compile Include="RoleModel.cs" />
     <Compile Include="SystemUserModel.cs" />
     <Compile Include="AccountMainExpandInfoModel.cs" />

@@ -161,6 +161,7 @@
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\LibraryTextController.cs" />
     <Compile Include="Controllers\SetController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserManageController.cs" />
     <Compile Include="Controllers\WebAPI_UserController.cs" />
     <Compile Include="Controllers\LibraryVoiceController.cs" />
@@ -415,6 +416,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\System\Models\" />
     <Folder Include="Areas\System\Views\Shared\" />
+    <Folder Include="Download\" />
     <Folder Include="File\" />
   </ItemGroup>
   <ItemGroup>
@@ -647,6 +649,7 @@
     <Content Include="Views\KeywordMessage\Index.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Library\Manage.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
