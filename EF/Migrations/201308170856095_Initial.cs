@@ -685,10 +685,9 @@ namespace EF.Migrations
                     {
                         ID = c.Int(nullable: false, identity: true),
                         SystemStatus = c.Int(nullable: false),
-                        TextContent = c.String(nullable: false, maxLength: 500),
+                        TextContent = c.String(nullable: false),
                         EnumMessageSendDirectionID = c.Int(nullable: false),
                         EnumMessageTypeID = c.Int(nullable: false),
-                        MessageObjID = c.Int(nullable: false),
                         FromAccountID = c.Int(),
                         FromUserID = c.Int(),
                         ToAccountID = c.Int(),
@@ -698,18 +697,42 @@ namespace EF.Migrations
                         ReceiveTime = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.LookupOption", t => t.EnumMessageSendDirectionID)
-                .ForeignKey("dbo.LookupOption", t => t.EnumMessageTypeID)
                 .ForeignKey("dbo.Account", t => t.FromAccountID)
                 .ForeignKey("dbo.User", t => t.FromUserID)
                 .ForeignKey("dbo.Account", t => t.ToAccountID)
                 .ForeignKey("dbo.User", t => t.ToUserID)
-                .Index(t => t.EnumMessageSendDirectionID)
-                .Index(t => t.EnumMessageTypeID)
                 .Index(t => t.FromAccountID)
                 .Index(t => t.FromUserID)
                 .Index(t => t.ToAccountID)
                 .Index(t => t.ToUserID);
+            
+            CreateTable(
+                "dbo.PendingMessages",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        MSD = c.String(),
+                        EnumMessageTypeID = c.Int(nullable: false),
+                        FromAccountID = c.Int(),
+                        FromUserID = c.Int(),
+                        ToAccountID = c.Int(),
+                        ToUserID = c.Int(),
+                        SendTime = c.DateTime(nullable: false),
+                        Content = c.String(),
+                        MessageID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Account", t => t.FromAccountID)
+                .ForeignKey("dbo.User", t => t.FromUserID)
+                .ForeignKey("dbo.Account", t => t.ToAccountID)
+                .ForeignKey("dbo.User", t => t.ToUserID)
+                .ForeignKey("dbo.Message", t => t.MessageID)
+                .Index(t => t.FromAccountID)
+                .Index(t => t.FromUserID)
+                .Index(t => t.ToAccountID)
+                .Index(t => t.ToUserID)
+                .Index(t => t.MessageID);
             
             CreateTable(
                 "dbo.Account_AccountMain",
@@ -783,12 +806,15 @@ namespace EF.Migrations
             DropIndex("dbo.ClientInfo", new[] { "EnumClientSystemTypeID" });
             DropIndex("dbo.Account_AccountMain", new[] { "AccountMainID" });
             DropIndex("dbo.Account_AccountMain", new[] { "AccountID" });
+            DropIndex("dbo.PendingMessages", new[] { "MessageID" });
+            DropIndex("dbo.PendingMessages", new[] { "ToUserID" });
+            DropIndex("dbo.PendingMessages", new[] { "ToAccountID" });
+            DropIndex("dbo.PendingMessages", new[] { "FromUserID" });
+            DropIndex("dbo.PendingMessages", new[] { "FromAccountID" });
             DropIndex("dbo.Message", new[] { "ToUserID" });
             DropIndex("dbo.Message", new[] { "ToAccountID" });
             DropIndex("dbo.Message", new[] { "FromUserID" });
             DropIndex("dbo.Message", new[] { "FromAccountID" });
-            DropIndex("dbo.Message", new[] { "EnumMessageTypeID" });
-            DropIndex("dbo.Message", new[] { "EnumMessageSendDirectionID" });
             DropIndex("dbo.SystemMessage", new[] { "UserID" });
             DropIndex("dbo.SystemMessage", new[] { "AccountID" });
             DropIndex("dbo.User", new[] { "UserLoginInfoID" });
@@ -853,12 +879,15 @@ namespace EF.Migrations
             DropForeignKey("dbo.ClientInfo", "EnumClientSystemTypeID", "dbo.LookupOption");
             DropForeignKey("dbo.Account_AccountMain", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.Account_AccountMain", "AccountID", "dbo.Account");
+            DropForeignKey("dbo.PendingMessages", "MessageID", "dbo.Message");
+            DropForeignKey("dbo.PendingMessages", "ToUserID", "dbo.User");
+            DropForeignKey("dbo.PendingMessages", "ToAccountID", "dbo.Account");
+            DropForeignKey("dbo.PendingMessages", "FromUserID", "dbo.User");
+            DropForeignKey("dbo.PendingMessages", "FromAccountID", "dbo.Account");
             DropForeignKey("dbo.Message", "ToUserID", "dbo.User");
             DropForeignKey("dbo.Message", "ToAccountID", "dbo.Account");
             DropForeignKey("dbo.Message", "FromUserID", "dbo.User");
             DropForeignKey("dbo.Message", "FromAccountID", "dbo.Account");
-            DropForeignKey("dbo.Message", "EnumMessageTypeID", "dbo.LookupOption");
-            DropForeignKey("dbo.Message", "EnumMessageSendDirectionID", "dbo.LookupOption");
             DropForeignKey("dbo.SystemMessage", "UserID", "dbo.User");
             DropForeignKey("dbo.SystemMessage", "AccountID", "dbo.Account");
             DropForeignKey("dbo.User", "UserLoginInfoID", "dbo.UserLoginInfo");
@@ -921,6 +950,7 @@ namespace EF.Migrations
             DropTable("dbo.ActivateEmail");
             DropTable("dbo.ClientInfo");
             DropTable("dbo.Account_AccountMain");
+            DropTable("dbo.PendingMessages");
             DropTable("dbo.Message");
             DropTable("dbo.SystemMessage");
             DropTable("dbo.UserLoginInfo");

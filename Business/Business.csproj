@@ -104,7 +104,6 @@
     <Compile Include="MenuOptionModel.cs" />
     <Compile Include="RoleOptionModel.cs" />
     <Compile Include="TemporayInstantMesModel.cs" />
-    <Compile Include="TextReplyModel.cs" />
     <Compile Include="UserModel.cs" />
     <Compile Include="UserLoginInfoModel.cs" />
   </ItemGroup>

@@ -14,14 +14,8 @@
             text-overflow: ellipsis;
             text-align: left;
             overflow: hidden;
-            word-break: break-all;
             -o-text-overflow: ellipsis; /* for Opera */
             text-overflow: ellipsis; /* for IE */
-        }
-        .tableList div:after
-        {
-            /* for Firefox */
-            content: "...";
         }
     </style>
 }
@@ -71,7 +65,7 @@
                 </td>
                 <td>
                     <div title="@item.Content">
-                        @item.Content.Show(10)</div>
+                        @item.Content.Show(90,"...")</div>
                 </td>
                 <td class="operation">
                     @Html.ActionLink("修改", "Edit", "LibraryText", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
