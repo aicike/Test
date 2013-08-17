@@ -41,9 +41,7 @@ namespace Poco
 
         public virtual ICollection<KeywordAutoMessage> KeywordAutoMessages { get; set; }
 
-        public virtual ICollection<Message> MessageEnumMessageType { get; set; }
 
-        public virtual ICollection<Message> MessageEnumMessageSendDirection { get; set; }
 
         public virtual ICollection<ClientInfo> ClientInfoEnumClientSystemType { get; set; }
 

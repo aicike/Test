@@ -21,6 +21,8 @@ namespace Web.Controllers
             }
             set { Session[SystemConst.Session.LoginSystemUser] = value; }
         }
+        
+       
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -50,7 +52,10 @@ namespace Web.Controllers
             {
                 ViewBag.RawUrl = filterContext.RequestContext.HttpContext.Request.UrlReferrer.AbsoluteUri;
             }
+
+            
             base.OnActionExecuting(filterContext);
         }
+       
     }
 }

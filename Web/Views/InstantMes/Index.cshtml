@@ -1,0 +1,197 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+
+    var groupList = ViewBag.GroupList as List<Poco.Group>;
+}
+@section head{
+    <script>
+        var SendMessageUrl = '@Url.Action("SendMessage", "InstantMes")';
+        $(function () {
+            //鼠标移动改变背景色
+            $('.TabList').hover(function () {
+                $(this).addClass('TabOver');
+            }, function () {
+                $(this).removeClass('TabOver');
+            });
+
+        });
+
+
+        function SendMes() {
+            $.get(SendMessageUrl, function (data) {
+                  if (data && data != "0") {
+                    $("#sendCount").html(data);
+                    $("#Ts").slideDown("slow");
+                }
+            });
+            
+        }
+
+
+        setInterval(SendMes, "10000");
+
+
+    </script>
+
+
+    <style>
+        .TabTitle
+        {
+            width: 100%;
+            font-size: 13px;
+            border-bottom: 1px solid #d3d3d3;
+            border-top: 1px solid #d3d3d3;
+        }
+        
+        .TabTitle th
+        {
+            height: 20px;
+        }
+        .TabList
+        {
+            width: 100%;
+            font-size: 13px;
+            border-bottom: 1px solid #d3d3d3;
+            padding-top: 15px;
+           
+        }
+        .TabList td
+        {
+            line-height: 25px;   
+        }
+        
+        .TabOver 
+        {
+             background-color:#ddebf4;    
+        }
+    </style>
+}
+@model PagedList<Poco.TemporayInstantMes>
+<div class="title">
+    用户管理
+</div>
+<div class="bodyLeft">
+    <ul class="ulList" id="ulGroup">
+        <li class="select"><a href="@Url.Action("Index", "InstantMes", new { HostName = ViewBag.HostName })">
+            销售消息 </a></li>
+        <li style="height: 10px; background-color: #f0f0f0; border-bottom: 1px solid #d3d3d3;
+            border-top: 1px solid #d3d3d3"></li>
+        @foreach (var item in groupList)
+        {
+            
+            <li><a href="@Url.Action("Index", "UserManage", new { HostName = ViewBag.HostName, groupID = item.ID })">
+                @item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())
+            </a></li>
+        }
+    </ul>
+</div>
+<div class="bodyRight" style="padding: 14px 0px 0px 0px; width: 758px; background-color:#f1f1f1">
+    <div class="option">
+        <div id="Ts" onclick="javascript:window.top.location.reload()" style=" display:none; height:25px; width:98%; margin:auto auto ; line-height:25px; font-size:12px; color:#743e04; text-align:center;background-color:#fff9e3; border:1px solid #fadc80; cursor:pointer">
+            <span id="sendCount">1</span>条新消息 , 点击查看
+        </div>
+    </div>
+     <div class="pages" style=" font-size:12px; margin:10px 10px 10px auto">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+    <table class="TabTitle" cellpadding="0" cellspacing="0">
+        <tr>
+            <th align="left" style="padding-left: 12px">
+                消息
+            </th>
+            <th width="150px">
+                时间
+            </th>
+            <th width="150px">
+                未读消息
+            </th>
+        </tr>
+    </table>
+    @foreach(var item in Model)
+    {
+        <table class="TabList" cellpadding="0" cellspacing="0" >
+            <tr>
+                <td rowspan="2" align="center" valign="top" style="width: 70px">
+                   <a onclick="javascript:window.top.location.reload()" href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.FromUserID })"target="_blank">
+                    <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content(item.HeadImagePath)" />
+                    </a>
+                </td>
+                <td style="font-weight: bold">
+                    @if (item.Name == item.UMark)
+                    {
+                        <a onclick="javascript:window.top.location.reload()" href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.FromUserID })" target="_blank">@item.Name</a>
+                    }
+                    else
+                    {
+                         <a onclick="javascript:window.top.location.reload()" href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.FromUserID })"target="_blank">@item.UMark (@item.Name)</a>
+                    }
+                </td>
+                <td width="150px" align="center" style=" font-size:12px; color:#aaaaaa">
+                     @item.MData.DateFormat()
+                </td>
+                <td rowspan="2" width="150px" align="center" valign="top" style=" padding-top:15px">
+                    @if (item.NoSend != 0)
+                    {
+                        <table cellpadding="0" cellspacing="0" align="center" style=" width:32px; height:32px; background:url('@Url.Content("~/Images/Unread.png")')">
+                            <tr>
+                                <td style=" font-size:14px; font-weight:bold; color:#fff" align="center">
+                                    @item.NoSend
+                                </td>
+                            </tr>
+                        </table>
+                        
+                    }
+                    else
+                    { 
+                        
+                          <span style="font-size:12px; color:#aaaaaa">无</span>
+                                
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td style=" padding-bottom: 20px">
+                    <div style=" width:360px;text-overflow:ellipsis;overflow:hidden;"> 
+                        @item.Tcontent
+                    </div>
+                </td>
+            </tr>
+        </table>
+    }
+     <div class="pages" style=" font-size:12px; margin-top:10px; margin-right:10px">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
+<div style="clear: both">
+</div>

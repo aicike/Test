@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="agsXMPP, Version=0.9.0.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\agsXMPP\agsXMPP.dll</HintPath>
+    </Reference>
     <Reference Include="EzValidation.Core">
       <HintPath>..\packages\EzValidation.1.0.2\lib\EzValidation.Core.dll</HintPath>
     </Reference>
@@ -55,6 +59,9 @@
     <Compile Include="Enum\EnumBuildingType.cs" />
     <Compile Include="Enum\EnumDecoration.cs" />
     <Compile Include="Enum\EnumPushType.cs" />
+    <Compile Include="NewsProtocol.cs" />
+    <Compile Include="PendingMessages.cs" />
+    <Compile Include="TemporayInstantMes.cs" />
     <Compile Include="Validation\AllowCheckPermissionsAttribute.cs" />
     <Compile Include="AppUpdate.cs" />
     <Compile Include="WebAPI_Poco\App_Account.cs" />
@@ -119,7 +126,6 @@
     <Compile Include="_RoleMenu.cs" />
     <Compile Include="_RoleOption.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

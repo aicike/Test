@@ -113,5 +113,15 @@ namespace System
                 }
             }
         }
+
+        /// <summary>
+        /// 根据指定日期格式显示日期
+        /// </summary>
+        /// <param name="datetime"></param>
+        /// <returns></returns>
+        public static string DateFormat(this DateTime datetime)
+        {
+           return datetime.ToString("MM-dd hh:mm");
+        }
     }
 }

@@ -8,5 +8,10 @@ namespace Interface
 {
     public interface IMessageModel :IBaseModel<Message>
     {
+
+        IQueryable<Message> GetList(int SID,int UID);
+
+        int UpAndDelData(int SID, int UID);
+
     }
 }

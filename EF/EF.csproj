@@ -49,6 +49,7 @@
     <Compile Include="Mapping\AutoMessage_KeywordMap.cs" />
     <Compile Include="Mapping\LibraryImageTextMap.cs" />
     <Compile Include="Mapping\MessageMap.cs" />
+    <Compile Include="Mapping\PendingMessagesMap.cs" />
     <Compile Include="Mapping\SystemUserMap.cs" />
     <Compile Include="Mapping\ClientInfoMap.cs" />
     <Compile Include="Mapping\AccountMainMap.cs" />
@@ -61,7 +62,7 @@
     <Compile Include="Mapping\AppUpdateMap.cs" />
     <Compile Include="Migrations\201308120709036_Initial.cs" />
     <Compile Include="Migrations\201308120709036_Initial.Designer.cs">
-      <DependentUpon>201308120709036_Initial.cs</DependentUpon>
+      <DependentUpon>201308120822526_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -3,6 +3,20 @@
 }
 @section head{
     @RenderSection("head", required: false)
+    <style>
+        .DivSendSuccess
+        {
+            width: 200px;
+            height: 25px;
+            background-color: #68af02;
+            line-height:25px;
+            text-align: center;
+            color: #ffffff;
+            font-weight: bold;
+            margin: 0 auto;
+            display:none;
+        }
+    </style>
 }
 @{
     var account = Session[Poco.SystemConst.Session.LoginAccount] as Poco.Account;
@@ -15,6 +29,9 @@
                 { 
                     <a id="btnLogOut" type="user">退出</a>
                 }
+            </div>
+            <div class="DivSendSuccess">
+                发送成功
             </div>
         </div>
     </div>

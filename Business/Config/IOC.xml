@@ -50,6 +50,9 @@
   <object id="UserLoginInfoModel" type="Business.UserLoginInfoModel" parent="EFModel" singleton="false"></object>
   <object id="KeywordModel" type="Business.KeywordModel" parent="EFModel" singleton="false"></object>
   <object id="KeywordAutoMessageModel" type="Business.KeywordAutoMessageModel" parent="EFModel" singleton="false"></object>
+  <object id="PendingMessagesModel" type="Business.PendingMessagesModel" parent="EFModel" singleton="false"></object>
+  <object id="TemporayInstantMesModel" type="Business.TemporayInstantMesModel" parent="EFModel" singleton="false"></object>
+
   <object id="Push_IOS" type="Business.Push_IOS" singleton="false">
   </object>
   <object id="Push_Getui" type="Business.Push_Getui" singleton="false">

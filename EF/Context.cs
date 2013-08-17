@@ -35,7 +35,6 @@ namespace EF
         public DbSet<Keyword> Keyword { get; set; }
 
 
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
@@ -53,9 +52,8 @@ namespace EF
             modelBuilder.Configurations.Add(new AutoMessage_KeywordMap());
             modelBuilder.Configurations.Add(new KeywordAutoMessageMap());
             modelBuilder.Configurations.Add(new KeywordMap());
-            modelBuilder.Configurations.Add(new AppUpdateMap
-());
-
+            modelBuilder.Configurations.Add(new AppUpdateMap());
+            modelBuilder.Configurations.Add(new PendingMessagesMap());
         }
     }
 }

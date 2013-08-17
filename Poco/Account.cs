@@ -95,5 +95,10 @@ namespace Poco
         public virtual ICollection<Account_AccountMain> Account_AccountMains { get; set; }
 
         public virtual ICollection<Account_User> Account_User { get; set; }
+
+        public virtual ICollection<PendingMessages> SendPendingMessages { get; set; }
+
+        public virtual ICollection<PendingMessages> ReceivePendingMessages { get; set; }
+
     }
 }

@@ -26,5 +26,6 @@ namespace Poco
         public int GroupID { get; set; }
 
         public virtual Group Group { get; set; }
+
     }
 }

@@ -82,6 +82,7 @@
     <Compile Include="LookupFactory.cs" />
     <Compile Include="LookupOptionModel.cs" />
     <Compile Include="MessageModel.cs" />
+    <Compile Include="PendingMessagesModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProvinceModel.cs" />
     <Compile Include="PushModel.cs" />
@@ -102,6 +103,8 @@
     <Compile Include="MenuModel.cs" />
     <Compile Include="MenuOptionModel.cs" />
     <Compile Include="RoleOptionModel.cs" />
+    <Compile Include="TemporayInstantMesModel.cs" />
+    <Compile Include="TextReplyModel.cs" />
     <Compile Include="UserModel.cs" />
     <Compile Include="UserLoginInfoModel.cs" />
   </ItemGroup>

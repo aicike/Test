@@ -1,0 +1,74 @@
+﻿@{
+    Layout = null;
+}
+@model PagedList<Poco.Message>
+@foreach (var item in Model)
+{
+    <div class="div_item">
+        <div class="div_td" style="width: 70px; float: left; text-align: center">
+            @if (item.EnumMessageSendDirectionID == (int)Poco.Enum.EnumMessageSendDirection.Account_User)
+            {
+                if (!string.IsNullOrEmpty(item.FromAccount.HeadImagePath))
+                { 
+                <img id="imgUHead" style="max-width: 50px; max-height: 50px;" src="@Url.Content(item.FromAccount.HeadImagePath)" />
+                }
+            }
+            else if (item.EnumMessageSendDirectionID == (int)Poco.Enum.EnumMessageSendDirection.User_Account)
+            {
+                if (!string.IsNullOrEmpty(item.FromUser.UserLoginInfo.HeadImagePath))
+                { 
+                <img id="imgUHead" style="max-width: 50px; max-height: 50px;" src="@Url.Content(item.FromUser.UserLoginInfo.HeadImagePath)" />
+                }
+            }
+        </div>
+        <div class="div_td" style="float: left">
+            <div style="font-weight: bold; margin-top: 5px">
+                @if (item.EnumMessageSendDirectionID == (int)Poco.Enum.EnumMessageSendDirection.Account_User)
+                {
+                    @item.FromAccount.Name;
+                }
+                else if (item.EnumMessageSendDirectionID == (int)Poco.Enum.EnumMessageSendDirection.User_Account)
+                {
+                    if (item.FromUser.UserLoginInfo.Name == item.FromUser.Name)
+                    { 
+                    @item.FromUser.UserLoginInfo.Name
+                    }
+                    else
+                    { 
+                    @item.FromUser.Name @:(@item.FromUser.UserLoginInfo.Name)
+                                                                    }
+                }
+            </div>
+            <div style="margin-top: 10px; width: 510px; word-wrap: break-word; word-break: normal;">
+                @if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Text)
+                {
+                    @item.TextContent 
+                }
+            </div>
+        </div>
+        <div class="div_td" style="font-size: 12px; color: #aaaaaa; width: 150px; margin-top: 5px;
+            float: right; text-align: center">
+            @item.SendTime.DateFormat()
+        </div>
+        <div style="clear: both">
+        </div>
+    </div>
+}
+<div class="pages" style="margin-top: 10px">
+    @Html.Pager(Model.TotalPageCount,Model.CurrentPageIndex, "Index", "SingleChat", new PagerOptions
+       {
+           PageIndexParameterName = "ID",
+           CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+           NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+           NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+           CssClass = "manage_pages pages",
+           SeparatorHtml = "&nbsp;",
+           AutoHide = false,
+           /*LastPageText = "Last",
+           FirstPageText = "First",
+           PrevPageText = "Back",
+           NextPageText = "Next",*/
+           PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+           ShowFirstLast = false
+       }, "User", new { HostName = ViewBag.HostName, id = ViewBag.ID }, null)
+</div>
