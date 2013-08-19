@@ -7,6 +7,8 @@ namespace Poco
 {
     public static class SystemConst
     {
+        public static string WebUrl = System.Configuration.ConfigurationManager.AppSettings["WebUrl"];
+
         public class Business
         {
             private Business() { }
@@ -20,7 +22,7 @@ namespace Poco
             public const string DefaultGroup = "未分组";
             public const string BlackListGroup = "黑名单";
             public const string AccountAdmin = "AccountAdmin";
-            public const string ThumbnailImage_Width = "1000";         
+            public const string ThumbnailImage_Width = "1000";
         }
 
         public class Cache
@@ -30,14 +32,14 @@ namespace Poco
             public const string Menu = "Menu";
             public const string RoleMenu = "RoleMenu";
             public const string RoleOption = "RoleOption";
-            public const string LookupOption = "LookupOption";  
+            public const string LookupOption = "LookupOption";
         }
 
         public class Notice
         {
             private Notice() { }
             public const string NotAuthorized = "无权操作。";
-            public const string MultipleAccountMainAdminAccount= "只能创建一个有效的管理员账号，请先禁用其他管理员账号再添管理员账号加或选择其他角色创建账号。";
+            public const string MultipleAccountMainAdminAccount = "只能创建一个有效的管理员账号，请先禁用其他管理员账号再添管理员账号加或选择其他角色创建账号。";
         }
 
         public class Session
@@ -97,7 +99,7 @@ namespace Poco
             public const string PendingMessagesModel = "PendingMessagesModel";
             public const string MessageModel = "MessageModel";
             public const string TemporayInstantMes = "TemporayInstantMesModel";
-            
+
         }
     }
 }

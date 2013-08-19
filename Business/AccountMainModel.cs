@@ -68,17 +68,17 @@ namespace Business
                         Directory.CreateDirectory(path);
                     }
                     //3个文件目录
-                    var basePath = string.Format("{0}\\{1}", path, "Base");//Base目录物理路径
+                    var basePath = string.Format("{0}/{1}", path, "Base");//Base目录物理路径
                     if (Directory.Exists(basePath) == false)
                     {
                         Directory.CreateDirectory(basePath);
                     }
-                    var accountPath = string.Format("{0}\\{1}", path, "Account");//Account目录物理路径
+                    var accountPath = string.Format("{0}/{1}", path, "Account");//Account目录物理路径
                     if (Directory.Exists(accountPath) == false)
                     {
                         Directory.CreateDirectory(accountPath);
                     }
-                    var fileLibraryPath = string.Format("{0}\\{1}", path, "FileLibrary");//FileLibrary目录物理路径
+                    var fileLibraryPath = string.Format("{0}/{1}", path, "FileLibrary");//FileLibrary目录物理路径
                     if (Directory.Exists(fileLibraryPath) == false)
                     {
                         Directory.CreateDirectory(fileLibraryPath);
@@ -87,8 +87,8 @@ namespace Business
                     var width = 80;
                     var imageName = string.Format("{0}_{1}", token, LogoImagePath.FileName);
                     var imageThumbnailName = string.Format("{0}_{1}_{2}", token, width, LogoImagePath.FileName);
-                    var imagePath = string.Format("{0}\\{1}", basePath, imageName);
-                    var imageThumbnailPath = string.Format("{0}\\{1}", basePath, imageThumbnailName);
+                    var imagePath = string.Format("{0}/{1}", basePath, imageName);
+                    var imageThumbnailPath = string.Format("{0}/{1}", basePath, imageThumbnailName);
                     LogoImagePath.SaveAs(imagePath);
                     //缩略图
                     Tool.Thumbnail(imagePath, imageThumbnailPath, width);
@@ -118,7 +118,7 @@ namespace Business
                 {
                     //删除原logo及缩略图
                     var path = HttpContext.Current.Server.MapPath(string.Format("~/File/{0}", accountMain.ID));
-                    var basePath = string.Format("{0}\\{1}", path, "Base");
+                    var basePath = string.Format("{0}/{1}", path, "Base");
                     var logoImageAbsolutePath = HttpContext.Current.Server.MapPath(accountMain.LogoImagePath);
                     if (File.Exists(logoImageAbsolutePath))
                     {
@@ -133,8 +133,8 @@ namespace Business
                     var width = 80;
                     var imageName = string.Format("{0}_{1}", token, LogoImagePath.FileName);
                     var imageThumbnailName = string.Format("{0}_{1}_{2}", token, width, LogoImagePath.FileName);
-                    var imagePath = string.Format("{0}\\{1}", basePath, imageName);
-                    var imageThumbnailPath = string.Format("{0}\\{1}", basePath, imageThumbnailName);
+                    var imagePath = string.Format("{0}/{1}", basePath, imageName);
+                    var imageThumbnailPath = string.Format("{0}/{1}", basePath, imageThumbnailName);
                     LogoImagePath.SaveAs(imagePath);
                     //缩略图
                     Tool.Thumbnail(imagePath, imageThumbnailPath, width);

@@ -22,7 +22,7 @@ namespace Business
             var libraryVideoModel = Factory.Get<ILibraryVideoModel>(SystemConst.IOC_Model.LibraryVideoModel);
             var libraryVoiceModel = Factory.Get<ILibraryVoiceModel>(SystemConst.IOC_Model.LibraryVoiceModel);
 
-            string hostUrl = System.Configuration.ConfigurationManager.AppSettings["WebUrl"];
+            string hostUrl = SystemConst.WebUrl;
             List<App_AutoMessageReplyContent> replayList = new List<App_AutoMessageReplyContent>();
             foreach (var item in list)
             {

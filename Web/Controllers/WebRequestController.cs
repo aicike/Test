@@ -23,6 +23,16 @@ namespace Web.Controllers
         }
 
         /// <summary>
+        /// 获取App登录页logo
+        /// </summary>
+        public string GetAppLogo(int accountMainID)
+        {
+            var accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
+            string path = SystemConst.WebUrl + (accountMainModel.Get(accountMainID).LogoImageThumbnailPath).Replace("~", "");
+            return path;
+        }
+
+        /// <summary>
         /// 检查邮箱是否已存在
         /// </summary>
         [HttpPost]
