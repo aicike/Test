@@ -17,12 +17,18 @@
                 $("#divTextInfo").html(length);
             });
             $("#Content").keyup();
+
+
             //验证文本是否输入
             $("#btnSubmit").click(function () {
+
                 var length = $.trim($("#Content").val()).length;
                 if (length == 0) {
                     alert("请输入数据！");
                     return false;
+                }
+                else if (length > 500) {
+                    alert("只能输入500字！");
                 }
                 else {
                     return true;
@@ -30,31 +36,65 @@
             });
 
             //鼠标移动改变背景色
-            $('.div_item').hover(function () {
-                $(this).addClass('tabOver');
-            }, function () {
-                $(this).removeClass('tabOver');
+//            $('.div_item').hover(function () {
+//                $(this).addClass('tabOver');
+//            }, function () {
+//                $(this).removeClass('tabOver');
+//            });
+
+            //选择图片
+            $("#TypeImagePathFile").change(function () {
+                var fileName = $("#TypeImagePathFile").val();
+                $("#TypeImgPath").val(fileName);
+                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+                $("span[data-valmsg-for='HouseTypeImagePath']").empty().attr("class", "field-validation-valid");
+                switch (suffix) {
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".gif":
+                    case ".bmp":
+                        break;
+                    default:
+                        $("span[data-valmsg-for='HouseTypeImagePath']").text("支持下列图片格式：.jpg|.jpeg|.png|.gif|.bmp").attr("class", "field-validation-error");
+                        break;
+                }
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#imgType").attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+                else {
+                    $("#imgType").attr('src', "#");
+                }
+                return false;
             });
+
+
 
         });
 
         function ReadMessage() {
-//            $.get(checkMessageUrl, {}, function (data) {
-//                if (data && data == "1") {
-                    $("#btnSelData").click();
-//                }
-//            });
+            //            $.get(checkMessageUrl, {}, function (data) {
+            //                if (data && data == "1") {
+            $("#btnSelData").click();
+            //                }
+            //            });
         }
 
         setInterval(ReadMessage, "5000");
 
 
         function EmptyContent() {
-            
+
             $("#Content").val("");
             $("#Content").keyup();
         }
 
+       
     </script>
     <style>
         .div_item
@@ -63,6 +103,9 @@
             font-family: @@微软雅黑;
             padding: 15px 0px 25px 0px;
         }
+        .div_item:hover
+        {
+            background-color: #f1f1f1;}
         /*.div_td
         {
             width: 730px;
@@ -78,23 +121,37 @@
         {
             background-color: #f1f1f1;
         }
+        
+        .ImgTab
+        {
+            width: 100%;
+            height: 103px;
+            border-left: 1px solid #d3d3d3;
+            border-bottom: 1px solid #d3d3d3;
+        }
+        .ImgTab td
+        {
+            border-right: 1px solid #d3d3d3;
+            padding-left: 5px;
+        }
     </style>
 }
 <div class="title">
     与 "@ViewBag.UName" 的聊天
 </div>
 <div class="body">
-    @using (Ajax.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID}, new AjaxOptions() { UpdateTargetId = "div_data", OnSuccess = "EmptyContent()" }))
-    {
-        <div class="tableList" id="tabs" style="width: 725px; height: 220px">
-            <ul>
-                <li><a href="#tabs-1">文字</a></li>
-                <li style="display: none"><a href="#tabs-2">语音</a></li>
-                <li style="display: none"><a href="#tabs-3">图片</a></li>
-                <li style="display: none"><a href="#tabs-4">视频</a></li>
-                <li style="display: none"><a href="#tabs-5">图片消息</a></li>
-            </ul>
-            <div id="tabs-1">
+    <div class="tableList" id="tabs" style="width: 725px; height: 220px">
+        <ul>
+            <li><a href="#tabs-1">文字</a></li>
+            <li style="display: none"><a href="#tabs-2">语音</a></li>
+            <li><a href="#tabs-3">图片</a></li>
+            <li style="display: none"><a href="#tabs-4">视频</a></li>
+            <li style="display: none"><a href="#tabs-5">图文消息</a></li>
+        </ul>
+        <div id="tabs-1">
+            @using (Ajax.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID }, new AjaxOptions() { UpdateTargetId = "div_data", OnSuccess = "EmptyContent()" }))
+            {
+                <input type="hidden" value="0" id="MesType0" name="MesType" />
                 <textarea id="Content" name="Content" rows="8" style="width: 100%; height: 80px"></textarea>
                 <div style="float: left">
                 </div>
@@ -104,48 +161,67 @@
                 </div>
                 <div style="clear: both">
                 </div>
-            </div>
-            <div id="tabs-2">
-                <p>
-                    Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra
-                    massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget
-                    luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean
-                    aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent
-                    in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat
-                    nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque
-                    convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod
-                    felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
-            </div>
-            <div id="tabs-3">
-                <p>
-                    Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate,
-                    pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem.
-                    Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia
-                    nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo
-                    pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem
-                    enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-            </div>
-            <div id="tabs-4">
-                <p>
-                    Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate,
-                    pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem.
-                    Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia
-                    nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo
-                    pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem
-                    enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-            </div>
-            <div id="tabs-5">
-                <p>
-                    Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate,
-                    pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem.
-                    Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia
-                    nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo
-                    pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem
-                    enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-            </div>
-            <input type="submit" id="btnSubmit" value="发送" class="button" style="margin-left: 18px" />
+                    
+                <input type="submit" id="btnSubmit"  value="发送" class="button" style="margin-top: 10px" />
+            }
         </div>
-    }
+        <div id="tabs-2">
+            <p>
+                Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra
+                massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget
+                luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean
+                aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent
+                in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat
+                nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque
+                convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod
+                felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+        </div>
+        <div id="tabs-3">
+            @using (Html.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input type="hidden" value="1" id="MesType1" name="MesType" />
+                <table cellpadding="0" cellspacing="0" class="ImgTab">
+                    <tr>
+                        <td align="left">
+                            本地图片：
+                            <input type="file" id="TypeImagePathFile" name="TypeImagePathFile" />
+                            <input type="hidden" id="TypeImgPath" name="TypeImgPath" />
+                        </td>
+                        <td width="235px" rowspan="2" style=" border-left:0px">
+                            <img id="imgType" style="max-width: 230px; max-height: 100px; float: left" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            <button type="button" id="btnSC">
+                                素材图片</button>
+                        </td>
+                    </tr>
+                </table>
+                <div style="clear: both">
+                </div>
+                <input type="submit" id="btnImgSubmit" value="发送" class="button" style="margin-top: 12px" />
+            }
+        </div>
+        <div id="tabs-4">
+            <p>
+                Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate,
+                pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem.
+                Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia
+                nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo
+                pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem
+                enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+        </div>
+        <div id="tabs-5">
+            <p>
+                Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate,
+                pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem.
+                Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia
+                nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo
+                pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem
+                enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+        </div>
+    </div>
     @using (Ajax.BeginForm("ReadMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID }, new AjaxOptions() { UpdateTargetId = "div_data" }))
     { 
         <input type="submit" id="btnSelData" style="visibility: hidden" />

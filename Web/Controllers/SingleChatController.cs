@@ -43,34 +43,69 @@ namespace Web.Controllers
         }
 
         [AllowCheckPermissions(false)]
-        public ActionResult SendMessage(int id, int userID, string Content)
+        public ActionResult SendMessage(int id, int userID, string Content, string MesType, string TypePath, HttpPostedFileBase TypeImagePathFile)
         {
             TreedCon();
             Thread.Sleep(1000);
             try
             {
-                agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message();
-                msg.Type = MessageType.chat;
-                msg.Body = Content;
-                msg.From = new Jid("s" + LoginAccount.ID, "localhost", "resource");
-                msg.To = new Jid("u" + userID, "localhost", "s" + LoginAccount.ID);
-                NewsProtocol np = new NewsProtocol();
-                np.MSD = "0"; //->购房-->售楼
-                np.MT = "1";  //消息
-                np.EID = "0"; //文本
-                msg.AddChild(np);
-                Connection.Send(msg);
-                Presence p = new Presence();
-                p.Type = PresenceType.unavailable;
-                Connection.Send(p);
+                if (Connection != null)
+                {
+                    agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message();
+                    msg.Type = MessageType.chat;
+                    msg.From = new Jid("s" + LoginAccount.ID, "localhost", "resource");
+                    msg.To = new Jid("u" + userID, "localhost", "s" + LoginAccount.ID);
+
+                    NewsProtocol np = new NewsProtocol();
+                    np.MSD = ((int)EnumMessageSendDirection.Account_User).ToString(); //售楼->购房
+                    np.MT = "1";  //消息
+                    np.EID = MesType; //消息类型
+
+                    //文本
+                    if (MesType == ((int)EnumMessageType.Text).ToString())
+                    {
+                        msg.Body = Content;
+                    }
+                    //图片
+                    else if (MesType == ((int)EnumMessageType.Image).ToString())
+                    {
+
+                        var path = string.Format(string.Format("~/File/{0}.Message", LoginAccount.CurrentAccountMainID));
+                        if (!System.IO.File.Exists(Server.MapPath(path)))
+                        {
+                            System.IO.Directory.CreateDirectory(Server.MapPath(path));
+                        }
+                        var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                        var imageName = string.Format("{0}_{1}", token, TypeImagePathFile.FileName);
+                        var imagePath = string.Format("{0}\\{1}", path, imageName);
+                        var imagePath2 = Server.MapPath(imagePath);
+                        TypeImagePathFile.SaveAs(imagePath2);
+                        np.FielUrl = imagePath;
+                    }
+                    msg.AddChild(np);
+                    Connection.Send(msg);
+                    Presence p = new Presence();
+                    p.Type = PresenceType.unavailable;
+                    Connection.Send(p);
+                }
+                else
+                {
+                    //发送失败
+                }
             }
             catch
             {
                 //发送失败
             }
             Thread.Sleep(1000);
-
-            return RedirectToAction("ChatPartialView", new { id = id, userID = userID });
+            if (MesType != ((int)EnumMessageType.Text).ToString())
+            {
+                return RedirectToAction("index", new { id = id, userID = userID });
+            }
+            else
+            {
+                return RedirectToAction("ChatPartialView", new { id = id, userID = userID });
+            }
         }
 
         [AllowCheckPermissions(false)]

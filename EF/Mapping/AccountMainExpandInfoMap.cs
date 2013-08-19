@@ -12,8 +12,8 @@ namespace EF.Mapping
     {
         public AccountMainExpandInfoMap()
         {
-            HasRequired(a => a.AccounMain)
-                .WithOptional(u => u.AccountMainExpandInfo);
+            //HasRequired(a => a.AccounMain)
+            //    .WithOptional(u => u.AccountMainExpandInfo);
         }
     }
 }

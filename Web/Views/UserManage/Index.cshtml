@@ -234,7 +234,7 @@
                     }
                 </td>
                 <td>
-                    @item.Name
+                     <a href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.ID })" target="_blank">@item.Name</a>
                 </td>
                 <td>
                     @item.Phone

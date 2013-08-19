@@ -55,6 +55,9 @@ namespace Poco
 
         [Display(Name = "发送时间")]
         public DateTime ReceiveTime { get; set; }
+        
+        [Display(Name="文件路径")]
+        public string FileUrl { get; set; }
 
         public virtual ICollection<PendingMessages> PendingMessages { get; set; }
     }

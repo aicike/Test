@@ -149,8 +149,8 @@ namespace Business
             }
             if (result.HasError == false)
             {
-                IAccountMainExpandInfoModel accountMainExpandInfoModel = Factory.Get<IAccountMainExpandInfoModel>(SystemConst.IOC_Model.AccountMainExpandInfoModel);
-                result = accountMainExpandInfoModel.Edit(accountMain.AccountMainExpandInfo);
+                //IAccountMainExpandInfoModel accountMainExpandInfoModel = Factory.Get<IAccountMainExpandInfoModel>(SystemConst.IOC_Model.AccountMainExpandInfoModel);
+                //result = accountMainExpandInfoModel.Edit(accountMain.AccountMainExpandInfo);
             }
             return result;
         }

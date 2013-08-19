@@ -140,11 +140,11 @@ INSERT [dbo].[SystemUser] ([SystemStatus], [Name], [Email], [LoginPwd], [Phone],
 
 -----------------------------[AccountMain]--------------------------
 SET IDENTITY_INSERT [dbo].[AccountMain] ON
-INSERT [dbo].[AccountMain] ([ID], [SystemStatus], [Name],[HostName], [ProvinceID], [CityID], [DistrictID], [Phone], [LogoImageThumbnailPath], [LogoImagePath], [AccountStatusID], [FileLimit], [AccountMainExpandInfoID], [SystemUserID], [CreateTime]) VALUES (1, 0, N'天朗蓝湖树',N'TLLHS', 27, 288, 2513, N'13474137783', N'~\File\1\Base\20130712164726_80_logo.jpg', N'~\File\1\Base\20130712164726_logo.jpg', 1, 2, 0, 1, CAST(0x0000A1F90114B090 AS DateTime))
+INSERT [dbo].[AccountMain] ([ID], [SystemStatus], [Name],[HostName], [ProvinceID], [CityID], [DistrictID], [Phone], [LogoImageThumbnailPath], [LogoImagePath], [AccountStatusID], [FileLimit],  [SystemUserID], [CreateTime],[SaleAddress]) VALUES (1, 0, N'天朗蓝湖树',N'TLLHS', 27, 288, 2513, N'13474137783', N'~\File\1\Base\20130712164726_80_logo.jpg', N'~\File\1\Base\20130712164726_logo.jpg', 1, 2, 1, CAST(0x0000A1F90114B090 AS DateTime),'科技路西口')
 SET IDENTITY_INSERT [dbo].[AccountMain] OFF
 
 -----------------------------[AccountMainExpandInfo]--------------------------
-INSERT [dbo].[AccountMainExpandInfo] ([ID], [SystemStatus], [AccountMainID], [ProductAddress], [SaleAddress], [OpeningDate], [CheckInDate], [CompletedDate], [BuildCompany], [Investor], [Description], [ProjectSupport], [TrafficInfo], [BuildingMaterials], [FloorInfo], [StallInfo], [OccupyArea], [BuildingArea], [ProjectSchedule], [PropertyRight], [HouseholdsCount]) VALUES (1, 0, 0, N'科技路西口', N'科技路西口', CAST(0x0000A1F900000000 AS DateTime), CAST(0x0000A1FF00000000 AS DateTime), CAST(0x0000A20100000000 AS DateTime), N'天朗', N'天朗', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 70, NULL)
+--INSERT [dbo].[AccountMainExpandInfo] ([ID], [SystemStatus], [AccountMainID], [ProductAddress], [SaleAddress], [OpeningDate], [CheckInDate], [CompletedDate], [BuildCompany], [Investor], [Description], [ProjectSupport], [TrafficInfo], [BuildingMaterials], [FloorInfo], [StallInfo], [OccupyArea], [BuildingArea], [ProjectSchedule], [PropertyRight], [HouseholdsCount]) VALUES (1, 0, 0, N'科技路西口', N'科技路西口', CAST(0x0000A1F900000000 AS DateTime), CAST(0x0000A1FF00000000 AS DateTime), CAST(0x0000A20100000000 AS DateTime), N'天朗', N'天朗', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 70, NULL)
 
 -----------------------------[Account]--------------------------
 SET IDENTITY_INSERT [dbo].[Account] ON

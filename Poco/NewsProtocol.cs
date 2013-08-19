@@ -33,12 +33,21 @@ namespace Poco
         }
 
         /// <summary>
-        /// 消息类型  0：文本库 1：图片库 2：视频库 3：音频库 4：图文库 5：自动回复文本
+        /// 消息类型  0：文本库 1：图片库 2：视频库 3：音频库 4：图文库 
         /// </summary>
         public string EID 
         {
             get { return GetTag("eid"); }
             set { SetTag("eid",value); }
+        }
+
+        /// <summary>
+        /// 文件地址
+        /// </summary>
+        public string FielUrl 
+        {
+            get { return GetTag("fileurl"); }
+            set { SetTag("fileurl", value); }
         }
     }
 }

@@ -10,30 +10,30 @@
             $("#CityID").City("ProvinceID");
             $("#DistrictID").District("CityID");
 
-            $("#AccountMainExpandInfo_OpeningDate").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                onSelect: function (selectedDate) {
-                    $("#AccountMainExpandInfo_CheckInDate").datepicker("option", "minDate", selectedDate);
-                    $("#AccountMainExpandInfo_CompletedDate").datepicker("option", "minDate", selectedDate);
-                }
-            });
+//            $("#AccountMainExpandInfo_OpeningDate").datepicker({
+//                changeMonth: true,
+//                changeYear: true,
+//                onSelect: function (selectedDate) {
+//                    $("#AccountMainExpandInfo_CheckInDate").datepicker("option", "minDate", selectedDate);
+//                    $("#AccountMainExpandInfo_CompletedDate").datepicker("option", "minDate", selectedDate);
+//                }
+//            });
 
-            $("#AccountMainExpandInfo_CompletedDate").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                onSelect: function (selectedDate) {
-                    $("#AccountMainExpandInfo_OpeningDate").datepicker("option", "maxDate", selectedDate);
-                }
-            });
+//            $("#AccountMainExpandInfo_CompletedDate").datepicker({
+//                changeMonth: true,
+//                changeYear: true,
+//                onSelect: function (selectedDate) {
+//                    $("#AccountMainExpandInfo_OpeningDate").datepicker("option", "maxDate", selectedDate);
+//                }
+//            });
 
-            $("#AccountMainExpandInfo_CheckInDate").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                onSelect: function (selectedDate) {
-                    $("#AccountMainExpandInfo_OpeningDate").datepicker("option", "maxDate", selectedDate);
-                }
-            });
+//            $("#AccountMainExpandInfo_CheckInDate").datepicker({
+//                changeMonth: true,
+//                changeYear: true,
+//                onSelect: function (selectedDate) {
+//                    $("#AccountMainExpandInfo_OpeningDate").datepicker("option", "maxDate", selectedDate);
+//                }
+//            });
 
             $("#FileLimit").val(2);
 
@@ -164,11 +164,20 @@
                     <td>@Html.ValidationMessageFor(a => a.FileLimit)
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        售楼地址
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.SaleAddress)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.SaleAddress)
+                    </td>
+                </tr>
             </table>
         </fieldset>
         <fieldset style="border: 1px solid #d3d3d3; margin-top: 15px;">
             <legend>业务信息</legend>
-            <table class="tableForm">
+            @*<table class="tableForm">
                 <tr>
                     <td class="tdTitle">
                         开发商名称
@@ -186,8 +195,7 @@
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.Investor)
                     </td>
-                </tr>
-                <tr>
+                </tr> <tr>
                     <td>
                         项目地址
                     </td>
@@ -195,17 +203,7 @@
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.ProductAddress)
                     </td>
-                </tr>
-                <tr>
-                    <td>
-                        售楼地址
-                    </td>
-                    <td>@Html.TextBoxFor(a => a.AccountMainExpandInfo.SaleAddress)
-                    </td>
-                    <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.SaleAddress)
-                    </td>
-                </tr>
-                <tr>
+                </tr><tr>
                     <td>
                         开盘时间
                     </td>
@@ -331,7 +329,7 @@
                     <td>@Html.ValidationMessageFor(a => a.AccountMainExpandInfo.ProjectSchedule)
                     </td>
                 </tr>
-            </table>
+            </table>*@
         </fieldset>
         <div class="action">
             <input type="submit" id="btnSubmit" value="保存" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
