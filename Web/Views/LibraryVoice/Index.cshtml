@@ -17,12 +17,12 @@
                 swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
                 uploader: uploadUrl,
                 width: 80,
-                fileTypeExts: '*.mp3;*.wma;*.wav;*.amr',
+                fileTypeExts: '*.mp3;*.amr',
                 onUploadSuccess: function (file, data, response) {
                     eval(data);
                 }
             });
-            $("#file_upload-button").after('<div id="div_message" style="position: absolute;top: 5px;left: 100px;width:260px">格式限制：mp3, wma, wav, amr</div>');
+            $("#file_upload-button").after('<div id="div_message" style="position: absolute;top: 5px;left: 100px;width:260px">格式限制：mp3,amr</div>');
             $("a[name='btnReName']").click(function () {
                 var tr = $(this).parent().parent();
                 tr.find(".spanFileName").hide();

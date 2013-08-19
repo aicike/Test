@@ -29,26 +29,66 @@
     {
         <fieldset style="border: 1px solid #d3d3d3;">
             <legend>用户</legend>
-            @*<table class="tableForm">
+            <table class="tableForm">
                 <tr>
                     <td class="tdTitle">
-                        标题
+                        名称
                     </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.Title)
+                    <td class="tdField">@Model.UserLoginInfo.Name @Html.HiddenFor(a => a.ID);@Html.HiddenFor(a => a.AccountStatusID);@Html.HiddenFor(a => a.AccountMainID);@Html.HiddenFor(a => a.UserLoginInfoID);
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.Title)
+                    <td>
                     </td>
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        内容
+                        头像
                     </td>
-                    <td class="tdField">@Html.TextAreaFor(a => a.Content)
+                    <td class="tdField">
+                        @if (string.IsNullOrEmpty(Model.HeadImagePath) == false)
+                        { 
+                            <img style="max-width:80px;max-height:80px; float: left" src="@Url.Content(Model.HeadImagePath)" />
+                        }
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.Content)
+                    <td>
                     </td>
                 </tr>
-            </table>*@
+                <tr>
+                    <td class="tdTitle">
+                        备注
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Name)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        地址
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Address)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Address)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        电话
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Phone)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Phone)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        身份证
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.IdentityCard)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.IdentityCard)
+                    </td>
+                </tr>
+            </table>
         </fieldset>
         <div class="action">
             <input type="submit" id="btnSubmit" value="保存" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />

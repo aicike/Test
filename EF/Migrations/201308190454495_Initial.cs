@@ -37,6 +37,7 @@ namespace EF.Migrations
                         Name = c.String(nullable: false, maxLength: 50),
                         ParentRoleID = c.Int(),
                         IsCanDelete = c.Boolean(nullable: false),
+                        IsCanFindByUser = c.Boolean(),
                         Token = c.String(maxLength: 50),
                     })
                 .PrimaryKey(t => t.ID)

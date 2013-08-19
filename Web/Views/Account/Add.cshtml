@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "AddAccount";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+        $(function () {
+            var CheckIsExistAdminUrl = '@Url.Action("CheckIsExistAdmin", "Account")';
+            $("#HeadImagePathFile").change(function () {
+                var fileName = $("#HeadImagePathFile").val();
+                $("#Account_HeadImagePath").val(fileName);
+                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+                $("span[data-valmsg-for='Account_HeadImagePath']").empty().attr("class", "field-validation-valid");
+                switch (suffix) {
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".gif":
+                    case ".bmp":
+                        break;
+                    default:
+                        $("span[data-valmsg-for='Account_HeadImagePath']").text("支持下列图片格式：.jpg|.jpeg|.png|.gif|.bmp").attr("class", "field-validation-error");
+                        break;
+                }
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#imgLogo").attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+                return false;
+            });
+            $("#Account_RoleID").change(function () {
+                var index = $(this).val();
+                var value = $(this).find("option[value='" + index + "']").text();
+                if (value == "管理员") {
+                    $.get(CheckIsExistAdminUrl, { }, function (result) {
+                        if(result.length>0){
+                            eval(result);
+                        }else{
+                            
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+@model Poco.Account_AccountMain
+<div class="title">
+    添加账号</div>
+<div class="body">
+    @using (Html.BeginForm("Add", "Account", new { HostName = @ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <fieldset style="border: 1px solid #d3d3d3;">
+            <legend>账号信息</legend>
+            <table>
+                <tr>
+                    <td class="tdTitle">
+                        名称
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Account.Name)
+                        <input type="hidden" id="AccountMainID" name="AccountMainID" value="@ViewBag.AccountMainID" />
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Account.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        邮箱
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.Account.Email)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Account.Email)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        密码
+                    </td>
+                    <td>@Html.PasswordFor(a => a.Account.LoginPwdPage)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Account.LoginPwdPage)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        确认密码
+                    </td>
+                    <td>@Html.PasswordFor(a => a.Account.LoginPwdPageCompare)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Account.LoginPwdPageCompare)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        电话
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.Account.Phone)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Account.Phone)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        头像
+                    </td>
+                    <td>
+                        <img id="imgLogo" style="max-width: 80px; max-height: 80px; float: left" />
+                        <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" />
+                        @Html.TextBoxFor(a => a.Account.HeadImagePath, new { style = "width:0px;visibility:hidden" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Account.HeadImagePath)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        角色
+                    </td>
+                    <td>@Html.DropDownListFor(a => a.Account.RoleID, ViewData["Roles"] as List<SelectListItem>, new { })
+                    </td>
+                    <td id="tdRoleValidation">
+                        @Html.ValidationMessageFor(a => a.Account.RoleID)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="submit" id="btnSubmit" value="保存" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }</div>

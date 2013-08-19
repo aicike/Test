@@ -24,6 +24,9 @@ namespace Business
             return base.Add(user);
         }
 
-
+        public Result UpdateUserInfo(User user)
+        {
+            return base.Edit(user);
+        }
     }
 }

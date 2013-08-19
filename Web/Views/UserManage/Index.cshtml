@@ -154,20 +154,16 @@
     用户管理</div>
 <div class="bodyLeft">
     <ul class="ulList" id="ulGroup">
-        <li  >
-            <a href="@Url.Action("Index", "InstantMes", new { HostName = ViewBag.HostName})">
-                销售消息 
-            </a>
-        </li>
-        <li style="height:10px; background-color:#f0f0f0 ;border-bottom:1px solid #d3d3d3; border-top:1px solid #d3d3d3">
-            
-        </li>
+        <li><a href="@Url.Action("Index", "InstantMes", new { HostName = ViewBag.HostName })">
+            销售消息 </a></li>
+        <li style="height: 10px; background-color: #f0f0f0; border-bottom: 1px solid #d3d3d3;
+            border-top: 1px solid #d3d3d3"></li>
         @foreach (var item in groupList)
         {
             if (item.ID == groupID)
             { 
             <li class="select"><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())</a>
-                @if (item.ID != defaultGroupID)
+                @if (item.IsCanDelete)
                 {
                     <span class="span_option"><span class="span_edit" value="@item.GroupName" gID="@item.ID">
                         编辑</span><span class="span_delete" gID="@item.ID">删除</span></span>
@@ -177,7 +173,7 @@
             else
             {  
             <li><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())</a>
-                @if (item.ID != defaultGroupID)
+                @if (item.IsCanDelete)
                 {
                     <span class="span_option"><span class="span_edit" value="@item.GroupName" gID="@item.ID">
                         编辑</span><span class="span_delete" gID="@item.ID">删除</span></span>
@@ -205,8 +201,8 @@
             <th style="width: 90px;">
                 头像
             </th>
-            <th style="width: 150px;">
-                名称
+            <th style="width: 200px;">
+                名称(备注)
             </th>
             <th style="width: 150px;">
                 电话
@@ -214,7 +210,7 @@
             <th style="width: 150px;">
                 分组
             </th>
-            <th style="width: 150px;">
+            <th style="width: 100px;">
                 操作
             </th>
         </tr>
@@ -234,7 +230,11 @@
                     }
                 </td>
                 <td>
-                    @item.Name
+                    @item.UserLoginInfo.Name
+                    @if (string.IsNullOrEmpty(item.Name) == false)
+                    {
+                        @:(@item.Name)
+                    }
                 </td>
                 <td>
                     @item.Phone

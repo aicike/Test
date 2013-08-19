@@ -15,5 +15,7 @@ namespace Interface
         /// <param name="groupID"></param>
         /// <returns></returns>
         IQueryable<User> GetUserByAccountID(int accountID, int groupID);
+
+        Result UpdateUserInfo(User user);
     }
 }

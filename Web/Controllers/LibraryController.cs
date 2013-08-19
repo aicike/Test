@@ -41,7 +41,7 @@ namespace Web.Controllers
             var accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             var accountMainLibraryInfo = accountMainModel.GetAccountMainLibraryInfo(LoginAccount.CurrentAccountMainID);
             List<LibraryType> type = new List<Poco.LibraryType>();
-            type.Add(new LibraryType() { ID = 0, Name = "文字", Token = "LibraryText", Count = accountMainLibraryInfo.LibraryTextCount });
+            //type.Add(new LibraryType() { ID = 0, Name = "文字", Token = "LibraryText", Count = accountMainLibraryInfo.LibraryTextCount });
             type.Add(new LibraryType() { ID = 1, Name = "图片", Token = "LibraryImage", Count = accountMainLibraryInfo.LibraryImageCount });
             type.Add(new LibraryType() { ID = 2, Name = "视频", Token = "LibraryVideo", Count = accountMainLibraryInfo.LibraryVideoCount });
             type.Add(new LibraryType() { ID = 3, Name = "语音", Token = "LibraryVoice", Count = accountMainLibraryInfo.LibraryVoiceCount });

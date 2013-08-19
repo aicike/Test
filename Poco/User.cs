@@ -16,10 +16,10 @@ namespace Poco
 
         public int SystemStatus { get; set; }
 
-        [Display(Name = "名称")]
+        [Display(Name = "备注名称")]
         [StringLength(10, ErrorMessage = "长度小于10")]
         public string Name { get; set; }
-
+        
         [Display(Name = "地址")]
         [StringLength(50, ErrorMessage = "长度小于50")]
         public string Address { get; set; }

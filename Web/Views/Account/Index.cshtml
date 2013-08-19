@@ -114,7 +114,7 @@
                     }
                 </td>
                 <td class="operation">
-                    @Html.ActionLink("修改", "Edit", "Account", new { HostName = ViewBag.HostName, accountID = item.ID }, null)
+                    @Html.ActionLink("修改", "Edit", "Account", new { HostName = ViewBag.HostName, id = item.ID }, null)
                     @Ajax.ActionLink("删除", "Delete", "Account", new { HostName = ViewBag.HostName, id = item.ID, }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "Account", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" })
                 </td>
             </tr>

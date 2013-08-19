@@ -663,6 +663,8 @@
     <Content Include="Views\SingleChat\Index.cshtml" />
     <Content Include="Views\SingleChat\ChatPartialView.cshtml" />
     <Content Include="Views\InstantMes\Index.cshtml" />
+    <Content Include="Views\Account\Add.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

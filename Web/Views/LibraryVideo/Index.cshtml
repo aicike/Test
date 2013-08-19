@@ -13,94 +13,18 @@
         var renameUrl = '@Url.Action("ReName", "LibraryVideo", new { HostName = ViewBag.HostName })';
 
 
-
-        //播放Mediaplayer格式的视频，包括.avi .mpg .mpeg .wmv .wma .asf .mid .mp3等  
-        function pv_m(u, w, h) {
-            var pv = '';
-            pv += '<object width="' + w + '" height="' + h + '" id="iask_v" classid="CLSID:22d6f312-b0f6-11d0-94ab-0080c74c7e95" codebase="http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,4,5,715" standby="Loading Microsoft Windows Media Player components..." type="application/x-oleobject">';
-            pv += '<param name="FileName" value="' + u + '">';
-            pv += '<param name="AutoStart" value="1">';
-            pv += '<param name="AutoSize" value="1">';
-            pv += '<param name="ShowControls" value="1">';
-            pv += '<param name="ShowPositionControls" value="0">';
-            pv += '<param name="ShowAudioControls" value="1">';
-            pv += '<param name="ShowTracker" value="1">';
-            pv += '<param name="ShowDisplay" value="0">';
-            pv += '<param name="ShowStatusBar" value="1">';
-            pv += '<param name="ShowGotoBar" value="0">';
-            pv += '<param name="ShowCaptioning" value="0">';
-            pv += '<param name="PlayCount" value="1">';
-            pv += '<param name="AnimationAtStart" value="0">';
-            pv += '<param name="TransparentAtStart" value="0">';
-            pv += '<param name="AllowScan" value="0">';
-            pv += '<param name="EnableContextMenu" value="0">';
-            pv += '<param name="ClickToPlay" value="0">';
-            pv += '<param name="InvokeURLs" value="1">';
-            pv += '<param name="DefaultFrame" value="">';
-            pv += '<embed src="' + u + '" width="' + w + '" height="' + h + '" type="application/x-mplayer2" pluginspage="http://www.microsoft.com/isapi/redir.dll?prd=windows&;sbp=mediaplayer&ar=media&sba=plugin&" name="MediaPlayer" showcontrols="1" showpositioncontrols="0" showaudiocontrols="1" showtracker="1" showdisplay="0" showstatusbar="1" autosize="0" showgotobar="0" showcaptioning="0" autostart="1" autorewind="0" animationatstart="0" transparentatstart="0" allowscan="1" enablecontextmenu="1" clicktoplay="0" invokeurls="1" defaultframe=""></embed>';
-            pv += '</object>';
-            document.write(pv);
-        }
-
-        //播放Realplay格式的视频，包括.rm .ram .rmvb等  
-        function pv_r(u, w, h) {
-            var pv = '';
-            pv += '<object width="' + w + '" height="' + h + '" id="iask_v" classid="clsid:CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA">';
-            pv += '<param name="SRC" value="' + u + '">';
-            pv += '<param name="AUTOSTART" value="1">';
-            pv += '<param name="CONTROLS" value="Imagewindow,StatusBar,ControlPanel">';
-            pv += '<param name="_ExtentX" value="18415">';
-            pv += '<param name="_ExtentY" value="9102">';
-            pv += '<param name="SHUFFLE" value="0">';
-            pv += '<param name="PREFETCH" value="0">';
-            pv += '<param name="NOLABELS" value="0">';
-            pv += '<param name="CONSOLE" value="Clip1">';
-            pv += '<param name="LOOP" value="0">';
-            pv += '<param name="NUMLOOP" value="0">';
-            pv += '<param name="CENTER" value="0">';
-            pv += '<param name="MAINTAINASPECT" value="0">';
-            pv += '<param name="BACKGROUNDCOLOR" value="#000000">';
-            pv += '<embed src="' + u + '" width="' + w + '" height="' + h + '" type="audio/x-pn-realaudio-plugin" console="Clip1" controls="Imagewindow,StatusBar,ControlPanel" autostart="true">';
-            pv += '</object>';
-            return pv;
-        }
-
-        //播放Quicktime格式的视频，包括.mov .amr .3gp等  
-        function pv_q(u, w, h) {
-            var pv = '';
-            pv += '<object width="' + w + '" height="' + h + '" classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" codebase="http://www.apple.com/qtactivex/qtplugin.cab">';
-            pv += '<param name="src" value="' + u + '">';
-            pv += '<param name="controller" value="true">';
-            pv += '<param name="type" value="video/quicktime">';
-            pv += '<param name="autoplay" value="true">';
-            pv += '<param name="target" value="myself">';
-            pv += '<param name="bgcolor" value="black">';
-            pv += '<param name="pluginspage" value="http://www.apple.com/quicktime/download/index.html">';
-            pv += '<embed src="' + u + '" width="' + w + '" height="' + h + '" controller="true" align="middle" bgcolor="black" target="myself" type="video/quicktime" pluginspage="http://www.apple.com/quicktime/download/index.html"></embed>';
-            pv += '</object>';
-            document.write(pv);
-        }
-
-
-
-
-
-
-
-
-
         $(function () {
             $("#file_upload").uploadify({
                 height: 30,
                 swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
                 uploader: uploadUrl,
                 width: 80,
-                fileTypeExts: '*rm;*.rmvb;*.wmv;*.avi;*.mpg;*.mpeg;*.mp4',
+                fileTypeExts: '*.mpeg;*.mp4',
                 onUploadSuccess: function (file, data, response) {
                     eval(data);
                 }
             });
-            $("#file_upload-button").after('<div id="div_message" style="position: absolute;top: 5px;left: 100px;width:520px">视频大小限制：20M, 格式限制：rm, rmvb, wmv, avi, mpg, mpeg, mp4</div>');
+            $("#file_upload-button").after('<div id="div_message" style="position: absolute;top: 5px;left: 100px;width:520px">视频大小限制：20M, 格式限制：mpeg, mp4</div>');
             $("a[name='btnReName']").click(function () {
                 var tr = $(this).parent().parent();
                 tr.find(".spanFileName").hide();
@@ -145,58 +69,30 @@
 
             $(".btnPlay").click(function () {
                 var obj = $(this);
+                var type = obj.attr("isshow");
+                $(".btnPlay").attr("isshow", "false");
+                if (type == "false") {
+                    obj.attr("isshow", "true");
+                } else {
+                    obj.attr("isshow", "false");
+                }
                 var tr = obj.parent().parent();
                 var mediaDiv = tr.find(".media");
-                mediaDiv.append(pv_r('~/File/1/FileLibrary/20130725192141_echo-hereweare.mp4',300,300));
-                mediaDiv.slideToggle("fast", function () {  
-                
+                var video = mediaDiv.find("video")[0];
+                $(".media[id!='" + mediaDiv[0].id + "']").slideUp("fast");
+                $.each($("video"), function (i, n) {
+                    n.pause();
+                    n.load();
+                });
+                mediaDiv.slideToggle("fast", function () {
+                    if (mediaDiv.is(':hidden') == false) {
+                        video.play();
+                    } else {
+                        video.pause();
+                        video.load();
+                    }
                 });
             });
-
-            //            $(".btnPlay").click(function () {
-            //                $('video, audio').each(function () {
-            //                    if ($(this)[0].player != undefined) {
-            //                        //$(this)[0].player.pause();
-            //                        //$(this)[0].player.setCurrentTime(99999999);
-            //                    }
-            //                });
-            //                var obj = $(this);
-            //                var type = obj.attr("isshow");
-            //                $(".btnPlay").attr("isshow", "false");
-            //                if (type == "false") {
-            //                    obj.attr("isshow", "true");
-            //                } else {
-            //                    obj.attr("isshow", "false");
-            //                }
-            //                var tr = obj.parent().parent();
-            //                var mediaDiv = tr.find(".media");
-            //                $(".media[id!='" + mediaDiv[0].id + "']").slideUp("fast");
-            //                mediaDiv.slideToggle("fast", function () {
-            //                    if (mediaDiv.is(':hidden') == false) {
-            //                        mediaDiv.find('audio,video').mediaelementplayer({
-            //                            mode: 'shim',
-            //                            features: ['playpause','progress','volume','sourcechooser'],
-            //                            enableKeyboard: false,
-            //                            success: function (me) {
-            //                                me.play();
-            //                                obj.click(function () {
-            //                                    if ($(this).attr("isshow") == "true") {
-            //                                        if (me.paused || me.ended) {
-            //                                            me.play();
-            //                                        }
-            //                                        else {
-            //                                            //me.pause();
-            //                                            //me.setCurrentTime(99999999);
-            //                                        }
-            //                                    }
-            //                                });
-            //                            }
-            //                        });
-            //                    } else {
-
-            //                    }
-            //                });
-            //            });
         });
     </script>
 }
@@ -244,8 +140,8 @@
                 <td style="padding: 0px">
                     <div class="spanFileName" style="display: block; height: 28px; padding-top: 15px">@item.FileName</div>
                     <input class="txtFileName" type="text" rawID="@item.ID" rawValue="@item.FileName" value="@item.FileName" style="display:none" />
-                    <div class="media" id="divMedia_@item.ID" style="display: none;">@item.FilePath
-                        @*<video width="500" height="375" id="video_@item.ID" src="@Url.Content(item.FilePath)" controls="controls"></video>*@
+                    <div class="media" id="divMedia_@item.ID" style="display: none;">
+                        <video width="500" height="375" id="video_@item.ID" src="@Url.Content(item.FilePath)" controls="controls"></video>
                     </div>
                 </td>
                 <td class="operation">

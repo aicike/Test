@@ -88,6 +88,22 @@ namespace Web.Controllers
             return View(user);
         }
 
+        [HttpPost]
+        public ActionResult EditUser(User user)
+        {
+            //检查是否有数据操作权限
+            var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
+            accountModel.CheckHasPermissions_User(LoginAccount.ID, user.ID).NotAuthorizedPage();
+
+            var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+            var result= userModel.UpdateUserInfo(user);
+            if (result.HasError)
+            {
+                return Alert(new Dialog(result.Error));
+            }
+            return JavaScript(string.Format("location.href='{0}'", Url.Action("Index", "UserManage", new { HostName = LoginAccount.HostName })));
+        }
+
         public ActionResult ViewUser(int userID)
         {
             //检查是否有数据操作权限

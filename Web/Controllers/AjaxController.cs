@@ -47,7 +47,7 @@ namespace Web.Controllers
         [HttpGet]
         public ActionResult CheckIsUniqueAccountEmail()
         {
-            if (IsCheck("/System/AccountManage/AddAccount"))
+            if (IsCheck("/System/AccountManage/AddAccount", "/Account/Add"))
             {
                 string email = Request.QueryString[0];
                 CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
@@ -86,7 +86,7 @@ namespace Web.Controllers
         [HttpGet]
         public ActionResult CheckHousesRepeat()
         {
-            if (Request.UrlReferrer.LocalPath.IndexOf("HousesMange/Add/")>=0)
+            if (Request.UrlReferrer.LocalPath.IndexOf("HousesMange/Add/") >= 0)
             {
                 string HName = Request.QueryString[0];
                 CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
@@ -99,7 +99,16 @@ namespace Web.Controllers
         private bool IsCheck(params string[] path)
         {
             string url = Request.UrlReferrer.LocalPath;
-            return path.Contains(url);
+            bool v = false;
+            foreach (var item in path)
+            {
+                v = url.Contains(item);
+                if (v == true)
+                {
+                    break;
+                }
+            }
+            return v;
         }
     }
 }
