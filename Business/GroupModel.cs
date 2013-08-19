@@ -27,15 +27,28 @@ namespace Business
             return list;
         }
 
+        [Transaction]
         public Result AddDefaultGroup(int accountID, int accountMainID)
         {
-            Group group = new Group();
-            group.GroupName = SystemConst.Business.DefaultGroup;
-            group.AccountID = accountID;
-            group.AccountMainID = accountMainID;
-            group.IsDefaultGroup = true;
-            group.IsCanDelete = false;
-            return Add(group);
+            Result result = new Result();
+            string sql = "INSERT INTO dbo.[Group]( SystemStatus , GroupName , AccountID , AccountMainID , IsDefaultGroup ,IsCanDelete) " +
+                        string.Format("SELECT 0,'{0}',{1},{2},{3},{4} UNION ALL ",
+                        SystemConst.Business.DefaultGroup, accountID, accountMainID, 1, 0) +
+                        string.Format("SELECT 0,'{0}',{1},{2},{3},{4}",
+                        SystemConst.Business.BlackListGroup, accountID, accountMainID, 0, 0);
+            try
+            {
+                int i = base.SqlExecute(sql);
+                if (i <= 0)
+                {
+                    result.Error = "角色添加失败，请联系管理员。";
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Error = ex.Message;
+            }
+            return result;
         }
 
         [Transaction]

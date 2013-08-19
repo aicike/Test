@@ -10,8 +10,8 @@ INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action
 INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 3,0,'售楼部角色管理','System','Role','Index',3,NULL)
 INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 4,0,'系统账号管理','System','SystemUser','Index',4,NULL)
 INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 5,0,'系统角色管理','System','SystemUserRole','Index',5,NULL)
-INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 6,0,'设置','System','SystemSet','Index',6,NULL)
-INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 7,0,'售楼部账号管理','System','AccountManage','Index',1,2)
+INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 6,0,'售楼部账号管理','System','AccountManage','Index',1,2)
+--INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 7,0,'设置','System','SystemSet','Index',6,NULL)
 SET IDENTITY_INSERT [dbo].SystemUserMenu OFF
 
 -----------------------------SystemUserMenuOption--------------------------
@@ -40,15 +40,17 @@ INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION
 INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,5,'添加','Add',2)
 INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,5,'修改','Edit',3)
 INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,5,'删除','Delete',4)
+INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,5,'启用/禁用','SetStatus',5)
 
-INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,6,'设置','Index',1)
 
-INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,7,'列表','Index',1)
-INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,7,'添加','AddAccount',2)
-INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,7,'修改','EditAccount',3)
-INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,7,'删除','DeleteAccount',4)
-INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,7,'启用/禁用','SetAccountStatus',5)
-INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,7,'详细','View',6)
+INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,6,'列表','Index',1)
+INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,6,'添加','AddAccount',2)
+INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,6,'修改','EditAccount',3)
+INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,6,'删除','DeleteAccount',4)
+INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,6,'启用/禁用','SetAccountStatus',5)
+INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,6,'详细','View',6)
+
+--INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,7,'设置','Index',1)
 
 
 -----------------------------SystemUserRole--------------------------
@@ -61,7 +63,7 @@ SET IDENTITY_INSERT [dbo].SystemUserRole OFF
 SET IDENTITY_INSERT [dbo].[SystemUserRole_SystemUserMenu] ON
 INSERT [dbo].[SystemUserRole_SystemUserMenu] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuID]) VALUES (1, 0, 2, 1)
 INSERT [dbo].[SystemUserRole_SystemUserMenu] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuID]) VALUES (2, 0, 2, 2)
-INSERT [dbo].[SystemUserRole_SystemUserMenu] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuID]) VALUES (3, 0, 2, 7)
+INSERT [dbo].[SystemUserRole_SystemUserMenu] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuID]) VALUES (3, 0, 2, 6)
 SET IDENTITY_INSERT [dbo].[SystemUserRole_SystemUserMenu] OFF
 
 -----------------------------SystemUserRole_Option--------------------------
@@ -72,13 +74,12 @@ INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], 
 INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (4, 0, 2, 4)
 INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (5, 0, 2, 5)
 INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (6, 0, 2, 6)
-INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (7, 0, 2, 7)
-INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (8, 0, 2, 22)
-INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (9, 0, 2, 23)
-INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (10, 0, 2, 24)
-INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (11, 0, 2, 25)
-INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (12, 0, 2, 26)
-INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (13, 0, 2, 27)
+INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (7, 0, 2, 22)
+INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (8, 0, 2, 23)
+INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (9, 0, 2, 24)
+INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (10, 0, 2, 25)
+INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (11, 0, 2, 26)
+INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (12, 0, 2, 27)
 SET IDENTITY_INSERT [dbo].[SystemUserRole_Option] OFF
 
 -----------------------------[Lookup]--------------------------

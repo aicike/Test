@@ -47,11 +47,24 @@ namespace Web.Controllers
         [HttpGet]
         public ActionResult CheckIsUniqueAccountEmail()
         {
-            if (IsCheck("/System/SystemUserHome/AddAccount"))
+            if (IsCheck("/System/AccountManage/AddAccount"))
             {
                 string email = Request.QueryString[0];
                 CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
                 var result = model.CheckIsUnique("Account", "Email", email);
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult CheckIsUniqueSystemUserEmail()
+        {
+            if (IsCheck("/System/SystemUser/Add"))
+            {
+                string email = Request.QueryString[0];
+                CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+                var result = model.CheckIsUnique("SystemUser", "Email", email);
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
             return Json(true, JsonRequestBehavior.AllowGet);

@@ -84,8 +84,16 @@ namespace Business
                     var imageThumbnailPath = string.Format("{0}\\{1}", accountPath, imageThumbnailName);
                     HeadImagePathFile.SaveAs(imagePath);
                     //缩略图
-                    Tool.Thumbnail(imagePath, imageThumbnailPath, width);
-                    account.HeadImagePath = path + imageThumbnailName;
+                    if (Tool.Thumbnail(imagePath, imageThumbnailPath, width))
+                    {
+                        account.HeadImagePath = path + imageThumbnailName;
+                        //删除原头像
+                        File.Delete(imagePath);
+                    }
+                    else
+                    {
+                        account.HeadImagePath = path + imageName;
+                    }
                     result = Edit(account);
                     if (result.HasError == false)
                     {
@@ -113,6 +121,14 @@ namespace Business
                     return result;
                 }
             }
+            //检查邮箱是否唯一
+            CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+            var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
+            if (isOk == false)
+            {
+                result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
+                return result;
+            }
             account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
             result = base.Edit(account);
             if (result.HasError == false && HeadImagePathFile != null)
@@ -135,8 +151,16 @@ namespace Business
                     var imageThumbnailPath = string.Format("{0}\\{1}", accountPath, imageThumbnailName);
                     HeadImagePathFile.SaveAs(imagePath);
                     //缩略图
-                    Tool.Thumbnail(imagePath, imageThumbnailPath, width);
-                    account.HeadImagePath = path + imageThumbnailName;
+                    if (Tool.Thumbnail(imagePath, imageThumbnailPath, width))
+                    {
+                        account.HeadImagePath = path + imageThumbnailName;
+                        //删除原头像
+                        File.Delete(imagePath);
+                    }
+                    else
+                    {
+                        account.HeadImagePath = path + imageName;
+                    }
                     result = Edit(account);
                 }
                 catch (Exception ex)

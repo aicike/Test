@@ -42,7 +42,7 @@ namespace Web.Areas.System.Controllers
         {
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             var result = roleModel.Get(id);
-            (result.IsCanDelete == false).NotAuthorizedPage();
+            result.IsCanDelete.NotAuthorizedPage();
             return View(result);
         }
 
@@ -56,6 +56,18 @@ namespace Web.Areas.System.Controllers
                 return Alert(new Dialog(result.Error));
             }
             return JavaScript("window.location.href='" + Url.Action("Index", "Role", new { Area = "System" }) + "'");
+        }
+
+        [AllowCheckPermissions(false)]
+        public string IsCanFindByUser(int id, bool value)
+        {
+            IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
+            var result = roleModel.IsCanFindByUser(id, value);
+            if (result.HasError)
+            {
+                return AlertJS_NoTag(new Dialog(result.Error));
+            }
+            return "window.location.href='" + Url.Action("Index", "Role", new { Area = "System" }) + "'";
         }
 
         public ActionResult Delete(int id)

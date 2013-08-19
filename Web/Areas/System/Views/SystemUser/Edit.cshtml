@@ -1,11 +1,10 @@
 ﻿@{
-    ViewBag.Title = "EditAccount";
+    ViewBag.Title = "修改系统账号";
     Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
 }
 @section head{
     <script type="text/javascript">
         $(function () {
-            var CheckIsExistAdminUrl = '@Url.Action("CheckIsExistAdmin", "AccountManage")';
             $("#HeadImagePathFile").change(function () {
                 var fileName = $("#HeadImagePathFile").val();
                 var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
@@ -31,28 +30,15 @@
                 }
                 return false;
             });
-            $("#Account_RoleID").change(function () {
-                var index = $(this).val();
-                var value = $(this).find("option[value='" + index + "']").text();
-                if (value == "管理员") {
-                    $.get(CheckIsExistAdminUrl, { accountMainID: @ViewBag.AccountMainID,accountID:@Model.ID }, function (result) {
-                        if(result.length>0){
-                            eval(result);
-                        }else{
-                            
-                        }
-                    });
-                }
-            });
             $("#LoginPwdPage,#LoginPwdPageCompare").val('@Common.DESEncrypt.Decrypt(Model.LoginPwd)');
         });
     </script>
 }
-@model Poco.Account
+@model Poco.SystemUser
 <div class="title">
     修改账号</div>
 <div class="body">
-    @using (Html.BeginForm("EditAccount", "AccountManage", new { Area = "System", accountMainId = ViewBag.AccountMainID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Edit", "SystemUser", new { Area = "System" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <fieldset style="border: 1px solid #d3d3d3;">
             <legend>账号信息</legend>
@@ -61,7 +47,7 @@
                     <td class="tdTitle">
                         名称
                     </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.ID)@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.IsActivated)
+                    <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.ID)@Html.HiddenFor(a => a.AccountStatusID)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Name)
                     </td>
@@ -107,21 +93,21 @@
                         头像
                     </td>
                     <td>
-                        <img id="imgLogo" style="max-width: 80px; max-height: 80px; float: left" src="@Url.Content(Model.HeadImagePath)"/>
+                        <img id="imgLogo" style="max-width: 80px; max-height: 80px; float: left" src="@Url.Content(Model.HeadImage)"/>
                         <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" />
-                        @Html.TextBoxFor(a => a.HeadImagePath, new { style = "width:0px;visibility:hidden" })
+                        @Html.TextBoxFor(a => a.HeadImage, new { style = "width:0px;visibility:hidden" })
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.HeadImagePath)
+                    <td>@Html.ValidationMessageFor(a => a.HeadImage)
                     </td>
                 </tr>
                 <tr>
                     <td>
                         角色
                     </td>
-                    <td>@Html.DropDownListFor(a => a.RoleID, ViewData["Roles"] as List<SelectListItem>, new { })
+                    <td>@Html.DropDownListFor(a => a.SystemUserRoleID, ViewData["Roles"] as List<SelectListItem>, new { })
                     </td>
                     <td id="tdRoleValidation">
-                        @Html.ValidationMessageFor(a => a.RoleID)
+                        @Html.ValidationMessageFor(a => a.SystemUserRoleID)
                     </td>
                 </tr>
             </table>

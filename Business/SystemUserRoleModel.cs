@@ -13,5 +13,10 @@ namespace Business
         {
             return base.List().OrderBy(a => a.ID);
         }
+
+        public List<SystemUserRole> GetRoleWithoutSuperAdmin()
+        {
+            return base.List().Where(a => a.ID != 1).OrderBy(a => a.ID).ToList();
+        }
     }
 }

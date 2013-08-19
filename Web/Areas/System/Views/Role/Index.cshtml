@@ -3,6 +3,22 @@
     Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
 }
 @model PagedList<Poco.Role>
+<script>
+    $(function () {
+        var isCanFindByUserUrl = '@Url.Action("IsCanFindByUser", "Role")';
+        $(".cbCanFind").change(function () {
+            var status = $(this).attr("checked");
+            var value = false;
+            if (status != undefined && status == "checked") {
+                value = true;
+            }
+            var id = $(this).val();
+            $.get(isCanFindByUserUrl, { id: id, value: value }, function (result) {
+                eval(result);
+            });
+        });
+    });
+</script>
 <div class="title">
     售楼部角色管理</div>
 <div class="body">
@@ -11,6 +27,9 @@
         <tr>
             <th style="width: 450px;">
                 名称
+            </th>
+            <th style="width: 150px;">
+                可被用户查找和添加
             </th>
             <th style="width: 250px;">
                 操作
@@ -21,6 +40,16 @@
             <tr>
                 <td>
                     @item.Name
+                </td>
+                <td>
+                    @if (item.IsCanFindByUser.HasValue && item.IsCanFindByUser.Value)
+                    { 
+                        <input class="cbCanFind" value="@item.ID" type="checkbox" checked="checked" />    
+                    }
+                    else
+                    { 
+                        <input class="cbCanFind" value="@item.ID" type="checkbox" />
+                    }
                 </td>
                 <td class="operation">
                     @if (item.IsCanDelete)

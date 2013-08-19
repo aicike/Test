@@ -9,5 +9,7 @@ namespace Interface
     public interface IRoleModel : IBaseModel<Role>
     {
         List<Role> GetRoleList(int? accountMainID);
+
+        Result IsCanFindByUser(int id, bool value);
     }
 }

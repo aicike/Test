@@ -24,6 +24,11 @@ namespace Poco
 
         public bool IsCanDelete { get; set; }
 
+        /// <summary>
+        /// 是否可以被用户App查询
+        /// </summary>
+        public bool? IsCanFindByUser { get; set; }
+
         [Display(Name = "Token")]
         [StringLength(50, ErrorMessage = "长度小于50")]
         public string Token { get; set; }

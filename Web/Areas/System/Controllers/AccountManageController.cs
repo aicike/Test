@@ -106,6 +106,17 @@ namespace Web.Areas.System.Controllers
             return RedirectToAction("Index", "AccountManage", new { Area = "System", accountMainId = accountMainId });
         }
 
+        [AllowCheckPermissions(false)]
+        public string CheckIsExistAdmin(int accountMainID, int? accountID)
+        {
+            var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
+            if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID, accountID))
+            {
+                return AlertJS_NoTag(new Dialog("只能有一个有效的管理员账号，请选择分配其他角色。"));
+            }
+            return "";
+        }
+
         public ActionResult DeleteAccount(int id, int accountMainId)
         {
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
@@ -127,14 +138,12 @@ namespace Web.Areas.System.Controllers
 
             IAccountModel model = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             EnumAccountStatus accountStatus = (EnumAccountStatus)Enum.Parse(typeof(EnumAccountStatus), status);
-            var result = model.ChangeStatus(accountID, accountStatus,accountMainID);
+            var result = model.ChangeStatus(accountID, accountStatus, accountMainID);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));
             }
             return JavaScript("window.location.href='" + ViewBag.RawUrl + "'");
         }
-
-
     }
 }

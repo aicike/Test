@@ -144,7 +144,7 @@
     <Compile Include="Areas\System\Controllers\SystemSetController.cs" />
     <Compile Include="Areas\System\Controllers\SystemUserHomeController.cs" />
     <Compile Include="Areas\System\Controllers\SystemUserRoleController.cs" />
-    <Compile Include="Areas\System\Controllers\SystenUserController.cs" />
+    <Compile Include="Areas\System\Controllers\SystemUserController.cs" />
     <Compile Include="Areas\System\SystemAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AjaxController.cs" />
@@ -424,7 +424,8 @@
     <Folder Include="Areas\System\Models\" />
     <Folder Include="Areas\System\Views\Shared\" />
     <Folder Include="Download\" />
-    <Folder Include="File\" />
+    <Folder Include="File\1_messageFile\" />
+    <Folder Include="File\platform\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -570,7 +571,7 @@
     <Content Include="Areas\System\Views\Set\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\System\Views\SystenUser\Index.cshtml" />
+    <Content Include="Areas\System\Views\SystemUser\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\LibraryVoice\Index.cshtml">
@@ -648,6 +649,8 @@
     <Content Include="Views\HouseInfoDetail\Select.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\System\Views\SystemUser\Add.cshtml" />
+    <Content Include="Areas\System\Views\SystemUser\Edit.cshtml" />
     <None Include="video-js\font\vjs.eot" />
     <None Include="video-js\font\vjs.ttf" />
     <None Include="video-js\font\vjs.woff" />

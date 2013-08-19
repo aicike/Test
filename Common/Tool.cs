@@ -16,7 +16,7 @@ namespace Common
         /// <param name="imgSrc">原图路径</param>
         /// <param name="SavePath">保存路径</param>
         /// <param name="thumbWidth">宽像素</param>
-        public static void Thumbnail(string imgSrc, string SavePath, int thumbWidth)
+        public static bool Thumbnail(string imgSrc, string SavePath, int thumbWidth)
         {
             Image image = null;
             Bitmap bmp = null;
@@ -26,6 +26,10 @@ namespace Common
                 //接着创建一个System.Drawing.Bitmap对象，并设置你希望的缩略图的宽度和高度。
                 int srcWidth = image.Width;
                 int srcHeight = image.Height;
+                if (srcWidth < thumbWidth)
+                {
+                    return false;
+                }
                 int thumbHeight = Convert.ToInt32((srcHeight * 1.0 / srcWidth) * thumbWidth);
                 bmp = new Bitmap(thumbWidth, thumbHeight);
                 //从Bitmap创建一个System.Drawing.Graphics对象，用来绘制高质量的缩小图。
@@ -40,16 +44,22 @@ namespace Common
                 System.Drawing.Rectangle rectDestination = new System.Drawing.Rectangle(0, 0, thumbWidth, thumbHeight);
                 gr.DrawImage(image, rectDestination, 0, 0, srcWidth, srcHeight, GraphicsUnit.Pixel);
                 bmp.Save(SavePath);
+                return true;
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
             finally
             {
-                //最后别忘了释放资源
-                bmp.Dispose();
-                image.Dispose();
+                if (bmp != null)
+                {
+                    bmp.Dispose();
+                }
+                if (image != null)
+                {
+                    image.Dispose();
+                }
             }
         }
     }

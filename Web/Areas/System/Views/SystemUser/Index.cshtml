@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
+}
+@model PagedList<Poco.SystemUser>
+<div class="title">
+    系统账号管理</div>
+<div class="body">
+    <div class="option">@Html.ActionLink("添加", "Add", "SystemUser", new { Area = "System" }, null, true)</div>
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th style="width: 90px;">
+                头像
+            </th>
+            <th style="width: 200px;">
+                名称
+            </th>
+            <th style="width: 150px;">
+                电话
+            </th>
+            <th style="width: 150px;">
+                角色
+            </th>
+            <th style="width: 100px;">
+                状态
+            </th>
+            <th style="width: 200px;">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (string.IsNullOrEmpty(item.HeadImage) == false)
+                    { 
+                        <img id="imgLogo" style="max-width:80px;max-height:80px;" src="@Url.Content(@item.HeadImage)" />
+                    }
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Phone
+                </td>
+                <td>
+                    @item.SystemUserRole.Name
+                </td>
+                <td>
+                    @if (@item.AccountStatus.Token == Poco.Enum.EnumAccountStatus.Disabled.ToString())
+                    {
+                        @Ajax.ActionLink(@item.AccountStatus.Value, "SetStatus", "SystemUser", new
+                   {
+                       Area = "System",
+                       ID = item.ID,
+                       status = Poco.Enum.EnumAccountStatus.Enabled.ToString()
+                   },
+                        new AjaxOptions()
+                        {
+                            UpdateTargetId = "alert",
+                            OnBegin = "return AppDelete('确定要启用?','" + Url.Action("SetStatus", "SystemUser",
+                                new
+                                {
+                                    Area = "System",
+                                    ID = item.ID,
+                                    status = Poco.Enum.EnumAccountStatus.Enabled.ToString()
+                                }) + "',null)"
+                        }, true, true)
+                    }
+                    else
+                    {
+                        @Ajax.ActionLink(@item.AccountStatus.Value, "SetStatus", "SystemUser", new
+                   {
+                       Area = "System",
+                       ID = item.ID,
+                       status = Poco.Enum.EnumAccountStatus.Disabled.ToString()
+                   },
+                        new AjaxOptions()
+                        {
+                            UpdateTargetId = "alert",
+                            OnBegin = "return AppDelete('确定要禁用?','" + Url.Action("SetStatus", "SystemUser",
+                                new
+                                {
+                                    Area = "System",
+                                    ID = item.ID,
+                                    status = Poco.Enum.EnumAccountStatus.Disabled.ToString()
+                                }) + "',null)"
+                        }, true, true)
+                    }
+                </td>
+                <td class="operation">
+                    @Html.ActionLink("修改", "Edit", "SystemUser", new { Area = "System", id = item.ID }, null, true)
+                    @Ajax.ActionLink("删除", "Delete", "SystemUser", new { Area = "System", id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "SystemUser", new { Area = "System", id = item.ID }) + "',null)" }, true)
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>

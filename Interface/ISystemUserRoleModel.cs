@@ -8,5 +8,8 @@ namespace Interface
 {
     public interface ISystemUserRoleModel : IBaseModel<SystemUserRole>
     {
+        List<SystemUserRole> GetRoleWithoutSuperAdmin();
+
+
     }
 }

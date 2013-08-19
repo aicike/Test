@@ -5,6 +5,7 @@
 @section head{
     <script type="text/javascript">
         $(function () {
+            var CheckIsExistAdminUrl = '@Url.Action("CheckIsExistAdmin", "AccountManage")';
             $("#HeadImagePathFile").change(function () {
                 var fileName = $("#HeadImagePathFile").val();
                 $("#Account_HeadImagePath").val(fileName);
@@ -31,6 +32,19 @@
                 }
                 return false;
             });
+            $("#Account_RoleID").change(function () {
+                var index = $(this).val();
+                var value = $(this).find("option[value='" + index + "']").text();
+                if (value == "管理员") {
+                    $.get(CheckIsExistAdminUrl, { accountMainID: @ViewBag.AccountMainID }, function (result) {
+                        if(result.length>0){
+                            eval(result);
+                        }else{
+                            
+                        }
+                    });
+                }
+            });
         });
     </script>
 }
@@ -47,7 +61,8 @@
                     <td class="tdTitle">
                         名称
                     </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.Account.Name) <input type="hidden" id="AccountMainID" name="AccountMainID" value="@ViewBag.AccountMainID" />
+                    <td class="tdField">@Html.TextBoxFor(a => a.Account.Name)
+                        <input type="hidden" id="AccountMainID" name="AccountMainID" value="@ViewBag.AccountMainID" />
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Account.Name)
                     </td>
@@ -93,7 +108,7 @@
                         头像
                     </td>
                     <td>
-                        <img id="imgLogo" style="max-width:80px;max-height:80px;float: left" />
+                        <img id="imgLogo" style="max-width: 80px; max-height: 80px; float: left" />
                         <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" />
                         @Html.TextBoxFor(a => a.Account.HeadImagePath, new { style = "width:0px;visibility:hidden" })
                     </td>
@@ -104,7 +119,7 @@
                     <td>
                         角色
                     </td>
-                    <td>@Html.DropDownListFor(a => a.Account.RoleID, ViewData["Roles"] as List<SelectListItem>, new {})
+                    <td>@Html.DropDownListFor(a => a.Account.RoleID, ViewData["Roles"] as List<SelectListItem>, new { })
                     </td>
                     <td id="tdRoleValidation">
                         @Html.ValidationMessageFor(a => a.Account.RoleID)

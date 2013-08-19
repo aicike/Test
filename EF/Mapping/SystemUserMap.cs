@@ -12,6 +12,7 @@ namespace EF.Mapping
         public SystemUserMap()
         {
             this.Ignore(a => a.LoginPwdPage);
+            this.Ignore(a => a.LoginPwdPageCompare);
         }
     }
 }

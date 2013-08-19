@@ -1,15 +1,15 @@
 ﻿@{
-    ViewBag.Title = "EditAccount";
+    ViewBag.Title = "添加系统账号";
     Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
 }
 @section head{
     <script type="text/javascript">
         $(function () {
-            var CheckIsExistAdminUrl = '@Url.Action("CheckIsExistAdmin", "AccountManage")';
             $("#HeadImagePathFile").change(function () {
                 var fileName = $("#HeadImagePathFile").val();
+                $("#Account_HeadImagePath").val(fileName);
                 var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
-                $("span[data-valmsg-for='HeadImagePath']").empty().attr("class", "field-validation-valid");
+                $("span[data-valmsg-for='Account_HeadImagePath']").empty().attr("class", "field-validation-valid");
                 switch (suffix) {
                     case ".jpg":
                     case ".jpeg":
@@ -18,7 +18,7 @@
                     case ".bmp":
                         break;
                     default:
-                        $("span[data-valmsg-for='HeadImagePath']").text("支持下列图片格式：.jpg|.jpeg|.png|.gif|.bmp").attr("class", "field-validation-error");
+                        $("span[data-valmsg-for='Account_HeadImagePath']").text("支持下列图片格式：.jpg|.jpeg|.png|.gif|.bmp").attr("class", "field-validation-error");
                         break;
                 }
                 var input = this;
@@ -31,28 +31,14 @@
                 }
                 return false;
             });
-            $("#Account_RoleID").change(function () {
-                var index = $(this).val();
-                var value = $(this).find("option[value='" + index + "']").text();
-                if (value == "管理员") {
-                    $.get(CheckIsExistAdminUrl, { accountMainID: @ViewBag.AccountMainID,accountID:@Model.ID }, function (result) {
-                        if(result.length>0){
-                            eval(result);
-                        }else{
-                            
-                        }
-                    });
-                }
-            });
-            $("#LoginPwdPage,#LoginPwdPageCompare").val('@Common.DESEncrypt.Decrypt(Model.LoginPwd)');
         });
     </script>
 }
-@model Poco.Account
+@model Poco.SystemUser
 <div class="title">
-    修改账号</div>
+    添加账号</div>
 <div class="body">
-    @using (Html.BeginForm("EditAccount", "AccountManage", new { Area = "System", accountMainId = ViewBag.AccountMainID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Add", "SystemUser", new { Area = "System" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <fieldset style="border: 1px solid #d3d3d3;">
             <legend>账号信息</legend>
@@ -61,7 +47,8 @@
                     <td class="tdTitle">
                         名称
                     </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.ID)@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.IsActivated)
+                    <td class="tdField">@Html.TextBoxFor(a => a.Name)
+                        <input type="hidden" id="AccountMainID" name="AccountMainID" value="@ViewBag.AccountMainID" />
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Name)
                     </td>
@@ -70,7 +57,7 @@
                     <td>
                         邮箱
                     </td>
-                    <td>@Html.TextBoxFor(a => a.Email, new { val = Model.ID })
+                    <td>@Html.TextBoxFor(a => a.Email)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Email)
                     </td>
@@ -107,21 +94,21 @@
                         头像
                     </td>
                     <td>
-                        <img id="imgLogo" style="max-width: 80px; max-height: 80px; float: left" src="@Url.Content(Model.HeadImagePath)"/>
+                        <img id="imgLogo" style="max-width: 80px; max-height: 80px; float: left" />
                         <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" />
-                        @Html.TextBoxFor(a => a.HeadImagePath, new { style = "width:0px;visibility:hidden" })
+                        @Html.TextBoxFor(a => a.HeadImage, new { style = "width:0px;visibility:hidden" })
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.HeadImagePath)
+                    <td>@Html.ValidationMessageFor(a => a.HeadImage)
                     </td>
                 </tr>
                 <tr>
                     <td>
                         角色
                     </td>
-                    <td>@Html.DropDownListFor(a => a.RoleID, ViewData["Roles"] as List<SelectListItem>, new { })
+                    <td>@Html.DropDownListFor(a => a.SystemUserRoleID, ViewData["Roles"] as List<SelectListItem>, new { })
                     </td>
                     <td id="tdRoleValidation">
-                        @Html.ValidationMessageFor(a => a.RoleID)
+                        @Html.ValidationMessageFor(a => a.SystemUserRoleID)
                     </td>
                 </tr>
             </table>

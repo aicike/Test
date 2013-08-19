@@ -18,6 +18,7 @@ namespace Poco
             public const string PathAccount = "~/File/{0}/Account/";
             public const string PathFileLibrary = "~/File/{0}/FileLibrary/";
             public const string DefaultGroup = "未分组";
+            public const string BlackListGroup = "黑名单";
             public const string AccountAdmin = "AccountAdmin";            
         }
 

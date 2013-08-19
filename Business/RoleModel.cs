@@ -36,18 +36,26 @@ namespace Business
             //判断是否有用户使用了该角色
             Result result = new Result();
             var role = Get(id);
-            if (role.Accounts.Any(a => a.SystemStatus == (int)EnumSystemStatus.Active))
-            {
-                result.Error = "该角色已经被使用，无法删除。";
-                return result;
-            }
             if (!role.IsCanDelete)
             {
                 result.Error = "\"管理员\"是系统初始化数据，无法删除。";
                 return result;
             }
+            if (role.Accounts.Any(a => a.SystemStatus == (int)EnumSystemStatus.Active))
+            {
+                result.Error = "该角色已经被使用，无法删除。";
+                return result;
+            }
             result = base.Delete(id);
             return result;
+        }
+
+
+        public Result IsCanFindByUser(int id, bool value)
+        {
+            var entity = Get(id);
+            entity.IsCanFindByUser = value;
+            return base.Edit(entity);
         }
     }
 }
