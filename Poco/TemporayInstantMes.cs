@@ -36,6 +36,10 @@ namespace Poco
         /// </summary>
         public string HeadImagePath { get; set; }
 
+        /// <summary>
+        /// 消息类型  0：文本库 1：图片库 2：视频库 3：音频库 4：图文库 
+        /// </summary>
+        public int EnumMessageTypeID { get; set; }
 
 
         public int ID { get; set; }

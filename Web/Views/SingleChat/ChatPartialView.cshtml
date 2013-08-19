@@ -1,6 +1,7 @@
 ﻿@{
     Layout = null;
 }
+
 @model PagedList<Poco.Message>
 @foreach (var item in Model)
 {
@@ -43,6 +44,13 @@
                 @if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Text)
                 {
                     @item.TextContent 
+                }
+                else if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Image)
+                {
+                    if (!string.IsNullOrEmpty(item.FileUrl))
+                    { 
+                    <img id="imgUImg" style=" height:120px;max-width:230px; max-height:140px" src="@Url.Content(item.FileUrl)" />
+                    }
                 }
             </div>
         </div>

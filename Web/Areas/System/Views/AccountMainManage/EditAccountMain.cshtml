@@ -10,30 +10,30 @@
             $("#CityID").City({ parent: "ProvinceID", value: '@Model.CityID' });
             $("#DistrictID").District({ parent: "CityID", value: '@Model.DistrictID' });
 
-            $("#AccountMainExpandInfo_OpeningDate").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                onSelect: function (selectedDate) {
-                    $("#AccountMainExpandInfo_CheckInDate").datepicker("option", "minDate", selectedDate);
-                    $("#AccountMainExpandInfo_CompletedDate").datepicker("option", "minDate", selectedDate);
-                }
-            });
+//            $("#AccountMainExpandInfo_OpeningDate").datepicker({
+//                changeMonth: true,
+//                changeYear: true,
+//                onSelect: function (selectedDate) {
+//                    $("#AccountMainExpandInfo_CheckInDate").datepicker("option", "minDate", selectedDate);
+//                    $("#AccountMainExpandInfo_CompletedDate").datepicker("option", "minDate", selectedDate);
+//                }
+//            });
 
-            $("#AccountMainExpandInfo_CompletedDate").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                onSelect: function (selectedDate) {
-                    $("#AccountMainExpandInfo_OpeningDate").datepicker("option", "maxDate", selectedDate);
-                }
-            });
+//            $("#AccountMainExpandInfo_CompletedDate").datepicker({
+//                changeMonth: true,
+//                changeYear: true,
+//                onSelect: function (selectedDate) {
+//                    $("#AccountMainExpandInfo_OpeningDate").datepicker("option", "maxDate", selectedDate);
+//                }
+//            });
 
-            $("#AccountMainExpandInfo_CheckInDate").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                onSelect: function (selectedDate) {
-                    $("#AccountMainExpandInfo_OpeningDate").datepicker("option", "maxDate", selectedDate);
-                }
-            });
+//            $("#AccountMainExpandInfo_CheckInDate").datepicker({
+//                changeMonth: true,
+//                changeYear: true,
+//                onSelect: function (selectedDate) {
+//                    $("#AccountMainExpandInfo_OpeningDate").datepicker("option", "maxDate", selectedDate);
+//                }
+//            });
             $("#LogoImagePathFile").change(function () {
                 var fileName = $("#LogoImagePathFile").val();
                 var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
@@ -160,9 +160,18 @@
                     <td>@Html.ValidationMessageFor(a => a.FileLimit)
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        售楼地址
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.SaleAddress)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.SaleAddress)
+                    </td>
+                </tr>
             </table>
         </fieldset>
-        <fieldset style="border: 1px solid #d3d3d3; margin-top: 15px;">
+        @*<fieldset style="border: 1px solid #d3d3d3; margin-top: 15px;">
             <legend>业务信息</legend>
             <table class="tableForm">
                 <tr>
@@ -329,7 +338,7 @@
                     </td>
                 </tr>
             </table>
-        </fieldset>
+        </fieldset>*@
         <div class="action">
             <input type="submit" id="btnSubmit" value="保存" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
         </div>

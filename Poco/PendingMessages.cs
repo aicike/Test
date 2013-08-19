@@ -51,11 +51,16 @@ namespace Poco
         //[Display(Name = "发送内容")]
         public string Content { get; set; }
 
+        [Display(Name = "文件路径")]
+        public string FileUrl { get; set; }
+
         /// <summary>
         /// 对应的消息ID
         /// </summary>
         public int MessageID { get; set; }
         public virtual Message Message { get; set; }
+
+
 
     }
 }

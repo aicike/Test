@@ -21,6 +21,7 @@ namespace AcceptanceServer.DataBllOperate
             Poco.Message Pmg = new Poco.Message();
             Pmg.TextContent = msg.Body;
             Pmg.EnumMessageTypeID = int.Parse(Np.EID);
+            Pmg.FileUrl = Np.FielUrl;
             //售楼人员对购房者发送消息
             if (Np.MSD == ((int)EnumMessageSendDirection.Account_User).ToString())
             {
@@ -54,6 +55,7 @@ namespace AcceptanceServer.DataBllOperate
             PendingMessages pm = new PendingMessages();
             pm.MessageID = MessageID;
             pm.Content = msg.Body;
+            pm.FileUrl = Np.FielUrl;
             pm.EnumMessageTypeID = int.Parse(Np.EID);
             //售楼人员对购房者发送消息
             if (Np.MSD == ((int)EnumMessageSendDirection.Account_User).ToString())

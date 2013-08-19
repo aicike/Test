@@ -16,18 +16,15 @@ namespace Poco
 
         public int SystemStatus { get; set; }
 
-        public int AccountMainID { get; set; }
-        public virtual AccountMain AccounMain { get; set; }
+        //public int AccountMainID { get; set; }
+        //public virtual AccountMain AccounMain { get; set; }
 
         [Display(Name = "项目地址")]
         [Required(ErrorMessage = "请输入项目地址")]
         [StringLength(200, ErrorMessage = "长度小于200")]
         public string ProductAddress { get; set; }
 
-        [Display(Name = "售楼地址")]
-        [Required(ErrorMessage = "请输入售楼地址")]
-        [StringLength(200, ErrorMessage = "长度小于200")]
-        public string SaleAddress { get; set; }
+        
 
         [Display(Name = "开盘时间")]
         [Required(ErrorMessage = "请输入开盘时间")]

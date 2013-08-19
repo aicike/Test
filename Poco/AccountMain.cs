@@ -77,12 +77,10 @@ namespace Poco
         [Range(0, 10, ErrorMessage = "目前系统限制最大附件容量为10GB")]
         public double FileLimit { get; set; }
 
-        /// <summary>
-        /// 扩展信息
-        /// </summary>
-        public int AccountMainExpandInfoID { get; set; }
-        public virtual AccountMainExpandInfo AccountMainExpandInfo { get; set; }
-
+        [Display(Name = "售楼地址")]
+        [Required(ErrorMessage = "请输入售楼地址")]
+        [StringLength(200, ErrorMessage = "长度小于200")]
+        public string SaleAddress { get; set; }
 
         /// <summary>
         /// 数据更新信息

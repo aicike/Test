@@ -147,7 +147,7 @@ namespace EF.Migrations
                         LogoImagePath = c.String(nullable: false, maxLength: 500),
                         AccountStatusID = c.Int(nullable: false),
                         FileLimit = c.Double(nullable: false),
-                        AccountMainExpandInfoID = c.Int(nullable: false),
+                        SaleAddress = c.String(nullable: false, maxLength: 200),
                         AppUpdateID = c.Int(),
                         SystemUserID = c.Int(nullable: false),
                         CreateTime = c.DateTime(nullable: false),
@@ -200,36 +200,6 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.City", t => t.CityID)
                 .Index(t => t.CityID);
-            
-            CreateTable(
-                "dbo.AccountMainExpandInfo",
-                c => new
-                    {
-                        ID = c.Int(nullable: false),
-                        SystemStatus = c.Int(nullable: false),
-                        AccountMainID = c.Int(nullable: false),
-                        ProductAddress = c.String(nullable: false, maxLength: 200),
-                        SaleAddress = c.String(nullable: false, maxLength: 200),
-                        OpeningDate = c.DateTime(nullable: false),
-                        CheckInDate = c.DateTime(nullable: false),
-                        CompletedDate = c.DateTime(nullable: false),
-                        BuildCompany = c.String(nullable: false, maxLength: 100),
-                        Investor = c.String(nullable: false, maxLength: 100),
-                        Description = c.String(maxLength: 4000),
-                        ProjectSupport = c.String(maxLength: 2000),
-                        TrafficInfo = c.String(maxLength: 2000),
-                        BuildingMaterials = c.String(maxLength: 2000),
-                        FloorInfo = c.String(maxLength: 2000),
-                        StallInfo = c.String(maxLength: 2000),
-                        OccupyArea = c.Double(),
-                        BuildingArea = c.Double(),
-                        ProjectSchedule = c.String(maxLength: 4000),
-                        PropertyRight = c.Int(nullable: false),
-                        HouseholdsCount = c.Int(),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.AccountMain", t => t.ID)
-                .Index(t => t.ID);
             
             CreateTable(
                 "dbo.AppUpdate",
@@ -696,6 +666,7 @@ namespace EF.Migrations
                         SendTime = c.DateTime(nullable: false),
                         IsReceive = c.Boolean(nullable: false),
                         ReceiveTime = c.DateTime(nullable: false),
+                        FileUrl = c.String(),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.FromAccountID)
@@ -721,6 +692,7 @@ namespace EF.Migrations
                         ToUserID = c.Int(),
                         SendTime = c.DateTime(nullable: false),
                         Content = c.String(),
+                        FileUrl = c.String(),
                         MessageID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
@@ -785,6 +757,32 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
+            
+            CreateTable(
+                "dbo.AccountMainExpandInfo",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        ProductAddress = c.String(nullable: false, maxLength: 200),
+                        OpeningDate = c.DateTime(nullable: false),
+                        CheckInDate = c.DateTime(nullable: false),
+                        CompletedDate = c.DateTime(nullable: false),
+                        BuildCompany = c.String(nullable: false, maxLength: 100),
+                        Investor = c.String(nullable: false, maxLength: 100),
+                        Description = c.String(maxLength: 4000),
+                        ProjectSupport = c.String(maxLength: 2000),
+                        TrafficInfo = c.String(maxLength: 2000),
+                        BuildingMaterials = c.String(maxLength: 2000),
+                        FloorInfo = c.String(maxLength: 2000),
+                        StallInfo = c.String(maxLength: 2000),
+                        OccupyArea = c.Double(),
+                        BuildingArea = c.Double(),
+                        ProjectSchedule = c.String(maxLength: 4000),
+                        PropertyRight = c.Int(nullable: false),
+                        HouseholdsCount = c.Int(),
+                    })
+                .PrimaryKey(t => t.ID);
 
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };
@@ -857,7 +855,6 @@ namespace EF.Migrations
             DropIndex("dbo.SystemUser", new[] { "SystemUserRoleID" });
             DropIndex("dbo.SystemUser", new[] { "AccountStatusID" });
             DropIndex("dbo.AppUpdate", new[] { "ID" });
-            DropIndex("dbo.AccountMainExpandInfo", new[] { "ID" });
             DropIndex("dbo.District", new[] { "CityID" });
             DropIndex("dbo.City", new[] { "ProvinceID" });
             DropIndex("dbo.AccountMain", new[] { "SystemUserID" });
@@ -930,7 +927,6 @@ namespace EF.Migrations
             DropForeignKey("dbo.SystemUser", "SystemUserRoleID", "dbo.SystemUserRole");
             DropForeignKey("dbo.SystemUser", "AccountStatusID", "dbo.LookupOption");
             DropForeignKey("dbo.AppUpdate", "ID", "dbo.AccountMain");
-            DropForeignKey("dbo.AccountMainExpandInfo", "ID", "dbo.AccountMain");
             DropForeignKey("dbo.District", "CityID", "dbo.City");
             DropForeignKey("dbo.City", "ProvinceID", "dbo.Province");
             DropForeignKey("dbo.AccountMain", "SystemUserID", "dbo.SystemUser");
@@ -948,6 +944,7 @@ namespace EF.Migrations
             DropForeignKey("dbo.Role", "ParentRoleID", "dbo.Role");
             DropForeignKey("dbo.Account", "AccountStatusID", "dbo.LookupOption");
             DropForeignKey("dbo.Account", "RoleID", "dbo.Role");
+            DropTable("dbo.AccountMainExpandInfo");
             DropTable("dbo.ActivateEmail");
             DropTable("dbo.ClientInfo");
             DropTable("dbo.Account_AccountMain");
@@ -979,7 +976,6 @@ namespace EF.Migrations
             DropTable("dbo.SystemUserRole");
             DropTable("dbo.SystemUser");
             DropTable("dbo.AppUpdate");
-            DropTable("dbo.AccountMainExpandInfo");
             DropTable("dbo.District");
             DropTable("dbo.City");
             DropTable("dbo.Province");
