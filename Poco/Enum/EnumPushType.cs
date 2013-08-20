@@ -7,7 +7,13 @@ namespace Poco.Enum
 {
     public enum EnumPushType
     {
-        IOS,
-        GeTui
+        /// <summary>
+        /// 全部
+        /// </summary>
+        All,
+        /// <summary>
+        /// 指定
+        /// </summary>
+        Appoint
     }
 }

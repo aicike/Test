@@ -18,6 +18,7 @@ namespace Web.Controllers
             var groupModel = Factory.Get<IGroupModel>(SystemConst.IOC_Model.GroupModel);
             var groupList = groupModel.GetGroupListByAccountID(LoginAccount.ID, null);
             ViewBag.GroupList = groupList;
+            ViewBag.HostName = LoginAccount.HostName;
             return View();
         }
 
@@ -40,6 +41,11 @@ namespace Web.Controllers
             }
 
             return "window.location.href='" + Url.Action("Index", "Message", new { HostName = LoginAccount.HostName }) + "'";
+        }
+
+        public ActionResult History()
+        {
+            return View();
         }
     }
 }

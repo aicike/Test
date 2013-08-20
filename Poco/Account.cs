@@ -100,5 +100,6 @@ namespace Poco
 
         public virtual ICollection<PendingMessages> ReceivePendingMessages { get; set; }
 
+        public virtual ICollection<PushMsg> PushMsgs { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using Poco;
 using Poco.Enum;
 using Injection;
 using Poco.WebAPI_Poco;
+using Injection.Transaction;
 
 namespace Business
 {
@@ -19,6 +20,7 @@ namespace Business
         {
         }
 
+        [Transaction]
         public Result Push_Text(string content, string receiveType, int accountID, string userIds, int accountMainID)
         {
             Result result = new Result();
@@ -31,6 +33,27 @@ namespace Business
             string title = string.Format("来自{0}的消息", accountMain.Name);
 
             //保存在数据库
+            var pmModel = Factory.Get<IPushMsgModel>(SystemConst.IOC_Model.PushMsgModel);
+            PushMsg pushMsg = new PushMsg();
+            pushMsg.Text = content;
+            pushMsg.EnumMessageType = (int)EnumMessageType.Text;
+            pushMsg.PushTime = DateTime.Now;
+            if (receiveType == "all")
+            {
+                pushMsg.EnumPushType = (int)EnumPushType.All;
+            }
+            else
+            {
+                pushMsg.EnumPushType = (int)EnumPushType.Appoint;
+            }
+            pushMsg.AccountMainID = accountMainID;
+            pushMsg.AccountID = accountID;
+            result = pmModel.AddPush(pushMsg, PushIDInfo.userIDs);
+            if (result.HasError)
+            {
+                return result;
+            }
+
             //未实现
             List<App_AutoMessageReplyContent> pushMessage = new List<App_AutoMessageReplyContent>();
             App_AutoMessageReplyContent rep = new App_AutoMessageReplyContent();
@@ -50,10 +73,6 @@ namespace Business
             message.EnumEvent = EnumEvent.Wait;// EnumEvent.Immediately;
             message.MessageJson = json;
             result = Push_Getui.SendMessage(message, PushIDInfo.Android);
-            if (result.HasError == false)
-            {
-                //保存在数据库中
-            }
             return result;
         }
 
@@ -75,10 +94,12 @@ namespace Business
             var userIDs = account_UserModel.List().Where(a => a.AccountID == accountID).Select(a => a.UserID).ToList();
             List<string> clientIds_android = new List<string>();
             List<string> clientIds_ios = new List<string>();
+            List<int> pushUserID = null;
             if (receiveType == "all")
             {
                 clientIds_android = clientInfoList_android.Where(a => userIDs.Contains(a.EntityID.Value)).Select(a => a.ClientID).ToList();
                 clientIds_ios = clientInfoList_ios.Where(a => userIDs.Contains(a.EntityID.Value)).Select(a => a.ClientID).ToList();
+                pushUserID = userIDs;
             }
             else if (receiveType == "user")
             {
@@ -89,10 +110,12 @@ namespace Business
                     clientIds_android = clientInfoList_android.Where(a => uids.Contains(a.EntityID.Value)).Select(a => a.ClientID).ToList();
                     clientIds_ios = clientInfoList_ios.Where(a => uids.Contains(a.EntityID.Value)).Select(a => a.ClientID).ToList();
                 }
+                pushUserID = uids.ToList();
             }
             PushIDInfo pi = new PushIDInfo();
             pi.Android = clientIds_android.ToArray();
             pi.IOS = clientIds_ios.ToArray();
+            pi.userIDs = pushUserID;
             return pi;
         }
 
@@ -100,6 +123,7 @@ namespace Business
         {
             public string[] Android { get; set; }
             public string[] IOS { get; set; }
+            public List<int> userIDs { get; set; }
         }
     }
 }

@@ -99,6 +99,9 @@ namespace Poco
             public const string PendingMessagesModel = "PendingMessagesModel";
             public const string MessageModel = "MessageModel";
             public const string TemporayInstantMes = "TemporayInstantMesModel";
+            public const string PushMsgDetailModel = "PushMsgDetailModel";
+            public const string PushMsgModel = "PushMsgModel";
+            
 
         }
     }

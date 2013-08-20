@@ -121,9 +121,10 @@ namespace Poco
 
         public virtual ICollection<AccountMainHouseType> AccountMainHouseTypes { get; set; }
 
-
         public virtual ICollection<User> Users { get; set; }
 
         public virtual ICollection<AccountMainHouses> AccountMainHousess { get; set; }
+
+        public virtual ICollection<PushMsg> PushMsgs { get; set; }
     }
 }

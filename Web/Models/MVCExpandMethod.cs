@@ -62,13 +62,20 @@ namespace System.Web.Mvc.Html
             return htmlHelper.ActionLink(linkText, actionName);
         }
 
-        public static MvcHtmlString ActionLink<TModel>(this HtmlHelper<TModel> htmlHelper, string linkText, string actionName, string controllerName, object routeValues, object htmlAttributes, bool isCheckPermissions)
+        public static MvcHtmlString ActionLink<TModel>(this HtmlHelper<TModel> htmlHelper, string linkText, string actionName, string controllerName, object routeValues, object htmlAttributes, bool isCheckPermissions, bool isShowText = false)
         {
             if (isCheckPermissions)
             {
                 if (!CheckHasPermissions(htmlHelper.ViewContext, actionName, controllerName, routeValues))
                 {
-                    return MvcHtmlString.Empty;
+                    if (isShowText)
+                    {
+                        return MvcHtmlString.Create(linkText);
+                    }
+                    else
+                    {
+                        return MvcHtmlString.Empty;
+                    }
                 }
             }
             return htmlHelper.ActionLink(linkText, actionName, controllerName, routeValues, htmlAttributes);

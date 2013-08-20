@@ -60,8 +60,11 @@
     <Compile Include="Enum\EnumBuildingType.cs" />
     <Compile Include="Enum\EnumDecoration.cs" />
     <Compile Include="Enum\EnumPushType.cs" />
+    <Compile Include="Enum\EnumReceiveStatus.cs" />
     <Compile Include="NewsProtocol.cs" />
     <Compile Include="PendingMessages.cs" />
+    <Compile Include="PushMsg.cs" />
+    <Compile Include="PushMsgDetail.cs" />
     <Compile Include="TemporayInstantMes.cs" />
     <Compile Include="Validation\AllowCheckPermissionsAttribute.cs" />
     <Compile Include="AppUpdate.cs" />

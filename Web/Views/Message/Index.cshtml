@@ -133,8 +133,8 @@
     消息管理</div>
 <div class="bodyLeft">
     <ul class="ulList">
-        <li class="select"><a>新建消息</a> </li>
-        <li><a>已发送</a> </li>
+        <li class="select">@Html.ActionLink("新建消息", "Index", "Message", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("已发送", "History", "Message", new { HostName = ViewBag.HostName }, null, true)</li>
 </div>
 <div class="bodyRight">
     <div class="option">

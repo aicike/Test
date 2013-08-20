@@ -57,6 +57,8 @@
     <Compile Include="IPendingMessagesModel.cs" />
     <Compile Include="IProvinceModel.cs" />
     <Compile Include="IPushModel.cs" />
+    <Compile Include="IPushMsgDetailModel.cs" />
+    <Compile Include="IPushMsgModel.cs" />
     <Compile Include="ISystemUserMenuModel.cs" />
     <Compile Include="ISystemUserModel.cs" />
     <Compile Include="ISystemUserRoleModel.cs" />
