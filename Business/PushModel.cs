@@ -38,6 +38,7 @@ namespace Business
             pushMsg.Text = content;
             pushMsg.EnumMessageType = (int)EnumMessageType.Text;
             pushMsg.PushTime = DateTime.Now;
+            pushMsg.PushStatus = (int)EnumPushStatus.Success;
             if (receiveType == "all")
             {
                 pushMsg.EnumPushType = (int)EnumPushType.All;
@@ -54,15 +55,18 @@ namespace Business
                 return result;
             }
 
-            //未实现
+            //封装消息
             List<App_AutoMessageReplyContent> pushMessage = new List<App_AutoMessageReplyContent>();
             App_AutoMessageReplyContent rep = new App_AutoMessageReplyContent();
             rep.ID = 0;
             rep.Type = (int)EnumMessageType.Text;
             rep.FileTitle = title;
             rep.Content = content;
+            rep.EnumMsgModel = (int)EnumMsgModel.Push;
+            rep.MsgID = pushMsg.ID;
             pushMessage.Add(rep);
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(pushMessage);
+
             //ios推送
             //未实现
             //android推送

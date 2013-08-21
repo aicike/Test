@@ -182,7 +182,11 @@
     <Compile Include="Models\MVCExpandMethod.cs" />
     <Compile Include="Models\NoClientCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Content\Icon\Icon.css" />
+    <Content Include="Content\Icon\glyphicons.png" />
     <Content Include="Images\Unread.png" />
+    <Content Include="Scripts\tabControl\tabControl.css" />
+    <Content Include="Scripts\tabControl\tabControl.js" />
     <Content Include="ueditor\net\Uploader.cs">
       <SubType>Code</SubType>
     </Content>

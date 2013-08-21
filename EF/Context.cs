@@ -54,6 +54,7 @@ namespace EF
             modelBuilder.Configurations.Add(new KeywordMap());
             modelBuilder.Configurations.Add(new AppUpdateMap());
             modelBuilder.Configurations.Add(new PendingMessagesMap());
+            modelBuilder.Configurations.Add(new PushMsgMap());
         }
     }
 }

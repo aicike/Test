@@ -19,6 +19,11 @@ namespace Business
             return LookupOptionModel.GetIdByToken(value);
         }
 
+        public static LookupOption GetLookupOptionByToken(Enum value)
+        {
+            return LookupOptionModel.GetByToken(value);
+        }
+
         public static List<LookupOption> GetLookupOptionList(Type emumType)
         {
             string typeName=emumType.Name;

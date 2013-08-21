@@ -28,5 +28,11 @@ namespace Business
             var entity = List_Cache().Where(a => a.Token == str).FirstOrDefault();
             return entity.ID;
         }
+
+        public LookupOption GetByToken(Enum value)
+        {
+            var str = value.ToString();
+            return List_Cache().Where(a => a.Token == str).FirstOrDefault();
+        }
     }
 }

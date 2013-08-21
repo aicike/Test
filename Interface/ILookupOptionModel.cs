@@ -10,5 +10,6 @@ namespace Interface
     {
         List<LookupOption> List_Cache();
         int GetIdByToken(Enum value);
+        LookupOption GetByToken(Enum value);
     }
 }

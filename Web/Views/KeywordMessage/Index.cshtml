@@ -5,7 +5,9 @@
 @model List<Poco.AutoMessage_Keyword>
 @section head{
     <link href="@Url.Content("~/Scripts/treeview/jquery.treeview.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/tabControl/tabControl.css")" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="@Url.Content("~/Scripts/treeview/jquery.treeview.js")"></script>
+    <script src="@Url.Content("/Scripts/tabControl/tabControl.js")" type="text/javascript"></script>
     <style>
         .keyLeft
         {
@@ -74,6 +76,9 @@
         var getEntityUrl = '@Url.Action("Get", "KeywordMessage")';
         var deleteUrl = '@Url.Action("Delete", "KeywordMessage")';
         $(function () {
+            
+		    $("#txtKey").tabControl({maxTabCount:10,tabW:80},"");
+
             $("#browser").treeview({
                 toggle: function () {
                 },
@@ -136,8 +141,21 @@
                             var hidObj=sel.parent().find(":hidden")
                             var url=hidObj.val();
                             var id=hidObj.attr("fileID");
-                            var type=hidObj.attr("fileType")
-                            $("#msgContent").append('<div class="keyMessageItem"><img style="max-width: 100px;max-height:80px;vertical-align:middle" src="'+url+'" /><input type="hidden" class="hidFile" fileType="'+type+'" value="'+id+'"><label class="msgText">' + title + '</label><span style="float: right;cursor: pointer;" onclick="delText(this)">删除</span></div>');
+                            var type=hidObj.attr("fileType");
+                            switch(type){
+                                case "LibraryImage":
+                                    $("#msgContent").append('<div class="keyMessageItem"><img style="max-width: 100px;max-height:80px;vertical-align:middle" src="'+url+'" />&nbsp;<input type="hidden" class="hidFile" fileType="'+type+'" value="'+id+'"><label class="msgText">' + title + '</label><span style="float: right;cursor: pointer;" onclick="delText(this)">删除</span></div>');
+                                    break;
+                                case "LibraryVoice":
+                                    $("#msgContent").append('<div class="keyMessageItem"><span class="ico-music" style="vertical-align: middle;"></span><input type="hidden" class="hidFile" fileType="'+type+'" value="'+id+'"><label class="msgText">' + title + '</label><span style="float: right;cursor: pointer;" onclick="delText(this)">删除</span></div>');
+                                    break;
+                                case "LibraryVideo":
+                                    $("#msgContent").append('<div class="keyMessageItem"><span class="ico-facetime-video" style="vertical-align: middle;"></span><input type="hidden" class="hidFile" fileType="'+type+'" value="'+id+'"><label class="msgText">' + title + '</label><span style="float: right;cursor: pointer;" onclick="delText(this)">删除</span></div>');
+                                    break;
+                                default:
+                                    $("#msgContent").append('<div class="keyMessageItem"><img style="max-width: 100px;max-height:80px;vertical-align:middle" src="'+url+'" />&$nbsp;<input type="hidden" class="hidFile" fileType="'+type+'" value="'+id+'"><label class="msgText">' + title + '</label><span style="float: right;cursor: pointer;" onclick="delText(this)">删除</span></div>');
+                                    break;
+                            }
                             $(this).dialog("close");
                         },
                         "取消": function () {
@@ -179,7 +197,7 @@
                 $.get(getEntityUrl, { id: keyId }, function (result) {
                     $("#txtRuleName").val(result.RuleName);
                     $("#txtRuleNo").val(result.FullRuleNo);
-                    $("#txtKey").val(result.Keywords);
+		            $("#txtKey").tabControl({maxTabCount:10,tabW:80},result.Keywords);
                     if(result.IsFistAutoMessage==true){
                         $("#cbFirst").attr("checked","checked");
                     }
@@ -266,9 +284,9 @@
                     });
                     return false;
                 }
-                var key = $("#txtKey").val().trim();
+                var key = $("#txtKey").getTabVals().join(",");
                 if (key.length == 0) {
-                    $("#txtKey").focus();
+                    $(".tabinput:visible").focus();
                     JAlert({
                         Message: "请输入关键字。",
                         DialogType: "Ok",
@@ -340,7 +358,10 @@
 
             $("#txtRuleName").val("");
             $("#txtRuleNo").val("");
-            $("#txtKey").val("");
+
+            $("span[name='tab']").remove();
+            $(".tabinput:hidden").remove();
+
             $("#msgContent").empty();
         }
         function delText(obj) {
@@ -389,7 +410,8 @@
                 <div>
                     <div style="width: 58px; text-align: right; float: left">
                         关键字：</div>
-                    <textarea id="txtKey" rows="3" cols="72"></textarea>
+                    <div id="txtKey">
+                    </div>
                 </div>
             </div>
             <div style="padding: 5px 5px 0px 10px;">

@@ -14,6 +14,8 @@ namespace EF.Mapping
             this.HasRequired(a => a.AutoMessage_Keyword)
             .WithMany(a => a.KeywordAutoMessages)
             .HasForeignKey(a => a.AutoMessage_KeywordID).WillCascadeOnDelete(true);
+
+            this.Ignore(a => a.SendTime);
         }
     }
 }

@@ -53,6 +53,7 @@
                 $("#divTextInfo").html("还可以输入" + length + "字");
             });
             $("#btnSend").click(function () {
+                
                 var su= $("#selectUser").val();
                 var uids=$("#hidUserID").val();
                 if(su=="user"){
@@ -77,6 +78,7 @@
                                 }); 
                            return false;
                         }
+                        $("#btnSend").attr("disabled","disabled");
                         $.ajax({
                             type: "post",
                             data: { content: content,type:"text",sendType:su,uids:uids},
@@ -85,6 +87,7 @@
                                 if (result != undefined && result != null && result.length > 0) {
                                     eval(result);
                                 }
+                                $("#btnSend").removeAttr("disabled");
                             },
                             error: function (XMLHttpRequest, textStatus, errorThrown) {
                                 JAlert({
@@ -92,6 +95,7 @@
                                     DialogType: "Ok",
                                     BtnOk: "确定"
                                 });
+                                $("#btnSend").removeAttr("disabled");
                             }
                         });
                         break;
@@ -197,7 +201,7 @@
                 enim, pretium nec, feugiat nec, luctus a, lacus.</p>
         </div>
     </div>
-    <input type="button" value="发送消息" id="btnSend" />
+    <input type="button" value="发送消息" id="btnSend" class="button" />
 </div>
 <div style="clear: both">
 </div>

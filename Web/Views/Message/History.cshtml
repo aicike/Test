@@ -1,6 +1,74 @@
 ﻿@{
-    ViewBag.Title = "History";
+    ViewBag.Title = "已发送";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
-
-<h2>History</h2>
+@section head{
+    <script type="text/javascript">
+    </script>
+}
+@model PagedList<Poco.PushMsg>
+<div class="title">
+    消息管理</div>
+<div class="bodyLeft">
+    <ul class="ulList">
+        <li>@Html.ActionLink("新建消息", "Index", "Message", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li class="select">@Html.ActionLink("已发送", "History", "Message", new { HostName = ViewBag.HostName }, null, true)</li>
+</div>
+<div class="bodyRight">
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th style="width: 200px;">
+                消息
+            </th>
+            <th style="width: 100px;">
+                状态
+            </th>
+            <th style="width: 100px;">
+                时间
+            </th>
+            @*<th style="width: 100px;">
+                操作
+            </th>*@
+        </tr>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+            <tr>
+                <td align="left">
+                    @item.HtmlShow
+                </td>
+                <td>
+                    @item.GetPushStatus()
+                </td>
+                <td>
+                    @item.PushTime.ToString("yyyy-MM-dd hh:mm")
+                </td>
+                @*td class="operation">
+                   @Ajax.ActionLink("删除", "Delete", "Message", new { HostName = ViewBag.HostName, id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "Message", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
+                </td>*@
+            </tr>
+            }
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
+<div style="clear: both">
+</div>

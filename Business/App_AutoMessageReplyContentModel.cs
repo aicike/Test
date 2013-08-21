@@ -91,6 +91,7 @@ namespace Business
                         }
                         break;
                 }
+                rep.SendTime = item.SendTime;
                 replayList.Add(rep);
             }
             return replayList;

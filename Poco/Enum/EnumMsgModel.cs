@@ -6,21 +6,21 @@ using System.Text;
 namespace Poco.Enum
 {
     /// <summary>
-    /// 客户端用户类型
+    /// 消息模式
     /// </summary>
-    public enum EnumClientUserType
+    public enum EnumMsgModel
     {
         /// <summary>
-        /// 平台维护账号
+        /// 自助式问答
         /// </summary>
-        Platform=0,
+        AutoMessage = 0,
         /// <summary>
-        /// 业务账号
+        /// 推送
         /// </summary>
-        Account=1,
+        Push = 1,
         /// <summary>
-        /// 普通用户
+        /// 聊天
         /// </summary>
-        User=2
+        Call = 2
     }
 }

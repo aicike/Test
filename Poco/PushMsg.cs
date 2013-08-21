@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Poco.Enum;
 
 namespace Poco
 {
@@ -17,7 +18,7 @@ namespace Poco
         public string Text { get; set; }
 
         /// <summary>
-        /// 推送类型
+        /// 消息类型
         /// </summary>
         public int EnumMessageType { get; set; }
 
@@ -30,6 +31,11 @@ namespace Poco
         /// 推送时间
         /// </summary>
         public DateTime PushTime { get; set; }
+
+        /// <summary>
+        /// 推送状态
+        /// </summary>
+        public int PushStatus { get; set; }
 
         /// <summary>
         /// 推送类型，全部或指定
@@ -51,5 +57,28 @@ namespace Poco
         public virtual Account Account { get; set; }
 
         public virtual ICollection<PushMsgDetail> PushMsgDetails { get; set; }
+
+        public string GetPushStatus()
+        {
+            string value = null;
+            switch (PushStatus)
+            {
+                case (int)EnumPushStatus.Sending:
+                    value = "正在发送";
+                    break;
+                case (int)EnumPushStatus.Fail:
+                    value = "发送失败";
+                    break;
+                case (int)EnumPushStatus.Success:
+                    value = "发送成功";
+                    break;
+            }
+            return value;
+        }
+
+        /// <summary>
+        /// 业务字段，不会在数据库生成
+        /// </summary>
+        public string HtmlShow { get; set; }
     }
 }

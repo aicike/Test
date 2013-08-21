@@ -29,5 +29,16 @@ namespace Poco.WebAPI_Poco
         /// 只有图文消息使用的字段
         /// </summary>
         public string SubContent { get; set; }
+
+        /// <summary>
+        /// 消息模式
+        /// </summary>
+        public int EnumMsgModel { get; set; }
+        /// <summary>
+        /// 消息模式对象的消息对象ID
+        /// </summary>
+        public int MsgID { get; set; }
+
+        public DateTime SendTime { get; set; }
     }
 }

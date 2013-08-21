@@ -97,5 +97,10 @@ namespace Poco
 
         [Display(Name = "排序")]
         public int Order { get; set; }
+
+        /// <summary>
+        /// 业务字段，不会再数据库中生成
+        /// </summary>
+        public DateTime SendTime { get; set; }
     }
 }

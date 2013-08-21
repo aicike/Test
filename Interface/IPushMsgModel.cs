@@ -9,5 +9,6 @@ namespace Interface
     public interface IPushMsgModel : IBaseModel<PushMsg>
     {
         Result AddPush(PushMsg entity, List<int> userID);
+        IQueryable<PushMsg> GetList(int accountMainID, int accountID);
     }
 }

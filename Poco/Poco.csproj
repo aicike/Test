@@ -59,6 +59,8 @@
     <Compile Include="AccountMainHouseInfoDetail.cs" />
     <Compile Include="Enum\EnumBuildingType.cs" />
     <Compile Include="Enum\EnumDecoration.cs" />
+    <Compile Include="Enum\EnumMsgModel.cs" />
+    <Compile Include="Enum\EnumPushStatus.cs" />
     <Compile Include="Enum\EnumPushType.cs" />
     <Compile Include="Enum\EnumReceiveStatus.cs" />
     <Compile Include="NewsProtocol.cs" />
