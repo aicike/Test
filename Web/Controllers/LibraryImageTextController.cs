@@ -72,5 +72,6 @@ namespace Web.Controllers
             }
             return JavaScript("window.location.href='" + Url.Action("Index", "LibraryImageText", new { HostName = LoginAccount.HostName }) + "'");
         }
+
     }
 }

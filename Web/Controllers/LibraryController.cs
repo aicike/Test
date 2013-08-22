@@ -48,5 +48,39 @@ namespace Web.Controllers
             type.Add(new LibraryType() { ID = 4, Name = "图文", Token = "LibraryImageText", Count = accountMainLibraryInfo.LibraryImageTextCount });
             return type;
         }
+
+        [AllowCheckPermissions(false)]
+        public ActionResult ImageManage()
+        {
+            var libraryImageModel = Factory.Get<ILibraryImageModel>(SystemConst.IOC_Model.LibraryImageModel);
+            //图片
+            var imageList = libraryImageModel.GetLibraryList(LoginAccount.CurrentAccountMainID).ToList();
+            ViewBag.ImageList = imageList;
+
+            return View();
+        }
+
+        [AllowCheckPermissions(false)]
+        public ActionResult VoiceManage()
+        {
+            var libraryVoiceModel = Factory.Get<ILibraryVoiceModel>(SystemConst.IOC_Model.LibraryVoiceModel);
+            //语音
+            var voiceList = libraryVoiceModel.GetLibraryList(LoginAccount.CurrentAccountMainID).ToList();
+            ViewBag.VoiceList = voiceList;
+
+            return View();
+        }
+
+
+        [AllowCheckPermissions(false)]
+        public ActionResult VideoManage()
+        {
+            var libraryVideoModel = Factory.Get<ILibraryVideoModel>(SystemConst.IOC_Model.LibraryVideoModel);
+            //视频
+            var videoList = libraryVideoModel.GetLibraryList(LoginAccount.CurrentAccountMainID).ToList();
+            ViewBag.VideoList = videoList;
+
+            return View();
+        }
     }
 }

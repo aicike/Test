@@ -3,9 +3,13 @@
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 @section head{
+    <link href="@Url.Content("~/Scripts/MediaElement/mediaelementplayer.min.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/MediaElement/mediaelement-and-player.min.js")" type="text/javascript"></script>
     <script type="text/javascript">
+        var CanCommit = true;
         var checkMessageUrl = '@Url.Action("CheckMessage", "SingleChat")';
         $(function () {
+
             //更改main 宽度
             var main = $('.main');
             main.attr("style", "width:770px")
@@ -21,33 +25,97 @@
 
             //验证文本是否输入
             $("#btnSubmit").click(function () {
+                if (CanCommit) {
+                    CanCommit = false;
+                    var length = $.trim($("#Content").val()).length;
+                    if (length == 0) {
+                        alert("请输入数据！");
+                        CanCommit = true;
+                        return false;
+                    }
+                    else if (length > 500) {
+                        CanCommit = true;
+                        alert("只能输入500字！");
+                        return false;
+                    }
+                    else {
 
-                var length = $.trim($("#Content").val()).length;
-                if (length == 0) {
-                    alert("请输入数据！");
-                    return false;
-                }
-                else if (length > 500) {
-                    alert("只能输入500字！");
+                        return true;
+                    }
                 }
                 else {
-                    return true;
+                    return false;
                 }
             });
 
-            //鼠标移动改变背景色
-//            $('.div_item').hover(function () {
-//                $(this).addClass('tabOver');
-//            }, function () {
-//                $(this).removeClass('tabOver');
-//            });
+            //验证是否选择图片
+            $("#btnImgSubmit").click(function () {
+                if (CanCommit) {
+                    CanCommit = false;
+                    var length = $.trim($("#TypeImgPath").val()).length;
+                    if (length == 0) {
+                        alert("请选择一个图片！");
+                        CanCommit = true;
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
+                }
+                else {
+                    return false
+                }
+            });
 
-            //选择图片
+
+            //验证是否选择语音
+            $("#btnYYSubmit").click(function () {
+                if (CanCommit) {
+                    CanCommit = false;
+                    var length = $.trim($("#TypeVoicePath").val()).length;
+                    if (length == 0) {
+                        alert("请选择一个语音素材！");
+                        CanCommit = true;
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
+                }
+                else {
+                    return false
+                }
+            });
+
+
+            //验证是否选择视频
+            $("#btnSPSubmit").click(function () {
+                if (CanCommit) {
+                    CanCommit = false;
+                    var length = $.trim($("#TypeVideoPath").val()).length;
+                    if (length == 0) {
+                        alert("请选择一个视频素材！");
+                        CanCommit = true;
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
+                }
+                else {
+                    return false
+                }
+            });
+
+
+
+
+            //选择本地图片
             $("#TypeImagePathFile").change(function () {
                 var fileName = $("#TypeImagePathFile").val();
                 $("#TypeImgPath").val(fileName);
                 var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
-                $("span[data-valmsg-for='HouseTypeImagePath']").empty().attr("class", "field-validation-valid");
+                $("span[data-valmsg-for='TypeImagePath']").empty().attr("class", "field-validation-valid");
                 switch (suffix) {
                     case ".jpg":
                     case ".jpeg":
@@ -64,19 +132,148 @@
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         $("#imgType").attr('src', e.target.result);
+                        $("#MesIMGAddress").val("1");
                     };
                     reader.readAsDataURL(input.files[0]);
                 }
                 else {
                     $("#imgType").attr('src', "#");
+                    $("#TypeImgPath").val("");
                 }
                 return false;
             });
+
+            //素材图片
+            $("#btnImgSC").click(function () {
+                var src = $("#iframeLibrary").attr("src");
+                $("#iframeLibrary").attr("src", src);
+                $("#dialogFile").dialog({
+                    resizable: false,
+                    height: 650,
+                    width: 829,
+                    modal: true,
+                    draggable: false,
+                    buttons: {
+                        "确定": function () {
+                            var subDocument = $(window.frames["iframeLibrary"].document);
+                            var sel = subDocument.find("#tabs-img").find(":checked")
+                            if (sel.length <= 0) {
+                                JAlert({
+                                    Message: "请选择一个素材。",
+                                    DialogType: "Ok",
+                                    BtnOk: "确定"
+                                });
+                                return;
+                            }
+                            var title = sel.parent().find("label").text();
+                            var hidObj = sel.parent().find(":hidden")
+                            var url = hidObj.val();
+                            var id = hidObj.attr("fileID");
+                            var type = hidObj.attr("fileType")
+                            $("#imgType").attr('src', url);
+                            $("#TypeImgPath").val("~" + url);
+                            $("#MesIMGAddress").val("2");
+                            $(this).dialog("close");
+                        },
+                        "取消": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
+
+            //语音素材
+            $("#btnVoiceSC").click(function () {
+                var src = $("#iframeVoiceLibrary").attr("src");
+                $("#iframeVoiceLibrary").attr("src", src);
+                $("#dialogVoiceVFile").dialog({
+                    resizable: false,
+                    height: 650,
+                    width: 829,
+                    modal: true,
+                    draggable: false,
+                    buttons: {
+                        "确定": function () {
+                            var subDocument = $(window.frames["iframeVoiceLibrary"].document);
+                            var sel = subDocument.find("#tabs-Voice").find(":checked")
+                            if (sel.length <= 0) {
+                                JAlert({
+                                    Message: "请选择一个素材。",
+                                    DialogType: "Ok",
+                                    BtnOk: "确定"
+                                });
+                                return;
+                            }
+                            var title = sel.parent().find("label").text();
+                            var hidObj = sel.parent().find(":hidden")
+                            var url = hidObj.val();
+                            var id = hidObj.attr("fileID");
+                            var type = hidObj.attr("fileType")
+
+                            $("#VoiceName").text(title);
+                            $("#VoiceYL").attr("style", "display:");
+                            $("#VoiceYL").click(function () { ShowMessage("2", url, $(this)); })
+                            $("#TypeVoicePath").val("~" + url);
+                            $(this).dialog("close");
+                        },
+                        "取消": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+
+                });
+            });
+
+            //视频素材
+            $("#btnVideoSC").click(function () {
+                var src = $("#iframeVideoLibrary").attr("src");
+                $("#iframeVideoLibrary").attr("src", src);
+                $("#dialogVideoFile").dialog({
+                    resizable: false,
+                    height: 650,
+                    width: 829,
+                    modal: true,
+                    draggable: false,
+                    buttons: {
+                        "确定": function () {
+                            var subDocument = $(window.frames["iframeVideoLibrary"].document);
+                            var sel = subDocument.find("#tabs-Video").find(":checked")
+                            if (sel.length <= 0) {
+                                JAlert({
+                                    Message: "请选择一个素材。",
+                                    DialogType: "Ok",
+                                    BtnOk: "确定"
+                                });
+                                return;
+                            }
+                            var title = sel.parent().find("label").text();
+                            var hidObj = sel.parent().find(":hidden")
+                            var url = hidObj.val();
+                            var id = hidObj.attr("fileID");
+                            var type = hidObj.attr("fileType")
+
+                            $("#VideoName").text(title);
+                            $("#VideoYL").attr("style", "display:");
+                            $("#VideoYL").click(function () { ShowMessage("3", url, $(this)); })
+                            $("#TypeVideoPath").val("~" + url);
+                            $(this).dialog("close");
+                        },
+                        "取消": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+
+                });
+            });
+
+
+
 
 
 
         });
 
+        //读取数据
         function ReadMessage() {
             //            $.get(checkMessageUrl, {}, function (data) {
             //                if (data && data == "1") {
@@ -85,13 +282,114 @@
             //            });
         }
 
+        //定时器
         setInterval(ReadMessage, "5000");
 
-
+        //发送完执行的js
         function EmptyContent() {
 
             $("#Content").val("");
             $("#Content").keyup();
+            CanCommit = true;
+
+        }
+
+        //显示图片视频语音
+        function ShowMessage(Type, MesURL, obj) {
+            //图片
+            if (Type == "1") {
+                $("#trImg").attr("style", "display:");
+                $("#trVoice").attr("style", "display:none");
+                $("#trVideo").attr("style", "display:none");
+
+                $("#ShowImg").attr("src", MesURL);
+                $("#dialogShowMessage").attr("title", "图片");
+                $("#dialogShowMessage").dialog({
+                    resizable: false,
+                    height: "auto",
+                    width: "auto",
+                    modal: true,
+                    draggable: false
+                });
+
+            }
+            //语音
+            else if (Type == "2") {
+                $("#trImg").attr("style", "display:none");
+                $("#trVoice").attr("style", "display:");
+                $("#trVideo").attr("style", "display:none");
+
+                $("#playerVoice").attr("src", MesURL);
+                $("#dialogShowMessage").attr("title", "语音");
+                $("#dialogShowMessage").dialog({
+                    resizable: false,
+                    height: "110",
+                    width: "550",
+                    modal: true,
+                    draggable: false,
+                    beforeClose: function (event, ui) {
+                        new MediaElement("playerVoice", {
+                            enableKeyboard: false,
+                            success: function (mediaElement, domObject) {
+                                mediaElement.stop();
+                            },
+                            error: function () {
+
+                            }
+                        });
+                    }
+                });
+
+                new MediaElement("playerVoice", {
+                    enableKeyboard: false,
+                    success: function (mediaElement, domObject) {
+                        mediaElement.play();
+                    },
+                    error: function () {
+
+                    }
+                });
+
+            }
+            //视频
+            else if (Type == "3") {
+                $("#trImg").attr("style", "display:none");
+                $("#trVoice").attr("style", "display:none");
+                $("#trVideo").attr("style", "display:");
+
+
+                $("#playerVideo").attr("src", MesURL);
+                $("#dialogShowMessage").attr("title", "视频");
+                $("#dialogShowMessage").dialog({
+                    resizable: false,
+                    height: "370",
+                    width: "570",
+                    modal: true,
+                    draggable: false,
+                    beforeClose: function (event, ui) {
+                        new MediaElement("playerVideo", {
+                            enableKeyboard: false,
+                            success: function (mediaElement, domObject) {
+                                mediaElement.stop();
+                            },
+                            error: function () {
+
+                            }
+                        });
+                    }
+                });
+
+                new MediaElement("playerVideo", {
+                    enableKeyboard: false,
+                    success: function (mediaElement, domObject) {
+                        mediaElement.play();
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+
         }
 
        
@@ -105,17 +403,8 @@
         }
         .div_item:hover
         {
-            background-color: #f1f1f1;}
-        /*.div_td
-        {
-            width: 730px;
-            line-height: 25px;
-            border: 0;
-            border-bottom: 1px solid #d3d3d3;
-            font-family: @@微软雅黑;
-            margin-top:10px;
-            margin-bottom:10px;
-        }*/
+            background-color: #f1f1f1;
+        }
         
         .tabOver
         {
@@ -143,9 +432,9 @@
     <div class="tableList" id="tabs" style="width: 725px; height: 220px">
         <ul>
             <li><a href="#tabs-1">文字</a></li>
-            <li style="display: none"><a href="#tabs-2">语音</a></li>
+            <li><a href="#tabs-2">语音</a></li>
             <li><a href="#tabs-3">图片</a></li>
-            <li style="display: none"><a href="#tabs-4">视频</a></li>
+            <li><a href="#tabs-4">视频</a></li>
             <li style="display: none"><a href="#tabs-5">图文消息</a></li>
         </ul>
         <div id="tabs-1">
@@ -162,39 +451,54 @@
                 <div style="clear: both">
                 </div>
                     
-                <input type="submit" id="btnSubmit"  value="发送" class="button" style="margin-top: 10px" />
+                <input type="submit" id="btnSubmit" value="发送" class="button" style="margin-top: 10px;" />
             }
         </div>
         <div id="tabs-2">
-            <p>
-                Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra
-                massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget
-                luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean
-                aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent
-                in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat
-                nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque
-                convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod
-                felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+            @using (Html.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input type="hidden" value="3" id="MesType3" name="MesType" />
+                <input type="hidden" id="TypeVoicePath" name="TypePath" />
+                <table cellpadding="0" cellspacing="0" class="ImgTab">
+                    <tr>
+                        <td align="left" colspan="2">
+                            <button type="button" id="btnVoiceSC">
+                                语音素材</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" style="width: 35px; border-right: 0px">
+                            <img id="VoiceYL" width="32px" src="~/Images/Start.png" title="点击预览" style="cursor: pointer;
+                                display: none" />
+                        </td>
+                        <td align="left" style="border-left: 0px">
+                            <label id="VoiceName" />
+                        </td>
+                    </tr>
+                </table>
+                <input type="submit" id="btnYYSubmit" value="发送" class="button" style="margin-top: 12px;" />
+            }
         </div>
         <div id="tabs-3">
             @using (Html.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <input type="hidden" value="1" id="MesType1" name="MesType" />
+                <input type="hidden" value="-1" id="MesIMGAddress" name="MesAddress" />
                 <table cellpadding="0" cellspacing="0" class="ImgTab">
                     <tr>
                         <td align="left">
                             本地图片：
                             <input type="file" id="TypeImagePathFile" name="TypeImagePathFile" />
-                            <input type="hidden" id="TypeImgPath" name="TypeImgPath" />
+                            <input type="hidden" id="TypeImgPath" name="TypePath" />
                         </td>
-                        <td width="235px" rowspan="2" style=" border-left:0px">
+                        <td width="235px" rowspan="2" style="border-left: 0px">
                             <img id="imgType" style="max-width: 230px; max-height: 100px; float: left" />
                         </td>
                     </tr>
                     <tr>
                         <td align="left">
-                            <button type="button" id="btnSC">
-                                素材图片</button>
+                            <button type="button" id="btnImgSC">
+                                图片素材</button>
                         </td>
                     </tr>
                 </table>
@@ -204,13 +508,29 @@
             }
         </div>
         <div id="tabs-4">
-            <p>
-                Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate,
-                pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem.
-                Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia
-                nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo
-                pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem
-                enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+            @using (Html.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input type="hidden" value="2" id="MesType2" name="MesType" />
+                <input type="hidden" id="TypeVideoPath" name="TypePath" />
+                <table cellpadding="0" cellspacing="0" class="ImgTab">
+                    <tr>
+                        <td align="left" colspan="2">
+                            <button type="button" id="btnVideoSC">
+                                视频素材</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" style="width: 35px; border-right: 0px">
+                            <img id="VideoYL" width="32px" src="~/Images/Start.png" title="点击预览" style="cursor: pointer;
+                                display: none" />
+                        </td>
+                        <td align="left" style="border-left: 0px">
+                            <label id="VideoName" />
+                        </td>
+                    </tr>
+                </table>
+                <input type="submit" id="btnSPSubmit" value="发送" class="button" style="margin-top: 12px;" />
+            }
         </div>
         <div id="tabs-5">
             <p>
@@ -229,4 +549,35 @@
     <div id="div_data" style="padding: 0px 0px 25px 0px; margin-top: -40px">
         @{Html.RenderAction("ChatPartialView", new { id = ViewBag.ID, userID = ViewBag.UserID });}
     </div>
+</div>
+<div id="dialogFile" title="选择图片素材" style="display: none">
+    <iframe id="iframeLibrary" src="@Url.Action("ImageManage", "Library", new { HostName = ViewBag.HostName })" style="width:800px;height:530px;border:none;overflow:hidden">
+    </iframe>
+</div>
+<div id="dialogVoiceVFile" title="选择语音素材" style="display: none">
+    <iframe id="iframeVoiceLibrary" src="@Url.Action("VoiceManage", "Library", new { HostName = ViewBag.HostName })" style="width:800px;height:530px;border:none;overflow:hidden">
+    </iframe>
+</div>
+<div id="dialogVideoFile" title="选择视频素材" style="display: none">
+    <iframe id="iframeVideoLibrary" src="@Url.Action("VideoManage", "Library", new { HostName = ViewBag.HostName })" style="width:800px;height:530px;border:none;overflow:hidden">
+    </iframe>
+</div>
+<div id="dialogShowMessage" title="" style="display: none">
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr id="trImg" align="center" style="">
+            <td>
+                <img id="ShowImg" style="max-width: 1024px; max-height: 620px" src="" />
+            </td>
+        </tr>
+        <tr id="trVoice">
+            <td style="padding-top: 15px">
+                <audio style="width: 100%" id="playerVoice" src="" controls="controls"></audio>
+            </td>
+        </tr>
+        <tr id="trVideo">
+            <td>
+                <video width="550px"  id="playerVideo" src="" controls="controls"></video>
+            </td>
+        </tr>
+    </table>
 </div>

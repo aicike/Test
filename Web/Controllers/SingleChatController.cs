@@ -43,7 +43,7 @@ namespace Web.Controllers
         }
 
         [AllowCheckPermissions(false)]
-        public ActionResult SendMessage(int id, int userID, string Content, string MesType, string TypePath, HttpPostedFileBase TypeImagePathFile)
+        public ActionResult SendMessage(int id, int userID, string Content, string MesType, string TypePath, string MesAddress, HttpPostedFileBase TypeImagePathFile)
         {
             TreedCon();
             Thread.Sleep(1000);
@@ -69,18 +69,35 @@ namespace Web.Controllers
                     //图片
                     else if (MesType == ((int)EnumMessageType.Image).ToString())
                     {
-
-                        var path = string.Format(string.Format("~/File/{0}.Message", LoginAccount.CurrentAccountMainID));
-                        if (!System.IO.File.Exists(Server.MapPath(path)))
+                        //本地
+                        if (MesAddress == "1")
                         {
-                            System.IO.Directory.CreateDirectory(Server.MapPath(path));
+                            var path = string.Format(string.Format("~/File/{0}.Message", LoginAccount.CurrentAccountMainID));
+                            if (!System.IO.File.Exists(Server.MapPath(path)))
+                            {
+                                System.IO.Directory.CreateDirectory(Server.MapPath(path));
+                            }
+                            var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                            var imageName = string.Format("{0}_{1}", token, TypeImagePathFile.FileName);
+                            var imagePath = string.Format("{0}\\{1}", path, imageName);
+                            var imagePath2 = Server.MapPath(imagePath);
+                            TypeImagePathFile.SaveAs(imagePath2);
+                            np.FielUrl = imagePath;
                         }
-                        var token = DateTime.Now.ToString("yyyyMMddHHmmss");
-                        var imageName = string.Format("{0}_{1}", token, TypeImagePathFile.FileName);
-                        var imagePath = string.Format("{0}\\{1}", path, imageName);
-                        var imagePath2 = Server.MapPath(imagePath);
-                        TypeImagePathFile.SaveAs(imagePath2);
-                        np.FielUrl = imagePath;
+                        else
+                        {
+                            np.FielUrl = TypePath;
+                        }
+                    }
+                    //语音
+                    else if (MesType == ((int)EnumMessageType.Voice).ToString())
+                    {
+                        np.FielUrl = TypePath;
+                    }
+                    //视频
+                    else if (MesType == ((int)EnumMessageType.Video).ToString())
+                    {
+                        np.FielUrl = TypePath;
                     }
                     msg.AddChild(np);
                     Connection.Send(msg);

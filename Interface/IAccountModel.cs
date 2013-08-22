@@ -14,6 +14,7 @@ namespace Interface
         /// 项目成员
         /// </summary>
         IQueryable<Account> GetAccountListByAccountMain(int accountMainID);
+        IList<Account> GetAccountListNoAdminByAccountMain(int accountMainID);
         IQueryable<Account> GetAccountListByAccountMain(AccountMain accountMain);
         /// <summary>
         /// 根据角色获取项目成员

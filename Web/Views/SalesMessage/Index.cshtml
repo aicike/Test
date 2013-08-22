@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@section head{
+    <script>
+        $(function () {
+            $("#accordion").accordion();
+        });
+        
+
+    </script>
+    <style>
+        .ListTab
+        {
+            margin-top: 15px;
+            line-height: 25px;
+            border-top: 1px solid #d3d3d3;
+            border-left: 1px solid #d3d3d3;
+        }
+        .ListTab th
+        {
+            font-size: 14px;
+            border-bottom: 1px solid #d3d3d3;
+            border-right: 1px solid #d3d3d3;
+        }
+        .ListTab td
+        {
+            font-size: 14px;
+            border-bottom: 1px solid #d3d3d3;
+            border-right: 1px solid #d3d3d3;
+        }
+    </style>
+}
+@model IList<Poco.Account>
+<div class="title">
+    销售与客户管理</div>
+<div class="bodyLeft">
+    <div id="accordion">
+        @foreach (var item in Model)
+        {
+            <h3>
+                @item.Name</h3>
+            <div>
+                <table cellpadding="0" cellspacing="0" border="0" style="line-height: 20px; margin-left: 10px">
+                    @foreach (var Gitem in item.Groups)
+                    {
+                        <tr>
+                            <td>
+                                <a>@Gitem.GroupName</a>
+                            </td>
+                        </tr>   
+                    }
+                </table>
+            </div>
+        }
+    </div>
+</div>
+<div class="bodyRight">
+    <div style="font-size: 14px; font-weight: bold">
+        张三-未分组</div>
+    <table class="ListTab" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <th>
+                头像
+            </th>
+            <th>
+                姓名(备注)
+            </th>
+            <th>
+                电话
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+        <tr align="center">
+            <td>
+                <img src="" style="max-width: 50px; border: 0px" />
+            </td>
+            <td>
+                wushangqi
+            </td>
+            <td>
+                13245678912
+            </td>
+            <td>
+                <a>更改销售代表</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div style="clear: both">
+</div>

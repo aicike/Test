@@ -14,10 +14,10 @@ namespace Web.Areas.System.Controllers
 {
     public class AccountMainManageController : ManageSystemUserController
     {
-        public ActionResult Index(int? index)
+        public ActionResult Index(int? id)
         {
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
-            var list = accountMainModel.List_Permission(LoginSystemUser.ID).ToPagedList(index ?? 1, 15);
+            var list = accountMainModel.List_Permission(LoginSystemUser.ID).ToPagedList(id ?? 1, 15);
             return View(list);
         }
 

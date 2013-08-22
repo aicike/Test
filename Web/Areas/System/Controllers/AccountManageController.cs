@@ -13,7 +13,7 @@ namespace Web.Areas.System.Controllers
 {
     public class AccountManageController : ManageSystemUserController
     {
-        public ActionResult Index(int accountMainId, int? roleID, int? index)
+        public ActionResult Index(int? id,int accountMainId, int? roleID)
         {
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             accountMainModel.CheckHasPermissions(LoginSystemUser.ID, accountMainId).NotAuthorizedPage();
@@ -37,7 +37,7 @@ namespace Web.Areas.System.Controllers
             {
                 accountList = accountAdminIquery;
             }
-            var pageList = accountList.ToPagedList(index ?? 1, 15);
+            var pageList = accountList.ToPagedList(id ?? 1, 15);
             ViewBag.RoleID = roleID.HasValue ? roleID.Value : 1;
             ViewBag.AccountAdminList = accountAdminIquery.ToList();
             return View(pageList);

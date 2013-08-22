@@ -15,7 +15,7 @@ namespace Web.Controllers
         //
         // GET: /InstantMes/
 
-        public ActionResult Index(int ? index)
+        public ActionResult Index(int ? id)
         {
             //获取用户分组
             var groupModel = Factory.Get<IGroupModel>(SystemConst.IOC_Model.GroupModel);
@@ -27,7 +27,7 @@ namespace Web.Controllers
 
             //读取信息
             var TemporayModel = Factory.Get<ITemporayInstantMesModel>(SystemConst.IOC_Model.TemporayInstantMes);
-            var TemporayList = TemporayModel.GetList(LoginAccount.ID).ToPagedList(index ?? 1, 15); ;
+            var TemporayList = TemporayModel.GetList(LoginAccount.ID).ToPagedList(id ?? 1, 15); ;
 
             return View(TemporayList);
         }

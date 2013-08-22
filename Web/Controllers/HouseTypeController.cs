@@ -20,14 +20,14 @@ namespace Web.Controllers
         /// <param name="id">楼盘ID</param>
         /// <param name="index"></param>
         /// <returns></returns>
-        public ActionResult Index(int id,int? index)
+        public ActionResult Index(int? id,int houseID)
         {
             var hounsesTypeModel = Factory.Get<IAccountMainHouseTypeModel>(SystemConst.IOC_Model.AccountMainHouseTypeModel);
-            var list = hounsesTypeModel.GetList(id).ToPagedList(index ?? 1, 15);
+            var list = hounsesTypeModel.GetList(houseID).ToPagedList(id ?? 1, 15);
             ViewBag.HostName = LoginAccount.HostName;
-            ViewBag.HID = id;
+            ViewBag.HID = houseID;
             var hounsesModel = Factory.Get<IAccountMainHousesModel>(SystemConst.IOC_Model.AccountMainHousesModel);
-            var Hounse = hounsesModel.Get(id);
+            var Hounse = hounsesModel.Get(houseID);
             ViewBag.HostTitle = Hounse.HName;
             return View(list);
         }

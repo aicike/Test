@@ -15,7 +15,7 @@ namespace Business
         public Result Upload(LibraryVoice entity, System.Web.HttpPostedFileBase voice)
         {
             var token = DateTime.Now.ToString("yyyyMMddHHmmss");
-            var fileName = string.Format("{0}_{1}", token, voice.FileName);
+            var fileName = string.Format("{0}{1}", token, voice.FileName.Substring(voice.FileName.LastIndexOf(".")));
             var filePath = string.Format("~/File/{0}/FileLibrary/{1}", entity.AccountMainID, fileName);
             var pathIO = HttpContext.Current.Server.MapPath(filePath);
             voice.SaveAs(pathIO);

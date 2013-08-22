@@ -23,11 +23,11 @@ namespace Web.Controllers
         /// <param name="Did">单元ID</param>
         /// <param name="index"></param>
         /// <returns></returns>
-        public ActionResult Index(int Hid,int Did, int? index)
+        public ActionResult Index(int? id,int Hid,int Did)
         {
             //房屋数据
             var hounsesInfoDetailModel = Factory.Get<IAccountMainHouseInfoDetailModel>(SystemConst.IOC_Model.AccountMainHouseInfoDetailModel);
-            var list = hounsesInfoDetailModel.GetList(Did).ToPagedList(index ?? 1, 15);
+            var list = hounsesInfoDetailModel.GetList(Did).ToPagedList(id ?? 1, 15);
             ViewBag.HostName = LoginAccount.HostName;
             ViewBag.HID = Hid;
             ViewBag.DID = Did;

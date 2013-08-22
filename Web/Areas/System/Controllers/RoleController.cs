@@ -12,10 +12,10 @@ namespace Web.Areas.System.Controllers
 {
     public class RoleController : ManageSystemUserController
     {
-        public ActionResult Index(int? index)
+        public ActionResult Index(int? id)
         {
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
-            var list = roleModel.List().ToPagedList(index ?? 1, 15);
+            var list = roleModel.List().ToPagedList(id??1 , 2);
             return View(list);
         }
 

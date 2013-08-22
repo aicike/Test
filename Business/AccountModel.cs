@@ -23,6 +23,15 @@ namespace Business
             var entity = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
             return entity.List().Where(a => a.AccountMainID == accountMainID).Select(a => a.Account);
         }
+        /// <summary>
+        /// 获取项目成员(不包含管理员)
+        /// </summary>
+        public IList<Account> GetAccountListNoAdminByAccountMain(int accountMainID)
+        {
+            var entity = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
+            return entity.List().Where(a => a.AccountMainID == accountMainID & a.Account.RoleID != 1).Select(a => a.Account).ToList();
+        }
+
         public IQueryable<Account> GetAccountListByAccountMain(AccountMain accountMain)
         {
             return accountMain.Account_AccountMains.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Select(a => a.Account).AsQueryable();

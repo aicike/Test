@@ -14,13 +14,10 @@ namespace Web.Controllers
 {
     public class HousesMangeController : ManageAccountController
     {
-        //
-        // GET: /HousesMange/
-
-        public ActionResult Index(int? index)
+        public ActionResult Index(int? id)
         {
             var hounsesModel = Factory.Get<IAccountMainHousesModel>(SystemConst.IOC_Model.AccountMainHousesModel);
-            var list = hounsesModel.GetList(LoginAccount.CurrentAccountMainID).ToPagedList(index ?? 1, 15);
+            var list = hounsesModel.GetList(LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 15);
             ViewBag.HostName = LoginAccount.HostName;
             return View(list);
         }

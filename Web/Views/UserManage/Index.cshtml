@@ -230,11 +230,12 @@
                     }
                 </td>
                 <td>
-                    @item.UserLoginInfo.Name
+                   <a  href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.ID })" target="_blank"> @item.UserLoginInfo.Name
                     @if (string.IsNullOrEmpty(item.Name) == false)
                     {
                         @:(@item.Name)
                     }
+                    </a>
                 </td>
                 <td>
                     @item.Phone

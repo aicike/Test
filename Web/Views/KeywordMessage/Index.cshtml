@@ -153,7 +153,7 @@
                                     $("#msgContent").append('<div class="keyMessageItem"><span class="ico-facetime-video" style="vertical-align: middle;"></span><input type="hidden" class="hidFile" fileType="'+type+'" value="'+id+'"><label class="msgText">' + title + '</label><span style="float: right;cursor: pointer;" onclick="delText(this)">删除</span></div>');
                                     break;
                                 default:
-                                    $("#msgContent").append('<div class="keyMessageItem"><img style="max-width: 100px;max-height:80px;vertical-align:middle" src="'+url+'" />&$nbsp;<input type="hidden" class="hidFile" fileType="'+type+'" value="'+id+'"><label class="msgText">' + title + '</label><span style="float: right;cursor: pointer;" onclick="delText(this)">删除</span></div>');
+                                    $("#msgContent").append('<div class="keyMessageItem"><img style="max-width: 100px;max-height:80px;vertical-align:middle" src="'+url+'" />&nbsp;<input type="hidden" class="hidFile" fileType="'+type+'" value="'+id+'"><label class="msgText">' + title + '</label><span style="float: right;cursor: pointer;" onclick="delText(this)">删除</span></div>');
                                     break;
                             }
                             $(this).dialog("close");

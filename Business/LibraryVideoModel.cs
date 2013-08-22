@@ -18,15 +18,15 @@ namespace Business
             return List().Where(a => a.AccountMainID == accountMainID);
         }
 
-        public Result Upload(LibraryVideo entity, System.Web.HttpPostedFileBase voice)
+        public Result Upload(LibraryVideo entity, System.Web.HttpPostedFileBase video)
         {
             var token = DateTime.Now.ToString("yyyyMMddHHmmss");
-            var fileName = string.Format("{0}_{1}", token, voice.FileName);
+            var fileName = string.Format("{0}{1}", token, video.FileName.Substring(video.FileName.LastIndexOf(".")));
             var filePath = string.Format("~/File/{0}/FileLibrary/{1}", entity.AccountMainID, fileName);
             var pathIO = HttpContext.Current.Server.MapPath(filePath);
-            voice.SaveAs(pathIO);
+            video.SaveAs(pathIO);
 
-            entity.FileName = voice.FileName.Substring(0, voice.FileName.LastIndexOf('.'));
+            entity.FileName = video.FileName.Substring(0, video.FileName.LastIndexOf('.'));
             entity.FilePath = filePath;
             return base.Add(entity);
         }

@@ -149,6 +149,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AjaxController.cs" />
     <Compile Include="Controllers\BaseController\BaseController.cs" />
+    <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ExitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstallAppReplyController.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="Controllers\BaseController\ManageSystemUserController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\LibraryTextController.cs" />
+    <Compile Include="Controllers\SalesMessageController.cs" />
     <Compile Include="Controllers\SetController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\SingleChatController.cs" />
@@ -184,6 +186,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\Icon\Icon.css" />
     <Content Include="Content\Icon\glyphicons.png" />
+    <Content Include="Images\Start.png" />
     <Content Include="Images\Unread.png" />
     <Content Include="Scripts\tabControl\tabControl.css" />
     <Content Include="Scripts\tabControl\tabControl.js" />
@@ -452,7 +455,7 @@
       <Name>Interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\MvcPager\MvcPager.csproj">
-      <Project>{E30DDBC3-4BA0-4414-908C-D6A0D9CBD1D0}</Project>
+      <Project>{11FAED02-B907-40B7-B9F4-0C471ED9781D}</Project>
       <Name>MvcPager</Name>
     </ProjectReference>
     <ProjectReference Include="..\Poco\Poco.csproj">
@@ -670,6 +673,13 @@
     <Content Include="Views\Account\Add.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Message\History.cshtml" />
+    <Content Include="Views\Library\ImageManage.cshtml" />
+    <Content Include="Views\Library\VoiceManage.cshtml" />
+    <Content Include="Views\Library\VideoManage.cshtml" />
+    <Content Include="Views\SalesMessage\Index.cshtml" />
+    <Content Include="Views\SalesMessage\SalesUserList.cshtml" />
+    <Content Include="Views\LibraryImageText\AppView.cshtml" />
+    <Content Include="Views\Default\AppView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
