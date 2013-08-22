@@ -1,25 +1,90 @@
 ﻿@{
     Layout = null;
 }
-
-
-
-@*
-<div class="pages" style="margin-top: 10px">
-    @Html.Pager(Model.TotalPageCount,Model.CurrentPageIndex, "Index", "SingleChat", new PagerOptions
-       {
-           PageIndexParameterName = "ID",
-           CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
-           NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
-           NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
-           CssClass = "manage_pages pages",
-           SeparatorHtml = "&nbsp;",
-           AutoHide = false,
-           /*LastPageText = "Last",
-           FirstPageText = "First",
-           PrevPageText = "Back",
-           NextPageText = "Next",*/
-           PageIndexOutOfRangeErrorMessage = "Page index out of range.",
-           ShowFirstLast = false
-       }, "User", new { HostName = ViewBag.HostName, id = ViewBag.ID }, null)
-</div>*@
+<style>
+        .ListTab
+        {
+            margin-top: 15px;
+            line-height: 25px;
+            border-top: 1px solid #d3d3d3;
+            border-left: 1px solid #d3d3d3;
+        }
+        .ListTab th
+        {
+            font-size: 14px;
+            border-bottom: 1px solid #d3d3d3;
+            border-right: 1px solid #d3d3d3;
+        }
+        .ListTab td
+        {
+            font-size: 14px;
+            border-bottom: 1px solid #d3d3d3;
+            border-right: 1px solid #d3d3d3;
+        }
+    </style>
+@model PagedList<Poco.User>
+ 
+ <div style="font-size: 14px; font-weight: bold">
+        @ViewBag.AccountName -> @ViewBag.GroupName</div>
+    <table class="ListTab" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <th>
+                头像
+            </th>
+            <th>
+                姓名(备注)
+            </th>
+            <th>
+                电话
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr align="center">
+            <td>
+                @if (!string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath))
+                { 
+                    <img src="@Url.Action(item.UserLoginInfo.HeadImagePath)" style="max-width: 50px; border: 0px" />
+                }
+            </td>
+            <td>
+                @if (item.UserLoginInfo.Name == item.Name)
+                {
+                    @item.UserLoginInfo.Name
+                }
+                else
+                { 
+                    @item.UserLoginInfo.Name @:(@item.Name)
+                }
+            </td>
+            <td>
+                @item.UserLoginInfo.Phone
+            </td>
+            <td>
+                <a>更改销售代表</a>
+            </td>
+        </tr>
+        }
+        
+    </table>
+    <div style=" float:right; font-size:12px ; margin-top:15px">
+     @Html.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "ID",
+    CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+    NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+    NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+    CssClass = "manage_pages pages",
+    SeparatorHtml = "&nbsp;",
+    AutoHide = false,
+    /*LastPageText = "Last",
+    FirstPageText = "First",
+    PrevPageText = "Back",
+    NextPageText = "Next",*/
+    PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+    ShowFirstLast = false
+})
+   </div>

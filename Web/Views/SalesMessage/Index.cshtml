@@ -7,7 +7,13 @@
         $(function () {
             $("#accordion").accordion();
         });
-        
+
+        //点击user事件
+        function ChickUser(accountID, groupID) {
+
+            var url = '@Url.Action("SalesUserList", "SalesMessage", new { HostName = ViewBag.HostName })' + "/1?accountID=" + accountID + "&GruopID=" + groupID;
+            $("#iframeUsers").attr("src",url);
+        }
 
     </script>
     <style>
@@ -47,7 +53,7 @@
                     {
                         <tr>
                             <td>
-                                <a>@Gitem.GroupName</a>
+                                <a onclick="ChickUser('@item.ID','@Gitem.ID')">@Gitem.GroupName</a>
                             </td>
                         </tr>   
                     }
@@ -57,38 +63,8 @@
     </div>
 </div>
 <div class="bodyRight">
-    <div style="font-size: 14px; font-weight: bold">
-        张三-未分组</div>
-    <table class="ListTab" width="100%" cellpadding="0" cellspacing="0">
-        <tr>
-            <th>
-                头像
-            </th>
-            <th>
-                姓名(备注)
-            </th>
-            <th>
-                电话
-            </th>
-            <th>
-                操作
-            </th>
-        </tr>
-        <tr align="center">
-            <td>
-                <img src="" style="max-width: 50px; border: 0px" />
-            </td>
-            <td>
-                wushangqi
-            </td>
-            <td>
-                13245678912
-            </td>
-            <td>
-                <a>更改销售代表</a>
-            </td>
-        </tr>
-    </table>
+    <iframe id="iframeUsers" src="" style="width:720px; height: 670px; border: none;
+        overflow: hidden"></iframe>
 </div>
 <div style="clear: both">
 </div>

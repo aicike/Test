@@ -45,7 +45,6 @@
     <Reference Include="System" />
     <Reference Include="System.Web" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Global.cs" />
     <Compile Include="Webdiyer\WebControls\Mvc\PagerBuilder.cs" />
     <Compile Include="Webdiyer\WebControls\Mvc\PagerItem.cs" />
     <Compile Include="Webdiyer\WebControls\Mvc\PagerItemType.cs" />
