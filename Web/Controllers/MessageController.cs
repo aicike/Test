@@ -51,9 +51,10 @@ namespace Web.Controllers
         {
             IPushMsgModel model = Factory.Get<IPushMsgModel>(SystemConst.IOC_Model.PushMsgModel);
             var result = model.GetList(LoginAccount.CurrentAccountMainID, LoginAccount.ID).ToPagedList(index ?? 1, 15);
-            var list = GetMessageTitle(result.ToList()).AsQueryable().ToPagedList(index ?? 1, 15);
+            var list = GetMessageTitle(result.ToList());
+            ViewBag.List = list;
             ViewBag.HostName = LoginAccount.HostName;
-            return View(list);
+            return View(result);
         }
 
         public ActionResult Delete(int id)

@@ -101,6 +101,6 @@ namespace Poco
         /// <summary>
         /// 业务字段，不会再数据库中生成
         /// </summary>
-        public DateTime SendTime { get; set; }
+        public string SendTime { get; set; }
     }
 }

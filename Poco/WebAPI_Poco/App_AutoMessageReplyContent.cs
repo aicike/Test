@@ -39,6 +39,6 @@ namespace Poco.WebAPI_Poco
         /// </summary>
         public int MsgID { get; set; }
 
-        public DateTime SendTime { get; set; }
+        public string SendTime { get; set; }
     }
 }

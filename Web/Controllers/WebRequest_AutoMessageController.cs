@@ -141,6 +141,7 @@ namespace Web.Controllers
 
             if (pushDetailList != null && pushDetailList.Count > 0)
             {
+                string dataFormat="yyyy-MM-dd hh:mm:ss";
                 foreach (var item in pushDetailList)
                 {
                     switch (item.PushMsg.EnumMessageType)
@@ -151,14 +152,14 @@ namespace Web.Controllers
                                 ID = 0,
                                 EnumMessageType = msgType_Text,
                                 TextReply = item.PushMsg.Text,
-                                SendTime=item.PushMsg.PushTime
+                                SendTime=item.PushMsg.PushTime.ToString(dataFormat)
                             });
                             break;
                         case (int)EnumMessageType.Image:
                             list.Add(new KeywordAutoMessage(){
                                 EnumMessageType = msgType_Image,
                                 MessageID=item.PushMsg.LibraryID.Value,
-                                SendTime=item.PushMsg.PushTime
+                                SendTime = item.PushMsg.PushTime.ToString(dataFormat)
                             });
                             break;
                         case (int)EnumMessageType.Voice:
@@ -166,7 +167,7 @@ namespace Web.Controllers
                             {
                                 EnumMessageType = msgType_Voice,
                                 MessageID = item.PushMsg.LibraryID.Value,
-                                SendTime = item.PushMsg.PushTime
+                                SendTime = item.PushMsg.PushTime.ToString(dataFormat)
                             });
                             break;
                         case (int)EnumMessageType.Video:
@@ -174,7 +175,7 @@ namespace Web.Controllers
                             {
                                 EnumMessageType = msgType_Video,
                                 MessageID = item.PushMsg.LibraryID.Value,
-                                SendTime = item.PushMsg.PushTime
+                                SendTime = item.PushMsg.PushTime.ToString(dataFormat)
                             });
                             break;
                         case (int)EnumMessageType.ImageText:
@@ -182,7 +183,7 @@ namespace Web.Controllers
                             {
                                 EnumMessageType = msgType_ImageText,
                                 MessageID = item.PushMsg.LibraryID.Value,
-                                SendTime = item.PushMsg.PushTime
+                                SendTime = item.PushMsg.PushTime.ToString(dataFormat)
                             });
                             break;
                     }

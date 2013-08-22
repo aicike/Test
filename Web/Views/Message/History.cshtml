@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "已发送";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    List<Poco.PushMsg> list = ViewBag.List as List<Poco.PushMsg>;
 }
 @section head{
     <script type="text/javascript">
@@ -30,9 +31,9 @@
                 操作
             </th>*@
         </tr>
-        @if (Model != null)
+        @if (list != null)
         {
-            foreach (var item in Model)
+            foreach (var item in list)
             {
             <tr>
                 <td align="left">
