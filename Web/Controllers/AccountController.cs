@@ -13,7 +13,7 @@ namespace Web.Controllers
 {
     public class AccountController : ManageAccountController
     {
-        public ActionResult Index(int? roleID, int? index)
+        public ActionResult Index( int? id,int? roleID)
         {
             //角色列表
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
@@ -36,7 +36,7 @@ namespace Web.Controllers
             {
                 accountList = accountAdminIquery;
             }
-            var pageList = accountList.ToPagedList(index ?? 1, 15);
+            var pageList = accountList.ToPagedList(id ?? 1, 15);
             ViewBag.RoleID = roleID.HasValue ? roleID.Value : 1;
             ViewBag.AccountAdminList = accountAdminIquery.ToList();
             ViewBag.HostName = LoginAccount.HostName;

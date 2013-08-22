@@ -47,10 +47,10 @@ namespace Web.Controllers
             return "window.location.href='" + Url.Action("Index", "Message", new { HostName = LoginAccount.HostName }) + "'";
         }
 
-        public ActionResult History(int? index)
+        public ActionResult History(int? id)
         {
             IPushMsgModel model = Factory.Get<IPushMsgModel>(SystemConst.IOC_Model.PushMsgModel);
-            var result = model.GetList(LoginAccount.CurrentAccountMainID, LoginAccount.ID).ToPagedList(index ?? 1, 15);
+            var result = model.GetList(LoginAccount.CurrentAccountMainID, LoginAccount.ID).ToPagedList(id ?? 1, 15);
             var list = GetMessageTitle(result.ToList());
             ViewBag.List = list;
             ViewBag.HostName = LoginAccount.HostName;

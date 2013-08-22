@@ -12,7 +12,7 @@ namespace Web.Controllers
 {
     public class UserManageController : ManageAccountController
     {
-        public ActionResult Index(int? groupID, int? index)
+        public ActionResult Index(int? id,int? groupID)
         {
             var groupModel = Factory.Get<IGroupModel>(SystemConst.IOC_Model.GroupModel);
             var groupList = groupModel.GetGroupListByAccountID(LoginAccount.ID, null);
@@ -24,7 +24,7 @@ namespace Web.Controllers
             ViewBag.HostName = LoginAccount.HostName;
             ViewBag.LoginAccountID = LoginAccount.ID;
             var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
-            var userList = userModel.GetUserByAccountID(LoginAccount.ID, groupID.Value).ToPagedList(index ?? 1, 15);
+            var userList = userModel.GetUserByAccountID(LoginAccount.ID, groupID.Value).ToPagedList(id ?? 1, 15);
             return View(userList);
         }
 

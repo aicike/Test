@@ -11,10 +11,10 @@ namespace Web.Controllers
 {
     public class LibraryTextController : LibraryController
     {
-        public ActionResult Index(int? index)
+        public ActionResult Index(int? id)
         {
             var libraryModel = Factory.Get<ILibraryTextModel>(SystemConst.IOC_Model.LibraryTextModel);
-            var list = libraryModel.GetLibraryList(LoginAccount.CurrentAccountMainID).ToPagedList(index ?? 1, 15);
+            var list = libraryModel.GetLibraryList(LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 15);
             ViewBag.LibraryType = LibraryType();
             ViewBag.HostName = LoginAccount.HostName;
             return View(list);
