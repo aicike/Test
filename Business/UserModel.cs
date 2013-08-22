@@ -15,7 +15,8 @@ namespace Business
     {
         public IQueryable<User> GetUserByAccountID(int accountID, int groupID)
         {
-            return List().Where(a => a.Account_Users.Any(b => b.AccountID == accountID && b.SystemStatus == (int)EnumSystemStatus.Active && b.GroupID == groupID));
+            var list= List().Where(a => a.Account_Users.Any(b => b.AccountID == accountID && b.SystemStatus == (int)EnumSystemStatus.Active && b.GroupID == groupID));
+            return list;
         }
 
         public new Result Add(User user)
