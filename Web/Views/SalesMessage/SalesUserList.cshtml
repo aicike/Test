@@ -1,0 +1,25 @@
+﻿@{
+    Layout = null;
+}
+
+
+
+@*
+<div class="pages" style="margin-top: 10px">
+    @Html.Pager(Model.TotalPageCount,Model.CurrentPageIndex, "Index", "SingleChat", new PagerOptions
+       {
+           PageIndexParameterName = "ID",
+           CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+           NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+           NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+           CssClass = "manage_pages pages",
+           SeparatorHtml = "&nbsp;",
+           AutoHide = false,
+           /*LastPageText = "Last",
+           FirstPageText = "First",
+           PrevPageText = "Back",
+           NextPageText = "Next",*/
+           PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+           ShowFirstLast = false
+       }, "User", new { HostName = ViewBag.HostName, id = ViewBag.ID }, null)
+</div>*@

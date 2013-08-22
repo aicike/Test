@@ -165,6 +165,7 @@
     <Compile Include="Controllers\BaseController\ManageSystemUserController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\LibraryTextController.cs" />
+    <Compile Include="Controllers\SalesMessageController.cs" />
     <Compile Include="Controllers\SetController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\SingleChatController.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="Models\MVCExpandMethod.cs" />
     <Compile Include="Models\NoClientCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Images\Start.png" />
     <Content Include="Images\Unread.png" />
     <Content Include="ueditor\net\Uploader.cs">
       <SubType>Code</SubType>
@@ -665,6 +667,11 @@
     <Content Include="Views\InstantMes\Index.cshtml" />
     <Content Include="Views\Account\Add.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Library\ImageManage.cshtml" />
+    <Content Include="Views\Library\VoiceManage.cshtml" />
+    <Content Include="Views\Library\VideoManage.cshtml" />
+    <Content Include="Views\SalesMessage\Index.cshtml" />
+    <Content Include="Views\SalesMessage\SalesUserList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
