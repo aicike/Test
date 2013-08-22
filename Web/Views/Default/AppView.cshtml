@@ -5,6 +5,8 @@
 @model Poco.LibraryImageText
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
     <style>
         .title
         {
@@ -14,9 +16,11 @@
     </style>
 </head>
 <body>
-    <div class="title">@Model.Title</div>
-    <div>
-        @Html.Raw(Model.Content)
+    <div class="main">
+        <div class="title">@Model.Title</div>
+        <div>
+            @Html.Raw(Model.Content)
+        </div>
     </div>
 </body>
 </html>
