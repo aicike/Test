@@ -8,6 +8,7 @@ using Injection;
 using Poco;
 using Controllers;
 using Business;
+using Poco.Enum;
 
 namespace Web.Controllers
 {
@@ -22,22 +23,26 @@ namespace Web.Controllers
             return View();
         }
 
-        public string SendText(string content, string type, string sendType, string uids)
+        public string SendText(int libraryID, string url, string content, string type, string sendType, string uids)
         {
             PushModel pushModel = new PushModel();
             Result result = null;
             switch (type)
             {
                 case "text":
-                    result = pushModel.Push_Text(content, sendType, LoginAccount.ID, uids, LoginAccount.CurrentAccountMainID);
+                    result = pushModel.Push(EnumMessageType.Text, null, null, content, sendType, LoginAccount.ID, uids, LoginAccount.CurrentAccountMainID);
                     break;
                 case "image":
+                    result = pushModel.Push(EnumMessageType.Image, libraryID, url, content, sendType, LoginAccount.ID, uids, LoginAccount.CurrentAccountMainID);
                     break;
                 case "voice":
+                    result = pushModel.Push(EnumMessageType.Voice, libraryID, url, content, sendType, LoginAccount.ID, uids, LoginAccount.CurrentAccountMainID);
                     break;
                 case "video":
+                    result = pushModel.Push(EnumMessageType.Video, libraryID, url, content, sendType, LoginAccount.ID, uids, LoginAccount.CurrentAccountMainID);
                     break;
                 case "imagetext":
+                    result = pushModel.Push(EnumMessageType.ImageText, libraryID, url, content, sendType, LoginAccount.ID, uids, LoginAccount.CurrentAccountMainID);
                     break;
             }
             if (result.HasError)

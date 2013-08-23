@@ -20,8 +20,11 @@ namespace Business
         {
         }
 
+        /// <summary>
+        /// 推送文字
+        /// </summary>
         [Transaction]
-        public Result Push_Text(string content, string receiveType, int accountID, string userIds, int accountMainID)
+        public Result Push(EnumMessageType msgType, int? libraryID, string url, string content, string receiveType, int accountID, string userIds, int accountMainID)
         {
             Result result = new Result();
             var iosModel = Factory.Get("Push_IOS") as IPushModel;
@@ -35,8 +38,29 @@ namespace Business
             //保存在数据库
             var pmModel = Factory.Get<IPushMsgModel>(SystemConst.IOC_Model.PushMsgModel);
             PushMsg pushMsg = new PushMsg();
-            pushMsg.Text = content;
-            pushMsg.EnumMessageType = (int)EnumMessageType.Text;
+            switch (msgType)
+            {
+                case EnumMessageType.Text:
+                    pushMsg.EnumMessageType = (int)msgType;
+                    pushMsg.Text = content;
+                    break;
+                case EnumMessageType.Image:
+                    pushMsg.EnumMessageType = (int)msgType;
+                    pushMsg.LibraryID = libraryID;
+                    break;
+                case EnumMessageType.Voice:
+                    pushMsg.EnumMessageType = (int)msgType;
+                    pushMsg.LibraryID = libraryID;
+                    break;
+                case EnumMessageType.Video:
+                    pushMsg.EnumMessageType = (int)msgType;
+                    pushMsg.LibraryID = libraryID;
+                    break;
+                case EnumMessageType.ImageText:
+                    pushMsg.EnumMessageType = (int)msgType;
+                    pushMsg.LibraryID = libraryID;
+                    break;
+            }
             pushMsg.PushTime = DateTime.Now;
             pushMsg.PushStatus = (int)EnumPushStatus.Success;
             if (receiveType == "all")
@@ -56,14 +80,51 @@ namespace Business
             }
 
             //封装消息
+            string hostUrl = SystemConst.WebUrl;
             List<App_AutoMessageReplyContent> pushMessage = new List<App_AutoMessageReplyContent>();
             App_AutoMessageReplyContent rep = new App_AutoMessageReplyContent();
-            rep.ID = 0;
-            rep.Type = (int)EnumMessageType.Text;
             rep.FileTitle = title;
-            rep.Content = content;
-            rep.EnumMsgModel = (int)EnumMsgModel.Push;
             rep.MsgID = pushMsg.ID;
+            rep.EnumMsgModel = (int)EnumMsgModel.Push;
+            rep.Type = (int)msgType;
+            rep.SendTime = pushMsg.PushTime.ToString("yyyy-MM-dd hh:mm:ss");
+            switch (msgType)
+            {
+                case EnumMessageType.Text:
+                    rep.ID = 0;
+                    rep.Content = content;
+                    break;
+                case EnumMessageType.Image:
+                case EnumMessageType.Voice:
+                case EnumMessageType.Video:
+                    rep.ID = libraryID.Value;
+                    rep.FileUrl = hostUrl + Url(url);
+                    rep.FileTitle = content;
+                    break;
+                case EnumMessageType.ImageText:
+                    var libraryImageTextModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
+                    var itext = libraryImageTextModel.Get(libraryID.Value);
+                    rep.ID = libraryID.Value;
+                    rep.FileTitle = itext.Title;
+                    rep.Summary = itext.Summary;
+                    rep.FileUrl = hostUrl + Url(itext.ImagePath);
+                    if (itext.LibraryImageTexts.Count > 0)
+                    {
+                        List<App_AutoMessageReplyContent> subImageText = new List<App_AutoMessageReplyContent>();
+                        foreach (var it in itext.LibraryImageTexts)
+                        {
+                            App_AutoMessageReplyContent rep_it = new App_AutoMessageReplyContent();
+                            rep_it.ID = it.ID;
+                            rep_it.Type = (int)EnumMessageType.ImageText;
+                            rep_it.FileTitle = it.Title;
+                            rep_it.FileUrl = hostUrl + Url(it.ImagePath);
+                            subImageText.Add(rep_it);
+                        }
+                        rep.SubContent = Newtonsoft.Json.JsonConvert.SerializeObject(subImageText);
+                    }
+                    rep.Content = itext.Content;
+                    break;
+            }
             pushMessage.Add(rep);
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(pushMessage);
 
@@ -79,6 +140,8 @@ namespace Business
             result = Push_Getui.SendMessage(message, PushIDInfo.Android);
             return result;
         }
+
+
 
         /// <summary>
         /// 获取clientids
@@ -128,6 +191,11 @@ namespace Business
             public string[] Android { get; set; }
             public string[] IOS { get; set; }
             public List<int> userIDs { get; set; }
+        }
+
+        private static string Url(string url)
+        {
+            return url.Replace("~", "");
         }
     }
 }

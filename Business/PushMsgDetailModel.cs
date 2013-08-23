@@ -38,7 +38,7 @@ namespace Business
         /// </summary>
         public void SetPushStatusToRead(int pushID, EnumClientUserType enumClientUserType, string clientID)
         {
-            string sql = String.Format("UPDATE dbo.PushMsgDetail SET ReceiveTime =GETDATE() , EnumReceiveStatus={0} WHERE PushMsgID={1} AND EnumClientUserType={2} AND ReceiveID=(SELECT EntityID FROM dbo.ClientInfo WHERE ClientID='{3}')",
+            string sql = String.Format("UPDATE dbo.PushMsgDetail SET ReceiveTime =GETDATE() , EnumReceiveStatus={0} WHERE PushMsgID={1} AND EnumClientUserType={2} AND ReceiveID in (SELECT EntityID FROM dbo.ClientInfo WHERE ClientID='{3}')",
                (int)EnumReceiveStatus.Receive, pushID, (int)enumClientUserType, clientID);
             var comModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
             comModel.SqlExecute(sql);
