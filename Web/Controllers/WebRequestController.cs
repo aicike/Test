@@ -16,10 +16,11 @@ namespace Web.Controllers
         /// 每次打开应用时，提交的clientID
         /// </summary>
         [HttpPost]
-        public void PostClientID(string clientID, int? userID)
+        public string PostClientID(string clientID,int accountMainID ,int? userID)
         {
             var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
-            clientInfoModel.PostClientID(clientID, userID);
+            var result = clientInfoModel.PostClientID(clientID, accountMainID, userID);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
         /// <summary>
@@ -74,6 +75,16 @@ namespace Web.Controllers
                 HName = a.HName
             }).ToList();
             return Newtonsoft.Json.JsonConvert.SerializeObject(list);
+        }
+
+        /// <summary>
+        /// 绑定User和Account
+        /// </summary>
+        public string BindUserAccount(int accountID,int userID)
+        {
+            var account_UserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
+            var result= account_UserModel.BindUser_Account(accountID, userID);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
     }
 }

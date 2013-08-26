@@ -7,6 +7,7 @@ using Injection;
 using Interface;
 using Poco.Enum;
 using Injection.Transaction;
+using Poco.WebAPI_Poco;
 
 namespace Business
 {
@@ -55,11 +56,14 @@ namespace Business
         //    }
         //    return resule;
         //}
-        public void PostClientID(string clientID, int? userID)
+
+        public Result PostClientID(string clientID,int accountMainID, int? userID)
         {
+            Result result = new Result();
             bool isHas = true;
             if (userID!=null&&userID.HasValue&&userID > 0)
             {
+                //和user表绑定
                 isHas = List().Any(a => a.ClientID == clientID && a.EntityID == userID);
 
                 if (isHas == false)
@@ -67,19 +71,29 @@ namespace Business
                     ClientInfo clientInfo = new ClientInfo();
                     clientInfo.ClientID = clientID;
                     clientInfo.EntityID = userID;
-                    var result = base.Add(clientInfo);
+                    result = base.Add(clientInfo);
                 }
             }
             else
             {
+                //保存clientID信息，临时注册
                 isHas = List().Any(a => a.ClientID == clientID);
                 if (isHas == false)
                 {
-                    ClientInfo clientInfo = new ClientInfo();
-                    clientInfo.ClientID = clientID;
-                    var result = base.Add(clientInfo);
+                    //添加UserLoginInfo,User,ClientInfo
+                    var ulim = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
+                    App_UserLoginInfo userloginInfo = new App_UserLoginInfo();
+                    userloginInfo.Email = "";
+                    userloginInfo.Pwd = "pass123!";
+                    userloginInfo.Name = "匿名";
+                    userloginInfo.AccountMainID = accountMainID;
+                    userloginInfo.ClientID = clientID;
+                    userloginInfo.EnumClientSystemType = (int)EnumClientSystemType.Android;
+                    userloginInfo.EnumClientUserType = (int)EnumClientUserType.User;
+                    result= ulim.Register(userloginInfo);
                 }
             }
+            return result;
         }
     }
 }

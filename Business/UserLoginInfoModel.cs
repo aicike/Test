@@ -19,16 +19,19 @@ namespace Business
         {
             Result result = new Result();
             //检查邮箱是否通过，是否可以注册
-            bool isExist = List().Any(a => a.Email.Equals(userLoginInfo.Email, StringComparison.CurrentCultureIgnoreCase));
-            if (isExist)
+            if (string.IsNullOrEmpty(userLoginInfo.Email) == false)
             {
-                result.Error = "该邮箱已存在,不能创建账号.";
-                return result;
+                bool isExist = List().Any(a => a.Email.Equals(userLoginInfo.Email, StringComparison.CurrentCultureIgnoreCase));
+                if (isExist)
+                {
+                    result.Error = "该邮箱已存在,不能创建账号.";
+                    return result;
+                }
             }
             //添加用户登录信息UserLoginInfo
             UserLoginInfo userlogin = new UserLoginInfo();
             userlogin.LoginPwd = DESEncrypt.Encrypt(userLoginInfo.Pwd);
-            userlogin.LoginPwdPage = "aaaaaa";
+            userlogin.LoginPwdPage = "000000";
             userlogin.Name = userLoginInfo.Name;
             userlogin.Email = userLoginInfo.Email;
             result = base.Add(userlogin);
@@ -51,16 +54,8 @@ namespace Business
             //添加用户和Account关系
             if (userLoginInfo.AccountID != null && userLoginInfo.AccountID.HasValue)
             {
-                var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-                var account = accountModel.Get(userLoginInfo.AccountID.Value);
-                var group = account.Groups.Where(a => a.IsDefaultGroup == true).FirstOrDefault();
-
                 var account_UserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
-                Account_User accountUser = new Account_User();
-                accountUser.AccountID = userLoginInfo.AccountID.Value;
-                accountUser.UserID = user.ID;
-                accountUser.GroupID = group.ID;
-                result = account_UserModel.Add(accountUser);
+                result= account_UserModel.BindUser_Account(userLoginInfo.AccountID.Value, user.ID);
             }
             if (result.HasError)
             {
@@ -98,6 +93,7 @@ namespace Business
                     return result;
                 }
             }
+            result.Entity = user.ID;
             return result;
         }
 

@@ -12,7 +12,11 @@ namespace Interface
     {
         Result ChangeGroup(int userID,int accountID, int groupID);
 
-
         bool ChickUserInAccount(int SID, int UID);
+
+        /// <summary>
+        /// 用户和Account关系绑定
+        /// </summary>
+        Result BindUser_Account(int accountID, int userID);
     }
 }

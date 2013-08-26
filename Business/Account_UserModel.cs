@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Poco;
 using Interface;
+using Injection;
 
 namespace Business
 {
@@ -37,6 +38,21 @@ namespace Business
             {
                 return true;
             }
+        }
+
+        /// <summary>
+        /// 用户和Account关系绑定
+        /// </summary>
+        public Result BindUser_Account(int accountID, int userID)
+        {
+            var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
+            var account = accountModel.Get(accountID);
+            var group = account.Groups.Where(a => a.IsDefaultGroup == true).FirstOrDefault();
+            Account_User accountUser = new Account_User();
+            accountUser.AccountID = accountID;
+            accountUser.UserID = userID;
+            accountUser.GroupID = group.ID;
+            return Add(accountUser);
         }
     }
 }

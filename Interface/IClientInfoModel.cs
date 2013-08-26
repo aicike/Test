@@ -9,6 +9,6 @@ namespace Interface
 {
     public interface IClientInfoModel : IBaseModel<ClientInfo>
     {
-        void PostClientID(string clientID, int? userID);
+        Result PostClientID(string clientID, int accountMainID, int? userID);
     }
 }
