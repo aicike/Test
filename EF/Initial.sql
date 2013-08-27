@@ -363,18 +363,18 @@ SET IDENTITY_INSERT [dbo].[RoleOption] OFF
 
 ------------------------------[UserLoginInfo]---------------------------------
 SET IDENTITY_INSERT [dbo].[UserLoginInfo] ON
-INSERT [dbo].[UserLoginInfo] ([ID], [SystemStatus], [Name], [Email], [LoginPwd]) VALUES (1, 0, N'wushuangqi', N'd537@163.com', N'8ZjHBEPwxeqwCrxssgd2cQ==')
+--INSERT [dbo].[UserLoginInfo] ([ID], [SystemStatus], [Name], [Email], [LoginPwd]) VALUES (1, 0, N'wushuangqi', N'd537@163.com', N'8ZjHBEPwxeqwCrxssgd2cQ==')
 SET IDENTITY_INSERT [dbo].[UserLoginInfo] OFF
 ------------------------------[User]---------------------------------
 SET IDENTITY_INSERT [dbo].[User] ON
-INSERT [dbo].[User] ([ID], [SystemStatus], [Name], [Address], [Phone], [HeadImagePath], [AccountStatusID], [IdentityCard], [AccountMainID],UserLoginInfoID) VALUES (1, 0, N'武双琦', NULL, NULL, '', 1, NULL, 1,1)
+--[ID], [SystemStatus], [Name], [Address], [Phone], [HeadImagePath], [AccountStatusID], [IdentityCard], [AccountMainID],UserLoginInfoID) VALUES (1, 0, N'武双琦', NULL, NULL, '', 1, NULL, 1,1)
 SET IDENTITY_INSERT [dbo].[User] OFF
 ------------------------------[ClientInfo]---------------------------------
 SET IDENTITY_INSERT [dbo].[ClientInfo] ON
-INSERT [dbo].[ClientInfo] ([ID], [SystemStatus], [IMEI], [EnumClientSystemTypeID], [SetupTiem], [EnumClientUserTypeID], [Tag],[ClientID], [EntityID]) VALUES (1, 0, NULL, 10, CAST(0x0000A1FE00000000 AS DateTime), 16, NULL,'03b2ac5b2c55619f7c29f87eabff771f', 1)
+--INSERT [dbo].[ClientInfo] ([ID], [SystemStatus], [IMEI], [EnumClientSystemTypeID], [SetupTiem], [EnumClientUserTypeID], [Tag],[ClientID], [EntityID]) VALUES (1, 0, NULL, 10, CAST(0x0000A1FE00000000 AS DateTime), 16, NULL,'03b2ac5b2c55619f7c29f87eabff771f', 1)
 SET IDENTITY_INSERT [dbo].[ClientInfo] OFF
 ------------------------------[Account_User]---------------------------------
-INSERT INTO dbo.Account_User( SystemStatus, AccountID, UserID,GroupID ) VALUES  ( 0,1,1,1)
+--INSERT INTO dbo.Account_User( SystemStatus, AccountID, UserID,GroupID ) VALUES  ( 0,1,1,1)
 
 ------------------------------Other---------------------------------
 CREATE INDEX IX_HostName ON AccountMain (HostName)
