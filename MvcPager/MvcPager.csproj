@@ -49,7 +49,6 @@
     <Compile Include="Webdiyer\WebControls\Mvc\PagedList!1.cs" />
     <Compile Include="Webdiyer\WebControls\Mvc\PageIndexBoxType.cs" />
     <Compile Include="Webdiyer\WebControls\Mvc\PageLinqExtensions.cs" />
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Webdiyer\WebControls\Mvc\PagerBuilder.cs" />
     <Compile Include="Webdiyer\WebControls\Mvc\PagerHelper.cs" />
     <Compile Include="Webdiyer\WebControls\Mvc\PagerItem.cs" />

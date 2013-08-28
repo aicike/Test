@@ -156,6 +156,8 @@
     <ul class="ulList" id="ulGroup">
         <li><a href="@Url.Action("Index", "InstantMes", new { HostName = ViewBag.HostName })">
             销售消息 </a></li>
+        <li>@Html.ActionLink("销售与客户管理", "Index", "SalesMessage", new { HostName = ViewBag.HostName }, null, true)
+        </li>
         <li style="height: 10px; background-color: #f0f0f0; border-bottom: 1px solid #d3d3d3;
             border-top: 1px solid #d3d3d3"></li>
         @foreach (var item in groupList)
@@ -193,7 +195,7 @@
 <div class="bodyRight">
     <div class="option">
     </div>
-    <table class="tableList" cellpadding="0" cellspacing="0">
+    <table class="tableList" style="line-height: 25px" cellpadding="0" cellspacing="0">
         <tr>
             @*<th style="width: 80px;">
                 <input type="checkbox" />全选
@@ -228,13 +230,19 @@
                         <img id="imgLogo" style="max-width:80px;max-height:80px;"
                 src="@Url.Content(item.HeadImagePath)" />
                     }
+                    else
+                    { 
+                        <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
+                            
+                    }
                 </td>
                 <td>
-                   <a  href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.ID })" target="_blank"> @item.UserLoginInfo.Name
-                    @if (string.IsNullOrEmpty(item.Name) == false)
-                    {
-                        @:(@item.Name)
-                    }
+                    <a  href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.ID })" target="_blank">
+                        @item.UserLoginInfo.Name
+                        @if (string.IsNullOrEmpty(item.Name) == false)
+                        {
+                            @:(@item.Name)
+                                                                    }
                     </a>
                 </td>
                 <td>
@@ -243,7 +251,7 @@
                 <td>
                     <select>
                         @{
-                    int rawGroupID = 0;
+                        int rawGroupID = 0;
                         }
                         @foreach (var groupItem in groupList)
                         {
@@ -264,6 +272,9 @@
                 <td class="operation">
                     @Html.ActionLink("详细", "ViewUser", "UserManage", new { HostName = hostName, userID = item.ID }, null)
                     @Html.ActionLink("修改", "EditUser", "UserManage", new { HostName = hostName, userID = item.ID }, null)
+                    <br />
+                    <a href="@Url.Action("HistoryMes", "SingleChat", new { HostName = hostName, userID = item.ID })" style=" margin-left:-5px" target="_blank" title="该用户与之前的销售代表聊天记录">
+                        聊天历史</a>
                 </td>
             </tr>
             }

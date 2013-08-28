@@ -14,5 +14,14 @@ namespace Interface
 
 
         bool ChickUserInAccount(int SID, int UID);
+
+        /// <summary>
+        /// 修改用户所属的销售代表
+        /// </summary>
+        /// <param name="userID">用户ID</param>
+        /// <param name="AmiAccountID">目标代表ID</param>
+        /// <param name="groupID">目标代表默认分组</param>
+        /// <returns></returns>
+        int UpdUserTooAccount(int userID, int AmiAccountID, int groupID);
     }
 }

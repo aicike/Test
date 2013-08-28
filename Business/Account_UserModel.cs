@@ -28,15 +28,16 @@ namespace Business
         /// <returns></returns>
         public bool ChickUserInAccount(int SID, int UID)
         {
-            var axcountUser = List().Where(a => a.AccountID == SID && a.UserID == UID);
-            if (axcountUser == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            var axcountUser = List().Any(a => a.AccountID == SID && a.UserID == UID);
+            return axcountUser;
         }
+
+        public int UpdUserTooAccount(int userID,int AmiAccountID,int groupID)
+        {
+            string sql = string.Format("update Account_User set AccountID={0},GroupID={1} where UserID = {2}", AmiAccountID, groupID, userID);
+
+            return base.SqlExecute(sql);
+        }
+
     }
 }

@@ -1,7 +1,6 @@
 ﻿@{
     Layout = null;
 }
-
 @model PagedList<Poco.Message>
 @foreach (var item in Model)
 {
@@ -13,12 +12,22 @@
                 { 
                 <img id="imgUHead" style="max-width: 50px; max-height: 50px;" src="@Url.Content(item.FromAccount.HeadImagePath)" />
                 }
+                else
+                { 
+                <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
+                            
+                }
             }
             else if (item.EnumMessageSendDirectionID == (int)Poco.Enum.EnumMessageSendDirection.User_Account)
             {
                 if (!string.IsNullOrEmpty(item.FromUser.UserLoginInfo.HeadImagePath))
                 { 
                 <img id="imgUHead" style="max-width: 50px; max-height: 50px;" src="@Url.Content(item.FromUser.UserLoginInfo.HeadImagePath)" />
+                }
+                else
+                { 
+                <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
+                            
                 }
             }
         </div>
@@ -37,7 +46,7 @@
                     else
                     { 
                     @item.FromUser.Name @:(@item.FromUser.UserLoginInfo.Name)
-                                                                    }
+                                                                                    }
                 }
             </div>
             <div style="margin-top: 10px; width: 510px; word-wrap: break-word; word-break: normal;">
@@ -56,18 +65,26 @@
                 {
                     <table cellpadding="0" cellspacing="0" border="0">
                         <tr>
-                            <td width="35px"><img id="VoiceYL"  onclick="ShowMessage('2','@Url.Content(item.FileUrl)',this)" width="32px" src="~/Images/Start.png" title="点击播放" style=" cursor:pointer" /></td>
-                             <td>[点击播放语音]</td>
+                            <td width="35px">
+                                <img id="VoiceYL"  onclick="ShowMessage('2','@Url.Content(item.FileUrl)',this)" width="32px" src="~/Images/Start.png" title="点击播放" style=" cursor:pointer" />
+                            </td>
+                            <td>
+                                [点击播放语音]
+                            </td>
                         </tr>
                     </table> 
                     
                 }
                 else if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Video)
                 {
-                     <table cellpadding="0" cellspacing="0" border="0">
+                    <table cellpadding="0" cellspacing="0" border="0">
                         <tr>
-                            <td width="35px"><img id="VoiceYL"  onclick="ShowMessage('3','@Url.Content(item.FileUrl)')" width="32px" src="~/Images/Start.png" title="点击播放" style=" cursor:pointer" /></td>
-                             <td>[点击播放视频]</td>
+                            <td width="35px">
+                                <img id="VoiceYL"  onclick="ShowMessage('3','@Url.Content(item.FileUrl)')" width="32px" src="~/Images/Start.png" title="点击播放" style=" cursor:pointer" />
+                            </td>
+                            <td>
+                                [点击播放视频]
+                            </td>
                         </tr>
                     </table> 
                 }
@@ -82,7 +99,7 @@
     </div>
 }
 <div class="pages" style="margin-top: 10px">
-    @Html.Pager(Model.TotalPageCount,Model.CurrentPageIndex, "Index", "SingleChat", new PagerOptions
+    @Html.Pager(Model.TotalPageCount, Model.CurrentPageIndex, "Index", "SingleChat", new PagerOptions
        {
            PageIndexParameterName = "ID",
            CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",

@@ -23,6 +23,19 @@ namespace Business
             return list;
         }
 
+
+        /// <summary>
+        /// 查询历史消息
+        /// </summary>
+        /// <param name="SID">售楼部用户id</param>
+        /// <param name="UID">当前用户id</param>
+        /// <returns></returns>
+        public IQueryable<Message> GetHistoryList(int SID, int UID)
+        {
+            var list = List().Where(a => (a.FromAccountID != SID && a.FromAccountID != null && a.ToUserID == UID) || (a.ToAccountID == SID && a.FromUserID != UID && a.FromUserID != null)).OrderByDescending(a => a.SendTime);
+            return list;
+        }
+
         /// <summary>
         /// 修改聊天状态 并删除未读记录
         /// </summary>
