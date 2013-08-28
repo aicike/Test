@@ -59,6 +59,10 @@ namespace Poco
         [Display(Name="文件路径")]
         public string FileUrl { get; set; }
 
+        [Display(Name = "图文ID")]
+        public int? LibraryImageTextsID { get; set; }
+        public virtual LibraryImageText LibraryImageTexts { get; set; } 
+
         public virtual ICollection<PendingMessages> PendingMessages { get; set; }
     }
 }

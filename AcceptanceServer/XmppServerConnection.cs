@@ -15,6 +15,7 @@ using Poco.Enum;
 using AcceptanceServer.DataOperate;
 using AcceptanceServer.DataBllOperate;
 using System.Data;
+using System.Threading.Tasks;
 
 
 
@@ -30,7 +31,7 @@ namespace AcceptanceServer
         private byte[] buffer = new byte[BUFFERSIZE];
         private lbUser frm;
         public Jid jid;
-        public string LandingApproach="";
+        public string LandingApproach = "";
         public delegate void mydelegate(string str);
 
         #endregion
@@ -156,24 +157,25 @@ namespace AcceptanceServer
             {
                 Presence pres = e as Presence;
                 //处理用户上线消息
-                if (pres.Show == ShowType.chat && pres.Type == PresenceType.available)
+                if (pres.Show == ShowType.chat && pres.Type == PresenceType.available)//pres.Show == ShowType.chat &&
                 {
-                   
-
+                    //显示当前谁上线了
                     frm.Invoke(new dosomethings(delegate()
                     {
                         frm.ShowOlineUser(jid.User, jid.Bare + "||" + jid.Server);
                     }));
 
-                    pres.From = this.jid;
-                    foreach (XmppServerConnection con in OnlineUser.onlinuser)
-                    {
-                        if (con.jid.User != this.jid.User)
-                        {
-                            pres.To = con.jid;
-                            con.Send(pres);
-                        }
-                    }
+                   
+                    ////暂时屏蔽
+                    //pres.From = this.jid;
+                    //foreach (XmppServerConnection con in OnlineUser.onlinuser)
+                    //{
+                    //    if (con.jid.User != this.jid.User)
+                    //    {
+                    //        pres.To = con.jid;
+                    //        con.Send(pres);
+                    //    }
+                    //}
                 }
                 //处理好友离线消息
                 else if (pres.Type == PresenceType.unavailable)
@@ -219,9 +221,16 @@ namespace AcceptanceServer
                             if (OnlineUser.onlinuser.Any(a => a.jid.User == msg.To.User))
                             {
                                 //转发发送消息
-                                XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList()[0];
+                                IEnumerable<XmppServerConnection> cons =  OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
+                                //XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
+
                                 msg.From = jid;
-                                con.Send(msg);
+                                foreach (XmppServerConnection con in cons)
+                                {
+                                    con.Send(msg);
+                                }
+                               
+                                
                                 //frm.ShowMesage(msg.From.User + " 对 " + msg.To.User + " 发送信息 \r" + msg.Body);
                             }
                             //不在线
@@ -240,11 +249,10 @@ namespace AcceptanceServer
                         }
                     }
                     //状态
-                    else
-                    { 
-                    
-                    }
+                    else if (Np.MT == "2")
+                    {
 
+                    }
 
 
                 }
@@ -268,7 +276,7 @@ namespace AcceptanceServer
                     case IqType.get:
                         iq.SwitchDirection();
                         iq.Type = IqType.result;
-                        auth.AddChild(new Element("password"));
+                        auth.AddChild(new Element("Password"));
                         auth.AddChild(new Element("digest"));
                         Send(iq);
                         break;
@@ -288,6 +296,37 @@ namespace AcceptanceServer
                         //    //frm.listBox2.Items.Add(auth.Username);
                         //}));
 
+                        //刚刚登陆获取未读消息
+                        Task t = new Task(() =>
+                        {
+                            //售楼代表s；用户u
+                            string AoU = jid.User.Substring(0, 1);
+                            //ID
+                            string AoUID = jid.User.Substring(1);
+                            XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == jid.User).ToList()[0];
+
+                            agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message();
+                            msg.Type = MessageType.chat;
+                            msg.From = jid;
+                            msg.To = new Jid(jid.User, "localhost", jid.User);
+
+                            NewsProtocol np = new NewsProtocol();
+                            np.MT = "3";//未读消息
+
+                            List<UnreadMessage> UMlist = DataBusiness.GetUnreadMessage(AoU, AoUID);
+
+                            try
+                            {
+                                msg.Body = UMlist.ObjectToJson();
+
+                                con.Send(msg);
+                            }
+                            catch { }
+
+
+                        });
+                        //t.Start();
+
                         iq.SwitchDirection();
                         iq.Type = IqType.result;
                         iq.Query = null;
@@ -299,7 +338,7 @@ namespace AcceptanceServer
             else if (iq.Query.GetType() == typeof(Roster))
             {
                 //发送用户列表
-                ProcessRosterIQ(iq);
+                //ProcessRosterIQ(iq);
 
             }
 

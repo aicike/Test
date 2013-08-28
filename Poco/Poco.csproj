@@ -68,6 +68,7 @@
     <Compile Include="PushMsg.cs" />
     <Compile Include="PushMsgDetail.cs" />
     <Compile Include="TemporayInstantMes.cs" />
+    <Compile Include="UnreadMessage.cs" />
     <Compile Include="Validation\AllowCheckPermissionsAttribute.cs" />
     <Compile Include="AppUpdate.cs" />
     <Compile Include="WebAPI_Poco\App_Account.cs" />

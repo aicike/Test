@@ -163,12 +163,12 @@ namespace AcceptanceServer
         //显示在线用户
         public void ShowOlineUser(string name,string other)
         {
-            //DataRow row = OlineUserDt.NewRow();
-            //row["UName"] = name;
-            //row["other"] = other;
-            //OlineUserDt.Rows.Add(row);
+            DataRow row = OlineUserDt.NewRow();
+            row["UName"] = name;
+            row["other"] = other;
+            OlineUserDt.Rows.Add(row);
 
-            //dgUser.DataSource = OlineUserDt;
+            dgUser.DataSource = OlineUserDt;
         }
 
 

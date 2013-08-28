@@ -41,5 +41,9 @@ namespace Poco
         public int AccountMainID { get; set; }
 
         public virtual AccountMain AccountMain { get; set; }
+
+        public virtual ICollection<Message> Messages { get; set; }
+
+        public virtual ICollection<PendingMessages> PendingMessagess { get; set; }
     }
 }

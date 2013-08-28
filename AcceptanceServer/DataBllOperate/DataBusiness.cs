@@ -22,6 +22,11 @@ namespace AcceptanceServer.DataBllOperate
             Pmg.TextContent = msg.Body;
             Pmg.EnumMessageTypeID = int.Parse(Np.EID);
             Pmg.FileUrl = Np.FielUrl;
+            Pmg.LibraryImageTextsID = null;
+            if(Np.ImgTextID != null)
+            {
+                Pmg.LibraryImageTextsID = int.Parse(Np.ImgTextID);
+            }
             //售楼人员对购房者发送消息
             if (Np.MSD == ((int)EnumMessageSendDirection.Account_User).ToString())
             {
@@ -57,6 +62,11 @@ namespace AcceptanceServer.DataBllOperate
             pm.Content = msg.Body;
             pm.FileUrl = Np.FielUrl;
             pm.EnumMessageTypeID = int.Parse(Np.EID);
+            pm.LibraryImageTextsID = null;
+            if (Np.ImgTextID != null)
+            {
+                pm.LibraryImageTextsID = int.Parse(Np.ImgTextID);
+            }
             //售楼人员对购房者发送消息
             if (Np.MSD == ((int)EnumMessageSendDirection.Account_User).ToString())
             {
@@ -78,5 +88,40 @@ namespace AcceptanceServer.DataBllOperate
 
             return DataHandle.InsertOffLineData(pm); //存储
         }
+
+        /// <summary>
+        /// 获取未读消息
+        /// </summary>
+        /// <param name="AoU"></param>
+        /// <param name="AoUID"></param>
+        /// <returns></returns>
+        public static List<UnreadMessage> GetUnreadMessage(string AoU, string AoUID)
+        {
+            List<UnreadMessage> UMlist = new List<UnreadMessage>();
+            DataTable dt = DataHandle.GetUnreadMessage(AoU,AoUID).Tables[0];
+            foreach (DataRow row in dt.Rows)
+            {
+                UnreadMessage um = new UnreadMessage();
+                if (AoU == "u")
+                {
+                    um.FromAccountID = row["FromAccountID"].ToString();
+                    um.FromUserID = "";
+                }
+                else
+                {
+                    um.FromAccountID = "";
+                    um.FromUserID = row["fromUserID"].ToString();
+                }
+                um.Content = row["Content"].ToString();
+                um.EID = row["EID"].ToString();
+                um.SendTime = row["SendTime"].ToString();
+                um.SendCnt = row["cnt"].ToString();
+
+                UMlist.Add(um);
+            }
+
+            return UMlist;
+        }
+
     }
 }

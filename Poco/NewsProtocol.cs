@@ -15,7 +15,7 @@ namespace Poco
         }
 
         /// <summary>
-        /// 消息方向
+        /// 消息方向 0:售楼代表对用户  1：用户对售楼代表  2：售楼代表对售楼代表  3：用户对用户
         /// </summary>
         public string MSD
         {
@@ -24,7 +24,7 @@ namespace Poco
         }
 
         /// <summary>
-        /// 消息类别 1 消息，2状态
+        /// 消息类别 1 消息，2状态, 3未读消息
         /// </summary>
         public string MT
         {
@@ -48,6 +48,15 @@ namespace Poco
         {
             get { return GetTag("fileurl"); }
             set { SetTag("fileurl", value); }
+        }
+
+        /// <summary>
+        /// 图文ID
+        /// </summary>
+        public string ImgTextID
+        {
+            get { return GetTag("imgtextid"); }
+            set { SetTag("imgtextid", value); }
         }
     }
 }

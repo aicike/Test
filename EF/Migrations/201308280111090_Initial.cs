@@ -370,6 +370,159 @@ namespace EF.Migrations
                 .Index(t => t.AccountMainID);
             
             CreateTable(
+                "dbo.Message",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        TextContent = c.String(nullable: false),
+                        EnumMessageSendDirectionID = c.Int(nullable: false),
+                        EnumMessageTypeID = c.Int(nullable: false),
+                        FromAccountID = c.Int(),
+                        FromUserID = c.Int(),
+                        ToAccountID = c.Int(),
+                        ToUserID = c.Int(),
+                        SendTime = c.DateTime(nullable: false),
+                        IsReceive = c.Boolean(nullable: false),
+                        ReceiveTime = c.DateTime(nullable: false),
+                        FileUrl = c.String(),
+                        LibraryImageTextsID = c.Int(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Account", t => t.FromAccountID)
+                .ForeignKey("dbo.User", t => t.FromUserID)
+                .ForeignKey("dbo.Account", t => t.ToAccountID)
+                .ForeignKey("dbo.User", t => t.ToUserID)
+                .ForeignKey("dbo.LibraryImageText", t => t.LibraryImageTextsID)
+                .Index(t => t.FromAccountID)
+                .Index(t => t.FromUserID)
+                .Index(t => t.ToAccountID)
+                .Index(t => t.ToUserID)
+                .Index(t => t.LibraryImageTextsID);
+            
+            CreateTable(
+                "dbo.User",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        Name = c.String(maxLength: 10),
+                        Phone = c.String(maxLength: 20),
+                        AccountStatusID = c.Int(nullable: false),
+                        IdentityCard = c.String(maxLength: 30),
+                        AccountMainID = c.Int(nullable: false),
+                        UserLoginInfoID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.LookupOption", t => t.AccountStatusID)
+                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
+                .ForeignKey("dbo.UserLoginInfo", t => t.UserLoginInfoID)
+                .Index(t => t.AccountStatusID)
+                .Index(t => t.AccountMainID)
+                .Index(t => t.UserLoginInfoID);
+            
+            CreateTable(
+                "dbo.UserLoginInfo",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        Name = c.String(nullable: false, maxLength: 10),
+                        Address = c.String(maxLength: 50),
+                        Phone = c.String(maxLength: 20),
+                        HeadImagePath = c.String(maxLength: 500),
+                        IdentityCard = c.String(maxLength: 30),
+                        Email = c.String(maxLength: 50),
+                        LoginPwd = c.String(nullable: false, maxLength: 100),
+                    })
+                .PrimaryKey(t => t.ID);
+            
+            CreateTable(
+                "dbo.SystemMessage",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        Message = c.String(nullable: false, maxLength: 500),
+                        SendDate = c.DateTime(nullable: false),
+                        AccountID = c.Int(nullable: false),
+                        UserID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Account", t => t.AccountID)
+                .ForeignKey("dbo.User", t => t.UserID)
+                .Index(t => t.AccountID)
+                .Index(t => t.UserID);
+            
+            CreateTable(
+                "dbo.Account_User",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        AccountID = c.Int(nullable: false),
+                        UserID = c.Int(nullable: false),
+                        GroupID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Account", t => t.AccountID)
+                .ForeignKey("dbo.User", t => t.UserID)
+                .ForeignKey("dbo.Group", t => t.GroupID)
+                .Index(t => t.AccountID)
+                .Index(t => t.UserID)
+                .Index(t => t.GroupID);
+            
+            CreateTable(
+                "dbo.Group",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        GroupName = c.String(nullable: false, maxLength: 20),
+                        AccountID = c.Int(nullable: false),
+                        AccountMainID = c.Int(nullable: false),
+                        IsDefaultGroup = c.Boolean(nullable: false),
+                        IsCanDelete = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Account", t => t.AccountID)
+                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
+                .Index(t => t.AccountID)
+                .Index(t => t.AccountMainID);
+            
+            CreateTable(
+                "dbo.PendingMessages",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        MSD = c.String(),
+                        EnumMessageTypeID = c.Int(nullable: false),
+                        FromAccountID = c.Int(),
+                        FromUserID = c.Int(),
+                        ToAccountID = c.Int(),
+                        ToUserID = c.Int(),
+                        SendTime = c.DateTime(nullable: false),
+                        Content = c.String(),
+                        FileUrl = c.String(),
+                        MessageID = c.Int(nullable: false),
+                        LibraryImageTextsID = c.Int(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Account", t => t.FromAccountID)
+                .ForeignKey("dbo.User", t => t.FromUserID)
+                .ForeignKey("dbo.Account", t => t.ToAccountID)
+                .ForeignKey("dbo.User", t => t.ToUserID)
+                .ForeignKey("dbo.Message", t => t.MessageID)
+                .ForeignKey("dbo.LibraryImageText", t => t.LibraryImageTextsID)
+                .Index(t => t.FromAccountID)
+                .Index(t => t.FromUserID)
+                .Index(t => t.ToAccountID)
+                .Index(t => t.ToUserID)
+                .Index(t => t.MessageID)
+                .Index(t => t.LibraryImageTextsID);
+            
+            CreateTable(
                 "dbo.LibraryImage",
                 c => new
                     {
@@ -558,156 +711,6 @@ namespace EF.Migrations
                 .Index(t => t.AutoMessage_KeywordID);
             
             CreateTable(
-                "dbo.Group",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        SystemStatus = c.Int(nullable: false),
-                        GroupName = c.String(nullable: false, maxLength: 20),
-                        AccountID = c.Int(nullable: false),
-                        AccountMainID = c.Int(nullable: false),
-                        IsDefaultGroup = c.Boolean(nullable: false),
-                        IsCanDelete = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Account", t => t.AccountID)
-                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
-                .Index(t => t.AccountID)
-                .Index(t => t.AccountMainID);
-            
-            CreateTable(
-                "dbo.Account_User",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        SystemStatus = c.Int(nullable: false),
-                        AccountID = c.Int(nullable: false),
-                        UserID = c.Int(nullable: false),
-                        GroupID = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Account", t => t.AccountID)
-                .ForeignKey("dbo.User", t => t.UserID)
-                .ForeignKey("dbo.Group", t => t.GroupID)
-                .Index(t => t.AccountID)
-                .Index(t => t.UserID)
-                .Index(t => t.GroupID);
-            
-            CreateTable(
-                "dbo.User",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        SystemStatus = c.Int(nullable: false),
-                        Name = c.String(maxLength: 10),
-                        Address = c.String(maxLength: 50),
-                        Phone = c.String(maxLength: 20),
-                        HeadImagePath = c.String(maxLength: 500),
-                        Email = c.String(maxLength: 50),
-                        AccountStatusID = c.Int(nullable: false),
-                        IdentityCard = c.String(maxLength: 30),
-                        AccountMainID = c.Int(nullable: false),
-                        UserLoginInfoID = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.LookupOption", t => t.AccountStatusID)
-                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
-                .ForeignKey("dbo.UserLoginInfo", t => t.UserLoginInfoID)
-                .Index(t => t.AccountStatusID)
-                .Index(t => t.AccountMainID)
-                .Index(t => t.UserLoginInfoID);
-            
-            CreateTable(
-                "dbo.UserLoginInfo",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        SystemStatus = c.Int(nullable: false),
-                        Name = c.String(nullable: false, maxLength: 10),
-                        Address = c.String(maxLength: 50),
-                        Phone = c.String(maxLength: 20),
-                        HeadImagePath = c.String(maxLength: 500),
-                        IdentityCard = c.String(maxLength: 30),
-                        Email = c.String(maxLength: 50),
-                        LoginPwd = c.String(nullable: false, maxLength: 100),
-                    })
-                .PrimaryKey(t => t.ID);
-            
-            CreateTable(
-                "dbo.SystemMessage",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        SystemStatus = c.Int(nullable: false),
-                        Message = c.String(nullable: false, maxLength: 500),
-                        SendDate = c.DateTime(nullable: false),
-                        AccountID = c.Int(nullable: false),
-                        UserID = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Account", t => t.AccountID)
-                .ForeignKey("dbo.User", t => t.UserID)
-                .Index(t => t.AccountID)
-                .Index(t => t.UserID);
-            
-            CreateTable(
-                "dbo.Message",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        SystemStatus = c.Int(nullable: false),
-                        TextContent = c.String(nullable: false),
-                        EnumMessageSendDirectionID = c.Int(nullable: false),
-                        EnumMessageTypeID = c.Int(nullable: false),
-                        FromAccountID = c.Int(),
-                        FromUserID = c.Int(),
-                        ToAccountID = c.Int(),
-                        ToUserID = c.Int(),
-                        SendTime = c.DateTime(nullable: false),
-                        IsReceive = c.Boolean(nullable: false),
-                        ReceiveTime = c.DateTime(nullable: false),
-                        FileUrl = c.String(),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Account", t => t.FromAccountID)
-                .ForeignKey("dbo.User", t => t.FromUserID)
-                .ForeignKey("dbo.Account", t => t.ToAccountID)
-                .ForeignKey("dbo.User", t => t.ToUserID)
-                .Index(t => t.FromAccountID)
-                .Index(t => t.FromUserID)
-                .Index(t => t.ToAccountID)
-                .Index(t => t.ToUserID);
-            
-            CreateTable(
-                "dbo.PendingMessages",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        SystemStatus = c.Int(nullable: false),
-                        MSD = c.String(),
-                        EnumMessageTypeID = c.Int(nullable: false),
-                        FromAccountID = c.Int(),
-                        FromUserID = c.Int(),
-                        ToAccountID = c.Int(),
-                        ToUserID = c.Int(),
-                        SendTime = c.DateTime(nullable: false),
-                        Content = c.String(),
-                        FileUrl = c.String(),
-                        MessageID = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Account", t => t.FromAccountID)
-                .ForeignKey("dbo.User", t => t.FromUserID)
-                .ForeignKey("dbo.Account", t => t.ToAccountID)
-                .ForeignKey("dbo.User", t => t.ToUserID)
-                .ForeignKey("dbo.Message", t => t.MessageID)
-                .Index(t => t.FromAccountID)
-                .Index(t => t.FromUserID)
-                .Index(t => t.ToAccountID)
-                .Index(t => t.ToUserID)
-                .Index(t => t.MessageID);
-            
-            CreateTable(
                 "dbo.Account_AccountMain",
                 c => new
                     {
@@ -846,25 +849,6 @@ namespace EF.Migrations
             DropIndex("dbo.PushMsg", new[] { "AccountMainID" });
             DropIndex("dbo.Account_AccountMain", new[] { "AccountMainID" });
             DropIndex("dbo.Account_AccountMain", new[] { "AccountID" });
-            DropIndex("dbo.PendingMessages", new[] { "MessageID" });
-            DropIndex("dbo.PendingMessages", new[] { "ToUserID" });
-            DropIndex("dbo.PendingMessages", new[] { "ToAccountID" });
-            DropIndex("dbo.PendingMessages", new[] { "FromUserID" });
-            DropIndex("dbo.PendingMessages", new[] { "FromAccountID" });
-            DropIndex("dbo.Message", new[] { "ToUserID" });
-            DropIndex("dbo.Message", new[] { "ToAccountID" });
-            DropIndex("dbo.Message", new[] { "FromUserID" });
-            DropIndex("dbo.Message", new[] { "FromAccountID" });
-            DropIndex("dbo.SystemMessage", new[] { "UserID" });
-            DropIndex("dbo.SystemMessage", new[] { "AccountID" });
-            DropIndex("dbo.User", new[] { "UserLoginInfoID" });
-            DropIndex("dbo.User", new[] { "AccountMainID" });
-            DropIndex("dbo.User", new[] { "AccountStatusID" });
-            DropIndex("dbo.Account_User", new[] { "GroupID" });
-            DropIndex("dbo.Account_User", new[] { "UserID" });
-            DropIndex("dbo.Account_User", new[] { "AccountID" });
-            DropIndex("dbo.Group", new[] { "AccountMainID" });
-            DropIndex("dbo.Group", new[] { "AccountID" });
             DropIndex("dbo.KeywordAutoMessage", new[] { "AutoMessage_KeywordID" });
             DropIndex("dbo.KeywordAutoMessage", new[] { "EnumMessageTypeID" });
             DropIndex("dbo.Keyword", new[] { "AutoMessage_KeywordID" });
@@ -881,6 +865,27 @@ namespace EF.Migrations
             DropIndex("dbo.AutoMessage_Reply", new[] { "AccountMainID" });
             DropIndex("dbo.AutoMessage_Add", new[] { "AccountMainID" });
             DropIndex("dbo.LibraryImage", new[] { "AccountMainID" });
+            DropIndex("dbo.PendingMessages", new[] { "LibraryImageTextsID" });
+            DropIndex("dbo.PendingMessages", new[] { "MessageID" });
+            DropIndex("dbo.PendingMessages", new[] { "ToUserID" });
+            DropIndex("dbo.PendingMessages", new[] { "ToAccountID" });
+            DropIndex("dbo.PendingMessages", new[] { "FromUserID" });
+            DropIndex("dbo.PendingMessages", new[] { "FromAccountID" });
+            DropIndex("dbo.Group", new[] { "AccountMainID" });
+            DropIndex("dbo.Group", new[] { "AccountID" });
+            DropIndex("dbo.Account_User", new[] { "GroupID" });
+            DropIndex("dbo.Account_User", new[] { "UserID" });
+            DropIndex("dbo.Account_User", new[] { "AccountID" });
+            DropIndex("dbo.SystemMessage", new[] { "UserID" });
+            DropIndex("dbo.SystemMessage", new[] { "AccountID" });
+            DropIndex("dbo.User", new[] { "UserLoginInfoID" });
+            DropIndex("dbo.User", new[] { "AccountMainID" });
+            DropIndex("dbo.User", new[] { "AccountStatusID" });
+            DropIndex("dbo.Message", new[] { "LibraryImageTextsID" });
+            DropIndex("dbo.Message", new[] { "ToUserID" });
+            DropIndex("dbo.Message", new[] { "ToAccountID" });
+            DropIndex("dbo.Message", new[] { "FromUserID" });
+            DropIndex("dbo.Message", new[] { "FromAccountID" });
             DropIndex("dbo.LibraryImageText", new[] { "AccountMainID" });
             DropIndex("dbo.LibraryImageText", new[] { "LibraryImageTextParentID" });
             DropIndex("dbo.LibraryVideo", new[] { "AccountMainID" });
@@ -921,25 +926,6 @@ namespace EF.Migrations
             DropForeignKey("dbo.PushMsg", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.Account_AccountMain", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.Account_AccountMain", "AccountID", "dbo.Account");
-            DropForeignKey("dbo.PendingMessages", "MessageID", "dbo.Message");
-            DropForeignKey("dbo.PendingMessages", "ToUserID", "dbo.User");
-            DropForeignKey("dbo.PendingMessages", "ToAccountID", "dbo.Account");
-            DropForeignKey("dbo.PendingMessages", "FromUserID", "dbo.User");
-            DropForeignKey("dbo.PendingMessages", "FromAccountID", "dbo.Account");
-            DropForeignKey("dbo.Message", "ToUserID", "dbo.User");
-            DropForeignKey("dbo.Message", "ToAccountID", "dbo.Account");
-            DropForeignKey("dbo.Message", "FromUserID", "dbo.User");
-            DropForeignKey("dbo.Message", "FromAccountID", "dbo.Account");
-            DropForeignKey("dbo.SystemMessage", "UserID", "dbo.User");
-            DropForeignKey("dbo.SystemMessage", "AccountID", "dbo.Account");
-            DropForeignKey("dbo.User", "UserLoginInfoID", "dbo.UserLoginInfo");
-            DropForeignKey("dbo.User", "AccountMainID", "dbo.AccountMain");
-            DropForeignKey("dbo.User", "AccountStatusID", "dbo.LookupOption");
-            DropForeignKey("dbo.Account_User", "GroupID", "dbo.Group");
-            DropForeignKey("dbo.Account_User", "UserID", "dbo.User");
-            DropForeignKey("dbo.Account_User", "AccountID", "dbo.Account");
-            DropForeignKey("dbo.Group", "AccountMainID", "dbo.AccountMain");
-            DropForeignKey("dbo.Group", "AccountID", "dbo.Account");
             DropForeignKey("dbo.KeywordAutoMessage", "AutoMessage_KeywordID", "dbo.AutoMessage_Keyword");
             DropForeignKey("dbo.KeywordAutoMessage", "EnumMessageTypeID", "dbo.LookupOption");
             DropForeignKey("dbo.Keyword", "AutoMessage_KeywordID", "dbo.AutoMessage_Keyword");
@@ -956,6 +942,27 @@ namespace EF.Migrations
             DropForeignKey("dbo.AutoMessage_Reply", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.AutoMessage_Add", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.LibraryImage", "AccountMainID", "dbo.AccountMain");
+            DropForeignKey("dbo.PendingMessages", "LibraryImageTextsID", "dbo.LibraryImageText");
+            DropForeignKey("dbo.PendingMessages", "MessageID", "dbo.Message");
+            DropForeignKey("dbo.PendingMessages", "ToUserID", "dbo.User");
+            DropForeignKey("dbo.PendingMessages", "ToAccountID", "dbo.Account");
+            DropForeignKey("dbo.PendingMessages", "FromUserID", "dbo.User");
+            DropForeignKey("dbo.PendingMessages", "FromAccountID", "dbo.Account");
+            DropForeignKey("dbo.Group", "AccountMainID", "dbo.AccountMain");
+            DropForeignKey("dbo.Group", "AccountID", "dbo.Account");
+            DropForeignKey("dbo.Account_User", "GroupID", "dbo.Group");
+            DropForeignKey("dbo.Account_User", "UserID", "dbo.User");
+            DropForeignKey("dbo.Account_User", "AccountID", "dbo.Account");
+            DropForeignKey("dbo.SystemMessage", "UserID", "dbo.User");
+            DropForeignKey("dbo.SystemMessage", "AccountID", "dbo.Account");
+            DropForeignKey("dbo.User", "UserLoginInfoID", "dbo.UserLoginInfo");
+            DropForeignKey("dbo.User", "AccountMainID", "dbo.AccountMain");
+            DropForeignKey("dbo.User", "AccountStatusID", "dbo.LookupOption");
+            DropForeignKey("dbo.Message", "LibraryImageTextsID", "dbo.LibraryImageText");
+            DropForeignKey("dbo.Message", "ToUserID", "dbo.User");
+            DropForeignKey("dbo.Message", "ToAccountID", "dbo.Account");
+            DropForeignKey("dbo.Message", "FromUserID", "dbo.User");
+            DropForeignKey("dbo.Message", "FromAccountID", "dbo.Account");
             DropForeignKey("dbo.LibraryImageText", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.LibraryImageText", "LibraryImageTextParentID", "dbo.LibraryImageText");
             DropForeignKey("dbo.LibraryVideo", "AccountMainID", "dbo.AccountMain");
@@ -994,13 +1001,6 @@ namespace EF.Migrations
             DropTable("dbo.PushMsgDetail");
             DropTable("dbo.PushMsg");
             DropTable("dbo.Account_AccountMain");
-            DropTable("dbo.PendingMessages");
-            DropTable("dbo.Message");
-            DropTable("dbo.SystemMessage");
-            DropTable("dbo.UserLoginInfo");
-            DropTable("dbo.User");
-            DropTable("dbo.Account_User");
-            DropTable("dbo.Group");
             DropTable("dbo.KeywordAutoMessage");
             DropTable("dbo.Keyword");
             DropTable("dbo.AccountMainHouseType");
@@ -1011,6 +1011,13 @@ namespace EF.Migrations
             DropTable("dbo.AutoMessage_Reply");
             DropTable("dbo.AutoMessage_Add");
             DropTable("dbo.LibraryImage");
+            DropTable("dbo.PendingMessages");
+            DropTable("dbo.Group");
+            DropTable("dbo.Account_User");
+            DropTable("dbo.SystemMessage");
+            DropTable("dbo.UserLoginInfo");
+            DropTable("dbo.User");
+            DropTable("dbo.Message");
             DropTable("dbo.LibraryImageText");
             DropTable("dbo.LibraryVideo");
             DropTable("dbo.LibraryVoice");

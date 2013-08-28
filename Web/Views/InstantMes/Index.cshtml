@@ -72,6 +72,8 @@
     <ul class="ulList" id="ulGroup">
         <li class="select"><a href="@Url.Action("Index", "InstantMes", new { HostName = ViewBag.HostName })">
             销售消息 </a></li>
+        <li>@Html.ActionLink("销售与客户管理", "Index", "SalesMessage", new { HostName = ViewBag.HostName }, null, true)
+            </li>
         <li style="height: 10px; background-color: #f0f0f0; border-bottom: 1px solid #d3d3d3;
             border-top: 1px solid #d3d3d3"></li>
         @foreach (var item in groupList)
@@ -129,7 +131,15 @@
             <tr>
                 <td rowspan="2" align="center" valign="top" style="width: 70px">
                     <a onclick="javascript:window.top.location.reload()" href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.FromUserID })"target="_blank">
-                        <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content(item.HeadImagePath)" />
+                        @if (!string.IsNullOrEmpty(item.HeadImagePath))
+                        { 
+                            <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content(item.HeadImagePath)" />
+                        }
+                        else
+                        { 
+                            <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
+                            
+                        }
                     </a>
                 </td>
                 <td style="font-weight: bold">

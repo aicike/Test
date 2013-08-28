@@ -151,6 +151,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{1D926C61-B1CC-48BC-93AA-3F52D05B8FD0}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Poco\Poco.csproj">
       <Project>{DDFA1F60-3A1E-42BD-AD5C-64E5F5CCDEEE}</Project>
       <Name>Poco</Name>

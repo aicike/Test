@@ -435,7 +435,7 @@
             <li><a href="#tabs-2">语音</a></li>
             <li><a href="#tabs-3">图片</a></li>
             <li><a href="#tabs-4">视频</a></li>
-            <li style="display: none"><a href="#tabs-5">图文消息</a></li>
+            <li><a href="#tabs-5">图文消息</a></li>
         </ul>
         <div id="tabs-1">
             @using (Ajax.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID }, new AjaxOptions() { UpdateTargetId = "div_data", OnSuccess = "EmptyContent()" }))
@@ -533,13 +533,10 @@
             }
         </div>
         <div id="tabs-5">
-            <p>
-                Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate,
-                pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem.
-                Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia
-                nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo
-                pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem
-                enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+            @using (Html.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                 <input type="hidden" value="4" id="MesType4" name="MesType" />
+            }
         </div>
     </div>
     @using (Ajax.BeginForm("ReadMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID }, new AjaxOptions() { UpdateTargetId = "div_data" }))
@@ -580,4 +577,6 @@
             </td>
         </tr>
     </table>
+</div>
+<div style="clear: both">
 </div>

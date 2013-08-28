@@ -187,6 +187,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\Icon\Icon.css" />
     <Content Include="Content\Icon\glyphicons.png" />
+    <Content Include="Images\default_Avatar.png" />
     <Content Include="Images\Start.png" />
     <Content Include="Images\Unread.png" />
     <Content Include="Scripts\tabControl\tabControl.css" />
@@ -681,6 +682,8 @@
     <Content Include="Views\SalesMessage\SalesUserList.cshtml" />
     <Content Include="Views\LibraryImageText\AppView.cshtml" />
     <Content Include="Views\Default\AppView.cshtml" />
+    <Content Include="Views\SalesMessage\SelectAtoUmes.cshtml" />
+    <Content Include="Views\SingleChat\HistoryMes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

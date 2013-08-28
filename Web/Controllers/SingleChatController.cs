@@ -42,8 +42,36 @@ namespace Web.Controllers
             return View();
         }
 
+        //历史聊天页面
         [AllowCheckPermissions(false)]
-        public ActionResult SendMessage(int id, int userID, string Content, string MesType, string TypePath, string MesAddress, HttpPostedFileBase TypeImagePathFile)
+        public ActionResult HistoryMes(int? id,int userID)
+        {
+            //判断是否与当前用户有聊天权限
+            var AccountUserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
+            bool isOk = AccountUserModel.ChickUserInAccount(LoginAccount.ID, userID);
+            isOk.NotAuthorizedPage();
+
+            //客户姓名
+            var UserModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+            var User = UserModel.Get(userID);
+            if (User.Name == User.UserLoginInfo.Name)
+            {
+                ViewBag.UserName = User.Name;
+            }
+            else
+            {
+                ViewBag.UserName = User.UserLoginInfo.Name + "(" + User.Name + ")";
+            }
+            //获取聊天记录
+            var MessageModel = Factory.Get<IMessageModel>(SystemConst.IOC_Model.MessageModel);
+            var message = MessageModel.GetHistoryList(LoginAccount.ID, userID).ToPagedList(id ?? 1, 30);
+
+            return View(message);
+        }
+
+
+        [AllowCheckPermissions(false)]
+        public ActionResult SendMessage(int id, int userID, string Content, string MesType, string TypePath, string MesAddress, HttpPostedFileBase TypeImagePathFile,string imgtestID)
         {
             TreedCon();
             Thread.Sleep(1000);
@@ -99,6 +127,13 @@ namespace Web.Controllers
                     {
                         np.FielUrl = TypePath;
                     }
+                    //图文
+                    else if (MesType == ((int)EnumMessageType.ImageText).ToString())
+                    {
+                        np.ImgTextID = imgtestID;
+                    }
+
+
                     msg.AddChild(np);
                     Connection.Send(msg);
                     Presence p = new Presence();
