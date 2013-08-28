@@ -17,5 +17,10 @@ namespace Interface
         IQueryable<User> GetUserByAccountID(int accountID, int groupID);
 
         Result UpdateUserInfo(User user);
+
+        /// <summary>
+        /// 根据 accountMainID和 accountID获取全部用户列表
+        /// </summary>
+        List<User> GetUserListByAccountID(int accountMainID, int accountID);
     }
 }

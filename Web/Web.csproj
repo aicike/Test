@@ -176,6 +176,7 @@
     <Compile Include="Controllers\LibraryVideoController.cs" />
     <Compile Include="Controllers\LibraryImageTextController.cs" />
     <Compile Include="Controllers\WebRequestController.cs" />
+    <Compile Include="Controllers\WebRequest_AccountController.cs" />
     <Compile Include="Controllers\WebRequest_AutoMessageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

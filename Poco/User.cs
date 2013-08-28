@@ -20,22 +20,9 @@ namespace Poco
         [StringLength(10, ErrorMessage = "长度小于10")]
         public string Name { get; set; }
         
-        [Display(Name = "地址")]
-        [StringLength(50, ErrorMessage = "长度小于50")]
-        public string Address { get; set; }
-
         [Display(Name = "电话")]
         [StringLength(20, ErrorMessage = "长度小于20")]
         public string Phone { get; set; }
-
-        [Display(Name = "头像")]
-        [StringLength(500, ErrorMessage = "长度小于500")]
-        public string HeadImagePath { get; set; }
-
-        [Display(Name = "邮箱")]
-        [StringLength(50, ErrorMessage = "长度小于50")]
-        [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "请输入有效的邮箱")]
-        public string Email { get; set; }
 
         /// <summary>
         /// 账号类型，启用禁用

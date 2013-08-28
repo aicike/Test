@@ -51,7 +51,7 @@ namespace Web.Controllers
         {
             var account_AccountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
 
-            string hostUrl = string.Format("http://{0}:{1}", Request.Url.Host, Request.Url.Port);
+            string hostUrl =SystemConst.WebUrl;
 
             var accountList = account_AccountMainModel.GetAccountListByAccountMainID(accountMainID).Select(a => new App_Account
             {

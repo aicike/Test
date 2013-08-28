@@ -261,6 +261,36 @@ namespace Business
             return result;
         }
 
+        public Result LoginApp(string email, string pwd)
+        {
+            Result result = new Result();
+            pwd = DESEncrypt.Encrypt(pwd);
+            var account = List().Where(a => a.Email.Equals(email, StringComparison.OrdinalIgnoreCase) && a.LoginPwd.Equals(pwd)).FirstOrDefault();
+            if (account == null)
+            {
+                result.Error = "用户名或密码错误";
+            }
+            else
+            {
+                //todo:以后可能会出现一个销售账号管理多个售楼部，需要先选择售楼部才能登录系统，目前默认选择第一个售楼部。
+                Account entity = new Account();
+                entity.ID = account.ID;
+                entity.SystemStatus = account.SystemStatus;
+                entity.Name = account.Name;
+                entity.LoginPwd = account.LoginPwd;
+                entity.Phone = account.Phone;
+                entity.HeadImagePath = account.HeadImagePath;
+                entity.Email = account.Email;
+                entity.RoleID = account.RoleID;
+                entity.AccountStatusID = account.AccountStatusID;
+                entity.IsActivated = account.IsActivated;
+                entity.HostName = account.Account_AccountMains.FirstOrDefault().AccountMain.HostName;
+                entity.CurrentAccountMainID = account.Account_AccountMains.FirstOrDefault().AccountMain.ID;
+                result.Entity = entity;
+            }
+            return result;
+        }
+
         /// <summary>
         /// 检查是否有权限操作该数据数据
         /// </summary>

@@ -367,7 +367,7 @@ SET IDENTITY_INSERT [dbo].[UserLoginInfo] ON
 SET IDENTITY_INSERT [dbo].[UserLoginInfo] OFF
 ------------------------------[User]---------------------------------
 SET IDENTITY_INSERT [dbo].[User] ON
---[ID], [SystemStatus], [Name], [Address], [Phone], [HeadImagePath], [AccountStatusID], [IdentityCard], [AccountMainID],UserLoginInfoID) VALUES (1, 0, N'武双琦', NULL, NULL, '', 1, NULL, 1,1)
+--[ID], [SystemStatus], [Name], [Phone], [AccountStatusID], [IdentityCard], [AccountMainID],UserLoginInfoID) VALUES (1, 0, N'武双琦', NULL, 1, NULL, 1,1)
 SET IDENTITY_INSERT [dbo].[User] OFF
 ------------------------------[ClientInfo]---------------------------------
 SET IDENTITY_INSERT [dbo].[ClientInfo] ON

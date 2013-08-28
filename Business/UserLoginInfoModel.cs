@@ -43,7 +43,6 @@ namespace Business
             User user = new User();
             user.UserLoginInfoID = userlogin.ID;
             user.Name = userlogin.Name;
-            user.Email = userlogin.Email;
             user.AccountMainID = userLoginInfo.AccountMainID;
             var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
             result = userModel.Add(user);
