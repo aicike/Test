@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using agsXMPP;
 using System.Threading;
 using agsXMPP.protocol.client;
+using System.Configuration;
 
 namespace Web.Controllers
 {
@@ -100,7 +101,8 @@ namespace Web.Controllers
                         //本地
                         if (MesAddress == "1")
                         {
-                            var path = string.Format(string.Format("~/File/{0}.Message", LoginAccount.CurrentAccountMainID));
+                            string UpFilePath = ConfigurationManager.AppSettings["UpLodeFile"].ToString();
+                            var path = string.Format(string.Format("{0}{1}.Message/Account/{2}/Image", UpFilePath, LoginAccount.CurrentAccountMainID, LoginAccount.ID));
                             if (!System.IO.File.Exists(Server.MapPath(path)))
                             {
                                 System.IO.Directory.CreateDirectory(Server.MapPath(path));
