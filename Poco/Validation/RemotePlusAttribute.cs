@@ -7,6 +7,7 @@ using System.Web.Mvc;
 namespace System.ComponentModel.DataAnnotations
 {
     [AttributeUsage(AttributeTargets.Property)]
+    [Obsolete("该方法已经失效，请修改。",false)]
     public class RemotePlusAttribute : Attribute//: RemoteAttribute
     {
         public string ErrorMessage { get; set; }
