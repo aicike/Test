@@ -102,20 +102,12 @@ namespace AcceptanceServer.DataBllOperate
             foreach (DataRow row in dt.Rows)
             {
                 UnreadMessage um = new UnreadMessage();
-                if (AoU == "u")
-                {
-                    um.FromAccountID = row["FromAccountID"].ToString();
-                    um.FromUserID = "";
-                }
-                else
-                {
-                    um.FromAccountID = "";
-                    um.FromUserID = row["fromUserID"].ToString();
-                }
+                um.FromID = row["FromID"].ToString();
                 um.Content = row["Content"].ToString();
                 um.EID = row["EID"].ToString();
                 um.SendTime = row["SendTime"].ToString();
-                um.SendCnt = row["cnt"].ToString();
+                um.MessageCnt = row["Messagecnt"].ToString();
+                um.MSD = row["MSD"].ToString();
 
                 UMlist.Add(um);
             }

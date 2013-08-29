@@ -44,7 +44,7 @@ namespace Web.Controllers
 
         //历史聊天页面
         [AllowCheckPermissions(false)]
-        public ActionResult HistoryMes(int? id,int userID)
+        public ActionResult HistoryMes(int? id, int userID)
         {
             //判断是否与当前用户有聊天权限
             var AccountUserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
@@ -71,7 +71,7 @@ namespace Web.Controllers
 
 
         [AllowCheckPermissions(false)]
-        public ActionResult SendMessage(int id, int userID, string Content, string MesType, string TypePath, string MesAddress, HttpPostedFileBase TypeImagePathFile,string imgtestID)
+        public ActionResult SendMessage(int id, int userID, string Content, string MesType, string TypePath, string MesAddress, HttpPostedFileBase TypeImagePathFile, string imgtextID)
         {
             TreedCon();
             Thread.Sleep(1000);
@@ -88,7 +88,7 @@ namespace Web.Controllers
                     np.MSD = ((int)EnumMessageSendDirection.Account_User).ToString(); //售楼->购房
                     np.MT = "1";  //消息
                     np.EID = MesType; //消息类型
-
+                    np.Sendtime = DateTime.Now.ToString();//发送时间
                     //文本
                     if (MesType == ((int)EnumMessageType.Text).ToString())
                     {
@@ -130,7 +130,7 @@ namespace Web.Controllers
                     //图文
                     else if (MesType == ((int)EnumMessageType.ImageText).ToString())
                     {
-                        np.ImgTextID = imgtestID;
+                        np.ImgTextID = imgtextID;
                     }
 
 
@@ -149,7 +149,6 @@ namespace Web.Controllers
             {
                 //发送失败
             }
-            Thread.Sleep(1000);
             if (MesType != ((int)EnumMessageType.Text).ToString())
             {
                 return RedirectToAction("index", new { id = id, userID = userID });
@@ -174,7 +173,7 @@ namespace Web.Controllers
         }
 
         [AllowCheckPermissions(false)]
-        public ActionResult ReadMessage( int id,int userID)
+        public ActionResult ReadMessage(int id, int userID)
         {
             return RedirectToAction("ChatPartialView", new { id = id, userID = userID });
         }
@@ -234,6 +233,19 @@ namespace Web.Controllers
             Connection.Open();
         }
 
+        [AllowCheckPermissions(false)]
+        public JsonResult GetImgTextMessage(int ImgTextID)
+        {
+            var ImgTextModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
+            var imgText = ImgTextModel.Get(ImgTextID);
 
+            return Json(new LibraryImageText()
+            {
+                ID=imgText.ID,
+                Title = imgText.Title,
+                Content = imgText.Content,
+                ImagePath = Url.Content(imgText.ImagePath)
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

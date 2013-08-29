@@ -8,6 +8,7 @@
     <script type="text/javascript">
         var CanCommit = true;
         var checkMessageUrl = '@Url.Action("CheckMessage", "SingleChat")';
+        var GetImgTextMessage = '@Url.Action("GetImgTextMessage", "SingleChat")';
         $(function () {
 
             //更改main 宽度
@@ -108,6 +109,24 @@
             });
 
 
+            //验证是否选择图文
+            $("#btnTWSubmit").click(function () {
+                if (CanCommit) {
+                    CanCommit = false;
+                    var length = $.trim($("#imgtextID").val()).length;
+                    if (length == 0) {
+                        alert("请选择一个图文素材！");
+                        CanCommit = true;
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
+                }
+                else {
+                    return false
+                }
+            });
 
 
             //选择本地图片
@@ -266,7 +285,49 @@
                 });
             });
 
+            //图文素材
+            $("#btnImgTextSC").click(function () {
+                var src = $("#iframeImgTextLibrary").attr("src");
+                $("#iframeImgTextLibrary").attr("src", src);
+                $("#dialogImgTextFile").dialog({
+                    resizable: false,
+                    height: 650,
+                    width: 829,
+                    modal: true,
+                    draggable: false,
+                    buttons: {
+                        "确定": function () {
+                            var subDocument = $(window.frames["iframeImgTextLibrary"].document);
+                            var sel = subDocument.find("#tabs-ImgText").find(":checked")
+                            if (sel.length <= 0) {
+                                JAlert({
+                                    Message: "请选择一个素材。",
+                                    DialogType: "Ok",
+                                    BtnOk: "确定"
+                                });
+                                return;
+                            }
+                            var title = sel.parent().find("label").text();
+                            var hidObj = sel.parent().find(":hidden")
+                            var url = hidObj.val();
+                            var id = hidObj.attr("fileID");
+                            var type = hidObj.attr("fileType")
 
+                            $("#ImgTextName").text(title);
+                            $("#ImgTextYL").attr("style", "display:");
+                            $("#imgtextID").val(id);
+
+                            $("#ImgTextYL").click(function () { ShowMessage("4", id, $(this)); })
+
+                            $(this).dialog("close");
+                        },
+                        "取消": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+
+                });
+            });
 
 
 
@@ -294,13 +355,15 @@
 
         }
 
-        //显示图片视频语音
+        //显示图片视频语音图文
         function ShowMessage(Type, MesURL, obj) {
             //图片
             if (Type == "1") {
                 $("#trImg").attr("style", "display:");
                 $("#trVoice").attr("style", "display:none");
                 $("#trVideo").attr("style", "display:none");
+                $("#trImgText").attr("style", "display:none");
+
 
                 $("#ShowImg").attr("src", MesURL);
                 $("#dialogShowMessage").attr("title", "图片");
@@ -318,6 +381,7 @@
                 $("#trImg").attr("style", "display:none");
                 $("#trVoice").attr("style", "display:");
                 $("#trVideo").attr("style", "display:none");
+                $("#trImgText").attr("style", "display:none");
 
                 $("#playerVoice").attr("src", MesURL);
                 $("#dialogShowMessage").attr("title", "语音");
@@ -356,7 +420,7 @@
                 $("#trImg").attr("style", "display:none");
                 $("#trVoice").attr("style", "display:none");
                 $("#trVideo").attr("style", "display:");
-
+                $("#trImgText").attr("style", "display:none");
 
                 $("#playerVideo").attr("src", MesURL);
                 $("#dialogShowMessage").attr("title", "视频");
@@ -389,6 +453,35 @@
                     }
                 });
             }
+            //图文
+            else if (Type == "4") {
+                $("#trImg").attr("style", "display:none");
+                $("#trVoice").attr("style", "display:none");
+                $("#trVideo").attr("style", "display:none");
+                $("#trImgText").attr("style", "display:");
+
+                $("#dialogShowMessage").attr("title", "图文");
+                $("#dialogShowMessage").dialog({
+                    resizable: false,
+                    height: "600",
+                    width: "560",
+                    modal: true,
+                    draggable: false
+                });
+                //MesURL==ID
+                $.get(GetImgTextMessage, { ImgTextID: MesURL }, function (data) {
+                    if (data) {
+                        //var JsomMessage = JSON.parse(data);
+                        $("#labImgTextTitle").text(data.Title);
+                        $("#labImgTextContent")[0].innerHTML = data.Content;
+                        $("#ImgShowImgText").attr("src",data.ImagePath);
+
+
+                    }
+                });
+
+            }
+
 
         }
 
@@ -535,7 +628,30 @@
         <div id="tabs-5">
             @using (Html.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                 <input type="hidden" value="4" id="MesType4" name="MesType" />
+                <input type="hidden" value="4" id="MesType4" name="MesType" />
+                <input type="hidden" id="imgtextID" name="imgtextID" />
+                <table cellpadding="0" cellspacing="0" class="ImgTab">
+                    <tr>
+                        <td align="left" colspan="2">
+                            <button type="button" id="btnImgTextSC">
+                                图文素材</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" style="width: 35px; border-right: 0px">
+                            <img id="ImgTextYL" width="32px" src="~/Images/Start.png" title="点击预览" style="cursor: pointer;
+                                display: none" />
+                        </td>
+                        <td align="left" style="border-left: 0px">
+                            <label id="ImgTextName" />
+                        </td>
+                    </tr>
+                </table>
+             
+
+                <input type="submit" id="btnTWSubmit" value="发送" class="button" style="margin-top: 12px;" />
+             
+                
             }
         </div>
     </div>
@@ -559,6 +675,10 @@
     <iframe id="iframeVideoLibrary" src="@Url.Action("VideoManage", "Library", new { HostName = ViewBag.HostName })" style="width:800px;height:530px;border:none;overflow:hidden">
     </iframe>
 </div>
+<div id="dialogImgTextFile" title="选择图文素材" style="display: none">
+    <iframe id="iframeImgTextLibrary" src="@Url.Action("ImgTextManager", "Library", new { HostName = ViewBag.HostName })" style="width:800px;height:530px;border:none;overflow:hidden">
+    </iframe>
+</div>
 <div id="dialogShowMessage" title="" style="display: none">
     <table cellpadding="0" cellspacing="0" border="0" width="100%">
         <tr id="trImg" align="center" style="">
@@ -573,7 +693,27 @@
         </tr>
         <tr id="trVideo">
             <td>
-                <video width="550px"  id="playerVideo" src="" controls="controls"></video>
+                <video width="550px" id="playerVideo" src="" controls="controls"></video>
+            </td>
+        </tr>
+        <tr id="trImgText">
+            <td>
+                <table width="540px" cellpadding="0" cellspacing="0" style="line-height: 25px">
+                    <tr>
+                        <td style="word-break: break-all; font-size: 16px; font-weight: bold">
+                            <label id="labImgTextTitle"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img id="ImgShowImgText" style="max-height: 280px; max-width: 535px" src="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td  id="labImgTextContent" style="word-break: break-all;">
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
     </table>

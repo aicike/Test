@@ -206,6 +206,7 @@ namespace AcceptanceServer
                 if (msg.Type == MessageType.chat)
                 {
                     NewsProtocol Np = msg.SelectSingleElement(typeof(NewsProtocol)) as NewsProtocol;
+                    
                     //消息
                     if (Np.MT == "1")
                     {
@@ -246,6 +247,11 @@ namespace AcceptanceServer
                                 }
 
                             }
+                            //回发消息状态 4发送成功
+                            SendMessageStatus("4");
+
+
+
                         }
                     }
                     //状态
@@ -297,35 +303,8 @@ namespace AcceptanceServer
                         //}));
 
                         //刚刚登陆获取未读消息
-                        Task t = new Task(() =>
-                        {
-                            //售楼代表s；用户u
-                            string AoU = jid.User.Substring(0, 1);
-                            //ID
-                            string AoUID = jid.User.Substring(1);
-                            XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == jid.User).ToList()[0];
+                        LoginSendUnreadMessage();
 
-                            agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message();
-                            msg.Type = MessageType.chat;
-                            msg.From = jid;
-                            msg.To = new Jid(jid.User, "localhost", jid.User);
-
-                            NewsProtocol np = new NewsProtocol();
-                            np.MT = "3";//未读消息
-
-                            List<UnreadMessage> UMlist = DataBusiness.GetUnreadMessage(AoU, AoUID);
-
-                            try
-                            {
-                                msg.Body = UMlist.ObjectToJson();
-
-                                con.Send(msg);
-                            }
-                            catch { }
-
-
-                        });
-                        //t.Start();
 
                         iq.SwitchDirection();
                         iq.Type = IqType.result;
@@ -404,6 +383,70 @@ namespace AcceptanceServer
         {
             Send(el.ToString());
         }
+
+
+
+        //-----------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// 回发消息状态
+        /// </summary>
+        /// <param name="MT">消息状态 4发送成功，5对方已读</param>
+        public void SendMessageStatus(string MT)
+        {
+            XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == jid.User).ToList()[0];
+
+            agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message();
+            msg.Type = MessageType.chat;
+            msg.From = jid;
+            msg.To = new Jid(jid.User, "localhost", jid.User);
+            NewsProtocol np = new NewsProtocol();
+            np.MT = MT;//消息状态
+
+            con.Send(msg);
+
+        }
+
+
+        /// <summary>
+        /// 刚刚登陆获取未读消息
+        /// </summary>
+        public void LoginSendUnreadMessage()
+        {
+            Task t = new Task(() =>
+            {
+                //售楼代表s；用户u
+                string AoU = jid.User.Substring(0, 1);
+                //ID
+                string AoUID = jid.User.Substring(1);
+                XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == jid.User).ToList()[0];
+
+                agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message();
+                msg.Type = MessageType.chat;
+                msg.From = jid;
+                msg.To = new Jid(jid.User, "localhost", jid.User);
+
+                NewsProtocol np = new NewsProtocol();
+                np.MT = "3";//未读消息
+
+                List<UnreadMessage> UMlist = DataBusiness.GetUnreadMessage(AoU, AoUID);
+
+                try
+                {
+                    msg.Body = UMlist.ObjectToJson();
+
+                    con.Send(msg);
+                }
+                catch { }
+
+
+            });
+            t.Start();
+        
+        }
+
+
+
+
 
     }
 }

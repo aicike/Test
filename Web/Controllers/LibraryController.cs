@@ -82,5 +82,14 @@ namespace Web.Controllers
 
             return View();
         }
+         [AllowCheckPermissions(false)]
+        public ActionResult ImgTextManager()
+        {
+            var libraryImageTextModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
+            //图文
+            var imageTextList = libraryImageTextModel.GetLibraryList(LoginAccount.CurrentAccountMainID).ToList();
+            ViewBag.ImageTextList = imageTextList;
+            return View();
+        }
     }
 }
