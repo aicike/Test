@@ -10,15 +10,15 @@ namespace Interface
 {
     public interface IAccount_UserModel : IBaseModel<Account_User>
     {
-        Result ChangeGroup(int userID,int accountID, int groupID);
+        Result ChangeGroup(int userID, int accountID, int groupID);
 
         bool ChickUserInAccount(int SID, int UID);
 
         /// <summary>
         /// 用户和Account关系绑定
         /// </summary>
-		Result BindUser_Account(int accountID, int userID);
-		
+        Result BindUser_Account(int accountID, int userID);
+
         /// <summary>
         /// 修改用户所属的销售代表
         /// </summary>
@@ -27,5 +27,7 @@ namespace Interface
         /// <param name="groupID">目标代表默认分组</param>
         /// <returns></returns>
         int UpdUserTooAccount(int userID, int AmiAccountID, int groupID);
+
+        int GetBindAccountID(int userID, int accountMainID);
     }
 }

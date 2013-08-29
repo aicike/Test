@@ -10,13 +10,13 @@ using Poco.WebAPI_Poco;
 
 namespace Web.Controllers
 {
-    public class WebRequestController : Controller
+    public class WebRequest_UserController : Controller
     {
         /// <summary>
         /// 每次打开应用时，提交的clientID
         /// </summary>
         [HttpPost]
-        public string PostClientID(string clientID,int accountMainID ,int? userID)
+        public string PostClientID(string clientID, int accountMainID, int? userID)
         {
             var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
             var result = clientInfoModel.PostClientID(clientID, accountMainID, userID);
@@ -51,7 +51,7 @@ namespace Web.Controllers
         {
             var account_AccountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
 
-            string hostUrl =SystemConst.WebUrl;
+            string hostUrl = SystemConst.WebUrl;
 
             var accountList = account_AccountMainModel.GetAccountListByAccountMainID(accountMainID).Select(a => new App_Account
             {
@@ -80,11 +80,20 @@ namespace Web.Controllers
         /// <summary>
         /// 绑定User和Account
         /// </summary>
-        public string BindUserAccount(int accountID,int userID)
+        public string BindUserAccount(int accountID, int userID)
         {
             var account_UserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
-            var result= account_UserModel.BindUser_Account(accountID, userID);
+            var result = account_UserModel.BindUser_Account(accountID, userID);
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+        /// <summary>
+        /// 获取绑定的AccountID
+        /// </summary>
+        public string GetBindAccountID(int userID, int accountMainID)
+        {
+            var account_UserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
+            return account_UserModel.GetBindAccountID(userID, accountMainID) + "";
         }
     }
 }

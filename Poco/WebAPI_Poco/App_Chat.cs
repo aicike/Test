@@ -9,16 +9,28 @@ namespace Poco.WebAPI_Poco
     {
         public int ID { get; set; }
 
-        public DateTime SendTime { get; set; }
+        public string SendTime { get; set; }
 
-        public string Message { get; set; }
+        public string Content { get; set; }
 
-        public string MessageType { get; set; }
+        public int Type { get; set; }
 
         public bool IsRead { get; set; }
 
-        public int SenderID { get; set; }
+        public int SendDirection { get; set; }
+        
+        public string FileTitle { get; set; }
 
-        public string SenderType { get; set; }
+        public string FileUrl { get; set; }
+
+        /// <summary>
+        /// 只有图文消息使用的字段
+        /// </summary>
+        public string Summary { get; set; }
+
+        /// <summary>
+        /// 只有图文消息使用的字段
+        /// </summary>
+        public string SubContent { get; set; }
     }
 }

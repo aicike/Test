@@ -57,11 +57,14 @@ namespace Business
         //    return resule;
         //}
 
-        public Result PostClientID(string clientID,int accountMainID, int? userID)
+        /// <summary>
+        /// User App
+        /// </summary>
+        public Result PostClientID(string clientID, int accountMainID, int? userID)
         {
             Result result = new Result();
             bool isHas = true;
-            if (userID!=null&&userID.HasValue&&userID > 0)
+            if (userID != null && userID.HasValue && userID > 0)
             {
                 //和user表绑定
                 isHas = List().Any(a => a.ClientID == clientID && a.EntityID == userID);
@@ -77,8 +80,8 @@ namespace Business
             else
             {
                 //保存clientID信息，临时注册
-                isHas = List().Any(a => a.ClientID == clientID);
-                if (isHas == false)
+                var cl = List().Where(a => a.ClientID == clientID).FirstOrDefault();
+                if (cl == null)
                 {
                     //添加UserLoginInfo,User,ClientInfo
                     var ulim = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
@@ -90,7 +93,11 @@ namespace Business
                     userloginInfo.ClientID = clientID;
                     userloginInfo.EnumClientSystemType = (int)EnumClientSystemType.Android;
                     userloginInfo.EnumClientUserType = (int)EnumClientUserType.User;
-                    result= ulim.Register(userloginInfo);
+                    result = ulim.Register(userloginInfo);
+                }
+                else
+                {
+                    result.Entity = cl.EntityID;
                 }
             }
             return result;

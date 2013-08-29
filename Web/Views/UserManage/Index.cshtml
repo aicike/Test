@@ -225,10 +225,10 @@
                     <input type="checkbox" />
                 </td>*@
                 <td>
-                    @if (!string.IsNullOrEmpty(item.HeadImagePath))
+                    @if (!string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath))
                     { 
                         <img id="imgLogo" style="max-width:80px;max-height:80px;"
-                src="@Url.Content(item.HeadImagePath)" />
+                src="@Url.Content(item.UserLoginInfo.HeadImagePath)" />
                     }
                     else
                     { 

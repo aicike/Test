@@ -33,7 +33,7 @@ namespace Business
             return axcountUser;
         }
 
-        public int UpdUserTooAccount(int userID,int AmiAccountID,int groupID)
+        public int UpdUserTooAccount(int userID, int AmiAccountID, int groupID)
         {
             string sql = string.Format("update Account_User set AccountID={0},GroupID={1} where UserID = {2}", AmiAccountID, groupID, userID);
 
@@ -54,6 +54,19 @@ namespace Business
             accountUser.UserID = userID;
             accountUser.GroupID = group.ID;
             return Add(accountUser);
+        }
+
+        /// <summary>
+        /// 获取绑定的AccountID
+        /// </summary>
+        public int GetBindAccountID(int userID, int accountMainID)
+        {
+            var entity = List().Where(a => a.UserID == userID && a.User.AccountMainID == accountMainID && a.Account.Account_AccountMains.Any(b => b.AccountMainID == accountMainID)).FirstOrDefault();
+            if (entity != null)
+            {
+                return entity.AccountID;
+            }
+            return 0;
         }
     }
 }

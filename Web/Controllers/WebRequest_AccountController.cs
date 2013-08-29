@@ -15,7 +15,7 @@ namespace Web.Controllers
         /// <summary>
         /// 售楼部App登录
         /// </summary>
-        public string Login(int accountMainID, string email, string pwd)
+        public string AccountLogin(int accountMainID, string email, string pwd)
         {
             var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             var result = accountModel.LoginApp(email, pwd);

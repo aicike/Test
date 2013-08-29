@@ -21,7 +21,7 @@ namespace Business
         }
 
         /// <summary>
-        /// 推送文字
+        /// 普通推送
         /// </summary>
         [Transaction]
         public Result Push(EnumMessageType msgType, int? libraryID, string url, string content, string receiveType, int accountID, string userIds, int accountMainID)
@@ -141,6 +141,53 @@ namespace Business
             return result;
         }
 
+        /// <summary>
+        /// 当没有在线，并且接收到消息时，调用推送方法
+        /// </summary>
+        public Result PushFromChat(EnumMessageType msgType, string content, EnumClientUserType toUserType, int toUserID, EnumClientUserType fromUserType, int fromUserID)
+        {
+            //string name = null;
+            ////获取发信人名称
+            //if (fromUserType == EnumClientUserType.Account)
+            //{
+            //    var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
+            //    var account = accountModel.Get(fromUserID);
+            //    name = account.Name;
+            //}
+            //else
+            //{
+            //    var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+            //    var user = userModel.Get(fromUserID);
+            //    name = user.Name;
+            //}
+            string title = "你有一条消息。";
+            Result result = new Result();
+            var iosModel = Factory.Get("Push_IOS") as IPushModel;
+            var androidModel = Factory.Get("Push_Getui") as IPushModel;
+            var PushIDInfo = GetClientIDs(toUserType, toUserID);
+            //封装消息
+            List<App_AutoMessageReplyContent> pushMessage = new List<App_AutoMessageReplyContent>();
+            App_AutoMessageReplyContent rep = new App_AutoMessageReplyContent();
+            rep.FileTitle = title;
+            rep.MsgID = fromUserID;
+            rep.UserType = (int)fromUserType;
+            rep.EnumMsgModel = (int)EnumMsgModel.Call;
+            rep.Type = (int)msgType;            
+            pushMessage.Add(rep);
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(pushMessage);
+
+            //ios推送
+            //未实现
+            //android推送
+            PushMessage message = new PushMessage();
+            message.Title = title;
+            message.Text = content;
+            message.Logo = "logo.png";
+            message.EnumEvent = EnumEvent.Wait;// EnumEvent.Immediately;
+            message.MessageJson = json;
+            result = Push_Getui.SendMessage(message, PushIDInfo.Android);
+            return result;
+        }
 
 
         /// <summary>
@@ -183,6 +230,20 @@ namespace Business
             pi.Android = clientIds_android.ToArray();
             pi.IOS = clientIds_ios.ToArray();
             pi.userIDs = pushUserID;
+            return pi;
+        }
+
+        private PushIDInfo GetClientIDs(EnumClientUserType userType, int userID)
+        {
+            string clientSystemType_android = EnumClientSystemType.Android.ToString();
+            string clientSystemType_ios = EnumClientSystemType.IOS.ToString();
+            var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
+            string ut= userType.ToString();
+            var android = clientInfoModel.List().Where(a => a.EnumClientUserType.Token == ut && a.EntityID == userID && a.EnumClientSystemType.Token == clientSystemType_android).Select(a=>a.ClientID);
+            var ios = clientInfoModel.List().Where(a => a.EnumClientUserType.Token == ut && a.EntityID == userID && a.EnumClientSystemType.Token == clientSystemType_ios).Select(a => a.ClientID);
+            PushIDInfo pi = new PushIDInfo();
+            pi.Android = android.ToArray();
+            pi.IOS = ios.ToArray();
             return pi;
         }
 
