@@ -141,7 +141,7 @@ namespace Web.Controllers
 
             if (pushDetailList != null && pushDetailList.Count > 0)
             {
-                string dataFormat="yyyy-MM-dd hh:mm:ss";
+                string dataFormat = "yyyy-MM-dd hh:mm:ss";
                 foreach (var item in pushDetailList)
                 {
                     switch (item.PushMsg.EnumMessageType)
@@ -152,13 +152,14 @@ namespace Web.Controllers
                                 ID = 0,
                                 EnumMessageType = msgType_Text,
                                 TextReply = item.PushMsg.Text,
-                                SendTime=item.PushMsg.PushTime.ToString(dataFormat)
+                                SendTime = item.PushMsg.PushTime.ToString(dataFormat)
                             });
                             break;
                         case (int)EnumMessageType.Image:
-                            list.Add(new KeywordAutoMessage(){
+                            list.Add(new KeywordAutoMessage()
+                            {
                                 EnumMessageType = msgType_Image,
-                                MessageID=item.PushMsg.LibraryID.Value,
+                                MessageID = item.PushMsg.LibraryID.Value,
                                 SendTime = item.PushMsg.PushTime.ToString(dataFormat)
                             });
                             break;
@@ -192,6 +193,24 @@ namespace Web.Controllers
             }
             result.Entity = pushMessage;
             return Newtonsoft.Json.JsonConvert.SerializeObject(result); ;
+        }
+
+        public void SaveQuestion(int accountMainID, int userID, int? autoMessageID, string question)
+        {
+            var model = Factory.Get<IAutoMessage_UserModel>(SystemConst.IOC_Model.AutoMessage_UserModel);
+            AutoMessage_User am = new AutoMessage_User();
+            am.UserID = userID;
+            am.SendTime = DateTime.Now;
+            am.AccountMainID = accountMainID;
+            if (autoMessageID.HasValue)
+            {
+                am.AutoMessage_KeywordID = autoMessageID;
+            }
+            if (string.IsNullOrEmpty(question) == false)
+            {
+                am.Question = question;
+            }
+            model.Add(am);
         }
     }
 }

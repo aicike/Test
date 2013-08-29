@@ -126,5 +126,7 @@ namespace Poco
         public virtual ICollection<AccountMainHouses> AccountMainHousess { get; set; }
 
         public virtual ICollection<PushMsg> PushMsgs { get; set; }
+
+        public virtual ICollection<AutoMessage_User> AutoMessage_Users { get; set; }
     }
 }
