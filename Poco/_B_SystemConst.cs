@@ -15,7 +15,7 @@ namespace Poco
             public const string key = "abcdefgh";
             public const string iv = "12345678";
             public const string DefaultLogo = "DefaultLogo";
-            public const string DefaultHeadImage = "DefaultHeadImage";
+            public const string DefaultHeadImage = "~/Images/default_Avatar.png";
             public const string PathBase = "~/File/{0}/Base/";
             public const string PathAccount = "~/File/{0}/Account/";
             public const string PathFileLibrary = "~/File/{0}/FileLibrary/";

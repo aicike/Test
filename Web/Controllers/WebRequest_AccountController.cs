@@ -56,7 +56,7 @@ namespace Web.Controllers
                         ID = item.ID,
                         Name = item.UserLoginInfo.Name,
                         NameNote = item.Name,
-                        HeadImagePath = SystemConst.WebUrl + Url.Content(item.UserLoginInfo.HeadImagePath)
+                        HeadImagePath = SystemConst.WebUrl + Url.Content(item.UserLoginInfo.HeadImagePath.DefaultHeadImage())
                     });
                 }
             }

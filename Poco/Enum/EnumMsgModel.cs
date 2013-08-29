@@ -8,7 +8,7 @@ namespace Poco.Enum
     /// <summary>
     /// 消息模式
     /// </summary>
-    public enum EnumMsgModel
+    public enum EnumMsgMode
     {
         /// <summary>
         /// 自助式问答

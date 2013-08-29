@@ -121,7 +121,16 @@ namespace System
         /// <returns></returns>
         public static string DateFormat(this DateTime datetime)
         {
-           return datetime.ToString("MM-dd hh:mm");
+            return datetime.ToString("MM-dd hh:mm");
+        }
+
+        public static string DefaultHeadImage(this string path)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                return SystemConst.Business.DefaultHeadImage;
+            }
+            return path;
         }
     }
 }

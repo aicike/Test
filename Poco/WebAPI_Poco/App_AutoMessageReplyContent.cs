@@ -33,7 +33,7 @@ namespace Poco.WebAPI_Poco
         /// <summary>
         /// 消息模式
         /// </summary>
-        public int EnumMsgModel { get; set; }
+        public int EnumMsgMode { get; set; }
         /// <summary>
         /// 消息模式对象的消息对象ID
         /// </summary>

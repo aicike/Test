@@ -85,7 +85,7 @@ namespace Business
             App_AutoMessageReplyContent rep = new App_AutoMessageReplyContent();
             rep.FileTitle = title;
             rep.MsgID = pushMsg.ID;
-            rep.EnumMsgModel = (int)EnumMsgModel.Push;
+            rep.EnumMsgMode = (int)EnumMsgMode.Push;
             rep.Type = (int)msgType;
             rep.SendTime = pushMsg.PushTime.ToString("yyyy-MM-dd hh:mm:ss");
             switch (msgType)
@@ -171,7 +171,7 @@ namespace Business
             rep.FileTitle = title;
             rep.MsgID = fromUserID;
             rep.UserType = (int)fromUserType;
-            rep.EnumMsgModel = (int)EnumMsgModel.Call;
+            rep.EnumMsgMode = (int)EnumMsgMode.Call;
             rep.Type = (int)msgType;            
             pushMessage.Add(rep);
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(pushMessage);
@@ -181,7 +181,7 @@ namespace Business
             //android推送
             PushMessage message = new PushMessage();
             message.Title = title;
-            message.Text = content;
+            message.Text = "";//content;
             message.Logo = "logo.png";
             message.EnumEvent = EnumEvent.Wait;// EnumEvent.Immediately;
             message.MessageJson = json;
