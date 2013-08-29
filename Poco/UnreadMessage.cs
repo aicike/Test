@@ -7,45 +7,36 @@ namespace Poco
 {
     public class UnreadMessage
     {
-        string fromAccountID;
+        string fromID;
         /// <summary>
-        /// 售楼部发送人ID
+        /// 发送人ID（售楼部或用户ID）
         /// </summary>
-        public string FromAccountID
+        public string FromID
         {
-            get { return fromAccountID; }
-            set { fromAccountID = value; }
+            get { return fromID; }
+            set { fromID = value; }
         }
-        string fromUserID;
+        string messageCnt;
         /// <summary>
-        /// 用户发送人ID
+        /// 消息数量
         /// </summary>
-        public string FromUserID
+        public string MessageCnt
         {
-            get { return fromUserID; }
-            set { fromUserID = value; }
+            get { return messageCnt; }
+            set { messageCnt = value; }
         }
         string sendTime;
         /// <summary>
-        /// 发送时间
+        /// 最后一条消息发送时间
         /// </summary>
         public string SendTime
         {
             get { return sendTime; }
             set { sendTime = value; }
         }
-        string sendCnt;
-        /// <summary>
-        /// 条数
-        /// </summary>
-        public string SendCnt
-        {
-            get { return sendCnt; }
-            set { sendCnt = value; }
-        }
         string eID;
         /// <summary>
-        /// 消息类型 0：文本库 1：图片库 2：视频库 3：音频库 4：图文库 
+        /// 消息类型 0：文本 1：图片 2：视频 3：音频 4：图文
         /// </summary>
         public string EID
         {
@@ -54,12 +45,21 @@ namespace Poco
         }
         string content;
         /// <summary>
-        /// 文本消息内容
+        /// 消息内容
         /// </summary>
         public string Content
         {
             get { return content; }
             set { content = value; }
+        }
+        string mSD;
+        /// <summary>
+        /// 消息方向  0:售楼代表对用户  1：用户对售楼代表  2：售楼代表对售楼代表  3：用户对用户
+        /// </summary>
+        public string MSD
+        {
+            get { return mSD; }
+            set { mSD = value; }
         }
     }
 }

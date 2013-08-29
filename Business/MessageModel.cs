@@ -32,7 +32,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<Message> GetHistoryList(int SID, int UID)
         {
-            var list = List().Where(a => (a.FromAccountID != SID && a.FromAccountID != null && a.ToUserID == UID) || (a.ToAccountID == SID && a.FromUserID != UID && a.FromUserID != null)).OrderByDescending(a => a.SendTime);
+            var list = List().Where(a => (a.FromAccountID != SID && a.FromAccountID != null && a.ToUserID == UID) || (a.ToAccountID != SID && a.FromUserID == UID && a.ToAccountID != null)).OrderByDescending(a => a.SendTime);
             return list;
         }
 

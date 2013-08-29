@@ -24,13 +24,14 @@ namespace Poco
         }
 
         /// <summary>
-        /// 消息类别 1 消息，2状态, 3未读消息
+        /// 消息类别 1 消息，2状态, 3未读消息,4发送成功，5对方已读
         /// </summary>
         public string MT
         {
             get { return GetTag("mt"); }
             set { SetTag("mt", value); }
         }
+
 
         /// <summary>
         /// 消息类型  0：文本库 1：图片库 2：视频库 3：音频库 4：图文库 
@@ -58,5 +59,38 @@ namespace Poco
             get { return GetTag("imgtextid"); }
             set { SetTag("imgtextid", value); }
         }
+        /// <summary>
+        /// 图文标题
+        /// </summary>
+        public string fileTitle{
+            get { return GetTag("filetitle"); }
+            set { SetTag("filetitle", value); }
+        }
+
+        /// <summary>
+        /// 图文摘要
+        /// </summary>
+        public string Summary {
+            get { return GetTag("summary"); }
+            set { SetTag("summary", value); }
+        }
+
+        /// <summary>
+        /// 子图文字符窜 json
+        /// </summary>
+        public string Subcontent
+        {
+            get { return GetTag("subcontent"); }
+            set { SetTag("subcontent", value); }
+        }
+        /// <summary>
+        /// 发送时间
+        /// </summary>
+        public string Sendtime
+        {
+            get { return GetTag("sendtime"); }
+            set { SetTag("sendtime", value); }
+        }
+        
     }
 }

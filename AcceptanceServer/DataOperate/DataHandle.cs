@@ -59,18 +59,22 @@ namespace AcceptanceServer.DataOperate
             //用户
             if (AoU == "u")
             {
-                sql = string.Format(@"select a.FromAccountID,max(a.sendTime) as SendTime,count(a.touserid) as cnt,
-                                (select EnumMessageTypeID from PendingMessages where touserid= {0} and sendTime =max(a.sendtime)) as EID,
-                                (select Content from PendingMessages where touserid= {0} and sendTime =max(a.sendtime)) as Content
-                                 from PendingMessages a where a.toUserID = {0} group by a.FromAccountID", AoUID);
+                sql = string.Format(@"select case when a.fromaccountid <> 0 then a.fromaccountid else a.fromuserid  end as FromID,
+                                     count(*) as Messagecnt,max(a.sendTime) as SendTime ,
+                                    (select EnumMessageTypeID from PendingMessages where toUserID= {0}and sendTime =max(a.sendtime)) as EID,
+                                    (select Content from PendingMessages where toUserID= {0} and sendTime =max(a.sendtime)) as Content,
+                                    (select MSD from PendingMessages where toUserID= {0} and sendTime =max(a.sendtime)) as MSD
+                                     from dbo.PendingMessages a where a.toUserID = {0} group by a.fromaccountid,a.fromuserid", AoUID);
             }
             //售楼代表
             else
             {
-                sql = string.Format(@"select a.fromUserID,max(a.sendTime) as SendTime,count(a.toaccountid) as cnt,
+                sql = string.Format(@" select case when a.fromaccountid <> 0 then a.fromaccountid else a.fromuserid  end as FromID,
+                                     count(*) as Messagecnt,max(a.sendTime) as SendTime ,
                                     (select EnumMessageTypeID from PendingMessages where toaccountid= {0} and sendTime =max(a.sendtime)) as EID,
-                                    (select Content from PendingMessages where toaccountid= {0} and sendTime =max(a.sendtime)) as Content
-                                     from PendingMessages a where a.toaccountid = {0} group by a.fromUserID", AoUID);
+                                    (select Content from PendingMessages where toaccountid= {0} and sendTime =max(a.sendtime)) as Content,
+                                    (select MSD from PendingMessages where toaccountid= {0} and sendTime =max(a.sendtime)) as MSD
+                                     from dbo.PendingMessages a where a.toaccountid = {0} group by a.fromaccountid,a.fromuserid", AoUID);
             }
 
             return SqlHelper.ExecuteDataset(sql);
