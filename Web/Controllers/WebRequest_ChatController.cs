@@ -60,5 +60,11 @@ namespace Web.Controllers
             result.Entity = chats;
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
+
+        public string UpLodeFiles(int Type, string FileName, string FileBuffer)
+        {
+            return "";
+        }
+
     }
 }

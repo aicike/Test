@@ -11,3 +11,16 @@ update-database
 
 -----4.生成数据库迁移文件-----------------
 add-migrations Name
+
+
+-----5.聊天 附件存储位置----------------------
+WebConfig中UpLodeFile节点值+“所属售楼部ID”+“.Message/”
+售楼部+“Account/”+当前售楼账号ID
+	图片+“/Image”
+	视频+“/Video”
+	语音+“/Voice”
+
+用户+“User/”+当前用户账号ID
+	图片+“/Image”
+	视频+“/Video”
+	语音+“/Voice”
