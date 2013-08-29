@@ -7,7 +7,7 @@ namespace Poco.Enum
 {
     public enum EnumMessageSend
     {
-        To = 0,
-        From = 1
+        From = 0,
+        To = 1
     }
 }

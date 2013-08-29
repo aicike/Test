@@ -7,15 +7,16 @@ using System.Web.Mvc;
 namespace System.ComponentModel.DataAnnotations
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class RemotePlusAttribute : RemoteAttribute
+    public class RemotePlusAttribute : Attribute//: RemoteAttribute
     {
+        public string ErrorMessage { get; set; }
         public RemotePlusAttribute(string action, string controller, string area, string routeName = null)
-            : base(action, controller, area)
+        //: base(action, controller, area)
         {
-            if (!string.IsNullOrEmpty(routeName))
-            {
-                this.RouteName = routeName;
-            }
+            //if (!string.IsNullOrEmpty(routeName))
+            //{
+            //    this.RouteName = routeName;
+            //}
         }
     }
 }

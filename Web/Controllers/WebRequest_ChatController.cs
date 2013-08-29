@@ -26,7 +26,7 @@ namespace Web.Controllers
             {
                 App_Chat chat = new App_Chat();
                 chat.ID = item.ID;
-                chat.SendTime = item.SendTime.DateFormat();
+                chat.SendTime = item.SendTime.ToString(SystemConst.Business.TimeFomatFull);
                 chat.Content = item.TextContent;//todo 
                 chat.Type = item.EnumMessageTypeID;
                 //发送方向：接收 或 发送
