@@ -48,6 +48,7 @@
     <Compile Include="IAccountMainHouseTypeModel.cs" />
     <Compile Include="IAccountMainModel.cs" />
     <Compile Include="IAccountModel.cs" />
+    <Compile Include="IAutoMessage_UserModel.cs" />
     <Compile Include="IBaseModel.cs" />
     <Compile Include="IKeywordAutoMessageModel.cs" />
     <Compile Include="IKeywordModel.cs" />
