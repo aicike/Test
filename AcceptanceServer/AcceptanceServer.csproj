@@ -151,6 +151,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Business\Business.csproj">
+      <Project>{7E5029F0-6823-4253-A107-A9C4154E7FAD}</Project>
+      <Name>Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{1D926C61-B1CC-48BC-93AA-3F52D05B8FD0}</Project>
       <Name>Common</Name>

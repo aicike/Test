@@ -16,6 +16,7 @@ using AcceptanceServer.DataOperate;
 using AcceptanceServer.DataBllOperate;
 using System.Data;
 using System.Threading.Tasks;
+using Business;
 
 
 
@@ -214,7 +215,9 @@ namespace AcceptanceServer
                         DataTable dt = DataBusiness.InsertChatRecord(msg, Np).Tables[0];
                         if (dt == null) //数据存储失败 
                         {
-                            //return 发送失败 --------------------------------------------------------------------------------------------------
+                            //return  6发送失败
+                            SendMessageStatus("6");
+                            return;
                         }
                         else
                         {
@@ -231,8 +234,6 @@ namespace AcceptanceServer
                                     con.Send(msg);
                                 }
                                
-                                
-                                //frm.ShowMesage(msg.From.User + " 对 " + msg.To.User + " 发送信息 \r" + msg.Body);
                             }
                             //不在线
                             else
@@ -243,7 +244,14 @@ namespace AcceptanceServer
                                 int cnt = DataBusiness.InsertOffLineData(msg, Np, ThisMessageID);
                                 if (cnt <= 0)
                                 {
-                                    //return 发送失败--------------------------------------------------------------------------------------------------
+                                    //return  6发送失败
+                                    SendMessageStatus("6");
+                                    return;
+                                }
+                                else
+                                { 
+                                    //推送
+                                    PushMessage(msg, Np);
                                 }
 
                             }
@@ -251,14 +259,13 @@ namespace AcceptanceServer
                             SendMessageStatus("4");
 
 
-
                         }
                     }
                     //状态
-                    else if (Np.MT == "2")
-                    {
+                    //else if (Np.MT == "2")
+                    //{
 
-                    }
+                    //}
 
 
                 }
@@ -444,7 +451,52 @@ namespace AcceptanceServer
         
         }
 
+        /// <summary>
+        /// 推送消息
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="Np"></param>
+        public void PushMessage(agsXMPP.protocol.client.Message msg, NewsProtocol Np)
+        {
 
+            PushModel pm = new PushModel();
+            //发送人类型
+            int FromType = 0;
+            //接收人类型
+            int ToType = 0;
+            //发送人ID
+            int FromUID = int.Parse(jid.User.Substring(1));
+            //接收人ID
+            int ToUID = int.Parse(msg.To.User.Substring(1));
+            //消息方向
+            int Msd = int.Parse(Np.MSD);
+            //售楼 - 售楼
+            if (Msd == (int)EnumMessageSendDirection.Account_Account)
+            {
+                FromType = (int)EnumClientUserType.Account;
+                ToType = (int)EnumClientUserType.Account;
+            }
+            //售楼 - 用户
+            else if (Msd == (int)EnumMessageSendDirection.Account_User)
+            {
+                FromType = (int)EnumClientUserType.Account;
+                ToType = (int)EnumClientUserType.User;
+            }
+            //用户 - 售楼
+            else if (Msd == (int)EnumMessageSendDirection.User_Account)
+            {
+                FromType = (int)EnumClientUserType.User;
+                ToType = (int)EnumClientUserType.Account;
+            }
+            //用户 - 用户
+            else if (Msd == (int)EnumMessageSendDirection.User_User)
+            {
+                FromType = (int)EnumClientUserType.User;
+                ToType = (int)EnumClientUserType.User;
+            }
+
+            pm.PushFromChat((EnumMessageType)int.Parse(Np.EID), msg.Body, (EnumClientUserType)ToType, ToUID, (EnumClientUserType)FromType, FromUID);
+        }
 
 
 
