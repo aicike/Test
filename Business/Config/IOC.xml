@@ -60,6 +60,9 @@
   </object>
   <object id="Push_Getui" type="Business.Push_Getui" singleton="false">
   </object>
+
+  <object id="AutoMessage_UserModel" type="Business.AutoMessage_UserModel" parent="EFModel" singleton="false"></object>
+  
   <!--<object id="UserModel" type="NightClubBooth.Business.UserModel" parent="EFModel" singleton="false">
     <property name="LookupOptionModel" ref="LookupOptionModel"/>
     <property name="RoleModel" ref="RoleModel"/>

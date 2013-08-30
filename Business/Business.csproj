@@ -72,6 +72,7 @@
     <Compile Include="AccountModel.cs" />
     <Compile Include="Account_UserModel.cs" />
     <Compile Include="App_AutoMessageReplyContentModel.cs" />
+    <Compile Include="AutoMessage_UserModel.cs" />
     <Compile Include="CommonModel.cs" />
     <Compile Include="BaseModel.cs" />
     <Compile Include="CityModel.cs" />

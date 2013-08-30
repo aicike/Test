@@ -47,6 +47,8 @@ namespace Poco
         public virtual ICollection<KeywordAutoMessage> KeywordAutoMessages { get; set; }
 
         public virtual ICollection<AutoMessage_Keyword> AutoMessage_KeywordsKeyword { get; set; }
+
+        public virtual ICollection<AutoMessage_User> AutoMessage_Users { get; set; }
     }
 
     /// <summary>
