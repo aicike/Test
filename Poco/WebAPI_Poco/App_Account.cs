@@ -14,5 +14,7 @@ namespace Poco.WebAPI_Poco
         public string HeadImagePath { get; set; }
 
         public string Email { get; set; }
+
+        public string Pwd { get; set; }
     }
 }

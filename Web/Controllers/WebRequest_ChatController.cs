@@ -16,10 +16,18 @@ namespace Web.Controllers
         /// <summary>
         /// 获取用户的聊天记录
         /// </summary>
-        public string GetMessageList(int currentUserType, int accountID, int userID, int pageSize, int currentPage)
+        public string GetMessageList(int currentUserType, int accountID, int userID, int pageSize, int lastMessageID)
         {
             var messageModel = Factory.Get<IMessageModel>(SystemConst.IOC_Model.MessageModel);
-            var list = messageModel.GetList(accountID, userID).ToPagedList(currentPage, pageSize).ToList();
+            List<Message> list = null;
+            if (lastMessageID <= 0)
+            {
+                list = messageModel.GetList(accountID, userID).Take(pageSize).ToList();
+            }
+            else
+            {
+                list = messageModel.GetList(accountID, userID).Where(a => a.ID < lastMessageID).Take(pageSize).ToList();
+            }
             List<App_Chat> chats = new List<App_Chat>();
             var userType = (EnumClientUserType)currentUserType;//当前用户身份的类型
             foreach (var item in list)

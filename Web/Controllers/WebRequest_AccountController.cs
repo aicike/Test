@@ -33,7 +33,8 @@ namespace Web.Controllers
                     ID = account.ID,
                     Name = account.Name,
                     HeadImagePath = hostUrl + Url.Content(account.HeadImagePath),
-                    Email = account.Email
+                    Email = account.Email,
+                    Pwd = pwd
                 }
             };
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);

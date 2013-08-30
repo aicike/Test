@@ -19,7 +19,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<Message> GetList(int SID, int UID)
         {
-            var list = List().Where(a => (a.FromAccountID == SID && a.ToUserID == UID) || (a.ToAccountID == SID && a.FromUserID == UID)).OrderByDescending(a => a.SendTime);
+            var list = List().Where(a => (a.FromAccountID == SID && a.ToUserID == UID) || (a.ToAccountID == SID && a.FromUserID == UID)).OrderByDescending(a => a.ID);
             return list;
         }
 

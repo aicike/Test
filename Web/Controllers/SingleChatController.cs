@@ -89,7 +89,7 @@ namespace Web.Controllers
                     np.MSD = ((int)EnumMessageSendDirection.Account_User).ToString(); //售楼->购房
                     np.MT = "1";  //消息
                     np.EID = MesType; //消息类型
-                    np.Sendtime = DateTime.Now.ToString();//发送时间
+                    np.Sendtime = DateTime.Now.ToString(SystemConst.Business.TimeFomatFull);//发送时间
                     //文本
                     if (MesType == ((int)EnumMessageType.Text).ToString())
                     {
