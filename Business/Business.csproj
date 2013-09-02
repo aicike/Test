@@ -94,7 +94,6 @@
     <Compile Include="QrCodeModel.cs" />
     <Compile Include="RoleModel.cs" />
     <Compile Include="SystemUserModel.cs" />
-    <Compile Include="AccountMainExpandInfoModel.cs" />
     <Compile Include="Account_AccountMainModel.cs" />
     <Compile Include="ActivateEmailModel.cs" />
     <Compile Include="SystemUserRoleModel.cs" />

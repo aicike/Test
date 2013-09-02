@@ -434,6 +434,9 @@
     <Folder Include="Areas\System\Models\" />
     <Folder Include="Areas\System\Views\Shared\" />
     <Folder Include="Download\" />
+    <Folder Include="File\1\Account\" />
+    <Folder Include="File\1\Base\" />
+    <Folder Include="File\1\FileLibrary\" />
     <Folder Include="File\1_messageFile\" />
     <Folder Include="File\platform\" />
   </ItemGroup>
@@ -704,7 +707,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>30062</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

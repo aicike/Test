@@ -15,7 +15,7 @@ namespace Web.Areas.System.Controllers
         public ActionResult Index(int? id)
         {
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
-            var list = roleModel.List().ToPagedList(id??1 , 2);
+            var list = roleModel.List().ToPagedList(id??1 , 15);
             return View(list);
         }
 

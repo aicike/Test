@@ -250,7 +250,7 @@ namespace Common
             {
                 return "P";
             }
-            else if ((iCnChar >= 50906) && (iCnChar <= .51386))
+            else if ((iCnChar >= 50906) && (iCnChar <= 51386))
             {
                 return "Q";
             }

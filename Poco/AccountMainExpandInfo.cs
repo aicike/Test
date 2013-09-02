@@ -9,6 +9,7 @@ namespace Poco
     /// <summary>
     /// 扩展信息表（不同业务字段）
     /// </summary>
+    [Obsolete("已彻底弃用",true)]
     [Serializable]
     public class AccountMainExpandInfo : IBaseEntity
     {

@@ -171,11 +171,6 @@ namespace Business
             var result = base.Delete(id);
             if (result.HasError == false)
             {
-                IAccountMainExpandInfoModel accountMainExpandInfoModel = Factory.Get<IAccountMainExpandInfoModel>(SystemConst.IOC_Model.AccountMainExpandInfoModel);
-                result = accountMainExpandInfoModel.Delete(id);
-            }
-            if (result.HasError == false)
-            {
                 var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
                 var account_accountMain_ids = account_accountMainModel.List().Where(a => a.AccountMainID == id).Select(a => a.ID).ToArray();
                 var account_ids = account_accountMainModel.List().Where(a => a.AccountMainID == id).Select(a => a.AccountID).ToArray();

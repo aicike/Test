@@ -44,7 +44,6 @@ namespace EF
             modelBuilder.Configurations.Add(new SystemUserMap());
             modelBuilder.Configurations.Add(new ClientInfoMap());
             modelBuilder.Configurations.Add(new MessageMap());
-            modelBuilder.Configurations.Add(new AccountMainExpandInfoMap());
             modelBuilder.Configurations.Add(new AccountMainMap());
             modelBuilder.Configurations.Add(new AccountMap());
             modelBuilder.Configurations.Add(new UserMap());

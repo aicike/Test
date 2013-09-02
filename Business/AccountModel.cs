@@ -220,7 +220,7 @@ namespace Business
         {
             Result result = new Result();
             var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
-            if (status == EnumAccountStatus.Enabled && account_accountMainModel.CheckIsExistAccountAdmin(accountMainID))
+            if (status == EnumAccountStatus.Enabled && account_accountMainModel.CheckIsExistAccountAdmin(accountMainID, accountID))
             {
                 result.Error = SystemConst.Notice.MultipleAccountMainAdminAccount;
                 return result;
@@ -238,26 +238,32 @@ namespace Business
             var account = List().Where(a => a.Email.Equals(email, StringComparison.OrdinalIgnoreCase) && a.LoginPwd.Equals(pwd)).FirstOrDefault();
             if (account == null)
             {
-                result.Error = "用户名或密码错误";
+                result.Error = "用户名或密码错误。";
+                return result;
             }
-            else
+            var accountMain = account.Account_AccountMains.FirstOrDefault();
+            if (accountMain.AccountMain.AccountStatus.Token.Equals(EnumAccountStatus.Disabled.ToString(), StringComparison.CurrentCultureIgnoreCase)
+                || account.AccountStatus.Token.Equals(EnumAccountStatus.Disabled.ToString(), StringComparison.CurrentCultureIgnoreCase)
+            || accountMain.SystemStatus == (int)EnumSystemStatus.Delete)
             {
-                //todo:以后可能会出现一个销售账号管理多个售楼部，需要先选择售楼部才能登录系统，目前默认选择第一个售楼部。
-                Account entity = new Account();
-                entity.ID = account.ID;
-                entity.SystemStatus = account.SystemStatus;
-                entity.Name = account.Name;
-                entity.LoginPwd = account.LoginPwd;
-                entity.Phone = account.Phone;
-                entity.HeadImagePath = account.HeadImagePath;
-                entity.Email = account.Email;
-                entity.RoleID = account.RoleID;
-                entity.AccountStatusID = account.AccountStatusID;
-                entity.IsActivated = account.IsActivated;
-                entity.HostName = account.Account_AccountMains.FirstOrDefault().AccountMain.HostName;
-                entity.CurrentAccountMainID = account.Account_AccountMains.FirstOrDefault().AccountMain.ID;
-                HttpContext.Current.Session[SystemConst.Session.LoginAccount] = entity;
+                result.Error = "账号不可用。";
+                return result;
             }
+            //todo:以后可能会出现一个销售账号管理多个售楼部，需要先选择售楼部才能登录系统，目前默认选择第一个售楼部。
+            Account entity = new Account();
+            entity.ID = account.ID;
+            entity.SystemStatus = account.SystemStatus;
+            entity.Name = account.Name;
+            entity.LoginPwd = account.LoginPwd;
+            entity.Phone = account.Phone;
+            entity.HeadImagePath = account.HeadImagePath;
+            entity.Email = account.Email;
+            entity.RoleID = account.RoleID;
+            entity.AccountStatusID = account.AccountStatusID;
+            entity.IsActivated = account.IsActivated;
+            entity.HostName = account.Account_AccountMains.FirstOrDefault().AccountMain.HostName;
+            entity.CurrentAccountMainID = account.Account_AccountMains.FirstOrDefault().AccountMain.ID;
+            HttpContext.Current.Session[SystemConst.Session.LoginAccount] = entity;
             return result;
         }
 

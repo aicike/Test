@@ -52,6 +52,10 @@
             cursor: pointer;
             text-align: center;
         }
+        .menu li.select a
+        {
+            background-color: #37712b;
+        }
         .title
         {
             border-bottom: 1px solid #d3d3d3;

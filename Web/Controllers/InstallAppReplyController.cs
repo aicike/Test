@@ -36,19 +36,27 @@ namespace Web.Controllers
         {
             var AutoAddModel = Factory.Get<IAutoMessage_AddModel>(SystemConst.IOC_Model.AutoMessage_AddModel);
             var AutoAdd = AutoAddModel.GitInfo(LoginAccount.CurrentAccountMainID);
-            if (AutoAdd!=null)
+            Result result = null;
+            if (AutoAdd != null)
             {
                 AutoAdd.Content = AutoMessAdd.Content;
-                AutoAddModel.Edit(AutoAdd);
+                result = AutoAddModel.Edit(AutoAdd);
             }
             else
             {
                 AutoMessAdd.AccountMainID = LoginAccount.CurrentAccountMainID;
-                AutoAddModel.Add(AutoMessAdd);
+                result = AutoAddModel.Add(AutoMessAdd);
             }
-            return JavaScript("window.location.href='" + Url.Action("Index", "InstallAppReply", new { HostName = LoginAccount.HostName }) + "'");
+            if (result.HasError)
+            {
+                return Alert(new Dialog(result.Error, Url.Action("Index", "InstallAppReply", new { HostName = LoginAccount.HostName })));
+            }
+            else
+            {
+                return Alert(new Dialog("保存成功", Url.Action("Index", "InstallAppReply", new { HostName = LoginAccount.HostName })));
+            }
         }
-        
+
         public ActionResult Delete(int id)
         {
             var AutoAddModel = Factory.Get<IAutoMessage_AddModel>(SystemConst.IOC_Model.AutoMessage_AddModel);

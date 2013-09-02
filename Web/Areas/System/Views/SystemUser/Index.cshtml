@@ -32,10 +32,7 @@
         {
             <tr>
                 <td>
-                    @if (string.IsNullOrEmpty(item.HeadImage) == false)
-                    { 
-                        <img id="imgLogo" style="max-width:80px;max-height:80px;" src="@Url.Content(@item.HeadImage)" />
-                    }
+                        <img id="imgLogo" style="max-width:80px;max-height:80px;" src="@Url.Content(@item.HeadImage.DefaultHeadImage())" />
                 </td>
                 <td>
                     @item.Name

@@ -815,32 +815,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
-            
-            CreateTable(
-                "dbo.AccountMainExpandInfo",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        SystemStatus = c.Int(nullable: false),
-                        ProductAddress = c.String(nullable: false, maxLength: 200),
-                        OpeningDate = c.DateTime(nullable: false),
-                        CheckInDate = c.DateTime(nullable: false),
-                        CompletedDate = c.DateTime(nullable: false),
-                        BuildCompany = c.String(nullable: false, maxLength: 100),
-                        Investor = c.String(nullable: false, maxLength: 100),
-                        Description = c.String(maxLength: 4000),
-                        ProjectSupport = c.String(maxLength: 2000),
-                        TrafficInfo = c.String(maxLength: 2000),
-                        BuildingMaterials = c.String(maxLength: 2000),
-                        FloorInfo = c.String(maxLength: 2000),
-                        StallInfo = c.String(maxLength: 2000),
-                        OccupyArea = c.Double(),
-                        BuildingArea = c.Double(),
-                        ProjectSchedule = c.String(maxLength: 4000),
-                        PropertyRight = c.Int(nullable: false),
-                        HouseholdsCount = c.Int(),
-                    })
-                .PrimaryKey(t => t.ID);
+
 
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };
@@ -1016,7 +991,6 @@ namespace EF.Migrations
             DropForeignKey("dbo.Role", "ParentRoleID", "dbo.Role");
             DropForeignKey("dbo.Account", "AccountStatusID", "dbo.LookupOption");
             DropForeignKey("dbo.Account", "RoleID", "dbo.Role");
-            DropTable("dbo.AccountMainExpandInfo");
             DropTable("dbo.ActivateEmail");
             DropTable("dbo.ClientInfo");
             DropTable("dbo.PushMsgDetail");

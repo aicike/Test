@@ -54,16 +54,15 @@
     <Compile Include="Mapping\SystemUserMap.cs" />
     <Compile Include="Mapping\ClientInfoMap.cs" />
     <Compile Include="Mapping\AccountMainMap.cs" />
-    <Compile Include="Mapping\AccountMainExpandInfoMap.cs" />
     <Compile Include="Mapping\AccountMap.cs" />
     <Compile Include="Mapping\UserMap.cs" />
     <Compile Include="Mapping\UserLoginInfoMap.cs" />
     <Compile Include="Mapping\KeywordMap.cs" />
     <Compile Include="Mapping\KeywordAutoMessageMap.cs" />
     <Compile Include="Mapping\AppUpdateMap.cs" />
-    <Compile Include="Migrations\201309020040350_Initial.cs" />
-    <Compile Include="Migrations\201309020040350_Initial.Designer.cs">
-      <DependentUpon>201309020040350_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201309021307237_Initial.cs" />
+    <Compile Include="Migrations\201309021307237_Initial.Designer.cs">
+      <DependentUpon>201309021307237_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,8 +82,8 @@
     <Content Include="InitialProvince.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201309020040350_Initial.resx">
-      <DependentUpon>201309020040350_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201309021307237_Initial.resx">
+      <DependentUpon>201309021307237_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

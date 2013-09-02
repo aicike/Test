@@ -45,8 +45,18 @@ namespace Business
             int accountStatusID = LookupFactory.GetLookupOptionIdByToken(EnumAccountStatus.Enabled);
             if (accountID != null && accountID.HasValue)
             {
-                return List().Any(a => a.AccountMainID == accountMainID && (a.Account.Role.Token.Equals(SystemConst.Business.AccountAdmin) || a.Account.Role.ID == 1) && a.Account.SystemStatus == (int)EnumSystemStatus.Active && a.Account.AccountStatusID == accountStatusID
-                    && a.AccountID != accountID);
+                
+                var accountIDs= List().Where(a => a.AccountMainID == accountMainID 
+                    && (a.Account.Role.Token.Equals(SystemConst.Business.AccountAdmin) || a.Account.Role.ID == 1) 
+                    && a.Account.SystemStatus == (int)EnumSystemStatus.Active 
+                    && a.Account.AccountStatusID == accountStatusID).Select(a=>a.AccountID);
+                if (accountIDs.Count() > 1)
+                {
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
             return List().Any(a => a.AccountMainID == accountMainID && (a.Account.Role.Token.Equals(SystemConst.Business.AccountAdmin) || a.Account.Role.ID == 1) && a.Account.SystemStatus == (int)EnumSystemStatus.Active && a.Account.AccountStatusID == accountStatusID);
         }

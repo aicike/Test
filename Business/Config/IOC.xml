@@ -9,7 +9,6 @@
   <object id="MessageModel" type="Business.MessageModel" parent="EFModel" singleton="false"></object>
   <object id="SystemUserModel" type="Business.SystemUserModel" parent="EFModel" singleton="false"></object>
   <object id="AccountMainModel" type="Business.AccountMainModel" parent="EFModel" singleton="false"></object>
-  <object id="AccountMainExpandInfoModel" type="Business.AccountMainExpandInfoModel" parent="EFModel" singleton="false"></object>
   <object id="AccountModel" type="Business.AccountModel" parent="EFModel" singleton="false"></object>
   <object id="ProvinceModel" type="Business.ProvinceModel" parent="EFModel" singleton="false"></object>
   <object id="CityModel" type="Business.CityModel" parent="EFModel" singleton="false"></object>

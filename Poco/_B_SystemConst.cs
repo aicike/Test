@@ -52,6 +52,12 @@ namespace Poco
             public const string LoginAccount = "LoginAccount";
         }
 
+        public class Menu {
+            private Menu() { }
+
+            public const string Home = "Home";
+        }
+
         public class IOC_Model
         {
             private IOC_Model() { }
