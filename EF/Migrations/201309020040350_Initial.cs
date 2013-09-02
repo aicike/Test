@@ -3,7 +3,7 @@ namespace EF.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -711,6 +711,24 @@ namespace EF.Migrations
                 .Index(t => t.AutoMessage_KeywordID);
             
             CreateTable(
+                "dbo.AutoMessage_User",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        UserID = c.Int(nullable: false),
+                        SendTime = c.DateTime(nullable: false),
+                        AccountMainID = c.Int(nullable: false),
+                        AutoMessage_KeywordID = c.Int(),
+                        Question = c.String(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
+                .ForeignKey("dbo.AutoMessage_Keyword", t => t.AutoMessage_KeywordID)
+                .Index(t => t.AccountMainID)
+                .Index(t => t.AutoMessage_KeywordID);
+            
+            CreateTable(
                 "dbo.Account_AccountMain",
                 c => new
                     {
@@ -824,7 +842,6 @@ namespace EF.Migrations
                     })
                 .PrimaryKey(t => t.ID);
 
-
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };
             foreach (var file in ddlSqlFiles)
@@ -849,6 +866,8 @@ namespace EF.Migrations
             DropIndex("dbo.PushMsg", new[] { "AccountMainID" });
             DropIndex("dbo.Account_AccountMain", new[] { "AccountMainID" });
             DropIndex("dbo.Account_AccountMain", new[] { "AccountID" });
+            DropIndex("dbo.AutoMessage_User", new[] { "AutoMessage_KeywordID" });
+            DropIndex("dbo.AutoMessage_User", new[] { "AccountMainID" });
             DropIndex("dbo.KeywordAutoMessage", new[] { "AutoMessage_KeywordID" });
             DropIndex("dbo.KeywordAutoMessage", new[] { "EnumMessageTypeID" });
             DropIndex("dbo.Keyword", new[] { "AutoMessage_KeywordID" });
@@ -926,6 +945,8 @@ namespace EF.Migrations
             DropForeignKey("dbo.PushMsg", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.Account_AccountMain", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.Account_AccountMain", "AccountID", "dbo.Account");
+            DropForeignKey("dbo.AutoMessage_User", "AutoMessage_KeywordID", "dbo.AutoMessage_Keyword");
+            DropForeignKey("dbo.AutoMessage_User", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.KeywordAutoMessage", "AutoMessage_KeywordID", "dbo.AutoMessage_Keyword");
             DropForeignKey("dbo.KeywordAutoMessage", "EnumMessageTypeID", "dbo.LookupOption");
             DropForeignKey("dbo.Keyword", "AutoMessage_KeywordID", "dbo.AutoMessage_Keyword");
@@ -1001,6 +1022,7 @@ namespace EF.Migrations
             DropTable("dbo.PushMsgDetail");
             DropTable("dbo.PushMsg");
             DropTable("dbo.Account_AccountMain");
+            DropTable("dbo.AutoMessage_User");
             DropTable("dbo.KeywordAutoMessage");
             DropTable("dbo.Keyword");
             DropTable("dbo.AccountMainHouseType");

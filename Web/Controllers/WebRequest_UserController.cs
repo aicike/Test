@@ -13,6 +13,26 @@ namespace Web.Controllers
     public class WebRequest_UserController : Controller
     {
         /// <summary>
+        /// 登录
+        /// </summary>
+        [HttpGet]
+        public Result UserLogin(string email, string loginPwd)
+        {
+            var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
+            var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email, Pwd = loginPwd });
+            return result;
+        }
+        /// <summary>
+        /// 注册
+        /// </summary>
+        [HttpPost]
+        public Result UserRegister(App_UserLoginInfo user)
+        {
+            var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
+            var result = userLoginInfoModel.Register(user);
+            return result;
+        }
+        /// <summary>
         /// 每次打开应用时，提交的clientID
         /// </summary>
         [HttpPost]
