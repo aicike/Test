@@ -815,6 +815,18 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
+            
+            CreateTable(
+                "dbo.Conversation",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        User1ID = c.String(),
+                        User2ID = c.String(),
+                        Ctype = c.String(),
+                    })
+                .PrimaryKey(t => t.ID);
 
 
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");
@@ -991,6 +1003,7 @@ namespace EF.Migrations
             DropForeignKey("dbo.Role", "ParentRoleID", "dbo.Role");
             DropForeignKey("dbo.Account", "AccountStatusID", "dbo.LookupOption");
             DropForeignKey("dbo.Account", "RoleID", "dbo.Role");
+            DropTable("dbo.Conversation");
             DropTable("dbo.ActivateEmail");
             DropTable("dbo.ClientInfo");
             DropTable("dbo.PushMsgDetail");

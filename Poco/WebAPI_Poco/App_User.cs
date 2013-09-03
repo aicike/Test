@@ -13,6 +13,10 @@ namespace Poco.WebAPI_Poco
 
         public string NameNote { get; set; }
 
+        public string Phone { get; set; }
+
+        public string Email { get; set; }
+
         public string HeadImagePath { get; set; }
     }
 }

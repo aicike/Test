@@ -7,6 +7,7 @@ using Injection;
 using Interface;
 using Poco;
 using Poco.WebAPI_Poco;
+using Common;
 
 namespace Web.Controllers
 {
@@ -114,6 +115,43 @@ namespace Web.Controllers
         {
             var account_UserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
             return account_UserModel.GetBindAccountID(userID, accountMainID) + "";
+        }
+
+        /// <summary>
+        /// 修改用户信息
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="field"></param>
+        /// <param name="value"></param>
+        public string SetUserInfo(int userID, string field, string value)
+        {
+            Result result = new Result();
+            var um = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+            var user = um.Get(userID);
+            if (user == null)
+            {
+                result.Error = "请求错误，用户不存在或不可用。";
+            }
+            var ulim = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
+            var userLoginInfo = ulim.Get(user.UserLoginInfoID);
+            switch (field)
+            {
+                case "name":
+                    userLoginInfo.Name = value;
+                    break;
+                case "phone":
+                    userLoginInfo.Phone = value;
+                    break;
+                case "email":
+                    userLoginInfo.Email = value;
+                    break;
+                case "pwd":
+                    userLoginInfo.LoginPwd = DESEncrypt.Encrypt(value); ;
+                    break;
+            }
+            userLoginInfo.LoginPwdPage = "000000";
+            result = ulim.Edit(userLoginInfo);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
     }
 }
