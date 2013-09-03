@@ -58,7 +58,9 @@
     <Compile Include="AccountMainHouseInfo.cs" />
     <Compile Include="AccountMainHouseInfoDetail.cs" />
     <Compile Include="AutoMessage_User.cs" />
+    <Compile Include="Conversation.cs" />
     <Compile Include="Enum\EnumBuildingType.cs" />
+    <Compile Include="Enum\EnumConversationType.cs" />
     <Compile Include="Enum\EnumDecoration.cs" />
     <Compile Include="Enum\EnumMessageSend.cs" />
     <Compile Include="Enum\EnumMsgModel.cs" />

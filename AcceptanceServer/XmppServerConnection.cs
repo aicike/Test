@@ -17,6 +17,8 @@ using AcceptanceServer.DataBllOperate;
 using System.Data;
 using System.Threading.Tasks;
 using Business;
+using System.Security.Policy;
+using System.Configuration;
 
 
 
@@ -207,7 +209,7 @@ namespace AcceptanceServer
                 if (msg.Type == MessageType.chat)
                 {
                     NewsProtocol Np = msg.SelectSingleElement(typeof(NewsProtocol)) as NewsProtocol;
-                    
+                  
                     //消息
                     if (Np.MT == "1")
                     {
@@ -227,7 +229,11 @@ namespace AcceptanceServer
                                 //转发发送消息
                                 IEnumerable<XmppServerConnection> cons =  OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
                                 //XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
-
+                                if (Np.MSD == "1" || Np.MSD == "2" || Np.MSD == "3")
+                                {
+                                    Np.FielUrl = ConfigurationManager.AppSettings["WebUrl"].ToString() + Np.FielUrl;
+                                }
+                                
                                 msg.From = jid;
                                 foreach (XmppServerConnection con in cons)
                                 {
@@ -249,7 +255,11 @@ namespace AcceptanceServer
                                     return;
                                 }
                                 else
-                                { 
+                                {
+                                    if (Np.MSD == "1" || Np.MSD == "2" || Np.MSD == "3")
+                                    {
+                                        Np.FielUrl = ConfigurationManager.AppSettings["WebUrl"].ToString() + Np.FielUrl;
+                                    }
                                     //推送
                                     PushMessage(msg, Np);
                                 }
