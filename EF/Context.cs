@@ -33,7 +33,7 @@ namespace EF
         public DbSet<Account_AccountMain> Account_AccountMain { get; set; }
         public DbSet<ClientInfo> ClientInfo { get; set; }
         public DbSet<Keyword> Keyword { get; set; }
-
+        public DbSet<Conversation> Conversation { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -8,6 +8,7 @@ using Interface;
 using Poco;
 using Poco.WebAPI_Poco;
 using Poco.Enum;
+using System.Configuration;
 
 namespace Web.Controllers
 {
@@ -58,12 +59,81 @@ namespace Web.Controllers
             }
             Result result = new Result();
             result.Entity = chats;
+
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
-        public string UpLodeFiles(int Type, string FileName, string FileBuffer)
+        /// <summary>
+        /// 移动端上传文件
+        /// </summary>
+        /// <param name="FileType">文件类型 1 图片，2语音，3视频</param>
+        /// <param name="FileName">文件名称（带后缀的）</param>
+        /// <param name="UserID">发送人ID</param>
+        /// <param name="UserType">发送人类型 1，售楼人员，2用户</param>
+        /// <param name="UserAccountID">发送人所属售楼部ID</param>
+        /// <param name="FileBuffer">二进制文件</param>
+        /// <returns></returns>
+        [ValidateInput(false)]
+        public string UpLodeFiles(byte[] FileBuffer)//int FileType, string FileName, int UserType, int UserID, int UserAccountID,
         {
+
             return "";
+            
+            //byte[] FileBuffers =null;
+            //Result result = new Result();
+            ////路径
+            //string UpFile = ConfigurationManager.AppSettings["UpLodeFile"].ToString();
+            ////人员类型
+            //string UpType = string.Empty;
+            ////文件类型
+            //string UpFileType = string.Empty;
+            ////文件类型 参数
+            //if (FileType == 1)
+            //{
+            //    UpFileType = "Image";
+            //}
+            //else if (FileType == 2)
+            //{
+            //    UpFileType = "Voice";
+            //}
+            //else if (FileType == 3)
+            //{
+            //    UpFileType = "Video";
+            //}
+            ////发送人类型
+            //if (UserType == 1)
+            //{
+            //    UpType = "Account";
+            //}
+            //else if (UserType == 2)
+            //{
+            //    UpType = "User";
+            //}
+            ////拼接路径
+            //string UPFileHname = DateTime.Now.ToString("yyMMddhhmmss");
+            //string Path = string.Format("{0}{1}.Message/{2}/{3}/{4}", UpFile, UserAccountID, UpType, UserID, UpFileType);
+            //try
+            //{
+            //    if (!System.IO.File.Exists(Server.MapPath(Path)))
+            //    {
+            //        System.IO.Directory.CreateDirectory(Server.MapPath(Path));
+            //    }
+            //    Path = Path + "/" + UPFileHname + "_" + FileName;
+            //    //全路径
+            //    string FilePath = Server.MapPath(Path);
+
+            //    //保存文件
+            //    System.IO.File.WriteAllBytes(FilePath, FileBuffers);
+            //    //返回路径
+            //    result.Entity = Path;
+            //    return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            //}
+            //catch (Exception ex)
+            //{
+            //    result.HasError = true;
+            //    return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            //}
+
         }
 
     }
