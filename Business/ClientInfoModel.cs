@@ -64,7 +64,20 @@ namespace Business
         {
             Result result = new Result();
             bool isHas = true;
-            if (userID != null && userID.HasValue && userID > 0)
+
+            bool isHasUser = false;
+            if (userID.HasValue)
+            {
+                //判断userID是否存在
+                var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+                var user = userModel.Get(userID.Value);
+                if (user != null)
+                {
+                    isHasUser = true;
+                }
+            }
+
+            if (userID != null && userID.HasValue && userID > 0 && isHasUser)
             {
                 //和user表绑定
                 isHas = List().Any(a => a.ClientID == clientID && a.EntityID == userID);
