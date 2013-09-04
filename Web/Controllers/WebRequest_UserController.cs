@@ -16,12 +16,11 @@ namespace Web.Controllers
         /// <summary>
         /// 登录
         /// </summary>
-        [HttpGet]
-        public Result UserLogin(string email, string loginPwd)
+        public string UserLogin(string email, string loginPwd,int accountMainID)
         {
             var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
-            var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email, Pwd = loginPwd });
-            return result;
+            var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email, Pwd = loginPwd,AccountMainID=accountMainID });
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
         /// <summary>
         /// 注册

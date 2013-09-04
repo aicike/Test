@@ -14,6 +14,19 @@ namespace Business
 {
     public class UserLoginInfoModel : BaseModel<UserLoginInfo>, IUserLoginInfoModel
     {
+        public new Result Edit(UserLoginInfo userLogiInfo)
+        {
+            Result result = new Result();
+            bool isExist = List().Any(a => a.Email.Equals(userLogiInfo.Email, StringComparison.CurrentCultureIgnoreCase) && a.ID != userLogiInfo.ID);
+            if (isExist)
+            {
+                result.Error = "该邮箱已存在，无法保存。";
+                return result;
+            }
+            return base.Edit(userLogiInfo);
+        }
+
+
         [Transaction]
         public Result Register(App_UserLoginInfo userLoginInfo)
         {
@@ -54,7 +67,7 @@ namespace Business
             if (userLoginInfo.AccountID != null && userLoginInfo.AccountID.HasValue)
             {
                 var account_UserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
-                result= account_UserModel.BindUser_Account(userLoginInfo.AccountID.Value, user.ID);
+                result = account_UserModel.BindUser_Account(userLoginInfo.AccountID.Value, user.ID);
             }
             if (result.HasError)
             {
@@ -103,19 +116,22 @@ namespace Business
 
             var accountStatus = EnumAccountStatus.Enabled.ToString();
 
-            var user = List().Where(a => a.Email.Equals(app_UserLoginInfo.Email, StringComparison.CurrentCultureIgnoreCase) && a.LoginPwd == pwd
+            var userLoginInfo = List().Where(a => a.Email.Equals(app_UserLoginInfo.Email, StringComparison.CurrentCultureIgnoreCase) && a.LoginPwd == pwd
                 && a.Users.Any(b => b.SystemStatus == (int)EnumSystemStatus.Active && b.AccountStatus.Token == accountStatus)).FirstOrDefault();
-            if (user == null)
+            if (userLoginInfo == null)
             {
                 result.Error = "邮箱或密码错误，登录失败。";
+                return result;
             }
-            user.CurrenRelatedUser = user.Users.Where(a => a.AccountMainID == app_UserLoginInfo.AccountMainID).FirstOrDefault();
-
-            UserLoginInfo newUser = new UserLoginInfo()
-            {
-                ID = user.ID,
-            };
-            result.Entity = newUser;
+            var user = userLoginInfo.Users.Where(a => a.AccountMainID == app_UserLoginInfo.AccountMainID).FirstOrDefault();
+            App_User appuser = new App_User();
+            appuser.ID = user.ID;
+            appuser.Name = user.UserLoginInfo.Name;
+            appuser.Phone = user.UserLoginInfo.Phone;
+            appuser.Email = user.UserLoginInfo.Email;
+            appuser.NameNote = user.Name;
+            appuser.HeadImagePath = SystemConst.WebUrl + user.UserLoginInfo.HeadImagePath.DefaultHeadImage().Replace("~", "");
+            result.Entity = appuser;
             return result;
         }
 
