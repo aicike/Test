@@ -55,30 +55,48 @@ namespace AcceptanceServer.DataOperate
         /// <returns></returns>
         public static DataSet GetUnreadMessage(string AoU, string AoUID)
         {
+            //获取用户会话ID
+            DataTable dt = GetUserConversationID(AoU, AoUID).Tables[0];
+            string id = "";
+            foreach (DataRow row in dt.Rows)
+            {
+                id += row["ID"] + ",";
+            }
+            id = id.TrimEnd(',');
             string sql = "";
             //用户
             if (AoU == "u")
             {
-                sql = string.Format(@"select case when a.fromaccountid <> 0 then a.fromaccountid else a.fromuserid  end as FromID,
-                                     count(*) as Messagecnt,max(a.sendTime) as SendTime ,
-                                    (select EnumMessageTypeID from PendingMessages where toUserID= {0}and sendTime =max(a.sendtime)) as EID,
-                                    (select Content from PendingMessages where toUserID= {0} and sendTime =max(a.sendtime)) as Content,
-                                    (select MSD from PendingMessages where toUserID= {0} and sendTime =max(a.sendtime)) as MSD
-                                     from dbo.PendingMessages a where a.toUserID = {0} group by a.fromaccountid,a.fromuserid", AoUID);
+                sql = " select * from  dbo.View_UserUnreadMessage where ToUserID in ('" + id + "')";
             }
             //售楼代表
             else
             {
-                sql = string.Format(@" select case when a.fromaccountid <> 0 then a.fromaccountid else a.fromuserid  end as FromID,
-                                     count(*) as Messagecnt,max(a.sendTime) as SendTime ,
-                                    (select EnumMessageTypeID from PendingMessages where toaccountid= {0} and sendTime =max(a.sendtime)) as EID,
-                                    (select Content from PendingMessages where toaccountid= {0} and sendTime =max(a.sendtime)) as Content,
-                                    (select MSD from PendingMessages where toaccountid= {0} and sendTime =max(a.sendtime)) as MSD
-                                     from dbo.PendingMessages a where a.toaccountid = {0} group by a.fromaccountid,a.fromuserid", AoUID);
+                sql = " select * from  dbo.View_AccountUnreadMessage where ToAccountID in ('" + id + "')";
             }
 
             return SqlHelper.ExecuteDataset(sql);
         
+        }
+
+        /// <summary>
+        /// 获取用户所有会话ID
+        /// </summary>
+        /// <param name="AoU"></param>
+        /// <param name="UID"></param>
+        /// <returns></returns>
+        public static DataSet GetUserConversationID(string AoU ,string UID)
+        {
+            string sql = "";
+            if (AoU == "u")
+            {
+                sql = string.Format("select ID from dbo.[Conversation] where (ctype='0' and User1ID='{0}') or (ctype='1' and User1ID='{0}') or(ctype ='1' and User2ID = '{0}')", UID);
+            }
+            else
+            {
+                sql = string.Format("select ID from dbo.[Conversation] where (ctype='0' and User2ID='{0}') or (ctype='2' and User1ID='{0}') or(ctype ='2' and User2ID = '{0}')", UID);
+            }
+            return SqlHelper.ExecuteDataset(sql);
         }
     }
 }

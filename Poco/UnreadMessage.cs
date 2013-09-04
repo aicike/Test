@@ -61,5 +61,16 @@ namespace Poco
             get { return mSD; }
             set { mSD = value; }
         }
+
+        string sID;
+        /// <summary>
+        /// 会话ID
+        /// </summary>
+        public string SID
+        {
+            get { return sID; }
+            set { sID = value; }
+        }
+        
     }
 }

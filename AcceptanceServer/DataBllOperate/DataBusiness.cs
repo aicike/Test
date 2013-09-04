@@ -108,7 +108,7 @@ namespace AcceptanceServer.DataBllOperate
                 um.SendTime = row["SendTime"].ToString();
                 um.MessageCnt = row["Messagecnt"].ToString();
                 um.MSD = row["MSD"].ToString();
-
+                um.SID = row["ConversationID"].ToString();
                 UMlist.Add(um);
             }
 

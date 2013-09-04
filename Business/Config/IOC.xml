@@ -54,6 +54,8 @@
   
   <object id="PushMsgModel" type="Business.PushMsgModel" parent="EFModel" singleton="false"></object>
   <object id="PushMsgDetailModel" type="Business.PushMsgDetailModel" parent="EFModel" singleton="false"></object>
+  <object id="ConversationModel" type="Business.ConversationModel" parent="EFModel" singleton="false"></object>
+  
 
   <object id="Push_IOS" type="Business.Push_IOS" singleton="false">
   </object>

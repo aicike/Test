@@ -51,9 +51,12 @@ namespace Web.Controllers
 
         public ActionResult SelectAtoUmes(int ?id ,int accountID,int UserID)
         {
+            //获取会话ID
+            var ConversationModel = Factory.Get<IConversationModel>(SystemConst.IOC_Model.ConversationModel);
+            var SID = ConversationModel.GetCID(LoginAccount.CurrentAccountMainID.ToString(), accountID.ToString(), UserID.ToString(), "0");
             //获取聊天记录
             var MessageModel = Factory.Get<IMessageModel>(SystemConst.IOC_Model.MessageModel);
-            var message = MessageModel.GetList(accountID, UserID).ToPagedList(id??1, 30);
+            var message = MessageModel.GetList(SID).ToPagedList(id ?? 1, 30);
 
             //售楼人员姓名
             var AccountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);

@@ -32,6 +32,14 @@ namespace Poco
             set { SetTag("mt", value); }
         }
 
+        /// <summary>
+        /// 会话ID
+        /// </summary>
+        public string SID
+        {
+            get { return GetTag("sid"); }
+            set { SetTag("sid",value); }
+        }
 
         /// <summary>
         /// 消息类型  0：文本库 1：图片库 2：视频库 3：音频库 4：图文库 

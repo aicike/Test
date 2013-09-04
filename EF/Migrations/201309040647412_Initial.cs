@@ -387,14 +387,17 @@ namespace EF.Migrations
                         ReceiveTime = c.DateTime(nullable: false),
                         FileUrl = c.String(),
                         LibraryImageTextsID = c.Int(),
+                        ConversationID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.FromAccountID)
+                .ForeignKey("dbo.Conversation", t => t.ConversationID)
                 .ForeignKey("dbo.User", t => t.FromUserID)
                 .ForeignKey("dbo.Account", t => t.ToAccountID)
                 .ForeignKey("dbo.User", t => t.ToUserID)
                 .ForeignKey("dbo.LibraryImageText", t => t.LibraryImageTextsID)
                 .Index(t => t.FromAccountID)
+                .Index(t => t.ConversationID)
                 .Index(t => t.FromUserID)
                 .Index(t => t.ToAccountID)
                 .Index(t => t.ToUserID)
@@ -507,6 +510,7 @@ namespace EF.Migrations
                         FileUrl = c.String(),
                         MessageID = c.Int(nullable: false),
                         LibraryImageTextsID = c.Int(),
+                        ConversationID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.FromAccountID)
@@ -515,12 +519,27 @@ namespace EF.Migrations
                 .ForeignKey("dbo.User", t => t.ToUserID)
                 .ForeignKey("dbo.Message", t => t.MessageID)
                 .ForeignKey("dbo.LibraryImageText", t => t.LibraryImageTextsID)
+                .ForeignKey("dbo.Conversation", t => t.ConversationID)
                 .Index(t => t.FromAccountID)
                 .Index(t => t.FromUserID)
                 .Index(t => t.ToAccountID)
                 .Index(t => t.ToUserID)
                 .Index(t => t.MessageID)
-                .Index(t => t.LibraryImageTextsID);
+                .Index(t => t.LibraryImageTextsID)
+                .Index(t => t.ConversationID);
+            
+            CreateTable(
+                "dbo.Conversation",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        AccountMainID = c.String(),
+                        User1ID = c.String(),
+                        User2ID = c.String(),
+                        Ctype = c.String(),
+                    })
+                .PrimaryKey(t => t.ID);
             
             CreateTable(
                 "dbo.LibraryImage",
@@ -815,18 +834,6 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
-            
-            CreateTable(
-                "dbo.Conversation",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        SystemStatus = c.Int(nullable: false),
-                        User1ID = c.String(),
-                        User2ID = c.String(),
-                        Ctype = c.String(),
-                    })
-                .PrimaryKey(t => t.ID);
 
 
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");
@@ -871,6 +878,7 @@ namespace EF.Migrations
             DropIndex("dbo.AutoMessage_Reply", new[] { "AccountMainID" });
             DropIndex("dbo.AutoMessage_Add", new[] { "AccountMainID" });
             DropIndex("dbo.LibraryImage", new[] { "AccountMainID" });
+            DropIndex("dbo.PendingMessages", new[] { "ConversationID" });
             DropIndex("dbo.PendingMessages", new[] { "LibraryImageTextsID" });
             DropIndex("dbo.PendingMessages", new[] { "MessageID" });
             DropIndex("dbo.PendingMessages", new[] { "ToUserID" });
@@ -891,6 +899,7 @@ namespace EF.Migrations
             DropIndex("dbo.Message", new[] { "ToUserID" });
             DropIndex("dbo.Message", new[] { "ToAccountID" });
             DropIndex("dbo.Message", new[] { "FromUserID" });
+            DropIndex("dbo.Message", new[] { "ConversationID" });
             DropIndex("dbo.Message", new[] { "FromAccountID" });
             DropIndex("dbo.LibraryImageText", new[] { "AccountMainID" });
             DropIndex("dbo.LibraryImageText", new[] { "LibraryImageTextParentID" });
@@ -950,6 +959,7 @@ namespace EF.Migrations
             DropForeignKey("dbo.AutoMessage_Reply", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.AutoMessage_Add", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.LibraryImage", "AccountMainID", "dbo.AccountMain");
+            DropForeignKey("dbo.PendingMessages", "ConversationID", "dbo.Conversation");
             DropForeignKey("dbo.PendingMessages", "LibraryImageTextsID", "dbo.LibraryImageText");
             DropForeignKey("dbo.PendingMessages", "MessageID", "dbo.Message");
             DropForeignKey("dbo.PendingMessages", "ToUserID", "dbo.User");
@@ -970,6 +980,7 @@ namespace EF.Migrations
             DropForeignKey("dbo.Message", "ToUserID", "dbo.User");
             DropForeignKey("dbo.Message", "ToAccountID", "dbo.Account");
             DropForeignKey("dbo.Message", "FromUserID", "dbo.User");
+            DropForeignKey("dbo.Message", "ConversationID", "dbo.Conversation");
             DropForeignKey("dbo.Message", "FromAccountID", "dbo.Account");
             DropForeignKey("dbo.LibraryImageText", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.LibraryImageText", "LibraryImageTextParentID", "dbo.LibraryImageText");
@@ -1003,7 +1014,6 @@ namespace EF.Migrations
             DropForeignKey("dbo.Role", "ParentRoleID", "dbo.Role");
             DropForeignKey("dbo.Account", "AccountStatusID", "dbo.LookupOption");
             DropForeignKey("dbo.Account", "RoleID", "dbo.Role");
-            DropTable("dbo.Conversation");
             DropTable("dbo.ActivateEmail");
             DropTable("dbo.ClientInfo");
             DropTable("dbo.PushMsgDetail");
@@ -1020,6 +1030,7 @@ namespace EF.Migrations
             DropTable("dbo.AutoMessage_Reply");
             DropTable("dbo.AutoMessage_Add");
             DropTable("dbo.LibraryImage");
+            DropTable("dbo.Conversation");
             DropTable("dbo.PendingMessages");
             DropTable("dbo.Group");
             DropTable("dbo.Account_User");
