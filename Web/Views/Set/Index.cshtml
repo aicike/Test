@@ -7,8 +7,8 @@
     设置</div>
 <div class="bodyLeft">
     <ul class="ulList">
-        <li><a href="@Url.Action("Index", "InstallAppReply", new{ HostName=ViewBag.HostName })">安装App自动回复</a></li>
-        <li><a href="@Url.Action("Index", "KeywordMessage", new { HostName = ViewBag.HostName })">关键词自动回复</a></li>
+        <li>@Html.ActionLink("安装App自动回复", "Index", "InstallAppReply", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("关键词自动回复", "Index", "KeywordMessage", new { HostName = ViewBag.HostName }, null, true)</li>
     </ul>
 </div>
 <div class="bodyRight">
