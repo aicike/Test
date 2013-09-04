@@ -384,3 +384,74 @@ SET IDENTITY_INSERT [dbo].[ClientInfo] OFF
 
 ------------------------------Other---------------------------------
 CREATE INDEX IX_HostName ON AccountMain (HostName)
+
+
+
+--INSERT VIEW----[View_UserUnreadMessage]----------------------------------------------------------
+USE [Aicike]
+GO
+
+/****** Object:  View [dbo].[View_UserUnreadMessage]    Script Date: 09/04/2013 10:46:05 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW [dbo].[View_UserUnreadMessage]
+AS
+SELECT     CASE WHEN a.fromaccountid <> 0 THEN a.fromaccountid ELSE a.fromuserid END AS FromID, COUNT(*) AS Messagecnt, MAX(SendTime) AS SendTime,
+                          (SELECT     ToUserID
+                            FROM          dbo.PendingMessages
+                            WHERE      (SendTime = MAX(a.SendTime))) AS ToUserID,
+                          (SELECT     EnumMessageTypeID
+                            FROM          dbo.PendingMessages AS PendingMessages_4
+                            WHERE      (SendTime = MAX(a.SendTime))) AS EID,
+                          (SELECT     [Content]
+                            FROM          dbo.PendingMessages AS PendingMessages_3
+                            WHERE      (SendTime = MAX(a.SendTime))) AS Content,
+                          (SELECT     MSD
+                            FROM          dbo.PendingMessages AS PendingMessages_2
+                            WHERE      (SendTime = MAX(a.SendTime))) AS MSD,
+                          (SELECT     ConversationID
+                            FROM          dbo.PendingMessages AS PendingMessages_1
+                            WHERE      (SendTime = MAX(a.SendTime))) AS ConversationID
+FROM         dbo.PendingMessages AS a
+WHERE     (ToUserID <> 0)
+GROUP BY FromAccountID, FromUserID
+
+GO
+---INSERT VIEW ----View_AccountUnreadMessage-----------------------------------------------
+USE [Aicike]
+GO
+
+/****** Object:  View [dbo].[View_AccountUnreadMessage]    Script Date: 09/04/2013 10:46:31 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW [dbo].[View_AccountUnreadMessage]
+AS
+SELECT     CASE WHEN a.fromaccountid <> 0 THEN a.fromaccountid ELSE a.fromuserid END AS FromID, COUNT(*) AS Messagecnt, MAX(SendTime) AS SendTime,
+                          (SELECT     ToAccountID
+                            FROM          dbo.PendingMessages
+                            WHERE      (SendTime = MAX(a.SendTime))) AS ToAccountID,
+                          (SELECT     EnumMessageTypeID
+                            FROM          dbo.PendingMessages AS PendingMessages_4
+                            WHERE      (SendTime = MAX(a.SendTime))) AS EID,
+                          (SELECT     [Content]
+                            FROM          dbo.PendingMessages AS PendingMessages_3
+                            WHERE      (SendTime = MAX(a.SendTime))) AS Content,
+                          (SELECT     MSD
+                            FROM          dbo.PendingMessages AS PendingMessages_2
+                            WHERE      (SendTime = MAX(a.SendTime))) AS MSD,
+                          (SELECT     ConversationID
+                            FROM          dbo.PendingMessages AS PendingMessages_1
+                            WHERE      (SendTime = MAX(a.SendTime))) AS ConversationID
+FROM         dbo.PendingMessages AS a
+WHERE     (ToAccountID <> 0)
+GROUP BY FromAccountID, FromUserID
+
+GO

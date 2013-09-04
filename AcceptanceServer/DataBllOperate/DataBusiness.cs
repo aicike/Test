@@ -23,6 +23,7 @@ namespace AcceptanceServer.DataBllOperate
             Pmg.EnumMessageTypeID = int.Parse(Np.EID);
             Pmg.FileUrl = Np.FielUrl;
             Pmg.LibraryImageTextsID = null;
+            Pmg.ConversationID = int.Parse(Np.SID);
             if(Np.ImgTextID != null)
             {
                 Pmg.LibraryImageTextsID = int.Parse(Np.ImgTextID);
@@ -62,6 +63,7 @@ namespace AcceptanceServer.DataBllOperate
             pm.Content = msg.Body;
             pm.FileUrl = Np.FielUrl;
             pm.EnumMessageTypeID = int.Parse(Np.EID);
+            pm.ConversationID = int.Parse(Np.SID);
             pm.LibraryImageTextsID = null;
             if (Np.ImgTextID != null)
             {

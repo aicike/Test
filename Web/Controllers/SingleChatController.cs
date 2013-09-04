@@ -162,7 +162,7 @@ namespace Web.Controllers
             }
             else
             {
-                return RedirectToAction("ChatPartialView", new { id = id, userID = userID });
+                return RedirectToAction("ChatPartialView", new { id = id, userID = userID, SID = SID });
             }
         }
 
@@ -180,9 +180,9 @@ namespace Web.Controllers
         }
 
         [AllowCheckPermissions(false)]
-        public ActionResult ReadMessage(int id, int userID)
+        public ActionResult ReadMessage(int id, int userID,int SID)
         {
-            return RedirectToAction("ChatPartialView", new { id = id, userID = userID });
+            return RedirectToAction("ChatPartialView", new { id = id, userID = userID, SID = SID });
         }
 
         [AllowCheckPermissions(false)]

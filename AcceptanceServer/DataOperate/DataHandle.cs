@@ -15,14 +15,15 @@ namespace AcceptanceServer.DataOperate
         /// <returns></returns>
         public static DataSet InsertChatRecord(Message mg)
         {
-            string sql = string.Format(@"insert into [Message](SystemStatus,TextContent,EnumMessageSendDirectionID,EnumMessageTypeID,FromAccountID,FromUserID,ToAccountID,ToUserID,IsReceive,SendTime,ReceiveTime,fileUrl,LibraryImageTextsID) 
-                                         values({0},'{1}',{2},{3},{4},{5},{6},{7},'false',getdate(),getdate(),'{8}',{9}) select @@IDENTITY as TID",
+            string sql = string.Format(@"insert into [Message](SystemStatus,TextContent,EnumMessageSendDirectionID,EnumMessageTypeID,FromAccountID,FromUserID,ToAccountID,ToUserID,IsReceive,SendTime,ReceiveTime,fileUrl,LibraryImageTextsID,ConversationID) 
+                                         values({0},'{1}',{2},{3},{4},{5},{6},{7},'false',getdate(),getdate(),'{8}',{9},{10}) select @@IDENTITY as TID",
                                         0, mg.TextContent, mg.EnumMessageSendDirectionID, mg.EnumMessageTypeID,
                                         mg.FromAccountID == null ? "null" : mg.FromAccountID.Value.ToString(),
                                         mg.FromUserID == null ? "null" : mg.FromUserID.Value.ToString(),
                                         mg.ToAccountID == null ? "null" : mg.ToAccountID.Value.ToString(),
                                         mg.ToUserID == null ? "null" : mg.ToUserID.Value.ToString(),
-                                        mg.FileUrl,mg.LibraryImageTextsID == null?"null":mg.LibraryImageTextsID.ToString()
+                                        mg.FileUrl,mg.LibraryImageTextsID == null?"null":mg.LibraryImageTextsID.ToString(),
+                                        mg.ConversationID
                                        );
 
             return SqlHelper.ExecuteDataset(sql);
@@ -36,13 +37,13 @@ namespace AcceptanceServer.DataOperate
         /// <returns></returns>
         public static int InsertOffLineData(PendingMessages pm)
         {
-            string sql = string.Format("insert into PendingMessages(SystemStatus,FromAccountID,FromUserID,ToAccountID,ToUserID,SendTime,Content,MessageID,EnumMessageTypeID,MSD,fileUrl,LibraryImageTextsID) values(0,{0},{1},{2},{3},getdate(),'{4}',{5},{6},'{7}','{8}',{9})",
+            string sql = string.Format("insert into PendingMessages(SystemStatus,FromAccountID,FromUserID,ToAccountID,ToUserID,SendTime,Content,MessageID,EnumMessageTypeID,MSD,fileUrl,LibraryImageTextsID,ConversationID) values(0,{0},{1},{2},{3},getdate(),'{4}',{5},{6},'{7}','{8}',{9},{10})",
                                         pm.FromAccountID == null ? "null" : pm.FromAccountID.Value.ToString(),
                                         pm.FromUserID == null ? "null" : pm.FromUserID.Value.ToString(),
                                         pm.ToAccountID == null ? "null" : pm.ToAccountID.Value.ToString(),
                                         pm.ToUserID == null ? "null" : pm.ToUserID.Value.ToString(),
                                         pm.Content,pm.MessageID,pm.EnumMessageTypeID,pm.MSD,pm.FileUrl,
-                                        pm.LibraryImageTextsID == null ? "null" : pm.LibraryImageTextsID.ToString());
+                                        pm.LibraryImageTextsID == null ? "null" : pm.LibraryImageTextsID.ToString(),pm.ConversationID);
 
             return SqlHelper.ExecuteNonQuery(sql);
         }
