@@ -62,7 +62,10 @@ namespace Poco
 
         [Display(Name = "图文ID")]
         public int? LibraryImageTextsID { get; set; }
-        public virtual LibraryImageText LibraryImageTexts { get; set; } 
+        public virtual LibraryImageText LibraryImageTexts { get; set; }
 
+        [Display(Name = "会话ID")]
+        public int ConversationID { get; set; }
+        public virtual Conversation Conversation { get; set; }
     }
 }

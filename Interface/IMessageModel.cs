@@ -9,7 +9,7 @@ namespace Interface
     public interface IMessageModel :IBaseModel<Message>
     {
 
-        IQueryable<Message> GetList(int SID,int UID);
+        IQueryable<Message> GetList(int SID);
 
         IQueryable<Message> GetHistoryList(int SID, int UID);
 

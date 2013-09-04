@@ -19,8 +19,10 @@ WebConfig中UpLodeFile节点值+“所属售楼部ID”+“.Message/”
 	图片+“/Image”
 	视频+“/Video”
 	语音+“/Voice”
+	头像+“/HeadImage”
 
 用户+“User/”+当前用户账号ID
 	图片+“/Image”
 	视频+“/Video”
 	语音+“/Voice”
+	头像+“/HeadImage”

@@ -12,14 +12,14 @@ namespace Business
     public class MessageModel : BaseModel<Message>, IMessageModel
     {
         /// <summary>
-        /// 查询当前数据
+        /// 查询当前聊天数据
         /// </summary>
         /// <param name="SID">售楼部ID</param>
         /// <param name="UID">当前聊天人ID</param>
         /// <returns></returns>
-        public IQueryable<Message> GetList(int SID, int UID)
+        public IQueryable<Message> GetList(int SID)
         {
-            var list = List().Where(a => (a.FromAccountID == SID && a.ToUserID == UID) || (a.ToAccountID == SID && a.FromUserID == UID)).OrderByDescending(a => a.ID);
+            var list = List().Where(a => (a.ConversationID == SID));
             return list;
         }
 

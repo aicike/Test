@@ -109,7 +109,7 @@ namespace Poco
             public const string PushMsgDetailModel = "PushMsgDetailModel";
             public const string PushMsgModel = "PushMsgModel";
             public const string AutoMessage_UserModel = "AutoMessage_UserModel";
-            
+            public const string ConversationModel = "ConversationModel";
 
         }
     }

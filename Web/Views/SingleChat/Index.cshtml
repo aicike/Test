@@ -531,7 +531,7 @@
             <li><a href="#tabs-5">图文消息</a></li>
         </ul>
         <div id="tabs-1">
-            @using (Ajax.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID }, new AjaxOptions() { UpdateTargetId = "div_data", OnSuccess = "EmptyContent()" }))
+            @using (Ajax.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID, SID = ViewBag.ConverID }, new AjaxOptions() { UpdateTargetId = "div_data", OnSuccess = "EmptyContent()" }))
             {
                 <input type="hidden" value="0" id="MesType0" name="MesType" />
                 <textarea id="Content" name="Content" rows="8" style="width: 100%; height: 80px"></textarea>
@@ -548,7 +548,7 @@
             }
         </div>
         <div id="tabs-2">
-            @using (Html.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID, SID = ViewBag.ConverID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <input type="hidden" value="3" id="MesType3" name="MesType" />
                 <input type="hidden" id="TypeVoicePath" name="TypePath" />
@@ -573,7 +573,7 @@
             }
         </div>
         <div id="tabs-3">
-            @using (Html.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID, SID = ViewBag.ConverID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <input type="hidden" value="1" id="MesType1" name="MesType" />
                 <input type="hidden" value="-1" id="MesIMGAddress" name="MesAddress" />
@@ -601,7 +601,7 @@
             }
         </div>
         <div id="tabs-4">
-            @using (Html.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID, SID = ViewBag.ConverID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <input type="hidden" value="2" id="MesType2" name="MesType" />
                 <input type="hidden" id="TypeVideoPath" name="TypePath" />
@@ -626,7 +626,7 @@
             }
         </div>
         <div id="tabs-5">
-            @using (Html.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("SendMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID, SID = ViewBag.ConverID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <input type="hidden" value="4" id="MesType4" name="MesType" />
                 <input type="hidden" id="imgtextID" name="imgtextID" />
@@ -660,7 +660,7 @@
         <input type="submit" id="btnSelData" style="visibility: hidden" />
     }
     <div id="div_data" style="padding: 0px 0px 25px 0px; margin-top: -40px">
-        @{Html.RenderAction("ChatPartialView", new { id = ViewBag.ID, userID = ViewBag.UserID });}
+        @{Html.RenderAction("ChatPartialView", new { id = ViewBag.ID, userID = ViewBag.UserID, SID = ViewBag.ConverID });}
     </div>
 </div>
 <div id="dialogFile" title="选择图片素材" style="display: none">

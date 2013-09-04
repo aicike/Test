@@ -50,6 +50,7 @@
     <Compile Include="IAccountModel.cs" />
     <Compile Include="IAutoMessage_UserModel.cs" />
     <Compile Include="IBaseModel.cs" />
+    <Compile Include="IConversationModel.cs" />
     <Compile Include="IKeywordAutoMessageModel.cs" />
     <Compile Include="IKeywordModel.cs" />
     <Compile Include="ILibraryModel.cs" />

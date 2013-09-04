@@ -32,6 +32,10 @@ namespace Web.Controllers
             var AccountUserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
             bool isOk = AccountUserModel.ChickUserInAccount(LoginAccount.ID, userID);
             isOk.NotAuthorizedPage();
+            //获取会话ID
+            var ConversationModel = Factory.Get<IConversationModel>(SystemConst.IOC_Model.ConversationModel);
+            var Conver = ConversationModel.GetCID(LoginAccount.CurrentAccountMainID.ToString(), LoginAccount.ID.ToString(), userID.ToString(), "0");
+            ViewBag.ConverID = Conver;
             //当前聊天人
             var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
             var user = userModel.Get(userID);
@@ -72,7 +76,7 @@ namespace Web.Controllers
 
 
         [AllowCheckPermissions(false)]
-        public ActionResult SendMessage(int id, int userID, string Content, string MesType, string TypePath, string MesAddress, HttpPostedFileBase TypeImagePathFile, string imgtextID)
+        public ActionResult SendMessage(int id, int userID, string Content, string MesType, string TypePath, string MesAddress, HttpPostedFileBase TypeImagePathFile, string imgtextID,string SID)
         {
             TreedCon();
             Thread.Sleep(1000);
@@ -89,6 +93,7 @@ namespace Web.Controllers
                     np.MSD = ((int)EnumMessageSendDirection.Account_User).ToString(); //售楼->购房
                     np.MT = "1";  //消息
                     np.EID = MesType; //消息类型
+                    np.SID = SID;//会话ID
                     np.Sendtime = DateTime.Now.ToString(SystemConst.Business.TimeFomatFull);//发送时间
                     //文本
                     if (MesType == ((int)EnumMessageType.Text).ToString())
@@ -162,11 +167,11 @@ namespace Web.Controllers
         }
 
         [AllowCheckPermissions(false)]
-        public ActionResult ChatPartialView(int id, int userID)
+        public ActionResult ChatPartialView(int id, int userID,int SID)
         {
             //获取聊天记录
             var MessageModel = Factory.Get<IMessageModel>(SystemConst.IOC_Model.MessageModel);
-            var message = MessageModel.GetList(LoginAccount.ID, userID).ToPagedList(id, 30);
+            var message = MessageModel.GetList(SID).ToPagedList(id, 30);
 
             //修改记录状态 并 删除待处理数据
             MessageModel.UpAndDelData(LoginAccount.ID, userID);
