@@ -17,5 +17,10 @@ namespace Web.Controllers
             var entity = libraryModel.Get(id);
             return View(entity);
         }
+
+        public ActionResult Calculator()
+        {
+            return View();
+        }
     }
 }

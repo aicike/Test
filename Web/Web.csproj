@@ -689,6 +689,7 @@
     <Content Include="Views\SalesMessage\SelectAtoUmes.cshtml" />
     <Content Include="Views\SingleChat\HistoryMes.cshtml" />
     <Content Include="Views\Library\ImgTextManager.cshtml" />
+    <Content Include="Views\Default\Calculator.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

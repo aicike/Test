@@ -61,12 +61,7 @@
     <Compile Include="Mapping\KeywordAutoMessageMap.cs" />
     <Compile Include="Mapping\AppUpdateMap.cs" />
     <Compile Include="Migrations\201309040647412_Initial.cs" />
-    <Compile Include="Migrations\201309040647412_Initial.Designer.cs">
-      <DependentUpon>201309040647412_Initial.cs</DependentUpon>
     <Compile Include="Migrations\201309040747293_initial.cs" />
-    <Compile Include="Migrations\201309040747293_initial.Designer.cs">
-      <DependentUpon>201309040747293_initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -85,8 +80,7 @@
     <Content Include="InitialProvince.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201309040647412_Initial.resx">
-      <DependentUpon>201309040647412_Initial.cs</DependentUpon>
+    
     <EmbeddedResource Include="Migrations\201309040747293_initial.resx">
       <DependentUpon>201309040747293_initial.cs</DependentUpon>
     </EmbeddedResource>
