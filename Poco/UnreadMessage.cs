@@ -18,7 +18,7 @@ namespace Poco
         }
         string messageCnt;
         /// <summary>
-        /// 消息数量
+        /// 未读消息数量
         /// </summary>
         public string MessageCnt
         {

@@ -89,6 +89,10 @@
                         项目名称
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.CreateTime)@Html.HiddenFor(a => a.SystemUserID)
+                    @Html.HiddenFor(a => a.SalePhone)
+                    @Html.HiddenFor(a => a.SaleMapAddress)
+                    @Html.HiddenFor(a => a.Lng)
+                    @Html.HiddenFor(a => a.Lat)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Name)
                     </td>

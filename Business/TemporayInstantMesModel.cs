@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Interface;
 using Poco;
+using Injection;
 
 namespace Business
 {
@@ -11,17 +12,21 @@ namespace Business
     {
         public IQueryable<TemporayInstantMes> GetList(int SID)
         {
-            string sql = @"select  x.*,y.Name as UMark,z.Name,z.HeadImagePath from 
-                        (
-                        select a.FromUserID ,max(SendTime) MData,
-                        (select count(id) from [Message] where ToAccountID= " + SID + @"  and IsReceive=0) as NoSend,
-                        (select textContent from [Message] where id = max(a.id)) as Tcontent,
-                        (select EnumMessageTypeID from [Message] where id = max(a.id)) as EnumMessageTypeID
-                        from dbo.[Message] a where ToAccountID= " + SID + @"  group by FromUserID
-                        ) x,[User] y,UserLoginInfo z where x.FromUserID = y.id and y.UserLoginInfoID= z.ID order by x.MData desc";
+            var ConversationModel = Factory.Get<IConversationModel>(SystemConst.IOC_Model.ConversationModel);
+            var ConverCID = ConversationModel.GetAllCID("s",SID);
+            string cids="";
+            foreach (var item in ConverCID)
+            {
+                cids += item.ID+",";
+            }
+            cids = cids.TrimEnd(',');
+            string sql = @"select * from View_AccountMessageList where ConversationID in('" + cids + "')";
 
             return base.SqlQuery(sql);
         }
 
+
+
+        
     }
 }

@@ -20,6 +20,8 @@ namespace Interface
 
         Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int loginSystemUserID);
 
+        Result Edit_ByAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePath);
+
         Result ChangeStatus_Permission(int accountMainID, EnumAccountStatus status, int loginSystemUserID);
 
         /// <summary>

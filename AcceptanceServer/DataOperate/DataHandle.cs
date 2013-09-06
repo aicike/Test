@@ -49,7 +49,7 @@ namespace AcceptanceServer.DataOperate
         }
 
         /// <summary>
-        /// 获取未读消息
+        /// 获取所有消息与未读消息数量
         /// </summary>
         /// <param name="AoU"></param>
         /// <param name="AoUID"></param>
@@ -68,16 +68,30 @@ namespace AcceptanceServer.DataOperate
             //用户
             if (AoU == "u")
             {
-                sql = " select * from  dbo.View_UserUnreadMessage where ToUserID in ('" + id + "')";
+                sql = string.Format(@"select ConversationID as [SID],Max(SendTime) as SendTime,
+                                    (select count(isreceive)  from dbo.[Message] where ConversationID in ({0}) and ToUserID ={1} and IsReceive='false' ) as Messagecnt,
+                                    (select  CASE WHEN fromaccountid <> 0 THEN fromaccountid ELSE fromuserid END  from dbo.[Message] where SendTime = Max(a.SendTime) ) as FromID,
+                                    (select TextContent  from dbo.[Message] where SendTime = Max(a.SendTime)) as Content,
+                                    (select EnumMessageSendDirectionID  from dbo.[Message] where SendTime = Max(a.SendTime)) as MSD,
+                                    (select EnumMessageTypeID  from dbo.[Message] where SendTime = Max(a.SendTime)) as EID
+                                    from dbo.[Message] a  where ConversationID in ({0}) and ToUserID ={1} group by ConversationID"
+                                    , id, AoUID);
             }
             //售楼代表
             else
             {
-                sql = " select * from  dbo.View_AccountUnreadMessage where ToAccountID in ('" + id + "')";
+                sql = string.Format(@"seselect ConversationID as [SID],Max(SendTime) as SendTime,
+                                    (select count(isreceive)  from dbo.[Message] where ConversationID in ({0}) and ToAccountID ={1} and IsReceive='false' ) as Messagecnt,
+                                    (select  CASE WHEN fromaccountid <> 0 THEN fromaccountid ELSE fromuserid END  from dbo.[Message] where SendTime = Max(a.SendTime) ) as FromID,
+                                    (select TextContent  from dbo.[Message] where SendTime = Max(a.SendTime)) as Content,
+                                    (select EnumMessageSendDirectionID  from dbo.[Message] where SendTime = Max(a.SendTime)) as MSD,
+                                    (select EnumMessageTypeID  from dbo.[Message] where SendTime = Max(a.SendTime)) as EID
+                                    from dbo.[Message] a  where ConversationID in ({0}) and ToAccountID ={1} group by ConversationID"
+                                    , id, AoUID);
             }
 
             return SqlHelper.ExecuteDataset(sql);
-        
+
         }
 
         /// <summary>
@@ -89,7 +103,7 @@ namespace AcceptanceServer.DataOperate
         public static DataSet GetUserConversationID(string AoU ,string UID)
         {
             string sql = "";
-            if (AoU == "u")
+            if (AoU == "s")
             {
                 sql = string.Format("select ID from dbo.[Conversation] where (ctype='0' and User1ID='{0}') or (ctype='1' and User1ID='{0}') or(ctype ='1' and User2ID = '{0}')", UID);
             }
@@ -98,6 +112,29 @@ namespace AcceptanceServer.DataOperate
                 sql = string.Format("select ID from dbo.[Conversation] where (ctype='0' and User2ID='{0}') or (ctype='2' and User1ID='{0}') or(ctype ='2' and User2ID = '{0}')", UID);
             }
             return SqlHelper.ExecuteDataset(sql);
+        }
+
+        /// <summary>
+        /// 删除未读消息并修改消息状态
+        /// </summary>
+        /// <param name="SID"></param>
+        /// <param name="AoU"></param>
+        /// <param name="ToUID"></param>
+        /// <returns></returns>
+        public static int UpandDelMessType(int SID,string AoU, int ToUID)
+        {
+            string sql = "";
+            if (AoU == "s")
+            {
+                sql = string.Format("update [Message] set IsReceive = 'true' where ConversationID={0} and IsReceive='false' and ToAccountID= {1} "
+                                    + "delete dbo.PendingMessages where conversationID={0} and ToAccountID ={1}", SID, ToUID);
+            }
+            else
+            {
+                sql = string.Format("update [Message] set IsReceive = 'true' where ConversationID={0} and IsReceive='false' and ToUserID= {1} "
+                                    + "delete dbo.PendingMessages where conversationID={0} and ToUserID ={1}", SID, ToUID);
+            }
+            return SqlHelper.ExecuteNonQuery(sql);
         }
     }
 }

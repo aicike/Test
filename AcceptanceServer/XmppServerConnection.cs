@@ -100,7 +100,8 @@ namespace AcceptanceServer
             }
             catch (Exception ex)
             {
-                frm.ShowErrorMessage(ex.Message);
+                //frm.ShowErrorMessage(ex.Message);
+                throw;
             }
         }
 
@@ -187,17 +188,17 @@ namespace AcceptanceServer
 
                     OnlineUser.onlinuser.Remove(this);
 
-                    //frm.listBox2.Items.Remove(this.jid.User);
-                    //frm.listBox1.Items.Add(this.jid.User + "下线了");
+                    ////frm.listBox2.Items.Remove(this.jid.User);
+                    ////frm.listBox1.Items.Add(this.jid.User + "下线了");
 
-                    foreach (XmppServerConnection con in OnlineUser.onlinuser)
-                    {
-                        if (con.jid.User != this.jid.User)
-                        {
-                            pres.To = con.jid;
-                            con.Send(pres);
-                        }
-                    }
+                    //foreach (XmppServerConnection con in OnlineUser.onlinuser)
+                    //{
+                    //    if (con.jid.User != this.jid.User)
+                    //    {
+                    //        pres.To = con.jid;
+                    //        con.Send(pres);
+                    //    }
+                    //}
 
                 }
 
@@ -226,8 +227,8 @@ namespace AcceptanceServer
                             //在线
                             if (OnlineUser.onlinuser.Any(a => a.jid.User == msg.To.User))
                             {
-                                //转发发送消息
-                                IEnumerable<XmppServerConnection> cons =  OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
+                                //转发发送消息 IEnumerable
+                                List<XmppServerConnection> cons =  OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
                                 //XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
                                 if (Np.MSD == "1" || Np.MSD == "2" || Np.MSD == "3")
                                 {
@@ -235,9 +236,21 @@ namespace AcceptanceServer
                                 }
                                 
                                 msg.From = jid;
-                                foreach (XmppServerConnection con in cons)
+                                //foreach (XmppServerConnection con in cons)
+                                //{
+                                //    con.Send(msg);
+                                //}
+                                for (int i = 0; i < cons.Count(); i++)
                                 {
-                                    con.Send(msg);
+                                    try
+                                    {
+                                        cons[i].Send(msg);
+                                    }
+                                    catch
+                                    {
+                                        OnlineUser.onlinuser.Remove(cons[i]);
+                                        i--;
+                                    }
                                 }
                                
                             }
@@ -266,16 +279,43 @@ namespace AcceptanceServer
 
                             }
                             //回发消息状态 4发送成功
-                            SendMessageStatus("4");
+                            //SendMessageStatus("4");
 
 
                         }
                     }
-                    //状态
-                    //else if (Np.MT == "2")
-                    //{
+                    //已读状态
+                    else if (Np.MT == "5")
+                    {
+                        //修改数据库状态
+                        //售楼代表s；用户u
+                        string AoU = jid.User.Substring(0, 1);
+                        //ID
+                        string AoUID = jid.User.Substring(1);
+                        DataBusiness.UpandDelMessType(int.Parse(Np.SID), AoU, int.Parse(AoUID));
+                        //在线
+                        if (OnlineUser.onlinuser.Any(a => a.jid.User == msg.To.User))
+                        {
+                            //转发发送消息
+                            List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
+              
+                            msg.From = jid;
+                            
+                            for (int i = 0; i < cons.Count(); i++)
+                            {
+                                try
+                                {
+                                    cons[i].Send(msg);
+                                }
+                                catch
+                                {
+                                    OnlineUser.onlinuser.Remove(cons[i]);
+                                    i--;
+                                }
+                            }
 
-                    //}
+                        }
+                    }
 
 
                 }
@@ -407,19 +447,31 @@ namespace AcceptanceServer
         /// <summary>
         /// 回发消息状态
         /// </summary>
-        /// <param name="MT">消息状态 4发送成功，5对方已读</param>
+        /// <param name="MT">消息状态 4发送成功 6失败</param>
         public void SendMessageStatus(string MT)
         {
-            XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == jid.User).ToList()[0];
+            List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == jid.User).ToList();
 
             agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message();
             msg.Type = MessageType.chat;
-            msg.From = jid;
+            msg.From = new Jid(msg.To.User, "localhost", "resource");
             msg.To = new Jid(jid.User, "localhost", jid.User);
             NewsProtocol np = new NewsProtocol();
             np.MT = MT;//消息状态
-
-            con.Send(msg);
+            msg.Body = "";
+            msg.AddChild(np);
+            for (int i = 0; i < cons.Count(); i++)
+            {
+                try
+                {
+                    cons[i].Send(msg);
+                }
+                catch
+                {
+                    OnlineUser.onlinuser.Remove(cons[i]);
+                    i--;
+                }
+            }
 
         }
 
@@ -450,7 +502,7 @@ namespace AcceptanceServer
                 try
                 {
                     msg.Body = UMlist.ObjectToJson();
-
+                    msg.AddChild(np);
                     con.Send(msg);
                 }
                 catch { }

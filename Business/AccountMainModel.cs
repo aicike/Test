@@ -156,6 +156,53 @@ namespace Business
         }
 
         [Transaction]
+        public Result Edit_ByAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePath)
+        {
+            var result = base.Edit(accountMain);
+            if (result.HasError == false && LogoImagePath != null)
+            {
+                try
+                {
+                    //删除原logo及缩略图
+                    var path = HttpContext.Current.Server.MapPath(string.Format("~/File/{0}", accountMain.ID));
+                    var basePath = string.Format("{0}/{1}", path, "Base");
+                    var logoImageAbsolutePath = HttpContext.Current.Server.MapPath(accountMain.LogoImagePath);
+                    if (File.Exists(logoImageAbsolutePath))
+                    {
+                        File.Delete(logoImageAbsolutePath);
+                    }
+                    var logoImageThumbnailPath = HttpContext.Current.Server.MapPath(accountMain.LogoImageThumbnailPath);
+                    if (File.Exists(logoImageThumbnailPath))
+                    {
+                        File.Delete(logoImageThumbnailPath);
+                    }
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var width = 80;
+                    var imageName = string.Format("{0}_{1}", token, LogoImagePath.FileName);
+                    var imageThumbnailName = string.Format("{0}_{1}_{2}", token, width, LogoImagePath.FileName);
+                    var imagePath = string.Format("{0}/{1}", basePath, imageName);
+                    var imageThumbnailPath = string.Format("{0}/{1}", basePath, imageThumbnailName);
+                    LogoImagePath.SaveAs(imagePath);
+                    //缩略图
+                    Tool.Thumbnail(imagePath, imageThumbnailPath, width);
+                    accountMain.LogoImagePath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
+                    accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageThumbnailName;
+                    result = Edit(accountMain);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            if (result.HasError == false)
+            {
+                //IAccountMainExpandInfoModel accountMainExpandInfoModel = Factory.Get<IAccountMainExpandInfoModel>(SystemConst.IOC_Model.AccountMainExpandInfoModel);
+                //result = accountMainExpandInfoModel.Edit(accountMain.AccountMainExpandInfo);
+            }
+            return result;
+        }
+
+        [Transaction]
         public Result Delete_Permission(int id, int loginSystemUserID = 0)
         {
             if (!CheckHasPermissions(loginSystemUserID, id))

@@ -18,5 +18,8 @@ namespace Interface
         /// <returns></returns>
         int GetCID(string AccountMainID, string AID, string UID, string Ctype);
 
+        //获取用户所有会话ID
+        IQueryable<Conversation> GetAllCID(string AoU, int UID);
+
     }
 }

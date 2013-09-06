@@ -388,8 +388,7 @@ CREATE INDEX IX_HostName ON AccountMain (HostName)
 
 
 --INSERT VIEW----[View_UserUnreadMessage]----------------------------------------------------------
-USE [Aicike]
-GO
+
 
 /****** Object:  View [dbo].[View_UserUnreadMessage]    Script Date: 09/04/2013 10:46:05 ******/
 SET ANSI_NULLS ON
@@ -422,8 +421,7 @@ GROUP BY FromAccountID, FromUserID
 
 GO
 ---INSERT VIEW ----View_AccountUnreadMessage-----------------------------------------------
-USE [Aicike]
-GO
+
 
 /****** Object:  View [dbo].[View_AccountUnreadMessage]    Script Date: 09/04/2013 10:46:31 ******/
 SET ANSI_NULLS ON
@@ -455,3 +453,37 @@ WHERE     (ToAccountID <> 0)
 GROUP BY FromAccountID, FromUserID
 
 GO
+
+
+---INSERT VIEW ----[View_AccountMessageList]---------------------------------------------
+
+
+
+/****** Object:  View [dbo].[View_AccountMessageList]    Script Date: 09/04/2013 18:07:56 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW [dbo].[View_AccountMessageList]
+AS
+SELECT     TOP (100) PERCENT x.FromUserID, x.MData, x.NoSend, x.Tcontent, x.ConversationID, x.EnumMessageTypeID, y.Name AS UMark, z.Name, z.HeadImagePath
+FROM         (SELECT     FromUserID, MAX(SendTime) AS MData,
+                                                  (SELECT     COUNT(ID) AS Expr1
+                                                    FROM          dbo.Message
+                                                    WHERE      (IsReceive = 0) AND (ToAccountID <> 0)) AS NoSend,
+                                                  (SELECT     TextContent
+                                                    FROM          dbo.Message AS Message_3
+                                                    WHERE      (ID = MAX(a.ID))) AS Tcontent,
+                                                  (SELECT     ConversationID
+                                                    FROM          dbo.Message AS Message_2
+                                                    WHERE      (ID = MAX(a.ID))) AS ConversationID,
+                                                  (SELECT     EnumMessageTypeID
+                                                    FROM          dbo.Message AS Message_1
+                                                    WHERE      (ID = MAX(a.ID))) AS EnumMessageTypeID
+                       FROM          dbo.Message AS a
+                       GROUP BY FromUserID) AS x INNER JOIN
+                      dbo.[User] AS y ON x.FromUserID = y.ID INNER JOIN
+                      dbo.UserLoginInfo AS z ON y.UserLoginInfoID = z.ID
+ORDER BY x.MData DESC

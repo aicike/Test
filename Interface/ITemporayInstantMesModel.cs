@@ -9,5 +9,6 @@ namespace Interface
     public interface ITemporayInstantMesModel : IBaseModel<TemporayInstantMes>
     {
         IQueryable<TemporayInstantMes> GetList(int SID);
+        
     }
 }
