@@ -418,6 +418,7 @@ namespace EF.Migrations
                         AccountStatusID = c.Int(nullable: false),
                         IdentityCard = c.String(maxLength: 30),
                         AccountMainID = c.Int(nullable: false),
+                        CreateDate = c.DateTime(nullable: false),
                         UserLoginInfoID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
