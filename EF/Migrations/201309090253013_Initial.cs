@@ -148,6 +148,10 @@ namespace EF.Migrations
                         AccountStatusID = c.Int(nullable: false),
                         FileLimit = c.Double(nullable: false),
                         SaleAddress = c.String(nullable: false, maxLength: 200),
+                        SalePhone = c.String(),
+                        SaleMapAddress = c.String(),
+                        Lng = c.String(),
+                        Lat = c.String(),
                         AppUpdateID = c.Int(),
                         SystemUserID = c.Int(nullable: false),
                         CreateTime = c.DateTime(nullable: false),
@@ -414,6 +418,7 @@ namespace EF.Migrations
                         AccountStatusID = c.Int(nullable: false),
                         IdentityCard = c.String(maxLength: 30),
                         AccountMainID = c.Int(nullable: false),
+                        CreateDate = c.DateTime(nullable: false),
                         UserLoginInfoID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
@@ -834,6 +839,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
+
 
 
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");

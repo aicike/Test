@@ -27,6 +27,7 @@ namespace Business
 
         public new Result Add(User user)
         {
+            user.CreateDate = DateTime.Now;
             user.AccountStatusID = LookupFactory.GetLookupOptionIdByToken(EnumAccountStatus.Enabled);
             return base.Add(user);
         }
