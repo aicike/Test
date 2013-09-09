@@ -234,7 +234,7 @@ namespace AcceptanceServer
                                     //转发发送消息 IEnumerable
                                     List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
                                     //XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
-                                    if (Np.MSD == "1" || Np.MSD == "2" || Np.MSD == "3")
+                                    if (Np.EID == "1" || Np.EID == "2" || Np.EID == "3")
                                     {
                                         Np.FielUrl = ConfigurationManager.AppSettings["WebUrl"].ToString() + Np.FielUrl;
                                     }
