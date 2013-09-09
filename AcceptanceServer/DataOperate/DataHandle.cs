@@ -83,7 +83,7 @@ namespace AcceptanceServer.DataOperate
                 //售楼代表
                 else
                 {
-                    sql = string.Format(@"seselect ConversationID as [SID],Max(SendTime) as SendTime,
+                    sql = string.Format(@"select ConversationID as [SID],Max(SendTime) as SendTime,
                                     (select count(isreceive)  from dbo.[Message] where ConversationID in ({0}) and ToAccountID ={1} and IsReceive='false' ) as Messagecnt,
                                     (select  CASE WHEN fromaccountid <> 0 THEN fromaccountid ELSE fromuserid END  from dbo.[Message] where SendTime = Max(a.SendTime) ) as FromID,
                                     (select TextContent  from dbo.[Message] where SendTime = Max(a.SendTime)) as Content,
