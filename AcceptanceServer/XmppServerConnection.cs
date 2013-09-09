@@ -169,7 +169,7 @@ namespace AcceptanceServer
                         frm.ShowOlineUser(jid.User, jid.Bare + "||" + jid.Server);
                     }));
 
-                   
+
                     ////暂时屏蔽
                     //pres.From = this.jid;
                     //foreach (XmppServerConnection con in OnlineUser.onlinuser)
@@ -210,76 +210,86 @@ namespace AcceptanceServer
                 if (msg.Type == MessageType.chat)
                 {
                     NewsProtocol Np = msg.SelectSingleElement(typeof(NewsProtocol)) as NewsProtocol;
-                  
+
                     //消息
                     if (Np.MT == "1")
                     {
+                        DataTable dt;
                         //存储聊天记录
-                        DataTable dt = DataBusiness.InsertChatRecord(msg, Np).Tables[0];
-                        if (dt == null) //数据存储失败 
+                        try
                         {
-                            //return  6发送失败
-                            SendMessageStatus("6");
-                            return;
-                        }
-                        else
-                        {
-                            //在线
-                            if (OnlineUser.onlinuser.Any(a => a.jid.User == msg.To.User))
+                            dt = DataBusiness.InsertChatRecord(msg, Np).Tables[0];
+
+                            if (dt == null) //数据存储失败 
                             {
-                                //转发发送消息 IEnumerable
-                                List<XmppServerConnection> cons =  OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
-                                //XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
-                                if (Np.MSD == "1" || Np.MSD == "2" || Np.MSD == "3")
-                                {
-                                    Np.FielUrl = ConfigurationManager.AppSettings["WebUrl"].ToString() + Np.FielUrl;
-                                }
-                                
-                                msg.From = jid;
-                                //foreach (XmppServerConnection con in cons)
-                                //{
-                                //    con.Send(msg);
-                                //}
-                                for (int i = 0; i < cons.Count(); i++)
-                                {
-                                    try
-                                    {
-                                        cons[i].Send(msg);
-                                    }
-                                    catch
-                                    {
-                                        OnlineUser.onlinuser.Remove(cons[i]);
-                                        i--;
-                                    }
-                                }
-                               
+                                //return  6发送失败
+                                SendMessageStatus("6");
+                                return;
                             }
-                            //不在线
                             else
                             {
-                                //本条消息数据库ID
-                                int ThisMessageID = int.Parse(dt.Rows[0][0].ToString());
-                                //存储离线记录
-                                int cnt = DataBusiness.InsertOffLineData(msg, Np, ThisMessageID);
-                                if (cnt <= 0)
+                                //在线
+                                if (OnlineUser.onlinuser.Any(a => a.jid.User == msg.To.User))
                                 {
-                                    //return  6发送失败
-                                    SendMessageStatus("6");
-                                    return;
-                                }
-                                else
-                                {
+                                    //转发发送消息 IEnumerable
+                                    List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
+                                    //XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
                                     if (Np.MSD == "1" || Np.MSD == "2" || Np.MSD == "3")
                                     {
                                         Np.FielUrl = ConfigurationManager.AppSettings["WebUrl"].ToString() + Np.FielUrl;
                                     }
-                                    //推送
-                                    PushMessage(msg, Np);
-                                }
 
+                                    msg.From = jid;
+                                    //foreach (XmppServerConnection con in cons)
+                                    //{
+                                    //    con.Send(msg);
+                                    //}
+                                    for (int i = 0; i < cons.Count(); i++)
+                                    {
+                                        try
+                                        {
+                                            cons[i].Send(msg);
+                                        }
+                                        catch
+                                        {
+                                            OnlineUser.onlinuser.Remove(cons[i]);
+                                            i--;
+                                        }
+                                    }
+
+                                }
+                                //不在线
+                                else
+                                {
+                                    //本条消息数据库ID
+                                    int ThisMessageID = int.Parse(dt.Rows[0][0].ToString());
+                                    //存储离线记录
+                                    int cnt = DataBusiness.InsertOffLineData(msg, Np, ThisMessageID);
+                                    if (cnt <= 0)
+                                    {
+                                        //return  6发送失败
+                                        SendMessageStatus("6");
+                                        return;
+                                    }
+                                    else
+                                    {
+                                        if (Np.MSD == "1" || Np.MSD == "2" || Np.MSD == "3")
+                                        {
+                                            Np.FielUrl = ConfigurationManager.AppSettings["WebUrl"].ToString() + Np.FielUrl;
+                                        }
+                                        //推送
+                                        PushMessage(msg, Np);
+                                    }
+
+                                }
+                                //回发消息状态 4发送成功
+                                //SendMessageStatus("4");
                             }
-                            //回发消息状态 4发送成功
-                            //SendMessageStatus("4");
+                        }
+                        catch
+                        {
+                            SendMessageStatus("6");
+                            return;
 
 
                         }
@@ -298,9 +308,9 @@ namespace AcceptanceServer
                         {
                             //转发发送消息
                             List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
-              
+
                             msg.From = jid;
-                            
+
                             for (int i = 0; i < cons.Count(); i++)
                             {
                                 try
@@ -510,7 +520,7 @@ namespace AcceptanceServer
 
             });
             t.Start();
-        
+
         }
 
         /// <summary>
