@@ -31,13 +31,49 @@ namespace Web.Controllers
             }
             List<App_Chat> chats = new List<App_Chat>();
             var userType = (EnumClientUserType)currentUserType;//当前用户身份的类型
+            var libraryImageTextModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
             foreach (var item in list)
             {
                 App_Chat chat = new App_Chat();
                 chat.ID = item.ID;
                 chat.SendTime = item.SendTime.ToString(SystemConst.Business.TimeFomatFull);
-                chat.Content = item.TextContent;//todo 
                 chat.Type = item.EnumMessageTypeID;
+                switch (item.EnumMessageTypeID)
+                {
+                    case (int)EnumMessageType.Text:
+                        chat.Content = item.TextContent;
+                        break;
+                    case (int)EnumMessageType.Image:
+                    case (int)EnumMessageType.Video:
+                    case (int)EnumMessageType.Voice:
+                        chat.FileUrl = item.FileUrl;
+                        break;
+                    case (int)EnumMessageType.ImageText:
+                        var itext = libraryImageTextModel.Get(item.LibraryImageTextsID.Value);
+                        if (itext != null)
+                        {
+                            chat.ID = itext.ID;
+                            chat.FileTitle = itext.Title;
+                            chat.Summary = itext.Summary;
+                            chat.FileUrl = SystemConst.WebUrl + Url.Content(itext.ImagePath);
+                            if (itext.LibraryImageTexts.Count > 0)
+                            {
+                                List<App_AutoMessageReplyContent> subImageText = new List<App_AutoMessageReplyContent>();
+                                foreach (var it in itext.LibraryImageTexts)
+                                {
+                                    App_AutoMessageReplyContent rep_it = new App_AutoMessageReplyContent();
+                                    rep_it.ID = it.ID;
+                                    rep_it.Type = (int)EnumMessageType.ImageText;
+                                    rep_it.FileTitle = it.Title;
+                                    rep_it.FileUrl = SystemConst.WebUrl + Url.Content(it.ImagePath);
+                                    subImageText.Add(rep_it);
+                                }
+                                chat.SubContent = Newtonsoft.Json.JsonConvert.SerializeObject(subImageText);
+                            }
+                            chat.Content = itext.Content;
+                        }
+                        break;
+                }
                 //发送方向：接收 或 发送
                 switch (userType)
                 {
@@ -84,7 +120,6 @@ namespace Web.Controllers
             var ConversationModel = Factory.Get<IConversationModel>(SystemConst.IOC_Model.ConversationModel);
             var Conver = ConversationModel.GetCID(AccountMainID, AID, UID, Ctype);
             return Conver.ToString();
-            
         }
 
         /// <summary>
