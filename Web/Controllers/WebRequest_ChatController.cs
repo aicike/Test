@@ -182,6 +182,7 @@ namespace Web.Controllers
 
                 //保存文件
                 Request.Files[0].SaveAs(FilePath);
+                
                 //System.IO.File.WriteAllBytes(FilePath, FileBuffers);
                 //返回路径
                 result.Entity = SystemConst.WebUrl + Url.Content(Path);
