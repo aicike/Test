@@ -218,6 +218,10 @@ namespace AcceptanceServer
                         //存储聊天记录
                         try
                         {
+                            //if (Np.EID == "1" || Np.EID == "2" || Np.EID == "3")
+                            //{
+                            //    Np.FielUrl = ConfigurationManager.AppSettings["WebUrl"].ToString() + Np.FielUrl;
+                            //}
                             dt = DataBusiness.InsertChatRecord(msg, Np).Tables[0];
 
                             if (dt == null) //数据存储失败 
@@ -234,10 +238,7 @@ namespace AcceptanceServer
                                     //转发发送消息 IEnumerable
                                     List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
                                     //XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
-                                    if (Np.EID == "1" || Np.EID == "2" || Np.EID == "3")
-                                    {
-                                        Np.FielUrl = ConfigurationManager.AppSettings["WebUrl"].ToString() + Np.FielUrl;
-                                    }
+                                    
 
                                     msg.From = jid;
                                     //foreach (XmppServerConnection con in cons)
@@ -273,10 +274,6 @@ namespace AcceptanceServer
                                     }
                                     else
                                     {
-                                        if (Np.MSD == "1" || Np.MSD == "2" || Np.MSD == "3")
-                                        {
-                                            Np.FielUrl = ConfigurationManager.AppSettings["WebUrl"].ToString() + Np.FielUrl;
-                                        }
                                         //推送
                                         PushMessage(msg, Np);
                                     }

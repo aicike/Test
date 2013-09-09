@@ -84,6 +84,7 @@ namespace Web.Controllers
             {
                 if (Connection != null)
                 {
+
                     agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message();
                     msg.Type = MessageType.chat;
                     msg.From = new Jid("s" + LoginAccount.ID, "localhost", "resource");
@@ -117,22 +118,22 @@ namespace Web.Controllers
                             var imagePath = string.Format("{0}\\{1}", path, imageName);
                             var imagePath2 = Server.MapPath(imagePath);
                             TypeImagePathFile.SaveAs(imagePath2);
-                            np.FielUrl = imagePath;
+                            np.FielUrl = SystemConst.WebUrl + Url.Content(imagePath);
                         }
                         else
                         {
-                            np.FielUrl = TypePath;
+                            np.FielUrl = SystemConst.WebUrl + Url.Content(TypePath);
                         }
                     }
                     //语音
                     else if (MesType == ((int)EnumMessageType.Voice).ToString())
                     {
-                        np.FielUrl = TypePath;
+                        np.FielUrl = SystemConst.WebUrl + Url.Content(TypePath);
                     }
                     //视频
                     else if (MesType == ((int)EnumMessageType.Video).ToString())
                     {
-                        np.FielUrl = TypePath;
+                        np.FielUrl = SystemConst.WebUrl + Url.Content(TypePath);
                     }
                     //图文
                     else if (MesType == ((int)EnumMessageType.ImageText).ToString())
