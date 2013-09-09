@@ -62,6 +62,10 @@
     <Compile Include="Mapping\AppUpdateMap.cs" />
     <Compile Include="Migrations\201309040647412_Initial.cs" />
     <Compile Include="Migrations\201309040747293_initial.cs" />
+    <Compile Include="Migrations\201309090224426_initial.cs" />
+    <Compile Include="Migrations\201309090224426_initial.Designer.cs">
+      <DependentUpon>201309090224426_initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -83,6 +87,8 @@
     
     <EmbeddedResource Include="Migrations\201309040747293_initial.resx">
       <DependentUpon>201309040747293_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201309090224426_initial.resx">
+      <DependentUpon>201309090224426_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

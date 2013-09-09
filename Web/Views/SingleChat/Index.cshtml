@@ -655,7 +655,7 @@
             }
         </div>
     </div>
-    @using (Ajax.BeginForm("ReadMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID }, new AjaxOptions() { UpdateTargetId = "div_data" }))
+    @using (Ajax.BeginForm("ReadMessage", "SingleChat", new { HostName = ViewBag.HostName, id = ViewBag.ID, userID = ViewBag.UserID, SID = ViewBag.ConverID }, new AjaxOptions() { UpdateTargetId = "div_data" }))
     { 
         <input type="submit" id="btnSelData" style="visibility: hidden" />
     }

@@ -1,0 +1,256 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@section head{
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DE4a8a6c90c456f72bbcbfa3f1e8228d"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#ProvinceID").Province({ value: '@Model.ProvinceID' });
+            $("#CityID").City({ parent: "ProvinceID", value: '@Model.CityID' });
+            $("#DistrictID").District({ parent: "CityID", value: '@Model.DistrictID' });
+
+            $("#LogoImagePathFile").change(function () {
+                var fileName = $("#LogoImagePathFile").val();
+                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+                $("span[data-valmsg-for='LogoImagePath']").empty().attr("class", "field-validation-valid");
+                switch (suffix) {
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".gif":
+                    case ".bmp":
+                        break;
+                    default:
+                        $("span[data-valmsg-for='LogoImagePath']").text("支持下列图片格式：.jpg|.jpeg|.png|.gif|.bmp").attr("class", "field-validation-error");
+                        break;
+                }
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#imgLogo").attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+                return false;
+            });
+
+
+
+
+
+
+            //纬度
+            var TLng = $("#Lng").val();
+            //经度
+            var TLat = $("#Lat").val();
+
+            //百度地图
+            var map = new BMap.Map("allmap");
+
+            //允许缩放
+            map.enableScrollWheelZoom(true);
+            map.addControl(new BMap.NavigationControl());  //添加默认缩放平移控件
+            //            map.addControl(new BMap.NavigationControl({ anchor: BMAP_ANCHOR_TOP_RIGHT, type: BMAP_NAVIGATION_CONTROL_SMALL }));  //右上角，仅包含平移和缩放按钮
+            //            map.addControl(new BMap.NavigationControl({ anchor: BMAP_ANCHOR_BOTTOM_LEFT, type: BMAP_NAVIGATION_CONTROL_PAN }));  //左下角，仅包含平移按钮
+            map.addControl(new BMap.NavigationControl({ anchor: BMAP_ANCHOR_BOTTOM_RIGHT, type: BMAP_NAVIGATION_CONTROL_ZOOM }));  //右下角，仅包含缩放按钮
+
+            //反编译地址
+            var gc = new BMap.Geocoder();
+
+            //定位当前城市
+            if (TLng != "" && TLng != undefined) {
+
+
+                //显示地图
+                var point = new BMap.Point(TLng, TLat);
+                map.centerAndZoom(point, 12);
+
+
+                //创建坐标 lng：纬度 lat：经度
+//                var Tpoint = new BMap.Point(result.center.lng, result.center.lat);
+                var marker = new BMap.Marker(point);  // 创建标注
+                map.addOverlay(marker);              // 将标注添加到地图中
+                marker.enableDragging();    //可拖拽
+                //添加坐标备注
+                var label = new BMap.Label("移动我来定位", { offset: new BMap.Size(20, -10) });
+                marker.setLabel(label);
+
+                //移动标注事件
+                marker.addEventListener("onmouseup", function (e) {
+                    $("#Lng").val(e.point.lng);
+                    $("#Lat").val(e.point.lat);
+                    //反编译地址
+                    var pt = e.point;
+                    gc.getLocation(pt, function (rs) {
+                        var addComp = rs.addressComponents;
+                        $("#SaleMapAddress").val(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+                    });
+
+                });
+
+            }
+            else {
+                function myFun(result) {
+                    var cityName = result.name;
+                    map.setCenter(cityName);
+
+                    //显示地图
+                    map.centerAndZoom(result.center, 12);
+
+                    //创建坐标 lng：纬度 lat：经度
+                    var Tpoint = new BMap.Point(result.center.lng, result.center.lat);
+                    var marker = new BMap.Marker(Tpoint);  // 创建标注
+                    map.addOverlay(marker);              // 将标注添加到地图中
+                    marker.enableDragging();    //可拖拽
+                    //添加坐标备注
+                    var label = new BMap.Label("移动我来定位", { offset: new BMap.Size(20, -10) });
+                    marker.setLabel(label);
+
+                    //移动标注事件
+                    marker.addEventListener("onmouseup", function (e) {
+                        $("#Lng").val(e.point.lng);
+                        $("#Lat").val(e.point.lat);
+                        //反编译地址
+                        var pt = e.point;
+                        gc.getLocation(pt, function (rs) {
+                            var addComp = rs.addressComponents;
+                            $("#SaleMapAddress").val(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+                        });
+
+                    });
+
+                }
+                var myCity = new BMap.LocalCity();
+                myCity.get(myFun);
+            }
+
+
+
+
+
+
+
+
+        });
+
+
+        
+    </script>
+}
+@model Poco.AccountMain
+<div class="title">
+    基础设置</div>
+<div class="bodyLeft">
+    <ul class="ulList">
+        <li class="select">@Html.ActionLink("基础设置", "Index", "BasisSet", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("安装App自动回复", "Index", "InstallAppReply", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("关键词自动回复", "Index", "KeywordMessage", new { HostName = ViewBag.HostName }, null, true)</li>
+    </ul>
+</div>
+<div class="bodyRight">
+    @using (Html.BeginForm("Edit", "BasisSet", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <fieldset style="border: 1px solid #d3d3d3;">
+            <legend>基本信息</legend>
+            <table class="tableForm" style="line-height: 27px; font-size: 14px">
+                <tr>
+                    <td>
+                        Logo
+                    </td>
+                    <td>
+                        <img id="imgLogo" style="max-width:80px;max-height:80px; float: left" src="@Url.Content(@Model.LogoImagePath)" />
+                        <input type="file" id="LogoImagePathFile" name="LogoImagePathFile" />
+                        @Html.TextBoxFor(a => a.LogoImagePath, new { style = "width:0px;visibility:hidden" })
+                        @Html.HiddenFor(a => a.LogoImageThumbnailPath)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.LogoImagePath)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle" style="">
+                        售楼部名称
+                    </td>
+                    <td class="tdField">
+                        @Html.TextBoxFor(a => a.Name, new { @readonly = "readonly" })@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.CreateTime)@Html.HiddenFor(a => a.SystemUserID)
+                        @Html.HiddenFor(a => a.FileLimit)@Html.HiddenFor(a => a.Phone)@Html.HiddenFor(a => a.HostName)@Html.HiddenFor(a => a.ID)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        售楼部电话
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.SalePhone)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.SalePhone)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        售楼地址
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.SaleAddress)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.SaleAddress)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        省份
+                    </td>
+                    <td>@Html.DropDownListFor(a => a.ProvinceID)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.ProvinceID)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        城市
+                    </td>
+                    <td>@Html.DropDownListFor(a => a.CityID)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.CityID)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        地区
+                    </td>
+                    <td>@Html.DropDownListFor(a => a.DistrictID)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.DistrictID)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        地理位置
+                    </td>
+                    <td colspan="2">
+                        <div id="allmap" style="width: 555px; height: 290px; border: 1px solid #000">
+                        </div>
+                        @Html.HiddenFor(a => a.Lng)
+                        @Html.HiddenFor(a => a.Lat)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        坐标地址
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.SaleMapAddress)
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="submit" id="btnSubmit" class="button" value="保存" />
+        </div>
+    }
+</div>
+<div style="clear: both">
+</div>

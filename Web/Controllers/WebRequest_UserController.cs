@@ -152,5 +152,7 @@ namespace Web.Controllers
             result = ulim.Edit(userLoginInfo);
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
+
+        //public string Get
     }
 }

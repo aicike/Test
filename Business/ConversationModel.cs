@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Poco;
 using Interface;
+using System.Data;
 
 namespace Business
 {
@@ -46,6 +47,19 @@ namespace Business
             }
         }
 
-        
+        public IQueryable<Conversation> GetAllCID(string AoU, int UID)
+        {
+            string sql = "";
+            if (AoU == "s")
+            {
+                sql = string.Format("select * from dbo.[Conversation] where (ctype='0' and User1ID='{0}') or (ctype='1' and User1ID='{0}') or(ctype ='1' and User2ID = '{0}')", UID);
+            }
+            else
+            {
+                sql = string.Format("select * from dbo.[Conversation] where (ctype='0' and User2ID='{0}') or (ctype='2' and User1ID='{0}') or(ctype ='2' and User2ID = '{0}')", UID);
+            }
+            return base.SqlQuery(sql);
+        }
+
     }
 }

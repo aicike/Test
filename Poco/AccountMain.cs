@@ -82,6 +82,18 @@ namespace Poco
         [StringLength(200, ErrorMessage = "长度小于200")]
         public string SaleAddress { get; set; }
 
+        [Display(Name = "售楼电话")]
+        public string SalePhone { get; set; }
+
+        [Display(Name = "售楼地图定位地址")]
+        public string SaleMapAddress { get; set; }
+
+        [Display(Name = "纬度")]
+        public string Lng { get; set; }
+
+        [Display(Name = "经度")]
+        public string Lat { get; set; }
+
         /// <summary>
         /// 数据更新信息
         /// </summary>

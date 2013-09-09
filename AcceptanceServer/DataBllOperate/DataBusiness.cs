@@ -23,6 +23,7 @@ namespace AcceptanceServer.DataBllOperate
             Pmg.EnumMessageTypeID = int.Parse(Np.EID);
             Pmg.FileUrl = Np.FielUrl;
             Pmg.LibraryImageTextsID = null;
+            Pmg.ConversationID = int.Parse(Np.SID);
             if(Np.ImgTextID != null)
             {
                 Pmg.LibraryImageTextsID = int.Parse(Np.ImgTextID);
@@ -62,6 +63,7 @@ namespace AcceptanceServer.DataBllOperate
             pm.Content = msg.Body;
             pm.FileUrl = Np.FielUrl;
             pm.EnumMessageTypeID = int.Parse(Np.EID);
+            pm.ConversationID = int.Parse(Np.SID);
             pm.LibraryImageTextsID = null;
             if (Np.ImgTextID != null)
             {
@@ -90,7 +92,7 @@ namespace AcceptanceServer.DataBllOperate
         }
 
         /// <summary>
-        /// 获取未读消息
+        /// 获取所有消息与未读消息数量
         /// </summary>
         /// <param name="AoU"></param>
         /// <param name="AoUID"></param>
@@ -115,5 +117,16 @@ namespace AcceptanceServer.DataBllOperate
             return UMlist;
         }
 
+        /// <summary>
+        /// 删除未读消息并修改消息状态
+        /// </summary>
+        /// <param name="SID">会话ID</param>
+        /// <param name="AoU">s == u</param>
+        /// <param name="ToUID">用户ID</param>
+        /// <returns></returns>
+        public static int UpandDelMessType(int SID, string AoU, int ToUID)
+        {
+            return DataHandle.UpandDelMessType(SID,AoU,ToUID);
+        }
     }
 }

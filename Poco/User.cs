@@ -38,6 +38,9 @@ namespace Poco
         public int AccountMainID { get; set; }
         public virtual AccountMain AccountMain { get; set; }
 
+        [Display(Name = "创建日期")]
+        public DateTime CreateDate { get; set; }
+
         /// <summary>
         /// 业务字段，不会再数据库中生成
         /// 当前被哪个AccountID操作
