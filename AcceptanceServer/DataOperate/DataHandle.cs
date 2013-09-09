@@ -58,40 +58,47 @@ namespace AcceptanceServer.DataOperate
         {
             //获取用户会话ID
             DataTable dt = GetUserConversationID(AoU, AoUID).Tables[0];
-            string id = "";
-            foreach (DataRow row in dt.Rows)
+            if (dt.Rows.Count > 0)
             {
-                id += row["ID"] + ",";
-            }
-            id = id.TrimEnd(',');
-            string sql = "";
-            //用户
-            if (AoU == "u")
-            {
-                sql = string.Format(@"select ConversationID as [SID],Max(SendTime) as SendTime,
+                string id = "";
+                foreach (DataRow row in dt.Rows)
+                {
+                    id += row["ID"] + ",";
+                }
+                id = id.TrimEnd(',');
+                string sql = "";
+                //用户
+
+                if (AoU == "u")
+                {
+                    sql = string.Format(@"select ConversationID as [SID],Max(SendTime) as SendTime,
                                     (select count(isreceive)  from dbo.[Message] where ConversationID in ({0}) and ToUserID ={1} and IsReceive='false' ) as Messagecnt,
                                     (select  CASE WHEN fromaccountid <> 0 THEN fromaccountid ELSE fromuserid END  from dbo.[Message] where SendTime = Max(a.SendTime) ) as FromID,
                                     (select TextContent  from dbo.[Message] where SendTime = Max(a.SendTime)) as Content,
                                     (select EnumMessageSendDirectionID  from dbo.[Message] where SendTime = Max(a.SendTime)) as MSD,
                                     (select EnumMessageTypeID  from dbo.[Message] where SendTime = Max(a.SendTime)) as EID
                                     from dbo.[Message] a  where ConversationID in ({0}) and ToUserID ={1} group by ConversationID"
-                                    , id, AoUID);
-            }
-            //售楼代表
-            else
-            {
-                sql = string.Format(@"seselect ConversationID as [SID],Max(SendTime) as SendTime,
+                                        , id, AoUID);
+                }
+                //售楼代表
+                else
+                {
+                    sql = string.Format(@"seselect ConversationID as [SID],Max(SendTime) as SendTime,
                                     (select count(isreceive)  from dbo.[Message] where ConversationID in ({0}) and ToAccountID ={1} and IsReceive='false' ) as Messagecnt,
                                     (select  CASE WHEN fromaccountid <> 0 THEN fromaccountid ELSE fromuserid END  from dbo.[Message] where SendTime = Max(a.SendTime) ) as FromID,
                                     (select TextContent  from dbo.[Message] where SendTime = Max(a.SendTime)) as Content,
                                     (select EnumMessageSendDirectionID  from dbo.[Message] where SendTime = Max(a.SendTime)) as MSD,
                                     (select EnumMessageTypeID  from dbo.[Message] where SendTime = Max(a.SendTime)) as EID
                                     from dbo.[Message] a  where ConversationID in ({0}) and ToAccountID ={1} group by ConversationID"
-                                    , id, AoUID);
+                                        , id, AoUID);
+                }
+
+                return SqlHelper.ExecuteDataset(sql);
             }
-
-            return SqlHelper.ExecuteDataset(sql);
-
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>

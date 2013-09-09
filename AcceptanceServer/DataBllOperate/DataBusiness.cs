@@ -100,18 +100,22 @@ namespace AcceptanceServer.DataBllOperate
         public static List<UnreadMessage> GetUnreadMessage(string AoU, string AoUID)
         {
             List<UnreadMessage> UMlist = new List<UnreadMessage>();
-            DataTable dt = DataHandle.GetUnreadMessage(AoU,AoUID).Tables[0];
-            foreach (DataRow row in dt.Rows)
+            DataSet ds = DataHandle.GetUnreadMessage(AoU, AoUID);
+            if (ds != null)
             {
-                UnreadMessage um = new UnreadMessage();
-                um.FromID = row["FromID"].ToString();
-                um.Content = row["Content"].ToString();
-                um.EID = row["EID"].ToString();
-                um.SendTime = row["SendTime"].ToString();
-                um.MessageCnt = row["Messagecnt"].ToString();
-                um.MSD = row["MSD"].ToString();
-                um.SID = row["ConversationID"].ToString();
-                UMlist.Add(um);
+                DataTable dt = DataHandle.GetUnreadMessage(AoU, AoUID).Tables[0];
+                foreach (DataRow row in dt.Rows)
+                {
+                    UnreadMessage um = new UnreadMessage();
+                    um.FromID = row["FromID"].ToString();
+                    um.Content = row["Content"].ToString();
+                    um.EID = row["EID"].ToString();
+                    um.SendTime = row["SendTime"].ToString();
+                    um.MessageCnt = row["Messagecnt"].ToString();
+                    um.MSD = row["MSD"].ToString();
+                    um.SID = row["ConversationID"].ToString();
+                    UMlist.Add(um);
+                }
             }
 
             return UMlist;
