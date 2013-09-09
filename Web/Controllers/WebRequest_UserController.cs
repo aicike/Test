@@ -16,10 +16,10 @@ namespace Web.Controllers
         /// <summary>
         /// 登录
         /// </summary>
-        public string UserLogin(string email, string loginPwd,int accountMainID)
+        public string UserLogin(string email, string loginPwd, int accountMainID)
         {
             var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
-            var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email, Pwd = loginPwd,AccountMainID=accountMainID });
+            var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email, Pwd = loginPwd, AccountMainID = accountMainID });
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
         /// <summary>
@@ -153,6 +153,28 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
-        //public string Get
+        /// <summary>
+        /// 获取售楼部坐标
+        /// </summary>
+        /// <param name="AccountMainID"></param>
+        /// <returns></returns>
+        public string GetCoordinate(int AccountMainID)
+        {
+            Result result = new Result();
+            var AccountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
+            var accountmain = AccountMainModel.Get(AccountMainID);
+            App_Coordinate ac = new App_Coordinate();
+            if (string.IsNullOrEmpty(ac.Lat))
+            {
+                result.Error = "售楼部尚未定位坐标";
+            }
+            else
+            {
+                ac.Lat = accountmain.Lat;
+                ac.Lng = accountmain.Lng;
+                result.Entity = ac;
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
     }
 }
