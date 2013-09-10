@@ -51,6 +51,15 @@ namespace Poco
         public string LoginPwdPage { get; set; }
 
         /// <summary>
+        /// 找回密码URL
+        /// </summary>
+        public string FindPwdCode { get; set; }
+
+        public DateTime? FindPwdTime { get; set; }
+
+        public bool? FindPwdValidity { get; set; }
+
+        /// <summary>
         /// 业务字段，不会再数据库中生成
         /// （一个userloginInfo对应多个User,但一个APP登录只绑定一个跟AccountMain关联的信息）
         /// </summary>

@@ -18,17 +18,16 @@ namespace Common
             ThreadPool.QueueUserWorkItem(delegate { SendMail(email); });
         }
 
-        public static void SendMail(EmailInfo email)
+        private static void SendMail(EmailInfo email)
         {
-            var emailConfig = System.Configuration.ConfigurationManager.AppSettings["EmailInfo"];
+            var emailConfig = System.Configuration.ConfigurationManager.AppSettings["EmailInfo"].Split('|');
             var smtpClientConfig = System.Configuration.ConfigurationManager.AppSettings["SMTPClient"];
             var portConfig = System.Configuration.ConfigurationManager.AppSettings["SMTPPort"];
 
             if (emailConfig != null)
             {
-                var emailInfo = DESEncrypt.Decrypt(emailConfig);
-                var emailAddress = emailInfo.Split('|')[0];
-                var emailPwd = emailInfo.Split('|')[1];
+                var emailAddress = emailConfig[0];
+                var emailPwd = emailConfig[1];
 
                 using (System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage())
                 {
@@ -63,7 +62,7 @@ namespace Common
 
                     if (email.EmbeddedResources != null)
                     {
-                        AlternateView BodyView = AlternateView.CreateAlternateViewFromString(email.Body, null, MediaTypeNames.Text.Html);
+                        AlternateView BodyView = AlternateView.CreateAlternateViewFromString(email.Body, Encoding.UTF8, MediaTypeNames.Text.Html);
                         foreach (LinkedResource Resource in email.EmbeddedResources)
                         {
                             BodyView.LinkedResources.Add(Resource);
@@ -78,9 +77,9 @@ namespace Common
                     else
                         email.Priority = MailPriority.High;
 
-                    message.SubjectEncoding = System.Text.Encoding.GetEncoding("ISO-8859-1");
-                    message.BodyEncoding = System.Text.Encoding.GetEncoding("ISO-8859-1");
-                    message.IsBodyHtml = true;
+                    message.SubjectEncoding = Encoding.UTF8;
+                    message.BodyEncoding = Encoding.UTF8;
+                    message.IsBodyHtml = email.IsHtml;
 
                     if (email.Attachments != null)
                     {
@@ -109,40 +108,5 @@ namespace Common
                 }
             }
         }
-
-        public static void SendMailDetail(string emailTo, string subject, string body)
-        {
-            string url = System.Configuration.ConfigurationManager.AppSettings["Host"];
-            string validateUrl = url + "#";
-            var context = string.Format(body, ", please click " + "<a href='" + validateUrl + "'>here</a>");
-            EmailInfo emailInfo = new EmailInfo();
-            //Bid distrubit user order
-            emailInfo = new EmailInfo();
-            emailInfo.To = emailTo;
-            emailInfo.Priority = System.Net.Mail.MailPriority.High;
-            emailInfo.Subject = subject;
-            emailInfo.UseSSL = true;
-            emailInfo.Body = context;
-            SendEmail.SendMailAsync(emailInfo);
-        }
-
-        #region Send Email
-
-        public static void SendMailDetail(string emailTo, string subject, string body,string strUrl)
-        {
-            string url = System.Configuration.ConfigurationManager.AppSettings["Host"];
-            string validateUrl = url +"/"+ strUrl;
-            var context = string.Format(body, ", please click " + "<a href='" + validateUrl + "'>here</a>");
-            EmailInfo emailInfo = new EmailInfo();
-            //Bid distrubit user order
-            emailInfo = new EmailInfo();
-            emailInfo.To = emailTo;
-            emailInfo.Priority = System.Net.Mail.MailPriority.High;
-            emailInfo.Subject = subject;
-            emailInfo.UseSSL = true;
-            emailInfo.Body = context;
-            SendEmail.SendMailAsync(emailInfo);
-        }
-        #endregion
     }
 }

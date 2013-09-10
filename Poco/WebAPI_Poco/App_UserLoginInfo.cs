@@ -19,6 +19,10 @@ namespace Poco.WebAPI_Poco
 
         public int? AccountID { get; set; }
 
+        public string Phone { get; set; }
+
+        public int? UserID { get; set; }
+
         /// <summary>
         /// 客户端系统类型
         /// </summary>

@@ -390,7 +390,6 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
-    <Content Include="test.html" />
     <Content Include="video-js\AkamaiFlashPlayer.swf" />
     <Content Include="video-js\expressInstall.swf" />
     <Content Include="video-js\font\vjs.svg" />
@@ -692,6 +691,7 @@
     <Content Include="Views\Library\ImgTextManager.cshtml" />
     <Content Include="Views\Default\Calculator.cshtml" />
     <Content Include="Views\BasisSet\Index.cshtml" />
+    <Content Include="Views\Default\FindPwd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

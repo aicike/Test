@@ -26,11 +26,11 @@ namespace Web.Controllers
         /// 注册
         /// </summary>
         [HttpPost]
-        public Result UserRegister(App_UserLoginInfo user)
+        public string UserRegister(App_UserLoginInfo userLoginInfo)
         {
             var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
-            var result = userLoginInfoModel.Register(user);
-            return result;
+            var result = userLoginInfoModel.Register(userLoginInfo);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
         /// <summary>
         /// 每次打开应用时，提交的clientID
@@ -59,8 +59,13 @@ namespace Web.Controllers
         [HttpPost]
         public string CheckEmailOnRegister(string email, int? userLoginInfoID)
         {
+            Result result = new Result();
             var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
-            return Newtonsoft.Json.JsonConvert.SerializeObject(userLoginInfoModel.CheckEmailOnRegister(email));
+            if (userLoginInfoModel.ExistEmail(email, userLoginInfoID))
+            {
+                result.Error = "已存在相同邮箱。";
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
         /// <summary>
@@ -156,15 +161,13 @@ namespace Web.Controllers
         /// <summary>
         /// 获取售楼部坐标
         /// </summary>
-        /// <param name="AccountMainID"></param>
-        /// <returns></returns>
-        public string GetCoordinate(int AccountMainID)
+        public string GetCoordinate(int accountMainID)
         {
             Result result = new Result();
             var AccountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
-            var accountmain = AccountMainModel.Get(AccountMainID);
+            var accountmain = AccountMainModel.Get(accountMainID);
             App_Coordinate ac = new App_Coordinate();
-            if (string.IsNullOrEmpty(ac.Lat))
+            if (string.IsNullOrEmpty(accountmain.Lat))
             {
                 result.Error = "售楼部尚未定位坐标";
             }
@@ -174,6 +177,15 @@ namespace Web.Controllers
                 ac.Lng = accountmain.Lng;
                 result.Entity = ac;
             }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+        /// <summary>
+        /// 找回密码
+        /// </summary>
+        public string FindPwd(string email) {
+            var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
+            var result = userLoginInfoModel.FindPwd(email);
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
     }

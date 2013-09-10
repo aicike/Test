@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "FindPwd";
+    var result = ViewBag.Result as Poco.Result;
+    var ok = ViewBag.Ok as string;
+}
+<script type="text/javascript">
+    
+</script>
+<div>
+    @if (result != null && result.HasError)
+    {
+        <p>
+            @result.Error</p>
+    }
+    else
+    {
+        if (ok == "true")
+        {
+        <p>
+            密码修改成功！</p>
+        }
+        else
+        {
+
+            using (Html.BeginForm())
+            {
+        <div>
+            设置新密码</div>
+        <div>
+            <input type="password" name="txtNewPwd" />
+        </div>
+        <div>
+            <input type="submit" value="完成" />
+        </div>
+            }
+        }
+    }
+</div>

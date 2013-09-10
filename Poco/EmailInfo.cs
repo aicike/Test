@@ -8,7 +8,7 @@ using System.Net.Mime;
 
 namespace Poco
 {
-    public class EmailInfo 
+    public class EmailInfo
     {
         public string To { get; set; }
 
@@ -27,5 +27,18 @@ namespace Poco
         public string CC { get; set; }
 
         public string Bcc { get; set; }
+
+        public bool IsHtml
+        {
+            get
+            {
+                return isHtml;
+            }
+            set
+            {
+                isHtml = value;
+            }
+        }
+        private bool isHtml = false;
     }
 }

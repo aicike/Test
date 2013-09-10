@@ -9,6 +9,7 @@ using Poco.Enum;
 using Common;
 using Injection.Transaction;
 using Poco.WebAPI_Poco;
+using System.Web;
 
 namespace Business
 {
@@ -26,86 +27,113 @@ namespace Business
             return base.Edit(userLogiInfo);
         }
 
-
         [Transaction]
         public Result Register(App_UserLoginInfo userLoginInfo)
         {
             Result result = new Result();
-            //检查邮箱是否通过，是否可以注册
-            if (string.IsNullOrEmpty(userLoginInfo.Email) == false)
+            bool isExist = false;
+
+            UserLoginInfo oldUserLoginInfo = null;
+            if (userLoginInfo.UserID.HasValue)
             {
-                bool isExist = List().Any(a => a.Email.Equals(userLoginInfo.Email, StringComparison.CurrentCultureIgnoreCase));
-                if (isExist)
+                oldUserLoginInfo = GetByUserID(userLoginInfo.UserID.Value);
+                if (oldUserLoginInfo != null)
                 {
-                    result.Error = "该邮箱已存在,不能创建账号.";
-                    return result;
-                }
-            }
-            //添加用户登录信息UserLoginInfo
-            UserLoginInfo userlogin = new UserLoginInfo();
-            userlogin.LoginPwd = DESEncrypt.Encrypt(userLoginInfo.Pwd);
-            userlogin.LoginPwdPage = "000000";
-            userlogin.Name = userLoginInfo.Name;
-            userlogin.Email = userLoginInfo.Email;
-            result = base.Add(userlogin);
-            if (result.HasError)
-            {
-                return result;
-            }
-            //添加用户User
-            User user = new User();
-            user.UserLoginInfoID = userlogin.ID;
-            user.Name = userlogin.Name;
-            user.AccountMainID = userLoginInfo.AccountMainID;
-            var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
-            result = userModel.Add(user);
-            if (result.HasError)
-            {
-                return result;
-            }
-            //添加用户和Account关系
-            if (userLoginInfo.AccountID != null && userLoginInfo.AccountID.HasValue)
-            {
-                var account_UserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
-                result = account_UserModel.BindUser_Account(userLoginInfo.AccountID.Value, user.ID);
-            }
-            if (result.HasError)
-            {
-                return result;
-            }
-            //添加用户和ClientInfo信息
-            var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
-            var client = clientInfoModel.List().Where(a => a.ClientID.Equals(userLoginInfo.ClientID)).FirstOrDefault();
-            int enumClientSystemTypeID = LookupFactory.GetLookupOptionIdByToken((EnumClientSystemType)userLoginInfo.EnumClientSystemType);
-            int enumClientUserTypeID = LookupFactory.GetLookupOptionIdByToken((EnumClientUserType)userLoginInfo.EnumClientUserType);
-            if (client == null)
-            {
-                //数据库中没有client信息，需要新增
-                ClientInfo clientInfo = new ClientInfo();
-                clientInfo.EnumClientSystemTypeID = enumClientSystemTypeID;
-                clientInfo.SetupTiem = DateTime.Now;
-                clientInfo.EnumClientUserTypeID = enumClientUserTypeID;
-                clientInfo.ClientID = userLoginInfo.ClientID;
-                clientInfo.EntityID = user.ID;
-                result = clientInfoModel.Add(clientInfo);
-                if (result.HasError)
-                {
-                    return result;
+                    isExist = ExistEmail(userLoginInfo.Email, oldUserLoginInfo.ID);
                 }
             }
             else
             {
-                //数据库中有client信息，需要绑定
-                client.EnumClientSystemTypeID = enumClientSystemTypeID;
-                client.EnumClientUserTypeID = enumClientUserTypeID;
-                client.EntityID = user.ID;
-                result = clientInfoModel.Edit(client);
+                isExist = ExistEmail(userLoginInfo.Email);
+            }
+            //检查邮箱是否通过，是否可以注册
+            if (isExist)
+            {
+                result.Error = "该邮箱已存在,不能创建账号.";
+                return result;
+            }
+
+            if (userLoginInfo.UserID.HasValue && oldUserLoginInfo != null)
+            {
+                //已有账号，需要修改userLoginInfo信息
+                oldUserLoginInfo.Email = userLoginInfo.Email;
+                oldUserLoginInfo.LoginPwd = DESEncrypt.Encrypt(userLoginInfo.Pwd);
+                oldUserLoginInfo.LoginPwdPage = "000000";
+                oldUserLoginInfo.Phone = userLoginInfo.Phone;
+                oldUserLoginInfo.Name = userLoginInfo.Name;
+                result = base.Edit(oldUserLoginInfo);
+            }
+            else
+            {
+                //没有账号，需要新建userLoginInfo信息
+                throw new ApplicationException("方法需要完善。");
+                //添加用户登录信息UserLoginInfo
+                UserLoginInfo userlogin = new UserLoginInfo();
+                userlogin.LoginPwd = DESEncrypt.Encrypt(userLoginInfo.Pwd);
+                userlogin.LoginPwdPage = "000000";
+                userlogin.Name = userLoginInfo.Name;
+                userlogin.Email = userLoginInfo.Email;
+                result = base.Add(userlogin);
                 if (result.HasError)
                 {
                     return result;
                 }
+                //添加用户User
+                User user = new User();
+                user.UserLoginInfoID = userlogin.ID;
+                user.Name = userlogin.Name;
+                user.AccountMainID = userLoginInfo.AccountMainID;
+                var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+                result = userModel.Add(user);
+                if (result.HasError)
+                {
+                    return result;
+                }
+                //添加用户和Account关系
+                if (userLoginInfo.AccountID != null && userLoginInfo.AccountID.HasValue)
+                {
+                    var account_UserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
+                    result = account_UserModel.BindUser_Account(userLoginInfo.AccountID.Value, user.ID);
+                }
+                if (result.HasError)
+                {
+                    return result;
+                }
+                //添加用户和ClientInfo信息
+                var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
+                var client = clientInfoModel.List().Where(a => a.ClientID.Equals(userLoginInfo.ClientID)).FirstOrDefault();
+                int enumClientSystemTypeID = LookupFactory.GetLookupOptionIdByToken((EnumClientSystemType)userLoginInfo.EnumClientSystemType);
+                int enumClientUserTypeID = LookupFactory.GetLookupOptionIdByToken((EnumClientUserType)userLoginInfo.EnumClientUserType);
+                if (client == null)
+                {
+                    //数据库中没有client信息，需要新增
+                    ClientInfo clientInfo = new ClientInfo();
+                    clientInfo.EnumClientSystemTypeID = enumClientSystemTypeID;
+                    clientInfo.SetupTiem = DateTime.Now;
+                    clientInfo.EnumClientUserTypeID = enumClientUserTypeID;
+                    clientInfo.ClientID = userLoginInfo.ClientID;
+                    clientInfo.EntityID = user.ID;
+                    result = clientInfoModel.Add(clientInfo);
+                    if (result.HasError)
+                    {
+                        return result;
+                    }
+                }
+                else
+                {
+                    //数据库中有client信息，需要绑定
+                    client.EnumClientSystemTypeID = enumClientSystemTypeID;
+                    client.EnumClientUserTypeID = enumClientUserTypeID;
+                    client.EntityID = user.ID;
+                    result = clientInfoModel.Edit(client);
+                    if (result.HasError)
+                    {
+                        return result;
+                    }
+                }
+                result.Entity = user.ID;
+                return result;
             }
-            result.Entity = user.ID;
             return result;
         }
 
@@ -135,26 +163,162 @@ namespace Business
             return result;
         }
 
-
-        public Result CheckEmailOnRegister(string email, int? userLoginInfoID = null)
+        /// <summary>
+        /// 根据用户id获取登录id
+        /// </summary>
+        public UserLoginInfo GetByUserID(int userID)
         {
-            Result result = new Result();
+            return List().Where(a => a.Users.Any(b => b.ID == userID)).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// 检查邮箱是否存在
+        /// </summary>
+        public bool ExistEmail(string email, int? userLoginInfoID = null)
+        {
             if (userLoginInfoID != null && userLoginInfoID.HasValue && userLoginInfoID.Value > 0)
             {
-                var exist = List().Any(a => a.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase) && a.ID != userLoginInfoID.Value);
-                if (exist)
-                {
-                    result.Error = "该邮箱已存在。";
-                }
+                return List().Any(a => a.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase) && a.ID != userLoginInfoID.Value);
             }
             else
             {
-                var exist = List().Any(a => a.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase));
-                if (exist)
-                {
-                    result.Error = "该邮箱已存在。";
-                }
+                return List().Any(a => a.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase));
             }
+        }
+
+        /// <summary>
+        /// 找回密码
+        /// </summary>
+        public Result FindPwd(string email)
+        {
+            Result result = new Result();
+            var userLoginInfo = List().Where(a => a.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+            if (userLoginInfo == null)
+            {
+                result.Error = "该邮箱不能存在，请重新输入。";
+                return result;
+            }
+            //生成激活码
+            Random random = new Random();
+            int r = random.Next(100, 999);
+            string code = userLoginInfo.ID + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + r;
+            code = DESEncrypt.Encrypt(code);
+            userLoginInfo.FindPwdCode = code;
+            userLoginInfo.FindPwdTime = DateTime.Now;
+            userLoginInfo.FindPwdValidity = true;
+            userLoginInfo.LoginPwdPage = "000000";
+            result = base.Edit(userLoginInfo);
+            if (result.HasError)
+            {
+                result.Error = "操作失败，请稍后重试。";
+                return result;
+            }
+            string url = SystemConst.WebUrl + "/Default/FindPwd?code=" + HttpContext.Current.Server.UrlEncode(code);
+
+            //发送激活邮件
+            string time1 = DateTime.Now.ToString("yyyy年MM月dd日 hh:mm:ss");
+            string time2 = DateTime.Now.ToString("yyyy年MM月dd日");
+
+            EmailInfo emailInfo = new EmailInfo();
+            emailInfo.To = email;
+            emailInfo.Subject = "IMtimely - 找回密码";
+            emailInfo.IsHtml = true;
+            emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您在{0}提交了邮箱找回密码请求，请点击&nbsp;<a href='{1}' target='_blank'>此处</a>&nbsp;修改密码。", time1, url) +
+                string.Format("为了保证您的帐号安全，该链接有效期为24小时，并且点击一次后失效！<br/><br/>IMtimely<br/><br/>{0}", time2);
+            try
+            {
+                SendEmail.SendMailAsync(emailInfo);
+            }
+            catch (Exception ex)
+            {
+                result.Error = "操作失败，请稍后重试。";
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 找回密码_检查激活码
+        /// </summary>
+        public Result FindPwd_CheckCode(string code)
+        {
+            Result result = new Result();
+            try
+            {
+                string value = DESEncrypt.Decrypt(code);
+                if (value.IndexOf("_") < 0)
+                {
+                    result.Error = "链接有误，无法操作。";
+                    return result;
+                }
+                int userLoginInfoId = 0;
+                var isOk = int.TryParse(value.Split('_')[0], out userLoginInfoId);
+                if (isOk == false || userLoginInfoId == 0)
+                {
+                    result.Error = "链接有误，无法操作。";
+                    return result;
+                }
+                var userLoginInfo = Get(userLoginInfoId);
+                if (userLoginInfo == null)
+                {
+                    result.Error = "链接有误，无法操作。";
+                    return result;
+                }
+                if (userLoginInfo.FindPwdCode != code)
+                {
+                    result.Error = "链接有误，无法操作。";
+                    return result;
+                }
+                if (userLoginInfo.FindPwdValidity == false)
+                {
+                    result.Error = "该链接已经失效，无法操作。";
+                    return result;
+                }
+                int com = userLoginInfo.FindPwdTime.Value.AddHours(24).CompareTo(DateTime.Now);
+                if (com < 0)
+                {
+                    result.Error = "该链接已经失效，无法操作。";
+                    return result;
+                }
+                result.Entity = userLoginInfoId;
+            }
+            catch (Exception ex)
+            {
+                result.Error = "链接有误，无法操作。";
+                return result;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 找回密码_修改密码
+        /// </summary>
+        public Result FindPwd_ChangePwd(string code, string pwd)
+        {
+            Result result = null;
+            if (pwd.Trim().Length < 6)
+            {
+                result = new Result();
+                result.Error = "密码长度应大于6位字符。";
+                return result;
+            }
+            result = FindPwd_CheckCode(code);
+            if (result.HasError)
+            {
+                return result;
+            }
+            int userLoginInfoId = int.Parse(result.Entity.ToString());
+            var userLoginInfo = Get(userLoginInfoId);
+            if (userLoginInfo == null)
+            {
+                result.Error = "参数错误，操作失败。";
+                return result;
+            }
+            userLoginInfo.LoginPwd = DESEncrypt.Encrypt(pwd);
+            userLoginInfo.LoginPwdPage = "000000";
+            userLoginInfo.FindPwdCode = "";
+            userLoginInfo.FindPwdTime = null;
+            userLoginInfo.FindPwdValidity = false;
+            result = base.Edit(userLoginInfo);
             return result;
         }
     }

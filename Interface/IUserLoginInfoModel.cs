@@ -13,6 +13,21 @@ namespace Interface
 
         Result Register(App_UserLoginInfo userLoginInfo);
 
-        Result CheckEmailOnRegister(string email, int? userLoginInfoID = null);
+        bool ExistEmail(string email, int? userLoginInfoID = null);
+
+        /// <summary>
+        /// 找回密码
+        /// </summary>
+        Result FindPwd(string email);
+        
+        /// <summary>
+        /// 找回密码_检查激活码
+        /// </summary>
+        Result FindPwd_CheckCode(string code);
+
+        /// <summary>
+        /// 找回密码_修改密码
+        /// </summary>
+        Result FindPwd_ChangePwd(string code, string pwd);
     }
 }
