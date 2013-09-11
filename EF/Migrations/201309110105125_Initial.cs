@@ -442,6 +442,9 @@ namespace EF.Migrations
                         IdentityCard = c.String(maxLength: 30),
                         Email = c.String(maxLength: 50),
                         LoginPwd = c.String(nullable: false, maxLength: 100),
+                        FindPwdCode = c.String(),
+                        FindPwdTime = c.DateTime(),
+                        FindPwdValidity = c.Boolean(),
                     })
                 .PrimaryKey(t => t.ID);
             

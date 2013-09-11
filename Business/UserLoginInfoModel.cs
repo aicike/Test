@@ -66,8 +66,6 @@ namespace Business
             else
             {
                 //没有账号，需要新建userLoginInfo信息
-                throw new ApplicationException("方法需要完善。");
-                //添加用户登录信息UserLoginInfo
                 UserLoginInfo userlogin = new UserLoginInfo();
                 userlogin.LoginPwd = DESEncrypt.Encrypt(userLoginInfo.Pwd);
                 userlogin.LoginPwdPage = "000000";
