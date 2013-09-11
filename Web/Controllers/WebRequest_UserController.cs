@@ -164,7 +164,7 @@ namespace Web.Controllers
             var AccountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             var accountmain = AccountMainModel.Get(AccountMainID);
             App_Coordinate ac = new App_Coordinate();
-            if (string.IsNullOrEmpty(ac.Lat))
+            if (string.IsNullOrEmpty(accountmain.Lat))
             {
                 result.Error = "售楼部尚未定位坐标";
             }

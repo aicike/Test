@@ -227,7 +227,7 @@ namespace AcceptanceServer
                             if (dt == null) //数据存储失败 
                             {
                                 //return  6发送失败
-                                SendMessageStatus("6");
+                                SendMessageStatus("6",msg.To.User);
                                 return;
                             }
                             else
@@ -269,7 +269,7 @@ namespace AcceptanceServer
                                     if (cnt <= 0)
                                     {
                                         //return  6发送失败
-                                        SendMessageStatus("6");
+                                        SendMessageStatus("6", msg.To.User);
                                         return;
                                     }
                                     else
@@ -285,7 +285,7 @@ namespace AcceptanceServer
                         }
                         catch
                         {
-                            SendMessageStatus("6");
+                            SendMessageStatus("6", msg.To.User);
                             return;
 
 
@@ -455,13 +455,13 @@ namespace AcceptanceServer
         /// 回发消息状态
         /// </summary>
         /// <param name="MT">消息状态 4发送成功 6失败</param>
-        public void SendMessageStatus(string MT)
+        public void SendMessageStatus(string MT,string FromUser)
         {
             List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == jid.User).ToList();
 
             agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message();
             msg.Type = MessageType.chat;
-            msg.From = new Jid(msg.To.User, "localhost", "resource");
+            msg.From = new Jid(FromUser, "localhost", "resource");
             msg.To = new Jid(jid.User, "localhost", jid.User);
             NewsProtocol np = new NewsProtocol();
             np.MT = MT;//消息状态

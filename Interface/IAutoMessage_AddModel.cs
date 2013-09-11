@@ -8,6 +8,6 @@ namespace Interface
 {
     public interface IAutoMessage_AddModel : IBaseModel<AutoMessage_Add>
     {
-        AutoMessage_Add GitInfo(int AccountMainID);
+        AutoMessage_Add GetInfo(int AccountMainID);
     }
 }

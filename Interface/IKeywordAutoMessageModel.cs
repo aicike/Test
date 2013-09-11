@@ -10,5 +10,6 @@ namespace Interface
     {
         Result AddList(List<KeywordAutoMessage> list);
         Result DeleteByAutoMessage_KeywordID(int autoMessage_KeywordID);
+        
     }
 }

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Data;
 using Poco;
+using System.Threading.Tasks;
 
 namespace AcceptanceServer
 {
@@ -34,10 +35,16 @@ namespace AcceptanceServer
         //开启服务
         private void Form1_Load(object sender, EventArgs e)
         {
-            ThreadStart myThreadDelegate = new ThreadStart(Listen);
-            Thread myThread = new Thread(myThreadDelegate);
-            myThread.Start();
-            myThread.IsBackground = true;
+            //ThreadStart myThreadDelegate = new ThreadStart(Listen);
+            //Thread myThread = new Thread(myThreadDelegate);
+            //myThread.Start();
+            //myThread.IsBackground = true;
+
+            Task t = new Task(() =>
+            {
+                Listen();
+            });
+            t.Start();
             ShowErrorMessage("服务开启.....端口号：5222");
         }
         private void Listen()
@@ -103,7 +110,7 @@ namespace AcceptanceServer
         public void ShowSendMessage(string str)
         {
             //listBox1.Items.Add("发送的"+str);
-           //ShowMesage("发送的：" + str);
+            //ShowMesage("发送的：" + str);
         }
 
         #endregion
@@ -125,7 +132,7 @@ namespace AcceptanceServer
             row["Times"] = DateTime.Now;
             row["Point"] = message;
             ErrorMessageDt.Rows.Add(row);
-            
+
             DGType.DataSource = ErrorMessageDt;
 
             //日志
@@ -143,7 +150,7 @@ namespace AcceptanceServer
 
         //显示运行信息
         public void ShowMesage(string message)
-        { 
+        {
             DataRow row = MessageDt.NewRow();
             row["infoTime"] = DateTime.Now;
             row["infoPoint"] = message;
@@ -159,9 +166,9 @@ namespace AcceptanceServer
             OlineUserDt.Columns.Add("uname");
             OlineUserDt.Columns.Add("other");
         }
-        
+
         //显示在线用户
-        public void ShowOlineUser(string name,string other)
+        public void ShowOlineUser(string name, string other)
         {
             DataRow row = OlineUserDt.NewRow();
             row["UName"] = name;
@@ -172,7 +179,7 @@ namespace AcceptanceServer
         }
 
 
-       
+
 
         #endregion
 

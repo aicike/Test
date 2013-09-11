@@ -64,7 +64,7 @@ namespace Web.Controllers
             {
                 return Alert(new Dialog(result.Error));
             }
-            return RedirectToAction("Index", "HouseType", new { id = MainHouseType.AccountMainHousesID });
+            return RedirectToAction("Index", "HouseType", new { houseID = MainHouseType.AccountMainHousesID });
         }
 
         /// <summary>
