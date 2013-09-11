@@ -296,7 +296,7 @@ namespace Business
 
         public List<AutoMessage_Keyword> GetFirstAutoMessage(int accountMainID)
         {
-            return List().Where(a => a.AccountMainID == accountMainID).OrderBy(a => a.ID).ToList();
+            return List().Where(a => a.AccountMainID == accountMainID&&a.IsFistAutoMessage==true).OrderBy(a => a.ID).ToList();
         }
 
         public List<AutoMessage_Keyword> GetAutoMessageByKey(int accountMainID, string key)

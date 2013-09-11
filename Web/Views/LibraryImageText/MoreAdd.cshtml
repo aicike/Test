@@ -1,0 +1,321 @@
+﻿@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@section head{
+    <link href="@Url.Content("~/Scripts/uploadify/uploadify.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/uploadify/jquery.uploadify.js")" type="text/javascript"></script>
+    <script src="@Url.Content("/ueditor/ueditor.config.js")" type="text/javascript"></script>
+    <script src="@Url.Content("/ueditor/ueditor.all.js")" type="text/javascript"></script>
+    <style>
+        .divPreview
+        {
+            width: 320px;
+            border: 1px solid #d3d3d3;
+            background-color: #fff;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+            -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+            -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            float: left;
+        }
+        .divEdit
+        {
+            width: 525px;
+            padding: 10px; /*margin-bottom: 26px;*/
+            border: 1px solid #d3d3d3;
+            background-color: #F4F4F4;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+            -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+            -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            margin-left: 25px;
+            float: left;
+        }
+        .divEdit > form > div > *
+        {
+            width: 100%;
+        }
+        .divEdit > form > div
+        {
+            margin: 5px 0px 10px 0px;
+        }
+        .div_title
+        {
+            margin-bottom: 5px;
+        }
+        .item
+        {
+            border-top: 1px solid #d3d3d3;
+            height: 90px;
+            position: relative;
+        }
+        .item_img
+        {
+            width: 72px;
+            height: 72px;
+            border: 1px solid #d3d3d3;
+            float: right;
+            margin-right: 8px;
+            margin-top: 8px;
+            text-align: center;
+            position: relative;
+        }
+        .item_img_text
+        {
+            position: absolute;
+            left: 15px;
+            top: 27px;
+        }
+        .item_img_maintext
+        {
+            position: absolute;
+            left: 120px;
+            top: 72px;
+        }
+        .item_title
+        {
+            width: 215px;
+            height: 45px;
+            margin-left: 10px;
+            margin-top: 22px;
+            float: left;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            var uploadUrl = '@Url.Action("Upload", "LibraryImageText", new { HostName = ViewBag.HostName })';
+            window.UEDITOR_HOME_URL = "/ueditor/";
+            //实例化编辑器
+            var options = {
+                initialFrameWidth: '100%',
+                initialFrameHeight: 300,
+                imageUrl: UEDITOR_HOME_URL + "net/imageUp_LibraryImageText.ashx",
+                imagePath: "",
+                imageManagerUrl: UEDITOR_HOME_URL + "net/imageManager_LibraryImageText.ashx",
+                imageManagerPath: "",
+                initialContent: ""
+            };
+
+            var currentIndex = -1;
+
+            var ue = UE.getEditor('editor', options);
+
+            $("#CoverImagePathFile").change(function () {
+                var fileName = $("#CoverImagePathFile").val();
+                if (fileName.length == 0) { return false; }
+                $("#ImagePath").val(fileName);
+                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+                switch (suffix) {
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".gif":
+                    case ".bmp":
+                        break;
+                    default:
+                        JAlert({
+                            Message: "格式限制：jpg, jpge, gif, png, bmp",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return false;
+                        break;
+                }
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#imgCoverPreview").attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+                return false;
+            });
+            $("#btnAdd").click(function () {
+                if ($("#ImagePath").val().length <= 0) {
+                    JAlert({
+                        Message: "请上传封面图片",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return false;
+                }
+                return true;
+            });
+
+            $("#Title").focus().keyup(function () {
+                if (currentIndex == -1) {
+                    var title = $(this).val().trim();
+                    if (title.length == 0) {
+                        $("#itemMain_title").text("标题");
+                    } else {
+                        $("#itemMain_title").text($(this).val());
+                    }
+                } else {
+
+                }
+            });
+
+            $("#Summary").keyup(function () {
+                if (currentIndex == -1) {
+                    var summary = $(this).val().trim();
+                    if (summary.length == 0) {
+                        $("#itemMain_summary").text("摘要");
+                    } else {
+                        $("#itemMain_summary").text($(this).val());
+                    }
+                } else {
+
+                }
+            });
+
+
+            $("#btnAdd").click(function () {
+                $("#valContent").hide();
+                if ($.trim(ue.getContentTxt()).length <= 0) {
+                    $("#valContent").show();
+                }
+            });
+
+            $(".item").mouseover(function () {
+                $(this).find(".popdiv").show();
+            }).mouseout(function () {
+                $(this).find(".popdiv").hide();
+            });
+
+            $(".mainItem").mouseover(function () {
+                $(this).find(".popdivmain").show();
+            }).mouseout(function () {
+                $(this).find(".popdivmain").hide();
+            });
+        });
+
+        function edit(obj, index) {
+            if (index == -1) {
+                $(".divEdit").css("marginTop", 0);
+                $("#div_summary").show();
+                return;
+            }
+            var top = 230 + index * 90;
+            $(".divEdit").css("marginTop", top);
+            $("#div_summary").hide();
+        }
+
+        function ImageText() {
+            var it = new Object;
+            it.title = "";
+            it.image = "";
+            it.summary = "";
+            it.body = "";
+            it.sub = [];
+            it.addSub = function (imageText) {
+                this.sub.push(imageText);
+            };
+            return it;
+        } 
+    </script>
+}
+@model Poco.LibraryImageText
+<div class="title">
+    单图文消息</div>
+<div class="body">
+    <div class="divPreview">
+        <div class="mainItem" style="padding: 10px; height: auto;">
+            <div id="itemMain_title" style="width: 300px">
+                标题</div>
+            <div style="height: 160px; position: relative; border: 1px solid #d3d3d3; margin-top: 10px;">
+                <span class="item_img_maintext">封面图片</span>
+                <img id="imgCoverPreview" style="width: 300px; max-height: 160px; margin: auto 0px;" />
+                <div class="popdivmain" style="display: none; width: 300px; height: 162px; top: 0px;
+                    text-align: center; line-height: 162px; position: absolute; background: rgba(229,229,229,0.85);
+                    filter: progid:dximagetransform.microsoft.gradient(GradientType=0,startColorstr='#85E5E5E5',endColorstr='#85E5E5E5') alpha(opacity=85);">
+                    <a onclick="edit(this,-1)">修改</a>
+                </div>
+            </div>
+            <div id="itemMain_summary" style="margin-top: 15px; margin-bottom: 10px;width: 300px">
+                摘要
+            </div>
+        </div>
+        <div class="item">
+            <div class="item_title">
+                标题
+            </div>
+            <div class="item_img">
+                <span class="item_img_text">缩略图</span>
+            </div>
+            <div style="clear: both">
+            </div>
+            <div class="popdiv" style="display: none; width: 320px; height: 90px; top: 0px; text-align: center;
+                line-height: 90px; position: absolute; background: rgba(229,229,229,0.85); filter: progid:dximagetransform.microsoft.gradient(GradientType=0,startColorstr='#85E5E5E5',endColorstr='#85E5E5E5') alpha(opacity=85);">
+                <a onclick="edit(this,0)">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a>删除</a>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item_title">
+                标题
+            </div>
+            <div class="item_img">
+                <span class="item_img_text">缩略图</span>
+            </div>
+            <div style="clear: both">
+            </div>
+            <div class="popdiv" style="display: none; width: 320px; height: 90px; top: 0px; text-align: center;
+                line-height: 90px; position: absolute; background: rgba(229,229,229,0.85); filter: progid:dximagetransform.microsoft.gradient(GradientType=0,startColorstr='#85E5E5E5',endColorstr='#85E5E5E5') alpha(opacity=85);">
+                <a onclick="edit(this,1)">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a>删除</a>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item_title">
+                标题
+            </div>
+            <div class="item_img">
+                <span class="item_img_text">缩略图</span>
+            </div>
+            <div style="clear: both">
+            </div>
+            <div class="popdiv" style="display: none; width: 320px; height: 90px; top: 0px; text-align: center;
+                line-height: 90px; position: absolute; background: rgba(229,229,229,0.85); filter: progid:dximagetransform.microsoft.gradient(GradientType=0,startColorstr='#85E5E5E5',endColorstr='#85E5E5E5') alpha(opacity=85);">
+                <a onclick="edit(this,2)">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a>删除</a>
+            </div>
+        </div>
+    </div>
+    <div class="divEdit">
+        @using (Html.BeginForm("Add", "LibraryImageText", new { }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div>
+                <div class="div_title">
+                    标题 @Html.ValidationMessageFor(a => a.Title)</div>
+                @Html.TextBoxFor(a => a.Title)
+            </div>
+            <div>
+                <div class="div_title">
+                    封面</div>
+                <input type="button" value="选择文件" onclick="$('#CoverImagePathFile').click()" class="button" />
+                <input type="file" id="CoverImagePathFile" name="CoverImagePathFile" style="visibility: hidden;
+                    float: left; width: 0px;" />
+                @Html.TextBoxFor(a => a.ImagePath, new { style = "width:0px;visibility:hidden" })
+            </div>
+            <div id="div_summary">
+                <div class="div_title">
+                    摘要 @Html.ValidationMessageFor(a => a.Summary)</div>
+                @Html.TextAreaFor(a => a.Summary)
+            </div>
+            <div>
+                <div class="div_title" id="divContent">
+                    正文 <span id="valContent" style="display: none" class="field-validation-error" data-valmsg-for="Content"
+                        data-valmsg-replace="true"><span for="Summary" generated="true" class="">请输入正文</span></span></div>
+                <script type="text/plain" id="editor" height="300px" name="Content"></script>
+            </div>
+            <div>
+                <input type="submit" value="完成" id="btnAdd" class="button" />
+            </div>
+        }
+    </div>
+    <div style="clear: both">
+    </div>
+</div>

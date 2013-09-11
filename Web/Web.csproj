@@ -195,6 +195,9 @@
     <Content Include="Images\Unread.png" />
     <Content Include="Scripts\tabControl\tabControl.css" />
     <Content Include="Scripts\tabControl\tabControl.js" />
+    <Content Include="Scripts\ToolTip\jquery.tipTip.js" />
+    <Content Include="Scripts\ToolTip\jquery.tipTip.minified.js" />
+    <Content Include="Scripts\ToolTip\tipTip.css" />
     <Content Include="ueditor\net\Uploader.cs">
       <SubType>Code</SubType>
     </Content>
@@ -694,6 +697,7 @@
     <Content Include="Views\BasisSet\Index.cshtml" />
     <Content Include="Views\Default\FindPwd.cshtml" />
     <Content Include="Views\AccountMainGuide\Index.cshtml" />
+    <Content Include="Views\LibraryImageText\MoreAdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

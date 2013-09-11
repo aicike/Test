@@ -22,7 +22,7 @@ namespace Web.Controllers
             return View(list);
         }
 
-        public ActionResult Add(bool isSingle)
+        public ActionResult Add()
         {
             return View();
         }
@@ -39,6 +39,11 @@ namespace Web.Controllers
                 throw new ApplicationException(result.Error);
             }
             return RedirectToAction("Index", "LibraryImageText", new { HostName = LoginAccount.HostName });
+        }
+
+        public ActionResult MoreAdd()
+        {
+            return View();
         }
 
         public ActionResult Edit(int id)

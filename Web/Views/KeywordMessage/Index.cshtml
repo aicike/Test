@@ -68,6 +68,11 @@
             -o-text-overflow: ellipsis;
             text-overflow: ellipsis;
         }
+        .keyItem
+        {
+            min-height: 30px;
+            line-height: 30px;
+        }
     </style>
     <script type="text/javascript">
         var addUrl = '@Url.Action("Add", "KeywordMessage")';
@@ -78,6 +83,10 @@
         $(function () {
             
 		    $("#txtKey").tabControl({maxTabCount:10,tabW:80},"");
+
+            
+            $("#labCbFirst").attr("title", "选中后，该问题会在用户App中默认显示，以作为引导问题。").tipTip({ activation: "hover", delay: 3, defaultPosition: "right" });
+            $(".tabinput").attr("title", "回车输入关键字。").tipTip({ activation: "hover", delay: 3, defaultPosition: "right" });
 
             $("#browser").treeview({
                 toggle: function () {
@@ -175,7 +184,7 @@
                     url: getRuleNoUrl,
                     success: function (result) {
                         if (result != undefined && result != null && result.length > 0) {
-                            $("#txtRuleNo").val(result);
+                            $("#txtRuleNo").text(result);
                             $("#hidRuleNo").val(result);
                         }
                     },
@@ -196,7 +205,7 @@
                 var keyId = $(this).attr("keyID");
                 $.get(getEntityUrl, { id: keyId }, function (result) {
                     $("#txtRuleName").val(result.RuleName);
-                    $("#txtRuleNo").val(result.FullRuleNo);
+                    $("#txtRuleNo").text(result.FullRuleNo);
 		            $("#txtKey").tabControl({maxTabCount:10,tabW:80},result.Keywords);
                     if(result.IsFistAutoMessage==true){
                         $("#cbFirst").attr("checked","checked");
@@ -231,7 +240,7 @@
                     url: getRuleNoUrl,
                     success: function (result) {
                         if (result != undefined && result != null && result.length > 0) {
-                            $("#txtRuleNo").val(result);
+                            $("#txtRuleNo").text(result);
                         }
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -247,7 +256,7 @@
             $("#btnSaveRule").click(function () {
                 var ruleName = $("#txtRuleName").val().trim();
                 var hidRuleNo = $("#hidRuleNo").val().trim();
-                var fullRuleNo = $("#txtRuleNo").val().trim();
+                var fullRuleNo = $("#txtRuleNo").text().trim();
                 var parentID = $("#hidParentID").val().trim();
                 var projectID=$("#AccountMainHousesID").val();
                 var fileArray=new Array();
@@ -350,14 +359,14 @@
         });
         function clearText() {
             $("#labTitlt").text("新规则");
-            $("#txtRuleNo").val("");
+            $("#txtRuleNo").text("");
             $("#hidRuleNo").val("");
             $("#hidParentID").val("");
             $("#hidKeyID").val("");
             $("#cbFirst").removeAttr("checked");
 
             $("#txtRuleName").val("");
-            $("#txtRuleNo").val("");
+            $("#txtRuleNo").text("");
 
             $("span[name='tab']").remove();
             $(".tabinput:hidden").remove();
@@ -390,24 +399,29 @@
                     新规则</label>
             </div>
             <div style="padding: 10px 5px 0px 10px;">
-                <div>
+                <div class="keyItem">
                     <div style="width: 58px; text-align: right; float: left">
                         项目：</div>
                     @Html.DropDownList("AccountMainHousesID", ViewData["Project"] as List<SelectListItem>, new { })
                 </div>
-                <div>
+                <div class="keyItem">
                     <div style="width: 58px; text-align: right; float: left">
                         规则名：</div>
                     <input id="txtRuleName" type="text" />&nbsp;(规则名最多30个字)</div>
-                <div>
+                <div class="keyItem">
                     <div style="width: 58px; text-align: right; float: left">
                         编号：</div>
-                    <input type="text" id="txtRuleNo" readonly="readonly" /><input type="hidden" id="hidRuleNo" /><input
-                        type="hidden" id="hidParentID" /><input type="hidden" id="hidKeyID" />
+                    <label id="txtRuleNo">
+                        1
+                    </label>
+                    <input type="hidden" id="hidRuleNo" /><input type="hidden" id="hidParentID" /><input
+                        type="hidden" id="hidKeyID" />
                     <div style="float: right; margin-right: 20px;">
-                        <input type="checkbox" id="cbFirst" />引导消息</div>
+                        <input type="checkbox" id="cbFirst" /><label for="cbFirst" id="labCbFirst">引导消息</label></div>
+                    <div style="clear: both">
+                    </div>
                 </div>
-                <div>
+                <div class="keyItem">
                     <div style="width: 58px; text-align: right; float: left">
                         关键字：</div>
                     <div id="txtKey">

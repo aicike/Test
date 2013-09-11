@@ -31,13 +31,11 @@
     <div class="option">
         @Html.ActionLink("单图文消息", "Add", "LibraryImageText", new
    {
-       HostName = ViewBag.HostName,
-       isSingle = true
+       HostName = ViewBag.HostName
    }, null, true)
-        @Html.ActionLink("多图文消息", "Add", "LibraryImageText", new
+        @Html.ActionLink("多图文消息", "MoreAdd", "LibraryImageText", new
    {
        HostName = ViewBag.HostName,
-       isSingle = false
    }, null, true)
     </div>
     <table class="tableList" cellpadding="0" cellspacing="0">
