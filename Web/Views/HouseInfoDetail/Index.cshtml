@@ -60,7 +60,7 @@
             </tr>
         }
     </table>
-    <input type="button" value="返回" class="button" onclick="location.href='@Url.Action("Index", "HouseInfo", new { HostName = ViewBag.HostName, id = ViewBag.HID })'" />
+    <input type="button" value="返回" class="button" onclick="location.href='@Url.Action("Index", "HouseInfo", new { HostName = ViewBag.HostName, houseId = ViewBag.HID })'" />
     <div class="pages">
         @Html.Pager(Model, new PagerOptions
    {

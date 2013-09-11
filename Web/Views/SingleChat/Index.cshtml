@@ -366,13 +366,14 @@
 
 
                 $("#ShowImg").attr("src", MesURL);
-                $("#dialogShowMessage").attr("title", "图片");
                 $("#dialogShowMessage").dialog({
                     resizable: false,
                     height: "auto",
                     width: "auto",
                     modal: true,
-                    draggable: false
+                    draggable: false,
+                    title:"图片",
+                    position:"center"
                 });
 
             }
@@ -384,12 +385,13 @@
                 $("#trImgText").attr("style", "display:none");
 
                 $("#playerVoice").attr("src", MesURL);
-                $("#dialogShowMessage").attr("title", "语音");
                 $("#dialogShowMessage").dialog({
                     resizable: false,
                     height: "110",
                     width: "550",
                     modal: true,
+                    title:"语音",
+                    position:"center",
                     draggable: false,
                     beforeClose: function (event, ui) {
                         new MediaElement("playerVoice", {
@@ -423,12 +425,13 @@
                 $("#trImgText").attr("style", "display:none");
 
                 $("#playerVideo").attr("src", MesURL);
-                $("#dialogShowMessage").attr("title", "视频");
                 $("#dialogShowMessage").dialog({
                     resizable: false,
                     height: "370",
                     width: "570",
                     modal: true,
+                    title:"视频",
+                    position:"center",
                     draggable: false,
                     beforeClose: function (event, ui) {
                         new MediaElement("playerVideo", {
@@ -460,12 +463,13 @@
                 $("#trVideo").attr("style", "display:none");
                 $("#trImgText").attr("style", "display:");
 
-                $("#dialogShowMessage").attr("title", "图文");
                 $("#dialogShowMessage").dialog({
                     resizable: false,
                     height: "600",
                     width: "560",
                     modal: true,
+                    title:"图文",
+                    position:"center",
                     draggable: false
                 });
                 //MesURL==ID

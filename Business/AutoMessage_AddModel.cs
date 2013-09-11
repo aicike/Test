@@ -11,7 +11,7 @@ namespace Business
     public class AutoMessage_AddModel : BaseModel<AutoMessage_Add>, IAutoMessage_AddModel
     {
 
-        public AutoMessage_Add GitInfo(int AccountMainID)
+        public AutoMessage_Add GetInfo(int AccountMainID)
         {
             return List().Where(a => a.AccountMainID == AccountMainID).FirstOrDefault();
         }

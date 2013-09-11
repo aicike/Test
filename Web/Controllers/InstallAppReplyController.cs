@@ -18,7 +18,7 @@ namespace Web.Controllers
         public ActionResult Index()
         {
             var AutoAddModel = Factory.Get<IAutoMessage_AddModel>(SystemConst.IOC_Model.AutoMessage_AddModel);
-            var AutoAdd = AutoAddModel.GitInfo(LoginAccount.CurrentAccountMainID);
+            var AutoAdd = AutoAddModel.GetInfo(LoginAccount.CurrentAccountMainID);
             ViewBag.HostName = LoginAccount.HostName;
             if (AutoAdd != null)
             {
@@ -35,7 +35,7 @@ namespace Web.Controllers
         public ActionResult AddOrUpd(AutoMessage_Add AutoMessAdd)
         {
             var AutoAddModel = Factory.Get<IAutoMessage_AddModel>(SystemConst.IOC_Model.AutoMessage_AddModel);
-            var AutoAdd = AutoAddModel.GitInfo(LoginAccount.CurrentAccountMainID);
+            var AutoAdd = AutoAddModel.GetInfo(LoginAccount.CurrentAccountMainID);
             Result result = null;
             if (AutoAdd != null)
             {

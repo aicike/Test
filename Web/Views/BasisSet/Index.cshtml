@@ -46,6 +46,7 @@
             //经度
             var TLat = $("#Lat").val();
 
+           
             //百度地图
             var map = new BMap.Map("allmap");
 
@@ -62,14 +63,14 @@
             //定位当前城市
             if (TLng != "" && TLng != undefined) {
 
-
+                
                 //显示地图
                 var point = new BMap.Point(TLng, TLat);
                 map.centerAndZoom(point, 12);
 
 
                 //创建坐标 lng：纬度 lat：经度
-//                var Tpoint = new BMap.Point(result.center.lng, result.center.lat);
+                //                var Tpoint = new BMap.Point(result.center.lng, result.center.lat);
                 var marker = new BMap.Marker(point);  // 创建标注
                 map.addOverlay(marker);              // 将标注添加到地图中
                 marker.enableDragging();    //可拖拽

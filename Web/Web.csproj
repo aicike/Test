@@ -147,6 +147,7 @@
     <Compile Include="Areas\System\Controllers\SystemUserController.cs" />
     <Compile Include="Areas\System\SystemAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccountMainGuideController.cs" />
     <Compile Include="Controllers\AjaxController.cs" />
     <Compile Include="Controllers\BaseController\BaseController.cs" />
     <Compile Include="Controllers\BasisSetController.cs" />
@@ -692,6 +693,7 @@
     <Content Include="Views\Default\Calculator.cshtml" />
     <Content Include="Views\BasisSet\Index.cshtml" />
     <Content Include="Views\Default\FindPwd.cshtml" />
+    <Content Include="Views\AccountMainGuide\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
