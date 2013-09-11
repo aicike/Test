@@ -224,7 +224,7 @@ namespace Web.Controllers
                     Connection.Username = "s" + LoginAccount.ID;
                     Connection.Server = "127.0.0.1";
                     Connection.Port = 5222;
-                    Connection.Resource = "Resource";
+                    Connection.Resource = "web";
 
                     Thread mythread = new Thread(connect);
                     mythread.Start();

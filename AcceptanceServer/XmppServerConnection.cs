@@ -90,20 +90,7 @@ namespace AcceptanceServer
             }
         }
 
-        private void Send(string data)
-        {
-            try
-            {
-                byte[] byteData = Encoding.UTF8.GetBytes(data);
-                frm.BeginInvoke(new mydelegate(frm.ShowSendMessage), new Object[] { data });
-                m_Sock.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), null);
-            }
-            catch (Exception ex)
-            {
-                //frm.ShowErrorMessage(ex.Message);
-                throw;
-            }
-        }
+
 
 
         private void SendCallback(IAsyncResult ar)
@@ -163,11 +150,11 @@ namespace AcceptanceServer
                 //处理用户上线消息
                 if (pres.Show == ShowType.chat && pres.Type == PresenceType.available)//pres.Show == ShowType.chat &&
                 {
-                    //显示当前谁上线了
-                    frm.Invoke(new dosomethings(delegate()
-                    {
-                        frm.ShowOlineUser(jid.User, jid.Bare + "||" + jid.Server);
-                    }));
+                    ////显示当前谁上线了
+                    //frm.Invoke(new dosomethings(delegate()
+                    //{
+                    //    frm.ShowOlineUser(jid.User, jid.Bare + "||" + jid.Server);
+                    //}));
 
 
                     ////暂时屏蔽
@@ -218,17 +205,12 @@ namespace AcceptanceServer
                         //存储聊天记录
                         try
                         {
-                            //if (Np.EID == "1" || Np.EID == "2" || Np.EID == "3")
-                            //{
-                            //    Np.FielUrl = ConfigurationManager.AppSettings["WebUrl"].ToString() + Np.FielUrl;
-                            //}
                             dt = DataBusiness.InsertChatRecord(msg, Np).Tables[0];
 
                             if (dt == null) //数据存储失败 
                             {
                                 //return  6发送失败
-                                SendMessageStatus("6",msg.To.User);
-                                return;
+                                SendMessageStatus("6", msg.To.User);
                             }
                             else
                             {
@@ -236,27 +218,11 @@ namespace AcceptanceServer
                                 if (OnlineUser.onlinuser.Any(a => a.jid.User == msg.To.User))
                                 {
                                     //转发发送消息 IEnumerable
-                                    List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
-                                    //XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
-                                    
-
+                                    //List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
+                                    XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList()[0];
                                     msg.From = jid;
-                                    //foreach (XmppServerConnection con in cons)
-                                    //{
-                                    //    con.Send(msg);
-                                    //}
-                                    for (int i = 0; i < cons.Count(); i++)
-                                    {
-                                        try
-                                        {
-                                            cons[i].Send(msg);
-                                        }
-                                        catch
-                                        {
-                                            OnlineUser.onlinuser.Remove(cons[i]);
-                                            i--;
-                                        }
-                                    }
+                                    con.Send(msg);
+
 
                                 }
                                 //不在线
@@ -270,7 +236,6 @@ namespace AcceptanceServer
                                     {
                                         //return  6发送失败
                                         SendMessageStatus("6", msg.To.User);
-                                        return;
                                     }
                                     else
                                     {
@@ -279,15 +244,11 @@ namespace AcceptanceServer
                                     }
 
                                 }
-                                //回发消息状态 4发送成功
-                                //SendMessageStatus("4");
                             }
                         }
                         catch
                         {
                             SendMessageStatus("6", msg.To.User);
-                            return;
-
 
                         }
                     }
@@ -304,23 +265,9 @@ namespace AcceptanceServer
                         if (OnlineUser.onlinuser.Any(a => a.jid.User == msg.To.User))
                         {
                             //转发发送消息
-                            List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
-
+                            XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList()[0];
                             msg.From = jid;
-
-                            for (int i = 0; i < cons.Count(); i++)
-                            {
-                                try
-                                {
-                                    cons[i].Send(msg);
-                                }
-                                catch
-                                {
-                                    OnlineUser.onlinuser.Remove(cons[i]);
-                                    i--;
-                                }
-                            }
-
+                            con.Send(msg);
                         }
                     }
 
@@ -353,6 +300,27 @@ namespace AcceptanceServer
                     case IqType.set:
                         //上线
                         this.jid = new Jid(auth.Username, "localhost", "Resource");
+                        string AoU = auth.Username.Substring(0,1);
+                        
+                        if (auth.Resource != "web")
+                        {
+                            if (AoU == "u")
+                            {
+                                List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == auth.Username).ToList();
+                                if (cons.Count > 0)
+                                {
+                                    for (int i = 0; i < OnlineUser.onlinuser.Count; i++)
+                                    {
+                                        if (OnlineUser.onlinuser[i].jid.User == auth.Username)
+                                        {
+                                            OnlineUser.onlinuser.RemoveAt(i);
+                                            i--;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
 
 
                         //记录用户
@@ -366,9 +334,11 @@ namespace AcceptanceServer
                         //    //frm.listBox2.Items.Add(auth.Username);
                         //}));
 
-                        //刚刚登陆获取未读消息
-                        LoginSendUnreadMessage();
-
+                        if (auth.Resource != "web")
+                        {
+                            //刚刚登陆获取未读消息
+                            LoginSendUnreadMessage();
+                        }
 
                         iq.SwitchDirection();
                         iq.Type = IqType.result;
@@ -440,22 +410,61 @@ namespace AcceptanceServer
 
             sb.Append("'>");
 
-            Send(sb.ToString());
+            Send(sb.ToString(), null);
         }
 
         private void Send(Element el)
         {
-            Send(el.ToString());
+            Send(el.ToString(), el);
         }
 
+        private void Send(string data, Node n)
+        {
+            try
+            {
+                byte[] byteData = Encoding.UTF8.GetBytes(data);
+                frm.BeginInvoke(new mydelegate(frm.ShowSendMessage), new Object[] { data });
+                if (m_Sock.Connected)
+                {
+                    m_Sock.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), null);
+                }
+                else //不在线
+                {
+                    try
+                    {
+                        agsXMPP.protocol.client.Message msg = n as agsXMPP.protocol.client.Message;
+                        List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
+                        if (cons.Count > 0)
+                        {
+                            for (int i = 0; i < OnlineUser.onlinuser.Count; i++)
+                            {
+                                if (OnlineUser.onlinuser[i].jid.User == msg.To.User)
+                                {
+                                    OnlineUser.onlinuser.RemoveAt(i);
+                                    i--;
+                                }
+                            }
+                        }
 
+                    }
+                    catch { }
+                    //data
+
+                }
+            }
+            catch (Exception ex)
+            {
+                //frm.ShowErrorMessage(ex.Message);
+                throw;
+            }
+        }
 
         //-----------------------------------------------------------------------------------------------------
         /// <summary>
         /// 回发消息状态
         /// </summary>
         /// <param name="MT">消息状态 4发送成功 6失败</param>
-        public void SendMessageStatus(string MT,string FromUser)
+        public void SendMessageStatus(string MT, string FromUser)
         {
             List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == jid.User).ToList();
 
