@@ -15,7 +15,7 @@ namespace Business
     {
         public IQueryable<LibraryImageText> GetLibraryList(int accountMainID)
         {
-            return List().Where(a => a.AccountMainID == accountMainID);
+            return List().Where(a => a.AccountMainID == accountMainID && a.LibraryImageTextParentID.HasValue == false);
         }
 
         [Transaction]
@@ -26,10 +26,10 @@ namespace Business
                 //保存封面图片
                 var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                 var imageName = string.Format("{0}_{1}", token, coverImagePathFile.FileName);
-                var imagePath = string.Format("{0}\\{1}", string.Format(SystemConst.Business.PathFileLibrary, libraryImageText.AccountMainID), imageName);
+                var imagePath = string.Format("{0}/1}", string.Format(SystemConst.Business.PathFileLibrary, libraryImageText.AccountMainID), imageName);
                 var savePath = HttpContext.Current.Server.MapPath(imagePath);
                 coverImagePathFile.SaveAs(savePath);
-                libraryImageText.ImagePath = imagePath;
+                libraryImageText.ImagePath = SystemConst.WebUrl + imagePath.Replace("~", "");
                 return base.Add(libraryImageText);
             }
             catch (Exception ex)
@@ -55,10 +55,10 @@ namespace Business
                     //保存封面图片
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                     var imageName = string.Format("{0}_{1}", token, coverImagePathFile.FileName);
-                    var imagePath = string.Format("{0}\\{1}", string.Format(SystemConst.Business.PathFileLibrary, libraryImageText.AccountMainID), imageName);
+                    var imagePath = string.Format("{0}/{1}", string.Format(SystemConst.Business.PathFileLibrary, libraryImageText.AccountMainID), imageName);
                     var savePath = HttpContext.Current.Server.MapPath(imagePath);
                     coverImagePathFile.SaveAs(savePath);
-                    libraryImageText.ImagePath = imagePath;
+                    libraryImageText.ImagePath = SystemConst.WebUrl + imagePath.Replace("~", "");
                 }
                 return base.Edit(libraryImageText);
             }
@@ -85,6 +85,48 @@ namespace Business
                 File.Delete(rawImagePath);
             }
             return base.Delete(id);
+        }
+
+        /// <summary>
+        /// 多图文添加
+        /// </summary>
+        [Transaction]
+        public Result AddMore(LibraryImageText libraryImageText)
+        {
+            return base.Add(libraryImageText);
+        }
+
+        /// <summary>
+        /// 多图文修改
+        /// </summary>
+        [Transaction]
+        public Result EditMore(LibraryImageText libraryImageText, List<LibraryImageText> sublist)
+        {
+            base.SqlExecute("DELETE LibraryImageText WHERE LibraryImageTextParentID=" + libraryImageText.ID);
+            var result = base.Edit(libraryImageText);
+            if (result.HasError)
+            {
+                return result;
+            }
+            if (sublist != null && sublist.Count > 0)
+            {
+                try
+                {
+                    StringBuilder stringBuilderSql = new StringBuilder("INSERT INTO dbo.LibraryImageText( SystemStatus ,Title ,ImagePath ,Summary ,Content ,LibraryImageTextParentID ,AccountMainID)");
+                    foreach (var item in sublist)
+                    {
+                        stringBuilderSql.AppendFormat(" SELECT 0,'{0}','{1}','{2}','{3}',{4},{5} UNION ALL", item.Title, item.ImagePath, item.Summary, item.Content, item.LibraryImageTextParentID, item.AccountMainID);
+                    }
+                    var sql = stringBuilderSql.ToString();
+                    sql = sql.Remove(sql.Length - " UNION ALL".Length);
+                    base.SqlExecute(sql);
+                }
+                catch (Exception ex)
+                {
+                    result.Error = ex.Message;
+                }
+            }
+            return result;
         }
     }
 }

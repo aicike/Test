@@ -193,6 +193,7 @@
     <Content Include="Images\default_Avatar.png" />
     <Content Include="Images\Start.png" />
     <Content Include="Images\Unread.png" />
+    <Content Include="Scripts\JSONLoader.js" />
     <Content Include="Scripts\tabControl\tabControl.css" />
     <Content Include="Scripts\tabControl\tabControl.js" />
     <Content Include="Scripts\ToolTip\jquery.tipTip.js" />
@@ -698,6 +699,7 @@
     <Content Include="Views\Default\FindPwd.cshtml" />
     <Content Include="Views\AccountMainGuide\Index.cshtml" />
     <Content Include="Views\LibraryImageText\MoreAdd.cshtml" />
+    <Content Include="Views\LibraryImageText\MoreEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

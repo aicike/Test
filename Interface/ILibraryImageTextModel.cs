@@ -14,5 +14,9 @@ namespace Interface
         Result Edit(LibraryImageText libraryImageText, HttpPostedFileBase coverImagePathFile);
 
         Result Delete(int id, int accountMainID);
+
+        Result AddMore(LibraryImageText libraryImageText);
+
+        Result EditMore(LibraryImageText libraryImageText,List<LibraryImageText> sublist);
     }
 }

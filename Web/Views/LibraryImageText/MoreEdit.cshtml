@@ -1,7 +1,8 @@
 ﻿@{
-    ViewBag.Title = "Add";
+    ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
+@model Poco.LibraryImageText
 @section head{
     <link href="@Url.Content("~/Scripts/uploadify/uploadify.css")" rel="stylesheet" type="text/css" />
     <script src="@Url.Content("~/Scripts/uploadify/jquery.uploadify.js")" type="text/javascript"></script>
@@ -98,7 +99,7 @@
     </style>
     <script type="text/javascript">
         var uploadUrl = '@Url.Action("Upload", "LibraryImageText", new { HostName = ViewBag.HostName })';
-        var addUrl = '@Url.Action("MoreAdd", "LibraryImageText", new { HostName = ViewBag.HostName })';
+        var editUrl = '@Url.Action("MoreEdit", "LibraryImageText")';
 
         function ImageText() {
             var it = new Object;
@@ -126,6 +127,7 @@
         var currentIndex = -1;
         var ue;
         $(function () {
+
             window.UEDITOR_HOME_URL = "/ueditor/";
 
             //实例化编辑器
@@ -200,36 +202,36 @@
             });
             $("#btnAdd").click(function () {
                 if (it.title.length == 0) {
-                    return myAlert("封面标题不能为空。");
+                    return myAlert("封面标题不能为空");
                 }
                 if (it.image.length == 0) {
-                    return myAlert("封面图片不能为空。");
+                    return myAlert("封面图片不能为空");
                 }
                 if (it.summary.length == 0) {
-                    return myAlert("封面摘要不能为空。");
+                    return myAlert("封面摘要不能为空");
                 }
                 if (it.body.length == 0) {
-                    return myAlert("封面正文不能为空。");
+                    return myAlert("封面内容不能为空");
                 }
                 if (it.sub != null) {
                     for (var i = 0; i < it.sub.length; i++) {
                         var sit = it.sub[i];
                         if (sit.title.length == 0) {
                             edit(null, i);
-                            return myAlert("第" + (i + 2) + "条 标题不能为空。");
+                            return myAlert("第" + (i + 2) + "条 标题不能为空");
                         }
                         if (sit.image.length == 0) {
                             edit(null, i);
-                            return myAlert("第" + (i + 2) + "条 图片不能为空。");
+                            return myAlert("第" + (i + 2) + "条 图片不能为空");
                         }
                         if (sit.body.length == 0) {
                             edit(null, i);
-                            return myAlert("第" + (i + 2) + "条 正文不能为空。");
+                            return myAlert("第" + (i + 2) + "条 内容不能为空");
                         }
                     }
                 }
                 var value = JSON.stringify(it);
-                $.post(addUrl, { json: value }, function (result) {
+                $.post(editUrl, {json: value }, function (result) {
                     if (result && result.length > 0) {
                         eval(result);
                     }
@@ -292,6 +294,30 @@
             }).mouseout(function () {
                 $(this).find(".popdivmain").hide();
             });
+
+            var json= @Html.Raw(ViewBag.Json);
+            if(json!=null){
+                it.title=json.title;
+                it.image = json.image;
+                it.summary = json.summary;
+                it.body = json.body;
+                $("#itemMain_title").text(it.title);
+                $("#imgCoverPreview").attr('src', it.image );
+                $("#itemMain_summary").text(it.summary);
+                if(json.sub!=null){
+                    for (var i = 0; i < json.sub.length; i++) {
+                        insert();
+                        var jobj=json.sub[i];
+                        var sit=new ImageText();
+                        sit.title=jobj.title;
+                        sit.image = jobj.image;
+                        sit.body = jobj.body;
+                        $("#itemTitle" + i).text(sit.title);
+                        $("#item_img" + i).attr('src', sit.image);
+                        it.sub[i]=sit;
+                    }
+                }
+            }
         });
 
         function edit(obj, index) {
@@ -316,11 +342,11 @@
             $("#item" + index).remove();
             it.deleteItem(index);
             for (var i = 0; i < it.sub.length; i++) {
-                $($(".item")[i]).attr("id", "item" + i);
-                $($(".item_title")[i]).attr("id", "itemTitle" + i);
-                $($(".item_img")[i]).attr("id", "item_img" + i);
-                $($(".btnEdit")[i]).attr("onclick", "edit(this," + i + ")");
-                $($(".btnDelete")[i]).attr("onclick", "deleteItem(" + i + ")");
+                $($(".item")[i]).attr("id","item"+i);
+                $($(".item_title")[i]).attr("id","itemTitle"+i);
+                $($(".item_img")[i]).attr("id","item_img"+i);
+                $($(".btnEdit")[i]).attr("onclick","edit(this," + i + ")");
+                $($(".btnDelete")[i]).attr("onclick","deleteItem(" + i + ")");
             }
         }
 
@@ -345,7 +371,6 @@
         }
     </script>
 }
-@model Poco.LibraryImageText
 <div class="title">
     单图文消息</div>
 <div class="body">
@@ -363,7 +388,7 @@
                     <a onclick="edit(this,-1)">修改</a>
                 </div>
             </div>
-            <div id="itemMain_summary" style="margin-top: 15px; margin-bottom: 10px; width: 300px;word-wrap: break-word;">
+            <div id="itemMain_summary" style="margin-top: 15px; margin-bottom: 10px; width: 300px">
                 封面摘要
             </div>
         </div>
@@ -394,7 +419,7 @@
             <div>
                 <div class="div_title" id="divContent">
                     正文</div>
-                <script type="text/plain" id="editor" height="300px" name="Content"></script>
+                <script type="text/plain" id="editor" height="300px" name="Content">@Html.Raw(Model.Content)</script>
             </div>
             <div>
                 <input type="button" value="完成" id="btnAdd" class="button" />

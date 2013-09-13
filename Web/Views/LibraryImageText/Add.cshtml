@@ -37,6 +37,14 @@
             margin-left: 25px;
             float: left;
         }
+        
+        .item_img_maintext
+        {
+            position: absolute;
+            left: 130px;
+            top: 72px;
+            z-index: 0;
+        }
         .divEdit > form > div > *
         {
             width: 100%;
@@ -56,7 +64,7 @@
     </style>
     <script type="text/javascript">
         $(function () {
-            var uploadUrl = '@Url.Action("Upload", "LibraryImageText", new { HostName = ViewBag.HostName })';
+            var addUrl = '@Url.Action("Add", "LibraryImageText", new { HostName = ViewBag.HostName })';
             window.UEDITOR_HOME_URL = "/ueditor/";
             //实例化编辑器
             var options = {
@@ -102,26 +110,50 @@
                 }
                 return false;
             });
+
             $("#btnAdd").click(function () {
-                if ($("#ImagePath").val().length <= 0) {
-                    JAlert({
-                        Message: "请上传封面图片",
-                        DialogType: "Ok",
-                        BtnOk: "确定"
-                    });
-                    return false;
+                if ($("#Title").val().trim().length == 0) {
+                    return myAlert("标题不能为空。");
+                }
+                var imgLength = $("#imgCoverPreview").attr("src");
+                if (imgLength==null||imgLength.length == 0) {
+                    return myAlert("封面图片不能为空。");
+                }
+                if ($("#Summary").val().trim().length == 0) {
+                    return myAlert("摘要不能为空。");
+                }
+                if (ue.getContent().length == 0) {
+                    return myAlert("正文不能为空。");
                 }
                 return true;
             });
 
-            $("#Title").focus();
-            $("#btnAdd").click(function () {
-                $("#valContent").hide();
-                if ($.trim(ue.getContentTxt()).length <= 0) {
-                    $("#valContent").show();
+            $("#Title").focus().keyup(function () {
+                var title = $(this).val().trim();
+                if (title.length == 0) {
+                    $("#itemMain_title").text("标题");
+                } else {
+                    $("#itemMain_title").text(title);
+                }
+            });
+
+            $("#Summary").keyup(function () {
+                var summary = $(this).val().trim();
+                if (summary.length == 0) {
+                    $("#itemMain_summary").text("摘要");
+                } else {
+                    $("#itemMain_summary").text($(this).val());
                 }
             });
         });
+        function myAlert(msg) {
+            JAlert({
+                Message: msg,
+                DialogType: "Ok",
+                BtnOk: "确定"
+            });
+            return false;
+        }
     </script>
 }
 @model Poco.LibraryImageText
@@ -129,12 +161,14 @@
     单图文消息</div>
 <div class="body">
     <div class="divPreview">
-        <div>
+        <div id="itemMain_title" style="width: 300px; word-break: break-all; word-wrap: break-word;">
             标题</div>
-        <div style="height: 160px">
-            <img id="imgCoverPreview" style="width: 320px; max-height: 160px; margin: auto 0px;" />
-        </div>
-        <div>
+        <div style="height: 160px; position: relative; border: 1px solid #d3d3d3; margin-top: 10px;">
+                <span class="item_img_maintext">封面图片</span>
+                <img id="imgCoverPreview" style="width: 298px; max-height: 160px; margin: auto 0px;
+                    z-index: 1; position: absolute;" />
+            </div>
+        <div id="itemMain_summary" style="margin-top: 15px; margin-bottom: 10px; width: 300px;word-wrap: break-word;">
             摘要
         </div>
     </div>
@@ -143,7 +177,7 @@
         {
             <div>
                 <div class="div_title">
-                    标题 @Html.ValidationMessageFor(a => a.Title)</div>
+                    标题</div>
                 @Html.TextBoxFor(a => a.Title)
             </div>
             <div>
@@ -156,13 +190,12 @@
             </div>
             <div>
                 <div class="div_title">
-                    摘要 @Html.ValidationMessageFor(a => a.Summary)</div>
+                    摘要</div>
                 @Html.TextAreaFor(a => a.Summary)
             </div>
             <div>
                 <div class="div_title" id="divContent">
-                    正文 <span id="valContent" style="display: none" class="field-validation-error" data-valmsg-for="Content"
-                        data-valmsg-replace="true"><span for="Summary" generated="true" class="">请输入正文</span></span></div>
+                    正文</div>
                 <script type="text/plain" id="editor" height="300px" name="Content"></script>
             </div>
             <div>

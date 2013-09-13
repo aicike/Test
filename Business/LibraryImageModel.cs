@@ -46,7 +46,9 @@ namespace Business
                 entity.FilePath = filePath;
             }
             entity.FileName = image.FileName.Substring(0, image.FileName.LastIndexOf('.'));
-            return base.Add(entity);
+            Result result = base.Add(entity);
+            result.Entity = entity.FilePath;
+            return result;
         }
 
         [Transaction]

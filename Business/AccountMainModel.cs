@@ -298,7 +298,7 @@ namespace Business
                 entity.AccountMainID = accountMainID;
                 entity.LibraryTextCount = accountMain.LibraryTexts.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Count();
                 entity.LibraryImageCount = accountMain.LibraryImages.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Count();
-                entity.LibraryImageTextCount = accountMain.LibraryImageTexts.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Count();
+                entity.LibraryImageTextCount = accountMain.LibraryImageTexts.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active && a.LibraryImageTextParentID.HasValue == false).Count();
                 entity.LibraryVideoCount = accountMain.LibraryVideos.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Count();
                 entity.LibraryVoiceCount = accountMain.LibraryVoices.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Count();
                 return entity;

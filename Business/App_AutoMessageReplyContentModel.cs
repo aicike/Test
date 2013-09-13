@@ -82,7 +82,7 @@ namespace Business
                                     rep_it.ID = it.ID;
                                     rep_it.Type = (int)EnumMessageType.ImageText;
                                     rep_it.FileTitle = it.Title;
-                                    rep_it.FileUrl = hostUrl + Url(it.ImagePath);
+                                    rep_it.FileUrl = it.ImagePath;
                                     subImageText.Add(rep_it);
                                 }
                                 rep.SubContent = Newtonsoft.Json.JsonConvert.SerializeObject(subImageText);

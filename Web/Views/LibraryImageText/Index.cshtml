@@ -43,11 +43,8 @@
             <th style="width: 130px;">
                 封面图片
             </th>
-            <th style="width: 180px;">
+            <th style="width: 460px;">
                 标题
-            </th>
-            <th style="width: 280px;">
-                摘要
             </th>
             <th>
                 操作
@@ -64,11 +61,15 @@
                 <td>
                     @item.Title
                 </td>
-                <td>
-                    @item.Summary
-                </td>
                 <td class="operation">
-                    @Html.ActionLink("修改", "Edit", "LibraryImageText", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
+                    @if (item.LibraryImageTexts != null && item.LibraryImageTexts.Count > 0)
+                    {
+                        @Html.ActionLink("修改", "Edit", "LibraryImageText", new { HostName = ViewBag.HostName, id = item.ID, more = true }, null, true)
+                    }
+                    else
+                    {
+                        @Html.ActionLink("修改", "Edit", "LibraryImageText", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
+                    }
                     @Ajax.ActionLink("删除", "Delete", "LibraryImageText", new { HostName = ViewBag.HostName, id = item.ID },
                          new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "LibraryImageText", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
                 </td>

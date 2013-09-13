@@ -24,7 +24,6 @@ namespace Poco
         public string ImagePath { get; set; }
 
         [Display(Name = "摘要")]
-        [Required(ErrorMessage = "请输入摘要")]
         [StringLength(200, ErrorMessage = "长度小于200")]
         public string Summary { get; set; }
 

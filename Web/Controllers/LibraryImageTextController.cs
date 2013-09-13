@@ -41,13 +41,152 @@ namespace Web.Controllers
             return RedirectToAction("Index", "LibraryImageText", new { HostName = LoginAccount.HostName });
         }
 
+        [HttpPost]
+        [AllowCheckPermissions(false)]
+        public string Upload()
+        {
+            if (Request.Files.Count > 0)
+            {
+                var libraryModel = Factory.Get<ILibraryImageModel>(SystemConst.IOC_Model.LibraryImageModel);
+                LibraryImage entity = new LibraryImage();
+                entity.AccountMainID = LoginAccount.CurrentAccountMainID;
+                var result = libraryModel.Upload(entity, Request.Files[0]);
+                if (result.HasError)
+                {
+                    //return AlertJS_NoTag(new Dialog(result.Error));
+                }
+                else
+                {
+                    return SystemConst.WebUrl + Url.Content(result.Entity.ToString());
+                }
+            }
+            else
+            {
+                //return AlertJS_NoTag(new Dialog("未能成功上传文件，请重试。"));
+            }
+            return "false";
+        }
+
+        [HttpGet]
         public ActionResult MoreAdd()
         {
             return View();
         }
 
-        public ActionResult Edit(int id)
+        [HttpPost]
+        [ValidateInput(false)]
+        public string MoreAdd(string json)
         {
+            var it = Newtonsoft.Json.JsonConvert.DeserializeObject<ImageText>(json);
+            LibraryImageText lit = new LibraryImageText();
+            lit.Title = it.title;
+            lit.ImagePath = it.image;
+            lit.Summary = it.summary;
+            lit.Content = it.body;
+            lit.AccountMainID = LoginAccount.ID;
+            if (it.sub != null)
+            {
+                lit.LibraryImageTexts = new List<LibraryImageText>();
+                foreach (var item in it.sub)
+                {
+                    lit.LibraryImageTexts.Add(new LibraryImageText()
+                    {
+                        Title = item.title,
+                        Summary = "",
+                        ImagePath = item.image,
+                        Content = item.body,
+                        AccountMainID = LoginAccount.ID
+                    });
+                }
+            }
+            var libraryModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
+            var result = libraryModel.AddMore(lit);
+            if (result.HasError)
+            {
+                return AlertJS_NoTag(new Dialog(result.Error));
+            }
+            else
+            {
+                return AlertJS_NoTag(new Dialog("保存成功。", Url.Action("Index", "LibraryImageText")));
+            }
+        }
+
+        [HttpGet]
+        [AllowCheckPermissions(false)]
+        public ActionResult MoreEdit(int id)
+        {
+            var libraryModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
+            var entity = libraryModel.Get(id);
+            ImageText it = new ImageText();
+            it.title = entity.Title;
+            it.image = entity.ImagePath;
+            it.summary = entity.Summary;
+            it.body = entity.Content;
+            if (entity.LibraryImageTexts != null)
+            {
+                it.sub = new List<ImageText>();
+                foreach (var item in entity.LibraryImageTexts)
+                {
+                    it.sub.Add(new ImageText()
+                    {
+                        title = item.Title,
+                        image = item.ImagePath,
+                        summary = item.Summary,
+                        body = item.Content,
+                    });
+                }
+            }
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(it);
+            ViewBag.Json = json;
+            return View(entity);
+        }
+
+        [HttpPost]
+        [AllowCheckPermissions(false)]
+        [ValidateInput(false)]
+        public string MoreEdit(int id, string json)
+        {
+            var libraryModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
+            var it = Newtonsoft.Json.JsonConvert.DeserializeObject<ImageText>(json);
+            LibraryImageText lit = libraryModel.Get(id);
+            lit.Title = it.title;
+            lit.ImagePath = it.image;
+            lit.Summary = it.summary;
+            lit.Content = it.body;
+            lit.AccountMainID = LoginAccount.ID;
+            List<LibraryImageText> sublist=new List<LibraryImageText>();
+            if (it.sub != null)
+            {
+                foreach (var item in it.sub)
+                {
+                    sublist.Add(new LibraryImageText()
+                    {
+                        LibraryImageTextParentID=id,
+                        Title = item.title,
+                        Summary = "",
+                        ImagePath = item.image,
+                        Content = item.body,
+                        AccountMainID = LoginAccount.ID
+                    });
+                }
+            }
+            var result = libraryModel.EditMore(lit, sublist);
+            if (result.HasError)
+            {
+                return AlertJS_NoTag(new Dialog(result.Error));
+            }
+            else
+            {
+                return AlertJS_NoTag(new Dialog("保存成功。", Url.Action("Index", "LibraryImageText")));
+            }
+        }
+
+        public ActionResult Edit(int id, bool more = false)
+        {
+            if (more == true)
+            {
+                return RedirectToAction("MoreEdit", "LibraryImageText", new { id = id, HostName = LoginAccount.HostName });
+            }
             var libraryModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
             var entity = libraryModel.Get(id);
             return View(entity);
@@ -78,5 +217,14 @@ namespace Web.Controllers
             return JavaScript("window.location.href='" + Url.Action("Index", "LibraryImageText", new { HostName = LoginAccount.HostName }) + "'");
         }
 
+        [Serializable]
+        private class ImageText
+        {
+            public string title;
+            public string image;
+            public string summary;
+            public string body;
+            public List<ImageText> sub;
+        }
     }
 }
