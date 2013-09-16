@@ -47,7 +47,7 @@ namespace Web.Controllers
             }
             if (result.HasError)
             {
-                return AlertJS_NoTag(new Dialog("发送错误,请联系管理员。"));
+                return AlertJS_NoTag(new Dialog(result.Error));
             }
             return "window.location.href='" + Url.Action("Index", "Message", new { HostName = LoginAccount.HostName }) + "'";
         }
