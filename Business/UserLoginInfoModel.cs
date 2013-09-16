@@ -174,14 +174,18 @@ namespace Business
         /// </summary>
         public bool ExistEmail(string email, int? userLoginInfoID = null)
         {
-            if (userLoginInfoID != null && userLoginInfoID.HasValue && userLoginInfoID.Value > 0)
+            if (!string.IsNullOrEmpty(email))
             {
-                return List().Any(a => a.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase) && a.ID != userLoginInfoID.Value);
+                if (userLoginInfoID != null && userLoginInfoID.HasValue && userLoginInfoID.Value > 0)
+                {
+                    return List().Any(a => a.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase) && a.ID != userLoginInfoID.Value);
+                }
+                else
+                {
+                    return List().Any(a => a.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase));
+                }
             }
-            else
-            {
-                return List().Any(a => a.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase));
-            }
+            return false;
         }
 
         /// <summary>
