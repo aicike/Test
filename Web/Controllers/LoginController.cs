@@ -21,6 +21,7 @@ namespace Web.Controllers
         public ActionResult Index()
         {
             return View();
+            //return RedirectToAction("SystemLogin");
         }
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace Web.Controllers
         /// 售楼部登录
         /// </summary>
         /// <returns></returns>
-        public ActionResult UserLogin()
+        public ActionResult UserLogin(String hostName)
         {
             Session["IsHaveMessage"] = "0";
             return View();

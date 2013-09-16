@@ -7,6 +7,7 @@
     string[] dics = Model.Decoration.Split(',');
     string typeText = "";
     string[] types = Model.BuildingType.Split(',');
+    ViewBag.Menu = Poco.SystemConst.Menu.HousesMange;
 }
 @section head{
 }
@@ -18,11 +19,10 @@
         <legend>@Model.HName</legend>
         <table border="0" cellpadding="0" cellspacing="0" style="line-height: 25px" width="100%">
             <tr>
-                
                 <td width="80px">
                     装修情况：
                 </td>
-                <td width="217px" >
+                <td width="217px">
                     @foreach (var item in ckDicList)
                     {
                         foreach (var str in dics)
@@ -32,15 +32,14 @@
                                 dicText += item.Value + "、";
                             }
                         }
-                        
+
                     }
-                    
                     @dicText.TrimEnd('、')
                 </td>
                 <td width="80px">
                     建筑类别：
                 </td>
-                <td  colspan="3">
+                <td colspan="3">
                     @foreach (var item in ckTypeList)
                     {
                         foreach (var str in types)
@@ -50,10 +49,9 @@
                                 typeText += item.Value + "、";
                             }
                         }
-                        
+
                     }
-                    
-                     @typeText.TrimEnd('、')
+                    @typeText.TrimEnd('、')
                 </td>
             </tr>
             <tr>
@@ -134,7 +132,7 @@
                     else
                     {
                         @:已售完
-                    }
+                                        }
                 </td>
                 <td width="80px">
                     售楼电话：

@@ -5,6 +5,7 @@
     var ckDicList = ViewBag.Decoration as List<Poco.LookupOption>;
     string [] ckTypeS = Model.BuildingType.Split(',');
     string [] ckDicS = Model.Decoration.Split(',');
+    ViewBag.Menu = Poco.SystemConst.Menu.HousesMange;
 }
 @section head{
     <script type="text/javascript">

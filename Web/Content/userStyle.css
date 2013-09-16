@@ -48,7 +48,6 @@ a
     line-height: 40px;
     font-size: 16px;
     height: 40px;
-    color:White;
 }
 .menu li a
 {
@@ -185,42 +184,4 @@ a
     height: 28px !important;
     border: 1px solid #638467;
     color: White;
-}
-/*登录页面*/
-.bodyBottom
-{
-    height: 400px;
-}
-
-.homelogin
-{
-    width: 300px;
-    height: 250px;
-    padding: 25px;
-    border: 1px solid #F0F0F0;
-    margin-top: 30px;
-    float: right;
-    background-color: #eeeeee;
-    border-bottom: 1px solid #d3d3d3;
-    border-radius: 5px;
-}
-.homelogin form > div
-{
-    margin-bottom: 14px;
-}
-
-.inputLogin
-{
-    width: 283px;
-    padding: 11px 0 11px 11px;
-    vertical-align: middle;
-    font-family: "Microsoft YaHei";
-}
-
-.logo
-{
-    border: 1px solid #d3d3d3;
-    width: 120px;
-    height: 56px;
-    float:left;
 }

@@ -2,6 +2,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
     var groupList = ViewBag.GroupList as List<Poco.Group>;
+    ViewBag.Menu = Poco.SystemConst.Menu.Message;
 }
 @section head{
     <script type="text/javascript">

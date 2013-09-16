@@ -56,6 +56,12 @@ namespace Poco
             private Menu() { }
 
             public const string Home = "Home";
+            public const string UserManage = "UserManage";
+            public const string Message = "Message";
+            public const string LibraryImage = "LibraryImage";
+            public const string Account = "Account";
+            public const string HousesMange = "HousesMange";
+            public const string Set = "Set";
         }
 
         public class IOC_Model
