@@ -206,7 +206,8 @@
                 $.get(getEntityUrl, { id: keyId }, function (result) {
                     $("#txtRuleName").val(result.RuleName);
                     $("#txtRuleNo").text(result.FullRuleNo);
-		            $("#txtKey").tabControl({maxTabCount:10,tabW:80},result.Keywords);
+		            $("#txtKey").find("input").remove();
+                    $("#txtKey").tabControl({maxTabCount:10,tabW:80},result.Keywords);
                     if(result.IsFistAutoMessage==true){
                         $("#cbFirst").attr("checked","checked");
                     }
