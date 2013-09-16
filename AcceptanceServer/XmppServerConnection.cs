@@ -206,7 +206,8 @@ namespace AcceptanceServer
                         try
                         {
                             dt = DataBusiness.InsertChatRecord(msg, Np).Tables[0];
-
+                            //本条消息数据库ID
+                            int ThisMessageID = 0;
                             if (dt == null) //数据存储失败 
                             {
                                 //return  6发送失败
@@ -214,6 +215,8 @@ namespace AcceptanceServer
                             }
                             else
                             {
+                                //本条消息数据库ID
+                                ThisMessageID = int.Parse(dt.Rows[0][0].ToString());
                                 //在线
                                 if (OnlineUser.onlinuser.Any(a => a.jid.User == msg.To.User))
                                 {
@@ -221,15 +224,14 @@ namespace AcceptanceServer
                                     //List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
                                     XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList()[0];
                                     msg.From = jid;
-                                    con.Send(msg);
+                                    con.Send(msg,ThisMessageID);
 
 
                                 }
                                 //不在线
                                 else
                                 {
-                                    //本条消息数据库ID
-                                    int ThisMessageID = int.Parse(dt.Rows[0][0].ToString());
+                                    
                                     //存储离线记录
                                     int cnt = DataBusiness.InsertOffLineData(msg, Np, ThisMessageID);
                                     if (cnt <= 0)
@@ -267,7 +269,7 @@ namespace AcceptanceServer
                             //转发发送消息
                             XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList()[0];
                             msg.From = jid;
-                            con.Send(msg);
+                            con.Send(msg,0);
                         }
                     }
 
@@ -295,7 +297,7 @@ namespace AcceptanceServer
                         iq.Type = IqType.result;
                         auth.AddChild(new Element("Password"));
                         auth.AddChild(new Element("digest"));
-                        Send(iq);
+                        Send(iq,0);
                         break;
                     case IqType.set:
                         //上线
@@ -343,7 +345,7 @@ namespace AcceptanceServer
                         iq.SwitchDirection();
                         iq.Type = IqType.result;
                         iq.Query = null;
-                        Send(iq);
+                        Send(iq,0);
                         break;
                 }
 
@@ -372,7 +374,7 @@ namespace AcceptanceServer
                     ri.Jid = new Jid(ri.Name + "@localhost");
                     iq.Query.AddChild(ri);
                 }
-                Send(iq);
+                Send(iq,0);
 
                 //将其他人的信息发送
                 Presence pre;
@@ -382,7 +384,7 @@ namespace AcceptanceServer
                 {
                     pre.From = con.jid;
                     pre.Value = con.m_Sock.RemoteEndPoint.ToString();
-                    Send(pre);
+                    Send(pre,0);
                 }
             }
         }
@@ -410,15 +412,15 @@ namespace AcceptanceServer
 
             sb.Append("'>");
 
-            Send(sb.ToString(), null);
+            Send(sb.ToString(), null,0);
         }
 
-        private void Send(Element el)
+        private void Send(Element el, int ThisMessageID)
         {
-            Send(el.ToString(), el);
+            Send(el.ToString(), el, ThisMessageID);
         }
 
-        private void Send(string data, Node n)
+        private void Send(string data, Node n,int ThisMessageID)
         {
             try
             {
@@ -433,6 +435,7 @@ namespace AcceptanceServer
                     try
                     {
                         agsXMPP.protocol.client.Message msg = n as agsXMPP.protocol.client.Message;
+                        NewsProtocol Np = msg.SelectSingleElement(typeof(NewsProtocol)) as NewsProtocol;
                         List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
                         if (cons.Count > 0)
                         {
@@ -445,6 +448,27 @@ namespace AcceptanceServer
                                 }
                             }
                         }
+
+
+                        //存储离线记录
+                        try
+                        {
+                            if (ThisMessageID != 0)
+                            {
+                                int cnt = DataBusiness.InsertOffLineData(msg, Np, ThisMessageID);
+                                if (cnt <= 0)
+                                {
+                                    //return  6发送失败
+                                    SendMessageStatus("6", msg.To.User);
+                                }
+                                else
+                                {
+                                    //推送
+                                    PushMessage(msg, Np);
+                                }
+                            }
+                        }
+                        catch { }
 
                     }
                     catch { }
@@ -480,12 +504,11 @@ namespace AcceptanceServer
             {
                 try
                 {
-                    cons[i].Send(msg);
+                    cons[i].Send(msg,0);
                 }
                 catch
                 {
                     OnlineUser.onlinuser.Remove(cons[i]);
-                    i--;
                 }
             }
 
@@ -519,7 +542,7 @@ namespace AcceptanceServer
                 {
                     msg.Body = UMlist.ObjectToJson();
                     msg.AddChild(np);
-                    con.Send(msg);
+                    con.Send(msg,0);
                 }
                 catch { }
 

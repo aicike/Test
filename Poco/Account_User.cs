@@ -27,5 +27,6 @@ namespace Poco
 
         public virtual Group Group { get; set; }
 
+        public DateTime CreateDate { get; set; }
     }
 }

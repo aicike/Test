@@ -5,6 +5,7 @@ using System.Text;
 using Poco;
 using System.Web;
 using Poco.Enum;
+using System.Data;
 
 namespace Interface
 {
@@ -29,5 +30,17 @@ namespace Interface
         int UpdUserTooAccount(int userID, int AmiAccountID, int groupID);
 
         int GetBindAccountID(int userID, int accountMainID);
+        /// <summary>
+        /// 获取用户数
+        /// </summary>
+        /// <param name="AccountID"></param>
+        /// <returns></returns>
+        int GetAccountUser(int AccountID);
+        /// <summary>
+        /// 获取每日用户数
+        /// </summary>
+        /// <param name="AccountID"></param>
+        /// <returns></returns>
+        DataTable GetWeekUserCnt(int AccountID);
     }
 }

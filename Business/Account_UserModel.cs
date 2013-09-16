@@ -5,6 +5,7 @@ using System.Text;
 using Poco;
 using Interface;
 using Injection;
+using System.Data;
 
 namespace Business
 {
@@ -53,6 +54,7 @@ namespace Business
             accountUser.AccountID = accountID;
             accountUser.UserID = userID;
             accountUser.GroupID = group.ID;
+            accountUser.CreateDate = DateTime.Now;
             return Add(accountUser);
         }
 
@@ -67,6 +69,64 @@ namespace Business
                 return entity.AccountID;
             }
             return 0;
+        }
+
+        /// <summary>
+        /// 获取用户数
+        /// </summary>
+        /// <param name="AccountID"></param>
+        /// <returns></returns>
+        public int GetAccountUser(int AccountID)
+        {
+            var AccountUser = List().Where(a => a.AccountID == AccountID);
+            if (AccountUser != null)
+            {
+                return AccountUser.Count();
+            }
+            return 0;
+        }
+        /// <summary>
+        /// 获取一个星期的日增用户数
+        /// </summary>
+        /// <param name="AccountID"></param>
+        /// <returns></returns>
+        public DataTable GetWeekUserCnt(int AccountID)
+        {
+            //结束日期
+            string EndDate = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
+            //起始日期
+            string BeGinDate = DateTime.Now.AddDays(-6).ToString("yyyy-MM-dd");
+            string sql = string.Format(@" select CreateDate,count(CreateDate) as cnt  from 
+                        (select  Convert(varchar(50),CreateDate,23) as CreateDate from dbo.Account_User where AccountID = {0} and CreateDate > '{1}' and CreateDate < '{2}') a 
+                         group by a.CreateDate", AccountID, BeGinDate, EndDate);
+
+
+            CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+            var result = model.SqlQuery<_B_UserCount>(sql);
+            DataTable dt = new DataTable();
+            dt.Columns.Add("CreateDate");
+            dt.Columns.Add("cnt");
+            for (int i = 6; i >= 0; i--)
+            {
+                DataRow row = dt.NewRow();
+                row["CreateDate"] = DateTime.Now.AddDays(-i).ToString("yyyy-MM-dd");
+                row["cnt"] = "0";
+                dt.Rows.Add(row);
+            }
+
+            foreach(var item  in result)
+            {
+                for(int i =0 ;i<dt.Rows.Count;i++)
+                {
+                    if (item.CreateDate == dt.Rows[i]["CreateDate"].ToString())
+                    {
+                        dt.Rows[i]["cnt"] = item.cnt;
+                    }
+                }
+            }
+           
+
+            return dt;
         }
     }
 }
