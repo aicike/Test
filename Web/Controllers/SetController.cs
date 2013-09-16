@@ -4,23 +4,22 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Controllers;
+using Injection;
+using Interface;
+using Poco;
 
 namespace Web.Controllers
 {
     public class SetController : ManageAccountController
     {
-        //设置页
-        // GET: /Set/
-
         /// <summary>
         /// 首页
         /// </summary>
-        /// <returns></returns>
         public ActionResult Index()
         {
-            ViewBag.HostName = LoginAccount.HostName;
-            return View();
+            var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
+            var account = accountModel.Get(LoginAccount.ID);
+            return View(account);
         }
-
     }
 }

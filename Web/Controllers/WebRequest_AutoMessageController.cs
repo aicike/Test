@@ -39,6 +39,18 @@ namespace Web.Controllers
         }
 
         /// <summary>
+        /// 首次安装APP回复
+        /// </summary>
+        /// <returns></returns>
+        public string GetInitialMsg(int accountMainID)
+        {
+            var autoMessageAddModel = Factory.Get<IAutoMessage_AddModel>(SystemConst.IOC_Model.AutoMessage_AddModel);
+            var entity = autoMessageAddModel.Get(accountMainID);
+            string msg = entity.Content ?? "";
+            return msg;
+        }
+
+        /// <summary>
         /// 根据编号返回答案
         /// </summary>
         [HttpPost]
