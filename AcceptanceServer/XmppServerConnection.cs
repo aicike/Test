@@ -86,6 +86,11 @@ namespace AcceptanceServer
             {
                 //下线------------
                 //frm.ShowErrorMessage(ex.Message);
+                string ShowError = ConfigurationManager.AppSettings["ShowError"].ToString();
+                if (ShowError == "true")
+                {
+                    frm.ShowErrorMessage(ex.Message);
+                }
 
             }
         }
@@ -150,12 +155,15 @@ namespace AcceptanceServer
                 //处理用户上线消息
                 if (pres.Show == ShowType.chat && pres.Type == PresenceType.available)//pres.Show == ShowType.chat &&
                 {
-                    ////显示当前谁上线了
-                    //frm.Invoke(new dosomethings(delegate()
-                    //{
-                    //    frm.ShowOlineUser(jid.User, jid.Bare + "||" + jid.Server);
-                    //}));
-
+                    string showUP = ConfigurationManager.AppSettings["UPnotice"].ToString();
+                    if (showUP == "true")
+                    {
+                        ////显示当前谁上线了
+                        frm.Invoke(new dosomethings(delegate()
+                        {
+                            frm.ShowOlineUser(jid.User, jid.Bare + "||" + jid.Server);
+                        }));
+                    }
 
                     ////暂时屏蔽
                     //pres.From = this.jid;
@@ -471,14 +479,24 @@ namespace AcceptanceServer
                         catch { }
 
                     }
-                    catch { }
+                    catch( Exception ex) {
+                        string ShowError = ConfigurationManager.AppSettings["ShowError"].ToString();
+                        if (ShowError == "true")
+                        {
+                            frm.ShowErrorMessage(ex.Message);
+                        }
+                    }
                     //data
 
                 }
             }
             catch (Exception ex)
             {
-                //frm.ShowErrorMessage(ex.Message);
+                string ShowError = ConfigurationManager.AppSettings["ShowError"].ToString();
+                if (ShowError == "true")
+                {
+                    frm.ShowErrorMessage(ex.Message);
+                }
                 throw;
             }
         }
