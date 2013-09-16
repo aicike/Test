@@ -67,7 +67,7 @@ namespace Web.Controllers
             }
             else
             {
-                ViewBag.maxMessCnt = 1;
+                ViewBag.maxUserCnt = 1;
             }
             //获取每日接收消息数
             var MessCntDt = Factory.Get<IMessageModel>(SystemConst.IOC_Model.MessageModel);

@@ -4,8 +4,8 @@
     ViewBag.Menu = Poco.SystemConst.Menu.Home;
 }
 @section head{
-    <script src="../../Scripts/Highcharts/highcharts.js" type="text/javascript"></script>
-    <script src="../../Scripts/Highcharts/modules/exporting.js" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Highcharts/highcharts.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Highcharts/modules/exporting.js")" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
             var isAdmin = @ViewBag.AccountAdmin;
@@ -74,9 +74,6 @@
                 }]
             });
 
-
-
-
             
             $('#divMessCnt').highcharts({
                 chart: {
@@ -130,12 +127,8 @@
                 }]
             });
 
-
             $("tspan:contains('Highcharts.com')").remove();
             $(".highcharts-legend").remove();
-
-
-
         });
     </script>
     <style>
