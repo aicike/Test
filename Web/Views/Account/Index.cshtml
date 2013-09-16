@@ -14,17 +14,21 @@
     售楼部账户管理&nbsp;(@accountMain.Name)</div>
 <div class="bodyLeft">
     <ul class="ulList">
-        @foreach (var item in roleList)
-        {
-            if (item.ID == roleID)
-            { 
-            <li class="select"><a href="@Url.Action("Index", "Account", new { HostName = ViewBag.HostName, roleID = item.ID, index = 0 })">@item.Name&nbsp;(@item.Accounts.Count())</a></li>
+       
+            @foreach (var item in roleList)
+            {
+                if (item.ID == roleID)
+                {
+               
+                    <li class="select"><a href="@Url.Action("Index", "Account", new { HostName = ViewBag.HostName, roleID = item.ID, index = 0 })">@item.Name&nbsp;(@item.Accounts.Count())</a></li>
+                
+                }
+                else
+                {  
+                    <li><a href="@Url.Action("Index", "Account", new { HostName = ViewBag.HostName, roleID = item.ID, index = 0 })">@item.Name&nbsp;(@item.Accounts.Count())</a></li>
+                }
             }
-            else
-            {  
-            <li><a href="@Url.Action("Index", "Account", new { HostName = ViewBag.HostName, roleID = item.ID, index = 0 })">@item.Name&nbsp;(@item.Accounts.Count())</a></li>
-            }
-        }
+     
     </ul>
 </div>
 <div class="bodyRight">
@@ -77,7 +81,7 @@
                     {
                         @Ajax.ActionLink(@item.AccountStatus.Value, "SetAccountStatus", "Account", new
                    {
-                       HostName = ViewBag.HostName ,
+                       HostName = ViewBag.HostName,
                        accountID = item.ID,
                        status = Poco.Enum.EnumAccountStatus.Enabled.ToString()
                    },
@@ -86,8 +90,8 @@
                             UpdateTargetId = "alert",
                             OnBegin = "return AppDelete('确定要启用?','" + Url.Action("SetAccountStatus", "Account",
                                 new
-                                { 
-                                    HostName = ViewBag.HostName ,
+                                {
+                                    HostName = ViewBag.HostName,
                                     accountID = item.ID,
                                     status = Poco.Enum.EnumAccountStatus.Enabled.ToString()
                                 }) + "',null)"
@@ -96,8 +100,8 @@
                     else
                     {
                         @Ajax.ActionLink(@item.AccountStatus.Value, "SetAccountStatus", "Account", new
-                   { 
-                       HostName = ViewBag.HostName ,
+                   {
+                       HostName = ViewBag.HostName,
                        accountID = item.ID,
                        status = Poco.Enum.EnumAccountStatus.Disabled.ToString()
                    },
@@ -106,8 +110,8 @@
                             UpdateTargetId = "alert",
                             OnBegin = "return AppDelete('确定要禁用?','" + Url.Action("SetAccountStatus", "Account",
                                 new
-                                { 
-                                    HostName = ViewBag.HostName ,
+                                {
+                                    HostName = ViewBag.HostName,
                                     accountID = item.ID,
                                     status = Poco.Enum.EnumAccountStatus.Disabled.ToString()
                                 }) + "',null)"
