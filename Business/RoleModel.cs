@@ -13,12 +13,12 @@ namespace Business
     {
         public List<Role> GetRoleList(int? accountMainID)
         {
-            List<Role> list = List().ToList();
+            List<Role> list = List().Where(a=> a.IsCanDelete).ToList();
             if (accountMainID != null && accountMainID.HasValue)
             {
                 foreach (var item in list)
                 {
-                    item.Accounts = item.Accounts.Where(a => a.Account_AccountMains.Any(b => b.AccountMainID == accountMainID.Value && b.SystemStatus == (int)EnumSystemStatus.Active)).ToList();
+                    item.Accounts = item.Accounts.Where(a => a.Account_AccountMains.Any(b => b.AccountMainID == accountMainID.Value && b.SystemStatus == (int)EnumSystemStatus.Active )).ToList();
                 }
 
             }

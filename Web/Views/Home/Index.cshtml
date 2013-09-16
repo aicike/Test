@@ -24,7 +24,8 @@
             $('#divPopCnt').highcharts({
                 chart: {
                     zoomType: 'xy',
-                    type: 'areaspline'
+                    type: 'areaspline',
+                    backgroundColor:'#fafafa'
                 },
                 title: {
                     text: '',
@@ -33,6 +34,10 @@
                 subtitle: {
                     text: ''
                 },
+                credits:{
+                    enabled:false
+                }
+                ,
                 xAxis: [{
                     categories: @Html.Raw(ViewBag.WeetUserCntDate)
                 }],
@@ -62,7 +67,7 @@
                     verticalAlign: 'top',
                     y: 100,
                     floating: true,
-                    backgroundColor: '#FFFFFF'
+                    backgroundColor: '#FFFFFF',enabled:false
                 }, 
                 series: [{
                     name: '新增',
@@ -77,7 +82,8 @@
             
             $('#divMessCnt').highcharts({
                 chart: {
-                    zoomType: 'xy'
+                    zoomType: 'xy',
+                    backgroundColor:'#fafafa'
                 },
                 title: {
                     text: '',
@@ -86,6 +92,10 @@
                 subtitle: {
                     text: ''
                 },
+                credits:{
+                    enabled:false
+                }
+                ,
                 xAxis: [{
                     
                     categories: @Html.Raw(ViewBag.WeetMessCntDate)
@@ -114,7 +124,7 @@
                     verticalAlign: 'top',
                     y: 100,
                     floating: true,
-                    backgroundColor: '#FFFFFF'
+                    backgroundColor: '#FFFFFF',enabled:false
                 },
                 series: [{
                     name: '接收',
@@ -127,8 +137,6 @@
                 }]
             });
 
-            $("tspan:contains('Highcharts.com')").remove();
-            $(".highcharts-legend").remove();
         });
     </script>
     <style>
@@ -166,7 +174,7 @@
     </div>
     <div id="divTZ" class="TZdiv">
         <div>
-            <a href="#">你有 <span style="font-size: 14; font-weight: bold; color: Red">@ViewBag.UnreadCnt</span>
+            <a href="@Url.Action("Index", "InstantMes")">你有 <span style="font-size: 14; font-weight: bold; color: Red">@ViewBag.UnreadCnt</span>
                 条消息未读</a></div>
         <div>
             你目前共有 <span style="font-size: 14; font-weight: bold; color: Red">@ViewBag.UserCnt</span>

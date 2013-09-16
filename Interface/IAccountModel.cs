@@ -26,6 +26,7 @@ namespace Interface
         /// </summary>
         IQueryable<Account> GetAccountAdminListByAccountMain(int accountMainID);
         IQueryable<Account> GetAccountAdminListByAccountMain(AccountMain accountMain);
+        IQueryable<Account> GetAccountAdminListByAccountMain(AccountMain accountMain, int RoleID);
 
         Result Add(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile);
 

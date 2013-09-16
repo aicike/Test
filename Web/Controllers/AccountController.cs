@@ -25,20 +25,28 @@ namespace Web.Controllers
             ViewBag.AccountMain = entity;
             //项目管理员
             IAccountModel accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-            var accountAdminIquery = accountModel.GetAccountAdminListByAccountMain(entity);
+            //IQueryable<Account> accountAdminIquery;
             IQueryable<Poco.Account> accountList = null; //项目成员
             //根据角色查找账号列表
             if (roleID.HasValue)
             {
-                accountList = accountModel.GetAccountListByAccountMain_RoleID(LoginAccount.CurrentAccountMainID, roleID.Value);
+                if (roleID == 1)
+                {
+                    accountList = accountModel.GetAccountListByAccountMain_RoleID(LoginAccount.CurrentAccountMainID, roleList.FirstOrDefault().ID);
+                }
+                else
+                {
+                    accountList = accountModel.GetAccountListByAccountMain_RoleID(LoginAccount.CurrentAccountMainID, roleID.Value);
+                }
             }
             else
             {
-                accountList = accountAdminIquery;
+
+                accountList = accountModel.GetAccountAdminListByAccountMain(entity, roleList.FirstOrDefault().ID);
             }
             var pageList = accountList.ToPagedList(id ?? 1, 15);
-            ViewBag.RoleID = roleID.HasValue ? roleID.Value : 1;
-            ViewBag.AccountAdminList = accountAdminIquery.ToList();
+            ViewBag.RoleID = roleID.HasValue ? roleID.Value : roleList.FirstOrDefault().ID;
+            ViewBag.AccountAdminList = accountList.ToList();
             ViewBag.HostName = LoginAccount.HostName;
             return View(pageList);
         }
