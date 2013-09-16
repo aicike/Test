@@ -402,9 +402,6 @@
     <Content Include="video-js\HTMLPage2.htm" />
     <Content Include="video-js\OVP.xap" />
     <Content Include="video-js\swfobject.js" />
-    <Content Include="video-js\video2.flv" />
-    <Content Include="video-js\video3.wmv" />
-    <Content Include="video-js\video4.mp4" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -672,7 +669,6 @@
     <None Include="video-js\font\vjs.eot" />
     <None Include="video-js\font\vjs.ttf" />
     <None Include="video-js\font\vjs.woff" />
-    <None Include="video-js\video1.rmvb" />
     <Content Include="Views\Set\Index.cshtml" />
     <Content Include="Views\KeywordMessage\Index.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />

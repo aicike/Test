@@ -42,8 +42,13 @@ namespace Web.Controllers
         /// 根据编号返回答案
         /// </summary>
         [HttpPost]
-        public string GetAutoMessageByID(int autoMessageID)
+        public string GetAutoMessageByID(int autoMessageID, int accountMainID, int userID)
         {
+            try
+            {
+                SaveQuestion(accountMainID, userID, autoMessageID, null);
+            }
+            catch (Exception ex) { }
             var autoMessage_KeywordModel = Factory.Get<IAutoMessage_KeywordModel>(SystemConst.IOC_Model.AutoMessage_KeywordModel);
             Result result = new Result();
             try
@@ -66,8 +71,13 @@ namespace Web.Controllers
         /// 根据关键字返回答案
         /// </summary>
         [HttpPost]
-        public string GetAutoMessageByKey(int accountMainID, string key)
+        public string GetAutoMessageByKey(int accountMainID, int userID, string key)
         {
+            try
+            {
+                SaveQuestion(accountMainID, userID, null, key);
+            }
+            catch (Exception ex) { }
             var autoMessage_KeywordModel = Factory.Get<IAutoMessage_KeywordModel>(SystemConst.IOC_Model.AutoMessage_KeywordModel);
             Result result = new Result();
             try
@@ -195,7 +205,7 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(result); ;
         }
 
-        public void SaveQuestion(int accountMainID, int userID, int? autoMessageID, string question)
+        private void SaveQuestion(int accountMainID, int userID, int? autoMessageID, string question)
         {
             var model = Factory.Get<IAutoMessage_UserModel>(SystemConst.IOC_Model.AutoMessage_UserModel);
             AutoMessage_User am = new AutoMessage_User();
