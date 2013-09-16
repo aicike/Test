@@ -85,6 +85,7 @@
     <Compile Include="WebAPI_Poco\App_User.cs" />
     <Compile Include="WebAPI_Poco\App_UserLoginInfo.cs" />
     <Compile Include="_B_File.cs" />
+    <Compile Include="_B_MessageDayNumber.cs" />
     <Compile Include="_B_PushMessage.cs" />
     <Compile Include="_B_AccountMainLibraryInfo.cs" />
     <Compile Include="AccountMainHouses.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Lookup.cs" />
     <Compile Include="LookupOption.cs" />
     <Compile Include="UserLoginInfo.cs" />
+    <Compile Include="_B_UserCount.cs" />
     <Compile Include="_MenuOption.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Account_AccountMain.cs" />

@@ -362,7 +362,7 @@ namespace EF.Migrations
                         SystemStatus = c.Int(nullable: false),
                         Title = c.String(nullable: false, maxLength: 50),
                         ImagePath = c.String(nullable: false, maxLength: 500),
-                        Summary = c.String(nullable: false, maxLength: 200),
+                        Summary = c.String(maxLength: 200),
                         Content = c.String(nullable: false),
                         LibraryImageTextParentID = c.Int(),
                         AccountMainID = c.Int(nullable: false),
@@ -474,6 +474,7 @@ namespace EF.Migrations
                         AccountID = c.Int(nullable: false),
                         UserID = c.Int(nullable: false),
                         GroupID = c.Int(nullable: false),
+                        CreateDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.AccountID)

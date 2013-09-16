@@ -4,6 +4,8 @@
     ViewBag.Menu = Poco.SystemConst.Menu.Home;
 }
 @section head{
+    <script src="../../Scripts/Highcharts/highcharts.js" type="text/javascript"></script>
+    <script src="../../Scripts/Highcharts/modules/exporting.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
             var isAdmin = @ViewBag.AccountAdmin;
@@ -17,12 +19,176 @@
                     draggable: false
                 });
             }
+
+
+            $('#divPopCnt').highcharts({
+                chart: {
+                    zoomType: 'xy',
+                    type: 'areaspline'
+                },
+                title: {
+                    text: '',
+                    align: 'left'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: [{
+                    categories: @Html.Raw(ViewBag.WeetUserCntDate)
+                }],
+                yAxis: [{ // Primary yAxis
+                    labels: {
+                         formatter: function() {
+                            return this.value +'人';
+                         },
+                        style: {
+                            color: '#89A54E'
+                        }
+                    },
+                    title: {
+                        text: '',
+                        style: {
+                            color: '#89A54E'
+                        }
+                    },min:0,tickInterval: @ViewBag.maxUserCnt
+                }],
+                tooltip: {
+                    shared: true
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'left',
+                    x: 120,
+                    verticalAlign: 'top',
+                    y: 100,
+                    floating: true,
+                    backgroundColor: '#FFFFFF'
+                }, 
+                series: [{
+                    name: '新增',
+                    color: '#89A54E',
+                    data:@Html.Raw(ViewBag.WeetUserCnt),
+                    tooltip: {
+                        valueSuffix: '人'
+                    }
+                }]
+            });
+
+
+
+
+            
+            $('#divMessCnt').highcharts({
+                chart: {
+                    zoomType: 'xy'
+                },
+                title: {
+                    text: '',
+                    align: 'left'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: [{
+                    
+                    categories: @Html.Raw(ViewBag.WeetMessCntDate)
+                }],
+                yAxis: [{ // Primary yAxis
+                    labels: {
+                        format: '{value}条',
+                        style: {
+                            color: '#89A54E'
+                        }
+                    },
+                    title: {
+                        text: '',
+                        style: {
+                            color: '#89A54E'
+                        }
+                    },min:0,tickInterval: @ViewBag.maxMessCnt
+                }],
+                tooltip: {
+                    shared: true
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'left',
+                    x: 120,
+                    verticalAlign: 'top',
+                    y: 100,
+                    floating: true,
+                    backgroundColor: '#FFFFFF'
+                },
+                series: [{
+                    name: '接收',
+                    color: '#4e7bbf',
+                    type: 'areaspline',
+                    data: @Html.Raw(ViewBag.WeetMessCnt),
+                    tooltip: {
+                        valueSuffix: '条'
+                    }
+                }]
+            });
+
+
+            $("tspan:contains('Highcharts.com')").remove();
+            $(".highcharts-legend").remove();
+
+
+
         });
     </script>
+    <style>
+        .HYdiv
+        {
+            font-size: 18px;
+            font-family: @@黑体;
+            margin-bottom: 10px;
+        }
+        .TZdiv
+        {
+            height: 80px;
+            border-radius: 10px;
+            border: 1px solid #cccccc;
+            padding: 10px;
+            margin: 20px auto;
+            line-height: 25px;
+        }
+        .Titlediv
+        {
+            font-size: 16px;
+            font-family: @@黑体;
+            margin-bottom: 10px;
+            margin-top: 25px;
+            border-bottom: 3px solid #cccccc;
+            height: 25px;
+        }
+    </style>
 }
 <div class="title">
     首页</div>
 <div class="body">
+    <div id="divHY" class="HYdiv">
+        欢迎你 , @ViewBag.UNAme
+    </div>
+    <div id="divTZ" class="TZdiv">
+        <div>
+            <a href="#">你有 <span style="font-size: 14; font-weight: bold; color: Red">@ViewBag.UnreadCnt</span>
+                条消息未读</a></div>
+        <div>
+            你目前共有 <span style="font-size: 14; font-weight: bold; color: Red">@ViewBag.UserCnt</span>
+            个用户</div>
+    </div>
+    <div class="Titlediv">
+        每日净增人数
+    </div>
+    <div id="divPopCnt" style="min-width: 910px; height: 320px; margin: 0 auto;">
+    </div>
+    <div class="Titlediv">
+        每日接收消息数
+    </div>
+    <div id="divMessCnt" style="min-width: 910px; height: 320px; margin: 0 auto;">
+    </div>
 </div>
 <div id="DialogGuide" title="平台设置向导" style="display: none">
     <iframe id="iframeLibrary" src="@Url.Action("Index", "AccountMainGuide", new { HostName = ViewBag.HostName })" style="width:800px;height:530px;border:none;overflow:hidden">

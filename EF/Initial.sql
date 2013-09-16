@@ -1,6 +1,8 @@
 ﻿------默认约束---------------------------------
 alter table[User] add default (getdate()) for CreateDate 
 
+alter table[Account_User] add default (getdate()) for CreateDate 
+
 -----------------------------Role--------------------------
 INSERT INTO dbo.Role ( SystemStatus, NAME,IsCanDelete,Token ) VALUES  ( 0,'管理员',0,'AccountAdmin')
 INSERT INTO dbo.Role ( SystemStatus, Name,IsCanDelete  ) VALUES  ( 0,'销售经理',1)
