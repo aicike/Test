@@ -63,6 +63,12 @@ namespace Web.Areas.System.Controllers
         public ActionResult Delete(int id)
         {
             (id != 1).NotAuthorizedPage();
+
+            var SystemUsermodel = Factory.Get<ISystemUserModel>(SystemConst.IOC_Model.SystemUserModel);
+            if (SystemUsermodel.ChickDeleteRole(id))
+            {
+                return Alert(new Dialog("该角色已使用，不能删除！"));
+            }
             ISystemUserRoleModel roleModel = Factory.Get<ISystemUserRoleModel>(SystemConst.IOC_Model.SystemUserRoleModel);
             var result = roleModel.Delete(id);
             if (result.HasError)

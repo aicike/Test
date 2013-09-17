@@ -10,6 +10,12 @@
     用户管理</div>
 <div class="bodyLeft">
     <ul class="ulList" id="ulGroup">
+        <li><a href="@Url.Action("Index", "InstantMes", new { HostName = ViewBag.HostName })">
+            销售消息 </a></li>
+        <li>@Html.ActionLink("销售与客户管理", "Index", "SalesMessage", new { HostName = ViewBag.HostName }, null, true)
+            </li>
+        <li style="height: 10px; background-color: #f0f0f0; border-bottom: 1px solid #d3d3d3;
+            border-top: 1px solid #d3d3d3"></li>
         @foreach (var item in groupList)
         {
             if (item.IsDefaultGroup)
@@ -35,7 +41,7 @@
                     <td class="tdTitle">
                         名称
                     </td>
-                    <td class="tdField">@Model.UserLoginInfo.Name @Html.HiddenFor(a => a.ID);@Html.HiddenFor(a => a.AccountStatusID);@Html.HiddenFor(a => a.AccountMainID);@Html.HiddenFor(a => a.UserLoginInfoID);
+                    <td class="tdField">@Model.UserLoginInfo.Name @Html.HiddenFor(a => a.ID)@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.AccountMainID)@Html.HiddenFor(a => a.UserLoginInfoID)@Html.HiddenFor(a => a.CreateDate)
                     </td>
                     <td>
                     </td>
@@ -45,9 +51,14 @@
                         头像
                     </td>
                     <td class="tdField">
-                        @if (string.IsNullOrEmpty(Model.HeadImagePath) == false)
+                        @if (string.IsNullOrEmpty(Model.UserLoginInfo.HeadImagePath) == false)
                         { 
-                            <img style="max-width:80px;max-height:80px; float: left" src="@Url.Content(Model.HeadImagePath)" />
+                            <img style="max-width:80px;max-height:80px; float: left" src="@Url.Content(Model.UserLoginInfo.HeadImagePath)" />
+                        }
+                        else
+                        { 
+                            <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
+                            
                         }
                     </td>
                     <td>
@@ -60,15 +71,6 @@
                     <td class="tdField">@Html.TextBoxFor(a => a.Name)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Name)
-                    </td>
-                </tr>
-                <tr>
-                    <td class="tdTitle">
-                        地址
-                    </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.Address)
-                    </td>
-                    <td>@Html.ValidationMessageFor(a => a.Address)
                     </td>
                 </tr>
                 <tr>
@@ -92,7 +94,7 @@
             </table>
         </fieldset>
         <div class="action">
-            <input type="submit" id="btnSubmit" value="保存" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
+            <input type="submit" id="btnSubmit" class="button" value="保存" /><input type="button" value="返回" class="button" style=" margin-left:10px" onclick="location.href='@ViewBag.RawUrl'" />
         </div>
     }
 </div>

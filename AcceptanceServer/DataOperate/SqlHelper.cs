@@ -219,6 +219,17 @@ namespace AcceptanceServer.DataOperate
             return ExecuteNonQuery(GetConnSting(), ct, commandText);
         }
 
+        /// <summary>
+        /// 执行增删改
+        /// </summary>
+        /// <returns></returns>
+        public static int ExecuteNonQuery(string commandText, params SqlParameter[] commandParameters)
+        {
+            CommandType ct = CommandType.Text;
+
+            return ExecuteNonQuery(GetConnSting(), ct, commandText, commandParameters);
+        }
+
         /// <summary> 
         /// 执行指定连接字符串,类型的SqlCommand.如果没有提供参数,不返回结果. 
         /// </summary> 
@@ -471,6 +482,17 @@ namespace AcceptanceServer.DataOperate
         public static DataSet ExecuteDataset(string commandText)
         {
             return ExecuteDataset(GetConnSting(), CommandType.Text, commandText);
+        }
+
+        /// <summary>
+        /// 返回结果集
+        /// </summary>
+        /// <returns></returns>
+        public static DataSet ExecuteDataset(string commandText, params SqlParameter[] commandParameters)
+        {
+            CommandType ct = CommandType.Text;
+
+            return ExecuteDataset(GetConnSting(), ct, commandText, commandParameters);
         }
 
         /// <summary> 

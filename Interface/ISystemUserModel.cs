@@ -17,5 +17,7 @@ namespace Interface
         Result Add(SystemUser user, HttpPostedFileBase HeadImagePathFile);
 
         Result Edit(SystemUser user, HttpPostedFileBase HeadImagePathFile);
+
+        bool ChickDeleteRole(int roleID);
     }
 }

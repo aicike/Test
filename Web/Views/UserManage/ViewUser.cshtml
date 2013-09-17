@@ -10,6 +10,13 @@
     用户管理</div>
 <div class="bodyLeft">
     <ul class="ulList" id="ulGroup">
+
+        <li><a href="@Url.Action("Index", "InstantMes", new { HostName = ViewBag.HostName })">
+            销售消息 </a></li>
+        <li>@Html.ActionLink("销售与客户管理", "Index", "SalesMessage", new { HostName = ViewBag.HostName }, null, true)
+            </li>
+        <li style="height: 10px; background-color: #f0f0f0; border-bottom: 1px solid #d3d3d3;
+            border-top: 1px solid #d3d3d3"></li>
         @foreach (var item in groupList)
         {
             if (item.IsDefaultGroup)
@@ -31,39 +38,44 @@
         <table class="tableForm">
             <tr>
                 <td class="tdTitle">
-                    名称
+                    名称(备注):
                 </td>
-                <td class="tdField">@Model.Name
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    头像
-                </td>
-                <td>
-                    @if (string.IsNullOrEmpty(Model.HeadImagePath) == false)
-                    { 
-                        <img style="max-width:80px;max-height:80px; float: left" src="@Url.Content(Model.HeadImagePath)" />
-                    }
+                <td class="tdField">@Model.UserLoginInfo.Name（@Model.Name）
                 </td>
                 <td>
                 </td>
             </tr>
             <tr>
                 <td>
-                    住址
+                    头像:
                 </td>
                 <td>
-                    @Model.Address
+                   @if (string.IsNullOrEmpty(Model.UserLoginInfo.HeadImagePath) == false)
+                        { 
+                            <img style="max-width:80px;max-height:80px; float: left" src="@Url.Content(Model.UserLoginInfo.HeadImagePath)" />
+                        }
+                        else
+                        { 
+                            <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
+                            
+                        }
                 </td>
                 <td>
                 </td>
             </tr>
             <tr>
                 <td>
-                    电话
+                    住址:
+                </td>
+                <td>
+                    @Model.UserLoginInfo.Address
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    电话:
                 </td>
                 <td>
                     @Model.Phone
@@ -73,7 +85,7 @@
             </tr>
             <tr>
                 <td>
-                    身份证
+                    身份证:
                 </td>
                 <td>
                     @Model.IdentityCard
@@ -84,7 +96,7 @@
         </table>
     </fieldset>
     <div class="action">
-        <input type="submit" id="btnSubmit" value="保存" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
+       <input type="button" class="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
     </div>
 </div>
 <div style="clear: both">
