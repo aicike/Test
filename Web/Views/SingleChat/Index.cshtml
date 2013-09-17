@@ -375,17 +375,22 @@
                 $("#trImgText").attr("style", "display:none");
 
 
-                $("#ShowImg").attr("src", MesURL);
+                
                 $("#dialogShowMessage").dialog({
                     resizable: false,
                     height: "auto",
                     width: "auto",
                     modal: true,
                     draggable: false,
-                    title:"图片",
-                    position:"center"
+                    title: "图片",
+                    position: "center",
+                    buttons: {
+                        "关闭浏览": function () {
+                            $(this).dialog("close");
+                        }
+                    }
                 });
-
+                $("#ShowImg").attr("src", MesURL);
             }
             //语音
             else if (Type == "2") {
@@ -397,7 +402,7 @@
                 $("#playerVoice").attr("src", MesURL);
                 $("#dialogShowMessage").dialog({
                     resizable: false,
-                    height: "110",
+                    height: "170",
                     width: "550",
                     modal: true,
                     title:"语音",
@@ -413,6 +418,11 @@
 
                             }
                         });
+                    },
+                    buttons: {
+                        "关闭浏览": function () {
+                            $(this).dialog("close");
+                        }
                     }
                 });
 
@@ -437,7 +447,7 @@
                 $("#playerVideo").attr("src", MesURL);
                 $("#dialogShowMessage").dialog({
                     resizable: false,
-                    height: "370",
+                    height: "430",
                     width: "570",
                     modal: true,
                     title:"视频",
@@ -453,6 +463,11 @@
 
                             }
                         });
+                    },
+                    buttons: {
+                        "关闭浏览": function () {
+                            $(this).dialog("close");
+                        }
                     }
                 });
 
@@ -475,12 +490,17 @@
 
                 $("#dialogShowMessage").dialog({
                     resizable: false,
-                    height: "600",
+                    height: "660",
                     width: "560",
                     modal: true,
                     title:"图文",
                     position:"center",
-                    draggable: false
+                    draggable: false,
+                    buttons: {
+                        "关闭浏览": function () {
+                            $(this).dialog("close");
+                        }
+                    }
                 });
                 //MesURL==ID
                 $.get(GetImgTextMessage, { ImgTextID: MesURL }, function (data) {
@@ -595,7 +615,8 @@
                     <tr>
                         <td align="left">
                             本地图片：
-                            <input type="file" id="TypeImagePathFile"  name="TypeImagePathFile" />
+                            <input type="button" value="上传" onclick="$('#TypeImagePathFile').click()" class="button" />
+                            <input type="file" id="TypeImagePathFile"  name="TypeImagePathFile" style=" display:none" />
                             <input type="hidden" id="TypeImgPath" name="TypePath" />
                         </td>
                         <td width="235px" rowspan="2" style="border-left: 0px">

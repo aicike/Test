@@ -671,6 +671,7 @@ namespace EF.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         SystemStatus = c.Int(nullable: false),
                         AccountMainHouseInfoID = c.Int(nullable: false),
+                        AccountMainHouseID = c.Int(nullable: false),
                         Layer = c.Int(nullable: false),
                         RoomNumber = c.String(nullable: false),
                         AccountMainHouseTypeID = c.Int(nullable: false),
@@ -680,12 +681,15 @@ namespace EF.Migrations
                         EnumSoldStateID = c.Int(nullable: false),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
                         TotalPrice = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        AccountMainHouses_ID = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMainHouseInfo", t => t.AccountMainHouseInfoID)
+                .ForeignKey("dbo.AccountMainHouses", t => t.AccountMainHouses_ID)
                 .ForeignKey("dbo.AccountMainHouseType", t => t.AccountMainHouseTypeID)
                 .ForeignKey("dbo.LookupOption", t => t.EnumSoldStateID)
                 .Index(t => t.AccountMainHouseInfoID)
+                .Index(t => t.AccountMainHouses_ID)
                 .Index(t => t.AccountMainHouseTypeID)
                 .Index(t => t.EnumSoldStateID);
             
@@ -843,7 +847,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
-
+            
 
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };
@@ -878,6 +882,7 @@ namespace EF.Migrations
             DropIndex("dbo.AccountMainHouseType", new[] { "AccountMainHousesID" });
             DropIndex("dbo.AccountMainHouseInfoDetail", new[] { "EnumSoldStateID" });
             DropIndex("dbo.AccountMainHouseInfoDetail", new[] { "AccountMainHouseTypeID" });
+            DropIndex("dbo.AccountMainHouseInfoDetail", new[] { "AccountMainHouses_ID" });
             DropIndex("dbo.AccountMainHouseInfoDetail", new[] { "AccountMainHouseInfoID" });
             DropIndex("dbo.AccountMainHouseInfo", new[] { "AccountMainHousessID" });
             DropIndex("dbo.AccountMainHouses", new[] { "AccountMainID" });
@@ -959,6 +964,7 @@ namespace EF.Migrations
             DropForeignKey("dbo.AccountMainHouseType", "AccountMainHousesID", "dbo.AccountMainHouses");
             DropForeignKey("dbo.AccountMainHouseInfoDetail", "EnumSoldStateID", "dbo.LookupOption");
             DropForeignKey("dbo.AccountMainHouseInfoDetail", "AccountMainHouseTypeID", "dbo.AccountMainHouseType");
+            DropForeignKey("dbo.AccountMainHouseInfoDetail", "AccountMainHouses_ID", "dbo.AccountMainHouses");
             DropForeignKey("dbo.AccountMainHouseInfoDetail", "AccountMainHouseInfoID", "dbo.AccountMainHouseInfo");
             DropForeignKey("dbo.AccountMainHouseInfo", "AccountMainHousessID", "dbo.AccountMainHouses");
             DropForeignKey("dbo.AccountMainHouses", "AccountMainID", "dbo.AccountMain");

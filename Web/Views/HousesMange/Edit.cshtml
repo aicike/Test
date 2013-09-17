@@ -243,15 +243,7 @@
                     <td>@Html.ValidationMessageFor(a => a.HOpeningDate)
                     </td>
                 </tr>
-                <tr>
-                    <td class="tdTitle">
-                        入住时间
-                    </td>
-                    <td class="tdField">@Html.TextBox("HCheckInDate", Model.HCheckInDate.ToString("yyyy-MM-dd"), new { @readonly = "readonly" })
-                    </td>
-                    <td>@Html.ValidationMessageFor(a => a.HCheckInDate)
-                    </td>
-                </tr>
+                
                 <tr>
                     <td class="tdTitle">
                         竣工时间
@@ -259,6 +251,15 @@
                     <td class="tdField">@Html.TextBox("HCompletedDate", Model.HCompletedDate.ToString("yyyy-MM-dd"), new { @readonly = "readonly" })
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.HCompletedDate)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        入住时间
+                    </td>
+                    <td class="tdField">@Html.TextBox("HCheckInDate", Model.HCheckInDate.ToString("yyyy-MM-dd"), new { @readonly = "readonly" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HCheckInDate)
                     </td>
                 </tr>
                 <tr>

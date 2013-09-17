@@ -17,6 +17,7 @@ namespace Interface
         Result EditInfo(AccountMainHouseType HouseType, int accountMainID, HttpPostedFileBase HouseImagePath);
 
         Result DeleteInfo(int id);
-        
+
+        Result DelteAll(int HousesTypeID);
     }
 }

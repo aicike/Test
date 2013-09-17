@@ -19,7 +19,7 @@
             <th style="width: 230px;">
                 户型名称
             </th>
-            <th>
+            <th  style="width: 475px;">
                 户型说明
             </th>
 
@@ -36,14 +36,14 @@
                 <td>
                     @item.HName
                 </td>
-                <td align="left">
+                <td align="left" style="width: 475px;word-wrap: break-word;word-break:break-all">
                    @item.HouseTypeDescription
                 </td>
                 <td class="operation">
 
                     @Html.ActionLink("修改", "Edit", "HouseType", new { HostName = ViewBag.HostName, id = item.ID, hid = item.AccountMainHousesID }, new { style = "padding-right:15px" }, true)
                    
-                    @Ajax.ActionLink("删除", "Delete", "HouseType", new { HostName = ViewBag.HostName, id = item.ID, hid = item.AccountMainHousesID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "HouseType", new { HostName = ViewBag.HostName, id = item.ID, hid = item.AccountMainHousesID }) + "',null)" }, true)
+                    @Ajax.ActionLink("删除", "Delete", "HouseType", new { HostName = ViewBag.HostName, id = item.ID, hid = item.AccountMainHousesID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?删除此项将会删除其关联的所有数据！','" + Url.Action("Delete", "HouseType", new { HostName = ViewBag.HostName, id = item.ID, hid = item.AccountMainHousesID }) + "',null)" }, true)
                     
                 </td>
             </tr>

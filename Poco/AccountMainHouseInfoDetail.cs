@@ -19,6 +19,9 @@ namespace Poco
         public int AccountMainHouseInfoID { get; set; }
         public virtual AccountMainHouseInfo AccountMainHouseInfo { get; set; }
 
+        public int AccountMainHouseID { get; set; }
+        public virtual AccountMainHouses AccountMainHouses { get; set; } 
+
         [Display(Name = "楼层")]
         public int Layer { get; set; }
 

@@ -97,7 +97,7 @@ namespace Web.Controllers
             {
                 return Alert(new Dialog(result.Error));
             }
-            return JavaScript("window.location.href='" + Url.Action("Index", "HouseInfo", new { HostName = LoginAccount.HostName, id = MainHouseInfo.AccountMainHousessID }) + "'");
+            return JavaScript("window.location.href='" + Url.Action("Index", "HouseInfo", new { HostName = LoginAccount.HostName, houseId = MainHouseInfo.AccountMainHousessID }) + "'");
         }
 
         /// <summary>
@@ -108,13 +108,13 @@ namespace Web.Controllers
         public ActionResult Delete(int id,int Hid)
         {
             var hounsesInfoModel = Factory.Get<IAccountMainHouseInfo>(SystemConst.IOC_Model.AccountMainHouseInfoModel);
-            var result = hounsesInfoModel.Delete(id);
+            var result = hounsesInfoModel.DelteAll(id);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));
             }
 
-            return JavaScript("window.location.href='" + Url.Action("Index", "HouseInfo", new { HostName = LoginAccount.HostName, id = Hid }) + "'");
+            return JavaScript("window.location.href='" + Url.Action("Index", "HouseInfo", new { HostName = LoginAccount.HostName, houseId = Hid }) + "'");
         }
 
     }
