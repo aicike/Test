@@ -19,6 +19,7 @@ namespace Web.Controllers
         {
             var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             var account = accountModel.Get(LoginAccount.ID);
+            ViewBag.HostName = LoginAccount.HostName;
             return View(account);
         }
     }

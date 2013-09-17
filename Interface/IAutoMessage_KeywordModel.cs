@@ -17,5 +17,12 @@ namespace Interface
         Result Delete(int id, int accountMainID);
         List<AutoMessage_Keyword> GetFirstAutoMessage(int accountMainID);
         List<AutoMessage_Keyword> GetAutoMessageByKey(int accountMainID,string key);
+
+        /// <summary>
+        /// 根据项目ID查询是否被设关键字
+        /// </summary>
+        /// <param name="HousesID"></param>
+        /// <returns></returns>
+        bool GetKeyByHouseID(int HousesID);
     }
 }

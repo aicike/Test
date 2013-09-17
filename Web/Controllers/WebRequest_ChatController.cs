@@ -17,7 +17,7 @@ namespace Web.Controllers
         /// <summary>
         /// 获取用户的聊天记录
         /// </summary>
-        public string GetMessageList(int currentUserType,int sessionID, int pageSize, int lastMessageID)
+        public string GetMessageList(int currentUserType, int sessionID, int pageSize, int lastMessageID)
         {
             var messageModel = Factory.Get<IMessageModel>(SystemConst.IOC_Model.MessageModel);
             List<Message> list = null;
@@ -56,7 +56,7 @@ namespace Web.Controllers
                             chat.ID = itext.ID;
                             chat.FileTitle = itext.Title;
                             chat.Summary = itext.Summary;
-                            chat.FileUrl =itext.ImagePath;
+                            chat.FileUrl = itext.ImagePath;
                             if (itext.LibraryImageTexts.Count > 0)
                             {
                                 List<App_AutoMessageReplyContent> subImageText = new List<App_AutoMessageReplyContent>();
@@ -66,7 +66,7 @@ namespace Web.Controllers
                                     rep_it.ID = it.ID;
                                     rep_it.Type = (int)EnumMessageType.ImageText;
                                     rep_it.FileTitle = it.Title;
-                                    rep_it.FileUrl =it.ImagePath;
+                                    rep_it.FileUrl = it.ImagePath;
                                     //rep_it.SendTime = sendTime;
                                     subImageText.Add(rep_it);
                                 }
@@ -120,8 +120,15 @@ namespace Web.Controllers
         public string GetSetConversationID(string AccountMainID, string AID, string UID, string Ctype)
         {
             var ConversationModel = Factory.Get<IConversationModel>(SystemConst.IOC_Model.ConversationModel);
-            var Conver = ConversationModel.GetCID(AccountMainID, AID, UID, Ctype);
-            return Conver.ToString();
+            try
+            {
+                var Conver = ConversationModel.GetCID(AccountMainID, AID, UID, Ctype);
+                return Conver.ToString();
+            }
+            catch
+            {
+                return "0";
+            }
         }
 
         /// <summary>
@@ -146,7 +153,7 @@ namespace Web.Controllers
             string UpFileType = string.Empty;
             //文件类型 参数
             switch (FileType)
-            { 
+            {
                 case 1:
                     UpFileType = "Image";
                     break;
@@ -184,7 +191,7 @@ namespace Web.Controllers
 
                 //保存文件
                 Request.Files[0].SaveAs(FilePath);
-                
+
                 //System.IO.File.WriteAllBytes(FilePath, FileBuffers);
                 //返回路径
                 result.Entity = SystemConst.WebUrl + Url.Content(Path);

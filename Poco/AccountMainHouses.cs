@@ -123,5 +123,8 @@ namespace Poco
         public virtual ICollection<AccountMainHouseType> AccountMainHouseTypes { get; set; }
 
         public virtual ICollection<AutoMessage_Keyword> AutoMessage_Keywords { get; set; }
+
+        public virtual ICollection<AccountMainHouseInfoDetail> AccountMainHouseInfoDetails { get; set; }
+        
     }
 }

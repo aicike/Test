@@ -92,6 +92,7 @@ namespace Web.Controllers
         {
             var hounsesInfoDetailModel = Factory.Get<IAccountMainHouseInfoDetailModel>(SystemConst.IOC_Model.AccountMainHouseInfoDetailModel);
             MainHouseInfoDetail.AccountMainHouseInfoID = Did;
+            MainHouseInfoDetail.AccountMainHouseID = Hid;
             var result = hounsesInfoDetailModel.Add(MainHouseInfoDetail);
             if (result.HasError)
             {
@@ -153,6 +154,7 @@ namespace Web.Controllers
         {
             var hounsesInfoDetailModel = Factory.Get<IAccountMainHouseInfoDetailModel>(SystemConst.IOC_Model.AccountMainHouseInfoDetailModel);
             MainHouseInfoDetail.AccountMainHouseInfoID = Did;
+            MainHouseInfoDetail.AccountMainHouseID = Hid;
             var result = hounsesInfoDetailModel.Edit(MainHouseInfoDetail);
             if (result.HasError)
             {
@@ -169,7 +171,7 @@ namespace Web.Controllers
         public ActionResult Delete(int id,int Did, int Hid)
         {
             var hounsesInfoDetailModel = Factory.Get<IAccountMainHouseInfoDetailModel>(SystemConst.IOC_Model.AccountMainHouseInfoDetailModel);
-            var result = hounsesInfoDetailModel.Delete(id);
+            var result = hounsesInfoDetailModel.CompleteDelete(id);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));

@@ -9,5 +9,7 @@ namespace Interface
     public interface IAccountMainHouseInfo : IBaseModel<AccountMainHouseInfo>
     {
         IQueryable<AccountMainHouseInfo> GetList(int AccountMainHouseID);
+
+        Result DelteAll(int HousesInfoID);
     }
 }

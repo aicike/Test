@@ -100,5 +100,40 @@ namespace Business
             }
             return result;
         }
+
+        //删除所有数据 级联删除
+        [Transaction]
+        public Result DelteAll(int HousesTypeID)
+        {
+            Result result = new Result();
+            AccountMainHouseType HouseType = base.Get(HousesTypeID);
+            string sql = string.Format(@"delete dbo.AccountMainHouseInfoDetail where AccountMainHouseTypeID={0} 
+                           delete dbo.AccountMainHouseType where ID = {0}", HousesTypeID);
+            try
+            {
+                result.Entity = base.SqlExecute(sql);
+                try
+                {
+                    
+                    //删除原文件
+                    var file = HttpContext.Current.Server.MapPath(HouseType.HouseTypeImagePath);
+                    if (File.Exists(file))
+                    {
+                        File.Delete(file);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.HasError = true;
+                result.Error = ex.Message;
+            }
+            return result;
+        }
     }
 }

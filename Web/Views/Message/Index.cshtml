@@ -11,7 +11,7 @@
             var fileImageUrl='@Url.Action("ImageManage", "Library", new { HostName = ViewBag.HostName })';
             var fileVoiceUrl='@Url.Action("VoiceManage", "Library", new { HostName = ViewBag.HostName })';
             var fileVideoUrl='@Url.Action("VideoManage", "Library", new { HostName = ViewBag.HostName })';
-            var fileImageTextUrl='@Url.Action("VideoManage", "Library", new { HostName = ViewBag.HostName })';
+            var fileImageTextUrl='@Url.Action("ImgTextManager", "Library", new { HostName = ViewBag.HostName })';
             $("#tabs").tabs();
             $("#selectUser").change(function () {
                 var value = $(this).val();

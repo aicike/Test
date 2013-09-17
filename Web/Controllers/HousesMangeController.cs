@@ -94,8 +94,14 @@ namespace Web.Controllers
 
         public ActionResult Delete(int id)
         {
+            var AutoMessageModel = Factory.Get<IAutoMessage_KeywordModel>(SystemConst.IOC_Model.AutoMessage_KeywordModel);
+            if (AutoMessageModel.GetKeyByHouseID(id))
+            { 
+                return   Alert(new Dialog("此项目已经设置 “关键词自动回复” 不能删除！"));
+            }
+
             var hounsesModel = Factory.Get<IAccountMainHousesModel>(SystemConst.IOC_Model.AccountMainHousesModel);
-            var result = hounsesModel.Delete(id);
+            var result = hounsesModel.DelteAll(id);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));

@@ -305,5 +305,23 @@ namespace Business
             var list = keywordList.Where(a => a.AutoMessage_Keyword.AccountMainHousesID == accountMainID && a.Token.Contains(key)).Select(a => a.AutoMessage_Keyword).OrderBy(a => a.ID).ToList();
             return list;
         }
+
+        /// <summary>
+        /// 根据项目ID查询是否被设关键字
+        /// </summary>
+        /// <param name="HousesID"></param>
+        /// <returns></returns>
+        public bool GetKeyByHouseID(int HousesID)
+        {
+            var list = List().Where(a=> a.AccountMainHousesID==HousesID);
+            if (list.Count() > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
