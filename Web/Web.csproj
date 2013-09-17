@@ -188,6 +188,7 @@
     <Compile Include="Models\MVCExpandMethod.cs" />
     <Compile Include="Models\NoClientCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Content\blue.css" />
     <Content Include="Content\Icon\Icon.css" />
     <Content Include="Content\Icon\glyphicons.png" />
     <Content Include="Content\userStyle.css" />
@@ -195,6 +196,7 @@
     <Content Include="Images\default_Avatar.png" />
     <Content Include="Images\Start.png" />
     <Content Include="Images\Unread.png" />
+    <Content Include="Scripts\tytabs.js" />
     <Content Include="Scripts\JSONLoader.js" />
     <Content Include="Scripts\Highcharts\adapters\mootools-adapter.js" />
     <Content Include="Scripts\Highcharts\adapters\mootools-adapter.src.js" />
@@ -727,6 +729,9 @@
     <Content Include="Views\AccountMainGuide\Index.cshtml" />
     <Content Include="Views\LibraryImageText\MoreAdd.cshtml" />
     <Content Include="Views\LibraryImageText\MoreEdit.cshtml" />
+    <Content Include="Views\Default\ContactUs.cshtml" />
+    <Content Include="Views\Shared\_LayoutDefault.cshtml" />
+    <Content Include="Views\Shared\_head.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

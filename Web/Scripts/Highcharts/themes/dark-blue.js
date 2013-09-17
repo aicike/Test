@@ -76,7 +76,7 @@ Highcharts.theme = {
 	tooltip: {
 		backgroundColor: 'rgba(0, 0, 0, 0.75)',
 		style: {
-			color: '#F0F0F0'
+		    color: '#F4F4F4'
 		}
 	},
 	toolbar: {

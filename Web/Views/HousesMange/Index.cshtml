@@ -34,11 +34,11 @@
                 <td>
                     @Html.ActionLink(item.HName, "Select", "HousesMange", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
                 </td>
-                <td>
+                <td class="operation">
                     @Html.ActionLink("查看", "Index", "HouseInfo", new { HostName = ViewBag.HostName,id=1, houseId = item.ID }, null, true)
                 </td>
                
-                <td>
+                <td class="operation">
                     @Html.ActionLink("查看", "Index", "HouseType", new { HostName = ViewBag.HostName, id = 1, houseId = item.ID }, null, true)
                 </td>
                 <td>

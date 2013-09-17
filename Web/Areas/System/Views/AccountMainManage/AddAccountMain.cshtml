@@ -85,7 +85,7 @@
 <div class="body">
     @using (Html.BeginForm("AddAccountMain", "AccountMainManage", new { Area = "System" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <fieldset style="border: 1px solid #d3d3d3;">
+        <fieldset>
             <legend>基本信息</legend>
             <table class="tableForm">
                 <tr>
@@ -175,7 +175,7 @@
                 </tr>
             </table>
         </fieldset>
-        <fieldset style="border: 1px solid #d3d3d3; margin-top: 15px;">
+        <fieldset style="margin-top: 15px;">
             <legend>业务信息</legend>
             @*<table class="tableForm">
                 <tr>

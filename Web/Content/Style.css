@@ -30,8 +30,8 @@ a
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     min-height: 700px;
-    background-color: #fafafa;
-    border: 1px solid #d3d3d3;
+    background-color: #FdFdFd;
+    border: 1px solid #E7E7E7;
 }
 .menu
 {
@@ -58,15 +58,15 @@ a
 }
 .menu li.select a
 {
-    background-color: #37712b;
+    background-color: #00869A;
 }
 .title
 {
-    border-bottom: 1px solid #d3d3d3;
+    border-bottom: 1px solid #E7E7E7;
     height: 35px;
     line-height: 35px;
     padding: 0px 20px;
-    background-color: #F0F0F0;
+    background-color: #F4F4F4;
 }
 .body
 {
@@ -76,18 +76,18 @@ a
 }
 .option
 {
-    min-height: 20px;
-    line-height: 20px;
+    min-height: 35px;
+    line-height: 35px;
 }
 .tableList
 {
-    border: 1px solid #d3d3d3;
+    border: 1px solid #E7E7E7;
     margin: 10px auto 15px auto;
 }
 .tableList th
 {
     height: 30px;
-    border-left: 1px solid #d3d3d3;
+    border-left: 1px solid #E7E7E7;
     font-weight: normal;
 }
 .tableList th:first-child
@@ -96,10 +96,11 @@ a
 }
 .tableList td
 {
-    border-left: 1px solid #d3d3d3;
-    border-top: 1px solid #d3d3d3;
+    border-left: 1px solid #E7E7E7;
+    border-top: 1px solid #E7E7E7;
     height: 40px;
     padding: 2px;
+    font-size: 15px;
 }
 .tableList td:first-child
 {
@@ -108,6 +109,7 @@ a
 .pages
 {
     float: right;
+    font-size: 15px;
 }
 .action
 {
@@ -122,7 +124,7 @@ a
 .bodyLeft
 {
     width: 200px;
-    border-right: 1px solid #d3d3d3;
+    border-right: 1px solid #E7E7E7;
     padding-bottom: 30px;
 }
 .bodyRight
@@ -152,7 +154,7 @@ a
 }
 .ulList li.select
 {
-    background-color: #459935;
+    background-color: #00aec8;
 }
 .tdField
 {
@@ -162,7 +164,7 @@ a
 {
     width: 90px;
 }
-.tableForm input, .tableForm textarea, .tableForm select
+.tableForm input[type='text'], .tableForm textarea, .tableForm select
 {
     width: 200px;
 }
@@ -177,14 +179,29 @@ a
 }
 .button
 {
-    background-color: #459935;
+    background-color: #00aec8;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    width: 80px !important;
-    height: 28px !important;
     border: 1px solid #638467;
     color: White;
+    padding: 3px 13px;
+}
+.option a
+{
+    background-color: #00aec8;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #638467;
+    color: White;
+    font-size: 13px;
+    padding: 3px 13px;
+}
+
+.button_a, .operation a
+{
+    color: #00A4BD;
 }
 
 .bottom
@@ -213,11 +230,11 @@ a
     width: 300px;
     height: 250px;
     padding: 25px;
-    border: 1px solid #F0F0F0;
+    border: 1px solid #F4F4F4;
     margin-top: 30px;
     float: right;
     background-color: #eeeeee;
-    border-bottom: 1px solid #d3d3d3;
+    border-bottom: 1px solid #E7E7E7;
     border-radius: 5px;
 }
 .homelogin form > div
@@ -235,8 +252,52 @@ a
 
 .logo
 {
-    border: 1px solid #d3d3d3;
+    border: 1px solid #E7E7E7;
     width: 120px;
     height: 56px;
     float: left;
+}
+.head
+{
+    background-color: #F3F3F3;
+    border-bottom: 1px solid #E7E7E7;
+    height: 70px;
+}
+
+
+.line
+{
+    background: #00aec8;
+    display: block;
+    width: 50px;
+    height: 4px;
+    margin: 7px 0 -11px 0;
+}
+h1.page-title
+{
+    padding: 5px 0 10px 0;
+    border-bottom: 1px solid #ececec;
+    margin: 12px 0 18px 0;
+    font-size: 21px;
+}
+.bgcolor
+{
+    background: #00aec8;
+}
+
+.DivSendSuccess
+{
+    width: 200px;
+    height: 25px;
+    background-color: #68af02;
+    line-height: 25px;
+    text-align: center;
+    color: #ffffff;
+    font-weight: bold;
+    margin: 0 auto;
+    display: none;
+}
+.border, fieldset
+{
+    border: 1px solid #E7E7E7;
 }

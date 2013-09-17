@@ -30,16 +30,6 @@ namespace Injection.Transaction
                     string.Format("GlobalEntity.Instance.Message[\"4\"]: {0}", invocation.Method.Name));
             }
 
-            //var transactionAttribute = attributes.First();
-
-
-            //var message = string.Format("Method {0} of Type {1} invoked", invocation.Method.Name,
-            //                            invocation.Method.DeclaringType.Name);
-            //var parameterInfo = invocation.Method.GetParameters().Where(p => p.Name == "message").FirstOrDefault();
-            //if (parameterInfo != null)
-            //{
-            //    message = invocation.Arguments[parameterInfo.Position].ToString();
-            //}
             try
             {
                 using (System.Transactions.TransactionScope trans = new System.Transactions.TransactionScope())

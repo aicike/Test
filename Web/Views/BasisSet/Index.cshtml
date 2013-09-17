@@ -1,12 +1,16 @@
 ﻿@{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutUser.cshtml"; 
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
     ViewBag.Menu = Poco.SystemConst.Menu.Set;
 }
 @section head{
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DE4a8a6c90c456f72bbcbfa3f1e8228d"></script>
     <script type="text/javascript">
         $(function () {
+
+            $("#btnUpload").click(function () {
+                $("#LogoImagePathFile").click();
+            });
             $("#ProvinceID").Province({ value: '@Model.ProvinceID' });
             $("#CityID").City({ parent: "ProvinceID", value: '@Model.CityID' });
             $("#DistrictID").District({ parent: "CityID", value: '@Model.DistrictID' });
@@ -41,7 +45,7 @@
             //经度
             var TLat = $("#Lat").val();
 
-           
+
             //百度地图
             var map = new BMap.Map("allmap");
 
@@ -58,7 +62,7 @@
             //定位当前城市
             if (TLng != "" && TLng != undefined) {
 
-                
+
                 //显示地图
                 var point = new BMap.Point(TLng, TLat);
                 map.centerAndZoom(point, 12);
@@ -137,7 +141,7 @@
 <div class="bodyRight">
     @using (Html.BeginForm("Edit", "BasisSet", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <fieldset style="border: 1px solid #d3d3d3;">
+        <fieldset>
             <legend>基本信息</legend>
             <table class="tableForm" style="line-height: 27px; font-size: 14px">
                 <tr>
@@ -146,7 +150,8 @@
                     </td>
                     <td>
                         <img id="imgLogo" style="max-width:80px;max-height:80px; float: left" src="@Url.Content(@Model.LogoImagePath)" />
-                        <input type="file" id="LogoImagePathFile" name="LogoImagePathFile" />
+                        <input type="file" id="LogoImagePathFile" name="LogoImagePathFile" style="display: none" />
+                        <input type="button" class="button" value="上传" id="btnUpload" />
                         @Html.TextBoxFor(a => a.LogoImagePath, new { style = "width:0px;visibility:hidden" })
                         @Html.HiddenFor(a => a.LogoImageThumbnailPath)
                     </td>

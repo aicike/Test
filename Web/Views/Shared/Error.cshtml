@@ -1,16 +1,20 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    var account = Session[Poco.SystemConst.Session.LoginAccount] as Poco.Account;
 }
 @model System.Web.Mvc.HandleErrorInfo
-<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Error</title>
 </head>
 <body>
-    <h2>
-        Sorry,  @Model.Exception.Message
-    </h2>
+    <div style="text-align:center;padding-top:200px;font-weight:bolder;font-size:20px;">
+        对不起，你访问的页面不存在，请@{if(account == null)
+        {<a style="color:#2e7dc6">重新登录</a>
+        }
+        else {<a style="color:#2e7dc6" href="@Url.Action("index", "Home")">返回首页</a>
+        }}
+    </div>
 </body>
 </html>

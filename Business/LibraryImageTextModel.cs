@@ -26,7 +26,7 @@ namespace Business
                 //保存封面图片
                 var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                 var imageName = string.Format("{0}_{1}", token, coverImagePathFile.FileName);
-                var imagePath = string.Format("{0}/1}", string.Format(SystemConst.Business.PathFileLibrary, libraryImageText.AccountMainID), imageName);
+                var imagePath = string.Format("{0}/{1}", string.Format(SystemConst.Business.PathFileLibrary, libraryImageText.AccountMainID), imageName);
                 var savePath = HttpContext.Current.Server.MapPath(imagePath);
                 coverImagePathFile.SaveAs(savePath);
                 libraryImageText.ImagePath = SystemConst.WebUrl + imagePath.Replace("~", "");

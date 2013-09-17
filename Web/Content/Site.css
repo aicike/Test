@@ -2,6 +2,7 @@
 .field-validation-error
 {
     color: #e80c4d;
+    font-size:14px;
     /*font-weight: bold;*/
 }
 

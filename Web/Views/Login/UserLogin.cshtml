@@ -1,44 +1,29 @@
 ﻿@{
     ViewBag.Title = "UserLogin";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-@section head{
-    <script>
-        $(function () {
-        });
-    </script>
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
 }
 @model Poco.Account
-<div>
-    <div style="background-color: #F3F3F3; height: 70px">
-        <div style="width: 960px; margin: 0px auto 0px auto;padding-top:6px;">
-            <div class="logo">
-            Logo
-            </div>
+<div style="height: 460px; background: url('/Images/banner.jpg') repeat-x">
+    <div style="width: 960px; margin: 0px auto 0px auto">
+        <div class="homelogin">
+            @using (Ajax.BeginForm(new AjaxOptions() { UpdateTargetId = "alert" }))
+            {   
+                <div style="font-size: 20px; margin-bottom: 10px;">
+                    登录</div>
+                <div>
+                    @Html.TextBoxFor(a => a.Email, new { placeholder = "邮箱", @class = "inputLogin" })
+                    @Html.ValidationMessageFor(a => a.Email)
+                </div>
+                <div>
+                    @Html.PasswordFor(a => a.LoginPwdPage, new { placeholder = "密码", @class = "inputLogin" })
+                    @Html.ValidationMessageFor(a => a.LoginPwdPage)
+                </div>
+                <div>
+                    <input type="submit" value="登录" class="button" style="font-size: 14px;padding:5px 15px;" />
+                </div>
+            }
         </div>
     </div>
-    <div style="height: 460px; background: url('/Images/banner.jpg') repeat-x">
-        <div style="width: 960px; margin: 0px auto 0px auto">
-            <div class="homelogin">
-                @using (Ajax.BeginForm(new AjaxOptions() { UpdateTargetId = "alert" }))
-                {   
-                    <div style="font-size: 20px; margin-bottom: 10px;">
-                        登录</div>
-                    <div>
-                        @Html.TextBoxFor(a => a.Email, new { placeholder = "邮箱", @class = "inputLogin" })
-                        @Html.ValidationMessageFor(a => a.Email)
-                    </div>
-                    <div>
-                        @Html.PasswordFor(a => a.LoginPwdPage, new { placeholder = "密码", @class = "inputLogin" })
-                        @Html.ValidationMessageFor(a => a.LoginPwdPage)
-                    </div>
-                    <div>
-                        <input type="submit" value="登录" class="button" style="font-size: 14px;" />
-                    </div>
-                }
-            </div>
-        </div>
-    </div>
-    <div class="bodyBottom">
-    </div>
+</div>
+<div class="bodyBottom">
 </div>

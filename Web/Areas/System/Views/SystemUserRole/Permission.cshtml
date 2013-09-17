@@ -39,7 +39,7 @@
     @using (Ajax.BeginForm("Permission", "SystemUserRole", new { Area = "System"}, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
         <input type="hidden" value="@ViewBag.Role.ID" name="hidRoleID"/>
-        <fieldset style="border: 1px solid #d3d3d3;">
+        <fieldset>
             <legend>分配权限</legend>
             <table>
                 <tr>

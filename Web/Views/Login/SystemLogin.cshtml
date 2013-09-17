@@ -10,7 +10,7 @@
 }
 @model Poco.SystemUser
 <div>
-    <div style="background-color: #F3F3F3; height: 70px">
+    <div class="head">
         <div style="width: 960px; margin: 0px auto 0px auto;padding-top:6px;">
             <div class="logo">
             Logo
@@ -32,7 +32,7 @@
                         @Html.ValidationMessageFor(a => a.LoginPwdPage)
                     </div>
                     <div>
-                        <input type="submit" value="登录" class="button" style="font-size: 14px;" />
+                        <input type="submit" value="登录" class="button" style="font-size: 14px;padding:5px 15px;" />
                     </div>
                 }
             </div>

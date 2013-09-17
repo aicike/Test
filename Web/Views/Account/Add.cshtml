@@ -7,6 +7,11 @@
     <script type="text/javascript">
         $(function () {
             var CheckIsExistAdminUrl = '@Url.Action("CheckIsExistAdmin", "Account")';
+
+            $("#btnUpload").click(function () {
+                $("#HeadImagePathFile").click();
+            });
+
             $("#HeadImagePathFile").change(function () {
                 var fileName = $("#HeadImagePathFile").val();
                 $("#Account_HeadImagePath").val(fileName);
@@ -55,7 +60,7 @@
 <div class="body">
     @using (Html.BeginForm("Add", "Account", new { HostName = @ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <fieldset style="border: 1px solid #d3d3d3;">
+        <fieldset>
             <legend>账号信息</legend>
             <table>
                 <tr>
@@ -110,7 +115,8 @@
                     </td>
                     <td>
                         <img id="imgLogo" style="max-width: 80px; max-height: 80px; float: left" />
-                        <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" />
+                        <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" style="display: none"  />
+                        &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="button" value="上传" id="btnUpload"/>
                         @Html.TextBoxFor(a => a.Account.HeadImagePath, new { style = "width:0px;visibility:hidden" })
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Account.HeadImagePath)
@@ -129,6 +135,6 @@
             </table>
         </fieldset>
         <div class="action">
-            <input type="submit" id="btnSubmit" value="保存" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
+            <input type="submit" id="btnSubmit" value="保存" class="button" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
         </div>
     }</div>

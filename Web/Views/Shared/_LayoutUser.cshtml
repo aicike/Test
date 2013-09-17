@@ -3,42 +3,13 @@
 }
 @section head{
     @RenderSection("head", required: false)
-    <style>
-        .DivSendSuccess
-        {
-            width: 200px;
-            height: 25px;
-            background-color: #68af02;
-            line-height: 25px;
-            text-align: center;
-            color: #ffffff;
-            font-weight: bold;
-            margin: 0 auto;
-            display: none;
-        }
-    </style>
 }
 @{
     var account = Session[Poco.SystemConst.Session.LoginAccount] as Poco.Account;
 }
 <div>
-    <div style="background-color: #F3F3F3; height: 70px">
-        <div style="width: 960px; margin: 0px auto 0px auto;padding-top:6px;">
-            <div class="logo">
-                Logo
-            </div>
-            <div style="float: right; margin-top: 35px;">
-                @if (account != null)
-                { 
-                    <a id="btnLogOut" type="user">退出</a>
-                }
-            </div>
-            <div class="DivSendSuccess">
-                发送成功
-            </div>
-        </div>
-    </div>
-    <div style="background-color: #459935; height: 40px">
+    @Html.Partial("_head")
+    <div style="background-color: #00aec8; height: 40px">
         @Html.Partial("Menu")
     </div>
 </div>

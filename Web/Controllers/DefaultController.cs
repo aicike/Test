@@ -50,6 +50,11 @@ namespace Web.Controllers
             return View();
         }
 
+        public ActionResult ContactUs() {
+
+            return View();
+        }
+
         #endregion
     }
 }

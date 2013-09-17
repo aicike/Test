@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "ContactUs";
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+}
+@section head{
+    <style>
+        /* vertical tabs */
+        .tabs
+        {
+            padding: 0px;
+            width: 180px;
+        }
+        #vertical-tabs ul.tabs li.current, #vertical-tabs ul.tabs li:hover
+        {
+            background: #00aec8;
+        }
+        
+        .tabscontent.color
+        {
+            background-color: #00aec8 !important;
+        }
+        
+        #vertical-tabs .tabscontent
+        {
+            border-left: 1px solid #00aec8;
+            min-height: 400px;
+        }
+        
+        #vertical-tabs
+        {
+            margin-bottom: 15px;
+            position: absolute;
+        }
+        
+        #vertical-tabs .contents
+        {
+            float: right;
+            width: 780px;
+        }
+        
+        #vertical-tabs ul.tabs
+        {
+            overflow: hidden;
+            float: left;
+        }
+        
+        #vertical-tabs ul.tabs li
+        {
+            display: inline-block;
+            padding: 12px 0px 12px 10px;
+            margin-bottom: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        #vertical-tabs .tabscontent
+        {
+            padding: 15px;
+            display: none;
+            border-left: 1px solid #00aec8;
+        }
+    </style>
+    <script src="@Url.Content("~/Scripts/tytabs.js")" type="text/javascript"></script>
+    <script language="javascript" type="text/javascript">
+
+        $(function () {
+            $("#vertical-tabs").tytabs({
+                prefixtabs: "tabz",
+                prefixcontent: "contentz"
+            });
+            $("#vertical-tabs.a").tytabs({
+                prefixtabs: "taba",
+                prefixcontent: "contenta"
+            });
+            $("#vertical-tabs.b").tytabs({
+                prefixtabs: "tabb",
+                prefixcontent: "contentb"
+            });
+            $("#vertical-tabs.c").tytabs({
+                prefixtabs: "tabc",
+                prefixcontent: "contentc"
+            });
+
+            var reg = new RegExp("(^|&)" + "v" + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            var type = "";
+            if (r != null) {
+                type = unescape(r[2]);
+            }
+            switch (type) {
+                case "aboutus":
+                    $("#tabz2").click();
+                    break;
+                case "agreement":
+                    $("#tabz3").click();
+                    break;
+                default:
+                    break;
+            }
+        });
+    </script>
+}
+<div style="width: 960px; margin: 0px auto 0px auto; height: 800px;">
+    <h1 class="page-title">
+        联系我们<span class="line"></span></h1>
+    <div id="vertical-tabs">
+        <ul class="tabs">
+            <li id="tabz1">联系我们</li>
+            <li id="tabz2">关于 Imtimely</li>
+            <li id="tabz3">服务协议</li>
+        </ul>
+        <div class="contents">
+            <div id="contentz1" class="tabscontent">
+                <p>
+                    客服邮箱：help@imtimeiy.com
+                </p>
+            </div>
+            <div id="contentz2" class="tabscontent">
+                <p>
+                    关于 Imtimely
+                </p>
+            </div>
+            <div id="contentz3" class="tabscontent">
+                <p>
+                    服务协议
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

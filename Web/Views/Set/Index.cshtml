@@ -4,6 +4,15 @@
     ViewBag.Menu = Poco.SystemConst.Menu.Set;
 }
 @model Poco.Account
+@section head{
+    <script>
+        $(function () {
+            $("#btnUpload").click(function () {
+                $("#HeadImagePathFile").click();
+            });
+        });
+    </script>
+}
 <div class="title">
     设置</div>
 <div class="bodyLeft">
@@ -17,7 +26,7 @@
 <div class="bodyRight">
     @using (Html.BeginForm("Edit", "BasisSet", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <fieldset style="border: 1px solid #d3d3d3;">
+        <fieldset style="border: 1px solid #E7E7E7;">
             <legend>账号信息</legend>
             <table>
                 <tr>
@@ -71,7 +80,8 @@
                     </td>
                     <td>
                         <img id="imgLogo" style="max-width: 80px; max-height: 80px; float: left" src="@Url.Content(Model.HeadImagePath)"/>
-                        <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" />
+                        <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" style="display: none"/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="button" value="上传" id="btnUpload" />
                         @Html.TextBoxFor(a => a.HeadImagePath, new { style = "width:0px;visibility:hidden" })
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.HeadImagePath)

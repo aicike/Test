@@ -4,11 +4,14 @@
     ViewBag.Menu = Poco.SystemConst.Menu.HousesMange;
 }
 @section head{
-<script type="text/javascript">
-    $(function () { 
-    
-    $("#HousTypeImagePathFile").change(function () {
-        var fileName = $("#HousTypeImagePathFile").val();
+    <script type="text/javascript">
+        $(function () {
+
+            $("#btnUpload").click(function () {
+                $("#HousTypeImagePathFile").click();
+            });
+            $("#HousTypeImagePathFile").change(function () {
+                var fileName = $("#HousTypeImagePathFile").val();
                 $("#HouseTypeImagePath").val(fileName);
                 var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
                 $("span[data-valmsg-for='HouseTypeImagePath']").empty().attr("class", "field-validation-valid");
@@ -34,19 +37,16 @@
                 return false;
             });
         });
-</script>
+    </script>
 }
-
 @model Poco.AccountMainHouseType
 <div class="title">
-     @ViewBag.HostTitle->添加户型
+    @ViewBag.HostTitle->添加户型
 </div>
-
 <div class="body">
-
-@using (Html.BeginForm("Add", "HouseType", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Add", "HouseType", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-    <fieldset style="border: 1px solid #d3d3d3;">
+        <fieldset>
             <legend>基本信息</legend>
             <table class="tableForm">
                 <tr>
@@ -64,7 +64,7 @@
                     </td>
                     <td class="tdField">
                         <img id="imgHousType" style="max-width: 80px; max-height: 80px; float: left" />
-                        <input type="file" id="HousTypeImagePathFile" name="HousTypeImagePathFile" />
+                        <input type="file" id="HousTypeImagePathFile" name="HousTypeImagePathFile" style="display: none" /><input type="button" class="button" value="上传" id="btnUpload" />
                         @Html.TextBoxFor(a => a.HouseTypeImagePath, new { style = "width:0px;visibility:hidden" })
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.HouseTypeImagePath)
@@ -80,11 +80,11 @@
                     </td>
                 </tr>
             </table>
-    </fieldset>
+        </fieldset>
      
      
-      <div class="action">
-            <input type="submit" id="btnSubmit"  class="button" value="保存" style=" margin-right:20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
-       </div>
- }
+        <div class="action">
+            <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }
 </div>

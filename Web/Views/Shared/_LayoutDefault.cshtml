@@ -1,0 +1,11 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var account = Session[Poco.SystemConst.Session.LoginAccount] as Poco.Account;
+}
+@section head{
+    @RenderSection("head", required: false)
+}
+<div>
+    @Html.Partial("_head")
+        @RenderBody()
+</div>

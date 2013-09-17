@@ -13,7 +13,7 @@
         {
             width: 320px;
             padding: 10px; /*margin-bottom: 26px;*/
-            border: 1px solid #d3d3d3;
+            border: 1px solid #E7E7E7;
             background-color: #fff;
             box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
             -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
@@ -27,7 +27,7 @@
         {
             width: 525px;
             padding: 10px; /*margin-bottom: 26px;*/
-            border: 1px solid #d3d3d3;
+            border: 1px solid #E7E7E7;
             background-color: #F4F4F4;
             box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
             -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
@@ -46,7 +46,7 @@
             top: 72px;
             z-index: 0;
         }
-        .divEdit > form > div > *
+        .divEdit > form > div > input[type='text'], .divEdit > form > div > textarea
         {
             width: 100%;
         }
@@ -117,7 +117,7 @@
                     return myAlert("标题不能为空。");
                 }
                 var imgLength = $("#imgCoverPreview").attr("src");
-                if (imgLength==null||imgLength.length == 0) {
+                if (imgLength == null || imgLength.length == 0) {
                     return myAlert("封面图片不能为空。");
                 }
                 if ($("#Summary").val().trim().length == 0) {
@@ -164,12 +164,13 @@
     <div class="divPreview">
         <div id="itemMain_title" style="width: 300px; word-break: break-all; word-wrap: break-word;">
             标题</div>
-        <div style="height: 160px; position: relative; border: 1px solid #d3d3d3; margin-top: 10px;">
-                <span class="item_img_maintext">封面图片</span>
-                <img id="imgCoverPreview" style="width: 298px; max-height: 160px; margin: auto 0px;
-                    z-index: 1; position: absolute;" />
-            </div>
-        <div id="itemMain_summary" style="margin-top: 15px; margin-bottom: 10px; width: 300px;word-wrap: break-word;">
+        <div style="height: 160px; position: relative; border: 1px solid #E7E7E7; margin-top: 10px;">
+            <span class="item_img_maintext">封面图片</span>
+            <img id="imgCoverPreview" style="width: 298px; max-height: 160px; margin: auto 0px;
+                z-index: 1; position: absolute;" />
+        </div>
+        <div id="itemMain_summary" style="margin-top: 15px; margin-bottom: 10px; width: 300px;
+            word-wrap: break-word;">
             摘要
         </div>
     </div>

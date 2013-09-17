@@ -52,7 +52,7 @@
                 <td>
                     @item.NumberOfTheElevator
                 </td>
-                <td>
+                <td class="operation">
                     @Html.ActionLink("查看", "Index", "HouseInfoDetail", new { HostName = ViewBag.HostName, Hid = ViewBag.HID, Did = item.ID }, null, true)
                 </td>
                 <td class="operation">
@@ -76,10 +76,6 @@
        CssClass = "manage_pages pages",
        SeparatorHtml = "&nbsp;",
        AutoHide = false,
-       /*LastPageText = "Last",
-       FirstPageText = "First",
-       PrevPageText = "Back",
-       NextPageText = "Next",*/
        PageIndexOutOfRangeErrorMessage = "Page index out of range.",
        ShowFirstLast = false
    })

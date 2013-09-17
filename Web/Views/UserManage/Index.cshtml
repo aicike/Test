@@ -159,8 +159,8 @@
             销售消息 </a></li>
         <li>@Html.ActionLink("销售与客户管理", "Index", "SalesMessage", new { HostName = ViewBag.HostName }, null, true)
         </li>
-        <li style="height: 10px; background-color: #f0f0f0; border-bottom: 1px solid #d3d3d3;
-            border-top: 1px solid #d3d3d3"></li>
+        <li style="height: 10px; background-color: #F4F4F4; border-bottom: 1px solid #E7E7E7;
+            border-top: 1px solid #E7E7E7"></li>
         @foreach (var item in groupList)
         {
             if (item.ID == groupID)
@@ -189,8 +189,8 @@
         cursor: pointer; display: none">
         <input id="txtGroup" type="text" style="height: 24px; margin-top: 2px; width: 165px" />
     </div>
-    <div id="btnAddGroup" style="height: 35px; line-height: 35px; border-top: 1px solid #d3d3d3;
-        border-bottom: 1px solid #d3d3d3; padding-left: 15px; cursor: pointer">
+    <div id="btnAddGroup" style="height: 35px; line-height: 35px; border-top: 1px solid #E7E7E7;
+        border-bottom: 1px solid #E7E7E7; padding-left: 15px; cursor: pointer">
         新建分组</div>
 </div>
 <div class="bodyRight">
@@ -198,9 +198,6 @@
     </div>
     <table class="tableList" style="line-height: 25px" cellpadding="0" cellspacing="0">
         <tr>
-            @*<th style="width: 80px;">
-                <input type="checkbox" />全选
-            </th>*@
             <th style="width: 90px;">
                 头像
             </th>
@@ -222,9 +219,6 @@
             foreach (var item in Model)
             {
             <tr>
-                @*<td>
-                    <input type="checkbox" />
-                </td>*@
                 <td>
                     @if (!string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath))
                     { 
@@ -291,10 +285,6 @@
        CssClass = "manage_pages pages",
        SeparatorHtml = "&nbsp;",
        AutoHide = false,
-       /*LastPageText = "Last",
-       FirstPageText = "First",
-       PrevPageText = "Back",
-       NextPageText = "Next",*/
        PageIndexOutOfRangeErrorMessage = "Page index out of range.",
        ShowFirstLast = false
    })

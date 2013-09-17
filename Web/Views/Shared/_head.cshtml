@@ -1,0 +1,20 @@
+﻿@{
+    var account = Session[Poco.SystemConst.Session.LoginAccount] as Poco.Account;
+}
+<div class="head">
+    <div style="width: 960px; margin: 0px auto 0px auto; padding-top: 6px;">
+        <a href="@Url.Action("UserLogin","Login")"><div class="logo">
+            Logo
+        </div></a>
+        <div style="float: right; margin-top: 35px;">
+            @if (account != null)
+            { 
+                <a id="btnLogOut" type="user">退出</a>
+            }
+        </div>
+        <div class="DivSendSuccess">
+            发送成功
+        </div>
+    </div>
+</div>
+
