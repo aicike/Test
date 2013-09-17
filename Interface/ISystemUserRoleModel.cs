@@ -10,6 +10,5 @@ namespace Interface
     {
         List<SystemUserRole> GetRoleWithoutSuperAdmin();
 
-
     }
 }
