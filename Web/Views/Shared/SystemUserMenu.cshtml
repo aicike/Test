@@ -13,7 +13,14 @@
         <ul class="menu">
             @foreach (var item in systemUserMenuList)
             {
+                if (ViewBag.Menu == item.Controller)
+                { 
+                <li class="select">@Html.ActionLink(item.Name, item.Action, item.Controller, new { Area = item.Area }, null)</li>   
+                }
+                else
+                { 
                 <li>@Html.ActionLink(item.Name, item.Action, item.Controller, new { Area = item.Area }, null)</li>   
+                }
             }
         </ul>
         }

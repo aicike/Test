@@ -55,6 +55,14 @@ namespace Poco
         public class Menu {
             private Menu() { }
 
+            //平台
+            public const string SystemUserHome = "SystemUserHome";
+            public const string AccountMainManage = "AccountMainManage";
+            public const string Role = "Role";
+            public const string SystemUser = "SystemUser";
+            public const string SystemUserRole = "SystemUserRole";
+
+            //售楼部
             public const string Home = "Home";
             public const string UserManage = "UserManage";
             public const string Message = "Message";

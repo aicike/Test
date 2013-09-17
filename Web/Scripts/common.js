@@ -33,9 +33,9 @@ function AppDelete(msg, url, fun) {
     JAlert({
         Message: msg,
         DialogType: "confirm",
-        BtnOk: "OK",
+        BtnOk: "确定",
         BtnOkClick: "$(this).dialog('close');" + f + u,
-        BtnCancel: "Cancel",
+        BtnCancel: "取消",
         BtnCancelClick: "$(this).dialog('close');"
     });
     return false;

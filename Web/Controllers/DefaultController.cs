@@ -30,7 +30,6 @@ namespace Web.Controllers
         public ActionResult FindPwd(string code)
         {
             var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
-            //code = Server.HtmlDecode(code);
             Result result = userLoginInfoModel.FindPwd_CheckCode(code);
             ViewBag.Result = result;
             ViewBag.Code = code;

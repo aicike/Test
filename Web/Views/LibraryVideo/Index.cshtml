@@ -19,13 +19,13 @@
                 height: 30,
                 swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
                 uploader: uploadUrl,
-                width: 80,
+                width: 64,
                 fileTypeExts: '*.mpeg;*.mp4',
                 onUploadSuccess: function (file, data, response) {
                     eval(data);
                 }
             });
-            $("#file_upload-button").after('<div id="div_message" style="position: absolute;top: 5px;left: 100px;width:520px">视频大小限制：20M, 格式限制：mpeg, mp4</div>');
+            $("#file_upload-button").after('<div id="div_message" style="position: absolute;top: 0px;left: 100px;width:520px">视频大小限制：20M, 格式限制：mpeg, mp4</div>');
             $("a[name='btnReName']").click(function () {
                 var tr = $(this).parent().parent();
                 tr.find(".spanFileName").hide();
@@ -44,6 +44,16 @@
                     return;
                 }
                 var id = $(this).attr("rawID");
+                var regex = /^((?!<!).)*/g;
+                var tempValue = value.match(regex)[0];
+                if (tempValue.length != value.length) {
+                    JAlert({
+                        Message: "不能输入非法字符。",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return false;
+                }
                 if (value != rvalue) {
                     $.ajax({
                         type: "post",

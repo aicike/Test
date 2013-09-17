@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "Add";
     Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.SystemUserRole;
 }
 @section head{
 }
@@ -25,6 +26,6 @@
             </table>
         </fieldset>
         <div class="action">
-            <input type="submit" id="btnSubmit" value="保存" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
+            <input type="submit" id="btnSubmit" value="保存" class="button" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
         </div>
     }</div>

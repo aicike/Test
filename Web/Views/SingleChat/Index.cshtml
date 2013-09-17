@@ -41,7 +41,16 @@
                         return false;
                     }
                     else {
-
+                        var regex = /^((?!<!).)*/g;
+                        var tempValue = $.trim($("#Content").val()).match(regex)[0];
+                        if (tempValue.length != length) {
+                            JAlert({
+                                Message: "不能输入非法字符。",
+                                DialogType: "Ok",
+                                BtnOk: "确定"
+                            });
+                            return false;
+                        }
                         return true;
                     }
                 }

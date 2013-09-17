@@ -1,11 +1,15 @@
 ﻿@{
     ViewBag.Title = "EditAccount";
     Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.AccountMainManage;
 }
 @section head{
     <script type="text/javascript">
         $(function () {
             var CheckIsExistAdminUrl = '@Url.Action("CheckIsExistAdmin", "AccountManage")';
+            $("#btnUpload").click(function () {
+                $("#HeadImagePathFile").click();
+            });
             $("#HeadImagePathFile").change(function () {
                 var fileName = $("#HeadImagePathFile").val();
                 var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
@@ -58,6 +62,19 @@
             <legend>账号信息</legend>
             <table>
                 <tr>
+                    <td>
+                        头像
+                    </td>
+                    <td>
+                        <img id="imgLogo" style="max-width: 80px; max-height: 80px; float: left" src="@Url.Content(Model.HeadImagePath)"/>
+                        <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" style="display: none" />
+                        &nbsp;&nbsp;<input type="button" class="button" value="上传" id="btnUpload" />
+                        @Html.TextBoxFor(a => a.HeadImagePath, new { style = "width:0px;visibility:hidden" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HeadImagePath)
+                    </td>
+                </tr>
+                <tr>
                     <td class="tdTitle">
                         名称
                     </td>
@@ -104,18 +121,6 @@
                 </tr>
                 <tr>
                     <td>
-                        头像
-                    </td>
-                    <td>
-                        <img id="imgLogo" style="max-width: 80px; max-height: 80px; float: left" src="@Url.Content(Model.HeadImagePath)"/>
-                        <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" />
-                        @Html.TextBoxFor(a => a.HeadImagePath, new { style = "width:0px;visibility:hidden" })
-                    </td>
-                    <td>@Html.ValidationMessageFor(a => a.HeadImagePath)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
                         角色
                     </td>
                     <td>@Html.DropDownListFor(a => a.RoleID, ViewData["Roles"] as List<SelectListItem>, new { })
@@ -127,6 +132,6 @@
             </table>
         </fieldset>
         <div class="action">
-            <input type="submit" id="btnSubmit" value="保存" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
+            <input type="submit" id="btnSubmit" value="保存" class="button" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
         </div>
     }</div>

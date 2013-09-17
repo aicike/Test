@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutUser.cshtml"; 
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
     ViewBag.Menu = Poco.SystemConst.Menu.Set;
 }
 @model List<Poco.AutoMessage_Keyword>
@@ -105,6 +105,16 @@
                     buttons: {
                         "确定": function () {
                             var txtMsgText = $("#txtMsgText").val().trim();
+                            var regex = /^((?!<!).)*/g;
+                            var tempValue = txtMsgText.match(regex)[0];
+                            if (tempValue.length != txtMsgText.length) {
+                                JAlert({
+                                    Message: "不能输入非法字符。",
+                                    DialogType: "Ok",
+                                    BtnOk: "确定"
+                                });
+                                return false;
+                            }
                             if (txtMsgText.length == 0) {
                                 JAlert({
                                     Message: "内容不能为空。",
@@ -444,8 +454,8 @@
             <div style="padding: 10px 5px 10px 10px;">
                 <div style="float: left">
                     新增回复&nbsp;>
-                    <input class="button" value="文字" type="button" id="btnAddText"/>
-                    <input class="button" value="文件" type="button" id="btnAddFile"/></div>
+                    <input class="button" value="文字" type="button" id="btnAddText" />
+                    <input class="button" value="文件" type="button" id="btnAddFile" /></div>
                 <div style="float: right">
                     <input class="button" value="保存" type="button" id="btnSaveRule" />&nbsp;&nbsp;<input
                         class="button" type="button" value="取消" id="btnCancel" /></div>

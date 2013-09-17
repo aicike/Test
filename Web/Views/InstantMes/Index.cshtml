@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
-
+    ViewBag.Menu = Poco.SystemConst.Menu.UserManage;
     var groupList = ViewBag.GroupList as List<Poco.Group>;
 }
 @section head{
@@ -104,10 +104,6 @@
        CssClass = "manage_pages pages",
        SeparatorHtml = "&nbsp;",
        AutoHide = false,
-       /*LastPageText = "Last",
-       FirstPageText = "First",
-       PrevPageText = "Back",
-       NextPageText = "Next",*/
        PageIndexOutOfRangeErrorMessage = "Page index out of range.",
        ShowFirstLast = false
    })

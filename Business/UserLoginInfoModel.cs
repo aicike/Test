@@ -249,43 +249,43 @@ namespace Business
                 string value = DESEncrypt.Decrypt(code);
                 if (value.IndexOf("_") < 0)
                 {
-                    result.Error = "链接有误，无法操作。";
+                    result.Error = "该链接参数错误，无法修改密码。";
                     return result;
                 }
                 int userLoginInfoId = 0;
                 var isOk = int.TryParse(value.Split('_')[0], out userLoginInfoId);
                 if (isOk == false || userLoginInfoId == 0)
                 {
-                    result.Error = "链接有误，无法操作。";
+                    result.Error = "该链接参数错误，无法修改密码。";
                     return result;
                 }
                 var userLoginInfo = Get(userLoginInfoId);
                 if (userLoginInfo == null)
                 {
-                    result.Error = "链接有误，无法操作。";
-                    return result;
-                }
-                if (userLoginInfo.FindPwdCode != code)
-                {
-                    result.Error = "链接有误，无法操作。";
+                    result.Error = "该链接参数错误，无法修改密码。";
                     return result;
                 }
                 if (userLoginInfo.FindPwdValidity == false)
                 {
-                    result.Error = "该链接已经失效，无法操作。";
+                    result.Error = "该链接已经失效，无法修改密码。";
+                    return result;
+                }
+                if (userLoginInfo.FindPwdCode != code)
+                {
+                    result.Error = "该链接参数错误，无法修改密码。";
                     return result;
                 }
                 int com = userLoginInfo.FindPwdTime.Value.AddHours(24).CompareTo(DateTime.Now);
                 if (com < 0)
                 {
-                    result.Error = "该链接已经失效，无法操作。";
+                    result.Error = "该链接已经失效，无法修改密码。";
                     return result;
                 }
                 result.Entity = userLoginInfoId;
             }
             catch (Exception ex)
             {
-                result.Error = "链接有误，无法操作。";
+                result.Error = "该链接参数错误，无法修改密码。";
                 return result;
             }
             return result;
@@ -312,7 +312,7 @@ namespace Business
             var userLoginInfo = Get(userLoginInfoId);
             if (userLoginInfo == null)
             {
-                result.Error = "参数错误，操作失败。";
+                result.Error = "该链接参数错误，无法修改密码。";
                 return result;
             }
             userLoginInfo.LoginPwd = DESEncrypt.Encrypt(pwd);

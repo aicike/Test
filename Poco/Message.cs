@@ -15,6 +15,7 @@ namespace Poco
 
         [Display(Name = "文字")]
         [Required(ErrorMessage = "请输入文字")]
+        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string TextContent { get; set; }
 
         [Display(Name = "消息发送方向")]

@@ -16,6 +16,7 @@ namespace Poco
         [Display(Name = "角色")]
         [Required(ErrorMessage = "请输入角色")]
         [StringLength(50, ErrorMessage = "长度小于50")]
+        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Name { get; set; }
 
         public int? ParentRoleID { get; set; }
@@ -31,6 +32,7 @@ namespace Poco
 
         [Display(Name = "Token")]
         [StringLength(50, ErrorMessage = "长度小于50")]
+        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Token { get; set; }
 
         public virtual ICollection<Role> SubRoles { get; set; }

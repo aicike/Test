@@ -177,7 +177,7 @@ a
 {
     height: 26px;
 }
-.button
+.button, .option a, .button2
 {
     background-color: #00aec8;
     -webkit-border-radius: 3px;
@@ -185,18 +185,18 @@ a
     border-radius: 3px;
     border: 1px solid #638467;
     color: White;
-    padding: 3px 13px;
+    padding: 3px 17px;
+    font-size: 14px !important;
+    font-family: "Microsoft YaHei" , Helvetica, Verdana, Arial, Tahoma !important;
+    margin: 0px;
 }
 .option a
 {
-    background-color: #00aec8;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    border: 1px solid #638467;
-    color: White;
-    font-size: 13px;
-    padding: 3px 13px;
+    padding: 4px 17px;
+    }
+.button2
+{
+    padding: 6px 17px;
 }
 
 .button_a, .operation a

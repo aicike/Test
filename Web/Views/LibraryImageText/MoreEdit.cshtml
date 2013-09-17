@@ -38,7 +38,7 @@
             margin-left: 25px;
             float: left;
         }
-        .divEdit > form > div > *
+        .divEdit > form > div > input[type='text'], .divEdit > form > div > textarea
         {
             width: 100%;
         }
@@ -64,6 +64,15 @@
             vertical-align: middle;
         }
         .item_img
+        {
+            width: 72px;
+            height: 72px; /*border: 1px solid #E7E7E7;*/
+            float: right;
+            margin-right: 8px;
+            margin-top: 8px;
+            position: relative;
+        }
+        .item_img2
         {
             width: 72px;
             height: 72px; /*border: 1px solid #E7E7E7;*/
@@ -146,7 +155,7 @@
                 height: 30,
                 swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
                 uploader: uploadUrl,
-                width: 80,
+                width: 64,
                 fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
                 onUploadSuccess: function (file, data, response) {
                     if (currentIndex == -1) {
@@ -345,7 +354,7 @@
             for (var i = 0; i < it.sub.length; i++) {
                 $($(".item")[i]).attr("id","item"+i);
                 $($(".item_title")[i]).attr("id","itemTitle"+i);
-                $($(".item_img")[i]).attr("id","item_img"+i);
+                $($(".item_img2")[i]).attr("id","item_img"+i);
                 $($(".btnEdit")[i]).attr("onclick","edit(this," + i + ")");
                 $($(".btnDelete")[i]).attr("onclick","deleteItem(" + i + ")");
             }
@@ -354,7 +363,7 @@
         function insert() {
             var id = (it.sub == null || it.sub.length == 0) ? 0 : it.sub.length;
             var obj = '<div class="item" id="item' + id + '"><div class="item_title" id="itemTitle' + id + '">标题</div>';
-            obj += '<div class="item_img"><span class="item_img_text">缩略图</span><img class="item_img" id="item_img' + id + '" style="width: 72px; height: 72px; margin: auto 0px;z-index:1;position: absolute;" /></div>';
+            obj += '<div class="item_img"><span class="item_img_text">缩略图</span><img class="item_img2" id="item_img' + id + '" style="width: 72px; height: 72px; margin: auto 0px;z-index:1;position: absolute;" /></div>';
             obj += '<div style="clear: both"></div>';
             obj += '<div class="popdiv" style="display: none; width: 320px; height: 90px; top: 0px; text-align: center;line-height: 90px; position: absolute; background: rgba(229,229,229,0.85); filter: progid:dximagetransform.microsoft.gradient(GradientType=0,startColorstr="#85E5E5E5",endColorstr="#85E5E5E5") alpha(opacity=85);">';
             obj += '<a class="btnEdit" onclick="edit(this,' + id + ')">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="btnDelete" onclick="deleteItem(' + id + ')">删除</a></div></div>';

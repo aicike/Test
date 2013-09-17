@@ -19,11 +19,13 @@ namespace Poco
         [Display(Name = "标题")]
         [Required(ErrorMessage = "请输入标题")]
         [StringLength(10, ErrorMessage = "长度小于10")]
+        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Title { get; set; }
 
         [Display(Name = "正文")]
         [Required(ErrorMessage = "请输入正文")]
         [StringLength(4000, ErrorMessage = "长度小于4000")]
+        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Content { get; set; }
 
         public int AccountMainID { get; set; }

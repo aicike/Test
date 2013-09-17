@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "Permission";
     Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.SystemUserRole;
 }
 @section head{
     <link href="@Url.Content("~/Scripts/treeview/jquery.treeview.css")" rel="stylesheet" type="text/css" />
@@ -39,6 +40,9 @@
     @using (Ajax.BeginForm("Permission", "SystemUserRole", new { Area = "System"}, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
         <input type="hidden" value="@ViewBag.Role.ID" name="hidRoleID"/>
+        <div style="margin-bottom:10px">
+            <input type="submit" id="btnSubmit" value="保存" class="button" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
+        </div>
         <fieldset>
             <legend>分配权限</legend>
             <table>
@@ -115,6 +119,6 @@
             </table>
         </fieldset>
         <div class="action">
-            <input type="submit" id="btnSubmit" value="保存" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
+            <input type="submit" id="btnSubmit" value="保存" class="button" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
         </div>
     }</div>

@@ -22,6 +22,7 @@ namespace Poco
         [Required(ErrorMessage = "请输入名称")]
         [StringLength(50, ErrorMessage = "长度小于50")]
         [RemotePlus("CheckIsUniqueAccountMain", "Ajax", "", "Default", ErrorMessage = "名称已存在")]
+        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Name { get; set; }
 
         [Display(Name = "二级域名或目录名称")]
@@ -49,17 +50,19 @@ namespace Poco
         [Display(Name = "电话")]
         [Required(ErrorMessage = "请输入电话")]
         [StringLength(30, ErrorMessage = "长度小于30")]
+        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Phone { get; set; }
 
         [Display(Name = "Logo缩略图")]
         [Required(ErrorMessage = "请上传Logo缩略图")]
         [StringLength(500, ErrorMessage = "长度小于500缩略图")]
+        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string LogoImageThumbnailPath { get; set; }
 
         [Display(Name = "Logo")]
         [Required(ErrorMessage = "请上传Logo")]
         [StringLength(500, ErrorMessage = "长度小于500")]
-        //[RegularExpression(".+(?i)(gif|jpg|png)", ErrorMessage = "文件格式为(.gif .jpg .jpeg .png .bmp)")]        
+        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string LogoImagePath { get; set; }
 
         /// <summary>
@@ -80,18 +83,23 @@ namespace Poco
         [Display(Name = "售楼地址")]
         [Required(ErrorMessage = "请输入售楼地址")]
         [StringLength(200, ErrorMessage = "长度小于200")]
+        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string SaleAddress { get; set; }
 
         [Display(Name = "售楼电话")]
+        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string SalePhone { get; set; }
 
         [Display(Name = "售楼地图定位地址")]
+        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string SaleMapAddress { get; set; }
 
         [Display(Name = "纬度")]
+        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Lng { get; set; }
 
         [Display(Name = "经度")]
+        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Lat { get; set; }
 
         /// <summary>

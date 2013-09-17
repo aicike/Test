@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "EditAccountMain";
     Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.AccountMainManage;
 }
 @section head{
     <script type="text/javascript">
@@ -10,30 +11,10 @@
             $("#CityID").City({ parent: "ProvinceID", value: '@Model.CityID' });
             $("#DistrictID").District({ parent: "CityID", value: '@Model.DistrictID' });
 
-//            $("#AccountMainExpandInfo_OpeningDate").datepicker({
-//                changeMonth: true,
-//                changeYear: true,
-//                onSelect: function (selectedDate) {
-//                    $("#AccountMainExpandInfo_CheckInDate").datepicker("option", "minDate", selectedDate);
-//                    $("#AccountMainExpandInfo_CompletedDate").datepicker("option", "minDate", selectedDate);
-//                }
-//            });
+            $("#btnUpload").click(function () {
+                $("#LogoImagePathFile").click();
+            });
 
-//            $("#AccountMainExpandInfo_CompletedDate").datepicker({
-//                changeMonth: true,
-//                changeYear: true,
-//                onSelect: function (selectedDate) {
-//                    $("#AccountMainExpandInfo_OpeningDate").datepicker("option", "maxDate", selectedDate);
-//                }
-//            });
-
-//            $("#AccountMainExpandInfo_CheckInDate").datepicker({
-//                changeMonth: true,
-//                changeYear: true,
-//                onSelect: function (selectedDate) {
-//                    $("#AccountMainExpandInfo_OpeningDate").datepicker("option", "maxDate", selectedDate);
-//                }
-//            });
             $("#LogoImagePathFile").change(function () {
                 var fileName = $("#LogoImagePathFile").val();
                 var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
@@ -85,14 +66,28 @@
             <legend>基本信息</legend>
             <table class="tableForm">
                 <tr>
+                    <td>
+                        Logo
+                    </td>
+                    <td>
+                        <img id="imgLogo" style="max-width:80px;max-height:80px; float: left" src="@Url.Content(@Model.LogoImagePath)" />
+                        <input type="file" id="LogoImagePathFile" name="LogoImagePathFile" style="display: none" />
+                        &nbsp;&nbsp;<input type="button" class="button" value="上传" id="btnUpload" />
+                        @Html.TextBoxFor(a => a.LogoImagePath, new { style = "width:0px;visibility:hidden" })
+                        @Html.HiddenFor(a => a.LogoImageThumbnailPath)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.LogoImagePath)
+                    </td>
+                </tr>
+                <tr>
                     <td class="tdTitle">
                         项目名称
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.CreateTime)@Html.HiddenFor(a => a.SystemUserID)
-                    @Html.HiddenFor(a => a.SalePhone)
-                    @Html.HiddenFor(a => a.SaleMapAddress)
-                    @Html.HiddenFor(a => a.Lng)
-                    @Html.HiddenFor(a => a.Lat)
+                        @Html.HiddenFor(a => a.SalePhone)
+                        @Html.HiddenFor(a => a.SaleMapAddress)
+                        @Html.HiddenFor(a => a.Lng)
+                        @Html.HiddenFor(a => a.Lat)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Name)
                     </td>
@@ -144,19 +139,6 @@
                 </tr>
                 <tr>
                     <td>
-                        Logo
-                    </td>
-                    <td>
-                        <img id="imgLogo" style="max-width:80px;max-height:80px; float: left" src="@Url.Content(@Model.LogoImagePath)" />
-                        <input type="file" id="LogoImagePathFile" name="LogoImagePathFile" />
-                        @Html.TextBoxFor(a => a.LogoImagePath, new { style = "width:0px;visibility:hidden" })
-                        @Html.HiddenFor(a => a.LogoImageThumbnailPath)
-                    </td>
-                    <td>@Html.ValidationMessageFor(a => a.LogoImagePath)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
                         素材库容量
                     </td>
                     <td>@Html.TextBoxFor(a => a.FileLimit)
@@ -176,6 +158,6 @@
             </table>
         </fieldset>
         <div class="action">
-            <input type="submit" id="btnSubmit" value="保存" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
+            <input type="submit" id="btnSubmit" value="保存" class="button" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button"/>
         </div>
     }</div>

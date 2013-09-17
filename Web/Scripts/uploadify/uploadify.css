@@ -15,21 +15,13 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 	background-image: -moz-linear-gradient(bottom, #00aec8 0%, #00aec8 100%);
 	background-image: -webkit-linear-gradient(bottom, #00aec8 0%, #00aec8 100%);
 	background-image: -ms-linear-gradient(bottom, #00aec8 0%, #00aec8 100%);
-	/*background-image: -webkit-gradient(
-		linear,
-		left bottom,
-		left top,
-		color-stop(0, #505050),
-		color-stop(1, #707070)
-	);*/
 	background-position: center top;
 	background-repeat: no-repeat;
 	-webkit-border-radius: 30px;
 	-moz-border-radius: 30px;
 	border-radius: 3px;
-	/*border: 2px solid #808080;*/
 	color: #FFF;
-	font: bold 12px Arial, Helvetica, sans-serif;
+	font: solid 12px Arial, Helvetica, sans-serif;
 	text-align: center;
 	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 	width: 100%;

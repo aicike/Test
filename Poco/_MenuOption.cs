@@ -20,11 +20,13 @@ namespace Poco
         [Display(Name = "名称")]
         [Required]
         [StringLength(50, ErrorMessage = "长度小于50")]
+        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Name { get; set; }
 
         [Display(Name = "Action")]
         [Required]
         [StringLength(50, ErrorMessage = "长度小于50")]
+        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Action { get; set; }
 
         public int Order { get; set; }

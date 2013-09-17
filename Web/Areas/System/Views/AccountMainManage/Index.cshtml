@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "AccountMainManage";
     Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.AccountMainManage;
 }
 @model PagedList<Poco.AccountMain>
 <div class="title">
@@ -43,7 +44,7 @@
                 <td>
                     @item.Province.Name @item.City.Name @item.District.Name
                 </td>
-                <td>
+                <td class="operation">
                     @if (@item.AccountStatus.Token == Poco.Enum.EnumAccountStatus.Disabled.ToString())
                     {
                         @Ajax.ActionLink(@item.AccountStatus.Value, "SetAccountMainStatus", "AccountMainManage", new
