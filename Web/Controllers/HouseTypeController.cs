@@ -46,7 +46,7 @@ namespace Web.Controllers
             ViewBag.HostName = LoginAccount.HostName;
             AccountMainHouseType HounsesType = new AccountMainHouseType();
             HounsesType.AccountMainHousesID = id;
-
+            ViewBag.AccountMainID = LoginAccount.CurrentAccountMainID;
             return View(HounsesType);
         }
 
@@ -80,6 +80,7 @@ namespace Web.Controllers
             var Hounse = hounsesModel.Get(hid);
             ViewBag.HostTitle = Hounse.HName;
             ViewBag.HostName = LoginAccount.HostName;
+            ViewBag.AccountMainID = LoginAccount.CurrentAccountMainID;
             return View(HouseInfo);
         }
 

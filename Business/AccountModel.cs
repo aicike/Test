@@ -139,7 +139,7 @@ namespace Business
             }
             //检查邮箱是否唯一
             CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
-            var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
+            var isOk = model.CheckIsUnique( "Account", "Email", account.Email, account.ID);
             if (isOk == false)
             {
                 result.Error = "该邮箱已被其他账号使用，请修改邮箱。";

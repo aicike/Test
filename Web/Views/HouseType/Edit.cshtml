@@ -50,7 +50,7 @@
             <table class="tableForm">
                 <tr>
                     <td class="tdTitle">
-                        户型名称
+                        <span class="Identification">*</span> 户型名称
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.HName) @Html.HiddenFor(a => a.AccountMainHousesID)
                         @Html.HiddenFor(a => a.ID)
@@ -60,7 +60,7 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        户型图
+                        <span class="Identification">*</span> 户型图
                     </td>
                     <td class="tdField">
                         <img id="imgHousType" style="max-width: 80px; max-height: 80px; float: left" src="@Url.Content(Model.HouseTypeImagePath)" />
@@ -73,7 +73,7 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        户型说明
+                        <span class="Identification">*</span> 户型说明
                     </td>
                     <td class="tdField">@Html.TextAreaFor(a => a.HouseTypeDescription)
                     </td>

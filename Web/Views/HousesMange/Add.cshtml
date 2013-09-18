@@ -2,11 +2,14 @@
     ViewBag.Title = "Add";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
     var ckTypeList = ViewBag.Building as List<Poco.LookupOption>;
-    var ckDicList = ViewBag.Decoration as List<Poco.LookupOption>; 
+    var ckDicList = ViewBag.Decoration as List<Poco.LookupOption>;
     ViewBag.Menu = Poco.SystemConst.Menu.HousesMange;
 }
 @section head{
     <script type="text/javascript">
+
+    var isTrue= true;
+
     $(function () {
         $("#HOpeningDate").datepicker({
             changeMonth: true,
@@ -34,6 +37,48 @@
         });
 
 
+       
+        //唯一验证
+        $("#HName").blur(function(){
+             var values = $("#HName").val();
+             var AccountMainID = @ViewBag.AccountMainID;
+             if(values!="" &&values!=undefined)
+             {
+                 var YZUrl =  '@Url.Action("OnlyValidationAccount", "Ajax", new { Area="",HostName="" })';
+                 $.post(YZUrl,{AccountMainID:AccountMainID,tableName:"AccountMainHouses",field:"HName",value:values},function(result){
+                    
+                    if(result=="True")
+                    {
+                        isTrue= true;
+                    }
+                    else
+                    {
+                        isTrue= false;
+                        JAlert({
+                            Message: "该项目名称已存在！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                         });
+                    }
+                 });
+             }
+
+        });
+        
+        $("#btnSubmit").click(function(){
+            if(!isTrue)
+            {
+                JAlert({
+                    Message: "该项目名称已存在！",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+            }
+            return isTrue;
+        });
+        
+    
+
     });
     </script>
 }
@@ -49,7 +94,7 @@
             <table class="tableForm">
                 <tr>
                     <td class="tdTitle">
-                        项目名称
+                        <span class="Identification">*</span> 项目名称
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.HName)
                     </td>
@@ -58,7 +103,7 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        建筑类别
+                        <span class="Identification">*</span> 建筑类别
                     </td>
                     <td class="tdField">
                         @foreach (var item in ckTypeList)
@@ -72,20 +117,20 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        装修情况
+                        <span class="Identification">*</span> 装修情况
                     </td>
-                    <td class="tdField">  @foreach (var item in ckDicList)
+                    <td class="tdField">
+                        @foreach (var item in ckDicList)
                         {
                             <input style="width:auto" type="checkbox" id="cb_@item.ID" name="Decoration" value="@item.ID"  /><label for="cb_@item.ID">@item.Value</label>
                         }
                     </td>
-                      
                     <td>
                     </td>
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        项目地址
+                        <span class="Identification">*</span> 项目地址
                     </td>
                     <td class="tdField">@Html.TextAreaFor(a => a.HAddress)
                     </td>
@@ -94,7 +139,7 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        交通状况
+                        <span class="Identification">*</span> 交通状况
                     </td>
                     <td class="tdField">@Html.TextAreaFor(a => a.Traffic)
                     </td>
@@ -103,7 +148,7 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        物业公司
+                        <span class="Identification">*</span> 物业公司
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.ProPertyCom)
                     </td>
@@ -112,7 +157,7 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        物业费
+                        <span class="Identification">*</span> 物业费
                     </td>
                     <td class="tdField">@Html.TextAreaFor(a => a.PropetyFee)
                     </td>
@@ -121,16 +166,16 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        项目介绍
+                        <span>&nbsp;&nbsp;</span> 项目介绍
                     </td>
                     <td class="tdField">@Html.TextAreaFor(a => a.HIntroduce)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.HIntroduce)
                     </td>
                 </tr>
-                 <tr>
+                <tr>
                     <td class="tdTitle">
-                        开发商
+                        <span class="Identification">*</span> 开发商
                     </td>
                     <td class="tdField">@Html.TextAreaFor(a => a.HBuildCompany)
                     </td>
@@ -139,7 +184,7 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        投资商
+                        <span class="Identification">*</span> 投资商
                     </td>
                     <td class="tdField">@Html.TextAreaFor(a => a.HInvestor)
                     </td>
@@ -149,12 +194,12 @@
             </table>
         </fieldset>
      
-        <fieldset style=" margin-top: 15px;">
+        <fieldset style="margin-top: 15px;">
             <legend>销售信息</legend>
             <table class="tableForm">
-               <tr>
+                <tr>
                     <td class="tdTitle">
-                        售楼电话
+                        <span class="Identification">*</span> 售楼电话
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.TelSales)
                     </td>
@@ -163,7 +208,7 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        预售证
+                        <span class="Identification">*</span> 预售证
                     </td>
                     <td class="tdField">@Html.TextAreaFor(a => a.PreSalePermit)
                     </td>
@@ -172,25 +217,25 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        销售状况
+                        <span class="Identification">*</span> 销售状况
                     </td>
                     <td class="tdField">
-                    <select name="SalesState">
-                        <option value="true">在售</option>
-                        <option value="false">已售完</option>
-                    </select>
+                        <select name="SalesState">
+                            <option value="true">在售</option>
+                            <option value="false">已售完</option>
+                        </select>
                     </td>
                     <td>
                     </td>
                 </tr>
             </table>
         </fieldset>
-        <fieldset style=" margin-top: 15px;">
+        <fieldset style="margin-top: 15px;">
             <legend>详细信息</legend>
             <table class="tableForm">
                 <tr>
                     <td class="tdTitle">
-                        栋数
+                        <span class="Identification">*</span> 栋数
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.HHouseCount)
                     </td>
@@ -199,7 +244,7 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        总户数
+                        <span>&nbsp;&nbsp;</span> 总户数
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.HHouseholdsCount)
                     </td>
@@ -208,7 +253,7 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        车位数
+                        <span>&nbsp;&nbsp;</span> 车位数
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.HParkingCount)
                     </td>
@@ -217,17 +262,16 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        开盘时间
+                        <span class="Identification">*</span> 开盘时间
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.HOpeningDate, new { @readonly = "readonly" })
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.HOpeningDate)
                     </td>
                 </tr>
-                
                 <tr>
                     <td class="tdTitle">
-                        竣工时间
+                        <span class="Identification">*</span> 竣工时间
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.HCompletedDate, new { @readonly = "readonly" })
                     </td>
@@ -236,7 +280,7 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        入住时间
+                        <span class="Identification">*</span> 入住时间
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.HCheckInDate, new { @readonly = "readonly" })
                     </td>
@@ -245,7 +289,7 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        产权年限
+                        <span class="Identification">*</span> 产权年限
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.PropertyRight)
                     </td>
@@ -254,7 +298,7 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        占用面积
+                        <span>&nbsp;&nbsp;</span> 占用面积
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.HOccupyArea)
                     </td>
@@ -263,7 +307,7 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        建筑面积
+                        <span>&nbsp;&nbsp;</span> 建筑面积
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.HBuildingArea)
                     </td>
@@ -272,7 +316,7 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        绿化面积
+                        <span>&nbsp;&nbsp;</span> 绿化面积
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.HGreeningArea)
                     </td>

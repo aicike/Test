@@ -44,6 +44,7 @@ namespace Web.Controllers
             //装修类型
             var LookupDecoration = LookupFactory.GetLookupOptionList(typeof(EnumDecoration));
             ViewBag.Decoration = LookupDecoration;
+            ViewBag.AccountMainID = LoginAccount.CurrentAccountMainID;
             return View();
         }
 
@@ -74,6 +75,7 @@ namespace Web.Controllers
             //装修类型
             var LookupDecoration = LookupFactory.GetLookupOptionList(typeof(EnumDecoration));
             ViewBag.Decoration = LookupDecoration;
+            ViewBag.AccountMainID = LoginAccount.CurrentAccountMainID;
             return View(Hounses);
         }
 

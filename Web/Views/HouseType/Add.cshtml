@@ -36,6 +36,12 @@
                 }
                 return false;
             });
+
+
+        
+
+
+
         });
     </script>
 }
@@ -51,7 +57,7 @@
             <table class="tableForm">
                 <tr>
                     <td class="tdTitle">
-                        户型名称
+                        <span class="Identification">*</span> 户型名称
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.HName) @Html.HiddenFor(a => a.AccountMainHousesID)
                     </td>
@@ -60,11 +66,12 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        户型图
+                        <span class="Identification">*</span> 户型图
                     </td>
                     <td class="tdField">
                         <img id="imgHousType" style="max-width: 80px; max-height: 80px; float: left" />
-                        <input type="file" id="HousTypeImagePathFile" name="HousTypeImagePathFile" style="display: none" /><input type="button" class="button" value="上传" id="btnUpload" />
+                        <input type="file" id="HousTypeImagePathFile" name="HousTypeImagePathFile" style="display: none" /><input
+                            type="button" class="button" value="上传" id="btnUpload" />
                         @Html.TextBoxFor(a => a.HouseTypeImagePath, new { style = "width:0px;visibility:hidden" })
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.HouseTypeImagePath)
@@ -72,7 +79,7 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        户型说明
+                        <span class="Identification">*</span> 户型说明
                     </td>
                     <td class="tdField">@Html.TextAreaFor(a => a.HouseTypeDescription)
                     </td>
