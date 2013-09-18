@@ -44,7 +44,7 @@
                     @item.GetPushStatus()
                 </td>
                 <td>
-                    @item.PushTime.ToString("yyyy-MM-dd hh:mm")
+                    @item.PushTime.ToString("yyyy-MM-dd HH:mm")
                 </td>
                 @*td class="operation">
                    @Ajax.ActionLink("删除", "Delete", "Message", new { HostName = ViewBag.HostName, id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "Message", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)

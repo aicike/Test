@@ -87,7 +87,7 @@ namespace Business
             rep.MsgID = pushMsg.ID;
             rep.EnumMsgMode = (int)EnumMsgMode.Push;
             rep.Type = (int)msgType;
-            rep.SendTime = pushMsg.PushTime.ToString("yyyy-MM-dd hh:mm:ss");
+            rep.SendTime = pushMsg.PushTime.ToString("yyyy-MM-dd HH:mm:ss");
             switch (msgType)
             {
                 case EnumMessageType.Text:

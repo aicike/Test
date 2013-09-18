@@ -109,6 +109,7 @@ namespace Web.Controllers
         {
             var account_UserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
             var result = account_UserModel.BindUser_Account(accountID, userID);
+            result.Entity = accountID;
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
@@ -150,7 +151,10 @@ namespace Web.Controllers
                     userLoginInfo.Email = value;
                     break;
                 case "pwd":
-                    userLoginInfo.LoginPwd = DESEncrypt.Encrypt(value); ;
+                    userLoginInfo.LoginPwd = DESEncrypt.Encrypt(value);
+                    break;
+                case "headimg":
+                    userLoginInfo.HeadImagePath = value;
                     break;
             }
             userLoginInfo.LoginPwdPage = "000000";

@@ -23,7 +23,7 @@ namespace Poco
             public const string BlackListGroup = "黑名单";
             public const string AccountAdmin = "AccountAdmin";
             public const string ThumbnailImage_Width = "1000";
-            public const string TimeFomatFull = "yyyy-MM-dd hh:mm:ss";
+            public const string TimeFomatFull = "yyyy-MM-dd HH:mm:ss";
         }
 
         public class Cache

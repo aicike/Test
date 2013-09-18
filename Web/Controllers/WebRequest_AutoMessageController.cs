@@ -46,7 +46,15 @@ namespace Web.Controllers
         {
             var autoMessageAddModel = Factory.Get<IAutoMessage_AddModel>(SystemConst.IOC_Model.AutoMessage_AddModel);
             var entity = autoMessageAddModel.Get(accountMainID);
-            string msg = entity.Content ?? "";
+            string msg = null;
+            if (entity == null)
+            {
+                msg = "";
+            }
+            else
+            {
+                msg = entity.Content ?? "";
+            }
             return msg;
         }
 
@@ -163,7 +171,7 @@ namespace Web.Controllers
 
             if (pushDetailList != null && pushDetailList.Count > 0)
             {
-                string dataFormat = "yyyy-MM-dd hh:mm:ss";
+                string dataFormat = "yyyy-MM-dd HH:mm:ss";
                 foreach (var item in pushDetailList)
                 {
                     switch (item.PushMsg.EnumMessageType)

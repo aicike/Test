@@ -82,7 +82,7 @@ namespace Web.Controllers
                 appuser.Phone = user.UserLoginInfo.Phone??"";
                 appuser.Email = user.UserLoginInfo.Email??"";
                 appuser.NameNote = user.Name??"";
-                appuser.HeadImagePath = SystemConst.WebUrl + Url.Content(user.UserLoginInfo.HeadImagePath.DefaultHeadImage());
+                appuser.HeadImagePath = user.UserLoginInfo.HeadImagePath.DefaultHeadImage();
                 result.Entity = appuser;
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
