@@ -22,5 +22,41 @@ namespace AcceptanceServer.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string CurrentIntPtr {
+            get {
+                return ((string)(this["CurrentIntPtr"]));
+            }
+            set {
+                this["CurrentIntPtr"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int AlwaysCloseAction {
+            get {
+                return ((int)(this["AlwaysCloseAction"]));
+            }
+            set {
+                this["AlwaysCloseAction"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int CloseAction {
+            get {
+                return ((int)(this["CloseAction"]));
+            }
+            set {
+                this["CloseAction"] = value;
+            }
+        }
     }
 }

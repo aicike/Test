@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Data;
 using Poco;
 using System.Threading.Tasks;
+using AcceptanceServer.Properties;
 
 namespace AcceptanceServer
 {
@@ -39,7 +40,7 @@ namespace AcceptanceServer
             //Thread myThread = new Thread(myThreadDelegate);
             //myThread.Start();
             //myThread.IsBackground = true;
-
+           
             Task t = new Task(() =>
             {
                 Listen();
@@ -56,7 +57,7 @@ namespace AcceptanceServer
             try
             {
                 listener.Bind(localEndPoint);
-                listener.Listen(10);
+                listener.Listen(20);
 
                 m_Listening = true;
 
@@ -183,6 +184,50 @@ namespace AcceptanceServer
 
         #endregion
 
+ 
 
+       
+
+        private void lbUser_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Settings r = new Settings();
+
+            CloseTipForm form = new CloseTipForm();
+            form.ShowDialog();
+
+            r.Reload();
+            if (r.CloseAction == ClickCloseButtonAction.Cancel)//取消
+            {
+                e.Cancel = true;
+            }
+            else if (r.CloseAction == ClickCloseButtonAction.Min)//最小化
+            {
+                e.Cancel = true;
+                //this.WindowState = FormWindowState.Minimized;
+                this.Hide();
+            }
+            else if (r.CloseAction == ClickCloseButtonAction.Close)//关闭
+            {
+            }
+
+
+            //if (e.CloseReason == CloseReason.UserClosing)
+            //{
+            //    e.Cancel = true;    //取消"关闭窗口"事件
+            //    this.WindowState = FormWindowState.Minimized;    //使关闭时窗口向右下角缩小的效果
+            //    notifyIcon1.Visible = true;
+            //    this.Hide();
+            //    return;
+            //}
+
+        }
+
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            this.Show();
+        }
+
+
+      
     }
 }

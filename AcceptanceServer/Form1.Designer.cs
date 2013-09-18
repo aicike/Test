@@ -40,14 +40,15 @@
             this.Times = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Point = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.infoGread = new System.Windows.Forms.DataGridView();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.dgUser = new System.Windows.Forms.DataGridView();
             this.InfoTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.infoPoint = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.dgUser = new System.Windows.Forms.DataGridView();
             this.UName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.other = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.menuStrip1.SuspendLayout();
             this.tabpage33.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -181,6 +182,22 @@
             this.infoGread.Size = new System.Drawing.Size(919, 382);
             this.infoGread.TabIndex = 1;
             // 
+            // InfoTime
+            // 
+            this.InfoTime.DataPropertyName = "InfoTime";
+            this.InfoTime.HeaderText = "时间";
+            this.InfoTime.Name = "InfoTime";
+            this.InfoTime.ReadOnly = true;
+            this.InfoTime.Width = 150;
+            // 
+            // infoPoint
+            // 
+            this.infoPoint.DataPropertyName = "infoPoint";
+            this.infoPoint.HeaderText = "消息";
+            this.infoPoint.Name = "infoPoint";
+            this.infoPoint.ReadOnly = true;
+            this.infoPoint.Width = 700;
+            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.dgUser);
@@ -209,22 +226,6 @@
             this.dgUser.Size = new System.Drawing.Size(919, 382);
             this.dgUser.TabIndex = 0;
             // 
-            // InfoTime
-            // 
-            this.InfoTime.DataPropertyName = "InfoTime";
-            this.InfoTime.HeaderText = "时间";
-            this.InfoTime.Name = "InfoTime";
-            this.InfoTime.ReadOnly = true;
-            this.InfoTime.Width = 150;
-            // 
-            // infoPoint
-            // 
-            this.infoPoint.DataPropertyName = "infoPoint";
-            this.infoPoint.HeaderText = "消息";
-            this.infoPoint.Name = "infoPoint";
-            this.infoPoint.ReadOnly = true;
-            this.infoPoint.Width = 700;
-            // 
             // UName
             // 
             this.UName.DataPropertyName = "UName";
@@ -240,6 +241,13 @@
             this.other.ReadOnly = true;
             this.other.Width = 750;
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "聊天服务";
+            this.notifyIcon1.Visible = true;
+            this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
+            // 
             // lbUser
             // 
             this.AccessibleDescription = "5";
@@ -253,6 +261,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "lbUser";
             this.Text = "数据接收服务";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.lbUser_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -288,6 +297,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn infoPoint;
         private System.Windows.Forms.DataGridViewTextBoxColumn UName;
         private System.Windows.Forms.DataGridViewTextBoxColumn other;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
 

@@ -5,6 +5,9 @@
 }
 @section head{
     <script type="text/javascript">
+
+        var isTrue = true;
+
         $(function () {
             var CheckIsExistAdminUrl = '@Url.Action("CheckIsExistAdmin", "AccountManage")';
             
@@ -51,6 +54,52 @@
                 }
             });
             $("#LoginPwdPage,#LoginPwdPageCompare").val('@Common.DESEncrypt.Decrypt(Model.LoginPwd)');
+
+
+
+
+            //唯一验证
+            $("#Email").blur(function () {
+
+                var values = $("#Email").val();
+                 var ID = $("#ID").val();
+                if (values != "" && values != undefined) {
+                    var YZUrl = '@Url.Action("OnlyValidation", "Ajax", new { Area="",HostName="" })';
+                    $.post(YZUrl, { tableName: "Account", field: "Email", value: values,id:ID }, function (result) {
+                        if (result == "True") {
+                            isTrue = true;
+                        }
+                        else {
+                            isTrue = false;
+                            JAlert({
+                                Message: "该邮箱已存在！请换个邮箱试试！",
+                                DialogType: "Ok",
+                                BtnOk: "确定"
+                            });
+                        }
+                    });
+                }
+
+            });
+
+            $("#btnSubmit").click(function () {
+                if (!isTrue) {
+                    JAlert({
+                        Message: "该邮箱已存在！请换个邮箱试试！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                }
+                return isTrue;
+            });
+
+
+
+
+
+
+
+
         });
     </script>
 }
@@ -65,7 +114,7 @@
             <table>
                 <tr>
                     <td class="tdTitle">
-                        名称
+                        <span class="Identification">*</span> 名称
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.ID)@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.IsActivated)
                     </td>
@@ -74,7 +123,7 @@
                 </tr>
                 <tr>
                     <td>
-                        邮箱
+                        <span class="Identification">*</span> 邮箱
                     </td>
                     <td>@Html.TextBoxFor(a => a.Email, new { val = Model.ID })
                     </td>
@@ -83,7 +132,7 @@
                 </tr>
                 <tr>
                     <td>
-                        密码
+                        <span class="Identification">*</span> 密码
                     </td>
                     <td>@Html.PasswordFor(a => a.LoginPwdPage)
                     </td>
@@ -92,7 +141,7 @@
                 </tr>
                 <tr>
                     <td>
-                        确认密码
+                        <span class="Identification">*</span> 确认密码
                     </td>
                     <td>@Html.PasswordFor(a => a.LoginPwdPageCompare)
                     </td>
@@ -101,7 +150,7 @@
                 </tr>
                 <tr>
                     <td>
-                        电话
+                        <span class="Identification">*</span> 电话
                     </td>
                     <td>@Html.TextBoxFor(a => a.Phone)
                     </td>
@@ -110,7 +159,7 @@
                 </tr>
                 <tr>
                     <td>
-                        头像
+                        <span>&nbsp;&nbsp;</span> 头像
                     </td>
                     <td>
                         <img id="imgLogo" style="max-width: 80px; max-height: 80px; float: left" src="@Url.Content(Model.HeadImagePath)"/>
@@ -123,7 +172,7 @@
                 </tr>
                 <tr>
                     <td>
-                        角色
+                        <span class="Identification">*</span> 角色
                     </td>
                     <td>@Html.DropDownListFor(a => a.RoleID, ViewData["Roles"] as List<SelectListItem>, new { })
                     </td>

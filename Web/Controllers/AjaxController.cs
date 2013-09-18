@@ -110,5 +110,51 @@ namespace Web.Controllers
             }
             return v;
         }
+
+        /// <summary>
+        /// 唯一验证
+        /// </summary>
+        /// <param name="AccountMainID">售楼部ID</param>
+        /// <param name="tableName">表名字</param>
+        /// <param name="field">字段名</param>
+        /// <param name="value">值</param>
+        /// <param name="id">id</param>
+        /// <returns> false 代表已存在</returns>
+        [HttpPost]
+        public string OnlyValidationAccount(string AccountMainID, string tableName, string field, string value, int? id = null)
+        {
+            CommonModel cm = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+            if (id.HasValue)
+            {
+                return cm.CheckIsUniqueAccount(AccountMainID, tableName, field, value, id).ToString();
+            }
+            else
+            {
+                return cm.CheckIsUniqueAccount(AccountMainID, tableName, field, value).ToString();
+            }
+        }
+
+        /// <summary>
+        /// 唯一验证
+        /// </summary>
+        /// <param name="tableName">表名字</param>
+        /// <param name="field">字段名</param>
+        /// <param name="value">值</param>
+        /// <param name="id">id</param>
+        /// <returns> false 代表已存在</returns>
+        [HttpPost]
+        public string OnlyValidation( string tableName, string field, string value, int? id = null)
+        {
+            CommonModel cm = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+            if (id.HasValue)
+            {
+                return cm.CheckIsUnique( tableName, field, value, id).ToString();
+            }
+            else
+            {
+                return cm.CheckIsUnique( tableName, field, value).ToString();
+            }
+        }
+
     }
 }

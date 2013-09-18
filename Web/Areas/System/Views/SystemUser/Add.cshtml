@@ -4,7 +4,9 @@
 }
 @section head{
     <script type="text/javascript">
+        var isTrue = true;
         $(function () {
+
             $("#HeadImagePathFile").change(function () {
                 var fileName = $("#HeadImagePathFile").val();
                 $("#Account_HeadImagePath").val(fileName);
@@ -31,6 +33,47 @@
                 }
                 return false;
             });
+
+            //唯一验证
+            $("#Email").blur(function () {
+
+                var values = $("#Email").val();
+
+                if (values != "" && values != undefined) {
+                    var YZUrl = '@Url.Action("OnlyValidation", "Ajax", new { Area="",HostName="" })';
+                    $.post(YZUrl, { tableName: "SystemUser", field: "Email", value: values }, function (result) {
+
+                        if (result == "True") {
+                            isTrue = true;
+                        }
+                        else {
+                            isTrue = false;
+                            JAlert({
+                                Message: "该邮箱已存在！请换个邮箱试试！",
+                                DialogType: "Ok",
+                                BtnOk: "确定"
+                            });
+                        }
+                    });
+                }
+
+            });
+
+            $("#btnSubmit").click(function () {
+                if (!isTrue) {
+                    JAlert({
+                        Message: "该邮箱已存在！请换个邮箱试试！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                }
+                return isTrue;
+            });
+
+
+
+
+
         });
     </script>
 }
