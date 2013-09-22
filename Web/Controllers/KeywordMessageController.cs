@@ -37,6 +37,10 @@ namespace Web.Controllers
             newProjectList.AddRange(selectListProjects);
             ViewData["Project"] = newProjectList;
             ViewBag.HostName = LoginAccount.HostName;
+
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-关键词自动回复", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View(list);
         }
 

@@ -44,6 +44,11 @@ namespace Web.Controllers
 
             ViewBag.UserID = userID;
             ViewBag.ID = id;
+
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "聊天消息", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
+
             return View();
         }
 

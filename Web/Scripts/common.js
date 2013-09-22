@@ -159,3 +159,15 @@ jQuery.validator.addMethod('dropdownlist', function (value, element, params) {
 //            }
 //        });
 //    }, '');
+
+//BtnID 按钮ID,GIfID图片空间ID ,Status:1显示 2隐藏
+function LandWaitFor(BtnID,GifID, Status) {
+    if (Status == 1) {
+        $("#" + BtnID).hide();
+        $("#" + GifID).show();
+    }
+    else {
+        $("#" + BtnID).show();
+        $("#" + GifID).hide();
+    }
+}

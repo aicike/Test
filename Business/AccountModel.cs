@@ -273,6 +273,7 @@ namespace Business
             entity.IsActivated = account.IsActivated;
             entity.HostName = account.Account_AccountMains.FirstOrDefault().AccountMain.HostName;
             entity.CurrentAccountMainID = account.Account_AccountMains.FirstOrDefault().AccountMain.ID;
+            entity.CurrentAccountMainName = account.Account_AccountMains.FirstOrDefault().AccountMain.Name;
             HttpContext.Current.Session[SystemConst.Session.LoginAccount] = entity;
             return result;
         }

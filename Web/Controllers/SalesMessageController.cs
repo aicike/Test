@@ -19,7 +19,10 @@ namespace Web.Controllers
         {
             var AccountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             var AccountList = AccountModel.GetAccountListNoAdminByAccountMain(LoginAccount.CurrentAccountMainID);
-            ViewBag.HostName = LoginAccount.HostName; 
+            ViewBag.HostName = LoginAccount.HostName;
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "用户管理-销售与客户管理", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View(AccountList);
         }
 

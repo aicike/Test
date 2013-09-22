@@ -39,6 +39,11 @@ namespace Web.Controllers
             var hounsesInfoModel = Factory.Get<IAccountMainHouseInfo>(SystemConst.IOC_Model.AccountMainHouseInfoModel);
             var HounseInfo = hounsesInfoModel.Get(Did);
             ViewBag.HostDTitle = HounseInfo.Building + " " + HounseInfo.Cell;
+
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "项目管理-房屋管理", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
+
             return View(list);
         }
 
@@ -78,6 +83,11 @@ namespace Web.Controllers
             //newHtypeList.Add(new SelectListItem { Text = "请选择", Value = "select", Selected = true });
             newStatusList.AddRange(selectListSt);
             ViewData["HousesStatus"] = newStatusList;
+
+
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "项目管理-添加房屋", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
 
             return View();
         }
@@ -141,6 +151,13 @@ namespace Web.Controllers
             //房屋数据
             var hounsesInfoDetailModel = Factory.Get<IAccountMainHouseInfoDetailModel>(SystemConst.IOC_Model.AccountMainHouseInfoDetailModel);
             var HouseInfoDetail = hounsesInfoDetailModel.Get(id);
+
+
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "项目管理-修改房屋", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
+
+
             return View(HouseInfoDetail);
         }
 
@@ -205,6 +222,11 @@ namespace Web.Controllers
             //房屋数据
             var hounsesInfoDetailModel = Factory.Get<IAccountMainHouseInfoDetailModel>(SystemConst.IOC_Model.AccountMainHouseInfoDetailModel);
             var HouseInfoDetail = hounsesInfoDetailModel.Get(id);
+
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "项目管理-房屋详细", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
+
             return View(HouseInfoDetail);
         }
     }

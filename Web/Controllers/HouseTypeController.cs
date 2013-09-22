@@ -29,6 +29,9 @@ namespace Web.Controllers
             var hounsesModel = Factory.Get<IAccountMainHousesModel>(SystemConst.IOC_Model.AccountMainHousesModel);
             var Hounse = hounsesModel.Get(houseID);
             ViewBag.HostTitle = Hounse.HName;
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "项目管理-户型管理", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View(list);
         }
 
@@ -47,6 +50,9 @@ namespace Web.Controllers
             AccountMainHouseType HounsesType = new AccountMainHouseType();
             HounsesType.AccountMainHousesID = id;
             ViewBag.AccountMainID = LoginAccount.CurrentAccountMainID;
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "项目管理-添加户型", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View(HounsesType);
         }
 
@@ -81,6 +87,9 @@ namespace Web.Controllers
             ViewBag.HostTitle = Hounse.HName;
             ViewBag.HostName = LoginAccount.HostName;
             ViewBag.AccountMainID = LoginAccount.CurrentAccountMainID;
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "项目管理-修改户型", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View(HouseInfo);
         }
 

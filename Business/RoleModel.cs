@@ -25,6 +25,20 @@ namespace Business
             return list;
         }
 
+        public List<Role> GetRoleListAll(int? accountMainID)
+        {
+            List<Role> list = List().ToList();
+            if (accountMainID != null && accountMainID.HasValue)
+            {
+                foreach (var item in list)
+                {
+                    item.Accounts = item.Accounts.Where(a => a.Account_AccountMains.Any(b => b.AccountMainID == accountMainID.Value && b.SystemStatus == (int)EnumSystemStatus.Active)).ToList();
+                }
+
+            }
+            return list;
+        }
+
         public new IQueryable<Role> List()
         {
             return base.List().OrderBy(a => a.ID);

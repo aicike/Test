@@ -20,24 +20,29 @@ namespace Web.Controllers
             //获取网站管理员
             var model = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             var account = model.GetAccountAdminListByAccountMain(LoginAccount.CurrentAccountMainID);
-            if (LoginAccount.ID == account.ToList()[0].ID)
+            if (account != null)
             {
-                AccountMainGuideModel AMG = new AccountMainGuideModel();
-                bool isUntreated;
-                AMG.getUntreated(LoginAccount.CurrentAccountMainID, out isUntreated);
-                if (isUntreated)
+                if (LoginAccount.ID == account.ToList()[0].ID)
                 {
-                    ViewBag.AccountAdmin = "true";
+                    AccountMainGuideModel AMG = new AccountMainGuideModel();
+                    bool isUntreated;
+                    AMG.getUntreated(LoginAccount.CurrentAccountMainID, out isUntreated);
+                    if (isUntreated)
+                    {
+                        ViewBag.AccountAdmin = "true";
+                    }
+                    else
+                    {
+                        ViewBag.AccountAdmin = "false";
+                    }
                 }
                 else
                 {
                     ViewBag.AccountAdmin = "false";
                 }
             }
-            else
-            {
-                ViewBag.AccountAdmin = "false";
-            }
+
+
             ViewBag.UNAme = LoginAccount.Name;
 
             //获取未读消息数
@@ -92,6 +97,12 @@ namespace Web.Controllers
             {
                 ViewBag.maxMessCnt = 1;
             }
+
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "首页" ,LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
+
+
             return View();
         }
     }

@@ -14,7 +14,8 @@ namespace EF.Mapping
             this.Ignore(a => a.LoginPwdPage);
             this.Ignore(a => a.LoginPwdPageCompare);
             this.Ignore(a => a.HostName);
-            this.Ignore(a => a.CurrentAccountMainID);            
+            this.Ignore(a => a.CurrentAccountMainID);
+            this.Ignore(a => a.CurrentAccountMainName);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Index";
+
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
     ViewBag.Menu = Poco.SystemConst.Menu.Home;
 }
@@ -55,7 +55,7 @@
                         style: {
                             color: '#89A54E'
                         }
-                    },min:0,tickInterval: @ViewBag.maxUserCnt
+                    },min:0,tickInterval:@ViewBag.maxUserCnt
                 }],
                 tooltip: {
                     shared: true
@@ -112,7 +112,7 @@
                         style: {
                             color: '#89A54E'
                         }
-                    },min:0,tickInterval: @ViewBag.maxMessCnt
+                    },min:0,tickInterval:@ViewBag.maxMessCnt
                 }],
                 tooltip: {
                     shared: true

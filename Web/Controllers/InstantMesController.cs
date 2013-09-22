@@ -29,6 +29,10 @@ namespace Web.Controllers
             var TemporayModel = Factory.Get<ITemporayInstantMesModel>(SystemConst.IOC_Model.TemporayInstantMes);
             var TemporayList = TemporayModel.GetList(LoginAccount.ID).ToPagedList(id ?? 1, 15); ;
 
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "用户管理-销售消息", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
+
             return View(TemporayList);
         }
 

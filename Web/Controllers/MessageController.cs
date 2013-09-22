@@ -20,6 +20,9 @@ namespace Web.Controllers
             var groupList = groupModel.GetGroupListByAccountID(LoginAccount.ID, null);
             ViewBag.GroupList = groupList;
             ViewBag.HostName = LoginAccount.HostName;
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "消息管理-新建消息", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View();
         }
 
@@ -59,6 +62,9 @@ namespace Web.Controllers
             var list = GetMessageTitle(result.ToList());
             ViewBag.List = list;
             ViewBag.HostName = LoginAccount.HostName;
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "消息管理-已发送消息", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View(result);
         }
 

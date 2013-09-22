@@ -86,6 +86,11 @@ namespace Poco
         /// </summary>
         public int CurrentAccountMainID { get; set; }
 
+        /// <summary>
+        /// 业务字段，不会在数据库中生成该字段
+        /// </summary>
+        public string CurrentAccountMainName { get; set; }
+
         public virtual ICollection<ActivateEmail> ActivateEmails { get; set; }
 
         public virtual ICollection<Group> Groups { get; set; }

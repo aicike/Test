@@ -31,6 +31,9 @@ namespace Web.Controllers
         [HttpGet]
         public ActionResult SystemLogin()
         {
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "登陆", WebTitleRemark, "");
+            ViewBag.Title = webTitle;
             return View();
         }
 
@@ -41,7 +44,7 @@ namespace Web.Controllers
             var result = systemUserModel.Login(user.Email, user.LoginPwdPage);
             if (result.HasError)
             {
-                return Alert(new Dialog(result.Error));
+                return JavaScript("LandWaitFor('login','WaitImg',2);" + AlertJS_NoTag(new Dialog(result.Error)));
             }
             var url = Url.RouteUrl("System_default", new { action = "Index", controller = "SystemUserHome" });
             return JavaScript("window.location.href='" + url + "'");
@@ -59,6 +62,9 @@ namespace Web.Controllers
         public ActionResult UserLogin(String hostName)
         {
             Session["IsHaveMessage"] = "0";
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "登陆", WebTitleRemark, "");
+            ViewBag.Title = webTitle;
             return View();
         }
 
@@ -69,7 +75,8 @@ namespace Web.Controllers
             var result = accountModel.Login(user.Email, user.LoginPwdPage);
             if (result.HasError)
             {
-                return Alert(new Dialog(result.Error));
+                //return Alert(new Dialog(result,null,"alert('asdf')"));
+                return JavaScript("LandWaitFor('login','WaitImg',2);" + AlertJS_NoTag(new Dialog(result.Error)));
             }
             var account = Session[SystemConst.Session.LoginAccount] as Account;
             var url = Url.RouteUrl("User", new { action = "Index", controller = "Home", HostName = account.HostName });

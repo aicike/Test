@@ -19,11 +19,17 @@ namespace Web.Controllers
             var list = libraryModel.GetLibraryList(LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 15);
             ViewBag.LibraryType = LibraryType();
             ViewBag.HostName = LoginAccount.HostName;
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "素材管理-图文素材", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View(list);
         }
 
         public ActionResult Add()
         {
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "素材管理-添加单图文", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View();
         }
 
@@ -70,6 +76,9 @@ namespace Web.Controllers
         [HttpGet]
         public ActionResult MoreAdd()
         {
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "素材管理-添加多图文", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View();
         }
 
@@ -138,6 +147,9 @@ namespace Web.Controllers
             }
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(it);
             ViewBag.Json = json;
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "素材管理-修改多图文", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View(entity);
         }
 
@@ -189,6 +201,9 @@ namespace Web.Controllers
             }
             var libraryModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
             var entity = libraryModel.Get(id);
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "素材管理-修改单素材", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View(entity);
         }
 
