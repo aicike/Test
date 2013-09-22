@@ -178,7 +178,17 @@ namespace Web.Controllers
             }
             //拼接路径
             string UPFileHname = DateTime.Now.ToString("yyMMddhhmmss");
+            
             string Path = string.Format("{0}{1}.Message/{2}/{3}/{4}", UpFile, UserAccountMainID, UpType, UserID, UpFileType);
+            //头像
+            if (FileType == 4)
+            {
+                //售楼部
+                if (UserType == 1)
+                {
+                    Path = string.Format("{0}{1}/Account", UpFile, UserAccountMainID);
+                }
+            }
             try
             {
                 if (!System.IO.File.Exists(Server.MapPath(Path)))

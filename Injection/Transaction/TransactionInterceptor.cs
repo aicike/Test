@@ -54,9 +54,9 @@ namespace Injection.Transaction
                     return result;
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
     }

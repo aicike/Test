@@ -152,10 +152,13 @@ namespace Business
                 try
                 {
                     //删除原头像
-                    var file = HttpContext.Current.Server.MapPath(account.HeadImagePath);
-                    if (File.Exists(file))
+                    if (account.HeadImagePath != "~/Images/default_Avatar.png")
                     {
-                        File.Delete(file);
+                        var file = HttpContext.Current.Server.MapPath(account.HeadImagePath);
+                        if (File.Exists(file))
+                        {
+                            File.Delete(file);
+                        }
                     }
                     var path = string.Format(SystemConst.Business.PathAccount, accountMainID);
                     var accountPath = HttpContext.Current.Server.MapPath(path);
@@ -195,10 +198,13 @@ namespace Business
         {
             var entity = Get(id);
             //删除原头像
-            var file = HttpContext.Current.Server.MapPath(entity.HeadImagePath);
-            if (File.Exists(file))
+            if (entity.HeadImagePath != "~/Images/default_Avatar.png")
             {
-                File.Delete(file);
+                var file = HttpContext.Current.Server.MapPath(entity.HeadImagePath);
+                if (File.Exists(file))
+                {
+                    File.Delete(file);
+                }
             }
             var result = base.Delete(id);
             if (result.HasError == false)
