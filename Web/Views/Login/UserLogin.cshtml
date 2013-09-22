@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "UserLogin";
     Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+    ViewBag.HomeSelect = "2";
 }
 @model Poco.Account
 <div style="height: 460px; background: url('/Images/banner.jpg') repeat-x">
@@ -19,11 +20,46 @@
                     @Html.ValidationMessageFor(a => a.LoginPwdPage)
                 </div>
                 <div>
-                    <input type="submit" value="登录" class="button2"/>
+                    <input type="submit" value="登录" class="button2" />
                 </div>
             }
         </div>
     </div>
 </div>
 <div class="bodyBottom">
+    <div class="homeItem">
+        <div class="homeContent">
+            <div style="float: left; width: 490px; margin-top: 150px">
+                <div class="titleFont">
+                    客户沟通
+                </div>
+                <div class="titleFont">
+                    方便简单</div>
+                <div style="margin-top: 80px;" class="contentFont">
+                    语音消息，文字消息，图文详细，聊天从此不再枯燥。</div>
+            </div>
+            <div style="float: right; width: 409px; margin-top: 35px;">
+                <img src="../../Images/m1.png" style="max-height: 500px;" />
+            </div>
+            <div style="clear: both">
+            </div>
+        </div>
+    </div>
+    <div class="homeItem2">
+        <div class="homeContent">
+            <div style="float: left; width: 600px; margin-top: 50px">
+                <img src="../../Images/table.jpg" style="max-width: 600px;" />
+            </div>
+            <div style="float: right; width: 300px; margin-top: 150px; margin-left: 60px;">
+                <div class="titleFont">
+                    <div>
+                        数据分析</div>
+                </div>
+                <div style="margin-top: 80px;" class="contentFont">
+                    大数据量的数据统计，简单直观的报表展示。</div>
+            </div>
+            <div style="clear: both">
+            </div>
+        </div>
+    </div>
 </div>

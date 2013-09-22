@@ -57,7 +57,7 @@ namespace Web.Controllers
                         ID = item.ID,
                         Name = item.UserLoginInfo.Name,
                         NameNote = item.Name,
-                        HeadImagePath = SystemConst.WebUrl + Url.Content(item.UserLoginInfo.HeadImagePath.DefaultHeadImage())
+                        HeadImagePath = string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrl + Url.Content(item.UserLoginInfo.HeadImagePath.DefaultHeadImage())) : item.UserLoginInfo.HeadImagePath
                     });
                 }
             }
@@ -82,7 +82,7 @@ namespace Web.Controllers
                 appuser.Phone = user.UserLoginInfo.Phone ?? "";
                 appuser.Email = user.UserLoginInfo.Email ?? "";
                 appuser.NameNote = user.Name ?? "";
-                appuser.HeadImagePath = SystemConst.WebUrl + user.UserLoginInfo.HeadImagePath.DefaultHeadImage().Replace("~", "");
+                appuser.HeadImagePath = string.IsNullOrEmpty(user.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrl + Url.Content(user.UserLoginInfo.HeadImagePath.DefaultHeadImage())) : user.UserLoginInfo.HeadImagePath;
                 appuser.Pwd = Common.DESEncrypt.Decrypt(user.UserLoginInfo.LoginPwd);
                 result.Entity = appuser;
             }

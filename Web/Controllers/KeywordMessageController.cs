@@ -112,7 +112,7 @@ namespace Web.Controllers
         public ActionResult Get(int id)
         {
             var autoMessage_KeywordModel = Factory.Get<IAutoMessage_KeywordModel>(SystemConst.IOC_Model.AutoMessage_KeywordModel);
-            var entity = autoMessage_KeywordModel.GetByID_AccountMainID(id, LoginAccount.ID);
+            var entity = autoMessage_KeywordModel.GetByID_AccountMainID(id, LoginAccount.CurrentAccountMainID);
             List<Files> files = new List<Files>();
             if (entity.KeywordAutoMessages.Count > 0)
             {

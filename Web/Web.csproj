@@ -194,8 +194,12 @@
     <Content Include="Content\userStyle.css" />
     <Content Include="Images\banner.jpg" />
     <Content Include="Images\default_Avatar.png" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\sep.png" />
     <Content Include="Images\Start.png" />
+    <Content Include="Images\table.jpg" />
     <Content Include="Images\Unread.png" />
+    <Content Include="Images\m1.png" />
     <Content Include="Scripts\tytabs.js" />
     <Content Include="Scripts\JSONLoader.js" />
     <Content Include="Scripts\Highcharts\adapters\mootools-adapter.js" />

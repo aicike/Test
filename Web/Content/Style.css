@@ -8,6 +8,35 @@
     line-height: 1.6;
     color: #222;
 }
+.homeItem
+{
+    background: url(../images/sep.png) repeat-x center bottom;
+    background-color: #f4f4f4;
+    height: 570px;
+    position: relative;
+}
+.homeItem2
+{
+    background-color: #fff;
+    background: url(../images/sep.png) repeat-x center bottom;
+    position: relative;
+    height: 570px;
+}
+.homeContent
+{
+    margin: 0px auto 0px auto;
+    width: 960px;
+}
+.titleFont
+{
+    font-size: 35px;
+    color: #555;
+}
+.contentFont
+{
+    font-size: 18px;
+    color: #748686;
+}
 a
 {
     text-decoration: none;
@@ -193,7 +222,7 @@ a
 .option a
 {
     padding: 4px 17px;
-    }
+}
 .button2
 {
     padding: 6px 17px;
@@ -222,7 +251,7 @@ a
 /*登录页面*/
 .bodyBottom
 {
-    height: 400px;
+    min-height: 400px;
 }
 
 .homelogin
@@ -252,14 +281,10 @@ a
 
 .logo
 {
-    border: 1px solid #E7E7E7;
-    width: 120px;
-    height: 56px;
     float: left;
 }
 .head
 {
-    background-color: #F3F3F3;
     border-bottom: 1px solid #E7E7E7;
     height: 70px;
 }
@@ -303,6 +328,6 @@ h1.page-title
 }
 .Identification
 {
-    color:Red;    
-    text-align:center;
+    color: Red;
+    text-align: center;
 }

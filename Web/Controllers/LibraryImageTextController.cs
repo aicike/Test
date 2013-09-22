@@ -83,7 +83,7 @@ namespace Web.Controllers
             lit.ImagePath = it.image;
             lit.Summary = it.summary;
             lit.Content = it.body;
-            lit.AccountMainID = LoginAccount.ID;
+            lit.AccountMainID = LoginAccount.CurrentAccountMainID;
             if (it.sub != null)
             {
                 lit.LibraryImageTexts = new List<LibraryImageText>();
@@ -95,7 +95,7 @@ namespace Web.Controllers
                         Summary = "",
                         ImagePath = item.image,
                         Content = item.body,
-                        AccountMainID = LoginAccount.ID
+                        AccountMainID = LoginAccount.CurrentAccountMainID
                     });
                 }
             }
