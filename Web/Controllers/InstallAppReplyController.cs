@@ -29,6 +29,10 @@ namespace Web.Controllers
                 AutoMessage_Add Autpadd = new AutoMessage_Add();
                 return View(Autpadd);
             }
+
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-安装App自动回复", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
         }
 
         [HttpPost]

@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "SystemUserLogin";
+
     Layout = "~/Views/Shared/_LayoutDefault.cshtml";
     ViewBag.HomeSelect = "1";
 }
@@ -22,7 +22,8 @@
                     @Html.ValidationMessageFor(a => a.LoginPwdPage)
                 </div>
                 <div>
-                    <input type="submit" value="登录" class="button" style="font-size: 14px; padding: 5px 15px;" />
+                        <input id="login" onclick="LandWaitFor('login','WaitImg',1)" type="submit" value="登录" class="button" style="font-size: 14px;padding:5px 15px;" />
+                         <img id="WaitImg" src="../../Images/LandWaitFor.gif" style="display:none" />
                 </div>
             }
         </div>

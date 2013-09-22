@@ -48,6 +48,11 @@ namespace Web.Controllers
             ViewBag.RoleID = roleID.HasValue ? roleID.Value : roleList.FirstOrDefault().ID;
             ViewBag.AccountAdminList = accountList.ToList();
             ViewBag.HostName = LoginAccount.HostName;
+
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "账号管理", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
+
             return View(pageList);
         }
 
@@ -62,6 +67,9 @@ namespace Web.Controllers
             ViewData["Roles"] = newRolesList;
             ViewBag.HostName = LoginAccount.HostName;
             ViewBag.AccountMainID = LoginAccount.CurrentAccountMainID;
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "账号管理-添加账号", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View();
         }
 
@@ -91,6 +99,9 @@ namespace Web.Controllers
             ViewData["Roles"] = newRolesList;
             ViewBag.HostName = LoginAccount.HostName;
             ViewBag.AccountMainID = LoginAccount.CurrentAccountMainID;
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "账号管理-修改账号", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View(entity);
         }
 

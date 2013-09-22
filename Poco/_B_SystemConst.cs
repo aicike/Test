@@ -8,6 +8,7 @@ namespace Poco
     public static class SystemConst
     {
         public static string WebUrl = System.Configuration.ConfigurationManager.AppSettings["WebUrl"];
+        public static string WebTitleRemark = System.Configuration.ConfigurationManager.AppSettings["WebTitle"];
 
         public class Business
         {
@@ -24,6 +25,7 @@ namespace Poco
             public const string AccountAdmin = "AccountAdmin";
             public const string ThumbnailImage_Width = "1000";
             public const string TimeFomatFull = "yyyy-MM-dd HH:mm:ss";
+            public const string WebTitle = "{0} {1} {2}";
         }
 
         public class Cache

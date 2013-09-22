@@ -19,7 +19,7 @@ namespace Web.Areas.System.Controllers
             accountMainModel.CheckHasPermissions(LoginSystemUser.ID, accountMainId).NotAuthorizedPage();
             //角色列表
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
-            var roleList = roleModel.GetRoleList(accountMainId);
+            var roleList = roleModel.GetRoleListAll(accountMainId);
             ViewBag.RoleList = roleList;
             //项目信息
             var entity = accountMainModel.Get(accountMainId);

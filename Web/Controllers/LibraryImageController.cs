@@ -17,6 +17,9 @@ namespace Web.Controllers
             var list = libraryModel.GetLibraryList(LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 15);
             ViewBag.LibraryType = LibraryType();
             ViewBag.HostName = LoginAccount.HostName;
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "素材管理-图片素材", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View(list);
         }
 

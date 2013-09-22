@@ -10,6 +10,8 @@ namespace Interface
     {
         List<Role> GetRoleList(int? accountMainID);
 
+        List<Role> GetRoleListAll(int? accountMainID);
+
         Result IsCanFindByUser(int id, bool value);
     }
 }

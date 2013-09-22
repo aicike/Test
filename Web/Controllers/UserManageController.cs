@@ -25,6 +25,11 @@ namespace Web.Controllers
             ViewBag.LoginAccountID = LoginAccount.ID;
             var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
             var userList = userModel.GetUserByAccountID(LoginAccount.ID, groupID.Value).ToPagedList(id ?? 1, 15);
+
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "用户管理-分组", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
+
             return View(userList);
         }
 
@@ -47,6 +52,8 @@ namespace Web.Controllers
             {
                 return AlertJS_NoTag(new Dialog(result.Error));
             }
+
+            
             return string.Format("location.href='{0}'", Url.Action("Index", "UserManage", new { HostName = LoginAccount.HostName, groupID = currentGroupID }));
         }
 
@@ -85,6 +92,10 @@ namespace Web.Controllers
 
             var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
             var user = userModel.Get(userID);
+
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "用户管理-修改用户信息", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View(user);
         }
 
@@ -117,6 +128,9 @@ namespace Web.Controllers
 
             var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
             var user = userModel.Get(userID);
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "用户管理-用户信息", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View(user);
         }
     }

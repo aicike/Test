@@ -20,6 +20,9 @@ namespace Web.Controllers
             ViewBag.HostName = LoginAccount.HostName;
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             var entity = accountMainModel.Get(LoginAccount.CurrentAccountMainID);
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-基础设置", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View(entity);
         }
 
