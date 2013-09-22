@@ -78,11 +78,12 @@ namespace Web.Controllers
             {
                 App_User appuser = new App_User();
                 appuser.ID = user.ID;
-                appuser.Name = user.UserLoginInfo.Name??"";
-                appuser.Phone = user.UserLoginInfo.Phone??"";
-                appuser.Email = user.UserLoginInfo.Email??"";
-                appuser.NameNote = user.Name??"";
-                appuser.HeadImagePath = user.UserLoginInfo.HeadImagePath.DefaultHeadImage();
+                appuser.Name = user.UserLoginInfo.Name ?? "";
+                appuser.Phone = user.UserLoginInfo.Phone ?? "";
+                appuser.Email = user.UserLoginInfo.Email ?? "";
+                appuser.NameNote = user.Name ?? "";
+                appuser.HeadImagePath = SystemConst.WebUrl + user.UserLoginInfo.HeadImagePath.DefaultHeadImage().Replace("~", "");
+                appuser.Pwd = Common.DESEncrypt.Decrypt(user.UserLoginInfo.LoginPwd);
                 result.Entity = appuser;
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);

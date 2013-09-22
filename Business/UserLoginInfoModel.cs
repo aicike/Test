@@ -18,7 +18,7 @@ namespace Business
         public new Result Edit(UserLoginInfo userLogiInfo)
         {
             Result result = new Result();
-            bool isExist = List().Any(a => a.Email.Equals(userLogiInfo.Email, StringComparison.CurrentCultureIgnoreCase) && a.ID != userLogiInfo.ID);
+            bool isExist = List().Any(a => a.Email.Equals(userLogiInfo.Email, StringComparison.CurrentCultureIgnoreCase) && a.ID != userLogiInfo.ID && a.Email.Length > 0);
             if (isExist)
             {
                 result.Error = "该邮箱已存在，无法保存。";
@@ -129,7 +129,7 @@ namespace Business
                         return result;
                     }
                 }
-                result.Entity = user.ID;
+                result.Entity = new App_User() { ID = user.ID, Email = user.UserLoginInfo.Email, Pwd = Common.DESEncrypt.Decrypt(user.UserLoginInfo.LoginPwd) };
                 return result;
             }
             return result;
@@ -144,11 +144,16 @@ namespace Business
 
             var userLoginInfo = List().Where(a => a.Email.Equals(app_UserLoginInfo.Email, StringComparison.CurrentCultureIgnoreCase) && a.LoginPwd == pwd
                 && a.Users.Any(b => b.SystemStatus == (int)EnumSystemStatus.Active && b.AccountStatus.Token == accountStatus)).FirstOrDefault();
-            if (userLoginInfo == null)
+
+            var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
+            var clientInfo = clientInfoModel.GetByClientID(app_UserLoginInfo.ClientID);
+
+            if (userLoginInfo == null || (userLoginInfo.ID != clientInfo.EntityID))
             {
                 result.Error = "邮箱或密码错误，登录失败。";
                 return result;
             }
+
             var user = userLoginInfo.Users.Where(a => a.AccountMainID == app_UserLoginInfo.AccountMainID).FirstOrDefault();
             App_User appuser = new App_User();
             appuser.ID = user.ID;
@@ -167,6 +172,12 @@ namespace Business
         public UserLoginInfo GetByUserID(int userID)
         {
             return List().Where(a => a.Users.Any(b => b.ID == userID)).FirstOrDefault();
+        }
+
+        public UserLoginInfo GetByClientID(string clientID)
+        {
+            var clientInfo = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel).GetByClientID(clientID);
+            return GetByUserID(clientInfo.EntityID.Value);
         }
 
         /// <summary>

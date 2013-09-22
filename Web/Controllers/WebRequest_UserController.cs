@@ -14,12 +14,12 @@ namespace Web.Controllers
     public class WebRequest_UserController : Controller
     {
         /// <summary>
-        /// 登录
+        /// 安卓登录
         /// </summary>
-        public string UserLogin(string email, string loginPwd, int accountMainID)
+        public string UserLogin(string email, string loginPwd, int accountMainID,string clientID)
         {
             var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
-            var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email, Pwd = loginPwd, AccountMainID = accountMainID });
+            var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email, Pwd = loginPwd, AccountMainID = accountMainID,ClientID=clientID});
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
         /// <summary>
@@ -136,6 +136,7 @@ namespace Web.Controllers
             if (user == null)
             {
                 result.Error = "请求错误，用户不存在或不可用。";
+                return Newtonsoft.Json.JsonConvert.SerializeObject(result);
             }
             var ulim = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
             var userLoginInfo = ulim.Get(user.UserLoginInfoID);
