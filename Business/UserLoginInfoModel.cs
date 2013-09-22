@@ -129,7 +129,7 @@ namespace Business
                         return result;
                     }
                 }
-                result.Entity = new App_User() { ID = user.ID, Email = user.UserLoginInfo.Email, Pwd = Common.DESEncrypt.Decrypt(user.UserLoginInfo.LoginPwd) };
+                result.Entity = new App_User() { ID = user.ID, Email = "", Pwd = userLoginInfo.Pwd };
                 return result;
             }
             return result;
