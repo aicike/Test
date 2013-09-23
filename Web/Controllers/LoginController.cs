@@ -75,7 +75,6 @@ namespace Web.Controllers
             var result = accountModel.Login(user.Email, user.LoginPwdPage);
             if (result.HasError)
             {
-                //return Alert(new Dialog(result,null,"alert('asdf')"));
                 return JavaScript("LandWaitFor('login','WaitImg',2);" + AlertJS_NoTag(new Dialog(result.Error)));
             }
             var account = Session[SystemConst.Session.LoginAccount] as Account;
