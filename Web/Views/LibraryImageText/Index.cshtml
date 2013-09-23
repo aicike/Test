@@ -65,11 +65,11 @@
                 <td class="operation">
                     @if (item.LibraryImageTexts != null && item.LibraryImageTexts.Count > 0)
                     {
-                        @Html.ActionLink("修改", "Edit", "LibraryImageText", new { HostName = ViewBag.HostName, id = item.ID, more = true }, null, true)
+                        @Html.ActionLink("修改", "Edit", "LibraryImageText", new { id = item.ID, more = true }, null, true)
                     }
                     else
                     {
-                        @Html.ActionLink("修改", "Edit", "LibraryImageText", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
+                        @Html.ActionLink("修改", "Edit", "LibraryImageText", new { id = item.ID }, null, true)
                     }
                     @Ajax.ActionLink("删除", "Delete", "LibraryImageText", new { HostName = ViewBag.HostName, id = item.ID },
                          new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "LibraryImageText", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)

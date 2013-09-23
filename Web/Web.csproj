@@ -188,6 +188,8 @@
     <Compile Include="Models\HtmlExtensions.cs" />
     <Compile Include="Models\MVCExpandMethod.cs" />
     <Compile Include="Models\NoClientCache.cs" />
+    <Compile Include="Models\SessionSharedHttpModule.cs" />
+    <Compile Include="Models\UrlHelperExpand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\blue.css" />
     <Content Include="Content\Icon\Icon.css" />
@@ -724,7 +726,6 @@
     <Content Include="Views\Library\VideoManage.cshtml" />
     <Content Include="Views\SalesMessage\Index.cshtml" />
     <Content Include="Views\SalesMessage\SalesUserList.cshtml" />
-    <Content Include="Views\LibraryImageText\AppView.cshtml" />
     <Content Include="Views\Default\AppView.cshtml" />
     <Content Include="Views\SalesMessage\SelectAtoUmes.cshtml" />
     <Content Include="Views\SingleChat\HistoryMes.cshtml" />

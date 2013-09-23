@@ -81,10 +81,10 @@ namespace Web.Controllers
                 return JavaScript("LandWaitFor('login','WaitImg',2);" + AlertJS_NoTag(new Dialog(result.Error)));
             }
             var account = Session[SystemConst.Session.LoginAccount] as Account;
-            var url = Url.RouteUrl("User", new { action = "Index", controller = "Home", HostName = account.HostName });
-            return JavaScript("console.log("+url+");window.location.href='" + url + "'");
+            var url = Url.RouteUrl("User", new { action = "Index", controller = "Home", HostName = account.HostName }, true);
+            return JavaScript("window.location.href='" + url + "'");
         }
-        
+
 
         #endregion
     }

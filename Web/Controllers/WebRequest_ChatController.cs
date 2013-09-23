@@ -56,7 +56,7 @@ namespace Web.Controllers
                             chat.ID = itext.ID;
                             chat.FileTitle = itext.Title;
                             chat.Summary = itext.Summary;
-                            chat.FileUrl = itext.ImagePath;
+                            chat.FileUrl =SystemConst.WebUrl+ itext.ImagePath.Replace("~","");
                             if (itext.LibraryImageTexts.Count > 0)
                             {
                                 List<App_AutoMessageReplyContent> subImageText = new List<App_AutoMessageReplyContent>();
@@ -66,7 +66,7 @@ namespace Web.Controllers
                                     rep_it.ID = it.ID;
                                     rep_it.Type = (int)EnumMessageType.ImageText;
                                     rep_it.FileTitle = it.Title;
-                                    rep_it.FileUrl = it.ImagePath;
+                                    rep_it.FileUrl = SystemConst.WebUrl + it.ImagePath.Replace("~", "");
                                     //rep_it.SendTime = sendTime;
                                     subImageText.Add(rep_it);
                                 }

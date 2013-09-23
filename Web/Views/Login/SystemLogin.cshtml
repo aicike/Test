@@ -6,7 +6,7 @@
 @section head{
 }
 @model Poco.SystemUser
-<div style="height: 460px; background: url('/Images/banner.jpg') repeat-x">
+<div style="height: 430px; background-color: #fff">
     <div style="width: 960px; margin: 0px auto 0px auto">
         <div class="homelogin">
             @using (Ajax.BeginForm(new AjaxOptions() { UpdateTargetId = "alert" }))
@@ -22,8 +22,9 @@
                     @Html.ValidationMessageFor(a => a.LoginPwdPage)
                 </div>
                 <div>
-                        <input id="login" onclick="LandWaitFor('login','WaitImg',1)" type="submit" value="登录" class="button" style="font-size: 14px;padding:5px 15px;" />
-                         <img id="WaitImg" src="../../Images/LandWaitFor.gif" style="display:none" />
+                    <input id="login" onclick="LandWaitFor('login','WaitImg',1)" type="submit" value="登录"
+                        class="button" style="font-size: 14px; padding: 5px 15px;" />
+                    <img id="WaitImg" src="../../Images/LandWaitFor.gif" style="display: none" />
                 </div>
             }
         </div>
@@ -39,7 +40,7 @@
                 <div class="titleFont">
                     方便简单</div>
                 <div style="margin-top: 80px;" class="contentFont">
-                    语音消息，文字消息，图文详细，聊天从此不再枯燥。</div>
+                    语音消息，文字消息，图文信息，聊天从此不再枯燥。</div>
             </div>
             <div style="float: right; width: 409px; margin-top: 35px;">
                 <img src="../../Images/m1.png" style="max-height: 500px;" />

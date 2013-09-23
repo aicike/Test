@@ -38,6 +38,13 @@
             margin-left: 25px;
             float: left;
         }
+        .item_img_maintext
+        {
+            position: absolute;
+            left: 130px;
+            top: 72px;
+            z-index: 0;
+        }
         .divEdit > form > div > input[type='text'], .divEdit > form > div > textarea
         {
             width: 100%;
@@ -114,7 +121,25 @@
                 return true;
             });
 
-            $("#Title").focus();
+            $("#Title").focus().keyup(function () {
+                var title = $(this).val().trim();
+                if (title.length == 0) {
+                    $("#itemMain_title").text("标题");
+                } else {
+                    $("#itemMain_title").text(title);
+                }
+            });
+
+            $("#Summary").keyup(function () {
+                var summary = $(this).val().trim();
+                if (summary.length == 0) {
+                    $("#itemMain_summary").text("摘要");
+                } else {
+                    $("#itemMain_summary").text($(this).val());
+                }
+            });
+
+
             $("#btnAdd").click(function () {
                 $("#valContent").hide();
                 if ($.trim(ue.getContentTxt()).length <= 0) {
@@ -129,13 +154,16 @@
     单图文消息</div>
 <div class="body">
     <div class="divPreview">
-        <div>
-            标题</div>
-        <div style="height: 160px">
-            <img id="imgCoverPreview" src="@Url.Content(Model.ImagePath)" style="width: 320px; max-height: 160px; margin: auto 0px;" />
+        <div id="itemMain_title" style="width: 300px; word-break: break-all; word-wrap: break-word;">
+            @Model.Title</div>
+        <div style="height: 160px; position: relative; border: 1px solid #E7E7E7; margin-top: 10px;">
+            <span class="item_img_maintext">封面图片</span>
+            <img id="imgCoverPreview" src="@Url.Content(Model.ImagePath)" style="width: 298px; max-height: 160px; margin: auto 0px;
+                z-index: 1; position: absolute;" />
         </div>
-        <div>
-            摘要
+        <div id="itemMain_summary" style="margin-top: 15px; margin-bottom: 10px; width: 300px;
+            word-wrap: break-word;">
+            @Model.Summary
         </div>
     </div>
     <div class="divEdit">

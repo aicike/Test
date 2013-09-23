@@ -1,4 +1,0 @@
-CADC（长安地产售楼部）
-    |____Base（logo，文件等）
-    |____Account(账号头像)
-    |____FileLibrary(素材库等)

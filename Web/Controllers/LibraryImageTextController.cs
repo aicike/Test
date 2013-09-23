@@ -37,7 +37,7 @@ namespace Web.Controllers
         [ValidateInput(false)]
         public ActionResult Add(LibraryImageText libraryImageText, HttpPostedFileBase CoverImagePathFile)
         {
-            libraryImageText.AccountMainID = LoginAccount.ID;
+            libraryImageText.AccountMainID = LoginAccount.CurrentAccountMainID;
             var libraryModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
             var result = libraryModel.Add(libraryImageText, CoverImagePathFile);
             if (result.HasError)
@@ -63,7 +63,7 @@ namespace Web.Controllers
                 }
                 else
                 {
-                    return SystemConst.WebUrl + Url.Content(result.Entity.ToString());
+                    return Url.Content(result.Entity.ToString());
                 }
             }
             else
@@ -128,7 +128,7 @@ namespace Web.Controllers
             var entity = libraryModel.Get(id);
             ImageText it = new ImageText();
             it.title = entity.Title;
-            it.image = entity.ImagePath;
+            it.image = @Url.Content(entity.ImagePath);
             it.summary = entity.Summary;
             it.body = entity.Content;
             if (entity.LibraryImageTexts != null)
@@ -139,7 +139,7 @@ namespace Web.Controllers
                     it.sub.Add(new ImageText()
                     {
                         title = item.Title,
-                        image = item.ImagePath,
+                        image = @Url.Content(item.ImagePath),
                         summary = item.Summary,
                         body = item.Content,
                     });
@@ -165,20 +165,20 @@ namespace Web.Controllers
             lit.ImagePath = it.image;
             lit.Summary = it.summary;
             lit.Content = it.body;
-            lit.AccountMainID = LoginAccount.ID;
-            List<LibraryImageText> sublist=new List<LibraryImageText>();
+            lit.AccountMainID = LoginAccount.CurrentAccountMainID;
+            List<LibraryImageText> sublist = new List<LibraryImageText>();
             if (it.sub != null)
             {
                 foreach (var item in it.sub)
                 {
                     sublist.Add(new LibraryImageText()
                     {
-                        LibraryImageTextParentID=id,
+                        LibraryImageTextParentID = id,
                         Title = item.title,
                         Summary = "",
                         ImagePath = item.image,
                         Content = item.body,
-                        AccountMainID = LoginAccount.ID
+                        AccountMainID = LoginAccount.CurrentAccountMainID
                     });
                 }
             }

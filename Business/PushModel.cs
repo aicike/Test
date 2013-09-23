@@ -134,7 +134,7 @@ namespace Business
             PushMessage message = new PushMessage();
             message.Title = title;
             message.Text = content;
-            message.Logo = "logo.png";
+            message.Logo = "ic_launcher.png";
             message.EnumEvent = EnumEvent.Wait;// EnumEvent.Immediately;
             message.MessageJson = json;
             result = Push_Getui.SendMessage(message, PushIDInfo.Android);
