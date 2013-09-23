@@ -76,6 +76,10 @@ namespace Web.Controllers
             var MessageModel = Factory.Get<IMessageModel>(SystemConst.IOC_Model.MessageModel);
             var message = MessageModel.GetHistoryList(LoginAccount.ID, userID).ToPagedList(id ?? 1, 30);
 
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "历史聊天记录", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
+
             return View(message);
         }
 

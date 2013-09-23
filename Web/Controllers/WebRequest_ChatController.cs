@@ -141,7 +141,7 @@ namespace Web.Controllers
         /// <param name="FileBuffer">二进制文件</param>
         /// <returns></returns>
         [ValidateInput(false)]
-        public string UpLodeFiles(int FileType, int UserType, int UserID, int UserAccountMainID)//byte[] FileBuffer
+        public string UpLodeFiles(int FileType, int UserType, int UserID, int UserAccountMainID,string Token)//byte[] FileBuffer
         {
 
             Result result = new Result();
@@ -204,7 +204,7 @@ namespace Web.Controllers
 
                 //System.IO.File.WriteAllBytes(FilePath, FileBuffers);
                 //返回路径
-                result.Entity = SystemConst.WebUrl + Url.Content(Path);
+                result.Entity = new { URL = SystemConst.WebUrl + Url.Content(Path), Token = Token };
                 return Newtonsoft.Json.JsonConvert.SerializeObject(result);
             }
             catch (Exception ex)

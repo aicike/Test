@@ -48,7 +48,7 @@ namespace Web.Areas.System.Controllers
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             accountMainModel.CheckHasPermissions(LoginSystemUser.ID, accountMainId).NotAuthorizedPage();
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
-            var roles = roleModel.GetRoleList(null);
+            var roles = roleModel.GetRoleListAll(null);
             var selectListRoles = new SelectList(roles, "ID", "Name");
             List<SelectListItem> newRolesList = new List<SelectListItem>();
             newRolesList.Add(new SelectListItem { Text = "请选择", Value = "select", Selected = true });
