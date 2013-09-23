@@ -20,6 +20,9 @@ namespace Web.Controllers
 
         public ActionResult Index()
         {
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "首页", WebTitleRemark, "");
+            ViewBag.Title = webTitle;
             return View();
             //return RedirectToAction("SystemLogin");
         }
@@ -32,7 +35,7 @@ namespace Web.Controllers
         public ActionResult SystemLogin()
         {
             string WebTitleRemark = SystemConst.WebTitleRemark;
-            string webTitle = string.Format(SystemConst.Business.WebTitle, "登陆", WebTitleRemark, "");
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "登录", WebTitleRemark, "");
             ViewBag.Title = webTitle;
             return View();
         }
@@ -63,7 +66,7 @@ namespace Web.Controllers
         {
             Session["IsHaveMessage"] = "0";
             string WebTitleRemark = SystemConst.WebTitleRemark;
-            string webTitle = string.Format(SystemConst.Business.WebTitle, "登陆", WebTitleRemark, "");
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "登录", WebTitleRemark, "");
             ViewBag.Title = webTitle;
             return View();
         }

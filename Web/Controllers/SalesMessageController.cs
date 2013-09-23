@@ -79,6 +79,10 @@ namespace Web.Controllers
             }
 
             ViewBag.ID = id;
+            ViewBag.HostName = LoginAccount.HostName;
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "聊天记录", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+
             return View(message);
         }
 

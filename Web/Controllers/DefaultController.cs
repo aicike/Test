@@ -15,6 +15,10 @@ namespace Web.Controllers
         {
             var libraryModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
             var entity = libraryModel.Get(id);
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "图文信息", "", WebTitleRemark);
+            ViewBag.Title = webTitle;
+
             return View(entity);
         }
 
@@ -33,6 +37,9 @@ namespace Web.Controllers
             Result result = userLoginInfoModel.FindPwd_CheckCode(code);
             ViewBag.Result = result;
             ViewBag.Code = code;
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "找回密码", "", WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View();
         }
 
@@ -50,7 +57,9 @@ namespace Web.Controllers
         }
 
         public ActionResult ContactUs() {
-
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "联系我们", WebTitleRemark,"");
+            ViewBag.Title = webTitle;
             return View();
         }
 
