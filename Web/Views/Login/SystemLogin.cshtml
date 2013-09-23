@@ -9,7 +9,7 @@
 <div style="height: 460px; background: url('/Images/banner.jpg') repeat-x">
     <div style="width: 960px; margin: 0px auto 0px auto">
         <div class="homelogin">
-            @using (Ajax.BeginForm(new AjaxOptions() { UpdateTargetId = "alert" }))
+            @using (Ajax.BeginForm(new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "LandWaitFor('login','WaitImg',1)" }))
             {   
                 <div style="font-size: 20px; margin-bottom: 10px;">
                     登录</div>

@@ -27,5 +27,19 @@ namespace Web.Controllers
 
             return View(account);
         }
+        [AllowCheckPermissions(false)]
+        [HttpPost]
+        public ActionResult Edit(Account account, HttpPostedFileBase HeadImagePathFile)
+        {
+            var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
+
+            var result = accountModel.Edit(account, LoginAccount.CurrentAccountMainID, HeadImagePathFile);
+            if (result.HasError)
+            {
+                return Alert(new Dialog(result.Error));
+            }
+
+            return RedirectToAction("Index", "set", new { HostName = LoginAccount.HostName });
+        }
     }
 }

@@ -9,6 +9,45 @@
             $("#btnUpload").click(function () {
                 $("#HeadImagePathFile").click();
             });
+
+
+            $("#LoginPwdPage,#LoginPwdPageCompare").val('@Common.DESEncrypt.Decrypt(Model.LoginPwd)');
+
+            //选择本地图片
+            $("#HeadImagePathFile").change(function () {
+                var fileName = $("#HeadImagePathFile").val();
+                //$("#HeadImagePath").val(fileName);
+                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+                $("span[data-valmsg-for='HeadImagePath']").empty().attr("class", "field-validation-valid");
+                switch (suffix) {
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".gif":
+                    case ".bmp":
+                        break;
+                    default:
+                        $("span[data-valmsg-for='HouseTypeImagePath']").text("支持下列图片格式：.jpg|.jpeg|.png|.gif|.bmp").attr("class", "field-validation-error");
+                        break;
+                }
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#imgLogo").attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+                else {
+                    $("#imgLogo").attr('src', "#");
+                    $("#HeadImagePath").val("");
+                }
+                return false;
+            });
+
+
+
+
         });
     </script>
 }
@@ -23,7 +62,7 @@
     </ul>
 </div>
 <div class="bodyRight">
-    @using (Html.BeginForm("Edit", "BasisSet", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Edit", "Set", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <fieldset style="border: 1px solid #E7E7E7;">
             <legend>账号信息</legend>
