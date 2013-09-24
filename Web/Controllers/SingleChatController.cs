@@ -148,7 +148,7 @@ namespace Web.Controllers
                     else if (MesType == ((int)EnumMessageType.ImageText).ToString())
                     {
                         np.ImgTextID = imgtextID;
-                        //todo:还需要需要filtTitle,fileUrl,Summary
+                        //todo:还需要需要filtTitle,fileUrl,Summary,子图文
                     }
 
 
