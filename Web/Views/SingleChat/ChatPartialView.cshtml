@@ -57,8 +57,8 @@
                 else if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Image)
                 {
                     if (!string.IsNullOrEmpty(item.FileUrl))
-                    { 
-                    <img id="imgUImg" onclick="ShowMessage('1','@Url.Content(item.FileUrl)')" style=" height:120px;max-width:230px; max-height:140px; cursor:pointer" src="http://@item.FileUrl" />
+                    {
+                    <img id="imgUImg" onclick="ShowMessage('1','http://@item.FileUrl')" style=" height:120px;max-width:230px; max-height:140px; cursor:pointer" src="http://@item.FileUrl" />
                     }
                 }
                 else if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Voice)
@@ -66,7 +66,7 @@
                     <table cellpadding="0" cellspacing="0" border="0">
                         <tr>
                             <td width="35px">
-                                <img id="VoiceYL"  onclick="ShowMessage('2','@Url.Content(item.FileUrl)',this)" width="32px" src="~/Images/Start.png" title="点击播放" style=" cursor:pointer" />
+                                <img id="VoiceYL"  onclick="ShowMessage('2','http://@item.FileUrl',this)" width="32px" src="~/Images/Start.png" title="点击播放" style=" cursor:pointer" />
                             </td>
                             <td>
                                 [点击播放语音]
@@ -79,7 +79,7 @@
                     <table cellpadding="0" cellspacing="0" border="0">
                         <tr>
                             <td width="35px">
-                                <img id="VoiceYL"  onclick="ShowMessage('3','@Url.Content(item.FileUrl)')" width="32px" src="~/Images/Start.png" title="点击播放" style=" cursor:pointer" />
+                                <img id="VoiceYL"  onclick="ShowMessage('3','http://@item.FileUrl')" width="32px" src="~/Images/Start.png" title="点击播放" style=" cursor:pointer" />
                             </td>
                             <td>
                                 [点击播放视频]
