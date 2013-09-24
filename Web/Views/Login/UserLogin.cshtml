@@ -7,7 +7,7 @@
 <div style="height: 430px; background-color: #fff">
     <div style="width: 960px; margin: 0px auto 0px auto">
         <div class="homelogin">
-            @using (Ajax.BeginForm(new AjaxOptions() { UpdateTargetId = "alert" }))
+            @using (Ajax.BeginForm(new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "LandWaitFor('login','WaitImg',1)"  }))
             { 
                 <div style="font-size: 20px; margin-bottom: 10px;">
                     登录</div>
@@ -20,9 +20,8 @@
                     @Html.ValidationMessageFor(a => a.LoginPwdPage)
                 </div>
                 <div>
-                    <input id="login" onclick="LandWaitFor('login','WaitImg',1)" type="submit" value="登录"
-                        class="button2" />
-                    <img id="WaitImg" src="../../Images/LandWaitFor.gif" style="display: none" />
+                    <input id="login" onclick="" type="submit" value="登录" class="button2"/>
+                    <img id="WaitImg" src="../../Images/LandWaitFor.gif" style="display:none" />
                 </div>
             }
         </div>
