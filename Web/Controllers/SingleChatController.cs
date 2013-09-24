@@ -14,6 +14,7 @@ using agsXMPP;
 using System.Threading;
 using agsXMPP.protocol.client;
 using System.Configuration;
+using Poco.WebAPI_Poco;
 
 namespace Web.Controllers
 {
@@ -148,7 +149,32 @@ namespace Web.Controllers
                     else if (MesType == ((int)EnumMessageType.ImageText).ToString())
                     {
                         np.ImgTextID = imgtextID;
-                        //todo:还需要需要filtTitle,fileUrl,Summary,子图文
+                        var libraryImageTextModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
+                        var itext = libraryImageTextModel.Get(int.Parse(imgtextID));
+                        if (itext != null)
+                        {
+                            np.fileTitle = itext.Title;
+                            np.Summary = itext.Summary;
+                            np.FielUrl = SystemConst.WebUrl + Url.Content(itext.ImagePath);
+                            if (itext.LibraryImageTexts.Count > 0)
+                            {
+                                List<App_AutoMessageReplyContent> subImageText = new List<App_AutoMessageReplyContent>();
+                                foreach (var it in itext.LibraryImageTexts)
+                                {
+                                    App_AutoMessageReplyContent rep_it = new App_AutoMessageReplyContent();
+                                    rep_it.ID = it.ID;
+                                    rep_it.Type = (int)EnumMessageType.ImageText;
+                                    rep_it.FileTitle = it.Title;
+                                    rep_it.FileUrl = SystemConst.WebUrl + it.ImagePath.Replace("~", "");
+                                    //rep_it.SendTime = sendTime;
+                                    subImageText.Add(rep_it);
+                                }
+                                np.Subcontent = Newtonsoft.Json.JsonConvert.SerializeObject(subImageText);
+                            }
+                           
+                        }
+
+
                     }
 
 

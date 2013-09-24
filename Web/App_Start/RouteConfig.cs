@@ -27,6 +27,12 @@ namespace Web
             //    defaults: new { id = UrlParameter.Optional }
             //);
 
+            routes.Add("User", new DomainRoute(
+                          "{HostName}.imtimely.com",     // Domain with parameters 
+                          "{controller}/{action}/{id}",    // URL with parameters 
+                          new { id = UrlParameter.Optional }  // Parameter defaults
+            ));
+
 
             routes.MapRoute(
                 name: "Default",
@@ -34,11 +40,7 @@ namespace Web
                 defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional }
             );
 
-            routes.Add("User", new DomainRoute(
-               "{HostName}.imtimely.com",     // Domain with parameters 
-               "{controller}/{action}/{id}",    // URL with parameters 
-               new { id = UrlParameter.Optional }  // Parameter defaults
-            ));
+
 
         }
     }
