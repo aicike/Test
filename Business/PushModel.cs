@@ -146,20 +146,6 @@ namespace Business
         /// </summary>
         public Result PushFromChat(EnumMessageType msgType, string content, EnumClientUserType toUserType, int toUserID, EnumClientUserType fromUserType, int fromUserID)
         {
-            //string name = null;
-            ////获取发信人名称
-            //if (fromUserType == EnumClientUserType.Account)
-            //{
-            //    var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-            //    var account = accountModel.Get(fromUserID);
-            //    name = account.Name;
-            //}
-            //else
-            //{
-            //    var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
-            //    var user = userModel.Get(fromUserID);
-            //    name = user.Name;
-            //}
             string title = "你有一条消息。";
             Result result = new Result();
             var iosModel = Factory.Get("Push_IOS") as IPushModel;
@@ -182,7 +168,7 @@ namespace Business
             PushMessage message = new PushMessage();
             message.Title = title;
             message.Text = "";//content;
-            message.Logo = "logo.png";
+            message.Logo = "ic_launcher.png";
             message.EnumEvent = EnumEvent.Wait;// EnumEvent.Immediately;
             message.MessageJson = json;
             result = Push_Getui.SendMessage(message, PushIDInfo.Android);

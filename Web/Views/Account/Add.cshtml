@@ -19,24 +19,29 @@
                 $("#Account_HeadImagePath").val(fileName);
                 var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
                 $("span[data-valmsg-for='Account_HeadImagePath']").empty().attr("class", "field-validation-valid");
+                var isOk = false;
                 switch (suffix) {
                     case ".jpg":
                     case ".jpeg":
                     case ".png":
                     case ".gif":
                     case ".bmp":
+                        isOk = true;
                         break;
                     default:
+                        $("#HeadImagePathFile").val("");
                         $("span[data-valmsg-for='Account_HeadImagePath']").text("支持下列图片格式：.jpg|.jpeg|.png|.gif|.bmp").attr("class", "field-validation-error");
                         break;
                 }
-                var input = this;
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        $("#imgLogo").attr('src', e.target.result);
-                    };
-                    reader.readAsDataURL(input.files[0]);
+                if (isOk) {
+                    var input = this;
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $("#imgLogo").attr('src', e.target.result);
+                        };
+                        reader.readAsDataURL(input.files[0]);
+                    }
                 }
                 return false;
             });
@@ -62,7 +67,7 @@
                 var values = $("#Account_Email").val();
 
                 if (values != "" && values != undefined) {
-                    var YZUrl = '@Url.Action("OnlyValidation", "Ajax", new { Area="",HostName="" })';
+                    var YZUrl = '@Url.Action("OnlyValidation", "Ajax", new { Area = "", HostName = "" })';
                     $.post(YZUrl, { tableName: "Account", field: "Email", value: values }, function (result) {
 
                         if (result == "True") {
@@ -168,8 +173,8 @@
                     </td>
                     <td>
                         <img id="imgLogo" style="max-width: 80px; max-height: 80px; float: left" />
-                        <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" style="display: none"  />
-                        &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="button" value="上传" id="btnUpload"/>
+                        <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" style="display: none" />
+                        &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="button" value="上传" id="btnUpload" />
                         @Html.TextBoxFor(a => a.Account.HeadImagePath, new { style = "width:0px;visibility:hidden" })
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Account.HeadImagePath)

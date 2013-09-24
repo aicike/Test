@@ -58,7 +58,7 @@
                 {
                     if (!string.IsNullOrEmpty(item.FileUrl))
                     { 
-                    <img id="imgUImg" onclick="ShowMessage('1','@Url.Content(item.FileUrl)')" style=" height:120px;max-width:230px; max-height:140px; cursor:pointer" src="@Url.Content(item.FileUrl)" />
+                    <img id="imgUImg" onclick="ShowMessage('1','@Url.Content(item.FileUrl)')" style=" height:120px;max-width:230px; max-height:140px; cursor:pointer" src="http://@item.FileUrl" />
                     }
                 }
                 else if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Voice)
@@ -72,8 +72,7 @@
                                 [点击播放语音]
                             </td>
                         </tr>
-                    </table> 
-                    
+                    </table>
                 }
                 else if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Video)
                 {

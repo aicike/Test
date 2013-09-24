@@ -32,7 +32,9 @@ namespace Business
             image.SaveAs(pathIO);
 
             //缩略图
-            if (Tool.Thumbnail(pathIO, thumbnailPathIO, Convert.ToInt32(SystemConst.Business.ThumbnailImage_Width)))
+            //if (Tool.Thumbnail(pathIO, thumbnailPathIO, Convert.ToInt32(SystemConst.Business.ThumbnailImage_Width)))
+            //{
+            if (Tool.GetPicThumbnail(pathIO, thumbnailPathIO,90))
             {
                 //删除原头像
                 if (File.Exists(pathIO))

@@ -59,19 +59,7 @@ namespace Business
             }
             return result;
         }
-
-        static void Main(string[] args)
-        {
-            //PushMessageToList接口
-            PushMessageToList();
-
-            //PushMessageToSingle接口
-            //PushMessageToSingle();
-
-            //pushMessageToApp接口
-            //pushMessageToApp();
-        }
-
+        
         /// <summary>
         /// 透传
         /// </summary>
@@ -113,7 +101,7 @@ namespace Business
             template.AppKey = APPKEY;                           // 应用APPKEY
             template.Title = "此处填写通知标题";                // 通知标题
             template.Text = "此处填写通知内容";                 // 通知内容
-            template.Logo = "push.png";                         // 应用Logo
+            template.Logo = "ic_launcher.png";                         // 应用Logo
             template.TransmissionType = "2";                    // 收到消息是否立即启动应用，1为立即启动，2则广播等待客户端自启动
             template.TransmissionContent = "你需要透传的内容";  // 需要透传的内容
             //template.IsRing = true;					// 收到通知是否响铃，可选，默认响铃
@@ -154,7 +142,7 @@ namespace Business
             template.AppKey = APPKEY;                   // 应用APPKEY
             template.Title = "此处填写通知标题";        // 通知标题
             template.Text = "此处填写通知内容";         // 通知内容
-            template.Logo = "push.png";                 // 通知Logo
+            template.Logo = "ic_launcher.png";                 // 通知Logo  
             template.Url = "跳转的网页地址";            // 跳转地址
             //template.IsRing = true;					// 收到通知是否响铃，可选，默认响铃
             //template.IsVibrate = true;					// 收到通知是否震动，可选，默认振动
