@@ -51,7 +51,7 @@ namespace Web.Controllers
                     case (int)EnumMessageType.Video:
                     case (int)EnumMessageType.Voice:
                         chat.FileUrl = item.FileUrl;
-                        //chat.FL=
+                        chat.FL = String.IsNullOrEmpty(item.FileLength) ? "0" : item.FileLength;
                         break;
                     case (int)EnumMessageType.ImageText:
                         var itext = libraryImageTextModel.Get(item.LibraryImageTextsID.Value);
