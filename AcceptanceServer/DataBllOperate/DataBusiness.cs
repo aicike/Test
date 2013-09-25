@@ -22,6 +22,12 @@ namespace AcceptanceServer.DataBllOperate
             Pmg.TextContent = msg.Body;
             Pmg.EnumMessageTypeID = int.Parse(Np.EID);
             Pmg.FileUrl = Np.FielUrl;
+            Pmg.FileLength = Np.FL;
+            Pmg.voiceMP3Url = "";
+            if (Np.EID == "3")//音频
+            {
+                Pmg.voiceMP3Url = Np.FielUrl.Substring(0, Np.FielUrl.LastIndexOf('.')) + ".mp3";
+            }
             Pmg.LibraryImageTextsID = null;
             Pmg.ConversationID = int.Parse(Np.SID);
             if(Np.ImgTextID != null)
@@ -62,6 +68,12 @@ namespace AcceptanceServer.DataBllOperate
             pm.MessageID = MessageID;
             pm.Content = msg.Body;
             pm.FileUrl = Np.FielUrl;
+            pm.FileLength = Np.FL;
+            pm.voiceMP3Url = "";
+            if (Np.EID == "3")//音频
+            {
+                pm.voiceMP3Url = Np.FielUrl.Substring(0, Np.FielUrl.LastIndexOf('.')) + ".mp3";
+            }
             pm.EnumMessageTypeID = int.Parse(Np.EID);
             pm.ConversationID = int.Parse(Np.SID);
             pm.LibraryImageTextsID = null;

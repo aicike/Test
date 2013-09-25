@@ -21,6 +21,7 @@
                 $("#trImg").attr("style", "display:");
                 $("#trVoice").attr("style", "display:none");
                 $("#trVideo").attr("style", "display:none");
+                $("#trImgText").attr("style", "display:none");
 
                 $("#ShowImg").attr("src", MesURL);
                 $("#dialogShowMessage").attr("title", "图片");
@@ -29,7 +30,12 @@
                     height: "auto",
                     width: "auto",
                     modal: true,
-                    draggable: false
+                    draggable: false,
+                    buttons: {
+                        "关闭浏览": function () {
+                            $(this).dialog("close");
+                        }
+                    }
                 });
 
             }
@@ -38,15 +44,21 @@
                 $("#trImg").attr("style", "display:none");
                 $("#trVoice").attr("style", "display:");
                 $("#trVideo").attr("style", "display:none");
+                $("#trImgText").attr("style", "display:none");
 
                 $("#playerVoice").attr("src", MesURL);
                 $("#dialogShowMessage").attr("title", "语音");
                 $("#dialogShowMessage").dialog({
                     resizable: false,
-                    height: "110",
+                    height: "180",
                     width: "550",
                     modal: true,
                     draggable: false,
+                    buttons: {
+                        "关闭浏览": function () {
+                            $(this).dialog("close");
+                        }
+                    },
                     beforeClose: function (event, ui) {
                         new MediaElement("playerVoice", {
                             enableKeyboard: false,
@@ -76,16 +88,21 @@
                 $("#trImg").attr("style", "display:none");
                 $("#trVoice").attr("style", "display:none");
                 $("#trVideo").attr("style", "display:");
-
+                $("#trImgText").attr("style", "display:none");
 
                 $("#playerVideo").attr("src", MesURL);
                 $("#dialogShowMessage").attr("title", "视频");
                 $("#dialogShowMessage").dialog({
                     resizable: false,
-                    height: "370",
+                    height: "440",
                     width: "570",
                     modal: true,
                     draggable: false,
+                    buttons: {
+                        "关闭浏览": function () {
+                            $(this).dialog("close");
+                        }
+                    },
                     beforeClose: function (event, ui) {
                         new MediaElement("playerVideo", {
                             enableKeyboard: false,
@@ -108,6 +125,39 @@
 
                     }
                 });
+            }
+            //图文
+            else if (Type == "4") {
+               
+                $("#trImg").attr("style", "display:none");
+                $("#trVoice").attr("style", "display:none");
+                $("#trVideo").attr("style", "display:none");
+                $("#trImgText").attr("style", "display:");
+
+               
+                 var src = "@Url.Action("ShowImagetext", "LibraryImageText", new { HostName = ViewBag.HostName })"+"?ImageTextID="+MesURL;
+                $("#iframeShowImgText").attr("src", src);
+               
+                $("#dialogShowMessage").dialog({
+                    resizable: false,
+                    height: "660",
+                    width: "560",
+                    modal: true,
+                    title:"图文",
+                    position:"center",
+                    draggable: false,
+                    buttons: {
+                        "关闭浏览": function () {
+                            $(this).dialog("close");
+                        }
+                    },
+                    beforeClose: function (event, ui) {
+                         $("#iframeShowImgText").attr("src", "");
+                    }
+                });
+                //MesURL==ID 
+               
+
             }
 
         }
@@ -212,7 +262,7 @@
                             <table cellpadding="0" cellspacing="0" border="0">
                                 <tr>
                                     <td width="35px">
-                                        <img id="VoiceYL"  onclick="ShowMessage('2','http://@item.FileUrl',this)" width="32px" src="~/Images/Start.png" title="点击播放" style=" cursor:pointer" />
+                                        <img id="VoiceYL"  onclick="ShowMessage('2','http://@item.voiceMP3Url',this)" width="32px" src="~/Images/Start.png" title="点击播放" style=" cursor:pointer" />
                                     </td>
                                     <td>
                                         [点击播放语音]
@@ -233,6 +283,27 @@
                                     </td>
                                 </tr>
                             </table> 
+                        }
+                        else if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.ImageText)
+                        {
+                            <div onclick="ShowMessage('4','@item.LibraryImageTextsID')" style=" cursor:pointer; border:1px solid #b3b3b3 ;border-radius:10px; width:220px; background-color:#fff; padding:8px">
+                                <table cellpadding="0" cellspacing="0" style="width: 100%; line-height: 15px">
+                                    <tr>
+                                        <td style="word-break: break-all; padding-bottom: 10px; font-size: 14px; font-weight: bold">@item.LibraryImageTexts.Title
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img style=" max-width:220px; " src="@Url.Content(item.LibraryImageTexts.ImagePath)"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="word-break: break-all; padding-top: 10px">@item.LibraryImageTexts.Summary
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                
                         }
                     </div>
                 </div>
@@ -280,6 +351,12 @@
         <tr id="trVideo">
             <td>
                 <video width="550px"  id="playerVideo" src="" controls="controls"></video>
+            </td>
+        </tr>
+        <tr id="trImgText">
+            <td>
+                <iframe id="iframeShowImgText" src="#" style="width: 540px; height: 530px; border: none;
+                    overflow:auto"></iframe>
             </td>
         </tr>
     </table>

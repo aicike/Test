@@ -59,6 +59,7 @@ namespace Poco
             set { SetTag("fileurl", value); }
         }
 
+
         /// <summary>
         /// 图文ID
         /// </summary>
@@ -98,6 +99,15 @@ namespace Poco
         {
             get { return GetTag("sendtime"); }
             set { SetTag("sendtime", value); }
+        }
+
+        /// <summary>
+        /// 视频 音频时间长度
+        /// </summary>
+        public string FL 
+        {
+            get { return GetTag("fl"); }
+            set { SetTag("fl", value); }
         }
         
     }
