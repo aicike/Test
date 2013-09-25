@@ -54,6 +54,12 @@ namespace Poco
         [Display(Name = "文件路径")]
         public string FileUrl { get; set; }
 
+        [Display(Name = "语音mp3路径")]
+        public string voiceMP3Url { get; set; }
+
+        [Display(Name = "语音 视频 时间长度")]
+        public string FileLength { get; set; }
+
         /// <summary>
         /// 对应的消息ID
         /// </summary>

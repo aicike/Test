@@ -103,7 +103,7 @@ namespace Web.Controllers
             var Group = GroupModel.GetGroupListByAccountID(AmiaccountID).Where(a => a.IsDefaultGroup);
 
             var Account_userModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
-            int cnt = Account_userModel.UpdUserTooAccount(UserID,AmiaccountID,groupID);
+            int cnt = Account_userModel.UpdUserTooAccount(UserID, AmiaccountID, Group.FirstOrDefault().ID);
 
             return RedirectToAction("SalesUserList", "SalesMessage", new { HostName = LoginAccount.HostName, accountID = AccountID, GruopID = groupID });
         }

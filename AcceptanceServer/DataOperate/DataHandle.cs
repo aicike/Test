@@ -16,8 +16,8 @@ namespace AcceptanceServer.DataOperate
         /// <returns></returns>
         public static DataSet InsertChatRecord(Message mg)
         {
-            string sql = @"insert into [Message](SystemStatus,TextContent,EnumMessageSendDirectionID,EnumMessageTypeID,FromAccountID,FromUserID,ToAccountID,ToUserID,IsReceive,SendTime,ReceiveTime,fileUrl,LibraryImageTextsID,ConversationID) 
-                                         values(0,@TextContent,@EnumMessageSendDirectionID,@EnumMessageTypeID,@FromAccountID,@FromUserID,@ToAccountID,@ToUserID,'false',getdate(),getdate(),@fileUrl,@LibraryImageTextsID,@ConversationID) select @@IDENTITY as TID";
+            string sql = @"insert into [Message](SystemStatus,TextContent,EnumMessageSendDirectionID,EnumMessageTypeID,FromAccountID,FromUserID,ToAccountID,ToUserID,IsReceive,SendTime,ReceiveTime,fileUrl,LibraryImageTextsID,ConversationID,voiceMP3Url,FileLength) 
+                                         values(0,@TextContent,@EnumMessageSendDirectionID,@EnumMessageTypeID,@FromAccountID,@FromUserID,@ToAccountID,@ToUserID,'false',getdate(),getdate(),@fileUrl,@LibraryImageTextsID,@ConversationID,@voiceMP3Url,@FileLength) select @@IDENTITY as TID";
             SqlParameter[] sp = new SqlParameter[]{
                 new SqlParameter("@TextContent",mg.TextContent == null?"" :mg.TextContent),
                 new SqlParameter("@EnumMessageSendDirectionID",mg.EnumMessageSendDirectionID),
@@ -28,7 +28,9 @@ namespace AcceptanceServer.DataOperate
                 new SqlParameter("@ToUserID",mg.ToUserID == null ? null : mg.ToUserID.Value.ToString()),
                 new SqlParameter("@fileUrl",mg.FileUrl),
                 new SqlParameter("@LibraryImageTextsID",mg.LibraryImageTextsID == null?null:mg.LibraryImageTextsID.ToString()),
-                new SqlParameter("@ConversationID",mg.ConversationID)
+                new SqlParameter("@ConversationID",mg.ConversationID),
+                new SqlParameter("@voiceMP3Url",mg.voiceMP3Url),
+                new SqlParameter("@FileLength",mg.FileLength)
             };
 
 
@@ -43,8 +45,8 @@ namespace AcceptanceServer.DataOperate
         /// <returns></returns>
         public static int InsertOffLineData(PendingMessages pm)
         {
-            string sql = @"insert into PendingMessages(SystemStatus,FromAccountID,FromUserID,ToAccountID,ToUserID,SendTime,Content,MessageID,EnumMessageTypeID,MSD,fileUrl,LibraryImageTextsID,ConversationID) 
-                            values(0,@FromAccountID,@FromUserID,@ToAccountID,@ToUserID,getdate(),@Content,@MessageID,@EnumMessageTypeID,@MSD,@fileUrl,@LibraryImageTextsID,@ConversationID)";
+            string sql = @"insert into PendingMessages(SystemStatus,FromAccountID,FromUserID,ToAccountID,ToUserID,SendTime,Content,MessageID,EnumMessageTypeID,MSD,fileUrl,LibraryImageTextsID,ConversationID,voiceMP3Url,FileLength) 
+                            values(0,@FromAccountID,@FromUserID,@ToAccountID,@ToUserID,getdate(),@Content,@MessageID,@EnumMessageTypeID,@MSD,@fileUrl,@LibraryImageTextsID,@ConversationID,@voiceMP3Url,@FileLength)";
             SqlParameter[] sp = new SqlParameter[]{
                  new SqlParameter("@FromAccountID",pm.FromAccountID == null ? null: pm.FromAccountID.Value.ToString()),
                  new SqlParameter("@FromUserID", pm.FromUserID == null ? null : pm.FromUserID.Value.ToString()),
@@ -57,6 +59,8 @@ namespace AcceptanceServer.DataOperate
                  new SqlParameter("@fileUrl",pm.FileUrl),
                  new SqlParameter("@LibraryImageTextsID",pm.LibraryImageTextsID == null ? null : pm.LibraryImageTextsID.ToString()),
                  new SqlParameter("@ConversationID",pm.ConversationID),
+                 new SqlParameter("@voiceMP3Url",pm.voiceMP3Url),
+                 new SqlParameter("@FileLength",pm.FileLength)
             };
 
 

@@ -60,6 +60,12 @@ namespace Poco
         [Display(Name="文件路径")]
         public string FileUrl { get; set; }
 
+        [Display(Name = "语音mp3路径")]
+        public string voiceMP3Url { get; set; }
+
+        [Display(Name = "语音 视频 时间长度")]
+        public string FileLength { get; set; }
+
         [Display(Name = "图文ID")]
         public int? LibraryImageTextsID { get; set; }
         public virtual LibraryImageText LibraryImageTexts { get; set; }

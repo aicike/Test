@@ -42,6 +42,10 @@
     <Reference Include="EzValidation.Core">
       <HintPath>..\packages\EzValidation.1.0.2\lib\EzValidation.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Interop.CAVEditLib">
+      <HintPath>..\packages\CAVEditLib\Interop.CAVEditLib.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Spring.Core, Version=1.3.2.40943, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
       <HintPath>..\packages\spring\Spring.Core.dll</HintPath>
@@ -752,6 +756,7 @@
     <Content Include="Views\Default\ContactUs.cshtml" />
     <Content Include="Views\Shared\_LayoutDefault.cshtml" />
     <Content Include="Views\Shared\_head.cshtml" />
+    <Content Include="Views\LibraryImageText\ShowImagetext.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

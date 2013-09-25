@@ -8,6 +8,7 @@ using Interface;
 using Poco;
 using System.Collections;
 using System.IO;
+using Poco.WebAPI_Poco;
 
 namespace Web.Controllers
 {
@@ -240,6 +241,35 @@ namespace Web.Controllers
             public string summary;
             public string body;
             public List<ImageText> sub;
+        }
+
+        //聊天展示图文
+        [AllowCheckPermissions(false)]
+        public ActionResult ShowImagetext(int ImageTextID)
+        {
+            var libraryImageTextModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
+            var itext = libraryImageTextModel.Get(ImageTextID);
+            if (itext != null)
+            {
+                itext.ImagePath=itext.ImagePath.Replace("~", "");
+                if (itext.LibraryImageTexts.Count > 0)
+                {
+                    List<App_AutoMessageReplyContent> subImageText = new List<App_AutoMessageReplyContent>();
+                    foreach (var it in itext.LibraryImageTexts)
+                    {
+                        App_AutoMessageReplyContent rep_it = new App_AutoMessageReplyContent();
+                        rep_it.ID = it.ID;
+                        rep_it.FileTitle = it.Title;
+                        rep_it.FileUrl = it.ImagePath.Replace("~","");
+                        rep_it.Content = it.Content;
+                        //rep_it.SendTime = sendTime;
+                        subImageText.Add(rep_it);
+                    }
+                    ViewBag.subImageTexts = subImageText;
+                }
+
+            }
+            return View(itext);
         }
     }
 }
