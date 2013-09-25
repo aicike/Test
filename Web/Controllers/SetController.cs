@@ -24,7 +24,12 @@ namespace Web.Controllers
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-个人信息", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
-
+            if (TempData["EditStatus"] != null)
+            {
+                var value = TempData["EditStatus"].ToString().Split('|');
+                ViewBag.EditStatus = value[0];
+                ViewBag.EditError = value[1];
+            }
             return View(account);
         }
         [AllowCheckPermissions(false)]
@@ -36,9 +41,12 @@ namespace Web.Controllers
             var result = accountModel.Edit(account, LoginAccount.CurrentAccountMainID, HeadImagePathFile);
             if (result.HasError)
             {
-                return Alert(new Dialog(result.Error));
+                TempData["EditStatus"] = "false|" + result.Error;
             }
-
+            else
+            {
+                TempData["EditStatus"] = "true|";
+            }
             return RedirectToAction("Index", "set", new { HostName = LoginAccount.HostName });
         }
     }

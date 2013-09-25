@@ -18,10 +18,12 @@ namespace Poco.WebAPI_Poco
         public bool IsRead { get; set; }
 
         public int SendDirection { get; set; }
-        
+
         public string FileTitle { get; set; }
 
         public string FileUrl { get; set; }
+
+        public string FL { get; set; }
 
         /// <summary>
         /// 只有图文消息使用的字段

@@ -45,9 +45,12 @@ namespace Web.Controllers
                         chat.Content = item.TextContent;
                         break;
                     case (int)EnumMessageType.Image:
+                        chat.FileUrl = item.FileUrl;
+                        break;
                     case (int)EnumMessageType.Video:
                     case (int)EnumMessageType.Voice:
                         chat.FileUrl = item.FileUrl;
+                        //chat.FL=
                         break;
                     case (int)EnumMessageType.ImageText:
                         var itext = libraryImageTextModel.Get(item.LibraryImageTextsID.Value);

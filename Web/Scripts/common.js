@@ -14,7 +14,7 @@
         jqueryAlert += data.BtnCancel + ":function () {" + data.BtnCancelClick + "}}";
     }
     jqueryAlert += "}); $('#dialog').dialog('open');";
-    $('#dialog').attr("title", (data.Title ? data.Title : "Message"));
+    $('#dialog').attr("title", (data.Title ? data.Title : "消息"));
     $('#dialog').html(data.Message);
     //console.log(jqueryAlert);
     eval(jqueryAlert);

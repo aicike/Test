@@ -58,10 +58,6 @@
         {
             margin-bottom: 5px;
         }
-        .divPreview div
-        {
-            height: 20px;
-        }
     </style>
     <script type="text/javascript">
         $(function () {
@@ -193,7 +189,7 @@
             <div>
                 <div class="div_title">
                     摘要</div>
-                @Html.TextAreaFor(a => a.Summary)
+                @Html.TextAreaFor(a => a.Summary, new { maxlength = "200" })
             </div>
             <div>
                 <div class="div_title" id="divContent">

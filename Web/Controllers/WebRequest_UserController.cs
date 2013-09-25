@@ -16,10 +16,10 @@ namespace Web.Controllers
         /// <summary>
         /// 安卓登录
         /// </summary>
-        public string UserLogin(string email, string loginPwd, int accountMainID,string clientID)
+        public string UserLogin(string email, string loginPwd, int accountMainID, string clientID)
         {
             var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
-            var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email, Pwd = loginPwd, AccountMainID = accountMainID,ClientID=clientID});
+            var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email, Pwd = loginPwd, AccountMainID = accountMainID, ClientID = clientID });
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
         /// <summary>
@@ -188,9 +188,29 @@ namespace Web.Controllers
         /// <summary>
         /// 找回密码
         /// </summary>
-        public string FindPwd(string email) {
+        public string FindPwd(string email)
+        {
             var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
             var result = userLoginInfoModel.FindPwd(email);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+        /// <summary>
+        /// 获取售楼部信息
+        /// </summary>
+        public string GetAccountMainInfo(int amid)
+        {
+            IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
+            var entity = accountMainModel.Get(amid);
+            Result result = new Result();
+            if (entity == null)
+            {
+                result.Error = "参数错误。";
+            }
+            else
+            {
+                result.Entity = new { n = entity.Name, a = entity.SaleAddress, p = entity.SalePhone };
+            }
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
     }

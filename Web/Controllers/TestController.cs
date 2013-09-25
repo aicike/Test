@@ -23,7 +23,7 @@ namespace Web.Controllers
             QrCodeModel model = new QrCodeModel();
 
 
-            MemoryStream ms = model.Get_Android_DownloadUrl("http://61.150.34.203/Test/Download/");
+            MemoryStream ms = model.Get_Android_DownloadUrl("http://192.168.1.166/Test/Download/");
             if (null != ms)
             {
                 Response.BinaryWrite(ms.ToArray());
@@ -32,6 +32,7 @@ namespace Web.Controllers
 
         public ActionResult Download()
         {
+            var rrr = Request;
             string path = Server.MapPath("~/Download/BuyAHouse.apk");
             //application/vnd.android.package-archive
             return File(path, "application/vnd.android.package-archive");

@@ -1,6 +1,13 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
     ViewBag.Menu = Poco.SystemConst.Menu.Set;
+    string editStatus = ViewBag.EditStatus;
+    string error = ViewBag.EditError;
+    var isEdit = false;
+    if (editStatus != null)
+    {
+        isEdit = true;
+    }
 }
 @model Poco.Account
 @section head{
@@ -9,7 +16,6 @@
             $("#btnUpload").click(function () {
                 $("#HeadImagePathFile").click();
             });
-
 
             $("#LoginPwdPage,#LoginPwdPageCompare").val('@Common.DESEncrypt.Decrypt(Model.LoginPwd)');
 
@@ -49,9 +55,17 @@
                 return false;
             });
 
-
-
-
+            @if (isEdit)
+            {
+                if (editStatus == "true")
+                { 
+                     @:JAlert({Message: "修改成功。",DialogType: "Ok",BtnOk: "确定"});
+                }
+                else
+                { 
+                     @:JAlert({Message: "@error",DialogType: "Ok",BtnOk: "确定"});
+                }
+            }
         });
     </script>
 }
@@ -122,7 +136,7 @@
                     </td>
                     <td>
                         <img id="imgLogo" style="max-width: 80px; max-height: 80px; float: left" src="@Url.Content(Model.HeadImagePath)"/>
-                        <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" style="display: none"/>
+                        <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" style="display: none" />
                         &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="button" value="上传" id="btnUpload" />
                         @Html.TextBoxFor(a => a.HeadImagePath, new { style = "width:0px;visibility:hidden" })
                     </td>
