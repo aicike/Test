@@ -260,6 +260,7 @@
     <Content Include="Scripts\ToolTip\jquery.tipTip.js" />
     <Content Include="Scripts\ToolTip\jquery.tipTip.minified.js" />
     <Content Include="Scripts\ToolTip\tipTip.css" />
+    <Content Include="Scripts\uploadify\uploadify-cancel.png" />
     <Content Include="ueditor\net\Uploader.cs">
       <SubType>Code</SubType>
     </Content>

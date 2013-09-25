@@ -209,7 +209,7 @@ namespace Web.Controllers
             }
             else
             {
-                result.Entity = new { n = entity.Name, a = entity.SaleAddress, p = entity.SalePhone };
+                result.Entity = new { n = entity.Name, a = entity.SaleAddress, p = string.IsNullOrEmpty(entity.SalePhone) ? "" : entity.SalePhone };
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
