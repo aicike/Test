@@ -86,7 +86,7 @@ namespace Web.Controllers
 
 
         [AllowCheckPermissions(false)]
-        public ActionResult SendMessage(int id, int userID, string Content, string MesType, string TypePath, string MesAddress, HttpPostedFileBase TypeImagePathFile, string imgtextID,string SID)
+        public ActionResult SendMessage(int id, int userID, string Content, string MesType, string TypePath, string MesAddress, HttpPostedFileBase TypeImagePathFile, string imgtextID, string SID, string FileLength)
         {
             TreedCon();
             Thread.Sleep(1000);
@@ -139,11 +139,13 @@ namespace Web.Controllers
                     else if (MesType == ((int)EnumMessageType.Voice).ToString())
                     {
                         np.FielUrl = SystemConst.WebUrl + Url.Content(TypePath);
+                        np.FL = FileLength;
                     }
                     //视频
                     else if (MesType == ((int)EnumMessageType.Video).ToString())
                     {
                         np.FielUrl = SystemConst.WebUrl + Url.Content(TypePath);
+                        np.FL = FileLength;
                     }
                     //图文
                     else if (MesType == ((int)EnumMessageType.ImageText).ToString())

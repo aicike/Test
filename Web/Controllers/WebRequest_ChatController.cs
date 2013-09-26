@@ -10,6 +10,7 @@ using Poco.WebAPI_Poco;
 using Poco.Enum;
 using System.Configuration;
 using CAVEditLib;
+using Business;
 
 namespace Web.Controllers
 {
@@ -208,15 +209,9 @@ namespace Web.Controllers
                     //转换文件
                     try
                     {
-                        //VU = SystemConst.WebUrl + Url.Content(Path.Substring(0, Path.LastIndexOf('.')) + ".mp3");
-                        string ToFilePath = FilePath.Substring(0, FilePath.LastIndexOf('.')) + ".mp3";
-                        CAVConverter converter = null;
-
-                        converter = new CAVConverter(); 		//Create the converter
-                        converter.SetLicenseKey("orna@diamondsview.com", "62A80CE3A6DB3F755C8C7478D44332E5928296AC08E61FCCD052D464049EDDEFCE62B2ED069F1396AC27F7DA120E6A3FDE982ACA8B49A4E8735552303198E03250EFE9D36E9E5349D2E289FF18D6C919CAB81199B4B24B13ABDF70CBB53605C844B1ED2C4164D08B1B4392C526C3D49E4100C1399C052C986BA57392042AC468BF0DDFD7BA5B12AFC4F2FFC21F9DF83D75C054DC6DBC198B091AD0E8AFD49D7A8CBA1E6B1BEA6BE3E0A3B41DA51B79E0678A7B675D3183618229AF2D50650A8505E9EA106E8507156E53ECA07973D883152F3CF4A75EBA57576B50A56117E2B129C5734150D552B7519D28AA7368895C740444BFEC403C041F4BA207F1258786");
-                        converter.AddTask(FilePath, ToFilePath);
-                        converter.StartAndWait();
-                        converter = null;
+                        CommonModel cm = new CommonModel();
+                        cm.CreateMp3(FilePath,"mp3");
+                       
                     }
                     catch { }
                 }

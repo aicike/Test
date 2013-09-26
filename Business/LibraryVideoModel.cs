@@ -26,6 +26,17 @@ namespace Business
             var pathIO = HttpContext.Current.Server.MapPath(filePath);
             video.SaveAs(pathIO);
 
+            try
+            {
+                //获取时间
+                CommonModel cm = new CommonModel();
+                string FileTime = cm.GetFileTimeLength(pathIO);
+                entity.FileLength = FileTime;
+            }
+            catch { }
+
+
+
             entity.FileName = video.FileName.Substring(0, video.FileName.LastIndexOf('.'));
             entity.FilePath = filePath;
             return base.Add(entity);
