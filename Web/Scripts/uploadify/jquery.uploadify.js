@@ -668,7 +668,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 			if (settings.itemTemplate == false) {
 				settings.itemTemplate = '<div id="${fileID}" class="uploadify-queue-item">\
 					<div class="cancel">\
-						<a href="javascript:$(\'#${instanceID}\').uploadify(\'cancel\', \'${fileID}\')">X</a>\
+						<a href="javascript:$(\'#${instanceID}\').uploadify(\'cancel\', \'${fileID}\')" style="border:none">X</a>\
 					</div>\
 					<span class="fileName">${fileName} (${fileSize})</span><span class="data"></span>\
 					<div class="uploadify-progress">\
