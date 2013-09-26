@@ -30,7 +30,7 @@
             @foreach (var item in videoList)
             {
                 <div class="item">
-                    <input type="hidden" fileID="@item.ID" fileType="LibraryVideo" value="@Url.Content(item.FilePath)" /><input
+                    <input type="hidden" fileID="@item.ID" fileType="LibraryVideo" value="@Url.Content(item.FilePath)"  lengthvalue="@item.FileLength" /><input
                         type="radio" name="radioImg" />&nbsp;&nbsp;<label>@item.FileName</label>
                 </div>        
             }

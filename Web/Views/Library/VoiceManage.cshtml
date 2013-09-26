@@ -23,7 +23,8 @@
             @foreach (var item in voiceList)
             {
                 <div class="item">
-                    <input type="hidden" fileID="@item.ID" fileType="LibraryVoice" value="@Url.Content(item.FilePath)" /><input
+                   
+                    <input type="hidden" fileID="@item.ID" fileType="LibraryVoice" value="@Url.Content(item.FilePath)" mp3value="@Url.Content(item.FileMp3Path)" lengthvalue="@item.FileLength" /><input
                         type="radio" name="radioImg" />&nbsp;&nbsp;<label>@item.FileName</label>
                 </div>        
             }

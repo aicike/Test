@@ -25,6 +25,9 @@ namespace Poco
         [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string FilePath { get; set; }
 
+        //时长 秒
+        public string FileLength { get; set; }
+
         public int AccountMainID { get; set; }
 
         public virtual AccountMain AccountMain { get; set; }
