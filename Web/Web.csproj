@@ -500,7 +500,6 @@
     <Folder Include="File\1\Account\" />
     <Folder Include="File\1\Base\" />
     <Folder Include="File\1\FileLibrary\" />
-    <Folder Include="File\1_messageFile\" />
     <Folder Include="File\platform\" />
   </ItemGroup>
   <ItemGroup>
