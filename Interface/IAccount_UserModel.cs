@@ -29,7 +29,7 @@ namespace Interface
         /// <returns></returns>
         int UpdUserTooAccount(int userID, int AmiAccountID, int groupID);
 
-        int GetBindAccountID(int userID, int accountMainID);
+        Account GetBindAccountID(int userID, int accountMainID);
         /// <summary>
         /// 获取用户数
         /// </summary>

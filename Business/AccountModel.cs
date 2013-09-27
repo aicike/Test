@@ -111,16 +111,16 @@ namespace Business
                         account.HeadImagePath = path + imageName;
                     }
                     result = Edit(account);
-                    if (result.HasError == false)
-                    {
-                        var groupModel = Factory.Get<IGroupModel>(SystemConst.IOC_Model.GroupModel);
-                        result = groupModel.AddDefaultGroup(account.ID, accountMainID);
-                    }
                 }
                 catch (Exception ex)
                 {
                     throw ex;
                 }
+            }
+            if (result.HasError == false)
+            {
+                var groupModel = Factory.Get<IGroupModel>(SystemConst.IOC_Model.GroupModel);
+                result = groupModel.AddDefaultGroup(account.ID, accountMainID);
             }
             return result;
         }

@@ -119,7 +119,17 @@ namespace Web.Controllers
         public string GetBindAccountID(int userID, int accountMainID)
         {
             var account_UserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
-            return account_UserModel.GetBindAccountID(userID, accountMainID) + "";
+            var account = account_UserModel.GetBindAccountID(userID, accountMainID);
+            Result result = new Result();
+            if (account != null)
+            {
+                result.Entity = new { id = account.ID, n = account.Name };
+            }
+            else
+            {
+                result.HasError = true;
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
         /// <summary>

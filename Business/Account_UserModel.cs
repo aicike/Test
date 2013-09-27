@@ -61,14 +61,14 @@ namespace Business
         /// <summary>
         /// 获取绑定的AccountID
         /// </summary>
-        public int GetBindAccountID(int userID, int accountMainID)
+        public Account GetBindAccountID(int userID, int accountMainID)
         {
             var entity = List().Where(a => a.UserID == userID && a.User.AccountMainID == accountMainID && a.Account.Account_AccountMains.Any(b => b.AccountMainID == accountMainID)).FirstOrDefault();
             if (entity != null)
             {
-                return entity.AccountID;
+                return entity.Account;
             }
-            return 0;
+            return null ;
         }
 
         /// <summary>
