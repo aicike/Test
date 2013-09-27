@@ -9,6 +9,7 @@ using System.Web;
 using Injection.Transaction;
 using System.IO;
 using WMPLib;
+using System.Threading;
 namespace Business
 {
     public class LibraryVoiceModel : BaseModel<LibraryVoice>, ILibraryVoiceModel
@@ -32,7 +33,8 @@ namespace Business
                     //转换
                     mp3path = cm.CreateMp3(pathIO,"mp3");
                 }
-               
+                Thread.Sleep(1000);
+                
                 //获取时间
                 string FileTime = cm.GetFileTimeLength(mp3path);
                 entity.FileMp3Path = filePath.Substring(0, filePath.LastIndexOf('.')) + ".mp3";

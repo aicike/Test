@@ -48,16 +48,16 @@ namespace Business
         {
             return accountMain.Account_AccountMains.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Select(a => a.Account).Where(a => a.RoleID == 1).AsQueryable();
         }
-        public IQueryable<Account> GetAccountAdminListByAccountMain(AccountMain accountMain,int RoleID)
+        public IQueryable<Account> GetAccountAdminListByAccountMain(AccountMain accountMain,int RoleID,int AccountID)
         {
-            return accountMain.Account_AccountMains.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Select(a => a.Account).Where(a => a.RoleID == RoleID).AsQueryable();
+            return accountMain.Account_AccountMains.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Select(a => a.Account).Where(a => a.RoleID == RoleID&& a.ID!=AccountID).AsQueryable();
         }
         /// <summary>
         /// 根据角色获取项目成员
         /// </summary>
-        public IQueryable<Account> GetAccountListByAccountMain_RoleID(int accountMainID, int roleID)
+        public IQueryable<Account> GetAccountListByAccountMain_RoleID(int accountMainID, int roleID,int accountID)
         {
-            return GetAccountListByAccountMain(accountMainID).Where(a => a.RoleID == roleID);
+            return GetAccountListByAccountMain(accountMainID).Where(a => a.RoleID == roleID && a.ID != accountID);
         }
 
         public IQueryable<Account> GetAccountListByAccountMain_RoleID(AccountMain accountMain, int roleID)

@@ -49,8 +49,9 @@ namespace Business
                 var accountIDs = List().Where(a => a.AccountMainID == accountMainID
                     && (a.Account.Role.Token.Equals(SystemConst.Business.AccountAdmin) || a.Account.Role.ID == 1)
                     && a.Account.SystemStatus == (int)EnumSystemStatus.Active
-                    && a.Account.AccountStatusID == accountStatusID).Select(a => a.AccountID);
-                if (accountIDs.Count() > 1)
+                    && a.Account.AccountStatusID == accountStatusID
+                    && a.Account.ID != accountID).Select(a => a.AccountID);
+                if (accountIDs.Count() > 0)
                 {
                     return true;
                 }

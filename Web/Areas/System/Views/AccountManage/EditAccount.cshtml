@@ -5,6 +5,7 @@
 }
 @section head{
     <script type="text/javascript">
+         var isTrue = true;
         $(function () {
             var CheckIsExistAdminUrl = '@Url.Action("CheckIsExistAdmin", "AccountManage")';
             $("#btnUpload").click(function () {
@@ -40,7 +41,7 @@
                 }
                 return false;
             });
-            $("#Account_RoleID").change(function () {
+            $("#RoleID").change(function () {
                 var index = $(this).val();
                 var value = $(this).find("option[value='" + index + "']").text();
                 if (value == "管理员") {
@@ -54,6 +55,57 @@
                 }
             });
             $("#LoginPwdPage,#LoginPwdPageCompare").val('@Common.DESEncrypt.Decrypt(Model.LoginPwd)');
+
+
+
+
+
+            //唯一验证
+            $("#Email").blur(function () {
+
+                var values = $("#Email").val();
+                var ID = $("#ID").val();
+                if (values != "" && values != undefined) {
+                    var YZUrl = '@Url.Action("OnlyValidation", "Ajax", new { Area = "", HostName = "" })';
+                    $.post(YZUrl, { tableName: "Account", field: "Email", value: values,id:ID  }, function (result) {
+
+                        if (result == "True") {
+                            isTrue = true;
+                        }
+                        else {
+                            isTrue = false;
+                            JAlert({
+                                Message: "该邮箱已存在！请换个邮箱试试！",
+                                DialogType: "Ok",
+                                BtnOk: "确定"
+                            });
+                        }
+                    });
+                }
+
+            });
+
+            $("#btnSubmit").click(function () {
+                if (!isTrue) {
+                    JAlert({
+                        Message: "该邮箱已存在！请换个邮箱试试！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                }
+                return isTrue;
+            });
+
+
+
+
+
+
+
+
+
+
+
         });
     </script>
 }
