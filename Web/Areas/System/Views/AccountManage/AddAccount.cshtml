@@ -5,6 +5,7 @@
 }
 @section head{
     <script type="text/javascript">
+        var isTrue = true;
         $(function () {
             var CheckIsExistAdminUrl = '@Url.Action("CheckIsExistAdmin", "AccountManage")';
 
@@ -55,6 +56,59 @@
                     });
                 }
             });
+
+
+
+              //唯一验证
+            $("#Account_Email").blur(function () {
+
+                var values = $("#Account_Email").val();
+
+                if (values != "" && values != undefined) {
+                    var YZUrl = '@Url.Action("OnlyValidation", "Ajax", new { Area = "", HostName = "" })';
+                    $.post(YZUrl, { tableName: "Account", field: "Email", value: values }, function (result) {
+
+                        if (result == "True") {
+                            isTrue = true;
+                        }
+                        else {
+                            isTrue = false;
+                            JAlert({
+                                Message: "该邮箱已存在！请换个邮箱试试！",
+                                DialogType: "Ok",
+                                BtnOk: "确定"
+                            });
+                        }
+                    });
+                }
+
+            });
+
+            $("#btnSubmit").click(function () {
+                if (!isTrue) {
+                    JAlert({
+                        Message: "该邮箱已存在！请换个邮箱试试！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                }
+                return isTrue;
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         });
     </script>
 }

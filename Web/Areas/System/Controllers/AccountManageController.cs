@@ -8,6 +8,7 @@ using Interface;
 using Injection;
 using Poco;
 using Poco.Enum;
+using Business;
 
 namespace Web.Areas.System.Controllers
 {
@@ -63,6 +64,15 @@ namespace Web.Areas.System.Controllers
         {
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             accountMainModel.CheckHasPermissions(LoginSystemUser.ID, account_accountMain.AccountMainID).NotAuthorizedPage();
+            var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
+            if (account_accountMain.Account.RoleID == 1)
+            {
+                if (account_accountMainModel.CheckIsExistAccountAdmin(account_accountMain.AccountMainID, null))
+                {
+                    throw new ApplicationException("只能有一个有效的管理员账号，请选择分配其他角色。");
+                }
+            }
+
             IAccount_AccountMainModel model = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
             var result = model.Add(account_accountMain, HeadImagePathFile);
             if (result.HasError)
@@ -81,7 +91,7 @@ namespace Web.Areas.System.Controllers
             var entity = model.Get(accountID);
 
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
-            var roles = roleModel.GetRoleList(null);
+            var roles = roleModel.GetRoleListAll(null);
             var selectListRoles = new SelectList(roles, "ID", "Name");
             List<SelectListItem> newRolesList = new List<SelectListItem>();
             newRolesList.Add(new SelectListItem { Text = "请选择", Value = "select", Selected = true });
@@ -96,6 +106,13 @@ namespace Web.Areas.System.Controllers
         {
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             accountMainModel.CheckHasPermissions(LoginSystemUser.ID, accountMainId).NotAuthorizedPage();
+
+            var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
+            if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainId, account.ID))
+            {
+                throw new ApplicationException("只能有一个有效的管理员账号，请选择分配其他角色。");
+            }
+
 
             IAccountModel model = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             var result = model.Edit(account, accountMainId, HeadImagePathFile);

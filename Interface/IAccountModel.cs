@@ -19,14 +19,14 @@ namespace Interface
         /// <summary>
         /// 根据角色获取项目成员
         /// </summary>
-        IQueryable<Account> GetAccountListByAccountMain_RoleID(int accountMainID, int roleID);
+        IQueryable<Account> GetAccountListByAccountMain_RoleID(int accountMainID, int roleID, int accountID);
         IQueryable<Account> GetAccountListByAccountMain_RoleID(AccountMain accountMain, int roleID);
         /// <summary>
         /// 项目管理员
         /// </summary>
         IQueryable<Account> GetAccountAdminListByAccountMain(int accountMainID);
         IQueryable<Account> GetAccountAdminListByAccountMain(AccountMain accountMain);
-        IQueryable<Account> GetAccountAdminListByAccountMain(AccountMain accountMain, int RoleID);
+        IQueryable<Account> GetAccountAdminListByAccountMain(AccountMain accountMain, int RoleID, int accountID);
 
         Result Add(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile);
 

@@ -32,17 +32,17 @@ namespace Web.Controllers
             {
                 if (roleID == 1)
                 {
-                    accountList = accountModel.GetAccountListByAccountMain_RoleID(LoginAccount.CurrentAccountMainID, roleList.FirstOrDefault().ID);
+                    accountList = accountModel.GetAccountListByAccountMain_RoleID(LoginAccount.CurrentAccountMainID, roleList.FirstOrDefault().ID,LoginAccount.ID);
                 }
                 else
                 {
-                    accountList = accountModel.GetAccountListByAccountMain_RoleID(LoginAccount.CurrentAccountMainID, roleID.Value);
+                    accountList = accountModel.GetAccountListByAccountMain_RoleID(LoginAccount.CurrentAccountMainID, roleID.Value, LoginAccount.ID);
                 }
             }
             else
             {
 
-                accountList = accountModel.GetAccountAdminListByAccountMain(entity, roleList.FirstOrDefault().ID);
+                accountList = accountModel.GetAccountAdminListByAccountMain(entity, roleList.FirstOrDefault().ID,LoginAccount.ID);
             }
             var pageList = accountList.ToPagedList(id ?? 1, 15);
             ViewBag.RoleID = roleID.HasValue ? roleID.Value : roleList.FirstOrDefault().ID;

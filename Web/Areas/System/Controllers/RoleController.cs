@@ -29,6 +29,7 @@ namespace Web.Areas.System.Controllers
         public ActionResult Add(Role role)
         {
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
+            role.IsCanDelete = true;
             var result = roleModel.Add(role);
             if (result.HasError)
             {

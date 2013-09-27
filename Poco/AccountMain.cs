@@ -28,7 +28,7 @@ namespace Poco
         [Display(Name = "二级域名或目录名称")]
         [Required(ErrorMessage = "请输入")]
         [StringLength(50, ErrorMessage = "长度小于50")]
-        [RegularExpression("^[a-zA-Z0-9_]+$", ErrorMessage = "请输入有效字符(只能输入‘字母’，‘数字’或‘_’)")]
+        [RegularExpression("^[a-zA-Z0-9]+$", ErrorMessage = "请输入有效字符(只能输入‘字母’或‘数字’)")]
         [RemotePlus("CheckIsUniqueAccountMain_HostName", "Ajax", "", "Default", ErrorMessage = "该名称已存在，请修改")]
         public string HostName { get; set; }
 
