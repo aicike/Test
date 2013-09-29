@@ -7,6 +7,7 @@ using Injection;
 using Interface;
 using Poco;
 using Poco.WebAPI_Poco;
+using Poco.Enum;
 
 namespace Web.Controllers
 {
@@ -57,12 +58,46 @@ namespace Web.Controllers
                         ID = item.ID,
                         Name = item.UserLoginInfo.Name,
                         NameNote = item.Name,
-                        HeadImagePath = string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrl + Url.Content(item.UserLoginInfo.HeadImagePath.DefaultHeadImage())) : item.UserLoginInfo.HeadImagePath
+                        HeadImagePath = string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrl + Url.Content(item.UserLoginInfo.HeadImagePath.DefaultHeadImage())) : item.UserLoginInfo.HeadImagePath,
+                        GN=item.Account_Users.FirstOrDefault().Group.GroupName
                     });
                 }
             }
             Result result = new Result();
             result.Entity = users;
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+        /// <summary>
+        /// 获取全部用户(带分组)
+        /// </summary>
+        public string GetUserGroupList(int accountMainID, int accountID)
+        {
+            var groupModel = Factory.Get<IGroupModel>(SystemConst.IOC_Model.GroupModel);
+            var groups = groupModel.GetGroupListByAccountID(accountID, accountMainID);
+            List<App_Group> groupList = new List<App_Group>();
+            if (groups != null && groups.Count > 0)
+            {
+                foreach (var item in groups)
+                {
+                    groupList.Add(new App_Group()
+                    {
+                        ID = item.ID,
+                        GN = item.GroupName,
+                        UL = item.Account_Users.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active)
+                        .Select(a => new App_User()
+                        {
+                            ID = a.UserID,
+                            Name = a.User.UserLoginInfo.Name,
+                            NameNote = a.User.Name,
+                            HeadImagePath = string.IsNullOrEmpty(a.User.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrl + Url.Content(a.User.UserLoginInfo.HeadImagePath.DefaultHeadImage())) : a.User.UserLoginInfo.HeadImagePath,
+                            GN=item.GroupName
+                        }).ToList()
+                    });
+                }
+            }
+            Result result = new Result();
+            result.Entity = groupList;
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 

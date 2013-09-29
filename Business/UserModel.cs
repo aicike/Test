@@ -21,7 +21,7 @@ namespace Business
 
         public List<User> GetUserListByAccountID(int accountMainID, int accountID)
         {
-            var list = List().Where(a => a.AccountMainID == accountMainID && a.Account_Users.Any(b => b.AccountID == accountID)).OrderBy(a=>a.ID).ToList();
+            var list = List().Where(a => a.AccountMainID == accountMainID && a.Account_Users.Any(b => b.AccountID == accountID)).OrderBy(a=>a.Account_Users.FirstOrDefault().GroupID).ToList();
             return list;
         }
 

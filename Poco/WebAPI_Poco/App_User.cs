@@ -20,5 +20,10 @@ namespace Poco.WebAPI_Poco
         public string HeadImagePath { get; set; }
 
         public string Pwd { get; set; }
+
+        /// <summary>
+        /// 分组名称
+        /// </summary>
+        public string GN { get; set; }
     }
 }
