@@ -17,7 +17,7 @@ namespace Web.Controllers
         {
             //角色列表
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
-            var roleList = roleModel.GetRoleList(LoginAccount.CurrentAccountMainID);
+            var roleList = roleModel.GetRoleListNoaID(LoginAccount.CurrentAccountMainID,LoginAccount.ID);
             ViewBag.RoleList = roleList;
             //项目信息
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);

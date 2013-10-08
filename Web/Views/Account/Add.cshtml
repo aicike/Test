@@ -7,12 +7,14 @@
     <script type="text/javascript">
 
         var isTrue = true;
+        var isCommit = true;//验证只能连续点击一次添加按钮
+
         $(function () {
             var CheckIsExistAdminUrl = '@Url.Action("CheckIsExistAdmin", "Account")';
 
-            $("#btnUpload").click(function () {
-                $("#HeadImagePathFile").click();
-            });
+//            $("#btnUpload").click(function () {
+//                $("#HeadImagePathFile").click();
+//            });
 
             $("#HeadImagePathFile").change(function () {
                 var fileName = $("#HeadImagePathFile").val();
@@ -93,8 +95,14 @@
                         DialogType: "Ok",
                         BtnOk: "确定"
                     });
+                    return false;
                 }
-                return isTrue;
+//                if (!isCommit) {
+//                    return false;
+//                }
+//                isCommit = false;
+
+
             });
         });
     </script>
@@ -108,6 +116,25 @@
         <fieldset>
             <legend>账号信息</legend>
             <table>
+             <tr>
+                    <td rowspan="2">
+                        <span>&nbsp;&nbsp;</span> 头像
+                    </td>
+                    <td>
+                        <img id="imgLogo" src="@Url.Content("/Images/default_Avatar.png")" style="max-width: 100px; max-height: 100px; float: left" />
+                       
+                        @Html.TextBoxFor(a => a.Account.HeadImagePath, new { style = "width:0px;visibility:hidden" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Account.HeadImagePath)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" style="" />
+                    </td>
+                    <td>
+                    </td>
+                </tr>
                 <tr>
                     <td class="tdTitle">
                         <span class="Identification">*</span> 名称
@@ -154,19 +181,7 @@
                     <td>@Html.ValidationMessageFor(a => a.Account.Phone)
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <span>&nbsp;&nbsp;</span> 头像
-                    </td>
-                    <td>
-                        <img id="imgLogo" style="max-width: 80px; max-height: 80px; float: left" />
-                        <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" style="display: none" />
-                        &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="button" value="上传" id="btnUpload" />
-                        @Html.TextBoxFor(a => a.Account.HeadImagePath, new { style = "width:0px;visibility:hidden" })
-                    </td>
-                    <td>@Html.ValidationMessageFor(a => a.Account.HeadImagePath)
-                    </td>
-                </tr>
+               
                 <tr>
                     <td>
                         <span class="Identification">*</span> 角色
@@ -180,6 +195,6 @@
             </table>
         </fieldset>
         <div class="action">
-            <input type="submit" id="btnSubmit" value="保存" class="button" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
+            <input type="submit" id="btnSubmit" value="保存" class="button"  style="margin-right: 20px" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
         </div>
     }</div>

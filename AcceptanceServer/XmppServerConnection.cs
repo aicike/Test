@@ -228,11 +228,17 @@ namespace AcceptanceServer
                                 //在线
                                 if (OnlineUser.onlinuser.Any(a => a.jid.User == msg.To.User))
                                 {
-                                    //转发发送消息 IEnumerable
-                                    //List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
-                                    XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList()[0];
                                     msg.From = jid;
-                                    con.Send(msg,ThisMessageID);
+                                    //转发发送消息 所有设备IEnumerable
+                                    List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
+                                    foreach (XmppServerConnection xcon in cons)
+                                    {
+                                        xcon.Send(msg, ThisMessageID);
+                                    }
+
+                                    //发给一设备
+                                    //XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList()[0];
+                                    //con.Send(msg,ThisMessageID);
 
 
                                 }
@@ -347,7 +353,7 @@ namespace AcceptanceServer
                         if (auth.Resource != "web")
                         {
                             //刚刚登陆获取未读消息
-                            LoginSendUnreadMessage();
+                            //LoginSendUnreadMessage();
                         }
 
                         iq.SwitchDirection();

@@ -8,6 +8,7 @@
     <script type="text/javascript">
 
     var isTrue= true;
+    var isCommit = true;//验证只能连续点击一次添加按钮
 
     $(function () {
         $("#HOpeningDate").datepicker({
@@ -43,7 +44,7 @@
              var AccountMainID = @ViewBag.AccountMainID;
              if(values!="" &&values!=undefined)
              {
-                 var YZUrl =  '@Url.Action("OnlyValidationAccount", "Ajax", new { Area="",HostName="" })';
+                 var YZUrl =  '@Url.Action("OnlyValidationAccount", "Ajax", new { Area = "", HostName = "" })';
                  $.post(YZUrl,{AccountMainID:AccountMainID,tableName:"AccountMainHouses",field:"HName",value:values},function(result){
                     
                     if(result=="True")
@@ -64,7 +65,14 @@
 
         });
         
-        $("#btnSubmit").click(function(){
+        
+        
+    
+
+    });
+
+    function BandSubmitClick()
+    {
             if(!isTrue)
             {
                 JAlert({
@@ -72,13 +80,16 @@
                     DialogType: "Ok",
                     BtnOk: "确定"
                 });
+                return false;
             }
-            return isTrue;
-        });
-        
-    
+           
+           if(!isCommit)
+           {
+            return false;
+           }
+           isCommit=false;
+    }
 
-    });
     </script>
 }
 @model Poco.AccountMainHouses
@@ -86,7 +97,7 @@
     添加项目
 </div>
 <div class="body">
-    @using (Ajax.BeginForm("Add", "HousesMange", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    @using (Ajax.BeginForm("Add", "HousesMange", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "BandSubmitClick()" }))
     {
         <fieldset>
             <legend>基本信息</legend>

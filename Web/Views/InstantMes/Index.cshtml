@@ -129,7 +129,7 @@
                     <a onclick="javascript:window.top.location.reload()" href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.FromUserID })"target="_blank">
                         @if (!string.IsNullOrEmpty(item.HeadImagePath))
                         { 
-                            <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content(item.HeadImagePath)" />
+                            <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="http://@Url.Content(item.HeadImagePath)" />
                         }
                         else
                         { 

@@ -3,7 +3,23 @@
     ViewBag.Menu = Poco.SystemConst.Menu.HousesMange;
 }
 
+@section head{
+    <script type="text/javascript">
 
+    var isCommit = true;//验证只能连续点击一次添加按钮
+    
+    function BandSubmitClick() {
+       
+        if (!isCommit) {
+            return false;
+        }
+        isCommit = false;
+    }
+
+
+
+    </script>
+ }
 
 @model Poco.AccountMainHouseInfo
 <div class="title">
@@ -11,7 +27,7 @@
 </div>
 
 <div class="body">
- @using (Ajax.BeginForm("Add", "HouseInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+ @using (Ajax.BeginForm("Add", "HouseInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "BandSubmitClick()" }))
  {
     <fieldset>
             <legend>基本信息</legend>

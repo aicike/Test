@@ -26,6 +26,11 @@ namespace Business
             return Context.Set<T>().Where(a => a.SystemStatus == (int)EnumSystemStatus.Active);
         }
 
+        public IQueryable<T> GlobalList<T>() where T : class, IBaseEntity
+        {
+            return Context.Set<T>();
+        }
+
         public Result Add<T>(T entity) where T : class, IBaseEntity
         {
             entity.SystemStatus = (int)EnumSystemStatus.Active;

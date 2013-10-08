@@ -82,12 +82,12 @@ namespace Business
             var result = model.SqlQuery<_B_MessageDayNumber>(sql);
             DataTable dt = new DataTable();
             dt.Columns.Add("sendTime");
-            dt.Columns.Add("cnt");
+            dt.Columns.Add("cnt",typeof(Int32));
             for (int i = 6; i >= 0; i--)
             {
                 DataRow row = dt.NewRow();
                 row["sendTime"] = DateTime.Now.AddDays(-i).ToString("yyyy-MM-dd");
-                row["cnt"] = "0";
+                row["cnt"] =0;
                 dt.Rows.Add(row);
             }
             foreach (var item in result)
