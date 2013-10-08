@@ -106,7 +106,7 @@ namespace Web.Controllers
             var result = hounsesInfoDetailModel.Add(MainHouseInfoDetail);
             if (result.HasError)
             {
-                return Alert(new Dialog(result.Error));
+                return JavaScript("isCommit = true;" + AlertJS_NoTag(new Dialog(result.Error)));
             }
             return JavaScript("window.location.href='" + Url.Action("Index", "HouseInfoDetail", new { HostName = LoginAccount.HostName, Hid = Hid, Did = Did }) + "'");
         }

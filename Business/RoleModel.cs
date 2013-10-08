@@ -25,6 +25,19 @@ namespace Business
             return list;
         }
 
+        public List<Role> GetRoleListNoaID(int accountMainID, int AccountID)
+        {
+            List<Role> list = List().Where(a => a.IsCanDelete).ToList();
+
+            foreach (var item in list)
+            {
+                item.Accounts = item.Accounts.Where(a => a.Account_AccountMains.Any(b => b.AccountMainID == accountMainID && b.AccountID != AccountID && b.SystemStatus == (int)EnumSystemStatus.Active)).ToList();
+            }
+
+
+            return list;
+        }
+
         public List<Role> GetRoleListAll(int? accountMainID)
         {
             List<Role> list = List().ToList();

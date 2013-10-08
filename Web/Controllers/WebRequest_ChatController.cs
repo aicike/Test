@@ -11,6 +11,9 @@ using Poco.Enum;
 using System.Configuration;
 using CAVEditLib;
 using Business;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Data;
 
 namespace Web.Controllers
 {
@@ -61,7 +64,7 @@ namespace Web.Controllers
                             chat.ID = itext.ID;
                             chat.FileTitle = itext.Title;
                             chat.Summary = itext.Summary;
-                            chat.FileUrl =SystemConst.WebUrl+ itext.ImagePath.Replace("~","");
+                            chat.FileUrl = SystemConst.WebUrl + itext.ImagePath.Replace("~", "");
                             if (itext.LibraryImageTexts.Count > 0)
                             {
                                 List<App_AutoMessageReplyContent> subImageText = new List<App_AutoMessageReplyContent>();
@@ -136,6 +139,8 @@ namespace Web.Controllers
             }
         }
 
+        #region 移动端上传文件
+
         /// <summary>
         /// 移动端上传文件
         /// </summary>
@@ -146,7 +151,7 @@ namespace Web.Controllers
         /// <param name="FileBuffer">二进制文件</param>
         /// <returns></returns>
         [ValidateInput(false)]
-        public string UpLodeFiles(int FileType, int UserType, int UserID, int UserAccountMainID,string Token)//byte[] FileBuffer
+        public string UpLodeFiles(int FileType, int UserType, int UserID, int UserAccountMainID, string Token)//byte[] FileBuffer
         {
 
             Result result = new Result();
@@ -183,7 +188,7 @@ namespace Web.Controllers
             }
             //拼接路径
             string UPFileHname = DateTime.Now.ToString("yyMMddhhmmss");
-            
+
             string Path = string.Format("{0}{1}.Message/{2}/{3}/{4}", UpFile, UserAccountMainID, UpType, UserID, UpFileType);
             //头像
             if (FileType == 4)
@@ -200,7 +205,13 @@ namespace Web.Controllers
                 {
                     System.IO.Directory.CreateDirectory(Server.MapPath(Path));
                 }
-                Path = Path + "/" + UPFileHname + "_" + Request.Files[0].FileName;
+                string hz = Request.Files[0].FileName.Substring(Request.Files[0].FileName.LastIndexOf('.'), Request.Files[0].FileName.Length - Request.Files[0].FileName.LastIndexOf('.'));
+                
+                long tick = DateTime.Now.Ticks;
+                Random ran = new Random((int)(tick & 0xffffffffL) | (int)(tick >> 32));
+
+
+                Path = Path + "/" + UPFileHname + "_"+ran.Next().ToString() + hz;// + Request.Files[0].FileName;
                 //全路径
                 string FilePath = Server.MapPath(Path);
 
@@ -212,9 +223,12 @@ namespace Web.Controllers
                     //转换文件
                     try
                     {
-                        CommonModel cm = new CommonModel();
-                        cm.CreateMp3(FilePath,"mp3");
-                       
+                        Task t = new Task(() => {
+                            Thread.Sleep(2000);
+                            CommonModel cm = new CommonModel();
+                            cm.CreateMp3(FilePath, "mp3");
+                        });
+                        t.Start();
                     }
                     catch { }
                 }
@@ -230,6 +244,25 @@ namespace Web.Controllers
                 return Newtonsoft.Json.JsonConvert.SerializeObject(result);
             }
 
+        }
+
+
+        #endregion
+
+        /// <summary>
+        /// 获取会话列表
+        /// </summary>
+        /// <param name="UserID">用户ID</param>
+        /// <param name="UserType">用户类型 0：售楼部，1：用户</param>
+        /// <returns></returns>
+        public string GetSessionList(int UserID,int UserType)
+        {
+            var libraryImageTextModel = Factory.Get<CommonModel>(SystemConst.IOC_Model.CommonModel);
+
+            List<UnreadMessage> UMlist = new List<UnreadMessage>();
+            UMlist = libraryImageTextModel.getSessionList(UserID, UserType);
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(UMlist);
         }
 
     }

@@ -119,13 +119,13 @@ namespace AcceptanceServer.DataBllOperate
                 foreach (DataRow row in dt.Rows)
                 {
                     UnreadMessage um = new UnreadMessage();
-                    um.FromID = row["FromID"].ToString();
-                    um.Content = row["Content"].ToString();
-                    um.EID = row["EID"].ToString();
-                    um.SendTime = row["SendTime"].ToString();
-                    um.MessageCnt = row["Messagecnt"].ToString();
-                    um.MSD = row["MSD"].ToString();
-                    um.SID = row["SID"].ToString();
+                    //um.FromID = row["FromID"].ToString();
+                    //um.Content = row["Content"].ToString();
+                    //um.EID = row["EID"].ToString();
+                    //um.SendTime = row["SendTime"].ToString();
+                    //um.MessageCnt = row["Messagecnt"].ToString();
+                    //um.MSD = row["MSD"].ToString();
+                    //um.SID = row["SID"].ToString();
                     UMlist.Add(um);
                 }
             }

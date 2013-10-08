@@ -21,5 +21,21 @@ namespace Interface
         //获取用户所有会话ID
         IQueryable<Conversation> GetAllCID(string AoU, int UID);
 
+        /// <summary>
+        /// 删除用户与销售代表间的会话ID
+        /// </summary>
+        /// <param name="?"></param>
+        /// <returns></returns>
+        Result DelCID(string uid, string AID, string AccountMainID);
+
+        /// <summary>
+        /// 启用用户与销售代表间的会话ID
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="AID"></param>
+        /// <param name="AccountMainID"></param>
+        /// <returns></returns>
+        Result StartCID(string uid, string AID, string AccountMainID);
+
     }
 }

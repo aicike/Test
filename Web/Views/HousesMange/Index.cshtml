@@ -30,7 +30,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td style=" width:300px;word-wrap: break-word; word-break: normal;">
+                <td class="operation" style=" width:300px;word-wrap: break-word; word-break: normal;">
                     @Html.ActionLink(item.HName, "Select", "HousesMange", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
                 </td>
                 <td class="operation">

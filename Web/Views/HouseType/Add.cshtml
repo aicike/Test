@@ -4,6 +4,8 @@
 }
 @section head{
     <script type="text/javascript">
+
+        var isCommit = true; //验证只能连续点击一次添加按钮
         $(function () {
 
             $("#btnUpload").click(function () {
@@ -37,11 +39,8 @@
             });
 
 
-        
-
-
-
         });
+
     </script>
 }
 @model Poco.AccountMainHouseType
@@ -49,7 +48,7 @@
     @ViewBag.HostTitle->添加户型
 </div>
 <div class="body">
-    @using (Html.BeginForm("Add", "HouseType", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Add", "HouseType", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data"}))
     {
         <fieldset>
             <legend>基本信息</legend>

@@ -68,7 +68,7 @@ namespace Web.Controllers
             var result = hounsesModel.Add(Hounses);
             if (result.HasError)
             {
-                return Alert(new Dialog(result.Error));
+                return JavaScript(" isCommit = true;" + AlertJS_NoTag(new Dialog(result.Error)));
             }
 
             return JavaScript("window.location.href='" + Url.Action("Index", "HousesMange", new { HostName = LoginAccount.HostName }) + "'");

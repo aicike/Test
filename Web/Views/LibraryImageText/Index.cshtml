@@ -6,6 +6,35 @@
 }
 @section head{
     <script type="text/javascript">
+
+
+        //显示图片视频语音图文
+        function ShowMessage(Type, MesURL, obj) {
+            
+            if (Type == "4") {
+
+
+                var src = "@Url.Action("ShowImagetext", "LibraryImageText", new { HostName = ViewBag.HostName })"+"?ImageTextID="+MesURL;
+                $("#iframeShowImgText").attr("src", src);
+
+                $("#dialogShowMessage").dialog({
+                    resizable: false,
+                    height: "660",
+                    width: "560",
+                    modal: true,
+                    title:"图文",
+                    position:"center",
+                    draggable: false,
+                    buttons: {
+                        "关闭浏览": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+               
+            }
+
+        }
     </script>
 }
 @model PagedList<Poco.LibraryImageText>
@@ -57,10 +86,10 @@
             {
             <tr>
                 <td>
-                    <img src="@Url.Content(item.ImagePath)" style="width:130px" />
+                    <img src="@Url.Content(item.ImagePath)" onclick="ShowMessage('4','@item.ID')" title="点击预览"  style="width:130px; cursor:pointer" />
                 </td>
-                <td>
-                    @item.Title
+                <td >
+                    <span class="operation" title="预览" onclick="ShowMessage('4','@item.ID')" style=" cursor:pointer" >@item.Title</span>
                 </td>
                 <td class="operation">
                     @if (item.LibraryImageTexts != null && item.LibraryImageTexts.Count > 0)
@@ -96,6 +125,16 @@
        ShowFirstLast = false
    })
     </div>
+</div>
+<div id="dialogShowMessage" title="" style="display: none">
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr id="trImgText">
+            <td>
+                <iframe id="iframeShowImgText" src="#" style="width: 540px; height: 530px; border: none;
+                    overflow: auto"></iframe>
+            </td>
+        </tr>
+    </table>
 </div>
 <div style="clear: both">
 </div>

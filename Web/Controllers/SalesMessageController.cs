@@ -98,13 +98,21 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult UpUserAccount(int AmiaccountID, int UserID, int groupID,int AccountID)
         {
+            //删除员会话ID
+            var ConverModel = Factory.Get<IConversationModel>(SystemConst.IOC_Model.ConversationModel);
+            ConverModel.DelCID(UserID.ToString(), AccountID.ToString(), LoginAccount.CurrentAccountMainID.ToString());
+            //启用现在的会话ID（如果有的话）
+            ConverModel.StartCID(UserID.ToString(), AmiaccountID.ToString(), LoginAccount.CurrentAccountMainID.ToString());
+            
             //获取目标售楼代表默认分组
             var GroupModel = Factory.Get<IGroupModel>(SystemConst.IOC_Model.GroupModel);
             var Group = GroupModel.GetGroupListByAccountID(AmiaccountID).Where(a => a.IsDefaultGroup);
 
+
             var Account_userModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
             int cnt = Account_userModel.UpdUserTooAccount(UserID, AmiaccountID, Group.FirstOrDefault().ID);
 
+         
             return RedirectToAction("SalesUserList", "SalesMessage", new { HostName = LoginAccount.HostName, accountID = AccountID, GruopID = groupID });
         }
     }

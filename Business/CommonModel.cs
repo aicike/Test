@@ -6,6 +6,10 @@ using System.Data.SqlClient;
 using System.Data;
 using CAVEditLib;
 using WMPLib;
+using System.Threading;
+using Poco;
+using Interface;
+using Injection;
 
 namespace Business
 {
@@ -14,17 +18,17 @@ namespace Business
         /// <summary>
         /// 返回false，说明已存在该值
         /// </summary>
-        public bool CheckIsUniqueAccount(string AccountMainID,string tableName, string field, string value, int? id = null)
+        public bool CheckIsUniqueAccount(string AccountMainID, string tableName, string field, string value, int? id = null)
         {
             string sql = null;
 
             if (id.HasValue && id.Value > 0)
             {
-                sql = string.Format("SELECT ID FROM {0} WHERE {1}='{2}' AND SystemStatus=0 AND ID<>{3} AND AccountMainID={4}", tableName, field, value, id.Value,AccountMainID);
+                sql = string.Format("SELECT ID FROM {0} WHERE {1}='{2}' AND SystemStatus=0 AND ID<>{3} AND AccountMainID={4}", tableName, field, value, id.Value, AccountMainID);
             }
             else
             {
-                sql = string.Format("SELECT ID FROM {0} WHERE {1}='{2}' AND SystemStatus=0  AND AccountMainID={3}", tableName, field, value,AccountMainID);
+                sql = string.Format("SELECT ID FROM {0} WHERE {1}='{2}' AND SystemStatus=0  AND AccountMainID={3}", tableName, field, value, AccountMainID);
             }
             var result = SqlQuery<int>(sql).ToList();
             if (result.Count > 0)
@@ -40,7 +44,7 @@ namespace Business
         /// <summary>
         /// 返回false，说明已存在该值
         /// </summary>
-        public bool CheckIsUnique( string tableName, string field, string value, int? id = null)
+        public bool CheckIsUnique(string tableName, string field, string value, int? id = null)
         {
             string sql = null;
 
@@ -69,9 +73,10 @@ namespace Business
         /// <param name="ToFilePath">文件路径</param>
         /// <param name="ToFilePath">要转换的类型</param>
         /// <returns>转换后的路径</returns>
-        public string CreateMp3(string FilePath,string ToType)
+        public string CreateMp3(string FilePath, string ToType)
         {
-            string ToFilePath = FilePath.Substring(0, FilePath.LastIndexOf('.')) +"."+ ToType;
+            Thread.Sleep(2000);
+            string ToFilePath = FilePath.Substring(0, FilePath.LastIndexOf('.')) + "." + ToType;
             CAVConverter converter = null;
 
             converter = new CAVConverter(); 		//Create the converter
@@ -110,5 +115,105 @@ namespace Business
             return Context.Database.ExecuteSqlCommand(sql, parameters);
         }
 
+
+
+        /// <summary>
+        /// 取会话列表
+        /// </summary>
+        /// <param name="userID">用户ID</param>
+        /// <param name="userType">用户类型 0：售楼部，1：用户</param>
+        /// <returns></returns>
+        public List<UnreadMessage> getSessionList(int userID, int userType)
+        {
+            string AoU = "s";
+            //用户
+            if (userType == 1)
+            {
+                AoU = "u";
+            }
+            var conversModel = Factory.Get<IConversationModel>(SystemConst.IOC_Model.ConversationModel);
+            var convers = conversModel.GetAllCID(AoU, userID);
+
+            if (convers.Count() > 0)
+            {
+                string id = "";
+                foreach (var item in convers)
+                {
+                    id += item.ID + ",";
+                }
+                id = id.TrimEnd(',');
+                string sql = "";
+                //用户
+                if (userType == 1)
+                {
+                    sql = string.Format(@"select x.*,case when x.T='s' 
+	                                        then 
+		                                        (select  Name from dbo.Account where systemStatus=0 and id=x.I)
+	                                        else
+		                                        (select b.Name from dbo.[User] a,dbo.UserLoginInfo b where a.userLoginInfoID=b.id and a.id=x.I and a.systemStatus=0)
+	                                        end as N,
+                                            case when x.T='s' 
+                                            then 
+                                                ''
+                                            else
+                                                (select Name from dbo.[User] where id=x.I and systemStatus=0)
+                                            end as B,
+	                                        case when x.T='s' 
+	                                        then 
+		                                        (select  HeadImagePath from dbo.Account where systemStatus=0 and id=x.I)
+	                                        else
+		                                        (select b.HeadImagePath from dbo.[User] a,dbo.UserLoginInfo b where a.userLoginInfoID=b.id and a.id=x.I and a.systemStatus=0)
+	                                        end as P
+                                        from 
+                                        (select ConversationID as S,Convert(varchar(50),Max(SendTime),20) as D,
+                                        (select case when ctype = 0 then User1ID when ctype = 2 then  case when user1id= {1} then user2ID else user1id end end as FromID from dbo.Conversation where id = a.ConversationID) as I,
+                                        (select case when ctype = 0 then 's' when ctype = 2 then 'u' end as FromUserID from dbo.Conversation where id = a.ConversationID) as T,
+                                        (select count(isreceive)  from dbo.[Message] where ConversationID  = a.ConversationID and ToUserID ={1} and IsReceive='false' ) as C,
+                                        (select TextContent  from dbo.[Message] where SendTime = Max(a.SendTime)) as CT,
+                                        (select EnumMessageSendDirectionID  from dbo.[Message] where SendTime = Max(a.SendTime)) as M,
+                                        (select EnumMessageTypeID  from dbo.[Message] where SendTime = Max(a.SendTime)) as E
+                                        from dbo.[Message] a  where ConversationID in ({0}) group by ConversationID) x"
+                                        , id, userID);//and ToUserID ={1} 
+                }
+                //售楼代表
+                else
+                {
+                    sql = string.Format(@"select x.*,case when x.T='s' 
+	                                        then 
+		                                        (select  Name from dbo.Account where systemStatus=0 and id=x.I)
+	                                        else
+		                                        (select b.Name from dbo.[User] a,dbo.UserLoginInfo b where a.userLoginInfoID=b.id and a.id=x.I and a.systemStatus=0)
+	                                        end as N,
+                                            case when x.T='s' 
+                                            then 
+                                                ''
+                                            else
+                                                (select Name from dbo.[User] where id=x.I and systemStatus=0)
+                                            end as B,
+	                                        case when x.T='s' 
+	                                        then 
+		                                        (select  HeadImagePath from dbo.Account where systemStatus=0 and id=x.I)
+	                                        else
+		                                        (select b.HeadImagePath from dbo.[User] a,dbo.UserLoginInfo b where a.userLoginInfoID=b.id and a.id=x.I and a.systemStatus=0)
+	                                        end as P
+                                        from 
+                                        (select ConversationID as S,Convert(varchar(50),Max(SendTime),20) as D,
+                                        (select case when ctype = 0 then User2ID when ctype = 1 then  case when user1id= {1} then user2ID else user1id end end as FromID from dbo.Conversation where id = a.ConversationID) as I,
+                                        (select case when ctype = 0 then 'u' when ctype = 1 then 's' end as FromUserID from dbo.Conversation where id = a.ConversationID) as T,
+                                        (select count(isreceive)  from dbo.[Message] where ConversationID  = a.ConversationID and ToAccountID ={1} and IsReceive='false' ) as C,
+                                        (select TextContent  from dbo.[Message] where SendTime = Max(a.SendTime)) as CT,
+                                        (select EnumMessageSendDirectionID  from dbo.[Message] where SendTime = Max(a.SendTime)) as M,
+                                        (select EnumMessageTypeID  from dbo.[Message] where SendTime = Max(a.SendTime)) as E
+                                        from dbo.[Message] a  where ConversationID in ({0}) group by ConversationID) x"
+                                        , id, userID);//and ToAccountID ={1} 
+                }
+                return SqlQuery<UnreadMessage>(sql).ToList();
+            }
+            else
+            {
+                return null;
+            }
+
+        }
     }
 }

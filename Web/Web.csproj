@@ -205,6 +205,7 @@
     <Content Include="Images\banner.jpg" />
     <Content Include="Images\default_Avatar.png" />
     <Content Include="Images\logo.png" />
+    <Content Include="Images\SelImg.jpg" />
     <Content Include="Images\sep.png" />
     <Content Include="Images\LandWaitFor.gif" />
     <Content Include="Images\sliders\slider-1-1.jpg" />
@@ -224,6 +225,9 @@
     <Content Include="Scripts\Carousel\carousel.css" />
     <Content Include="Scripts\Carousel\carousel.js" />
     <Content Include="Scripts\Carousel\jquery.flexslider.js" />
+    <Content Include="Scripts\Jcrop\Jcrop.gif" />
+    <Content Include="Scripts\Jcrop\jquery.Jcrop.css" />
+    <Content Include="Scripts\Jcrop\jquery.Jcrop.js" />
     <Content Include="Scripts\tytabs.js" />
     <Content Include="Scripts\JSONLoader.js" />
     <Content Include="Scripts\Highcharts\adapters\mootools-adapter.js" />
@@ -464,6 +468,9 @@
     <Content Include="video-js\HTMLPage2.htm" />
     <Content Include="video-js\OVP.xap" />
     <Content Include="video-js\swfobject.js" />
+    <Content Include="Views\InstantMes\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -736,7 +743,6 @@
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\SingleChat\Index.cshtml" />
     <Content Include="Views\SingleChat\ChatPartialView.cshtml" />
-    <Content Include="Views\InstantMes\Index.cshtml" />
     <Content Include="Views\Account\Add.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Message\History.cshtml" />

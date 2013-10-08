@@ -21,29 +21,35 @@ namespace Business
         /// <returns></returns>
         public int GetCID(string AccountMainID, string AID, string UID, string Ctype)
         {
-            IQueryable<Conversation> ICon = null;
-            if (Ctype == "0")
+            if (!string.IsNullOrEmpty(Ctype))
             {
-                ICon = List().Where(a => a.AccountMainID == AccountMainID && a.Ctype == Ctype && a.User1ID == AID && a.User2ID == UID);
-            }
-            else
-            {
-                ICon = List().Where(a => a.AccountMainID == AccountMainID && a.Ctype == Ctype && (a.User1ID == AID || a.User1ID == UID) && (a.User2ID == UID || a.User2ID == AID));
-            }
+                IQueryable<Conversation> ICon = null;
+                if (Ctype == "0")
+                {
+                    ICon = List().Where(a => a.AccountMainID == AccountMainID && a.Ctype == Ctype && a.User1ID == AID && a.User2ID == UID);
+                }
+                else
+                {
+                    ICon = List().Where(a => a.AccountMainID == AccountMainID && a.Ctype == Ctype && (a.User1ID == AID || a.User1ID == UID) && (a.User2ID == UID || a.User2ID == AID));
+                }
 
-            if (ICon.Count() > 0)
-            {
-                return ICon.First().ID;
+                if (ICon.Count() > 0)
+                {
+                    return ICon.First().ID;
+                }
+                else
+                {
+                    Conversation conver = new Conversation();
+                    conver.AccountMainID = AccountMainID;
+                    conver.User1ID = AID;
+                    conver.User2ID = UID;
+                    conver.Ctype = Ctype;
+                    base.Add(conver);
+                    return conver.ID;
+                }
             }
-            else
-            {
-                Conversation conver = new Conversation();
-                conver.AccountMainID = AccountMainID;
-                conver.User1ID = AID;
-                conver.User2ID = UID;
-                conver.Ctype = Ctype;
-                base.Add(conver);
-                return conver.ID;
+            else {
+                return -1;
             }
         }
 
@@ -61,5 +67,35 @@ namespace Business
             return base.SqlQuery(sql);
         }
 
+
+
+        public Result DelCID(string uid, string AID, string AccountMainID)
+        {
+            IQueryable<Conversation> ICon = null;
+            ICon = List().Where(a => a.AccountMainID == AccountMainID && a.Ctype == "0" && a.User1ID == AID && a.User2ID == uid);
+            Result result = new Result();
+            int SID = 0;
+            if (ICon.Count() > 0)
+            {
+                SID = ICon.FirstOrDefault().ID;
+                result = base.Delete(SID);
+            }
+            return result;
+        }
+
+
+        public Result StartCID(string uid, string AID, string AccountMainID)
+        {
+            Result result = new Result();
+            IQueryable<Conversation> ICon = null;
+            ICon = GlobalList().Where(a => a.AccountMainID == AccountMainID && a.Ctype == "0" && a.User1ID == AID && a.User2ID == uid );
+            int OK = 0;
+            if (ICon.Count() > 0)
+            {
+                string sql = "update Conversation set SystemStatus = 0 where id=" + ICon.FirstOrDefault().ID;
+                OK = base.SqlExecute(sql);
+            }
+            return result;
+        }
     }
 }

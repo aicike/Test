@@ -11,7 +11,10 @@ namespace Business
         {
             return base.List<T>().OrderByDescending(a=>a.ID);
         }
-
+        public IQueryable<T> GlobalList()
+        {
+            return base.GlobalList<T>().OrderByDescending(a => a.ID);
+        }
         public Result Add(T entity)
         {
             return base.Add<T>(entity);

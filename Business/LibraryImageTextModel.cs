@@ -30,6 +30,14 @@ namespace Business
                 var savePath = HttpContext.Current.Server.MapPath(imagePath);
                 coverImagePathFile.SaveAs(savePath);
                 libraryImageText.ImagePath = imagePath;
+
+                var libraryImgModel = Factory.Get<ILibraryImageModel>(SystemConst.IOC_Model.LibraryImageModel);
+                LibraryImage entity = new LibraryImage();
+                entity.AccountMainID = libraryImageText.AccountMainID;
+                entity.FileName = libraryImageText.Title;
+                entity.FilePath = imagePath;
+                libraryImgModel.Add(entity);
+
                 return base.Add(libraryImageText);
             }
             catch (Exception ex)

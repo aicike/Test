@@ -74,7 +74,42 @@
                 tr.find(".txtFileName").hide();
                 tr.find(".spanFileName").show();
             });
+
+
+
+
         });
+
+
+
+         //显示图片视频语音图文
+        function ShowMessage(Type, MesURL, obj) {
+            //图片
+            if (Type == "1") {
+
+                $("#ShowImg").attr("src", MesURL);
+                $("#dialogShowMessage").dialog({
+                    resizable: false,
+                    height: "auto",
+                    width: "auto",
+                    modal: true,
+                    draggable: false,
+                    title: "图片",
+                    position: "center",
+                    buttons: {
+                        "关闭浏览": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+                
+            }
+        }
+
+
+
+
+
     </script>
 }
 @model PagedList<Poco.LibraryImage>
@@ -122,7 +157,7 @@
             {
             <tr>
                 <td>
-                    <img src="@Url.Content(item.FilePath)" style="width:80px" />
+                    <img title="点击预览" src="@Url.Content(item.FilePath)"  onclick="ShowMessage('1','@Url.Content(item.FilePath)')" style="width:80px; cursor:pointer" />
                 </td>
                 <td>
                     <span class="spanFileName" style="display: block">@item.FileName</span>
@@ -156,5 +191,16 @@
    })
     </div>
 </div>
+
+<div id="dialogShowMessage" title="" style="display: none">
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr id="trImg" align="center" style="">
+            <td>
+                <img id="ShowImg" style="max-width: 1024px; max-height: 620px" src="" />
+            </td>
+        </tr>
+    </table>
+</div>
+
 <div style="clear: both">
 </div>

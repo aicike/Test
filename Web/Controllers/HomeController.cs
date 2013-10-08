@@ -22,14 +22,21 @@ namespace Web.Controllers
             var account = model.GetAccountAdminListByAccountMain(LoginAccount.CurrentAccountMainID);
             if (account != null)
             {
-                if (LoginAccount.ID == account.ToList()[0].ID)
+                if (account.Count() > 0)
                 {
-                    AccountMainGuideModel AMG = new AccountMainGuideModel();
-                    bool isUntreated;
-                    AMG.getUntreated(LoginAccount.CurrentAccountMainID, out isUntreated);
-                    if (isUntreated)
+                    if (LoginAccount.ID == account.ToList()[0].ID)
                     {
-                        ViewBag.AccountAdmin = "true";
+                        AccountMainGuideModel AMG = new AccountMainGuideModel();
+                        bool isUntreated;
+                        AMG.getUntreated(LoginAccount.CurrentAccountMainID, out isUntreated);
+                        if (isUntreated)
+                        {
+                            ViewBag.AccountAdmin = "true";
+                        }
+                        else
+                        {
+                            ViewBag.AccountAdmin = "false";
+                        }
                     }
                     else
                     {
@@ -86,6 +93,7 @@ namespace Web.Controllers
             }
             ViewBag.WeetMessCntDate = MessCntDate.TrimEnd(',') + "]";
             ViewBag.WeetMessCnt = MessCnt.TrimEnd(',') + "]";
+
             DataView dv = dtMess.DefaultView;
             dv.Sort = "cnt desc";
             int maxMessCnt = int.Parse(dv[0]["cnt"].ToString());

@@ -19,6 +19,8 @@ namespace Business
             return List().Where(a => a.AccountMainID == accountMainID);
         }
 
+
+
         [Transaction]
         public Result Upload(LibraryImage entity, System.Web.HttpPostedFileBase image)
         {

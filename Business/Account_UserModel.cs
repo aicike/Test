@@ -105,12 +105,12 @@ namespace Business
             var result = model.SqlQuery<_B_UserCount>(sql);
             DataTable dt = new DataTable();
             dt.Columns.Add("CreateDate");
-            dt.Columns.Add("cnt");
+            dt.Columns.Add("cnt",typeof(Int32));
             for (int i = 6; i >= 0; i--)
             {
                 DataRow row = dt.NewRow();
                 row["CreateDate"] = DateTime.Now.AddDays(-i).ToString("yyyy-MM-dd");
-                row["cnt"] = "0";
+                row["cnt"] = 0;
                 dt.Rows.Add(row);
             }
 
