@@ -8,6 +8,7 @@ namespace Poco
     public static class SystemConst
     {
         public static string WebUrl = System.Configuration.ConfigurationManager.AppSettings["WebUrl"];
+        public static string WebUrlIP = System.Configuration.ConfigurationManager.AppSettings["WebUrlIP"];
         public static string WebTitleRemark = System.Configuration.ConfigurationManager.AppSettings["WebTitle"];
 
         public class Business
