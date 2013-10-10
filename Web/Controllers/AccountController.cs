@@ -74,10 +74,10 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add(Account_AccountMain account_accountMain, HttpPostedFileBase HeadImagePathFile)
+        public ActionResult Add(Account_AccountMain account_accountMain, HttpPostedFileBase HeadImagePathFile, int w, int h, int x1, int y1, int tw, int th)
         {
             IAccount_AccountMainModel model = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
-            var result = model.Add(account_accountMain, HeadImagePathFile);
+            var result = model.Add(account_accountMain, HeadImagePathFile,w,h, x1, y1, tw, th);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);
@@ -106,10 +106,10 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Poco.Account account, HttpPostedFileBase HeadImagePathFile)
+        public ActionResult Edit(Poco.Account account, HttpPostedFileBase HeadImagePathFile, int w, int h, int x1, int y1, int tw, int th)
         {
             IAccountModel model = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-            var result = model.Edit(account, LoginAccount.CurrentAccountMainID, HeadImagePathFile);
+            var result = model.Edit(account, LoginAccount.CurrentAccountMainID, HeadImagePathFile, x1, y1, w, h, tw, th);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);

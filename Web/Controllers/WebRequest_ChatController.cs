@@ -224,9 +224,8 @@ namespace Web.Controllers
                     try
                     {
                         Task t = new Task(() => {
-                            Thread.Sleep(2000);
                             CommonModel cm = new CommonModel();
-                            cm.CreateMp3(FilePath, "mp3");
+                            cm.CreateMp3Forffmpeg(FilePath, "mp3");
                         });
                         t.Start();
                     }

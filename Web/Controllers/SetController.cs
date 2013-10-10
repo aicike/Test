@@ -34,11 +34,11 @@ namespace Web.Controllers
         }
         [AllowCheckPermissions(false)]
         [HttpPost]
-        public ActionResult Edit(Account account, HttpPostedFileBase HeadImagePathFile)
+        public ActionResult Edit(Account account, HttpPostedFileBase HeadImagePathFile,int w,int h,int x1,int y1,int tw,int th)
         {
             var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
 
-            var result = accountModel.Edit(account, LoginAccount.CurrentAccountMainID, HeadImagePathFile);
+            var result = accountModel.Edit(account, LoginAccount.CurrentAccountMainID, HeadImagePathFile, x1, y1, w, h, tw, th);
             if (result.HasError)
             {
                 TempData["EditStatus"] = "false|" + result.Error;
