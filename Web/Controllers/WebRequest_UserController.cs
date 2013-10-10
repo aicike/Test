@@ -49,7 +49,7 @@ namespace Web.Controllers
         public string GetAppLogo(int accountMainID)
         {
             var accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
-            string path = SystemConst.WebUrl + (accountMainModel.Get(accountMainID).LogoImageThumbnailPath).Replace("~", "");
+            string path = SystemConst.WebUrlIP + (accountMainModel.Get(accountMainID).LogoImageThumbnailPath).Replace("~", "");
             return path;
         }
 
@@ -76,7 +76,7 @@ namespace Web.Controllers
         {
             var account_AccountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
 
-            string hostUrl = SystemConst.WebUrl;
+            string hostUrl = SystemConst.WebUrlIP;
 
             var accountList = account_AccountMainModel.GetAccountListByAccountMainID(accountMainID).Select(a => new App_Account
             {

@@ -64,7 +64,7 @@ namespace Web.Controllers
                             chat.ID = itext.ID;
                             chat.FileTitle = itext.Title;
                             chat.Summary = itext.Summary;
-                            chat.FileUrl = SystemConst.WebUrl + itext.ImagePath.Replace("~", "");
+                            chat.FileUrl = SystemConst.WebUrlIP + itext.ImagePath.Replace("~", "");
                             if (itext.LibraryImageTexts.Count > 0)
                             {
                                 List<App_AutoMessageReplyContent> subImageText = new List<App_AutoMessageReplyContent>();
@@ -74,7 +74,7 @@ namespace Web.Controllers
                                     rep_it.ID = it.ID;
                                     rep_it.Type = (int)EnumMessageType.ImageText;
                                     rep_it.FileTitle = it.Title;
-                                    rep_it.FileUrl = SystemConst.WebUrl + it.ImagePath.Replace("~", "");
+                                    rep_it.FileUrl = SystemConst.WebUrlIP + it.ImagePath.Replace("~", "");
                                     //rep_it.SendTime = sendTime;
                                     subImageText.Add(rep_it);
                                 }
@@ -233,7 +233,7 @@ namespace Web.Controllers
                 }
                 //System.IO.File.WriteAllBytes(FilePath, FileBuffers);
                 //返回路径
-                result.Entity = new { URL = SystemConst.WebUrl + Url.Content(Path), Token = Token };
+                result.Entity = new { URL = SystemConst.WebUrlIP + Url.Content(Path), Token = Token };
                 return Newtonsoft.Json.JsonConvert.SerializeObject(result);
             }
             catch (Exception ex)

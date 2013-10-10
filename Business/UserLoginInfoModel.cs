@@ -161,7 +161,7 @@ namespace Business
             appuser.Phone = user.UserLoginInfo.Phone;
             appuser.Email = user.UserLoginInfo.Email;
             appuser.NameNote = user.Name;
-            appuser.HeadImagePath = SystemConst.WebUrl + user.UserLoginInfo.HeadImagePath.DefaultHeadImage().Replace("~", "");
+            appuser.HeadImagePath = SystemConst.WebUrlIP + user.UserLoginInfo.HeadImagePath.DefaultHeadImage().Replace("~", "");
             result.Entity = appuser;
             return result;
         }
@@ -226,7 +226,7 @@ namespace Business
                 result.Error = "操作失败，请稍后重试。";
                 return result;
             }
-            string url = SystemConst.WebUrl + "/Default/FindPwd?code=" + HttpContext.Current.Server.UrlEncode(code);
+            string url = SystemConst.WebUrlIP + "/Default/FindPwd?code=" + HttpContext.Current.Server.UrlEncode(code);
 
             //发送激活邮件
             string time1 = DateTime.Now.ToString("yyyy年MM月dd日 hh:mm:ss");

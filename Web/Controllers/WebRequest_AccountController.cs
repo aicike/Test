@@ -26,7 +26,7 @@ namespace Web.Controllers
                 return Newtonsoft.Json.JsonConvert.SerializeObject(result);
             }
             var account = result.Entity as Account;
-            string hostUrl = SystemConst.WebUrl;
+            string hostUrl = SystemConst.WebUrlIP;
             result = new Result()
             {
                 Entity = new App_Account()
@@ -58,7 +58,7 @@ namespace Web.Controllers
                         ID = item.ID,
                         Name = item.UserLoginInfo.Name,
                         NameNote = item.Name,
-                        HeadImagePath = string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrl + Url.Content(item.UserLoginInfo.HeadImagePath.DefaultHeadImage())) : item.UserLoginInfo.HeadImagePath,
+                        HeadImagePath = string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrlIP + Url.Content(item.UserLoginInfo.HeadImagePath.DefaultHeadImage())) : item.UserLoginInfo.HeadImagePath,
                         GN=item.Account_Users.FirstOrDefault().Group.GroupName
                     });
                 }
@@ -90,7 +90,7 @@ namespace Web.Controllers
                             ID = a.UserID,
                             Name = a.User.UserLoginInfo.Name,
                             NameNote = a.User.Name,
-                            HeadImagePath = string.IsNullOrEmpty(a.User.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrl + Url.Content(a.User.UserLoginInfo.HeadImagePath.DefaultHeadImage())) : a.User.UserLoginInfo.HeadImagePath,
+                            HeadImagePath = string.IsNullOrEmpty(a.User.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrlIP + Url.Content(a.User.UserLoginInfo.HeadImagePath.DefaultHeadImage())) : a.User.UserLoginInfo.HeadImagePath,
                             GN=item.GroupName
                         }).ToList()
                     });
@@ -117,7 +117,7 @@ namespace Web.Controllers
                 appuser.Phone = user.UserLoginInfo.Phone ?? "";
                 appuser.Email = user.UserLoginInfo.Email ?? "";
                 appuser.NameNote = user.Name ?? "";
-                appuser.HeadImagePath = string.IsNullOrEmpty(user.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrl + Url.Content(user.UserLoginInfo.HeadImagePath.DefaultHeadImage())) : user.UserLoginInfo.HeadImagePath;
+                appuser.HeadImagePath = string.IsNullOrEmpty(user.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrlIP + Url.Content(user.UserLoginInfo.HeadImagePath.DefaultHeadImage())) : user.UserLoginInfo.HeadImagePath;
                 appuser.Pwd = Common.DESEncrypt.Decrypt(user.UserLoginInfo.LoginPwd);
                 result.Entity = appuser;
             }

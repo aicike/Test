@@ -14,8 +14,8 @@ namespace Web.Controllers
     {
         public string GetQRCode(int amid)
         {
-            string androidUrl = string.Format("{0}/Download/{1}/android.jpg", SystemConst.WebUrl, amid);
-            string iosUrl = string.Format("{0}/Download/{1}/ios.jpg", SystemConst.WebUrl, amid);
+            string androidUrl = string.Format("{0}/Download/{1}/android.jpg", SystemConst.WebUrlIP, amid);
+            string iosUrl = string.Format("{0}/Download/{1}/ios.jpg", SystemConst.WebUrlIP, amid);
             return Newtonsoft.Json.JsonConvert.SerializeObject(new { a = androidUrl, i = iosUrl });
         }
 

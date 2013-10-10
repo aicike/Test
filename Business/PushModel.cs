@@ -80,7 +80,7 @@ namespace Business
             }
 
             //封装消息
-            string hostUrl = SystemConst.WebUrl;
+            string hostUrl = SystemConst.WebUrlIP;
             List<App_AutoMessageReplyContent> pushMessage = new List<App_AutoMessageReplyContent>();
             App_AutoMessageReplyContent rep = new App_AutoMessageReplyContent();
             rep.FileTitle = title;
