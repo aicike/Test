@@ -10,6 +10,7 @@ using System.Threading;
 using Poco;
 using Interface;
 using Injection;
+using System.Web;
 
 namespace Business
 {
@@ -87,7 +88,31 @@ namespace Business
 
             return ToFilePath;
         }
+        /// <summary>
+        /// (ffmpeg)转换 音频文件到制定格式
+        /// </summary>
+        /// <param name="FilePath"></param>
+        /// <param name="ToType"></param>
+        /// <returns></returns>
+        public string CreateMp3Forffmpeg(string FilePath, string ToType)
+        {
+            Thread.Sleep(2000);
+            string ToFilePath = FilePath.Substring(0, FilePath.LastIndexOf('.')) + "." + ToType;
+            //string ffmpegFile = HttpContext.Current.Server.MapPath("/App_Data/ffmpeg.exe");
+            string ffmpegFile = AppDomain.CurrentDomain.BaseDirectory + "/App_Data/ffmpeg.exe";
+            using (System.Diagnostics.Process pro = new System.Diagnostics.Process())
+            {
+                pro.StartInfo.UseShellExecute = false;
+                pro.StartInfo.ErrorDialog = false;
+                pro.StartInfo.RedirectStandardError = true;
 
+                pro.StartInfo.FileName = ffmpegFile;
+                pro.StartInfo.Arguments = " -i " + FilePath + " " + ToFilePath;
+                pro.Start();
+            }
+
+            return ToFilePath;
+        }
         /// <summary>
         /// 获取音频 视频文件长短 秒
         /// </summary>

@@ -60,7 +60,7 @@ namespace Web.Areas.System.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddAccount(Account_AccountMain account_accountMain, HttpPostedFileBase HeadImagePathFile)
+        public ActionResult AddAccount(Account_AccountMain account_accountMain, HttpPostedFileBase HeadImagePathFile, int w, int h, int x1, int y1, int tw, int th)
         {
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             accountMainModel.CheckHasPermissions(LoginSystemUser.ID, account_accountMain.AccountMainID).NotAuthorizedPage();
@@ -74,7 +74,7 @@ namespace Web.Areas.System.Controllers
             }
 
             IAccount_AccountMainModel model = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
-            var result = model.Add(account_accountMain, HeadImagePathFile);
+            var result = model.Add(account_accountMain, HeadImagePathFile, w, h, x1, y1, tw, th);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);
@@ -102,20 +102,22 @@ namespace Web.Areas.System.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditAccount(Poco.Account account, int accountMainId, HttpPostedFileBase HeadImagePathFile)
+        public ActionResult EditAccount(Poco.Account account, int accountMainId, HttpPostedFileBase HeadImagePathFile, int w, int h, int x1, int y1, int tw, int th)
         {
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             accountMainModel.CheckHasPermissions(LoginSystemUser.ID, accountMainId).NotAuthorizedPage();
-
-            var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
-            if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainId, account.ID))
+            if (account.RoleID == 1)
             {
-                throw new ApplicationException("只能有一个有效的管理员账号，请选择分配其他角色。");
+                var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
+                if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainId, account.ID))
+                {
+                    throw new ApplicationException("只能有一个有效的管理员账号，请选择分配其他角色。");
+                }
             }
 
 
             IAccountModel model = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-            var result = model.Edit(account, accountMainId, HeadImagePathFile);
+            var result = model.Edit(account, accountMainId, HeadImagePathFile, x1, y1, w, h, tw, th);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);

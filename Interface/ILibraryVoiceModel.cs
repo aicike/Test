@@ -11,6 +11,8 @@ namespace Interface
     {
         Result Upload(LibraryVoice entity, HttpPostedFileBase voice);
 
+        int UpdateVoiceTime(int id, string mp3FileName);
+
         Result ReName(int id, string name);
     }
 }

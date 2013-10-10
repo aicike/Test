@@ -39,11 +39,32 @@
                         marginLeft: '-' + Math.round(rx * c.x) + 'px',
                         marginTop: '-' + Math.round(ry * c.y) + 'px'
                       });
+
+                      var rx2 = 80 / c.w;
+                      var ry2 = 80 / c.h;
+                      $('#imgLogo2').css({
+                        width: Math.round(rx2 * boundx) + 'px',
+                        height: Math.round(ry2 * boundy) + 'px',
+                        marginLeft: '-' + Math.round(rx2 * c.x) + 'px',
+                        marginTop: '-' + Math.round(ry2 * c.y) + 'px'
+                      });
+
+                      var rx3 = 32 / c.w;
+                      var ry3 = 32 / c.h;
+                      $('#imgLogo3').css({
+                        width: Math.round(rx3 * boundx) + 'px',
+                        height: Math.round(ry3 * boundy) + 'px',
+                        marginLeft: '-' + Math.round(rx3 * c.x) + 'px',
+                        marginTop: '-' + Math.round(ry3 * c.y) + 'px'
+                      });
                     }
                     $('#x1').val(c.x);
                     $('#y1').val(c.y);
                     $('#w').val(c.w);
                     $('#h').val(c.h);
+                     //获取当前显示图片高宽
+                    $('#tw').val($("#imgSel").width());
+                    $('#th').val($("#imgSel").height()); 
               };
 
 
@@ -83,12 +104,20 @@
 
                             if(Cnt>0)
                             {
-                               jcrop_api.destroy();
-                            }
+                                jcrop_api.destroy();
+                                $('#x1').val("0");
+                                $('#y1').val("0");
+                                $('#w').val("0");
+                                $('#h').val("0");
+                                $('#tw').val("0");
+                                $('#th').val("0");
+                            } 
                             $("#imgSel").attr('src',e.target.result);
                             $("#imgLogo").attr('src', e.target.result);
-                            
+                            $("#imgLogo2").attr('src', e.target.result);
+                            $("#imgLogo3").attr('src', e.target.result);
 
+                           
                             
                             $('#imgSel').Jcrop({
                                 onChange:   updatePreview,
@@ -103,7 +132,7 @@
                                 jcrop_api = this;
                               });
                               Cnt = 1;
-                              
+                             
 
                         };
                         reader.readAsDataURL(input.files[0]);
@@ -138,9 +167,8 @@
             display: table-cell;
             vertical-align: middle;
             text-align: center;
-            border: 1px solid #f00;
+            border: 1px solid #d0d0d0;
         }
-        /* .middle-out .middle-in {position:static;*position:relative;top:-50%;left:-50%;}*/
     </style>
 }
 <div class="title">
@@ -158,39 +186,48 @@
     {
         <fieldset style="border: 1px solid #E7E7E7;">
             <legend>头像</legend>
-            <table>
+            <table style="line-height: 15px">
                 <tr>
-                    <td>
+                    <td style="width: 365px">
                         <div class="middle-out">
                             <div class="middle-in" style="margin: auto 0px">
                                 <img id="imgSel"  src="@Url.Content("~/Images/SelImg.jpg")"   style="max-height:320px; max-width:320px;" />
                             </div>
                         </div>
                     </td>
-                    <td>
+                    <td valign="top">
                         <div style="width: 120px; height: 120px; overflow: hidden;">
                             <img id="imgLogo" src="@Url.Content(Model.HeadImagePath)" style="width:120px; height:120px"/>
                         </div>
-                        @Html.TextBoxFor(a => a.HeadImagePath, new { style = "width:0px;visibility:hidden" })
-                        @Html.ValidationMessageFor(a => a.HeadImagePath)
+                        <span style="font-size: 12px; color: #979797">(120*120)</span>
+                        <div style="width: 80px; height: 80px; overflow: hidden; margin-top: 17px">
+                            <img id="imgLogo2" src="@Url.Content(Model.HeadImagePath)" style="width:80px; height:80px"/>
+                        </div>
+                        <span style="font-size: 12px; color: #979797">(80*80)</span>
+                        <div style="width: 32px; height: 32px; overflow: hidden; margin-top: 17px">
+                            <img id="imgLogo3" src="@Url.Content(Model.HeadImagePath)" style="width:32px; height:32px"/>
+                        </div>
+                        <span style="font-size: 12px; color: #979797">(32*32)</span>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" />
-                        <div>
-                            <label>
-                                X1
-                                <input type="text" size="4" id="x1" name="x1" /></label>
-                            <label>
-                                Y1
-                                <input type="text" size="4" id="y1" name="y1" /></label>
-                            <label>
-                                W
-                                <input type="text" size="4" id="w" name="w" /></label>
-                            <label>
-                                H
-                                <input type="text" size="4" id="h" name="h" /></label>
+                        @Html.TextBoxFor(a => a.HeadImagePath, new { style = "width:0px;visibility:hidden" })
+                        @Html.ValidationMessageFor(a => a.HeadImagePath)
+                        <div style="display:none ">
+                            X1
+                            <input type="text" size="4" id="x1" name="x1" value="0" />
+                            Y1
+                            <input type="text" size="4" id="y1" name="y1" value="0" />
+                            W
+                            <input type="text" size="4" id="w" name="w" value="0" />
+                            H
+                            <input type="text" size="4" id="h" name="h" value="0" />
+                            TW
+                            <input type="text" size="4" id="tw" name="tw" value="0" />
+                            TH
+                            <input type="text" size="4" id="th" name="th" value="0" />
                         </div>
                     </td>
                 </tr>

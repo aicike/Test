@@ -196,6 +196,7 @@
     <Compile Include="Models\SessionSharedHttpModule.cs" />
     <Compile Include="Models\UrlHelperExpand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="App_Data\ffmpeg.exe" />
     <Content Include="Content\blue.css" />
     <Content Include="Content\Icon\Icon.css" />
     <Content Include="Content\Icon\glyphicons.png" />
@@ -501,7 +502,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Areas\System\Models\" />
     <Folder Include="Areas\System\Views\Shared\" />
     <Folder Include="File\1\Account\" />

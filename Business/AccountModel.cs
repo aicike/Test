@@ -10,6 +10,10 @@ using System.Web;
 using System.IO;
 using Common;
 using Injection.Transaction;
+using System.Drawing;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Drawing.Imaging;
 
 namespace Business
 {
@@ -48,14 +52,14 @@ namespace Business
         {
             return accountMain.Account_AccountMains.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Select(a => a.Account).Where(a => a.RoleID == 1).AsQueryable();
         }
-        public IQueryable<Account> GetAccountAdminListByAccountMain(AccountMain accountMain,int RoleID,int AccountID)
+        public IQueryable<Account> GetAccountAdminListByAccountMain(AccountMain accountMain, int RoleID, int AccountID)
         {
-            return accountMain.Account_AccountMains.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Select(a => a.Account).Where(a => a.RoleID == RoleID&& a.ID!=AccountID).AsQueryable();
+            return accountMain.Account_AccountMains.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Select(a => a.Account).Where(a => a.RoleID == RoleID && a.ID != AccountID).AsQueryable();
         }
         /// <summary>
         /// 根据角色获取项目成员
         /// </summary>
-        public IQueryable<Account> GetAccountListByAccountMain_RoleID(int accountMainID, int roleID,int accountID)
+        public IQueryable<Account> GetAccountListByAccountMain_RoleID(int accountMainID, int roleID, int accountID)
         {
             return GetAccountListByAccountMain(accountMainID).Where(a => a.RoleID == roleID && a.ID != accountID);
         }
@@ -64,6 +68,8 @@ namespace Business
         {
             return accountMain.Account_AccountMains.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Select(a => a.Account).Where(a => a.RoleID == roleID).AsQueryable();
         }
+
+
 
         [Transaction]
         public Result Add(Account account, int accountMainID, System.Web.HttpPostedFileBase HeadImagePathFile)
@@ -125,6 +131,199 @@ namespace Business
             return result;
         }
 
+        public Result Add(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile, int x1, int y1, int width, int height, int Twidth, int Theight)
+        {
+            Result result = new Result();
+            if (account.RoleID == 1)
+            {
+                var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
+                if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID))
+                {
+                    result.Error = SystemConst.Notice.MultipleAccountMainAdminAccount;
+                    return result;
+                }
+            }
+            account.HeadImagePath = SystemConst.Business.DefaultHeadImage;
+            account.AccountStatusID = LookupFactory.GetLookupOptionIdByToken(EnumAccountStatus.Enabled);
+            account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
+            account.IsActivated = true;
+            result = base.Add(account);
+            if (result.HasError == false && HeadImagePathFile != null)
+            {
+                try
+                {
+                    var path = string.Format(SystemConst.Business.PathAccount, accountMainID);
+                    var accountPath = HttpContext.Current.Server.MapPath(path);
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var imageName = string.Format("{0}_{1}", token, HeadImagePathFile.FileName);
+                    var imageName2 = string.Format("{0}_M_{1}", token, HeadImagePathFile.FileName);
+                    var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
+                    var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
+                    HeadImagePathFile.SaveAs(imagePath);
+
+                    account.HeadImagePath = path + imageName;
+                    if (width > 0)
+                    {
+                        Task t = new Task(() =>
+                        {
+                            int ToWidth = width;
+                            int ToHeight = height;
+                            int ToX1 = x1;
+                            int ToY1 = y1;
+
+                            Bitmap sourceBitmap = new Bitmap(imagePath);
+
+                            int YW = sourceBitmap.Width;
+                            int YH = sourceBitmap.Height;
+
+                            if (YH != Theight)
+                            {
+                                double ratio = double.Parse(YH.ToString()) / double.Parse(Theight.ToString());
+                                //ratio = Math.Round(ratio, 2);
+                                ToWidth = (int)(ToWidth * ratio);
+                                ToHeight = (int)(ToHeight * ratio);
+                                ToX1 = (int)(ToX1 * ratio);
+                                ToY1 = (int)(ToY1 * ratio);
+                            }
+                            Bitmap resultBitmap = new Bitmap(ToWidth, ToHeight);
+
+                            using (Graphics g = Graphics.FromImage(resultBitmap))
+                            {
+                                Rectangle resultRectangle = new Rectangle(0, 0, ToWidth, ToHeight);
+                                Rectangle sourceRectangle = new Rectangle(0 + ToX1, 0 + ToY1, ToWidth, ToHeight);
+                                g.DrawImage(sourceBitmap, resultRectangle, sourceRectangle, GraphicsUnit.Pixel);
+                            }
+                            EncoderParameters ep = new EncoderParameters();
+
+                            resultBitmap.Save(imagePath2, sourceBitmap.RawFormat);
+                            resultBitmap.Dispose();
+                            sourceBitmap.Dispose();
+                            if (File.Exists(imagePath))
+                            {
+                                File.Delete(imagePath);
+                            }
+                        });
+                        t.Start();
+                        account.HeadImagePath = path + imageName2;
+                    }
+
+                    result = Edit(account);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            if (result.HasError == false)
+            {
+                var groupModel = Factory.Get<IGroupModel>(SystemConst.IOC_Model.GroupModel);
+                result = groupModel.AddDefaultGroup(account.ID, accountMainID);
+            }
+            return result;
+        }
+
+        public Result Edit(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile, int x1, int y1, int width, int height, int Twidth, int Theight)
+        {
+            Result result = new Result();
+            if (account.RoleID == 1)
+            {
+                var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
+                if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID, account.ID))
+                {
+                    result.Error = SystemConst.Notice.MultipleAccountMainAdminAccount;
+                    return result;
+                }
+            }
+            //检查邮箱是否唯一
+            CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+            var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
+            if (isOk == false)
+            {
+                result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
+                return result;
+            }
+            account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
+            result = base.Edit(account);
+            if (result.HasError == false && HeadImagePathFile != null)
+            {
+                try
+                {
+                    //删除原头像
+                    if (account.HeadImagePath != "~/Images/default_Avatar.png")
+                    {
+                        var file = HttpContext.Current.Server.MapPath(account.HeadImagePath);
+                        if (File.Exists(file))
+                        {
+                            File.Delete(file);
+                        }
+                    }
+                    var path = string.Format(SystemConst.Business.PathAccount, accountMainID);
+                    var accountPath = HttpContext.Current.Server.MapPath(path);
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var imageName = string.Format("{0}_{1}", token, HeadImagePathFile.FileName);
+                    var imageName2 = string.Format("{0}_M_{1}", token, HeadImagePathFile.FileName);
+                    var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
+                    var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
+                    HeadImagePathFile.SaveAs(imagePath);
+                    
+                    account.HeadImagePath = path + imageName;
+                    if (width > 0)
+                    {
+                        Task t = new Task(() =>
+                        {
+                            int ToWidth = width;
+                            int ToHeight = height;
+                            int ToX1 = x1;
+                            int ToY1 = y1;
+
+                            Bitmap sourceBitmap = new Bitmap(imagePath);
+
+                            int YW = sourceBitmap.Width;
+                            int YH = sourceBitmap.Height;
+
+
+                            if (YH != Theight)
+                            {
+                                double ratio = double.Parse(YH.ToString()) / double.Parse(Theight.ToString());
+                                //ratio = Math.Round(ratio, 2);
+                                ToWidth = (int)(ToWidth * ratio);
+                                ToHeight = (int)(ToHeight * ratio);
+                                ToX1 = (int)(ToX1 * ratio);
+                                ToY1 = (int)(ToY1 * ratio);
+                            }
+                            Bitmap resultBitmap = new Bitmap(ToWidth, ToHeight);
+
+                            using (Graphics g = Graphics.FromImage(resultBitmap))
+                            {
+                                Rectangle resultRectangle = new Rectangle(0, 0, ToWidth, ToHeight);
+                                Rectangle sourceRectangle = new Rectangle(0 + ToX1, 0 + ToY1, ToWidth, ToHeight);
+                                g.DrawImage(sourceBitmap, resultRectangle, sourceRectangle, GraphicsUnit.Pixel);
+                            }
+                            EncoderParameters ep = new EncoderParameters();
+
+                            resultBitmap.Save(imagePath2, sourceBitmap.RawFormat);
+                            resultBitmap.Dispose();
+                            sourceBitmap.Dispose();
+                            if (File.Exists(imagePath))
+                            {
+                                File.Delete(imagePath);
+                            }
+                        });
+                        t.Start();
+                        account.HeadImagePath = path + imageName2;
+                    }
+
+
+                    result = Edit(account);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            return result;
+        }
+
         public Result Edit(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile)
         {
             Result result = new Result();
@@ -139,7 +338,7 @@ namespace Business
             }
             //检查邮箱是否唯一
             CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
-            var isOk = model.CheckIsUnique( "Account", "Email", account.Email, account.ID);
+            var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
             if (isOk == false)
             {
                 result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
@@ -317,5 +516,8 @@ namespace Business
         {
             return true;
         }
+
+
+
     }
 }

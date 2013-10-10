@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Injection;
 using Interface;
 using Poco;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Web.Controllers
 {
@@ -32,10 +34,17 @@ namespace Web.Controllers
                 LibraryVoice entity = new LibraryVoice();
                 entity.AccountMainID = LoginAccount.CurrentAccountMainID;
                 var result = libraryModel.Upload(entity, Request.Files[0]);
+                
                 if (result.HasError)
                 {
                     return AlertJS_NoTag(new Dialog(result.Error));
                 }
+                Task t = new Task(() => {
+                    Thread.Sleep(2000);
+                    libraryModel.UpdateVoiceTime(entity.ID, Server.MapPath(entity.FileMp3Path));
+                });
+                t.Start();
+
                 return "window.location.href='" + Url.Action("Index", "LibraryVoice", new { HostName = LoginAccount.HostName }) + "'";
             }
             else

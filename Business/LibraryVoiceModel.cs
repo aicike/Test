@@ -21,7 +21,7 @@ namespace Business
             var filePath = string.Format("~/File/{0}/FileLibrary/{1}", entity.AccountMainID, fileName);
             var pathIO = HttpContext.Current.Server.MapPath(filePath);
             voice.SaveAs(pathIO);
-
+ 
             string mp3path =pathIO;
             try
             {
@@ -31,14 +31,10 @@ namespace Business
                 if (hz.ToUpper() != ".MP3")
                 {
                     //转换
-                    mp3path = cm.CreateMp3(pathIO,"mp3");
+                    mp3path = cm.CreateMp3Forffmpeg(pathIO,"mp3");
                 }
-                Thread.Sleep(1000);
-                
-                //获取时间
-                string FileTime = cm.GetFileTimeLength(mp3path);
                 entity.FileMp3Path = filePath.Substring(0, filePath.LastIndexOf('.')) + ".mp3";
-                entity.FileLength = FileTime;
+               
             }
             catch { }
 
@@ -46,6 +42,15 @@ namespace Business
             entity.FileName = voice.FileName.Substring(0, voice.FileName.LastIndexOf('.'));
             entity.FilePath = filePath;
             return base.Add(entity);
+        }
+
+        public int UpdateVoiceTime(int id, string mp3FileName)
+        {
+            CommonModel cm = new CommonModel();
+            //获取时间
+            string FileTime = cm.GetFileTimeLength(mp3FileName);
+            string sql = string.Format("update LibraryVoice set FileLength ='{0}' where ID = {1}", FileTime, id);
+            return base.SqlExecute(sql);
         }
 
         [Transaction]
