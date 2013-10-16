@@ -200,6 +200,7 @@ namespace AcceptanceServer
             }
             else if (e.GetType() == typeof(agsXMPP.protocol.client.Message))
             {
+                string WebUrlIP = ConfigurationManager.AppSettings["WebUrlIP"].ToString();
                 agsXMPP.protocol.client.Message msg = e as agsXMPP.protocol.client.Message;
                 //点对点聊
                 if (msg.Type == MessageType.chat)
@@ -213,6 +214,8 @@ namespace AcceptanceServer
                         //存储聊天记录
                         try
                         {
+                            Np.FielUrl = Np.FielUrl.Replace(WebUrlIP, "~");
+                            
                             dt = DataBusiness.InsertChatRecord(msg, Np).Tables[0];
                             //本条消息数据库ID
                             int ThisMessageID = 0;
@@ -229,6 +232,7 @@ namespace AcceptanceServer
                                 if (OnlineUser.onlinuser.Any(a => a.jid.User == msg.To.User))
                                 {
                                     msg.From = jid;
+                                    Np.FielUrl = WebUrlIP + Np.FielUrl.Remove(0,1);
                                     //转发发送消息 所有设备IEnumerable
                                     List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
                                     foreach (XmppServerConnection xcon in cons)

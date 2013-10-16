@@ -1,0 +1,328 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.Set;
+}
+
+@model Poco.AppAdvertorial
+@section head{
+    <script src="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/uploadify/uploadify.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/uploadify/jquery.uploadify.js")" type="text/javascript"></script>
+    <script src="@Url.Content("/ueditor/ueditor.config.js")" type="text/javascript"></script>
+    <script src="@Url.Content("/ueditor/ueditor.all.js")" type="text/javascript"></script>
+    <script>
+
+        var Cnt = 0;
+        $(function () {
+
+            window.UEDITOR_HOME_URL = "/ueditor/";
+            //实例化编辑器
+            var options = {
+                initialFrameWidth: '330',
+                initialFrameHeight: 300,
+                imageUrl: UEDITOR_HOME_URL + "net/imageUp_Advertorial.ashx",
+                imagePath: "",
+                imageManagerUrl: UEDITOR_HOME_URL + "net/imageManager_LibraryImageText.ashx",
+                imageManagerPath: "",
+                initialContent: ""
+            };
+
+            var ue = UE.getEditor('editor', options);
+
+
+
+            var jcrop_api, boundx, boundy;
+
+
+
+
+            function updatePreview(c) {
+                if (parseInt(c.w) > 0) {
+
+
+                    var rx2 = 200 / c.w;
+                    var ry2 = 100 / c.h;
+                    $('#imgLogo').css({
+                        width: Math.round(rx2 * boundx) + 'px',
+                        height: Math.round(ry2 * boundy) + 'px',
+                        marginLeft: '-' + Math.round(rx2 * c.x) + 'px',
+                        marginTop: '-' + Math.round(ry2 * c.y) + 'px'
+                    });
+
+                    var rx3 = 120 / c.w;
+                    var ry3 = 60 / c.h;
+                    $('#imgLogo2').css({
+                        width: Math.round(rx3 * boundx) + 'px',
+                        height: Math.round(ry3 * boundy) + 'px',
+                        marginLeft: '-' + Math.round(rx3 * c.x) + 'px',
+                        marginTop: '-' + Math.round(ry3 * c.y) + 'px'
+                    });
+                }
+                $('#x1').val(c.x);
+                $('#y1').val(c.y);
+                $('#w').val(c.w);
+                $('#h').val(c.h);
+                //获取当前显示图片高宽
+                $('#tw').val($("#imgSel").width());
+                $('#th').val($("#imgSel").height());
+            };
+
+
+            $("#HousShowImagePathFile").change(function () {
+                var fileName = $("#HousShowImagePathFile").val();
+                $("#MainImagPath").val(fileName);
+                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+                $("span[data-valmsg-for='MainImagPath']").empty().attr("class", "field-validation-valid");
+                switch (suffix) {
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".gif":
+                    case ".bmp":
+                        break;
+                    default:
+                        $("span[data-valmsg-for='MainImagPath']").text("支持下列图片格式：.jpg|.jpeg|.png|.gif|.bmp").attr("class", "field-validation-error");
+                        break;
+                }
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+
+                        if (Cnt > 0) {
+                            jcrop_api.destroy();
+                            $('#x1').val("0");
+                            $('#y1').val("0");
+                            $('#w').val("0");
+                            $('#h').val("0");
+                            $('#tw').val("0");
+                            $('#th').val("0");
+                        }
+                        $("#imgSel").attr('src', e.target.result);
+                        $("#imgLogo").attr('src', e.target.result);
+                        $("#imgLogo2").attr('src', e.target.result);
+
+
+
+                        $('#imgSel').Jcrop({
+                            onChange: updatePreview,
+                            onSelect: updatePreview,
+                            aspectRatio: 2
+                        }, function () {
+                            // Use the API to get the real image size
+                            var bounds = this.getBounds();
+                            boundx = bounds[0];
+                            boundy = bounds[1];
+                            // Store the API in the jcrop_api variable
+                            jcrop_api = this;
+                        });
+                        Cnt = 1;
+
+
+
+
+
+
+
+
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+                return false;
+            });
+
+        });
+        var IsStick = 0;
+        var iscansub = 0;
+        function chickStick() {
+            if ($("#sticks").val() == 1) {
+                var Url = '@Url.Action("chickStick", "AppAdvertorial")';
+                $.post(Url, { ID: 1 }, function (result) {
+
+                    if (result == "No") {
+                        JAlert({
+                            Message: "最多允许“5”篇软文置顶！请重新选择！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        IsStick = 1;
+                    }
+                    else {
+                        IsStick = 0;
+                    }
+                });
+            }
+            else {
+                IsStick = 0;
+            }
+        }
+
+        function CKOnsubmit()
+        {
+            if ($("#w").val() == "0") {
+                JAlert({
+                    Message: "请选择App列表展示区域！",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+                return false;
+            }
+            
+            if (IsStick == 1) {
+                JAlert({
+                    Message: "最多允许“5”篇软文置顶！请重新选择！",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+                return false;
+            }
+
+
+            if (iscansub == 1) {
+                return false;
+            }
+            iscansub = 1;
+        }
+
+    </script>
+        <style type="text/css">
+        .middle-out
+        {
+            width: 320px;
+            height: 320px;
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #d0d0d0;
+        }
+    </style>
+}
+<div class="title">
+    设置 -> 添加App动态软文
+</div>
+<div class="bodyLeft">
+    <ul class="ulList">
+        <li>@Html.ActionLink("个人信息", "Index", "Set", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("基础设置", "Index", "BasisSet", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li class="select">@Html.ActionLink("App动态软文", "Index", "AppAdvertorial", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("App等待画面", "Index", "AppWaitImg", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("关键词自动回复", "Index", "KeywordMessage", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("安装App自动回复", "Index", "InstallAppReply", new { HostName = ViewBag.HostName }, null, true)</li>
+    </ul>
+</div>
+<div class="bodyRight">
+    @using (Html.BeginForm("Add", "AppAdvertorial", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+         <fieldset style=" font-size:14px">
+            <legend>展示图片</legend>
+
+             <table style="line-height: 15px" width="100%">
+                <tr>
+                    <td style="width: 365px">
+                        <div class="middle-out">
+                            <div class="middle-in" style="margin: auto 0px">
+                                <img id="imgSel"  src="@Url.Content("~/Images/SelImg.jpg")"   style="max-height:320px; max-width:320px;" />
+                            </div>
+                        </div>
+                    </td>
+                    <td valign="top"><p>
+                    App列表页展示图
+
+                    </p> 
+                        <div style="width: 200px; height: 100px; overflow: hidden;">
+                            <img id="imgLogo" src="@Url.Content("~/Images/SelImg.jpg")" style="width:200px; height:100px"/>
+                        </div>
+                       (<span style="font-size: 12px; color: #979797">320*160 缩略图)</span>
+                        <div style="width: 120px; height: 60px; overflow: hidden; margin-top: 17px">
+                            <img id="imgLogo2" src="@Url.Content("~/Images/SelImg.jpg")" style="width:120px; height:60px"/>
+                        </div>
+                        <span style="font-size: 12px; color: #979797">(120*60 缩略图)</span>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="file" id="HousShowImagePathFile" name="HousShowImagePathFile" />
+                        @Html.TextBoxFor(a => a.MainImagPath, new { style = "width:0px;visibility:hidden" })
+                       @Html.ValidationMessageFor(a => a.MainImagPath)
+                       <div style=" font-size:12px;color:Red" >注：为了减少App端 在未接入WIFI的情况下的压力，请尽量上传文件较小的图片</div>
+                        <div style="display:none ">
+                            X1
+                            <input type="text" size="4" id="x1" name="x1" value="0" />
+                            Y1
+                            <input type="text" size="4" id="y1" name="y1" value="0" />
+                            W
+                            <input type="text" size="4" id="w" name="w" value="0" />
+                            H
+                            <input type="text" size="4" id="h" name="h" value="0" />
+                            TW
+                            <input type="text" size="4" id="tw" name="tw" value="0" />
+                            TH
+                            <input type="text" size="4" id="th" name="th" value="0" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+
+
+
+
+
+
+        </fieldset>
+        <fieldset  style=" font-size:14px">
+            <legend>基本信息</legend>
+            <table class="tableForm" style="width:100%">
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 软文标题
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Title)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Title)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 描述
+                    </td>
+                    <td class="tdField">@Html.TextAreaFor(a => a.Depict, new  { style="height:50px"})
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Depict)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 是否置顶
+                    </td>
+                    <td class="tdField"> 
+                        <select id="sticks" onchange="chickStick()" name="stick" style=" width:50px">
+                            <option value="0">否</option>
+                            <option value="1">是</option>
+                        </select> (最多只能有“5”篇软文置顶)
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle" valign="top">
+                        <span class="Identification">*</span> 正文
+                    </td>
+                    <td colspan="2" class="tdField">
+
+                        <script type="text/plain" id="editor" height="300px" width="330px" name="Content"></script>
+                        
+                    </td>
+                   
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="submit" id="btnSubmit" onclick="return CKOnsubmit()" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }
+</div>
+<div style="clear: both">
+</div>

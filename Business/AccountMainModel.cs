@@ -84,16 +84,23 @@ namespace Business
                         Directory.CreateDirectory(fileLibraryPath);
                     }
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
-                    var width = 80;
+                    var height = 58;
                     var imageName = string.Format("{0}_{1}", token, LogoImagePath.FileName);
-                    var imageThumbnailName = string.Format("{0}_{1}_{2}", token, width, LogoImagePath.FileName);
+                    var imageThumbnailName = string.Format("{0}_{1}_{2}", token, height, LogoImagePath.FileName);
                     var imagePath = string.Format("{0}/{1}", basePath, imageName);
                     var imageThumbnailPath = string.Format("{0}/{1}", basePath, imageThumbnailName);
                     LogoImagePath.SaveAs(imagePath);
                     //缩略图
-                    Tool.Thumbnail(imagePath, imageThumbnailPath, width);
+                    bool IsOK = Tool.Thumbnail(imagePath,height ,imageThumbnailPath);
                     accountMain.LogoImagePath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
-                    accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageThumbnailName;
+                    if (IsOK)
+                    {
+                        accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageThumbnailName;
+                    }
+                    else
+                    {
+                        accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
+                    }
                     result = Edit(accountMain);
                 }
                 catch (Exception ex)
@@ -130,16 +137,23 @@ namespace Business
                         File.Delete(logoImageThumbnailPath);
                     }
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
-                    var width = 80;
+                    var height = 58;
                     var imageName = string.Format("{0}_{1}", token, LogoImagePath.FileName);
-                    var imageThumbnailName = string.Format("{0}_{1}_{2}", token, width, LogoImagePath.FileName);
+                    var imageThumbnailName = string.Format("{0}_{1}_{2}", token, height, LogoImagePath.FileName);
                     var imagePath = string.Format("{0}/{1}", basePath, imageName);
                     var imageThumbnailPath = string.Format("{0}/{1}", basePath, imageThumbnailName);
                     LogoImagePath.SaveAs(imagePath);
                     //缩略图
-                    Tool.Thumbnail(imagePath, imageThumbnailPath, width);
+                    bool IsOK = Tool.Thumbnail(imagePath, height, imageThumbnailPath);
                     accountMain.LogoImagePath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
-                    accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageThumbnailName;
+                    if (IsOK)
+                    {
+                        accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageThumbnailName;
+                    }
+                    else
+                    {
+                        accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
+                    }
                     result = Edit(accountMain);
                 }
                 catch (Exception ex)
@@ -177,16 +191,23 @@ namespace Business
                         File.Delete(logoImageThumbnailPath);
                     }
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
-                    var width = 80;
+                    var height = 58;
                     var imageName = string.Format("{0}_{1}", token, LogoImagePath.FileName);
-                    var imageThumbnailName = string.Format("{0}_{1}_{2}", token, width, LogoImagePath.FileName);
+                    var imageThumbnailName = string.Format("{0}_{1}_{2}", token, height, LogoImagePath.FileName);
                     var imagePath = string.Format("{0}/{1}", basePath, imageName);
                     var imageThumbnailPath = string.Format("{0}/{1}", basePath, imageThumbnailName);
                     LogoImagePath.SaveAs(imagePath);
                     //缩略图
-                    Tool.Thumbnail(imagePath, imageThumbnailPath, width);
+                    bool IsOK = Tool.Thumbnail(imagePath, height, imageThumbnailPath);
                     accountMain.LogoImagePath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
-                    accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageThumbnailName;
+                    if (IsOK)
+                    {
+                        accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageThumbnailName;
+                    }
+                    else
+                    {
+                        accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
+                    }
                     result = Edit(accountMain);
                 }
                 catch (Exception ex)

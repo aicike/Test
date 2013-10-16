@@ -86,9 +86,12 @@ namespace Web.Controllers
             var LookupDecoration = LookupFactory.GetLookupOptionList(typeof(EnumDecoration));
             ViewBag.Decoration = LookupDecoration;
             ViewBag.AccountMainID = LoginAccount.CurrentAccountMainID;
+            ViewBag.zt = Hounses.SalesState;
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "项目管理-修改项目", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
+            
+
             return View(Hounses);
         }
 

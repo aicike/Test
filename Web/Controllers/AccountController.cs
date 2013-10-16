@@ -13,11 +13,11 @@ namespace Web.Controllers
 {
     public class AccountController : ManageAccountController
     {
-        public ActionResult Index( int? id,int? roleID)
+        public ActionResult Index(int? id, int? roleID)
         {
             //角色列表
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
-            var roleList = roleModel.GetRoleListNoaID(LoginAccount.CurrentAccountMainID,LoginAccount.ID);
+            var roleList = roleModel.GetRoleListNoaID(LoginAccount.CurrentAccountMainID, LoginAccount.ID);
             ViewBag.RoleList = roleList;
             //项目信息
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
@@ -27,12 +27,13 @@ namespace Web.Controllers
             IAccountModel accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             //IQueryable<Account> accountAdminIquery;
             IQueryable<Poco.Account> accountList = null; //项目成员
+
             //根据角色查找账号列表
             if (roleID.HasValue)
             {
                 if (roleID == 1)
                 {
-                    accountList = accountModel.GetAccountListByAccountMain_RoleID(LoginAccount.CurrentAccountMainID, roleList.FirstOrDefault().ID,LoginAccount.ID);
+                    accountList = accountModel.GetAccountListByAccountMain_RoleID(LoginAccount.CurrentAccountMainID, roleList.FirstOrDefault().ID, LoginAccount.ID);
                 }
                 else
                 {
@@ -41,12 +42,20 @@ namespace Web.Controllers
             }
             else
             {
+                if (roleList.FirstOrDefault() != null)
+                {
+                    accountList = accountModel.GetAccountAdminListByAccountMain(entity, roleList.FirstOrDefault().ID, LoginAccount.ID);
+                }
 
-                accountList = accountModel.GetAccountAdminListByAccountMain(entity, roleList.FirstOrDefault().ID,LoginAccount.ID);
             }
-            var pageList = accountList.ToPagedList(id ?? 1, 15);
-            ViewBag.RoleID = roleID.HasValue ? roleID.Value : roleList.FirstOrDefault().ID;
-            ViewBag.AccountAdminList = accountList.ToList();
+            PagedList<Account> pageList = null;
+            if (accountList != null)
+            {
+                pageList = accountList.ToPagedList(id ?? 1, 15);
+                ViewBag.RoleID = roleID.HasValue ? roleID.Value : roleList.FirstOrDefault().ID;
+                ViewBag.AccountAdminList = accountList.ToList();
+            }
+            ViewBag.RoleID = 0;
             ViewBag.HostName = LoginAccount.HostName;
 
             string WebTitleRemark = SystemConst.WebTitleRemark;
@@ -77,7 +86,7 @@ namespace Web.Controllers
         public ActionResult Add(Account_AccountMain account_accountMain, HttpPostedFileBase HeadImagePathFile, int w, int h, int x1, int y1, int tw, int th)
         {
             IAccount_AccountMainModel model = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
-            var result = model.Add(account_accountMain, HeadImagePathFile,w,h, x1, y1, tw, th);
+            var result = model.Add(account_accountMain, HeadImagePathFile, w, h, x1, y1, tw, th);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);

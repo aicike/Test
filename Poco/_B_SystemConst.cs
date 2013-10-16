@@ -128,6 +128,8 @@ namespace Poco
             public const string AutoMessage_UserModel = "AutoMessage_UserModel";
             public const string ConversationModel = "ConversationModel";
 
+            public const string AppAdvertorialModel = "AppAdvertorialModel";
+            public const string AppWaitImgModel = "AppWaitImgModel";
         }
     }
 }

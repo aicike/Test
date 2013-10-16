@@ -1,0 +1,103 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.Set;
+}
+@model Poco.AppWaitImg
+@section head{
+    <script>
+        $(function () {
+
+            $("#HousShowImagePathFile").change(function () {
+                var fileName = $("#HousShowImagePathFile").val();
+                $("#ImgPath").val(fileName);
+                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+                $("span[data-valmsg-for='ImgPath']").empty().attr("class", "field-validation-valid");
+                switch (suffix) {
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".gif":
+                    case ".bmp":
+                        break;
+                    default:
+                        $("span[data-valmsg-for='ImgPath']").text("支持下列图片格式：.jpg|.jpeg|.png|.gif|.bmp").attr("class", "field-validation-error");
+                        break;
+                }
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+
+                        $("#imgSel").attr('src', e.target.result);
+
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+                return false;
+            });
+        });
+    </script>
+}
+<div class="title">
+    设置</div>
+<div class="bodyLeft">
+    <ul class="ulList">
+        <li>@Html.ActionLink("个人信息", "Index", "Set", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("基础设置", "Index", "BasisSet", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("App动态软文", "Index", "AppAdvertorial", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li class="select">@Html.ActionLink("App等待画面", "Index", "AppWaitImg", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("关键词自动回复", "Index", "KeywordMessage", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("安装App自动回复", "Index", "InstallAppReply", new { HostName = ViewBag.HostName }, null, true)</li>
+    </ul>
+</div>
+<div class="bodyRight">
+    @using (Html.BeginForm("index", "AppWaitImg", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+     
+        <fieldset style="font-size: 14px">
+            <legend>App等待画面</legend>
+            <table style="line-height: 15px" width="100%">
+                <tr>
+                    <td style="width: 350px">
+                        <div class="middle-out">
+                            <div class="middle-in" style="margin: auto 0px">
+                                @if (Model != null)
+                                {
+                                    if (Model.ImgPath != "")
+                                    {
+                                        <img id="imgSel"  src="@Url.Content(Model.ImgPath)"   style="max-height:460px; max-width:320px;" />
+                                    }
+                                    else
+                                    { 
+                                        <img id="imgSel"  src="@Url.Content("~/Images/AppDefault.png")"   style="max-height:460px; max-width:320px;" />
+                                    }
+                                }
+                                else
+                                {   
+                                    <img id="imgSel"  src="@Url.Content("~/Images/AppDefault.png")"   style="max-height:460px; max-width:320px;" />
+                                }
+                            </div>
+                        </div>
+                    </td>
+                    <td valign="top">
+                        为了更好的在app上显示 请上传标准（640 x 960）分辩率的图片
+                        <br />
+                        @Html.ValidationMessageFor(a => a.ImgPath)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="file" id="HousShowImagePathFile" name="HousShowImagePathFile" />
+                        @Html.TextBoxFor(a => a.ImgPath, new { style = "width:0px;visibility:hidden" })
+                    </td>
+                </tr>
+            </table>
+            <div class="action">
+                <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px" />
+                <input type="button" id="btnDelete"  onclick="location.href='@Url.Action("Delete", "AppWaitImg", new { HostName = ViewBag.HostName })'" class="button" value="删除"   />
+            </div>
+        </fieldset>
+    }
+</div>
+<div style="clear: both">
+</div>

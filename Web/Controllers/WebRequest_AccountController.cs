@@ -26,7 +26,7 @@ namespace Web.Controllers
                 return Newtonsoft.Json.JsonConvert.SerializeObject(result);
             }
             var account = result.Entity as Account;
-            string hostUrl = SystemConst.WebUrl;
+            string hostUrl = SystemConst.WebUrlIP;
             result = new Result()
             {
                 Entity = new App_Account()
@@ -58,7 +58,7 @@ namespace Web.Controllers
                         ID = item.ID,
                         Name = item.UserLoginInfo.Name,
                         NameNote = item.Name,
-                        HeadImagePath = string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrl + Url.Content(item.UserLoginInfo.HeadImagePath.DefaultHeadImage())) : item.UserLoginInfo.HeadImagePath,
+                        HeadImagePath = string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrlIP + Url.Content(item.UserLoginInfo.HeadImagePath.DefaultHeadImage())) : (SystemConst.WebUrlIP +Url.Content(item.UserLoginInfo.HeadImagePath)),
                         GN=item.Account_Users.FirstOrDefault().Group.GroupName
                     });
                 }

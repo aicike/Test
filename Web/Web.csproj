@@ -66,6 +66,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -154,6 +155,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountMainGuideController.cs" />
     <Compile Include="Controllers\AjaxController.cs" />
+    <Compile Include="Controllers\AppAdvertorialController.cs" />
+    <Compile Include="Controllers\AppWaitImgController.cs" />
     <Compile Include="Controllers\BaseController\BaseController.cs" />
     <Compile Include="Controllers\BasisSetController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
@@ -196,6 +199,10 @@
     <Compile Include="Models\SessionSharedHttpModule.cs" />
     <Compile Include="Models\UrlHelperExpand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ueditor\net\imageUp_Advertorial.ashx.cs">
+      <DependentUpon>imageUp_Advertorial.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ueditor\net\Uploader_Advertorial.cs" />
     <Content Include="App_Data\ffmpeg.exe" />
     <Content Include="Content\blue.css" />
     <Content Include="Content\Icon\Icon.css" />
@@ -203,8 +210,19 @@
     <Content Include="Content\userStyle.css" />
     <Content Include="Download\1\android.jpg" />
     <Content Include="Download\1\ios.jpg" />
+    <Content Include="File\LoginPageShow\Client\3.jpg" />
+    <Content Include="File\LoginPageShow\Client\5.jpg" />
+    <Content Include="File\LoginPageShow\Client\6.jpg" />
+    <Content Include="File\LoginPageShow\Client\7.jpg" />
+    <Content Include="File\LoginPageShow\Default\Default.jpg" />
+    <Content Include="File\LoginPageShow\System\1.jpg" />
+    <Content Include="File\LoginPageShow\System\2.jpg" />
+    <Content Include="File\LoginPageShow\System\3.jpg" />
+    <Content Include="File\LoginPageShow\System\4.jpg" />
+    <Content Include="Images\AppDefault.png" />
     <Content Include="Images\banner.jpg" />
     <Content Include="Images\default_Avatar.png" />
+    <Content Include="Images\down.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\SelImg.jpg" />
     <Content Include="Images\sep.png" />
@@ -223,12 +241,32 @@
     <Content Include="Images\table.jpg" />
     <Content Include="Images\Unread.png" />
     <Content Include="Images\m1.png" />
+    <Content Include="Images\up.png" />
     <Content Include="Scripts\Carousel\carousel.css" />
     <Content Include="Scripts\Carousel\carousel.js" />
     <Content Include="Scripts\Carousel\jquery.flexslider.js" />
     <Content Include="Scripts\Jcrop\Jcrop.gif" />
     <Content Include="Scripts\Jcrop\jquery.Jcrop.css" />
     <Content Include="Scripts\Jcrop\jquery.Jcrop.js" />
+    <Content Include="Scripts\nivoSlider\bar\arrows.png" />
+    <Content Include="Scripts\nivoSlider\bar\bar.css" />
+    <Content Include="Scripts\nivoSlider\bar\bullets.png" />
+    <Content Include="Scripts\nivoSlider\bar\loading.gif" />
+    <Content Include="Scripts\nivoSlider\dark\arrows.png" />
+    <Content Include="Scripts\nivoSlider\dark\bullets.png" />
+    <Content Include="Scripts\nivoSlider\dark\dark.css" />
+    <Content Include="Scripts\nivoSlider\dark\loading.gif" />
+    <Content Include="Scripts\nivoSlider\default\arrows.png" />
+    <Content Include="Scripts\nivoSlider\default\bullets.png" />
+    <Content Include="Scripts\nivoSlider\default\default.css" />
+    <Content Include="Scripts\nivoSlider\default\loading.gif" />
+    <Content Include="Scripts\nivoSlider\jquery.nivo.slider.js" />
+    <Content Include="Scripts\nivoSlider\light\arrows.png" />
+    <Content Include="Scripts\nivoSlider\light\bullets.png" />
+    <Content Include="Scripts\nivoSlider\light\light.css" />
+    <Content Include="Scripts\nivoSlider\light\loading.gif" />
+    <Content Include="Scripts\nivoSlider\nivo-slider.css" />
+    <Content Include="Scripts\nivoSlider\style.css" />
     <Content Include="Scripts\tytabs.js" />
     <Content Include="Scripts\JSONLoader.js" />
     <Content Include="Scripts\Highcharts\adapters\mootools-adapter.js" />
@@ -554,7 +592,7 @@
     <Content Include="Views\Shared\_LayoutUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Login\UserLogin.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Exit\Index.cshtml" />
@@ -602,7 +640,7 @@
     <Content Include="Views\Shared\SystemUserMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Login\Index1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\System\Views\Role\Permission.cshtml" />
@@ -733,6 +771,8 @@
   <ItemGroup>
     <Content Include="Areas\System\Views\SystemUser\Add.cshtml" />
     <Content Include="Areas\System\Views\SystemUser\Edit.cshtml" />
+    <None Include="Scripts\nivoSlider\dark\.DS_Store" />
+    <Content Include="ueditor\net\imageUp_Advertorial.ashx" />
     <None Include="video-js\font\vjs.eot" />
     <None Include="video-js\font\vjs.ttf" />
     <None Include="video-js\font\vjs.woff" />
@@ -765,6 +805,11 @@
     <Content Include="Views\Shared\_LayoutDefault.cshtml" />
     <Content Include="Views\Shared\_head.cshtml" />
     <Content Include="Views\LibraryImageText\ShowImagetext.cshtml" />
+    <Content Include="Views\AppAdvertorial\Index.cshtml" />
+    <Content Include="Views\AppWaitImg\Index.cshtml" />
+    <Content Include="Views\AppAdvertorial\Add.cshtml" />
+    <Content Include="Views\AppAdvertorial\Edit.cshtml" />
+    <Content Include="Views\AppAdvertorial\Preview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

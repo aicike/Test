@@ -38,9 +38,9 @@ namespace Web.Controllers
             }
             else if (type == "user")
             {
-                return RedirectToAction("UserLogin", "Login", new { Area = "" });
+                return RedirectToAction("Index", "Login", new { Area = "" });
             }
-            ViewBag.ExitUrl = Url.Action("UserLogin", "Login", new { Area = "" });
+            ViewBag.ExitUrl = Url.Action("Index", "Login", new { Area = "" });
             return View();
         }
     }

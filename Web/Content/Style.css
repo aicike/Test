@@ -261,14 +261,14 @@ a img
 .homelogin
 {
     width: 300px;
-    height: 250px;
-    padding: 25px;
-    border: 1px solid #F4F4F4;
+    height: 180px;
+    padding: 20px;
+    border: 0px solid #000;
     margin-top: 30px;
     float: right;
-    background-color: #eeeeee;
-    border-bottom: 1px solid #E7E7E7;
-    border-radius: 5px;
+    background:rgba(0, 0, 0, 0.4) none repeat scroll 0 0 ;
+    border-bottom: 0px solid #000;
+    border-radius: 20px;
 }
 .homelogin form > div
 {

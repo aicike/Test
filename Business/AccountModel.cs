@@ -473,6 +473,8 @@ namespace Business
             entity.HostName = account.Account_AccountMains.FirstOrDefault().AccountMain.HostName;
             entity.CurrentAccountMainID = account.Account_AccountMains.FirstOrDefault().AccountMain.ID;
             entity.CurrentAccountMainName = account.Account_AccountMains.FirstOrDefault().AccountMain.Name;
+            entity.LogoPath = account.Account_AccountMains.FirstOrDefault().AccountMain.LogoImagePath;
+            entity.LogoThumbnailPath = account.Account_AccountMains.FirstOrDefault().AccountMain.LogoImageThumbnailPath;
             HttpContext.Current.Session[SystemConst.Session.LoginAccount] = entity;
             return result;
         }

@@ -16,6 +16,8 @@ namespace EF.Mapping
             this.Ignore(a => a.HostName);
             this.Ignore(a => a.CurrentAccountMainID);
             this.Ignore(a => a.CurrentAccountMainName);
+            this.Ignore(a => a.LogoPath);
+            this.Ignore(a => a.LogoThumbnailPath);
         }
     }
 }
