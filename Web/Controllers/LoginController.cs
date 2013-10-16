@@ -11,6 +11,8 @@ using System.Threading;
 using agsXMPP.protocol.client;
 using System.Threading.Tasks;
 using agsXMPP.Xml.Dom;
+using System.IO;
+using System.Data;
 
 namespace Web.Controllers
 {
@@ -23,6 +25,25 @@ namespace Web.Controllers
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "首页", WebTitleRemark, "");
             ViewBag.Title = webTitle;
+            //读取展示图片
+            DataTable dt = new DataTable();
+            dt.Columns.Add("path");
+            string loginPageShow = HttpContext.Server.MapPath("~/File/LoginPageShow/Client");
+            DirectoryInfo TheFolder = new DirectoryInfo(loginPageShow);
+            foreach (FileInfo NextFile in TheFolder.GetFiles())
+            {
+                DataRow row = dt.NewRow();
+                row["path"] = "~/File/LoginPageShow/Client/" + NextFile.Name;
+                dt.Rows.Add(row);
+            }
+            if (dt.Rows.Count <= 0)
+            {
+                DataRow row = dt.NewRow();
+                row["path"] = "~/File/LoginPageShow/Default/Default.jpg";
+                dt.Rows.Add(row);
+            }
+            ViewBag.ShowPage = dt;
+
             return View();
             //return RedirectToAction("SystemLogin");
         }
@@ -37,6 +58,24 @@ namespace Web.Controllers
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "登录", WebTitleRemark, "");
             ViewBag.Title = webTitle;
+            //读取展示图片
+            DataTable dt = new DataTable();
+            dt.Columns.Add("path");
+            string loginPageShow = HttpContext.Server.MapPath("~/File/LoginPageShow/System");
+            DirectoryInfo TheFolder = new DirectoryInfo(loginPageShow);
+            foreach (FileInfo NextFile in TheFolder.GetFiles())
+            {
+                DataRow row = dt.NewRow();
+                row["path"] = "~/File/LoginPageShow/System/" + NextFile.Name;
+                dt.Rows.Add(row);
+            }
+            if (dt.Rows.Count <= 0)
+            {
+                DataRow row = dt.NewRow();
+                row["path"] = "~/File/LoginPageShow/Default/Default.jpg";
+                dt.Rows.Add(row);
+            }
+            ViewBag.ShowPage = dt;
             return View();
         }
 

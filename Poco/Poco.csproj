@@ -56,6 +56,8 @@
     <Compile Include="AccountMain.cs" />
     <Compile Include="AccountMainHouseInfo.cs" />
     <Compile Include="AccountMainHouseInfoDetail.cs" />
+    <Compile Include="AppAdvertorial.cs" />
+    <Compile Include="AppWaitImg.cs" />
     <Compile Include="AutoMessage_User.cs" />
     <Compile Include="Conversation.cs" />
     <Compile Include="Enum\EnumBuildingType.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="WebAPI_Poco\App_ImageText.cs" />
     <Compile Include="WebAPI_Poco\App_User.cs" />
     <Compile Include="WebAPI_Poco\App_UserLoginInfo.cs" />
+    <Compile Include="_B_Advertorial.cs" />
     <Compile Include="_B_File.cs" />
     <Compile Include="_B_MessageDayNumber.cs" />
     <Compile Include="_B_PushMessage.cs" />

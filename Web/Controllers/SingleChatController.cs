@@ -128,23 +128,23 @@ namespace Web.Controllers
                             var imagePath = string.Format("{0}\\{1}", path, imageName);
                             var imagePath2 = Server.MapPath(imagePath);
                             TypeImagePathFile.SaveAs(imagePath2);
-                            np.FielUrl = SystemConst.WebUrlIP + Url.Content(imagePath);
+                            np.FielUrl =imagePath;
                         }
                         else
                         {
-                            np.FielUrl = SystemConst.WebUrlIP + Url.Content(TypePath);
+                            np.FielUrl =TypePath;
                         }
                     }
                     //语音
                     else if (MesType == ((int)EnumMessageType.Voice).ToString())
                     {
-                        np.FielUrl = SystemConst.WebUrlIP + Url.Content(TypePath);
+                        np.FielUrl = TypePath;
                         np.FL = FileLength;
                     }
                     //视频
                     else if (MesType == ((int)EnumMessageType.Video).ToString())
                     {
-                        np.FielUrl = SystemConst.WebUrlIP + Url.Content(TypePath);
+                        np.FielUrl = TypePath;
                         np.FL = FileLength;
                     }
                     //图文
@@ -157,7 +157,7 @@ namespace Web.Controllers
                         {
                             np.fileTitle = itext.Title;
                             np.Summary = itext.Summary;
-                            np.FielUrl = SystemConst.WebUrlIP + Url.Content(itext.ImagePath);
+                            np.FielUrl = itext.ImagePath;
                             if (itext.LibraryImageTexts.Count > 0)
                             {
                                 List<App_AutoMessageReplyContent> subImageText = new List<App_AutoMessageReplyContent>();
@@ -167,7 +167,7 @@ namespace Web.Controllers
                                     rep_it.ID = it.ID;
                                     rep_it.Type = (int)EnumMessageType.ImageText;
                                     rep_it.FileTitle = it.Title;
-                                    rep_it.FileUrl = SystemConst.WebUrlIP + it.ImagePath.Replace("~", "");
+                                    rep_it.FileUrl = SystemConst.WebUrl + it.ImagePath.Replace("~", "");
                                     //rep_it.SendTime = sendTime;
                                     subImageText.Add(rep_it);
                                 }

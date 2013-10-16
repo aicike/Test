@@ -50,11 +50,11 @@ namespace Web.Controllers
                         chat.Content = item.TextContent;
                         break;
                     case (int)EnumMessageType.Image:
-                        chat.FileUrl = item.FileUrl;
+                        chat.FileUrl = SystemConst.WebUrlIP + Url.Content(item.FileUrl);
                         break;
                     case (int)EnumMessageType.Video:
                     case (int)EnumMessageType.Voice:
-                        chat.FileUrl = item.FileUrl;
+                        chat.FileUrl = SystemConst.WebUrlIP + Url.Content(item.FileUrl);
                         chat.FL = String.IsNullOrEmpty(item.FileLength) ? "0" : item.FileLength;
                         break;
                     case (int)EnumMessageType.ImageText:
@@ -64,7 +64,7 @@ namespace Web.Controllers
                             chat.ID = itext.ID;
                             chat.FileTitle = itext.Title;
                             chat.Summary = itext.Summary;
-                            chat.FileUrl = SystemConst.WebUrlIP + itext.ImagePath.Replace("~", "");
+                            chat.FileUrl = SystemConst.WebUrlIP + Url.Content(itext.ImagePath);
                             if (itext.LibraryImageTexts.Count > 0)
                             {
                                 List<App_AutoMessageReplyContent> subImageText = new List<App_AutoMessageReplyContent>();
@@ -74,7 +74,7 @@ namespace Web.Controllers
                                     rep_it.ID = it.ID;
                                     rep_it.Type = (int)EnumMessageType.ImageText;
                                     rep_it.FileTitle = it.Title;
-                                    rep_it.FileUrl = SystemConst.WebUrlIP + it.ImagePath.Replace("~", "");
+                                    rep_it.FileUrl = SystemConst.WebUrlIP + Url.Content(itext.ImagePath);
                                     //rep_it.SendTime = sendTime;
                                     subImageText.Add(rep_it);
                                 }

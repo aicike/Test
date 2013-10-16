@@ -76,6 +76,8 @@
     <Compile Include="AccountMainModel.cs" />
     <Compile Include="AccountModel.cs" />
     <Compile Include="Account_UserModel.cs" />
+    <Compile Include="AppAdvertorialModel.cs" />
+    <Compile Include="AppWaitImgModel.cs" />
     <Compile Include="App_AutoMessageReplyContentModel.cs" />
     <Compile Include="AutoMessage_UserModel.cs" />
     <Compile Include="CommonModel.cs" />

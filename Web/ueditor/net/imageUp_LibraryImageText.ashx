@@ -52,9 +52,9 @@ public class imageUp_LibraryImageText : IHttpHandler, System.Web.SessionState.IR
         {
         }
 
+        string Url = "http://" + Poco.SystemConst.WebUrlIP;
 
-
-        HttpContext.Current.Response.Write("{'url':'" + info["url"] + "','title':'" + title + "','original':'" + oriName + "','state':'" + info["state"] + "'}");  //向浏览器返回数据json数据
+        HttpContext.Current.Response.Write("{'url':'" +Url+ info["url"] + "','title':'" + title + "','original':'" + oriName + "','state':'" + info["state"] + "'}");  //向浏览器返回数据json数据
     }
 
     public bool IsReusable

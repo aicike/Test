@@ -148,5 +148,9 @@ namespace Poco
         public virtual ICollection<PushMsg> PushMsgs { get; set; }
 
         public virtual ICollection<AutoMessage_User> AutoMessage_Users { get; set; }
+
+        public virtual ICollection<AppAdvertorial> AppAdvertorial { get; set; }
+
+        public virtual ICollection<AppWaitImg> AppWaitImg { get; set; }
     }
 }

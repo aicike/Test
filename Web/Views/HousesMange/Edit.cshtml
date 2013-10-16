@@ -9,10 +9,12 @@
 @section head{
     <script type="text/javascript">
 
-    
-    var isTrue= true;
-
+          
     $(function () {
+
+
+        $("#SalesState").val("@ViewBag.zt");
+
         $("#HOpeningDate").datepicker({
             changeMonth: true,
             changeYear: true,
@@ -91,6 +93,7 @@
     修改项目
 </div>
 <div class="body">
+
     @using (Ajax.BeginForm("Edit", "HousesMange", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
         <fieldset>
@@ -241,9 +244,9 @@
                         <span class="Identification">*</span> 销售状况
                     </td>
                     <td class="tdField">
-                        <select name="SalesState">
-                            <option value="true">在售</option>
-                            <option value="false">已售完</option>
+                        <select id="SalesState" name="SalesState">
+                            <option value="True">在售</option>
+                            <option value="False">已售完</option>
                         </select>
                     </td>
                     <td>
@@ -350,6 +353,7 @@
         <div class="action">
             <input type="submit" id="btnSubmit" value="保存" class="button" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
         </div>
-    
     }
 </div>
+
+

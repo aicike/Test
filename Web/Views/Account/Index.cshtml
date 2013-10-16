@@ -49,6 +49,7 @@
                 操作
             </th>
         </tr>
+
         @foreach (var item in Model)
         {
             <tr>
@@ -109,6 +110,7 @@
                 </td>
             </tr>
         }
+        
     </table>
     <div class="pages">
         @Html.Pager(Model, new PagerOptions

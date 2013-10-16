@@ -28,5 +28,8 @@ _ReSharper*/
 *.vssscc
 $tf*/
 Web.config
-File/
+1/
+2
+3/
+platform/
 video-js/
