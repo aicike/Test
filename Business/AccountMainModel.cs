@@ -50,7 +50,7 @@ namespace Business
         }
 
         [Transaction]
-        public Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID)
+        public Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID, HttpPostedFileBase AndroidPathFile)
         {
             accountMain.SystemUserID = createUserID;
             accountMain.CreateTime = DateTime.Now;
@@ -91,7 +91,7 @@ namespace Business
                     var imageThumbnailPath = string.Format("{0}/{1}", basePath, imageThumbnailName);
                     LogoImagePath.SaveAs(imagePath);
                     //缩略图
-                    bool IsOK = Tool.Thumbnail(imagePath,height ,imageThumbnailPath);
+                    bool IsOK = Tool.Thumbnail(imagePath, height, imageThumbnailPath);
                     accountMain.LogoImagePath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
                     if (IsOK)
                     {
@@ -100,6 +100,21 @@ namespace Business
                     else
                     {
                         accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
+                    }
+
+                    if (AndroidPathFile != null)
+                    {
+                        var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
+                        var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, AndroidPathFile.FileName);
+                        if (Directory.Exists(androidPath) == false)
+                        {
+                            Directory.CreateDirectory(androidPath);
+                        }
+                        var Downpath = string.Format("~/Download/{0}", accountMain.ID);
+                        var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidPathFile.FileName);
+                        AndroidPathFile.SaveAs(androidPathDown);
+                        
+                        accountMain.AndroidDownloadPath = Downpath2;
                     }
                     result = Edit(accountMain);
                 }
@@ -112,7 +127,7 @@ namespace Business
         }
 
         [Transaction]
-        public Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int loginSystemUserID = 0)
+        public Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, int loginSystemUserID = 0)
         {
             if (!CheckHasPermissions(loginSystemUserID, accountMain.ID))
             {
@@ -154,12 +169,44 @@ namespace Business
                     {
                         accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
                     }
+
                     result = Edit(accountMain);
                 }
                 catch (Exception ex)
                 {
                     throw ex;
                 }
+
+            }
+            try
+            {
+                if (result.HasError == false && AndroidPathFile != null)
+                {
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    //删除原路径
+                    var androidAbsolutePath = HttpContext.Current.Server.MapPath(accountMain.AndroidDownloadPath);
+                    if (File.Exists(androidAbsolutePath))
+                    {
+                        File.Delete(androidAbsolutePath);
+                    }
+                    var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
+                    var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, AndroidPathFile.FileName);
+                    if (Directory.Exists(androidPath) == false)
+                    {
+                        Directory.CreateDirectory(androidPath);
+                    }
+                    var Downpath = string.Format("~/Download/{0}", accountMain.ID);
+                    var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidPathFile.FileName);
+
+                    AndroidPathFile.SaveAs(androidPathDown);
+                    accountMain.AndroidDownloadPath = Downpath2;
+                }
+
+                result = Edit(accountMain);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
             if (result.HasError == false)
             {
@@ -170,7 +217,7 @@ namespace Business
         }
 
         [Transaction]
-        public Result Edit_ByAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePath)
+        public Result Edit_ByAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile)
         {
             var result = base.Edit(accountMain);
             if (result.HasError == false && LogoImagePath != null)
@@ -208,12 +255,44 @@ namespace Business
                     {
                         accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
                     }
+
                     result = Edit(accountMain);
                 }
                 catch (Exception ex)
                 {
                     throw ex;
                 }
+
+            }
+            try
+            {
+                if (result.HasError == false && AndroidPathFile != null)
+                {
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    //删除原路径
+                    var androidAbsolutePath = HttpContext.Current.Server.MapPath(accountMain.AndroidDownloadPath);
+                    if (File.Exists(androidAbsolutePath))
+                    {
+                        File.Delete(androidAbsolutePath);
+                    }
+                    var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
+                    var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, AndroidPathFile.FileName);
+                    if (Directory.Exists(androidPath) == false)
+                    {
+                        Directory.CreateDirectory(androidPath);
+                    }
+                    var Downpath = string.Format("~/Download/{0}", accountMain.ID);
+                    var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidPathFile.FileName);
+
+                    AndroidPathFile.SaveAs(androidPathDown);
+                    accountMain.AndroidDownloadPath = Downpath2;
+                }
+
+                result = Edit(accountMain);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
             if (result.HasError == false)
             {

@@ -22,6 +22,17 @@ namespace Web.Controllers
             var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email, Pwd = loginPwd, AccountMainID = accountMainID, ClientID = clientID });
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
+
+        /// <summary>
+        /// IOS登录
+        /// </summary>
+        public string UserLoginIOS(string email, string loginPwd, int accountMainID, string clientID)
+        {
+            var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
+            var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email, Pwd = loginPwd, AccountMainID = accountMainID, ClientID = clientID });
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
         /// <summary>
         /// 注册
         /// </summary>

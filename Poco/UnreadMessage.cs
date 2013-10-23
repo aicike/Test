@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Poco
 {
-    public class UnreadMessage
+    public class UnreadMessage : IBaseEntity
     {
         /// <summary>
         /// 发送人ID（售楼部或用户ID）
@@ -61,5 +61,9 @@ namespace Poco
         /// </summary>
         public int S { get; set; }
 
+
+        public int ID { get; set; }
+
+        public int SystemStatus { get; set; }
     }
 }

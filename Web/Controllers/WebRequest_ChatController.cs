@@ -259,7 +259,7 @@ namespace Web.Controllers
             var libraryImageTextModel = Factory.Get<CommonModel>(SystemConst.IOC_Model.CommonModel);
 
             List<UnreadMessage> UMlist = new List<UnreadMessage>();
-            UMlist = libraryImageTextModel.getSessionList(UserID, UserType);
+            UMlist = libraryImageTextModel.getSessionList(UserID, UserType).ToList();
 
             return Newtonsoft.Json.JsonConvert.SerializeObject(UMlist);
         }

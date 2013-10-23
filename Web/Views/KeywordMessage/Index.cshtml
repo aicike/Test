@@ -238,8 +238,9 @@
             });
 
             $(".btnAddSub").click(function () {
-                clearText();
+              
                 $("#div_addKeyrule").show();
+                  clearText();
                 var fullRuleNo = $(this).attr("fullRuleNo");
                 var ruleNo = $(this).attr("ruleNo");
                 var parentID = $(this).attr("parentID");
@@ -251,7 +252,9 @@
                     url: getRuleNoUrl,
                     success: function (result) {
                         if (result != undefined && result != null && result.length > 0) {
+                           
                             $("#txtRuleNo").text(result);
+                            
                         }
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {

@@ -11,10 +11,7 @@ namespace Poco.Enum
     public enum EnumSoldState
     {
 
-        /// <summary>
-        /// 未售出
-        /// </summary>
-        Unsold,
+        
         /// <summary>
         /// 已售出
         /// </summary>
@@ -26,6 +23,10 @@ namespace Poco.Enum
         /// <summary>
         /// 预留
         /// </summary>
-        Reserve
+        Reserve,
+        /// <summary>
+        /// 未售出
+        /// </summary>
+        Unsold
     }
 }

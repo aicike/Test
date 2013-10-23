@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "二维码";
+    Layout = null;
+}
+
+ <style>
+     
+    .Title 
+    {
+        font-weight:bold;
+         font-size:1.25em;    
+         text-align:center;
+         margin:10px 0px 10px 0px;
+    }
+    .Center
+    {
+        padding:10px;
+        border:1px solid #ebebeb;    
+        text-align:center;
+        
+    }
+    img
+    {
+         width:90%    
+    }
+ </style>
+ 
+ <div class="Title">
+    感谢您的使用
+ </div>
+ <div class="Center">
+    <img src="@Url.Action("CreateQrCode", "Default", new { AMID = ViewBag.AMID })" /> 
+ </div>
+

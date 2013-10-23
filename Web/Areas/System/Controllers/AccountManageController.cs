@@ -9,6 +9,7 @@ using Injection;
 using Poco;
 using Poco.Enum;
 using Business;
+using Common;
 
 namespace Web.Areas.System.Controllers
 {
@@ -72,6 +73,8 @@ namespace Web.Areas.System.Controllers
                     throw new ApplicationException("只能有一个有效的管理员账号，请选择分配其他角色。");
                 }
             }
+            CommonModel cm = new CommonModel();
+            account_accountMain.Account.LoginPwd = cm.CreateRandom("", 6);
 
             IAccount_AccountMainModel model = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
             var result = model.Add(account_accountMain, HeadImagePathFile, w, h, x1, y1, tw, th);
@@ -79,6 +82,25 @@ namespace Web.Areas.System.Controllers
             {
                 throw new ApplicationException(result.Error);
             }
+
+            var Accountmain = accountMainModel.Get(account_accountMain.AccountMainID);
+
+            EmailInfo emailInfo = new EmailInfo();
+            emailInfo.To = account_accountMain.Account.Email;
+            emailInfo.Subject = "IMtimely - 账号注册成功";
+            emailInfo.IsHtml = true;
+            emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您的ImTimely账号已创建成功,<a href='http://{0}.ImTimely.com' target='_blank'>请点击此处</a>&nbsp;登陆。", Accountmain.HostName) +
+                             string.Format("登陆名为您当前邮箱账号。<br/> 密码：{0}<br/>", account_accountMain.Account.LoginPwd) +
+                             string.Format("<br/>为了保证您的帐号安全，请尽快更改你的密码！(登陆后点击设置更改)<br/><br/>IMtimely<br/><br/>{0}", DateTime.Now.ToString("yyyy-MM-dd"));
+            try
+            {
+                SendEmail.SendMailAsync(emailInfo);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("邮件发送失败！请在列表页重新生成密码！");
+            }
+
             return RedirectToAction("Index", "AccountManage", new { Area = "System", accountMainId = account_accountMain.AccountMainID });
         }
 
@@ -117,7 +139,7 @@ namespace Web.Areas.System.Controllers
 
 
             IAccountModel model = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-            var result = model.Edit(account, accountMainId, HeadImagePathFile, x1, y1, w, h, tw, th);
+            var result = model.SetEdit(account, accountMainId, HeadImagePathFile, x1, y1, w, h, tw, th);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);
@@ -164,5 +186,37 @@ namespace Web.Areas.System.Controllers
             }
             return JavaScript("window.location.href='" + ViewBag.RawUrl + "'");
         }
+
+        public ActionResult ResetPwd(int id, string mail)
+        {
+            IAccountModel model = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
+            CommonModel cm = new CommonModel();
+            var account = model.Get(id);
+            string LoginPwd = cm.CreateRandom("", 6);
+            Result result = model.ResetPwd(id, DESEncrypt.Encrypt(LoginPwd));
+            if (result.HasError == true)
+            {
+                return Alert(new Dialog("密码重置失败 请重试"));
+            }
+            EmailInfo emailInfo = new EmailInfo();
+            emailInfo.To = mail;
+            emailInfo.Subject = "IMtimely - 密码重置成功";
+            emailInfo.IsHtml = true;
+            emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您的ImTimely账号密码重置成功,<a href='http://{0}.ImTimely.com' target='_blank'>请点击此处</a>&nbsp;登陆。", account.HostName) +
+                             string.Format("登陆名为您当前邮箱账号。<br/> 密码：{0}<br/>", LoginPwd) +
+                             string.Format("<br/>为了保证您的帐号安全，请尽快更改你的密码！(登陆后点击设置更改)<br/><br/>IMtimely<br/><br/>{0}", DateTime.Now.ToString("yyyy-MM-dd"));
+            try
+            {
+                SendEmail.SendMailAsync(emailInfo);
+            }
+            catch (Exception ex)
+            {
+                return Alert(new Dialog("邮件发送失败！请重新生成密码！"));
+            }
+
+
+            return Alert(new Dialog("密码重置成功！"));
+        }
+
     }
 }

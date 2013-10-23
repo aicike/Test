@@ -38,7 +38,7 @@ namespace Web.Controllers
         {
             var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
 
-            var result = accountModel.Edit(account, LoginAccount.CurrentAccountMainID, HeadImagePathFile, x1, y1, w, h, tw, th);
+            var result = accountModel.SetEdit(account, LoginAccount.CurrentAccountMainID, HeadImagePathFile, x1, y1, w, h, tw, th);
             if (result.HasError)
             {
                 TempData["EditStatus"] = "false|" + result.Error;

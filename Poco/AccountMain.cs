@@ -102,6 +102,12 @@ namespace Poco
         [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Lat { get; set; }
 
+        [Display(Name = "IOS下载地址")]
+        public string IOSDownloadPath { get; set; }
+
+        [Display(Name = "Android下载地址")]
+        public string AndroidDownloadPath { get; set; }
+
         /// <summary>
         /// 数据更新信息
         /// </summary>

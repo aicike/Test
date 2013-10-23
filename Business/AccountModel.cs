@@ -145,7 +145,7 @@ namespace Business
             }
             account.HeadImagePath = SystemConst.Business.DefaultHeadImage;
             account.AccountStatusID = LookupFactory.GetLookupOptionIdByToken(EnumAccountStatus.Enabled);
-            account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
+            account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwd);
             account.IsActivated = true;
             result = base.Add(account);
             if (result.HasError == false && HeadImagePathFile != null)
@@ -242,7 +242,7 @@ namespace Business
                 result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
                 return result;
             }
-            account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
+            //account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
             result = base.Edit(account);
             if (result.HasError == false && HeadImagePathFile != null)
             {
@@ -323,6 +323,109 @@ namespace Business
             }
             return result;
         }
+
+        public Result SetEdit(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile, int x1, int y1, int width, int height, int Twidth, int Theight)
+        {
+            Result result = new Result();
+            if (account.RoleID == 1)
+            {
+                var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
+                if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID, account.ID))
+                {
+                    result.Error = SystemConst.Notice.MultipleAccountMainAdminAccount;
+                    return result;
+                }
+            }
+            //检查邮箱是否唯一
+            CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+            var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
+            if (isOk == false)
+            {
+                result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
+                return result;
+            }
+            account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
+            result = base.Edit(account);
+            if (result.HasError == false && HeadImagePathFile != null)
+            {
+                try
+                {
+                    //删除原头像
+                    if (account.HeadImagePath != "~/Images/default_Avatar.png")
+                    {
+                        var file = HttpContext.Current.Server.MapPath(account.HeadImagePath);
+                        if (File.Exists(file))
+                        {
+                            File.Delete(file);
+                        }
+                    }
+                    var path = string.Format(SystemConst.Business.PathAccount, accountMainID);
+                    var accountPath = HttpContext.Current.Server.MapPath(path);
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var imageName = string.Format("{0}_{1}", token, HeadImagePathFile.FileName);
+                    var imageName2 = string.Format("{0}_M_{1}", token, HeadImagePathFile.FileName);
+                    var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
+                    var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
+                    HeadImagePathFile.SaveAs(imagePath);
+
+                    account.HeadImagePath = path + imageName;
+                    if (width > 0)
+                    {
+                        Task t = new Task(() =>
+                        {
+                            int ToWidth = width;
+                            int ToHeight = height;
+                            int ToX1 = x1;
+                            int ToY1 = y1;
+
+                            Bitmap sourceBitmap = new Bitmap(imagePath);
+
+                            int YW = sourceBitmap.Width;
+                            int YH = sourceBitmap.Height;
+
+
+                            if (YH != Theight)
+                            {
+                                double ratio = double.Parse(YH.ToString()) / double.Parse(Theight.ToString());
+                                //ratio = Math.Round(ratio, 2);
+                                ToWidth = (int)(ToWidth * ratio);
+                                ToHeight = (int)(ToHeight * ratio);
+                                ToX1 = (int)(ToX1 * ratio);
+                                ToY1 = (int)(ToY1 * ratio);
+                            }
+                            Bitmap resultBitmap = new Bitmap(ToWidth, ToHeight);
+
+                            using (Graphics g = Graphics.FromImage(resultBitmap))
+                            {
+                                Rectangle resultRectangle = new Rectangle(0, 0, ToWidth, ToHeight);
+                                Rectangle sourceRectangle = new Rectangle(0 + ToX1, 0 + ToY1, ToWidth, ToHeight);
+                                g.DrawImage(sourceBitmap, resultRectangle, sourceRectangle, GraphicsUnit.Pixel);
+                            }
+                            EncoderParameters ep = new EncoderParameters();
+
+                            resultBitmap.Save(imagePath2, sourceBitmap.RawFormat);
+                            resultBitmap.Dispose();
+                            sourceBitmap.Dispose();
+                            if (File.Exists(imagePath))
+                            {
+                                File.Delete(imagePath);
+                            }
+                        });
+                        t.Start();
+                        account.HeadImagePath = path + imageName2;
+                    }
+
+
+                    result = Edit(account);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            return result;
+        }
+
 
         public Result Edit(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile)
         {
@@ -519,7 +622,18 @@ namespace Business
             return true;
         }
 
-
+        public Result ResetPwd(int id, string pwd)
+        {
+            string sql = string.Format("update Account set loginPwd = '{0}' where id={1}",pwd,id);
+            int cnt = base.SqlExecute(sql);
+            Result result = new Result();
+            if (cnt <= 0)
+            {
+                result.HasError = true;
+                result.Entity = "修改失败！";
+            }
+            return result;
+        }
 
     }
 }

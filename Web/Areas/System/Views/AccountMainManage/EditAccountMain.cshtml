@@ -66,8 +66,8 @@
             <legend>基本信息</legend>
             <table class="tableForm">
                 <tr>
-                    <td>
-                        Logo
+                    <td width="150px">
+                        Logo：
                     </td>
                     <td>
                         <img id="imgLogo" style="max-width:80px;max-height:80px; float: left" src="@Url.Content(@Model.LogoImagePath)" />
@@ -81,8 +81,8 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        项目名称
-                    </td>
+                        项目名称：
+                                            </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.CreateTime)@Html.HiddenFor(a => a.SystemUserID)
                         @Html.HiddenFor(a => a.SalePhone)
                         @Html.HiddenFor(a => a.SaleMapAddress)
@@ -94,7 +94,7 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        二级域名或目录名称
+                        二级域名或目录名称：
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.HostName)
                     </td>
@@ -103,7 +103,7 @@
                 </tr>
                 <tr>
                     <td>
-                        电话
+                        电话：
                     </td>
                     <td>@Html.TextBoxFor(a => a.Phone)
                     </td>
@@ -112,7 +112,7 @@
                 </tr>
                 <tr>
                     <td>
-                        省份
+                        省份：
                     </td>
                     <td>@Html.DropDownListFor(a => a.ProvinceID)
                     </td>
@@ -121,7 +121,7 @@
                 </tr>
                 <tr>
                     <td>
-                        城市
+                        城市：
                     </td>
                     <td>@Html.DropDownListFor(a => a.CityID)
                     </td>
@@ -130,7 +130,7 @@
                 </tr>
                 <tr>
                     <td>
-                        地区
+                        地区：
                     </td>
                     <td>@Html.DropDownListFor(a => a.DistrictID)
                     </td>
@@ -139,7 +139,7 @@
                 </tr>
                 <tr>
                     <td>
-                        素材库容量
+                        素材库容量：
                     </td>
                     <td>@Html.TextBoxFor(a => a.FileLimit)
                     </td>
@@ -148,11 +148,32 @@
                 </tr>
                 <tr>
                     <td>
-                        售楼地址
+                        售楼地址：
                     </td>
                     <td>@Html.TextBoxFor(a => a.SaleAddress)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.SaleAddress)
+                    </td>
+                </tr>
+                  <tr>
+                    <td>
+                        IOS下载地址：<br />例：http://www.xxx.com 
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.IOSDownloadPath)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.IOSDownloadPath)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Android安装文件：
+                    </td>
+                    <td>
+                         @Html.TextBoxFor(a => a.AndroidDownloadPath, new { @readonly = "readonly" })
+                        <input type="file" id="AndroidPathFile" name="AndroidPathFile"  />
+                        
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AndroidDownloadPath)
                     </td>
                 </tr>
             </table>

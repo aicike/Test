@@ -1,8 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
-     ViewBag.Menu = Poco.SystemConst.Menu.Set;
+    ViewBag.Menu = Poco.SystemConst.Menu.Set;
 }
-
 @model PagedList<Poco.AppAdvertorial>
 @section head{
     <script>
@@ -22,7 +21,7 @@
                 $("#dialogShow").dialog({
                     resizable: false,
                     height: 570,
-                    width: 360,
+                    width: 350,
                     modal: true,
                     draggable: false
                 });
@@ -31,6 +30,18 @@
 
         });
 
+
+        function clickInfo(id) {
+            var src = '@Url.Action("Advertorial", "Default")';
+            $("#iframeShowInfo").attr("src", src + "/" + id);
+            $("#dialogShowInfo").dialog({
+                resizable: false,
+                height: 530,
+                width: 320,
+                modal: true,
+                draggable: false
+            });
+        }
 
         function clickStick(ID, ckb, Sort) {
             $("#AdvertorialID_stick").val(ID);
@@ -92,7 +103,8 @@
 <div class="bodyRight">
     <div class="option">
         @Html.ActionLink("添加", "Add", "AppAdvertorial", new { HostName = ViewBag.HostName }, null, true)
-        <input type="button" id="btnYL" class="button" style="margin-left: 10px;height:30px" value="App预览" />
+        <input type="button" id="btnYL" class="button" style="margin-left: 10px; height: 30px"
+            value="App预览" />
     </div>
     <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
         <tr>
@@ -129,11 +141,11 @@
                     }
                 </td>
                 <td>
-                    <img style="width: 150px; " src="@Url.Content(item.AppShowImagePath)" />
+                    <img style="width: 150px;  cursor:pointer "  onclick="clickInfo(@item.ID)" src="@Url.Content(item.AppShowImagePath)" />
                 </td>
-                <td style="font-size: 14px">
-                    <label name="labCbFirst" title="@item.Depict">
-                        @item.Title
+                <td style="font-size: 14px"  class="operation">
+                    <label name="labCbFirst" title="@item.Depict" onclick="clickInfo(@item.ID)" style=" cursor:pointer">
+                        <a>@item.Title</a>
                     </label>
                 </td>
                 <td style="font-size: 12px; color: #696969">
@@ -142,13 +154,17 @@
                 <td>
                     @if (item.stick == 1)
                     { 
-                        <img onclick="clickSort(@item.ID,@item.Sort,1) " style=" cursor:pointer" src="@Url.Content("~/Images/up.png")" title="向上" />
-                        <img onclick="clickSort(@item.ID,@item.Sort,0) " style=" cursor:pointer" src="@Url.Content("~/Images/down.png")" title="向下" />
+                        <label name="labCbFirst" title="上移">
+                            <img onclick="clickSort(@item.ID,@item.Sort,1) " style=" cursor:pointer" src="@Url.Content("~/Images/up.png")"/>
+                        </label>
+                        <label name="labCbFirst" title="下移">
+                            <img onclick="clickSort(@item.ID,@item.Sort,0) " style=" cursor:pointer" src="@Url.Content("~/Images/down.png")"  />
+                        </label>
                     }
                     else
                     { 
                         @:无
-                    }
+                     }
                 </td>
                 <td class="operation">
                     @Html.ActionLink("修改", "Edit", "AppAdvertorial", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:10px" }, true)
@@ -192,7 +208,12 @@
     <input type="hidden" id="Sort_stye" name="Type" />
     <input type="submit" id="btnSort" style="visibility: hidden" />
 }
-<div id="dialogShow" title="App预览" style="display: none; padding:0px">
+<div id="dialogShow" title="App预览" style="display: none; padding: 0px">
     <iframe id="iframeShow" src="#" style="width: 350px; height: 520px; border: none;
+        overflow: auto"></iframe>
+</div>
+
+<div id="dialogShowInfo" title="App详细预览" style="display: none; padding: 0px">
+    <iframe id="iframeShowInfo" src="#" style="width: 320px; height: 480px; border: none;
         overflow: auto"></iframe>
 </div>

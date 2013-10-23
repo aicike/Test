@@ -132,7 +132,7 @@
                     });
                 }
             });
-            $("#LoginPwdPage,#LoginPwdPageCompare").val('@Common.DESEncrypt.Decrypt(Model.LoginPwd)');
+//            $("#LoginPwdPage,#LoginPwdPageCompare").val('@Common.DESEncrypt.Decrypt(Model.LoginPwd)');
 
 
 
@@ -263,7 +263,7 @@
                     <td class="tdTitle">
                         名称
                     </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.ID)@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.IsActivated)
+                    <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.ID)@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.IsActivated)@Html.HiddenFor(a => a.LoginPwd)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Name)
                     </td>
@@ -277,24 +277,7 @@
                     <td>@Html.ValidationMessageFor(a => a.Email)
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        密码
-                    </td>
-                    <td>@Html.PasswordFor(a => a.LoginPwdPage)
-                    </td>
-                    <td>@Html.ValidationMessageFor(a => a.LoginPwdPage)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        确认密码
-                    </td>
-                    <td>@Html.PasswordFor(a => a.LoginPwdPageCompare)
-                    </td>
-                    <td>@Html.ValidationMessageFor(a => a.LoginPwdPageCompare)
-                    </td>
-                </tr>
+
                 <tr>
                     <td>
                         电话
