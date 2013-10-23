@@ -152,6 +152,8 @@ namespace EF.Migrations
                         SaleMapAddress = c.String(),
                         Lng = c.String(),
                         Lat = c.String(),
+                        IOSDownloadPath = c.String(),
+                        AndroidDownloadPath = c.String(),
                         AppUpdateID = c.Int(),
                         SystemUserID = c.Int(nullable: false),
                         CreateTime = c.DateTime(nullable: false),
@@ -627,17 +629,17 @@ namespace EF.Migrations
                         SystemStatus = c.Int(nullable: false),
                         AccountMainID = c.Int(nullable: false),
                         HName = c.String(nullable: false),
-                        HIntroduce = c.String(maxLength: 2000),
+                        HIntroduce = c.String(nullable: false, maxLength: 2000),
                         HAddress = c.String(nullable: false, maxLength: 200),
                         HHouseCount = c.Int(nullable: false),
-                        HHouseholdsCount = c.Int(),
-                        HParkingCount = c.Int(),
+                        HHouseholdsCount = c.Int(nullable: false),
+                        HParkingCount = c.Int(nullable: false),
                         HOpeningDate = c.DateTime(nullable: false),
                         HCheckInDate = c.DateTime(nullable: false),
                         HCompletedDate = c.DateTime(nullable: false),
-                        HOccupyArea = c.Double(),
-                        HBuildingArea = c.Double(),
-                        HGreeningArea = c.Double(),
+                        HOccupyArea = c.Double(nullable: false),
+                        HBuildingArea = c.Double(nullable: false),
+                        HGreeningArea = c.Double(nullable: false),
                         PropertyRight = c.Int(nullable: false),
                         HBuildCompany = c.String(nullable: false, maxLength: 200),
                         HInvestor = c.String(nullable: false, maxLength: 200),
@@ -661,11 +663,11 @@ namespace EF.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         SystemStatus = c.Int(nullable: false),
                         AccountMainHousessID = c.Int(nullable: false),
-                        Building = c.String(),
-                        Cell = c.String(),
+                        Building = c.String(nullable: false),
+                        Cell = c.String(nullable: false),
                         NumberOfLayers = c.Int(nullable: false),
                         NumberOfTheElevator = c.Int(nullable: false),
-                        NumberOfFamily = c.String(),
+                        NumberOfFamily = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMainHouses", t => t.AccountMainHousessID)
@@ -888,6 +890,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
+
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };
             foreach (var file in ddlSqlFiles)
@@ -899,7 +902,7 @@ namespace EF.Migrations
                     if (!String.IsNullOrWhiteSpace(commandText))
                         Sql(commandText);
                 }
-            }   
+            }
         }
         
         public override void Down()
