@@ -84,9 +84,12 @@
     <Compile Include="WebAPI_Poco\App_Group.cs" />
     <Compile Include="WebAPI_Poco\App_HistoryChat.cs" />
     <Compile Include="WebAPI_Poco\App_Chat.cs" />
+    <Compile Include="WebAPI_Poco\App_Image.cs" />
     <Compile Include="WebAPI_Poco\App_ImageText.cs" />
     <Compile Include="WebAPI_Poco\App_User.cs" />
     <Compile Include="WebAPI_Poco\App_UserLoginInfo.cs" />
+    <Compile Include="WebAPI_Poco\App_Video.cs" />
+    <Compile Include="WebAPI_Poco\App_Voice.cs" />
     <Compile Include="_B_Advertorial.cs" />
     <Compile Include="_B_File.cs" />
     <Compile Include="_B_MessageDayNumber.cs" />

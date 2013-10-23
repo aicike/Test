@@ -114,7 +114,7 @@ namespace Web.Controllers
         /// <param name="amid">AccountMainID</param>
         public string GetLibraryVideo(int amid)
         {
-            var libraryVideoModel = Factory.Get<ILibraryVoiceModel>(SystemConst.IOC_Model.LibraryVideoModel);
+            var libraryVideoModel = Factory.Get<ILibraryVideoModel>(SystemConst.IOC_Model.LibraryVideoModel);
             var list = libraryVideoModel.GetLibraryList(amid).ToList();
             List<App_Video> appList = new List<App_Video>();
             if (list != null)
