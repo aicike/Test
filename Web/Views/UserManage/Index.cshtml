@@ -15,6 +15,12 @@
             var editGroupUrl = '@Url.Action("EditGroup", "UserManage", new { HostName = ViewBag.HostName, currentGroupID = groupID })';
             var deleteGroupUrl = '@Url.Action("DeleteGroup", "UserManage", new { HostName = ViewBag.HostName, currentGroupID = groupID })';
             var changeGroupUrl = '@Url.Action("ChangeGroup", "UserManage", new { HostName = ViewBag.HostName, currentGroupID = groupID })';
+
+
+            $("label[name=labCbFirst]").each(function () {
+                $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
+            });
+
             $("#btnAddGroup").toggle(function () {
                 $("#divAddGroup").show();
                 $("#txtGroup").focus();
@@ -231,22 +237,24 @@
                             
                     }
                 </td>
-                <td  class="operation">
-                    <a  href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.ID })" target="_blank">
-                        @item.UserLoginInfo.Name
-                        @if (string.IsNullOrEmpty(item.Name) == false)
-                        {
-                            @:(@item.Name)
-                                                                    }
-                    </a>
+                <td class="operation">
+                    <label name="labCbFirst" title="沟通开始">
+                        <a  href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.ID })" target="_blank">
+                            @item.UserLoginInfo.Name
+                            @if (string.IsNullOrEmpty(item.Name) == false)
+                            {
+                                @:(@item.Name)
+                                                    }
+                        </a>
+                    </label>
                 </td>
                 <td>
                     @item.Phone
                 </td>
-                <td>
+                <td class="operation">
                     <select>
                         @{
-                        int rawGroupID = 0;
+                            int rawGroupID = 0;
                         }
                         @foreach (var groupItem in groupList)
                         {
@@ -261,15 +269,17 @@
                             }
                         }
                     </select>
-                    <span style="cursor: pointer" class="spanChangeGroup" value="@item.ID" rawGroup="@rawGroupID">
-                        放入</span>
+                    <a><span style="cursor: pointer" class="spanChangeGroup" value="@item.ID" rawGroup="@rawGroupID">
+                        放入</span></a>
                 </td>
                 <td class="operation">
                     @Html.ActionLink("详细", "ViewUser", "UserManage", new { HostName = hostName, userID = item.ID }, null)
                     @Html.ActionLink("修改", "EditUser", "UserManage", new { HostName = hostName, userID = item.ID }, null)
                     <br />
-                    <a href="@Url.Action("HistoryMes", "SingleChat", new { HostName = hostName, userID = item.ID })" style=" margin-left:-5px" target="_blank" title="该用户与之前的销售代表聊天记录">
-                        聊天历史</a>
+                    <label name="labCbFirst" title="该用户与之前的销售代表聊天记录">
+                        <a href="@Url.Action("HistoryMes", "SingleChat", new { HostName = hostName, userID = item.ID })" style=" margin-left:-5px" target="_blank" title="">
+                            聊天历史</a>
+                    </label>
                 </td>
             </tr>
             }

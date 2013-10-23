@@ -64,7 +64,7 @@
         }
     </style>
 }
-@model PagedList<Poco.TemporayInstantMes>
+@model PagedList<Poco.UnreadMessage>
 <div class="title">
     用户管理
 </div>
@@ -73,7 +73,7 @@
         <li class="select"><a href="@Url.Action("Index", "InstantMes", new { HostName = ViewBag.HostName })">
             销售消息 </a></li>
         <li>@Html.ActionLink("销售与客户管理", "Index", "SalesMessage", new { HostName = ViewBag.HostName }, null, true)
-            </li>
+        </li>
         <li style="height: 10px; background-color: #F4F4F4; border-bottom: 1px solid #E7E7E7;
             border-top: 1px solid #E7E7E7"></li>
         @foreach (var item in groupList)
@@ -121,15 +121,17 @@
             </th>
         </tr>
     </table>
-    @foreach (var item in Model)
+    @if (Model != null)
     {
+        foreach (var item in Model)
+        {
         <table class="TabList" cellpadding="0" cellspacing="0">
             <tr>
                 <td rowspan="2" align="center" valign="top" style="width: 70px">
-                    <a onclick="javascript:window.top.location.reload()" href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.FromUserID })"target="_blank">
-                        @if (!string.IsNullOrEmpty(item.HeadImagePath))
+                    <a onclick="javascript:window.top.location.reload()" href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.I })"target="_blank">
+                        @if (!string.IsNullOrEmpty(item.P))
                         { 
-                            <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="http://@Url.Content(item.HeadImagePath)" />
+                            <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content(item.P)" />
                         }
                         else
                         { 
@@ -139,26 +141,26 @@
                     </a>
                 </td>
                 <td style="font-weight: bold">
-                    @if (item.Name == item.UMark)
+                    @if (item.N == item.B)
                     {
-                        <a onclick="javascript:window.top.location.reload()" href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.FromUserID })" target="_blank">@item.Name</a>
+                        <a onclick="javascript:window.top.location.reload()" href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.I })" target="_blank">@item.N</a>
                     }
                     else
                     {
-                        <a onclick="javascript:window.top.location.reload()" href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.FromUserID })"target="_blank">@item.UMark
-                            (@item.Name)</a>
+                        <a onclick="javascript:window.top.location.reload()" href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.I })"target="_blank">@item.B
+                            (@item.N)</a>
                     }
                 </td>
-                <td width="150px" align="center" style="font-size: 12px; color: #aaaaaa">
-                    @item.MData.DateFormat()
+                <td width="150px" rowspan="2" align="center" style="font-size: 12px; color: #aaaaaa">
+                    @item.D
                 </td>
                 <td rowspan="2" width="150px" align="center" valign="top" style="padding-top: 15px">
-                    @if (item.NoSend != 0)
+                    @if (item.C != 0)
                     {
                         <table cellpadding="0" cellspacing="0" align="center" style=" width:32px; height:32px; background:url('@Url.Content("~/Images/Unread.png")')">
                             <tr>
                                 <td style="font-size: 14px; font-weight: bold; color: #fff" align="center">
-                                    @item.NoSend
+                                    @item.C
                                 </td>
                             </tr>
                         </table>
@@ -175,26 +177,27 @@
             <tr>
                 <td style="padding-bottom: 20px">
                     <div style="width: 360px; text-overflow: ellipsis; overflow: hidden;">
-                        @if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Text)
+                        @if (item.E == (int)Poco.Enum.EnumMessageType.Text)
                         { 
-                            @item.Tcontent
+                            @item.CT
                         }
-                        else if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Image)
+                        else if (item.E == (int)Poco.Enum.EnumMessageType.Image)
                         { 
                             @:[图片]
                         }
-                        else if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Voice)
+                        else if (item.E == (int)Poco.Enum.EnumMessageType.Voice)
                         { 
                             @:[语音]
                         }
-                        else if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Video)
+                        else if (item.E == (int)Poco.Enum.EnumMessageType.Video)
                         { 
                             @:[视频]
-                        }
+                                                }
                     </div>
                 </td>
             </tr>
         </table>
+        }
     }
     <div class="pages" style="font-size: 12px; margin-top: 10px; margin-right: 10px">
         @Html.Pager(Model, new PagerOptions

@@ -81,9 +81,9 @@ namespace Business
             Result result = new Result();
             Account account = new Account();
             account.Name = account_accountMain.Account.Name;
-            account.LoginPwd = account_accountMain.Account.Name;
-            account.LoginPwdPage = account_accountMain.Account.LoginPwdPage;
-            account.LoginPwdPageCompare = account_accountMain.Account.LoginPwdPageCompare;
+            account.LoginPwd = account_accountMain.Account.LoginPwd;
+            account.LoginPwdPage = "aaaaaa";
+            account.LoginPwdPageCompare = "aaaaaa";
             account.Phone = account_accountMain.Account.Phone;
             account.HeadImagePath = account_accountMain.Account.HeadImagePath;
             account.Email = account_accountMain.Account.Email;

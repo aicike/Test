@@ -27,15 +27,17 @@ namespace Web.Areas.System.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePathFile)
+        public ActionResult AddAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePathFile, HttpPostedFileBase AndroidPathFile)
         {
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
-            var result = accountMainModel.Add(accountMain, LogoImagePathFile, LoginSystemUser.ID);
+            var result = accountMainModel.Add(accountMain, LogoImagePathFile, LoginSystemUser.ID,AndroidPathFile);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);
             }
             return RedirectToAction("Index", "AccountMainManage");
+         
+
         }
 
         public ActionResult EditAccountMain(int id)
@@ -46,15 +48,16 @@ namespace Web.Areas.System.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePathFile)
+        public ActionResult EditAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePathFile,HttpPostedFileBase AndroidPathFile)
         {
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
-            var result = accountMainModel.Edit_Permission(accountMain, LogoImagePathFile, LoginSystemUser.ID);
+            var result = accountMainModel.Edit_Permission(accountMain, LogoImagePathFile,AndroidPathFile, LoginSystemUser.ID);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);
             }
             return RedirectToAction("Index", "AccountMainManage");
+            
         }
 
         public ActionResult DeleteAccountMain(int id)

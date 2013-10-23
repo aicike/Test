@@ -43,7 +43,7 @@ namespace Controllers
                 filterContext.Result = new RedirectToRouteResult("Default",
                     new RouteValueDictionary{
                         { "controller", "Login" },
-                        { "action", "UserLogin" }
+                        { "action", "Index" }
                 });
                 return;
             }

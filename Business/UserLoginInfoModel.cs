@@ -142,19 +142,24 @@ namespace Business
 
             var accountStatus = EnumAccountStatus.Enabled.ToString();
 
-            var userLoginInfo = List().Where(a => a.Email.Equals(app_UserLoginInfo.Email, StringComparison.CurrentCultureIgnoreCase) && a.LoginPwd == pwd
-                && a.Users.Any(b => b.SystemStatus == (int)EnumSystemStatus.Active && b.AccountStatus.Token == accountStatus)).FirstOrDefault();
-
             var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
             var clientInfo = clientInfoModel.GetByClientID(app_UserLoginInfo.ClientID);
-
-            if (userLoginInfo == null || (userLoginInfo.ID != clientInfo.EntityID))
+           
+            if (clientInfo == null)
             {
                 result.Error = "邮箱或密码错误，登录失败。";
                 return result;
             }
+             var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+             var user = userModel.Get(clientInfo.EntityID.Value);
 
-            var user = userLoginInfo.Users.Where(a => a.AccountMainID == app_UserLoginInfo.AccountMainID).FirstOrDefault();
+         
+             if (user.UserLoginInfo.Email.Equals(app_UserLoginInfo.Email, StringComparison.CurrentCultureIgnoreCase)==false || user.UserLoginInfo.LoginPwd != pwd)
+             {
+                 result.Error = "邮箱或密码错误，登录失败。";
+                 return result;
+             }
+
             App_User appuser = new App_User();
             appuser.ID = user.ID;
             appuser.Name = user.UserLoginInfo.Name;

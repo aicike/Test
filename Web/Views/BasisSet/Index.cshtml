@@ -154,7 +154,7 @@
                         Logo
                     </td>
                     <td>
-                        <img id="imgLogo" style="max-width:80px;max-height:80px; float: left" src="@Url.Content(@Model.LogoImagePath)" />
+                        <img id="imgLogo" style="max-width:150px;max-height:80px; float: left" src="@Url.Content(@Model.LogoImagePath)" />
                         <input type="file" id="LogoImagePathFile" name="LogoImagePathFile" style="display: none" />
                         <input type="button" class="button" value="上传" id="btnUpload" />
                         @Html.TextBoxFor(a => a.LogoImagePath, new { style = "width:0px;visibility:hidden" })
@@ -170,6 +170,9 @@
                     <td class="tdField">
                         @Html.TextBoxFor(a => a.Name, new { @readonly = "readonly" })@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.CreateTime)@Html.HiddenFor(a => a.SystemUserID)
                         @Html.HiddenFor(a => a.FileLimit)@Html.HiddenFor(a => a.Phone)@Html.HiddenFor(a => a.HostName)@Html.HiddenFor(a => a.ID)
+                        @Html.HiddenFor(a => a.AndroidDownloadPath)@Html.HiddenFor(a => a.IOSDownloadPath)
+
+                       <input type="file" style=" display:none" id="AndroidPathFile" name="AndroidPathFile"  />
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Name)
                     </td>

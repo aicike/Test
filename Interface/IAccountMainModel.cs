@@ -16,11 +16,11 @@ namespace Interface
 
         Result Delete_Permission(int id, int loginSystemUserID);
 
-        Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID);
+        Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID, HttpPostedFileBase AndroidPathFile);
 
-        Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int loginSystemUserID);
+        Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, int loginSystemUserID);
 
-        Result Edit_ByAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePath);
+        Result Edit_ByAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile);
 
         Result ChangeStatus_Permission(int accountMainID, EnumAccountStatus status, int loginSystemUserID);
 

@@ -5,12 +5,18 @@
 }
 <script src="@Url.Content("~/Scripts/jquery-1.8.3.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery-ui-1.10.3.custom.min.js")" type="text/javascript"></script>
-<link href="@Url.Content("~/Content/themes/base/jquery-ui-1.10.2.custom.css")" rel="stylesheet"
-    type="text/css" />
+<script src="@Url.Content("~/Scripts/ToolTip/jquery.tipTip.minified.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/themes/base/jquery-ui-1.10.2.custom.css")" rel="stylesheet"   type="text/css" />
 <link href="@Url.Content("~/Content/Style.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Scripts/ToolTip/tipTip.css")" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
-
+    $(function () {
+        $("label[name=labCbFirst]").each(function () {
+            $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
+        });
+    });
     function UpUserAccount(UserID) {
+
         $("#hiUserID").val(UserID);
 
         $("#dialogAccount").dialog({
@@ -44,13 +50,13 @@
     }
     .ListTab th
     {
-        font-size: 12px;
+        font-size: 14px;
         border-bottom: 1px solid #E7E7E7;
         border-right: 1px solid #E7E7E7;
     }
     .ListTab td
     {
-        font-size: 12px;
+        font-size: 13px;
         border-bottom: 1px solid #E7E7E7;
         border-right: 1px solid #E7E7E7;
         padding-top: 5px;
@@ -63,7 +69,7 @@
     }
 </style>
 @model PagedList<Poco.User>
-<div style="font-size: 12px; font-weight: bold">
+<div style="font-size: 14px; font-weight: bold">
     @ViewBag.AccountName -> @ViewBag.GroupName</div>
 <table class="ListTab" width="100%" cellpadding="0" cellspacing="0">
     <tr>
@@ -95,16 +101,18 @@
                 }
             </td>
             <td class="operation">
-                @if (item.UserLoginInfo.Name == item.Name)
-                {
-                    <a  href="@Url.Action("SelectAtoUmes", "SalesMessage", new { HostName = ViewBag.HostName, accountID = ViewBag.AccountID, UserID = item.ID })" target="_blank">
-                        @item.UserLoginInfo.Name</a>
-                }
-                else
-                { 
-                    <a  href="@Url.Action("SelectAtoUmes", "SalesMessage", new { HostName = ViewBag.HostName, accountID = ViewBag.AccountID, UserID = item.ID })" target="_blank">
-                        @item.UserLoginInfo.Name (@item.Name)</a>
-                }
+                <label name="labCbFirst" title="查看聊天记录">
+                    @if (item.UserLoginInfo.Name == item.Name)
+                    {
+                        <a  href="@Url.Action("SelectAtoUmes", "SalesMessage", new { HostName = ViewBag.HostName, accountID = ViewBag.AccountID, UserID = item.ID })" target="_blank">
+                            @item.UserLoginInfo.Name</a>
+                    }
+                    else
+                    { 
+                        <a  href="@Url.Action("SelectAtoUmes", "SalesMessage", new { HostName = ViewBag.HostName, accountID = ViewBag.AccountID, UserID = item.ID })" target="_blank">
+                            @item.UserLoginInfo.Name (@item.Name)</a>
+                    }
+                </label>
             </td>
             <td>
                 @item.UserLoginInfo.Phone
@@ -148,7 +156,7 @@
             <div>
                 @if (!string.IsNullOrEmpty(item.HeadImagePath))
                 {
-                 <img  onclick="ClickUserAccount(@item.ID)"  src="@Url.Content(@item.HeadImagePath)" style="max-width: 50px; max-height:50px; border: 0px; cursor:pointer" />
+                    <img  onclick="ClickUserAccount(@item.ID)"  src="@Url.Content(@item.HeadImagePath)" style="max-width: 50px; max-height:50px; border: 0px; cursor:pointer" />
                 }
                 else
                 { 

@@ -108,6 +108,7 @@
                 <td class="operation">
                     @Html.ActionLink("修改", "EditAccount", "AccountManage", new { Area = "System", accountMainID = accountMain.ID, accountID = item.ID }, null)
                     @Ajax.ActionLink("删除", "DeleteAccount", "AccountManage", new { Area = "System", id = item.ID, accountMainId = accountMain.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("DeleteAccount", "AccountManage", new { Area = "System", id = item.ID, accountMainId = accountMain.ID }) + "',null)" })
+                     @Ajax.ActionLink("重置密码", "ResetPwd", "AccountManage", new { HostName = ViewBag.HostName, id = item.ID, mail = item.Email }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定要重置密码?','" + Url.Action("ResetPwd", "AccountManage", new { HostName = ViewBag.HostName, id = item.ID, mail = item.Email }) + "',null)" })
                 </td>
             </tr>
         }

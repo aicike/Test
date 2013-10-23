@@ -20,9 +20,11 @@ namespace Poco
         public virtual AccountMainHouses AccountMainHousess { get; set; }
 
         [Display(Name = "栋数")]
+        [Required(ErrorMessage = "请输入栋数")]
         public string Building { get; set; }
 
         [Display(Name = "单元")]
+        [Required(ErrorMessage = "请输入单元")]
         public string Cell { get; set; }
 
         [Display(Name = "层数")]
@@ -32,6 +34,7 @@ namespace Poco
         public int NumberOfTheElevator { get; set; }
 
         [Display(Name = "户数")]
+        [Required(ErrorMessage = "请输入户数")]
         public string NumberOfFamily { get; set; }
 
         public virtual ICollection<AccountMainHouseInfoDetail> AccountMainHouseInfoDetails { get; set; }

@@ -148,7 +148,7 @@ namespace Business
         /// <param name="userID">用户ID</param>
         /// <param name="userType">用户类型 0：售楼部，1：用户</param>
         /// <returns></returns>
-        public List<UnreadMessage> getSessionList(int userID, int userType)
+        public IQueryable<UnreadMessage> getSessionList(int userID, int userType)
         {
             string AoU = "s";
             //用户
@@ -158,20 +158,27 @@ namespace Business
             }
             var conversModel = Factory.Get<IConversationModel>(SystemConst.IOC_Model.ConversationModel);
             var convers = conversModel.GetAllCID(AoU, userID);
-
+            string id = "";
             if (convers.Count() > 0)
             {
-                string id = "";
+
                 foreach (var item in convers)
                 {
                     id += item.ID + ",";
                 }
                 id = id.TrimEnd(',');
-                string sql = "";
-                //用户
-                if (userType == 1)
-                {
-                    sql = string.Format(@"select x.*,case when x.T='s' 
+
+            }
+            else
+            {
+                id = "0";
+            }
+
+            string sql = "";
+            //用户
+            if (userType == 1)
+            {
+                sql = string.Format(@"select x.*,case when x.T='s' 
 	                                        then 
 		                                        (select  Name from dbo.Account where systemStatus=0 and id=x.I)
 	                                        else
@@ -198,12 +205,12 @@ namespace Business
                                         (select EnumMessageSendDirectionID  from dbo.[Message] where SendTime = Max(a.SendTime)) as M,
                                         (select EnumMessageTypeID  from dbo.[Message] where SendTime = Max(a.SendTime)) as E
                                         from dbo.[Message] a  where ConversationID in ({0}) group by ConversationID) x"
-                                        , id, userID);//and ToUserID ={1} 
-                }
-                //售楼代表
-                else
-                {
-                    sql = string.Format(@"select x.*,case when x.T='s' 
+                                    , id, userID);//and ToUserID ={1} 
+            }
+            //售楼代表
+            else
+            {
+                sql = string.Format(@"select x.*,case when x.T='s' 
 	                                        then 
 		                                        (select  Name from dbo.Account where systemStatus=0 and id=x.I)
 	                                        else
@@ -230,15 +237,35 @@ namespace Business
                                         (select EnumMessageSendDirectionID  from dbo.[Message] where SendTime = Max(a.SendTime)) as M,
                                         (select EnumMessageTypeID  from dbo.[Message] where SendTime = Max(a.SendTime)) as E
                                         from dbo.[Message] a  where ConversationID in ({0}) group by ConversationID) x"
-                                        , id, userID);//and ToAccountID ={1} 
-                }
-                return SqlQuery<UnreadMessage>(sql).ToList();
+                                    , id, userID);//and ToAccountID ={1} 
             }
-            else
+            return SqlQuery<UnreadMessage>(sql);
+
+
+        }
+
+        /// <summary>
+        /// 创建随机字符窜（不唯一）
+        /// </summary>
+        /// <param name="str">随机数包含的字符 传"" 为默认a-z 1-9</param>
+        /// <param name="length">返回的字符长度</param>
+        /// <returns></returns>
+        public string CreateRandom(string str,int length)
+        {
+            if (str == "")
             {
-                return null;
+                str = "abcdefghijklmnopqrstuvwxyz0123456789";
+            }
+            Random rnd = new Random();
+            string tmpstr = "";
+            int iRandNum;
+            for (int i = 0; i < length; i++)
+            {
+                iRandNum = rnd.Next(str.Length);
+                tmpstr += str[iRandNum];
             }
 
+            return tmpstr;
         }
     }
 }

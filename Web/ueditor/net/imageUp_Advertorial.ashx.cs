@@ -42,7 +42,7 @@ namespace Web.ueditor.net
             string oriName = up.getOtherInfo(context, "fileName");                //获取原始文件名
 
 
-            string Url = "http://" + Poco.SystemConst.WebUrlIP;
+            string Url =  Poco.SystemConst.WebUrlIP;
 
             HttpContext.Current.Response.Write("{'url':'" + Url+info["url"] + "','title':'" + title + "','original':'" + oriName + "','state':'" + info["state"] + "'}");  //向浏览器返回数据json数据
         }

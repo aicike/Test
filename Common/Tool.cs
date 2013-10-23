@@ -43,7 +43,7 @@ namespace Common
                 //把原始图像绘制成上面所设置宽高的缩小图
                 System.Drawing.Rectangle rectDestination = new System.Drawing.Rectangle(0, 0, thumbWidth, thumbHeight);
                 gr.DrawImage(image, rectDestination, 0, 0, srcWidth, srcHeight, GraphicsUnit.Pixel);
-                bmp.Save(SavePath);
+                bmp.Save(SavePath, bmp.RawFormat);
                 return true;
             }
             catch (Exception ex)
@@ -96,7 +96,7 @@ namespace Common
                 //把原始图像绘制成上面所设置宽高的缩小图
                 System.Drawing.Rectangle rectDestination = new System.Drawing.Rectangle(0, 0, thumbWidth, thumbHeight);
                 gr.DrawImage(image, rectDestination, 0, 0, srcWidth, srcHeight, GraphicsUnit.Pixel);
-                bmp.Save(SavePath);
+                bmp.Save(SavePath, bmp.RawFormat);
                 return true;
             }
             catch (Exception ex)
@@ -149,7 +149,7 @@ namespace Common
                 //把原始图像绘制成上面所设置宽高的缩小图
                 System.Drawing.Rectangle rectDestination = new System.Drawing.Rectangle(0, 0, thumbWidth, thumbHeight);
                 gr.DrawImage(image, rectDestination, 0, 0, srcWidth, srcHeight, GraphicsUnit.Pixel);
-                bmp.Save(SavePath);
+                bmp.Save(SavePath,bmp.RawFormat);
                 return true;
             }
             catch (Exception ex)

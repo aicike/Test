@@ -7,6 +7,7 @@ using Controllers;
 using Injection;
 using Interface;
 using Poco;
+using Business;
 
 namespace Web.Controllers
 {
@@ -15,7 +16,7 @@ namespace Web.Controllers
         //
         // GET: /InstantMes/
 
-        public ActionResult Index(int ? id)
+        public ActionResult Index(int? id)
         {
             //获取用户分组
             var groupModel = Factory.Get<IGroupModel>(SystemConst.IOC_Model.GroupModel);
@@ -25,15 +26,19 @@ namespace Web.Controllers
             ViewBag.HostName = LoginAccount.HostName;
 
 
-            //读取信息
-            var TemporayModel = Factory.Get<ITemporayInstantMesModel>(SystemConst.IOC_Model.TemporayInstantMes);
-            var TemporayList = TemporayModel.GetList(LoginAccount.ID).ToPagedList(id ?? 1, 15); ;
-
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "用户管理-销售消息", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
+            //读取信息
+            //var TemporayModel = Factory.Get<ITemporayInstantMesModel>(SystemConst.IOC_Model.TemporayInstantMes);
+            //var TemporayList = TemporayModel.GetList(LoginAccount.ID).ToPagedList(id ?? 1, 15); 
 
-            return View(TemporayList);
+            var commonModel = Factory.Get<CommonModel>(SystemConst.IOC_Model.CommonModel);
+            var TemporayList = commonModel.getSessionList(LoginAccount.ID, 0);
+
+
+            return View(TemporayList.ToPagedList(id ?? 1, 15));
+
         }
 
 

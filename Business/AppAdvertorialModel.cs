@@ -140,9 +140,10 @@ namespace Business
         [Transaction]
         public Result EditAppAdvertorial(AppAdvertorial appadvertorial, HttpPostedFileBase HousShowImagePathFile, int w, int h, int x1, int y1, int tw, int th)
         {
+            var appadvertorials = this.Get(appadvertorial.ID);
             if (HousShowImagePathFile != null)
             {
-                var appadvertorials = this.Get(appadvertorial.ID);
+        
                 var path = string.Format(SystemConst.Business.PathBase, appadvertorial.AccountMainID);
                 var accountPath = HttpContext.Current.Server.MapPath(path);
                 var token = DateTime.Now.ToString("yyyyMMddHHmmss");
@@ -204,7 +205,7 @@ namespace Business
                         //account.HeadImagePath = path + imageThumbnailName;
 
                     }
-                    string path2 = HttpContext.Current.Server.MapPath(appadvertorial.MinImagePath);
+                    string path2 = HttpContext.Current.Server.MapPath(appadvertorials.MinImagePath);
                     if (File.Exists(path2))
                     {
                         File.Delete(path2);
@@ -214,7 +215,7 @@ namespace Business
                     {
                         File.Delete(path2);
                     }
-                    path2 = HttpContext.Current.Server.MapPath(appadvertorial.AppShowImagePath);
+                    path2 = HttpContext.Current.Server.MapPath(appadvertorials.AppShowImagePath);
                     if (File.Exists(path2))
                     {
                         File.Delete(path2);
@@ -230,11 +231,15 @@ namespace Business
                 }
             }
             Result result= base.Edit(appadvertorial);
-            int cnt = EditAppAdvertorialStick(appadvertorial.ID, appadvertorial.stick, appadvertorial.AccountMainID, appadvertorial.Sort);
-            if (cnt <= 0)
+            if (appadvertorial.stick != appadvertorials.stick)
             {
-                result.HasError = true;
-                result.Error = "修改失败 请稍后再试！";
+
+                int cnt = EditAppAdvertorialStick(appadvertorial.ID, appadvertorial.stick, appadvertorial.AccountMainID, appadvertorial.Sort);
+                if (cnt <= 0)
+                {
+                    result.HasError = true;
+                    result.Error = "修改失败 请稍后再试！";
+                }
             }
             return result;
         }

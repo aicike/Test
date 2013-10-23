@@ -157,24 +157,30 @@ namespace Web.Controllers
               
             
             List<_B_Advertorial> TitleShow = new List<_B_Advertorial>();
-            foreach (var item in RtitleImg)
+            if (RtitleImg != null)
             {
-                _B_Advertorial ADVERTORIAL = new _B_Advertorial();
-                ADVERTORIAL.I = item.ID;
-                ADVERTORIAL.T = item.Title;
-                ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath);
-                TitleShow.Add(ADVERTORIAL);
+                foreach (var item in RtitleImg)
+                {
+                    _B_Advertorial ADVERTORIAL = new _B_Advertorial();
+                    ADVERTORIAL.I = item.ID;
+                    ADVERTORIAL.T = item.Title;
+                    ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath);
+                    TitleShow.Add(ADVERTORIAL);
+                }
             }
             List<_B_Advertorial> ListShow = new List<_B_Advertorial>();
-            foreach (var item in RListImg)
+            if (RListImg != null)
             {
-                _B_Advertorial ADVERTORIAL = new _B_Advertorial();
-                ADVERTORIAL.I = item.ID;
-                ADVERTORIAL.T = item.Title;
-                ADVERTORIAL.P = item.Depict;
-                ADVERTORIAL.D = item.IssueDate.ToString("yyyy-MM-dd");
-                ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.MinImagePath);
-                ListShow.Add(ADVERTORIAL);
+                foreach (var item in RListImg)
+                {
+                    _B_Advertorial ADVERTORIAL = new _B_Advertorial();
+                    ADVERTORIAL.I = item.ID;
+                    ADVERTORIAL.T = item.Title;
+                    ADVERTORIAL.P = item.Depict;
+                    ADVERTORIAL.D = item.IssueDate.ToString("yyyy-MM-dd");
+                    ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.MinImagePath);
+                    ListShow.Add(ADVERTORIAL);
+                }
             }
            
             var jsonStr = new { TitleImg = TitleShow, List = ListShow };

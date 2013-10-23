@@ -25,7 +25,7 @@
             $("body").css("background-color", "#727171");
             $("#logo").attr("style", "width:100%");
             $(".logo").attr("style", "margin-left:10px");
-           
+            $(".head").attr("style", "min-width:1024px");
 
             $.fn.nivoSlider.defaults = {
                 effect: 'random', // 过渡效果
@@ -74,7 +74,7 @@
 *@
 <div id="wrapper" style="min-width: 1024px">
     <div class="slider-wrapper theme-default">
-        <div id="slider" class="nivoSlider" style="margin-bottom: 0px;">
+        <div id="slider" class="nivoSlider" style="margin-bottom: 0px; ">
             @if (ShowDt != null)
             {
                 for (int i = 0; i < ShowDt.Rows.Count; i++)

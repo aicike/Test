@@ -26,6 +26,7 @@ namespace Poco
 
         [Display(Name = "项目介绍")]
         [StringLength(2000, ErrorMessage = "长度小于2000")]
+        [Required(ErrorMessage = "请输入项目介绍")]
         [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string HIntroduce { get; set; }
 
@@ -39,10 +40,10 @@ namespace Poco
         public int HHouseCount { get; set; }
 
         [Display(Name = "总户数")]
-        public int? HHouseholdsCount { get; set; }
+        public int HHouseholdsCount { get; set; }
 
         [Display(Name = "车位数")]
-        public int? HParkingCount { get; set; }
+        public int HParkingCount { get; set; }
 
         [Display(Name = "开盘时间")]
         [Required(ErrorMessage = "请输入开盘时间")]
@@ -57,13 +58,13 @@ namespace Poco
         public DateTime HCompletedDate { get; set; }
 
         [Display(Name = "占用面积")]
-        public double? HOccupyArea { get; set; }
+        public double HOccupyArea { get; set; }
 
         [Display(Name = "建筑面积")]
-        public double? HBuildingArea { get; set; }
+        public double HBuildingArea { get; set; }
 
         [Display(Name = "绿化面积")]
-        public double? HGreeningArea { get; set; }
+        public double HGreeningArea { get; set; }
 
         [Display(Name = "产权年限")]
         [Required(ErrorMessage = "请输入产权年限 ")]
