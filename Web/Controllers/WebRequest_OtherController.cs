@@ -34,7 +34,7 @@ namespace Web.Controllers
                 {
                     App_ImageText app = new App_ImageText();
                     app.ID = item.ID;
-                    app.I = item.ImagePath;
+                    app.I = SystemConst.WebUrlIP + Url.Content(item.ImagePath); 
                     app.T = item.Title;
                     app.S = item.Summary;
                     app.C = item.Content;
@@ -53,6 +53,78 @@ namespace Web.Controllers
                         }
                         app.Sub = appSubList;
                     }
+                    else {
+                        app.Sub = new List<App_ImageText>();
+                    }
+                    appList.Add(app);
+                }
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(appList);
+        }
+
+        /// <summary>
+        /// 获取图片素材
+        /// </summary>
+        /// <param name="amid">AccountMainID</param>
+        public string GetLibraryImage(int amid)
+        {
+            var libraryImageModel = Factory.Get<ILibraryImageModel>(SystemConst.IOC_Model.LibraryImageModel);
+            var list = libraryImageModel.GetLibraryList(amid).ToList();
+            List<App_Image> appList = new List<App_Image>();
+            if (list != null)
+            {
+                foreach (var item in list)
+                {
+                    App_Image app = new App_Image();
+                    app.ID = item.ID;
+                    app.I = SystemConst.WebUrlIP + Url.Content(item.FilePath);
+                    app.T = item.FileName;
+                    appList.Add(app);
+                }
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(appList);
+        }
+
+        /// <summary>
+        /// 获取语音素材
+        /// </summary>
+        /// <param name="amid">AccountMainID</param>
+        public string GetLibraryVoice(int amid)
+        {
+            var libraryVoiceModel = Factory.Get<ILibraryVoiceModel>(SystemConst.IOC_Model.LibraryVoiceModel);
+            var list = libraryVoiceModel.GetLibraryList(amid).ToList();
+            List<App_Voice> appList = new List<App_Voice>();
+            if (list != null)
+            {
+                foreach (var item in list)
+                {
+                    App_Voice app = new App_Voice();
+                    app.ID = item.ID;
+                    app.I = SystemConst.WebUrlIP + Url.Content(item.FilePath);
+                    app.T = item.FileName;
+                    appList.Add(app);
+                }
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(appList);
+        }
+
+        /// <summary>
+        /// 获取视频素材
+        /// </summary>
+        /// <param name="amid">AccountMainID</param>
+        public string GetLibraryVideo(int amid)
+        {
+            var libraryVideoModel = Factory.Get<ILibraryVoiceModel>(SystemConst.IOC_Model.LibraryVideoModel);
+            var list = libraryVideoModel.GetLibraryList(amid).ToList();
+            List<App_Video> appList = new List<App_Video>();
+            if (list != null)
+            {
+                foreach (var item in list)
+                {
+                    App_Video app = new App_Video();
+                    app.ID = item.ID;
+                    app.I = SystemConst.WebUrlIP + Url.Content(item.FilePath);
+                    app.T = item.FileName;
                     appList.Add(app);
                 }
             }
