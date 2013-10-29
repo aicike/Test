@@ -158,5 +158,14 @@ namespace Poco
         public virtual ICollection<AppAdvertorial> AppAdvertorial { get; set; }
 
         public virtual ICollection<AppWaitImg> AppWaitImg { get; set; }
+
+        public virtual ICollection<Role> Role { get; set; }
+
+        
+        public virtual ICollection<Classify> Classify { get; set; }
+
+        public virtual ICollection<Product> Product { get; set; }
+        
+
     }
 }

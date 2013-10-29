@@ -52,6 +52,7 @@
     <Compile Include="IAppWaitImgModel.cs" />
     <Compile Include="IAutoMessage_UserModel.cs" />
     <Compile Include="IBaseModel.cs" />
+    <Compile Include="IClassifyModel.cs" />
     <Compile Include="IConversationModel.cs" />
     <Compile Include="IKeywordAutoMessageModel.cs" />
     <Compile Include="IKeywordModel.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="ILookupOptionModel.cs" />
     <Compile Include="IMessageModel.cs" />
     <Compile Include="IPendingMessagesModel.cs" />
+    <Compile Include="IProductModel.cs" />
     <Compile Include="IProvinceModel.cs" />
     <Compile Include="IPushModel.cs" />
     <Compile Include="IPushMsgDetailModel.cs" />

@@ -1,0 +1,81 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.Product;
+}
+@section head{
+}
+@model PagedList<Poco.Product>
+<div class="title">
+    产品管理</div>
+<div class="body">
+    <div class="option">@Html.ActionLink("添加", "Add", "Product", new { HostName = ViewBag.HostName }, null, true)</div>
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th style="width: 120px; ">
+                图片
+            </th>
+            <th style="width: 200px; word-wrap: break-word; word-break: normal;">
+                产品名称
+            </th>
+            <th style="width: 150px; word-wrap: break-word; word-break: normal;">
+                规格
+            </th>
+            <th style="width: 150px; word-wrap: break-word; word-break: normal;"> 
+                类别
+            </th>
+            <th>
+                售价
+            </th>
+            <th style="width: 150px;">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@Url.Content(item.imgFilePath)" style=" max-width:98px" />
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Specification
+                </td>
+                <td>
+                    @item.Classify.Name
+                </td>
+                <td>
+                    @item.Price
+                </td>
+                 <td class="operation">
+
+                    @Html.ActionLink("修改", "Edit", "Product", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:15px" }, true)
+                   
+                    @Ajax.ActionLink("删除", "Delete", "Product", new { HostName = ViewBag.HostName, id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "Product", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
+                    
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
+<div style="clear: both">
+</div>

@@ -59,6 +59,7 @@
     <Compile Include="AppAdvertorial.cs" />
     <Compile Include="AppWaitImg.cs" />
     <Compile Include="AutoMessage_User.cs" />
+    <Compile Include="Classify.cs" />
     <Compile Include="Conversation.cs" />
     <Compile Include="Enum\EnumBuildingType.cs" />
     <Compile Include="Enum\EnumConversationType.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Enum\EnumReceiveStatus.cs" />
     <Compile Include="NewsProtocol.cs" />
     <Compile Include="PendingMessages.cs" />
+    <Compile Include="Product.cs" />
     <Compile Include="PushMsg.cs" />
     <Compile Include="PushMsgDetail.cs" />
     <Compile Include="TemporayInstantMes.cs" />

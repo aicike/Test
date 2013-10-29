@@ -37,7 +37,7 @@
 <div class="title">
     分配权限 ( @ViewBag.Role.Name )</div>
 <div class="body">
-    @using (Ajax.BeginForm("Permission", "Role", new { Area = "System" }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    @using (Ajax.BeginForm("Permission", "Role", new { Area = "System" ,AccountMainID=ViewBag.AccountMainID}, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
         <input type="hidden" value="@ViewBag.Role.ID" name="hidRoleID"/>
         <div style="margin-bottom:10px;">

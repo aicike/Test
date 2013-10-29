@@ -50,7 +50,15 @@ namespace Business
 
         public IQueryable<Account> GetAccountAdminListByAccountMain(AccountMain accountMain)
         {
-            return accountMain.Account_AccountMains.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Select(a => a.Account).Where(a => a.RoleID == 1).AsQueryable();
+            var Rolemodel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
+            int Roleid = 0;
+            var Role = Rolemodel.GetListByAMID(accountMain.ID).Where(a => a.IsCanDelete == false);
+            if (Role != null)
+            {
+                Roleid = Role.FirstOrDefault().ID;
+
+            }
+            return accountMain.Account_AccountMains.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Select(a => a.Account).Where(a => a.RoleID == Roleid).AsQueryable();
         }
         public IQueryable<Account> GetAccountAdminListByAccountMain(AccountMain accountMain, int RoleID, int AccountID)
         {
@@ -133,8 +141,11 @@ namespace Business
 
         public Result Add(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile, int x1, int y1, int width, int height, int Twidth, int Theight)
         {
+            //获取项目管理员角色ID
+            IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
+            int sysRoleID = roleModel.GetRoleIscandelete(accountMainID);
             Result result = new Result();
-            if (account.RoleID == 1)
+            if (account.RoleID == sysRoleID)
             {
                 var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
                 if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID))
@@ -224,8 +235,11 @@ namespace Business
 
         public Result Edit(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile, int x1, int y1, int width, int height, int Twidth, int Theight)
         {
+            //获取项目管理员角色ID
+            IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
+            int sysRoleID = roleModel.GetRoleIscandelete(accountMainID);
             Result result = new Result();
-            if (account.RoleID == 1)
+            if (account.RoleID == sysRoleID)
             {
                 var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
                 if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID, account.ID))
@@ -326,8 +340,11 @@ namespace Business
 
         public Result SetEdit(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile, int x1, int y1, int width, int height, int Twidth, int Theight)
         {
+            //获取项目管理员角色ID
+            IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
+            int sysRoleID = roleModel.GetRoleIscandelete(accountMainID);
             Result result = new Result();
-            if (account.RoleID == 1)
+            if (account.RoleID == sysRoleID)
             {
                 var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
                 if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID, account.ID))

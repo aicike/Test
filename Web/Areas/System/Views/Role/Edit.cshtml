@@ -18,7 +18,8 @@
                     <td class="tdTitle">
                         名称
                     </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.ID)
+                    <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.ID)@Html.HiddenFor(a => a.AccountMainID)@Html.HiddenFor(a => a.IsCanDelete)
+                    @Html.HiddenFor(a => a.IsCanFindByUser)@Html.HiddenFor(a => a.Token)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Name)
                     </td>

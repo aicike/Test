@@ -21,19 +21,30 @@ namespace Web.Controllers
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             var roleList = roleModel.GetRoleListNoaID(LoginAccount.CurrentAccountMainID, LoginAccount.ID);
             ViewBag.RoleList = roleList;
+            int RoleShowID = 0;
+            if (roleList != null)
+            {
+                if (roleList.Count() > 0)
+                {
+                    RoleShowID = roleList.FirstOrDefault().ID;
+                }
+            }
             //项目信息
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             var entity = accountMainModel.Get(LoginAccount.CurrentAccountMainID);
             ViewBag.AccountMain = entity;
+
             //项目管理员
             IAccountModel accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             //IQueryable<Account> accountAdminIquery;
             IQueryable<Poco.Account> accountList = null; //项目成员
 
+            //获取项目管理员角色ID
+            int sysRoleID = roleModel.GetRoleIscandelete(LoginAccount.CurrentAccountMainID);
             //根据角色查找账号列表
             if (roleID.HasValue)
             {
-                if (roleID == 1)
+                if (roleID == sysRoleID)
                 {
                     accountList = accountModel.GetAccountListByAccountMain_RoleID(LoginAccount.CurrentAccountMainID, roleList.FirstOrDefault().ID, LoginAccount.ID);
                 }
@@ -54,10 +65,10 @@ namespace Web.Controllers
             if (accountList != null)
             {
                 pageList = accountList.ToPagedList(id ?? 1, 15);
-                ViewBag.RoleID = roleID.HasValue ? roleID.Value : roleList.FirstOrDefault().ID;
+                
                 ViewBag.AccountAdminList = accountList.ToList();
             }
-            ViewBag.RoleID = 0;
+            ViewBag.RoleID = roleID.HasValue ? roleID.Value : RoleShowID;
             ViewBag.HostName = LoginAccount.HostName;
 
             string WebTitleRemark = SystemConst.WebTitleRemark;
@@ -70,7 +81,7 @@ namespace Web.Controllers
         public ActionResult Add()
         {
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
-            var roles = roleModel.GetRoleList(null);
+            var roles = roleModel.GetRoleList(LoginAccount.CurrentAccountMainID);
             var selectListRoles = new SelectList(roles, "ID", "Name");
             List<SelectListItem> newRolesList = new List<SelectListItem>();
             newRolesList.Add(new SelectListItem { Text = "请选择", Value = "select", Selected = true });
@@ -120,7 +131,7 @@ namespace Web.Controllers
             var entity = model.Get(id);
 
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
-            var roles = roleModel.GetRoleList(null);
+            var roles = roleModel.GetRoleList(LoginAccount.CurrentAccountMainID);
             var selectListRoles = new SelectList(roles, "ID", "Name");
             List<SelectListItem> newRolesList = new List<SelectListItem>();
             newRolesList.Add(new SelectListItem { Text = "请选择", Value = "select", Selected = true });
@@ -137,6 +148,8 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult Edit(Poco.Account account, HttpPostedFileBase HeadImagePathFile, int w, int h, int x1, int y1, int tw, int th)
         {
+            account.LoginPwdPage = "aaaaaa";
+            account.LoginPwdPageCompare = "aaaaaa";
             IAccountModel model = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             var result = model.Edit(account, LoginAccount.CurrentAccountMainID, HeadImagePathFile, x1, y1, w, h, tw, th);
             if (result.HasError)

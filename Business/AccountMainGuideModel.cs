@@ -120,22 +120,29 @@ namespace Business
             var AppAdvertorial = AppAdvertorialModel.GetList(AccountMainID);
             if (AppAdvertorial != null)
             {
-                DataRow row = dt.NewRow();
-                row["Title"] = "第五步：在 <span style='font-weight:bold'>设置 </span>-><span style='font-weight:bold'> App动态软文 </span>中录入App动态软文！";
-                row["Conntroller"] = "";
-                row["View"] = "";
-                row["Status"] = "2";
-                dt.Rows.Add(row);
+                if (AppAdvertorial.Count() > 0)
+                {
+                    DataRow row = dt.NewRow();
+                    row["Title"] = "第五步：在 <span style='font-weight:bold'>设置 </span>-><span style='font-weight:bold'> App动态软文 </span>中录入App动态软文！";
+                    row["Conntroller"] = "";
+                    row["View"] = "";
+                    row["Status"] = "2";
+                    dt.Rows.Add(row);
+                }
+                else
+                {
+                    DataRow row = dt.NewRow();
+                    row["Title"] = "第五步：在 <span style='font-weight:bold'>设置 </span>-><span style='font-weight:bold'> App动态软文 </span>中录入App动态软文！";
+                    row["Conntroller"] = "InstallAppReply";
+                    row["View"] = "Index";
+                    row["Status"] = "1";
+                    dt.Rows.Add(row);
+                    i = true;
+                }
             }
             else
             {
-                DataRow row = dt.NewRow();
-                row["Title"] = "第五步：在 <span style='font-weight:bold'>设置 </span>-><span style='font-weight:bold'> App动态软文 </span>中录入App动态软文！";
-                row["Conntroller"] = "InstallAppReply";
-                row["View"] = "Index";
-                row["Status"] = "1";
-                dt.Rows.Add(row);
-                i = true;
+
             }
 
 

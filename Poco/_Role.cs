@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Poco
 {
+    [Obsolete("表更改 请检查接口")]
     [Serializable]
     public class Role : IBaseEntity
     {
@@ -34,6 +35,9 @@ namespace Poco
         [StringLength(50, ErrorMessage = "长度小于50")]
         [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Token { get; set; }
+
+        public virtual AccountMain AccountMain { get; set; }
+        public int AccountMainID { get; set; }
 
         public virtual ICollection<Role> SubRoles { get; set; }
 

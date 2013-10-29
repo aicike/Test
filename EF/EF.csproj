@@ -60,9 +60,9 @@
     <Compile Include="Mapping\KeywordMap.cs" />
     <Compile Include="Mapping\KeywordAutoMessageMap.cs" />
     <Compile Include="Mapping\AppUpdateMap.cs" />
-    <Compile Include="Migrations\201310180923327_initial.cs" />
-    <Compile Include="Migrations\201310180923327_initial.Designer.cs">
-      <DependentUpon>201310180923327_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201310280638099_initial.cs" />
+    <Compile Include="Migrations\201310280638099_initial.Designer.cs">
+      <DependentUpon>201310280638099_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -82,8 +82,8 @@
     <Content Include="InitialProvince.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201310180923327_initial.resx">
-      <DependentUpon>201310180923327_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201310280638099_initial.resx">
+      <DependentUpon>201310280638099_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

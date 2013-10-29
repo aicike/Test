@@ -1,0 +1,317 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.Classify;
+}
+@section head{
+    <link href="@Url.Content("~/Scripts/treeview/jquery.treeview.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/treeview/jquery.treeview.js")"></script>
+    <script>
+        
+        $(function () { 
+            
+             $("#browser").treeview({
+                toggle: function () {
+                },
+                collapsed: false,
+            });
+
+            $("#AddUrl").attr("href","javascript://function(){}");
+            $("#EditUrl").attr("href","javascript://function(){}");
+            $("#DeleteUrl").attr("href","javascript://function(){}");
+        });
+
+        function ckAdd()
+        {
+            
+            var name = $("#AddCname").val();
+            if(name!=""&&name!=undefined)
+            {
+                if($.trim(name)=="")
+                {
+                     JAlert({
+                            Message: "请输入分类名称",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                      }); 
+                }
+                else
+                {
+                    $("#btnAdd").click();
+                }
+            }
+            else
+            {
+                  JAlert({
+                        Message: "请输入分类名称",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                  }); 
+            }
+           
+        }
+        function ckEdit()
+        {
+            var name = $("#EditCname").val();
+            
+            if(name!=""&&name!=undefined)
+            {
+                if($.trim(name)=="")
+                {
+                    JAlert({
+                            Message: "分类名称不能为空",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                     }); 
+                }
+                else
+                {
+                    $("#btnEdit").click();
+                }
+            }
+            else
+            {
+                JAlert({
+                        Message: "分类名称不能为空",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                 }); 
+             }   
+            
+        }
+        function ckDelete()
+        {
+            if(confirm("你确定要删除吗？"))
+            {
+                if( $("#EditPID").val()==0)
+                {
+                     JAlert({
+                        Message: "此节点为主节点 不能删除！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    }); 
+                }
+                else{
+                    var ID = $("#CDeleteID").val();
+                
+                    var YZUrl = '@Url.Action("CkDelete", "Classify", new { Area = "", HostName = "" })';
+                    $.post(YZUrl, { ID: ID }, function (result) {
+                
+                        if (result == "True") {
+                            $("#btnDelete").click();
+                        }
+                        else {
+                            JAlert({
+                                    Message: "此节点下有子分类 不能删除！",
+                                    DialogType: "Ok",
+                                    BtnOk: "确定"
+                             }); 
+                        }
+                    });
+                }
+            }
+        }
+
+        function ckSet(id,level,Name,PID)
+        {
+            //添加
+            $("#CPID").val(id);
+            $("#CLevel").val(level);
+
+            //修改
+            $("#CEditID").val(id);
+            $("#EditCname").val(Name);
+            $("#EditPID").val(PID);
+            var YZUrl = '@Url.Action("GetPname", "Classify", new { Area = "", HostName = "" })';
+            $.post(YZUrl, { pid: PID }, function (result) {
+                
+                if (result == "此节点为顶级节点") {
+          
+                    $("#selPclass").attr("style","display:none");
+                }
+                else {
+                    $("#selPclass").attr("style","display:");
+                }
+                $("#PName").text(result);
+            });
+
+
+
+            //删除
+            $("#CDeleteID").val(id);
+                
+
+            $("#setDiv").attr("style","disply:");
+
+            //控制背景色
+           
+
+            $("a").each(function(n,m){
+                $(m).removeClass("aBgColor");
+            });
+             $("#"+id).addClass("aBgColor");
+        }
+
+         function SelParent()
+         {
+             var ID = $("#CDeleteID").val();
+             var YZUrl = '@Url.Action("ShowParent", "Classify", new { Area = "", HostName = "" })'+"?id="+ID;
+
+    
+            $("#iframeshow").attr("src", YZUrl);
+            $("#showParent").dialog({
+                resizable: false,
+                height: 650,
+                width: 355,
+                modal: true,
+                draggable: false,
+                buttons: {
+                    "确定": function () {
+                        var subDocument = $(window.frames["iframeshow"].document);
+                        var sel = subDocument.find("#browser").find(":checked")
+                        if (sel.length <= 0) {
+                            JAlert({
+                                Message: "请选择一个上级节点。",
+                                DialogType: "Ok",
+                                BtnOk: "确定"
+                            });
+                            return;
+                        }
+                        $("#EditPID").val(sel.attr("id"));
+                        $("#PName").text(sel.attr("title"));
+                        $(this).dialog("close");
+                    },
+                    "取消": function () {
+                         $("#iframeshow").attr("src", "");
+                         $(this).dialog("close");
+                    }
+                }
+            });
+   
+
+
+         }
+    </script>
+    <style type="text/css">
+        .lefClass
+        {
+            width: 500px;
+            height: 640px;
+            float: left;
+            border: 1px solid #ebebeb;
+            overflow: auto;
+            padding: 10px 10px 0px 10px;
+        }
+        .rigClass
+        {
+            border: 1px solid #ebebeb;
+            width: 370px;
+            height: 640px;
+            float: right;
+            padding-top: 10px;
+            padding-left: 10px;
+        }
+        .tabList
+        {
+            line-height: 30px;
+        }
+        .aBgColor
+        {
+             background-color:#00aec8;    
+             color:#fff !important;
+            
+        }
+    </style>
+}
+<div class="title">
+    类别管理</div>
+<div class="body">
+    <div class="rigClass">
+        <div id="setDiv" style="display: none">
+            @using (Html.BeginForm("Add", "Classify", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <table cellpadding="0" cellspacing="0" class="tabList">
+                    <tr>
+                        <td style="width: 100px">
+                            分类名称：
+                        </td>
+                        <td>
+                            <input id="CPID" name="PID" type="text" style="display: none" />
+                            <input id="CLevel" name="Level" type="text" style="display: none" />
+                            <input id="AddCname" name="AddCname" type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="submit" id="btnAdd" value="添加" class="button" style="display: none" />
+                            <div class="option">@Html.ActionLink("添加子类", "Add", "Classify", new { HostName = ViewBag.HostName }, new { onclick = "return ckAdd()", id = "AddUrl" }, true)</div>
+                        </td>
+                    </tr>
+                </table>
+       
+           
+            }
+            <br />
+            @using (Html.BeginForm("Edit", "Classify", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+            
+                <table cellpadding="0" cellspacing="0" class="tabList">
+                    <tr>
+                        <td style="width: 100px">
+                            当前类别名称：
+                        </td>
+                        <td>
+                            <input id="CEditID" name="CID" type="text" style="display: none" />
+                            <input id="EditCname" name="EditCname" type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 100px">
+                            上级类别：
+                        </td>
+                        <td class="operation">
+                            <label id="PName">
+                            </label>
+                            <input id="EditPID" name="PID" type="text" style="display: none" />
+                            <a id="selPclass" onclick="SelParent()">选择..</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="submit" id="btnEdit" value="修改" class="button" style="display: none" />
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </table>
+          
+            }
+            @using (Ajax.BeginForm("Delete", "Classify", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+            {
+                <input id="CDeleteID" name="CID" type="text" style="display: none" />
+                <input type="submit" id="btnDelete" value="删除" class="button" style="display: none" />
+            }
+            <br />
+            <table cellpadding="0" cellspacing="0" class="tabList">
+                <tr>
+                    <td>
+                        <div class="option">@Html.ActionLink("保存", "Edit", "Classify", new { HostName = ViewBag.HostName }, new { onclick = "ckEdit()", id = "EditUrl" }, true)</div>
+                    </td>
+                    <td>
+                        <div class="option">@Html.ActionLink("删除", "Delete", "Classify", new { HostName = ViewBag.HostName }, new { onclick = "ckDelete()", id = "DeleteUrl", style = "margin-left:20px" }, true)</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="lefClass operation">
+        <ul id='browser' style="width: 200%">
+            @Html.Raw(ViewBag.TreeView)
+        </ul>
+    </div>
+    <div style="clear: both">
+    </div>
+</div>
+<div id="showParent" title="选择上级" style="display: none; overflow: hidden">
+    <iframe id="iframeshow" src="" style="width: 800px; height: 530px; border: none;
+        overflow: hidden"></iframe>
+</div>

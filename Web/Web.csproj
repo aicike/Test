@@ -159,6 +159,7 @@
     <Compile Include="Controllers\AppWaitImgController.cs" />
     <Compile Include="Controllers\BaseController\BaseController.cs" />
     <Compile Include="Controllers\BasisSetController.cs" />
+    <Compile Include="Controllers\ClassifyController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ExitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Controllers\BaseController\ManageSystemUserController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\LibraryTextController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SalesMessageController.cs" />
     <Compile Include="Controllers\SetController.cs" />
     <Compile Include="Controllers\TestController.cs" />
@@ -232,6 +234,7 @@
     <Content Include="Images\default_Avatar.png" />
     <Content Include="Images\down.png" />
     <Content Include="Images\logo.png" />
+    <Content Include="Images\nopicture_icon.png" />
     <Content Include="Images\SelImg.jpg" />
     <Content Include="Images\sep.png" />
     <Content Include="Images\LandWaitFor.gif" />
@@ -821,6 +824,11 @@
     <Content Include="Views\Default\Advertorial.cshtml" />
     <Content Include="Views\Default\QrCode.cshtml" />
     <Content Include="Views\Default\QrCodeSkip.cshtml" />
+    <Content Include="Views\Classify\Index.cshtml" />
+    <Content Include="Views\Classify\ShowParent.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\Add.cshtml" />
+    <Content Include="Views\Product\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

@@ -57,6 +57,9 @@
   <object id="ConversationModel" type="Business.ConversationModel" parent="EFModel" singleton="false"></object>
   <object id="AppWaitImgModel" type="Business.AppWaitImgModel" parent="EFModel" singleton="false"></object>
   <object id="AppAdvertorialModel" type="Business.AppAdvertorialModel" parent="EFModel" singleton="false"></object>
+  <object id="ClassifyModel" type="Business.ClassifyModel" parent="EFModel" singleton="false"></object>
+  <object id="ProductModel" type="Business.ProductModel" parent="EFModel" singleton="false"></object>
+  
 
   <object id="Push_IOS" type="Business.Push_IOS" singleton="false">
   </object>

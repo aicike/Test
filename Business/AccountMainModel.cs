@@ -122,6 +122,10 @@ namespace Business
                 {
                     throw ex;
                 }
+
+                string sql =string.Format("INSERT INTO dbo.Role ( SystemStatus, NAME,IsCanDelete,Token,AccountMainID ) VALUES  ( 0,'管理员',0,'AccountAdmin',{0})"
+                           + " insert into classify(SystemStatus,AccountMainID,Name,ParentID,[Level],sort,Subordinate) values(0,{0},'{1}',0,0,0,0)", accountMain.ID,accountMain.Name);
+                base.SqlExecute(sql);
             }
             return result;
         }
