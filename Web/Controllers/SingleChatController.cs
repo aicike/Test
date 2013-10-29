@@ -172,14 +172,9 @@ namespace Web.Controllers
                                     subImageText.Add(rep_it);
                                 }
                                 np.Subcontent = Newtonsoft.Json.JsonConvert.SerializeObject(subImageText);
-                            }
-                           
+                            }                           
                         }
-
-
                     }
-
-
                     msg.AddChild(np);
                     Connection.Send(msg);
                     Presence p = new Presence();

@@ -21,5 +21,10 @@ namespace Poco.WebAPI_Poco
         /// ImagePath
         /// </summary>
         public string I { get; set; }
+
+        /// <summary>
+        /// FileLength
+        /// </summary>
+        public string L { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using Poco;
 using Injection;
 using Interface;
 using Poco.WebAPI_Poco;
+using Poco.Enum;
 
 namespace Web.Controllers
 {
@@ -34,7 +35,7 @@ namespace Web.Controllers
                 {
                     App_ImageText app = new App_ImageText();
                     app.ID = item.ID;
-                    app.I = SystemConst.WebUrlIP + Url.Content(item.ImagePath); 
+                    app.I = SystemConst.WebUrlIP + Url.Content(item.ImagePath);
                     app.T = item.Title;
                     app.S = item.Summary;
                     app.C = item.Content;
@@ -53,7 +54,8 @@ namespace Web.Controllers
                         }
                         app.Sub = appSubList;
                     }
-                    else {
+                    else
+                    {
                         app.Sub = new List<App_ImageText>();
                     }
                     appList.Add(app);
@@ -102,6 +104,7 @@ namespace Web.Controllers
                     app.ID = item.ID;
                     app.I = SystemConst.WebUrlIP + Url.Content(item.FilePath);
                     app.T = item.FileName;
+                    app.L = item.FileLength;
                     appList.Add(app);
                 }
             }
@@ -114,7 +117,7 @@ namespace Web.Controllers
         /// <param name="amid">AccountMainID</param>
         public string GetLibraryVideo(int amid)
         {
-            var libraryVideoModel = Factory.Get<ILibraryVoiceModel>(SystemConst.IOC_Model.LibraryVideoModel);
+            var libraryVideoModel = Factory.Get<ILibraryVideoModel>(SystemConst.IOC_Model.LibraryVideoModel);
             var list = libraryVideoModel.GetLibraryList(amid).ToList();
             List<App_Video> appList = new List<App_Video>();
             if (list != null)
@@ -125,6 +128,7 @@ namespace Web.Controllers
                     app.ID = item.ID;
                     app.I = SystemConst.WebUrlIP + Url.Content(item.FilePath);
                     app.T = item.FileName;
+                    app.L = item.FileLength;
                     appList.Add(app);
                 }
             }
@@ -138,7 +142,7 @@ namespace Web.Controllers
         /// <param name="ID">显示开始ID 第一次打开传0</param>
         /// <param name="ListCnt">返回列表的条数</param>
         /// <returns></returns>
-        public string GetAdvertorialList(int AMID ,int ID,int ListCnt)
+        public string GetAdvertorialList(int AMID, int ID, int ListCnt)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             var list = AppAdvertorialModel.GetList(AMID);
@@ -147,15 +151,15 @@ namespace Web.Controllers
             if (ID == 0)
             {
                 RtitleImg = list.Where(a => a.stick == 1).ToPagedList(1, 5);
-                RListImg = list.Where(a => a.stick == 0 ).ToPagedList(1, ListCnt);
+                RListImg = list.Where(a => a.stick == 0).ToPagedList(1, ListCnt);
             }
             else
-            { 
+            {
                 RListImg = list.Where(a => a.stick == 0 && a.ID < ID).ToPagedList(1, ListCnt);
             }
 
-              
-            
+
+
             List<_B_Advertorial> TitleShow = new List<_B_Advertorial>();
             if (RtitleImg != null)
             {
@@ -182,7 +186,7 @@ namespace Web.Controllers
                     ListShow.Add(ADVERTORIAL);
                 }
             }
-           
+
             var jsonStr = new { TitleImg = TitleShow, List = ListShow };
 
             return Newtonsoft.Json.JsonConvert.SerializeObject(jsonStr);
@@ -206,7 +210,7 @@ namespace Web.Controllers
             ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(Info.MainImagPath);
             ADVERTORIAL.C = Info.Content;
 
-            return Newtonsoft.Json.JsonConvert.SerializeObject(ADVERTORIAL); ;
+            return Newtonsoft.Json.JsonConvert.SerializeObject(ADVERTORIAL);
         }
 
         /// <summary>
@@ -222,6 +226,21 @@ namespace Web.Controllers
                 return SystemConst.WebUrlIP + Url.Content(waitimg.ImgPath);
             }
             return "";
+        }
+
+        /// <summary>
+        /// 检查更新
+        /// </summary>
+        /// <param name="type">IOS=0,Android=1,</param>
+        /// <param name="amid"></param>
+        /// <param name="version"></param>
+        /// <returns>1:有更新 0:无更新</returns>
+        public string CheckAppVersion(int type, int amid, string version)
+        {
+            var accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
+            var osType = (EnumClientSystemType)type;
+            var versionInfo = accountMainModel.CheckAppVersion(osType, amid, version);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(versionInfo);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using Poco;
 using System.Web;
 using Poco.Enum;
+using Poco.WebAPI_Poco;
 
 namespace Interface
 {
@@ -35,5 +36,7 @@ namespace Interface
         double GetFileLimitUseInfo(int accountMainID);
 
         AccountMainLibraryInfo GetAccountMainLibraryInfo(int accountMainID);
+
+        AppVersionInfo CheckAppVersion(EnumClientSystemType type, int amid, string version);
     }
 }

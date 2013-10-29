@@ -78,13 +78,21 @@ namespace Web.Controllers
 
         #endregion
 
-
+        /// <summary>
+        /// 可能没用到
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
         public ActionResult QrCode(int AMID)
         {
             ViewBag.AMID = AMID;
             return View();
         }
 
+        /// <summary>
+        /// 二维码
+        /// </summary>
+        /// <param name="AMID"></param>
         public void CreateQrCode(int AMID)
         {
             QrCodeModel model = new QrCodeModel();

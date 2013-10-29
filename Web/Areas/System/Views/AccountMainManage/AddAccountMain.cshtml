@@ -163,6 +163,16 @@
                     <td>例：http://www.xxx.com <br />@Html.ValidationMessageFor(a => a.IOSDownloadPath)
                     </td>
                 </tr>
+                 <tr>
+                    <td>
+                        IOS App版本号：
+                    </td>
+                    <td>
+                         @Html.TextBoxFor(a => a.IOSVersion)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.IOSVersion)
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         Android安装文件：
@@ -173,6 +183,16 @@
                         
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.AndroidDownloadPath)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Android App版本号：
+                    </td>
+                    <td>
+                         @Html.TextBoxFor(a => a.AndroidVersion)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AndroidVersion)
                     </td>
                 </tr>
             </table>

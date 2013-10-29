@@ -76,6 +76,7 @@
     <Compile Include="UnreadMessage.cs" />
     <Compile Include="Validation\AllowCheckPermissionsAttribute.cs" />
     <Compile Include="AppUpdate.cs" />
+    <Compile Include="WebAPI_Poco\AppVersionInfo.cs" />
     <Compile Include="WebAPI_Poco\App_Account.cs" />
     <Compile Include="WebAPI_Poco\App_AccountMainHouse.cs" />
     <Compile Include="WebAPI_Poco\App_AutoMessage.cs" />

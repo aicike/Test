@@ -216,8 +216,6 @@
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\userStyle.css" />
-    <Content Include="Download\1\android.jpg" />
-    <Content Include="Download\1\ios.jpg" />
     <Content Include="File\LoginPageShow\Client\3.jpg" />
     <Content Include="File\LoginPageShow\Client\5.jpg" />
     <Content Include="File\LoginPageShow\Client\6.jpg" />
@@ -550,6 +548,7 @@
   <ItemGroup>
     <Folder Include="Areas\System\Models\" />
     <Folder Include="Areas\System\Views\Shared\" />
+    <Folder Include="Download\1\" />
     <Folder Include="File\1\Account\" />
     <Folder Include="File\1\Base\" />
     <Folder Include="File\1\FileLibrary\" />
@@ -779,6 +778,7 @@
   <ItemGroup>
     <Content Include="Areas\System\Views\SystemUser\Add.cshtml" />
     <Content Include="Areas\System\Views\SystemUser\Edit.cshtml" />
+    <None Include="Download\BuyAHouse.apk" />
     <None Include="Scripts\nivoSlider\dark\.DS_Store" />
     <Content Include="ueditor\net\imageUp_Advertorial.ashx" />
     <None Include="video-js\font\vjs.eot" />

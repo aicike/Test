@@ -108,6 +108,14 @@ namespace Poco
         [Display(Name = "Android下载地址")]
         public string AndroidDownloadPath { get; set; }
 
+        [Display(Name = "Android版本")]
+        [RegularExpression(@"^\d{1,3}.\d.\d$", ErrorMessage = "版本号格式：x.x.x")]
+        public string AndroidVersion { get; set; }
+
+        [Display(Name = "IOS版本")]
+        [RegularExpression(@"^\d{1,3}.\d.\d$", ErrorMessage = "版本号格式：x.x.x")]
+        public string IOSVersion { get; set; }
+
         /// <summary>
         /// 数据更新信息
         /// </summary>
@@ -124,6 +132,8 @@ namespace Poco
         /// 创建时间
         /// </summary>
         public DateTime CreateTime { get; set; }
+
+
 
         public virtual ICollection<LibraryText> LibraryTexts { get; set; }
 

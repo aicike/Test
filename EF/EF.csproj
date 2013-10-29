@@ -64,6 +64,10 @@
     <Compile Include="Migrations\201310231006159_initial.Designer.cs">
       <DependentUpon>201310231006159_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201310250732348_AndroidVersion.cs" />
+    <Compile Include="Migrations\201310250732348_AndroidVersion.Designer.cs">
+      <DependentUpon>201310250732348_AndroidVersion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -84,6 +88,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201310231006159_initial.resx">
       <DependentUpon>201310231006159_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201310250732348_AndroidVersion.resx">
+      <DependentUpon>201310250732348_AndroidVersion.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

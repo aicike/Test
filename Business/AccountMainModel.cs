@@ -10,6 +10,7 @@ using Injection;
 using Poco.Enum;
 using Common;
 using Injection.Transaction;
+using Poco.WebAPI_Poco;
 
 namespace Business
 {
@@ -113,7 +114,7 @@ namespace Business
                         var Downpath = string.Format("~/Download/{0}", accountMain.ID);
                         var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidPathFile.FileName);
                         AndroidPathFile.SaveAs(androidPathDown);
-                        
+
                         accountMain.AndroidDownloadPath = Downpath2;
                     }
                     result = Edit(accountMain);
@@ -404,6 +405,52 @@ namespace Business
                 return entity;
             }
             return null;
+        }
+
+        public AppVersionInfo CheckAppVersion(EnumClientSystemType type, int amid, string version)
+        {
+            var accountMain = Get(amid);
+            AppVersionInfo versionInfo = new AppVersionInfo();
+            versionInfo.HasNewVersion = false;
+            string appName = null;
+            string v = null;
+            if (accountMain != null)
+            {
+                switch (type)
+                {
+                    case EnumClientSystemType.IOS:
+                        v = accountMain.IOSVersion;
+
+                        break;
+                    case EnumClientSystemType.Android:
+                        v = accountMain.AndroidVersion;
+                        if (string.IsNullOrEmpty(accountMain.AndroidDownloadPath) == false)
+                        {
+                            versionInfo.VersionCode = accountMain.AndroidVersion;
+                            appName = accountMain.AndroidDownloadPath.Substring(accountMain.AndroidDownloadPath.LastIndexOf('_')+1);
+                            appName = appName.Substring(0, appName.LastIndexOf('.')) + versionInfo.VersionCode + ".apk";
+                            string path = (accountMain.AndroidDownloadPath.Replace("~", ""));
+                            path = path.Substring(0, path.LastIndexOf('/')+1) + appName;
+                            versionInfo.AppPath = SystemConst.WebUrlIP + (accountMain.AndroidDownloadPath.Replace("~", ""));
+                            versionInfo.AppName = appName;
+                        }
+                        break;
+                }
+            }
+            int rawNum = 0;
+            int appNum = 0;
+            if (string.IsNullOrEmpty(v) == false)
+            {
+                rawNum = Convert.ToInt32(v.Replace(".", ""));
+            } if (string.IsNullOrEmpty(version) == false)
+            {
+                appNum = Convert.ToInt32(version.Replace(".", ""));
+            }
+            if (rawNum > appNum)
+            {
+                versionInfo.HasNewVersion = true;
+            }
+            return versionInfo;
         }
     }
 }

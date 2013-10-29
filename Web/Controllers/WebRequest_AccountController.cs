@@ -8,6 +8,7 @@ using Interface;
 using Poco;
 using Poco.WebAPI_Poco;
 using Poco.Enum;
+using Common;
 
 namespace Web.Controllers
 {
@@ -34,10 +35,75 @@ namespace Web.Controllers
                     ID = account.ID,
                     Name = account.Name,
                     HeadImagePath = hostUrl + Url.Content(account.HeadImagePath),
+                    Phone = account.Phone,
                     Email = account.Email,
                     Pwd = pwd
                 }
             };
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+        /// <summary>
+        /// 根据ID获取售楼部账号信息
+        /// </summary>
+        /// <param name="aid"></param>
+        /// <returns></returns>
+        public string GetAccountLogin(int aid)
+        {
+            var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
+            var account = accountModel.Get(aid);
+            Result result = new Result()
+            {
+                Entity = new App_Account()
+                {
+                    ID = account.ID,
+                    Name = account.Name,
+                    HeadImagePath = SystemConst.WebUrlIP + Url.Content(account.HeadImagePath),
+                    Phone=account.Phone,
+                    Email = account.Email,
+                    Pwd = account.LoginPwd
+                }
+            };
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+        /// <summary>
+        /// 修改售楼部账号信息
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="field"></param>
+        /// <param name="value"></param>
+        public string SetAccountInfo(int aid, string field, string value)
+        {
+            Result result = new Result();
+            var um = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
+            var account = um.Get(aid);
+            if (account == null)
+            {
+                result.Error = "请求错误，账号不存在或不可用。";
+                return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            }
+            switch (field)
+            {
+                case "name":
+                    account.Name = value;
+                    break;
+                case "phone":
+                    account.Phone = value;
+                    break;
+                case "email":
+                    account.Email = value;
+                    break;
+                case "pwd":
+                    account.LoginPwd = DESEncrypt.Encrypt(value);
+                    break;
+                case "headimg":
+                    account.HeadImagePath = value;
+                    break;
+            }
+            account.LoginPwdPage = "000000";
+            account.LoginPwdPageCompare = "000000";
+            result = um.Edit(account);
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
@@ -58,8 +124,8 @@ namespace Web.Controllers
                         ID = item.ID,
                         Name = item.UserLoginInfo.Name,
                         NameNote = item.Name,
-                        HeadImagePath = string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrlIP + Url.Content(item.UserLoginInfo.HeadImagePath.DefaultHeadImage())) : (SystemConst.WebUrlIP +Url.Content(item.UserLoginInfo.HeadImagePath)),
-                        GN=item.Account_Users.FirstOrDefault().Group.GroupName
+                        HeadImagePath = string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrlIP + Url.Content(item.UserLoginInfo.HeadImagePath.DefaultHeadImage())) : (SystemConst.WebUrlIP + Url.Content(item.UserLoginInfo.HeadImagePath)),
+                        GN = item.Account_Users.FirstOrDefault().Group.GroupName
                     });
                 }
             }
@@ -91,7 +157,7 @@ namespace Web.Controllers
                             Name = a.User.UserLoginInfo.Name,
                             NameNote = a.User.Name,
                             HeadImagePath = string.IsNullOrEmpty(a.User.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrlIP + Url.Content(a.User.UserLoginInfo.HeadImagePath.DefaultHeadImage())) : a.User.UserLoginInfo.HeadImagePath,
-                            GN=item.GroupName
+                            GN = item.GroupName
                         }).ToList()
                     });
                 }
