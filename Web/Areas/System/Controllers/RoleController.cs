@@ -12,16 +12,18 @@ namespace Web.Areas.System.Controllers
 {
     public class RoleController : ManageSystemUserController
     {
-        public ActionResult Index(int? id)
+        public ActionResult Index(int AccountMainID,int? id)
         {
+            ViewBag.AccountMainID = AccountMainID;
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
-            var list = roleModel.List().ToPagedList(id??1 , 15);
+            var list = roleModel.GetListByAMID(AccountMainID).ToPagedList(id??1 , 15);
             return View(list);
         }
 
         [HttpGet]
-        public ActionResult Add()
+        public ActionResult Add(int AccountMainID)
         {
+            ViewBag.AccountMainID = AccountMainID;
             return View();
         }
 
@@ -35,7 +37,7 @@ namespace Web.Areas.System.Controllers
             {
                 return Alert(new Dialog(result.Error));
             }
-            return JavaScript("window.location.href='" + Url.Action("Index", "Role", new { Area = "System" }) + "'");
+            return JavaScript("window.location.href='" + Url.Action("Index", "Role", new { Area = "System",AccountMainID = role.AccountMainID }) + "'");
         }
 
         [HttpGet]
@@ -56,11 +58,11 @@ namespace Web.Areas.System.Controllers
             {
                 return Alert(new Dialog(result.Error));
             }
-            return JavaScript("window.location.href='" + Url.Action("Index", "Role", new { Area = "System" }) + "'");
+            return JavaScript("window.location.href='" + Url.Action("Index", "Role", new { Area = "System", AccountMainID = role.AccountMainID }) + "'");
         }
 
         [AllowCheckPermissions(false)]
-        public string IsCanFindByUser(int id, bool value)
+        public string IsCanFindByUser(int id, bool value,int AccountMainID)
         {
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             var result = roleModel.IsCanFindByUser(id, value);
@@ -68,10 +70,10 @@ namespace Web.Areas.System.Controllers
             {
                 return AlertJS_NoTag(new Dialog(result.Error));
             }
-            return "window.location.href='" + Url.Action("Index", "Role", new { Area = "System" }) + "'";
+            return "window.location.href='" + Url.Action("Index", "Role", new { Area = "System", AccountMainID = AccountMainID }) + "'";
         }
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id,int AccountMainID)
         {
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             var result = roleModel.Delete(id);
@@ -79,11 +81,12 @@ namespace Web.Areas.System.Controllers
             {
                 return Alert(new Dialog(result.Error));
             }
-            return JavaScript("window.location.href='" + Url.Action("Index", "Role", new { Area = "System" }) + "'");
+            return JavaScript("window.location.href='" + Url.Action("Index", "Role", new { Area = "System", AccountMainID = AccountMainID }) + "'");
         }
 
-        public ActionResult Permission(int id)
+        public ActionResult Permission(int id, int AccountMainID)
         {
+            ViewBag.AccountMainID = AccountMainID;
             IMenuModel menuModel = Factory.Get<IMenuModel>(SystemConst.IOC_Model.MenuModel);
             var menus = menuModel.List_Cache().Where(a => a.ParentMenuID.HasValue == false).OrderBy(a => a.Order).ToList();
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
@@ -96,12 +99,12 @@ namespace Web.Areas.System.Controllers
             IMenuOptionModel menuOptionModel = Factory.Get<IMenuOptionModel>(SystemConst.IOC_Model.MenuOptionModel);
             var currentRoleOptionList = menuOptionModel.GetAllOptionByRoleID(id).Select(a => a.ID).ToList();
             ViewBag.CurrentRoleOptionList = currentRoleOptionList;
-            ViewBag.RawUrl = Url.Action("Index", "Role", new { Area = "System" });
+            ViewBag.RawUrl = Url.Action("Index", "Role", new { Area = "System", AccountMainID = AccountMainID });
             return View(menus);
         }
 
         [HttpPost]
-        public ActionResult Permission()
+        public ActionResult Permission(int AccountMainID)
         {
             var roleID = Convert.ToInt32(Request["hidRoleID"]);
 
@@ -128,7 +131,7 @@ namespace Web.Areas.System.Controllers
             {
                 return Alert(new Dialog(ex.Message));
             }
-            return Content(AlertJS(new Dialog("绑定成功。", Url.Action("Permission", "Role", new { Area = "System", id = roleID }))));
+            return Content(AlertJS(new Dialog("绑定成功。", Url.Action("Permission", "Role", new { Area = "System", id = roleID, AccountMainID = AccountMainID }))));
         }
     }
 }

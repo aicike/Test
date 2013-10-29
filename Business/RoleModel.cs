@@ -11,9 +11,14 @@ namespace Business
 {
     public class RoleModel : BaseModel<Role>, IRoleModel
     {
+        public int GetRoleIscandelete(int AcountMainID)
+        {
+            return List().Where(a => a.AccountMainID == AcountMainID && a.IsCanDelete == false).FirstOrDefault().ID;
+        }
+
         public List<Role> GetRoleList(int? accountMainID)
         {
-            List<Role> list = List().Where(a=> a.IsCanDelete).ToList();
+            List<Role> list = List().Where(a=> a.IsCanDelete&&a.AccountMainID==accountMainID).ToList();
             if (accountMainID != null && accountMainID.HasValue)
             {
                 foreach (var item in list)
@@ -27,7 +32,7 @@ namespace Business
 
         public List<Role> GetRoleListNoaID(int accountMainID, int AccountID)
         {
-            List<Role> list = List().Where(a => a.IsCanDelete).ToList();
+            List<Role> list = List().Where(a => a.IsCanDelete&&a.AccountMainID==accountMainID).ToList();
 
             foreach (var item in list)
             {
@@ -40,7 +45,7 @@ namespace Business
 
         public List<Role> GetRoleListAll(int? accountMainID)
         {
-            List<Role> list = List().ToList();
+            List<Role> list = List().Where(a=>a.AccountMainID == accountMainID).ToList();
             if (accountMainID != null && accountMainID.HasValue)
             {
                 foreach (var item in list)
@@ -56,6 +61,12 @@ namespace Business
         {
             return base.List().OrderBy(a => a.ID);
         }
+
+        public IQueryable<Role> GetListByAMID(int AccountMainID)
+        {
+            return base.List().Where(a => a.AccountMainID == AccountMainID).OrderBy(a => a.ID);
+        }
+
 
         [Transaction]
         public new Result Delete(int id)

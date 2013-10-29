@@ -73,6 +73,8 @@ namespace Poco
             public const string Account = "Account";
             public const string HousesMange = "HousesMange";
             public const string Set = "Set";
+            public const string Classify = "Classify";
+            public const string Product = "Product";
         }
 
         public class IOC_Model
@@ -130,6 +132,8 @@ namespace Poco
 
             public const string AppAdvertorialModel = "AppAdvertorialModel";
             public const string AppWaitImgModel = "AppWaitImgModel";
+            public const string ClassifyModle = "ClassifyModel";
+            public const string ProductModel = "ProductModel";
         }
     }
 }

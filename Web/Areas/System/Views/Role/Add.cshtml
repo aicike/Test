@@ -4,6 +4,13 @@
     ViewBag.Menu = Poco.SystemConst.Menu.Role;
 }
 @section head{
+    <script>
+        $(function () {
+
+            $("#AccountMainID").val("@ViewBag.AccountMainID");
+        });    
+    </script>
+
 }
 @model Poco.Role
 <div class="title">
@@ -18,7 +25,7 @@
                     <td class="tdTitle">
                         名称
                     </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.Name)
+                    <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.AccountMainID)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Name)
                     </td>

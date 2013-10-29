@@ -147,7 +147,7 @@
                 </tr>
                 <tr>
                     <td>
-                        售楼地址：
+                        地址：
                     </td>
                     <td>@Html.TextBoxFor(a => a.SaleAddress)
                     </td>
@@ -156,11 +156,12 @@
                 </tr>
                 <tr>
                     <td>
-                        IOS下载地址：
+                        IOS下载地址： <br />
+                        例：http://www.xxx.com
                     </td>
                     <td>@Html.TextBoxFor(a => a.IOSDownloadPath)
                     </td>
-                    <td>例：http://www.xxx.com <br />@Html.ValidationMessageFor(a => a.IOSDownloadPath)
+                    <td>@Html.ValidationMessageFor(a => a.IOSDownloadPath)
                     </td>
                 </tr>
                  <tr>

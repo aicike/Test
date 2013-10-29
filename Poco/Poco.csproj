@@ -59,6 +59,7 @@
     <Compile Include="AppAdvertorial.cs" />
     <Compile Include="AppWaitImg.cs" />
     <Compile Include="AutoMessage_User.cs" />
+    <Compile Include="Classify.cs" />
     <Compile Include="Conversation.cs" />
     <Compile Include="Enum\EnumBuildingType.cs" />
     <Compile Include="Enum\EnumConversationType.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Enum\EnumReceiveStatus.cs" />
     <Compile Include="NewsProtocol.cs" />
     <Compile Include="PendingMessages.cs" />
+    <Compile Include="Product.cs" />
     <Compile Include="PushMsg.cs" />
     <Compile Include="PushMsgDetail.cs" />
     <Compile Include="TemporayInstantMes.cs" />
@@ -85,10 +87,10 @@
     <Compile Include="WebAPI_Poco\App_Group.cs" />
     <Compile Include="WebAPI_Poco\App_HistoryChat.cs" />
     <Compile Include="WebAPI_Poco\App_Chat.cs" />
+    <Compile Include="WebAPI_Poco\App_Image.cs" />
     <Compile Include="WebAPI_Poco\App_ImageText.cs" />
     <Compile Include="WebAPI_Poco\App_User.cs" />
     <Compile Include="WebAPI_Poco\App_UserLoginInfo.cs" />
-    <Compile Include="WebAPI_Poco\App_Image.cs" />
     <Compile Include="WebAPI_Poco\App_Voice.cs" />
     <Compile Include="WebAPI_Poco\App_Video.cs" />
     <Compile Include="_B_Advertorial.cs" />

@@ -5,7 +5,7 @@
 }
 @model PagedList<Poco.AccountMain>
 <div class="title">
-    售楼部管理</div>
+    项目管理</div>
 <div class="body">
     <div class="option">@Html.ActionLink("添加", "AddAccountMain", "AccountMainManage", new { Area = "System" }, null, true)</div>
     <table class="tableList" cellpadding="0" cellspacing="0">
@@ -91,10 +91,12 @@
                         }, true, true)
                     }
                 </td>
-                <td class="operation">
+                <td class="operation" style=" line-height:20px">
                     @Html.ActionLink("详细", "ViewAccountMain", "AccountMainManage", new { Area = "System", id = item.ID }, null,true)
                     @Html.ActionLink("修改", "EditAccountMain", "AccountMainManage", new { Area = "System", id = item.ID }, null, true)
                     @Ajax.ActionLink("删除", "DeleteAccountMain", "AccountMainManage", new { Area = "System", id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("DeleteAccountMain", "AccountMainManage", new { Area = "System", id = item.ID }) + "',null)" }, true)
+                    <br />
+                    @Html.ActionLink("角色管理", "Index", "Role", new { Area = "System",AccountMainID=item.ID }, null, true)
                     @Html.ActionLink("账号管理", "Index", "AccountManage", new { Area = "System", accountMainId = item.ID }, null, true)
                 </td>
             </tr>

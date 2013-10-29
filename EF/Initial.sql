@@ -4,18 +4,18 @@ alter table[User] add default (getdate()) for CreateDate
 alter table[Account_User] add default (getdate()) for CreateDate 
 
 -----------------------------Role--------------------------
-INSERT INTO dbo.Role ( SystemStatus, NAME,IsCanDelete,Token ) VALUES  ( 0,'管理员',0,'AccountAdmin')
+--INSERT INTO dbo.Role ( SystemStatus, NAME,IsCanDelete,Token ) VALUES  ( 0,'管理员',0,'AccountAdmin')
 --INSERT INTO dbo.Role ( SystemStatus, Name,IsCanDelete,IsCanFindByUser  ) VALUES  ( 0,'销售经理',1,1)
 --INSERT INTO dbo.Role ( SystemStatus, NAME,ParentRoleID,IsCanDelete,IsCanFindByUser  ) VALUES  ( 0,'销售代表',1,1,1)
 
 -----------------------------SystemUserMenu--------------------------
 SET IDENTITY_INSERT [dbo].SystemUserMenu ON
 INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 1,0,'首页','System','SystemUserHome','Index',1,NULL)
-INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 2,0,'售楼部管理','System','AccountMainManage','Index',2,NULL)
-INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 3,0,'售楼部角色管理','System','Role','Index',3,NULL)
-INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 4,0,'系统账号管理','System','SystemUser','Index',4,NULL)
-INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 5,0,'系统角色管理','System','SystemUserRole','Index',5,NULL)
-INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 6,0,'售楼部账号管理','System','AccountManage','Index',1,2)
+INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 2,0,'项目管理','System','AccountMainManage','Index',2,NULL)
+INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 3,0,'角色管理','System','Role','Index',1,2)
+INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 4,0,'系统账号管理','System','SystemUser','Index',3,NULL)
+INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 5,0,'系统角色管理','System','SystemUserRole','Index',4,NULL)
+INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 6,0,'账号管理','System','AccountManage','Index',2,2)
 --INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 7,0,'设置','System','SystemSet','Index',6,NULL)
 SET IDENTITY_INSERT [dbo].SystemUserMenu OFF
 
@@ -197,6 +197,8 @@ INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (21, 0, N'App动态软文', NULL, N'AppAdvertorial', N'Index', 4, 11)
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (22, 0, N'App等待画面', NULL, N'AppWaitImg', N'Index', 5, 11)
 
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (23, 0, N'类别管理', NULL, N'Classify', N'Index', 4, NULL)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (24, 0, N'产品管理', NULL, N'Product', N'Index', 4, NULL)
 SET IDENTITY_INSERT [dbo].[Menu] OFF
 
 -----------------------------[MenuOption]--------------------------
@@ -287,6 +289,15 @@ INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  (
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,21,'修改软文','Edit',3)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,21,'删除软文','Delete',4)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,22,'App等待画面','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,23,'分类列表','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,23,'添加分类','Add',2)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,23,'修改分类','Edit',3)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,23,'删除分类','Delete',4)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,24,'产品列表','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,24,'添加产品','Add',2)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,24,'修改产品','Edit',3)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,24,'删除产品','Delete',4)
+
 -----------------------------RoleMenu--------------------------
 --SET IDENTITY_INSERT [dbo].[RoleMenu] ON
 --INSERT [dbo].[RoleMenu] ([ID], [SystemStatus], [RoleID], [MenuID]) VALUES (1, 0, 1, 1)

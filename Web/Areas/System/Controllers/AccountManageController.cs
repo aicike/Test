@@ -23,6 +23,9 @@ namespace Web.Areas.System.Controllers
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             var roleList = roleModel.GetRoleListAll(accountMainId);
             ViewBag.RoleList = roleList;
+
+            int roleshowID = roleList.Where(a => a.IsCanDelete == false).FirstOrDefault().ID;
+
             //项目信息
             var entity = accountMainModel.Get(accountMainId);
             ViewBag.AccountMain = entity;
@@ -40,7 +43,7 @@ namespace Web.Areas.System.Controllers
                 accountList = accountAdminIquery;
             }
             var pageList = accountList.ToPagedList(id ?? 1, 15);
-            ViewBag.RoleID = roleID.HasValue ? roleID.Value : 1;
+            ViewBag.RoleID = roleID.HasValue ? roleID.Value : roleshowID;
             ViewBag.AccountAdminList = accountAdminIquery.ToList();
             return View(pageList);
         }
@@ -50,7 +53,7 @@ namespace Web.Areas.System.Controllers
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             accountMainModel.CheckHasPermissions(LoginSystemUser.ID, accountMainId).NotAuthorizedPage();
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
-            var roles = roleModel.GetRoleListAll(null);
+            var roles = roleModel.GetRoleListAll(accountMainId);
             var selectListRoles = new SelectList(roles, "ID", "Name");
             List<SelectListItem> newRolesList = new List<SelectListItem>();
             newRolesList.Add(new SelectListItem { Text = "请选择", Value = "select", Selected = true });
@@ -66,7 +69,11 @@ namespace Web.Areas.System.Controllers
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             accountMainModel.CheckHasPermissions(LoginSystemUser.ID, account_accountMain.AccountMainID).NotAuthorizedPage();
             var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
-            if (account_accountMain.Account.RoleID == 1)
+            //获取项目管理员角色ID
+            IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
+            int sysRoleID = roleModel.GetRoleIscandelete(account_accountMain.AccountMainID);
+
+            if (account_accountMain.Account.RoleID == sysRoleID)
             {
                 if (account_accountMainModel.CheckIsExistAccountAdmin(account_accountMain.AccountMainID, null))
                 {
@@ -113,7 +120,7 @@ namespace Web.Areas.System.Controllers
             var entity = model.Get(accountID);
 
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
-            var roles = roleModel.GetRoleListAll(null);
+            var roles = roleModel.GetRoleListAll(accountMainID);
             var selectListRoles = new SelectList(roles, "ID", "Name");
             List<SelectListItem> newRolesList = new List<SelectListItem>();
             newRolesList.Add(new SelectListItem { Text = "请选择", Value = "select", Selected = true });
@@ -128,7 +135,11 @@ namespace Web.Areas.System.Controllers
         {
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             accountMainModel.CheckHasPermissions(LoginSystemUser.ID, accountMainId).NotAuthorizedPage();
-            if (account.RoleID == 1)
+
+            //获取项目管理员角色ID
+            IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
+            int sysRoleID = roleModel.GetRoleIscandelete(accountMainId);
+            if (account.RoleID == sysRoleID)
             {
                 var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
                 if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainId, account.ID))
@@ -138,8 +149,10 @@ namespace Web.Areas.System.Controllers
             }
 
 
+            account.LoginPwdPage = "aaaaaa";
+            account.LoginPwdPageCompare = "aaaaaa";
             IAccountModel model = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-            var result = model.SetEdit(account, accountMainId, HeadImagePathFile, x1, y1, w, h, tw, th);
+            var result = model.Edit(account, accountMainId, HeadImagePathFile, x1, y1, w, h, tw, th);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);
