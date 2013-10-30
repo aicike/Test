@@ -83,12 +83,14 @@
     <Compile Include="WebAPI_Poco\App_AccountMainHouse.cs" />
     <Compile Include="WebAPI_Poco\App_AutoMessage.cs" />
     <Compile Include="WebAPI_Poco\App_AutoMessageReplyContent.cs" />
+    <Compile Include="WebAPI_Poco\App_Class.cs" />
     <Compile Include="WebAPI_Poco\App_Coordinate.cs" />
     <Compile Include="WebAPI_Poco\App_Group.cs" />
     <Compile Include="WebAPI_Poco\App_HistoryChat.cs" />
     <Compile Include="WebAPI_Poco\App_Chat.cs" />
     <Compile Include="WebAPI_Poco\App_Image.cs" />
     <Compile Include="WebAPI_Poco\App_ImageText.cs" />
+    <Compile Include="WebAPI_Poco\App_Product.cs" />
     <Compile Include="WebAPI_Poco\App_User.cs" />
     <Compile Include="WebAPI_Poco\App_UserLoginInfo.cs" />
     <Compile Include="WebAPI_Poco\App_Voice.cs" />

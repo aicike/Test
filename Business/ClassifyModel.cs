@@ -9,7 +9,6 @@ namespace Business
 {
     public class ClassifyModel : BaseModel<Classify>, IClassifyModel
     {
-
         /// <summary>
         /// 根据上级ID 与客户ID 查询分类
         /// </summary>
@@ -62,6 +61,17 @@ namespace Business
             {
                 return true;
             }
+        }
+
+        /// <summary>
+        /// App获取一级分类列表，及分类下产品
+        /// </summary>
+        /// <param name="accountMainID"></param>
+        public List<Classify> Get1levelClass(int accountMainID)
+        {
+            var parentIDs = GetLastClass(0, accountMainID).Select(a => a.ID);
+            var list = List().Where(a =>parentIDs.Contains(a.ParentID));
+            return list.ToList();
         }
     }
 }

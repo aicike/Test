@@ -189,6 +189,7 @@
     <Compile Include="Controllers\LibraryImageTextController.cs" />
     <Compile Include="Controllers\WebRequest_ChatController.cs" />
     <Compile Include="Controllers\WebRequest_OtherController.cs" />
+    <Compile Include="Controllers\WebRequest_ProductController.cs" />
     <Compile Include="Controllers\WebRequest_UserController.cs" />
     <Compile Include="Controllers\WebRequest_AccountController.cs" />
     <Compile Include="Controllers\WebRequest_AutoMessageController.cs" />

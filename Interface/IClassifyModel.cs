@@ -19,5 +19,7 @@ namespace Interface
         int UpdClass(int PID, int ID, string Name, int AccountMainID);
 
         bool GetIsMainNode(int ID);
+
+        List<Classify> Get1levelClass(int accountMainID);
     }
 }

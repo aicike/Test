@@ -26,6 +26,7 @@ namespace Poco
         /// </summary>
         [Display(Name = "类别名称")]
         [Required(ErrorMessage = "请输入类别名称")]
+        [StringLength(20, ErrorMessage = "长度小于20")]
         public string Name { get; set; }
 
         /// <summary>
