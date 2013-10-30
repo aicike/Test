@@ -60,7 +60,7 @@
                                     { 
                                         <input type="checkbox" id="menu_@menu.ID" name="checkboxMenu" value="@menu.ID"/>
                                     }
-                                    <label for="option_@menu.ID">@menu.Name</label></span>
+                                    <label for="menu_@menu.ID">@menu.Name</label></span>
                                     <ul id="ul1">
                                         @{
                                     var options = menu.SystemUserMenuOptions.Where(a => a.SystemStatus == 0);
