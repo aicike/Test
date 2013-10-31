@@ -80,5 +80,33 @@ namespace Web.Controllers
             list.Add(new { id = (int)EnumDeliveryType.EveryDay, name = "每日送" });
             return Newtonsoft.Json.JsonConvert.SerializeObject(list);
         }
+
+        /// <summary>
+        /// 获取用户信息列表
+        /// </summary>
+        /// <param name="amid"></param>
+        /// <param name="orderUserID">最后一个orderUserInfo的id</param>
+        /// <returns></returns>
+        public string GetOrderUserInfo(int amid, int orderUserID)
+        {
+            var model = Factory.Get<IOrderUserInfoModel>(SystemConst.IOC_Model.OrderUserInfoModel);
+            var list = model.GetByAccountMainID(amid).OrderBy(a => a.ID).Where(a => a.ID > orderUserID).Select(a => new App_OrderUserInfo()
+             {
+                 ID = a.ID,
+                 ProvinceID = a.ProvinceID,
+                 Province = a.Province.Name,
+                 CityID = a.CityID,
+                 City = a.City.Name,
+                 DistrictID = a.DistrictID,
+                 District = a.District.Name,
+                 Address = a.Address,
+                 UserName = a.Receiver,
+                 UserPhone = a.RPhone,
+                 UserTelePhone = a.TelePhone
+             }).ToList();
+            return Newtonsoft.Json.JsonConvert.SerializeObject(list);
+        }
+
+
     }
 }

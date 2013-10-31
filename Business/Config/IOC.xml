@@ -60,6 +60,8 @@
   <object id="ClassifyModel" type="Business.ClassifyModel" parent="EFModel" singleton="false"></object>
   <object id="ProductModel" type="Business.ProductModel" parent="EFModel" singleton="false"></object>
   <object id="OrderMTypeModel" type="Business.OrderMTypeModel" parent="EFModel" singleton="false"></object>
+  <object id="OrderUserInfoModel" type="Business.OrderUserInfoModel" parent="EFModel" singleton="false"></object>
+  <object id="OrderModel" type="Business.OrderModel" parent="EFModel" singleton="false"></object>
 
   <object id="Push_IOS" type="Business.Push_IOS" singleton="false">
   </object>

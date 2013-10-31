@@ -195,6 +195,7 @@
     <Compile Include="Controllers\WebRequest_UserController.cs" />
     <Compile Include="Controllers\WebRequest_AccountController.cs" />
     <Compile Include="Controllers\WebRequest_AutoMessageController.cs" />
+    <Compile Include="Controllers\WebRequest_MilkController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

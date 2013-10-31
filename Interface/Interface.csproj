@@ -91,6 +91,7 @@
     <Compile Include="IRoleOptionModel.cs" />
     <Compile Include="IRoleMenuModel.cs" />
     <Compile Include="IAccount_UserModel.cs" />
+    <Compile Include="IOrderUserInfoModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Poco\Poco.csproj">

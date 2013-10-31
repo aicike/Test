@@ -19,8 +19,6 @@ namespace Poco
         /// </summary>
         public string OrderNum { get; set; }
 
-      
-
 
         /// <summary>
         /// 下单人ID
