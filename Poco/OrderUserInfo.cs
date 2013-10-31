@@ -10,6 +10,11 @@ namespace Poco
         public int ID { get; set; }
 
         public int SystemStatus { get; set; }
+
+        public int AccountMainID { get; set; }
+        public virtual AccountMain AccountMain { get; set; }
+
+
         /// <summary>
         /// 省份
         /// </summary>
