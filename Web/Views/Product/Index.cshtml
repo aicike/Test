@@ -26,6 +26,9 @@
             <th>
                 售价
             </th>
+             <th>
+                状态
+            </th>
             <th style="width: 150px;">
                 操作
             </th>
@@ -47,6 +50,20 @@
                 </td>
                 <td>
                     @item.Price
+                </td>
+                <td>
+                    @switch (item.Status)
+                    {
+                        case (int)Poco.Enum.EnumProductType.Normal:
+                            @:正常
+                            break;
+                        case (int)Poco.Enum.EnumProductType.OffShelves:
+                            @:下架
+                            break;
+                        case (int)Poco.Enum.EnumProductType.Shortages:
+                            @:缺货
+                            break;
+                    }
                 </td>
                  <td class="operation">
 

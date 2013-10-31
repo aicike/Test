@@ -175,7 +175,14 @@ namespace Poco
         public virtual ICollection<Classify> Classify { get; set; }
 
         public virtual ICollection<Product> Product { get; set; }
-        
 
+        public virtual ICollection<Order> Order { get; set; }
+
+        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
+
+        public virtual ICollection<OrderMType> OrderMType { get; set; }
+        
+        
+        
     }
 }

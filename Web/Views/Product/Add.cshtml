@@ -168,6 +168,16 @@
                     <td>
                     </td>
                 </tr>
+                <tr>
+                    <td class="tdTitle">
+                       <span class="Identification">*</span> 状态
+                    </td>
+                    <td class="tdField">
+                         @Html.DropDownListFor(a => a.Status, ViewData["Status"] as List<SelectListItem>, new { })
+                    </td>
+                    <td>
+                    </td>
+                </tr>
                  <tr>
                     <td class="tdTitle">
                         &nbsp;&nbsp; 介绍
