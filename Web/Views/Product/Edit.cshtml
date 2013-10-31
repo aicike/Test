@@ -1,5 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.Product;
 }
 @section head{
     <script src="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.js")" type="text/javascript"></script>
@@ -12,6 +13,8 @@
 
 
     $(function () {
+
+        $("#Status").val("@ViewBag.Tstatus");
 
         window.UEDITOR_HOME_URL = "/ueditor/";
         //实例化编辑器
@@ -163,6 +166,16 @@
                     </td>
                     <td class="tdField">
                         @Html.TextBoxFor(a => a.Specification)
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                 <tr>
+                    <td class="tdTitle">
+                       <span class="Identification">*</span> 状态
+                    </td>
+                    <td class="tdField">
+                         @Html.DropDownListFor(a => a.Status, ViewData["Status"] as List<SelectListItem>, new { })
                     </td>
                     <td>
                     </td>

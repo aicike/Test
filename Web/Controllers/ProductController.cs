@@ -7,6 +7,7 @@ using Controllers;
 using Poco;
 using Injection;
 using Interface;
+using Poco.Enum;
 
 namespace Web.Controllers
 {
@@ -33,6 +34,15 @@ namespace Web.Controllers
 
         public ActionResult Add()
         {
+
+            
+            List<SelectListItem> newstatus = new List<SelectListItem>();
+            newstatus.Add(new SelectListItem { Text = "正常", Value = ((int)Poco.Enum.EnumProductType.Normal).ToString(), Selected = true });
+            newstatus.Add(new SelectListItem { Text = "下架", Value = ((int)Poco.Enum.EnumProductType.OffShelves).ToString() });
+            newstatus.Add(new SelectListItem { Text = "缺货", Value = ((int)Poco.Enum.EnumProductType.Shortages).ToString() });
+
+            ViewData["Status"] = newstatus;
+
             ViewBag.HostName = LoginAccount.HostName;
 
             string WebTitleRemark = SystemConst.WebTitleRemark;
@@ -63,6 +73,14 @@ namespace Web.Controllers
         {
             var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
             var product = productModel.Get(id);
+
+            List<SelectListItem> newstatus = new List<SelectListItem>();
+            newstatus.Add(new SelectListItem { Text = "正常", Value = ((int)Poco.Enum.EnumProductType.Normal).ToString(), Selected = true });
+            newstatus.Add(new SelectListItem { Text = "下架", Value = ((int)Poco.Enum.EnumProductType.OffShelves).ToString() });
+            newstatus.Add(new SelectListItem { Text = "缺货", Value = ((int)Poco.Enum.EnumProductType.Shortages).ToString() });
+
+            ViewData["Status"] = newstatus;
+            ViewData["Tstatus"] = product.Status;
 
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "产品管理 - 修改产品", LoginAccount.CurrentAccountMainName, WebTitleRemark);

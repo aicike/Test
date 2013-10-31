@@ -35,6 +35,10 @@ namespace Poco
 
         [Display(Name = "操作日期")]
         public string LastSetDate { get; set; }
+
+        [Display(Name = "产品状态")]
+        public int Status { get; set; }
+
         //类别
         [Required(ErrorMessage = "请选择类别")]
         public int ClassifyID { get; set; }
@@ -48,6 +52,10 @@ namespace Poco
         public string file5 { get; set; }
         public string file6 { get; set; }
         public string file7 { get; set; }
+
+
+
+        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
 
     }
 }

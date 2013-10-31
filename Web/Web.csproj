@@ -177,6 +177,8 @@
     <Compile Include="Controllers\BaseController\ManageSystemUserController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\LibraryTextController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\OrderMTypeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SalesMessageController.cs" />
     <Compile Include="Controllers\SetController.cs" />
@@ -829,6 +831,9 @@
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\Add.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
+    <Content Include="Views\OrderMType\Index.cshtml" />
+    <Content Include="Views\OrderMType\Add.cshtml" />
+    <Content Include="Views\OrderMType\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

@@ -34,6 +34,7 @@ namespace EF
         public DbSet<ClientInfo> ClientInfo { get; set; }
         public DbSet<Keyword> Keyword { get; set; }
         public DbSet<Conversation> Conversation { get; set; }
+        public DbSet<OrderMType> OrderMType { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

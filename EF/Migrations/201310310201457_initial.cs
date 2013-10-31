@@ -124,6 +124,124 @@ namespace EF.Migrations
                 .Index(t => t.CityID);
             
             CreateTable(
+                "dbo.Order",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        AccountMainID = c.Int(nullable: false),
+                        OrderNum = c.String(),
+                        OrderUserID = c.Int(nullable: false),
+                        OrderUserType = c.Int(nullable: false),
+                        OrderDate = c.DateTime(nullable: false),
+                        BeginDate = c.DateTime(nullable: false),
+                        EndDate = c.DateTime(nullable: false),
+                        ProvinceID = c.Int(nullable: false),
+                        CityID = c.Int(nullable: false),
+                        DistrictID = c.Int(nullable: false),
+                        Address = c.String(),
+                        Receiver = c.String(),
+                        RPhone = c.String(),
+                        TelePhone = c.String(),
+                        Remark = c.String(),
+                        Price = c.Double(nullable: false),
+                        status = c.Int(nullable: false),
+                        DeliveryType = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
+                .ForeignKey("dbo.Province", t => t.ProvinceID)
+                .ForeignKey("dbo.City", t => t.CityID)
+                .ForeignKey("dbo.District", t => t.DistrictID)
+                .Index(t => t.AccountMainID)
+                .Index(t => t.ProvinceID)
+                .Index(t => t.CityID)
+                .Index(t => t.DistrictID);
+            
+            CreateTable(
+                "dbo.OrderDetail",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        AccountMainID = c.Int(nullable: false),
+                        OrderID = c.Int(nullable: false),
+                        ProductID = c.Int(nullable: false),
+                        ProductName = c.String(),
+                        ProductType = c.String(),
+                        Price = c.Double(nullable: false),
+                        Count = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
+                .ForeignKey("dbo.Order", t => t.OrderID)
+                .ForeignKey("dbo.Product", t => t.ProductID)
+                .Index(t => t.AccountMainID)
+                .Index(t => t.OrderID)
+                .Index(t => t.ProductID);
+            
+            CreateTable(
+                "dbo.Product",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        AccountMainID = c.Int(nullable: false),
+                        imgFilePath = c.String(),
+                        Name = c.String(nullable: false),
+                        Specification = c.String(),
+                        Price = c.Double(nullable: false),
+                        Introduction = c.String(),
+                        LastSetDate = c.String(),
+                        Status = c.Int(nullable: false),
+                        ClassifyID = c.Int(nullable: false),
+                        file1 = c.String(),
+                        file2 = c.String(),
+                        file3 = c.String(),
+                        file4 = c.String(),
+                        file5 = c.String(),
+                        file6 = c.String(),
+                        file7 = c.String(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
+                .ForeignKey("dbo.Classify", t => t.ClassifyID)
+                .Index(t => t.AccountMainID)
+                .Index(t => t.ClassifyID);
+            
+            CreateTable(
+                "dbo.Classify",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        AccountMainID = c.Int(nullable: false),
+                        Name = c.String(nullable: false),
+                        ParentID = c.Int(nullable: false),
+                        Level = c.Int(nullable: false),
+                        Sort = c.Int(nullable: false),
+                        Subordinate = c.String(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
+                .Index(t => t.AccountMainID);
+            
+            CreateTable(
+                "dbo.OrderMIntermediate",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        OrderID = c.Int(nullable: false),
+                        MTypeName = c.String(),
+                        MTypeDateCnt = c.Int(nullable: false),
+                        MTypeCount = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Order", t => t.OrderID)
+                .Index(t => t.OrderID);
+            
+            CreateTable(
                 "dbo.LookupOption",
                 c => new
                     {
@@ -817,49 +935,19 @@ namespace EF.Migrations
                 .Index(t => t.AccountMainID);
             
             CreateTable(
-                "dbo.Classify",
+                "dbo.OrderMType",
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
                         SystemStatus = c.Int(nullable: false),
+                        Name = c.String(maxLength: 30),
+                        DateCnt = c.Int(nullable: false),
+                        Count = c.Int(nullable: false),
                         AccountMainID = c.Int(nullable: false),
-                        Name = c.String(nullable: false),
-                        ParentID = c.Int(nullable: false),
-                        Level = c.Int(nullable: false),
-                        Sort = c.Int(nullable: false),
-                        Subordinate = c.String(),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
-            
-            CreateTable(
-                "dbo.Product",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        SystemStatus = c.Int(nullable: false),
-                        AccountMainID = c.Int(nullable: false),
-                        imgFilePath = c.String(),
-                        Name = c.String(nullable: false),
-                        Specification = c.String(),
-                        Price = c.Double(nullable: false),
-                        Introduction = c.String(),
-                        LastSetDate = c.String(),
-                        ClassifyID = c.Int(nullable: false),
-                        file1 = c.String(),
-                        file2 = c.String(),
-                        file3 = c.String(),
-                        file4 = c.String(),
-                        file5 = c.String(),
-                        file6 = c.String(),
-                        file7 = c.String(),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
-                .ForeignKey("dbo.Classify", t => t.ClassifyID)
-                .Index(t => t.AccountMainID)
-                .Index(t => t.ClassifyID);
             
             CreateTable(
                 "dbo.RoleMenu",
@@ -939,7 +1027,6 @@ namespace EF.Migrations
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
 
-
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };
             foreach (var file in ddlSqlFiles)
@@ -963,9 +1050,7 @@ namespace EF.Migrations
             DropIndex("dbo.Menu", new[] { "ParentMenuID" });
             DropIndex("dbo.RoleMenu", new[] { "MenuID" });
             DropIndex("dbo.RoleMenu", new[] { "RoleID" });
-            DropIndex("dbo.Product", new[] { "ClassifyID" });
-            DropIndex("dbo.Product", new[] { "AccountMainID" });
-            DropIndex("dbo.Classify", new[] { "AccountMainID" });
+            DropIndex("dbo.OrderMType", new[] { "AccountMainID" });
             DropIndex("dbo.AppWaitImg", new[] { "AccountMainID" });
             DropIndex("dbo.AppAdvertorial", new[] { "AccountMainID" });
             DropIndex("dbo.PushMsgDetail", new[] { "PushMsgID" });
@@ -1033,6 +1118,17 @@ namespace EF.Migrations
             DropIndex("dbo.User", new[] { "AccountMainID" });
             DropIndex("dbo.User", new[] { "AccountStatusID" });
             DropIndex("dbo.LookupOption", new[] { "LookupID" });
+            DropIndex("dbo.OrderMIntermediate", new[] { "OrderID" });
+            DropIndex("dbo.Classify", new[] { "AccountMainID" });
+            DropIndex("dbo.Product", new[] { "ClassifyID" });
+            DropIndex("dbo.Product", new[] { "AccountMainID" });
+            DropIndex("dbo.OrderDetail", new[] { "ProductID" });
+            DropIndex("dbo.OrderDetail", new[] { "OrderID" });
+            DropIndex("dbo.OrderDetail", new[] { "AccountMainID" });
+            DropIndex("dbo.Order", new[] { "DistrictID" });
+            DropIndex("dbo.Order", new[] { "CityID" });
+            DropIndex("dbo.Order", new[] { "ProvinceID" });
+            DropIndex("dbo.Order", new[] { "AccountMainID" });
             DropIndex("dbo.District", new[] { "CityID" });
             DropIndex("dbo.City", new[] { "ProvinceID" });
             DropIndex("dbo.AccountMain", new[] { "SystemUserID" });
@@ -1051,9 +1147,7 @@ namespace EF.Migrations
             DropForeignKey("dbo.Menu", "ParentMenuID", "dbo.Menu");
             DropForeignKey("dbo.RoleMenu", "MenuID", "dbo.Menu");
             DropForeignKey("dbo.RoleMenu", "RoleID", "dbo.Role");
-            DropForeignKey("dbo.Product", "ClassifyID", "dbo.Classify");
-            DropForeignKey("dbo.Product", "AccountMainID", "dbo.AccountMain");
-            DropForeignKey("dbo.Classify", "AccountMainID", "dbo.AccountMain");
+            DropForeignKey("dbo.OrderMType", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.AppWaitImg", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.AppAdvertorial", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.PushMsgDetail", "PushMsgID", "dbo.PushMsg");
@@ -1121,6 +1215,17 @@ namespace EF.Migrations
             DropForeignKey("dbo.User", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.User", "AccountStatusID", "dbo.LookupOption");
             DropForeignKey("dbo.LookupOption", "LookupID", "dbo.Lookup");
+            DropForeignKey("dbo.OrderMIntermediate", "OrderID", "dbo.Order");
+            DropForeignKey("dbo.Classify", "AccountMainID", "dbo.AccountMain");
+            DropForeignKey("dbo.Product", "ClassifyID", "dbo.Classify");
+            DropForeignKey("dbo.Product", "AccountMainID", "dbo.AccountMain");
+            DropForeignKey("dbo.OrderDetail", "ProductID", "dbo.Product");
+            DropForeignKey("dbo.OrderDetail", "OrderID", "dbo.Order");
+            DropForeignKey("dbo.OrderDetail", "AccountMainID", "dbo.AccountMain");
+            DropForeignKey("dbo.Order", "DistrictID", "dbo.District");
+            DropForeignKey("dbo.Order", "CityID", "dbo.City");
+            DropForeignKey("dbo.Order", "ProvinceID", "dbo.Province");
+            DropForeignKey("dbo.Order", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.District", "CityID", "dbo.City");
             DropForeignKey("dbo.City", "ProvinceID", "dbo.Province");
             DropForeignKey("dbo.AccountMain", "SystemUserID", "dbo.SystemUser");
@@ -1137,8 +1242,7 @@ namespace EF.Migrations
             DropTable("dbo.MenuOption");
             DropTable("dbo.Menu");
             DropTable("dbo.RoleMenu");
-            DropTable("dbo.Product");
-            DropTable("dbo.Classify");
+            DropTable("dbo.OrderMType");
             DropTable("dbo.AppWaitImg");
             DropTable("dbo.AppAdvertorial");
             DropTable("dbo.PushMsgDetail");
@@ -1177,6 +1281,11 @@ namespace EF.Migrations
             DropTable("dbo.User");
             DropTable("dbo.Lookup");
             DropTable("dbo.LookupOption");
+            DropTable("dbo.OrderMIntermediate");
+            DropTable("dbo.Classify");
+            DropTable("dbo.Product");
+            DropTable("dbo.OrderDetail");
+            DropTable("dbo.Order");
             DropTable("dbo.District");
             DropTable("dbo.City");
             DropTable("dbo.Province");
