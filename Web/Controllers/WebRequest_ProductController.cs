@@ -7,6 +7,7 @@ using Injection;
 using Interface;
 using Poco;
 using Poco.WebAPI_Poco;
+using Poco.Enum;
 
 namespace Web.Controllers
 {
@@ -56,7 +57,7 @@ namespace Web.Controllers
         public string GetProduct(int pid)
         {
             var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
-            var p= productModel.Get(pid);
+            var p = productModel.Get(pid);
             App_Product product = new App_Product();
             product.ID = p.ID;
             product.imgFilePath = SystemConst.WebUrlIP + p.imgFilePath.Replace("~", "");
@@ -65,6 +66,19 @@ namespace Web.Controllers
             product.Price = p.Price;
             product.Name = p.Name;
             return Newtonsoft.Json.JsonConvert.SerializeObject(product);
+        }
+
+        /// <summary>
+        /// 配送时间类型
+        /// </summary>
+        /// <returns></returns>
+        public string GetDeliveryType()
+        {
+            List<object> list = new List<object>();
+            list.Add(new { id = (int)EnumDeliveryType.WorkingDay, name = "仅工作日送" });
+            list.Add(new { id = (int)EnumDeliveryType.OffDay, name = "仅休息日(周六-周日)送" });
+            list.Add(new { id = (int)EnumDeliveryType.EveryDay, name = "每日送" });
+            return Newtonsoft.Json.JsonConvert.SerializeObject(list);
         }
     }
 }
