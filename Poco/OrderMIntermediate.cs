@@ -14,12 +14,24 @@ namespace Poco
         public int OrderID { get; set; }
         public virtual Order Order { get; set; }
 
-
+        /// <summary>
+        /// 订单类型名称
+        /// </summary>
         public string MTypeName { get; set; }
 
+        /// <summary>
+        /// 订购天数
+        /// </summary>
         public int MTypeDateCnt { get; set; }
-
+        /// <summary>
+        /// 每天配送瓶数
+        /// </summary>
         public int MTypeCount { get; set; }
+
+        /// <summary>
+        /// 剩余配送天数
+        /// </summary>
+        public int surplusDay { get; set; }
 
     }
 }

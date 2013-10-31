@@ -92,6 +92,7 @@
     <Compile Include="LookupFactory.cs" />
     <Compile Include="LookupOptionModel.cs" />
     <Compile Include="MessageModel.cs" />
+    <Compile Include="OrderMIntermediateModel.cs" />
     <Compile Include="OrderMTypeModel.cs" />
     <Compile Include="PendingMessagesModel.cs" />
     <Compile Include="ProductModel.cs" />

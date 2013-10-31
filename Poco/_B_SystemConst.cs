@@ -137,6 +137,8 @@ namespace Poco
             public const string ClassifyModle = "ClassifyModel";
             public const string ProductModel = "ProductModel";
             public const string OrderMTypeModel = "OrderMTypeModel";
+            public const string OrderMIntermediateModel = "OrderMIntermediateModel";
+            
         }
     }
 }

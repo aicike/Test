@@ -42,6 +42,7 @@ namespace Poco
         /// </summary>
         public DateTime BeginDate { get; set; }
 
+        
         /// <summary>
         /// 送货截止日期
         /// </summary>
