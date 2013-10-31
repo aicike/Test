@@ -21,7 +21,7 @@ namespace Poco
         public virtual ICollection<AccountMain> AccountMains { get; set; }
 
         public virtual ICollection<City> Citys { get; set; }
-        public virtual ICollection<Order> Order { get; set; }
+        public virtual ICollection<OrderUserInfo> OrderUserInfo { get; set; }
     }
 
     [Serializable]
@@ -48,7 +48,7 @@ namespace Poco
         public virtual ICollection<District> Districts { get; set; }
 
         public virtual ICollection<AccountMain> AccountMains { get; set; }
-        public virtual ICollection<Order> Order { get; set; }
+        public virtual ICollection<OrderUserInfo> OrderUserInfo { get; set; }
     }
 
     [Serializable]
@@ -68,7 +68,7 @@ namespace Poco
         public virtual City City { get; set; }
 
         public virtual ICollection<AccountMain> AccountMains { get; set; }
-        public virtual ICollection<Order> Order { get; set; }
+        public virtual ICollection<OrderUserInfo> OrderUserInfo { get; set; }
     }
 
 

@@ -77,6 +77,7 @@
     <Compile Include="OrderDetail.cs" />
     <Compile Include="OrderMIntermediate.cs" />
     <Compile Include="OrderMType.cs" />
+    <Compile Include="OrderUserInfo.cs" />
     <Compile Include="PendingMessages.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="PushMsg.cs" />

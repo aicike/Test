@@ -48,42 +48,10 @@ namespace Poco
         public DateTime EndDate { get; set; }
 
         /// <summary>
-        /// 省份
+        /// 订单人收货信息
         /// </summary>
-        public int ProvinceID { get; set; }
-        public virtual Province Province { get; set; }
-
-        /// <summary>
-        /// 城市
-        /// </summary>
-        public int CityID { get; set; }
-        public virtual City City { get; set; }
-
-        /// <summary>
-        /// 地区
-        /// </summary>
-        public int DistrictID { get; set; }
-        public virtual District District { get; set; }
-
-        /// <summary>
-        /// 详细地址
-        /// </summary>
-        public string Address { get; set; }
-
-        /// <summary>
-        /// 收货人姓名
-        /// </summary>
-        public string Receiver { get; set; }
-
-        /// <summary>
-        /// 收货人电话
-        /// </summary>
-        public string RPhone { get; set; }
-
-        /// <summary>
-        /// 固定电话
-        /// </summary>
-        public string TelePhone { get; set; }
+        public int OrderUserInfoID { get; set; }
+        public virtual OrderUserInfo OrderUserInfo { get; set; }
 
         /// <summary>
         /// 备注
