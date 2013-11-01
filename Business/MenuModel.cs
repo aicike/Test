@@ -58,7 +58,7 @@ namespace Business
             IRoleMenuModel roleMenuModel = Factory.Get<IRoleMenuModel>(SystemConst.IOC_Model.RoleMenuModel);
             var menu = roleMenuModel.List_Cache().Where(a => a.RoleID == roleID &&
                                                        ((area != null && a.Menu.Area.Equals(area, StringComparison.CurrentCultureIgnoreCase)) || (area == null && a.Menu.Area == null)) &&
-                                                       a.Menu.Controller.Equals(controller, StringComparison.CurrentCultureIgnoreCase)).Select(a => a.Menu).SingleOrDefault();
+                                                       a.Menu.Controller.Equals(controller, StringComparison.CurrentCultureIgnoreCase)).Select(a => a.Menu).FirstOrDefault();
 
             if (menu == null) { return false; }
 

@@ -88,7 +88,6 @@ namespace Poco
 
         [Display(Name = "文字消息")]
         [StringLength(4000, ErrorMessage = "长度小于4000")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string TextReply { get; set; }
 
         /// <summary>

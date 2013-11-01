@@ -26,7 +26,7 @@ $.fn.extend({
         var opts = $.extend(defOpt, options);
         var _tags = [];
         if (tags) {
-            tags = tags.replace(/[^A-Za-z0-9_,\u4E00-\u9FA5]+/gi, "").replace(/^,+|,+$/gi, ""); //将非中英文、数字、下划丝、逗号的其他字符都去掉，且不能以逗号开头与结束
+            tags = tags.replace(/[^A-Za-z0-9?？_,\u4E00-\u9FA5]+/gi, "").replace(/^,+|,+$/gi, ""); //将非中英文、数字、下划丝、逗号的其他字符都去掉，且不能以逗号开头与结束
             _tags = tags.split(',');
         }
         _tags = _tags.length > opts.maxTabCount ? _tags.slice(0, opts.maxTabCount - 1) : _tags;
@@ -136,7 +136,7 @@ $.fn.extend({
         var obj = $(this);
         var values = [];
         obj.children("span[name=\"tab\"][id^=\"radius\"]").find("b").text(function (index, text) {
-            var checkReg = /[^A-Za-z0-9_\u4E00-\u9FA5]+/gi;
+            var checkReg = /[^A-Za-z0-9?？_\u4E00-\u9FA5]+/gi;
             values.push(text.replace(checkReg, ""));
         });
         return values;

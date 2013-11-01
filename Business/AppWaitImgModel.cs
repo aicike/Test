@@ -24,7 +24,7 @@ namespace Business
             var path = string.Format(SystemConst.Business.PathBase, appWaitImg.AccountMainID);
             var accountPath = HttpContext.Current.Server.MapPath(path);
             var token = DateTime.Now.ToString("yyyyMMddHHmmss");
-            var imageName = string.Format("{0}_{1}", token, HousShowImagePathFile.FileName);
+            var imageName = string.Format("{0}_{1}", token, HousShowImagePathFile.FileName.Substring(HousShowImagePathFile.FileName.LastIndexOf('.')));
             var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
             HousShowImagePathFile.SaveAs(imagePath);
 
