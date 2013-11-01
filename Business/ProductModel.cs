@@ -30,7 +30,7 @@ namespace Business
                     var path = string.Format(SystemConst.Business.PathBase, product.AccountMainID);
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                     var imageName = string.Format("{0}_{1}", token, HousTypeImagePathFile.FileName);
-                    var imagePath = string.Format("{0}\\{1}", path, imageName);
+                    var imagePath = string.Format("{0}{1}", path, imageName);
                     var imagePath2 = HttpContext.Current.Server.MapPath(imagePath);
                     HousTypeImagePathFile.SaveAs(imagePath2);
                     product.imgFilePath = imagePath;
@@ -59,7 +59,7 @@ namespace Business
                     var path = string.Format(SystemConst.Business.PathBase, product.AccountMainID);
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                     var imageName = string.Format("{0}_{1}", token, HousTypeImagePathFile.FileName);
-                    var imagePath = string.Format("{0}\\{1}", path, imageName);
+                    var imagePath = string.Format("{0}{1}", path, imageName);
                     var imagePath2 = HttpContext.Current.Server.MapPath(imagePath);
                     HousTypeImagePathFile.SaveAs(imagePath2);
                     product.imgFilePath = imagePath;

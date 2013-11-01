@@ -836,6 +836,7 @@
     <Content Include="Views\OrderMType\Index.cshtml" />
     <Content Include="Views\OrderMType\Add.cshtml" />
     <Content Include="Views\OrderMType\Edit.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

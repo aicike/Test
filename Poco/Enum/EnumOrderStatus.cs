@@ -18,7 +18,11 @@ namespace Poco.Enum
         /// <summary>
         /// 取消
         /// </summary>
-        Cancel,        
+        Cancel,
+        /// <summary>
+        /// 撤销
+        /// </summary>
+        Revoke,
         /// <summary>
         /// 等待付款
         /// </summary>
