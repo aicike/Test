@@ -126,6 +126,31 @@ namespace EF.Migrations
                 .Index(t => t.CityID);
             
             CreateTable(
+                "dbo.OrderUserInfo",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        AccountMainID = c.Int(nullable: false),
+                        ProvinceID = c.Int(nullable: false),
+                        CityID = c.Int(nullable: false),
+                        DistrictID = c.Int(nullable: false),
+                        Address = c.String(),
+                        Receiver = c.String(),
+                        RPhone = c.String(),
+                        TelePhone = c.String(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
+                .ForeignKey("dbo.Province", t => t.ProvinceID)
+                .ForeignKey("dbo.City", t => t.CityID)
+                .ForeignKey("dbo.District", t => t.DistrictID)
+                .Index(t => t.AccountMainID)
+                .Index(t => t.ProvinceID)
+                .Index(t => t.CityID)
+                .Index(t => t.DistrictID);
+            
+            CreateTable(
                 "dbo.Order",
                 c => new
                     {
@@ -138,13 +163,7 @@ namespace EF.Migrations
                         OrderDate = c.DateTime(nullable: false),
                         BeginDate = c.DateTime(nullable: false),
                         EndDate = c.DateTime(nullable: false),
-                        ProvinceID = c.Int(nullable: false),
-                        CityID = c.Int(nullable: false),
-                        DistrictID = c.Int(nullable: false),
-                        Address = c.String(),
-                        Receiver = c.String(),
-                        RPhone = c.String(),
-                        TelePhone = c.String(),
+                        OrderUserInfoID = c.Int(nullable: false),
                         Remark = c.String(),
                         Price = c.Double(nullable: false),
                         status = c.Int(nullable: false),
@@ -152,13 +171,9 @@ namespace EF.Migrations
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
-                .ForeignKey("dbo.Province", t => t.ProvinceID)
-                .ForeignKey("dbo.City", t => t.CityID)
-                .ForeignKey("dbo.District", t => t.DistrictID)
+                .ForeignKey("dbo.OrderUserInfo", t => t.OrderUserInfoID)
                 .Index(t => t.AccountMainID)
-                .Index(t => t.ProvinceID)
-                .Index(t => t.CityID)
-                .Index(t => t.DistrictID);
+                .Index(t => t.OrderUserInfoID);
             
             CreateTable(
                 "dbo.OrderDetail",
@@ -238,6 +253,7 @@ namespace EF.Migrations
                         MTypeName = c.String(),
                         MTypeDateCnt = c.Int(nullable: false),
                         MTypeCount = c.Int(nullable: false),
+                        surplusDay = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Order", t => t.OrderID)
@@ -1029,7 +1045,6 @@ namespace EF.Migrations
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
 
-
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };
             foreach (var file in ddlSqlFiles)
@@ -1128,10 +1143,12 @@ namespace EF.Migrations
             DropIndex("dbo.OrderDetail", new[] { "ProductID" });
             DropIndex("dbo.OrderDetail", new[] { "OrderID" });
             DropIndex("dbo.OrderDetail", new[] { "AccountMainID" });
-            DropIndex("dbo.Order", new[] { "DistrictID" });
-            DropIndex("dbo.Order", new[] { "CityID" });
-            DropIndex("dbo.Order", new[] { "ProvinceID" });
+            DropIndex("dbo.Order", new[] { "OrderUserInfoID" });
             DropIndex("dbo.Order", new[] { "AccountMainID" });
+            DropIndex("dbo.OrderUserInfo", new[] { "DistrictID" });
+            DropIndex("dbo.OrderUserInfo", new[] { "CityID" });
+            DropIndex("dbo.OrderUserInfo", new[] { "ProvinceID" });
+            DropIndex("dbo.OrderUserInfo", new[] { "AccountMainID" });
             DropIndex("dbo.District", new[] { "CityID" });
             DropIndex("dbo.City", new[] { "ProvinceID" });
             DropIndex("dbo.AccountMain", new[] { "SystemUserID" });
@@ -1225,10 +1242,12 @@ namespace EF.Migrations
             DropForeignKey("dbo.OrderDetail", "ProductID", "dbo.Product");
             DropForeignKey("dbo.OrderDetail", "OrderID", "dbo.Order");
             DropForeignKey("dbo.OrderDetail", "AccountMainID", "dbo.AccountMain");
-            DropForeignKey("dbo.Order", "DistrictID", "dbo.District");
-            DropForeignKey("dbo.Order", "CityID", "dbo.City");
-            DropForeignKey("dbo.Order", "ProvinceID", "dbo.Province");
+            DropForeignKey("dbo.Order", "OrderUserInfoID", "dbo.OrderUserInfo");
             DropForeignKey("dbo.Order", "AccountMainID", "dbo.AccountMain");
+            DropForeignKey("dbo.OrderUserInfo", "DistrictID", "dbo.District");
+            DropForeignKey("dbo.OrderUserInfo", "CityID", "dbo.City");
+            DropForeignKey("dbo.OrderUserInfo", "ProvinceID", "dbo.Province");
+            DropForeignKey("dbo.OrderUserInfo", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.District", "CityID", "dbo.City");
             DropForeignKey("dbo.City", "ProvinceID", "dbo.Province");
             DropForeignKey("dbo.AccountMain", "SystemUserID", "dbo.SystemUser");
@@ -1289,6 +1308,7 @@ namespace EF.Migrations
             DropTable("dbo.Product");
             DropTable("dbo.OrderDetail");
             DropTable("dbo.Order");
+            DropTable("dbo.OrderUserInfo");
             DropTable("dbo.District");
             DropTable("dbo.City");
             DropTable("dbo.Province");

@@ -1,0 +1,124 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.Order;
+    var status = ViewData["Stutas"] as List<SelectListItem>;
+}
+@section head{
+}
+@model PagedList<Poco.Order>
+<div class="title">
+    订单管理</div>
+<div class="body">
+    @using (Html.BeginForm("Index", "Order", new { HostName = ViewBag.HostName }, FormMethod.Get, new { enctype = "multipart/form-data" }))
+    {
+        <table>
+            <tr>
+                <td>
+                    时间段：
+                </td>
+                <td>
+                    <select id="daybyday" name="daybyday">
+                        <option value="7">最近7天</option>
+                        <option value="30">最近30天</option>
+                        <option value="365">最近一年</option>
+                        <option value="0">所有</option>
+                    </select>
+                </td>
+                <td>
+                    订单编号：
+                </td>
+                <td>
+                    <input type="text" id="orderNum" name="orderNum" />
+                </td>
+                <td>
+                    手机号码：
+                </td>
+                <td>
+                    <input type="text" id="PhoneNum" name="PhoneNum" />
+                </td>
+                <td>
+                    订单状态：
+                </td>
+                <td>
+                      <select id="status" name="status">
+                        @foreach (var item in status)
+                        {
+                             <option value="@item.Value">@item.Text</option>
+                        }
+                      </select>
+                </td>
+                <td width="100px">
+                    <input type="submit" id="btnSubmit" value="查询" class="button" style="margin-left: 20px" />
+                </td>
+            </tr>
+        </table>
+               
+        
+
+
+    }
+
+
+      <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th style="width: 110px;">
+                商品
+            </th>
+            <th style="width: 230px;">
+                单价
+            </th>
+            <th style="width: 230px;">
+                数量
+            </th>
+              <th style="width: 230px;">
+                类型
+            </th>
+            <th  style="width: 475px;">
+                实际金额
+            </th>
+
+            <th style="width: 100px;">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+
+            </tr>
+            <tr>
+                <td colspan="6" style="height:5px"></td>
+            </tr>
+        }
+      
+    </table>
+
+
+
+
+
+    <div class="pages" style="margin-bottom: 15px">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>

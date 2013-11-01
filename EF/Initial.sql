@@ -509,8 +509,9 @@ INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  (
 ------------------------------Other---------------------------------
 CREATE INDEX IX_HostName ON AccountMain (HostName)
 
-GO
 ---Insert Function
+
+GO
 Create function SetSerialNumber(@prefix varchar(10),@digit int,@AccountMainID int)
 returns varchar(100)
 as
@@ -557,7 +558,7 @@ begin
 	return @Number
 end
 
-Go
+GO
 
 
 

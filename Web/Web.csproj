@@ -222,15 +222,7 @@
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\userStyle.css" />
-    <Content Include="File\LoginPageShow\Client\3.jpg" />
-    <Content Include="File\LoginPageShow\Client\5.jpg" />
-    <Content Include="File\LoginPageShow\Client\6.jpg" />
-    <Content Include="File\LoginPageShow\Client\7.jpg" />
     <Content Include="File\LoginPageShow\Default\Default.jpg" />
-    <Content Include="File\LoginPageShow\System\1.jpg" />
-    <Content Include="File\LoginPageShow\System\2.jpg" />
-    <Content Include="File\LoginPageShow\System\3.jpg" />
-    <Content Include="File\LoginPageShow\System\4.jpg" />
     <Content Include="Images\AppDefault.png" />
     <Content Include="Images\banner.jpg" />
     <Content Include="Images\default_Avatar.png" />
@@ -555,10 +547,9 @@
   <ItemGroup>
     <Folder Include="Areas\System\Models\" />
     <Folder Include="Areas\System\Views\Shared\" />
-    <Folder Include="Download\1\" />
-    <Folder Include="File\1\Account\" />
-    <Folder Include="File\1\Base\" />
-    <Folder Include="File\1\FileLibrary\" />
+    <Folder Include="Download\" />
+    <Folder Include="File\LoginPageShow\Client\" />
+    <Folder Include="File\LoginPageShow\System\" />
     <Folder Include="File\platform\" />
   </ItemGroup>
   <ItemGroup>
@@ -785,7 +776,6 @@
   <ItemGroup>
     <Content Include="Areas\System\Views\SystemUser\Add.cshtml" />
     <Content Include="Areas\System\Views\SystemUser\Edit.cshtml" />
-    <None Include="Download\BuyAHouse.apk" />
     <None Include="Scripts\nivoSlider\dark\.DS_Store" />
     <Content Include="ueditor\net\imageUp_Advertorial.ashx" />
     <None Include="video-js\font\vjs.eot" />
@@ -836,6 +826,8 @@
     <Content Include="Views\OrderMType\Index.cshtml" />
     <Content Include="Views\OrderMType\Add.cshtml" />
     <Content Include="Views\OrderMType\Edit.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Default\AppQrCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

@@ -13,5 +13,7 @@ namespace Interface
         IQueryable<Order> GetByAccountID(int accountID);
 
         IQueryable<Order> GetByAccountID(int accountID, bool orderStatusComplete);
+
+        IQueryable<Order> GetList(int accountMainID, int daybyday, string orderNum, string PhoneNum, string status);
     }
 }
