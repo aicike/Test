@@ -31,7 +31,7 @@ $.fn.extend({
         }
         _tags = _tags.length > opts.maxTabCount ? _tags.slice(0, opts.maxTabCount - 1) : _tags;
         opts.initTabCount = opts.maxTabCount <= _tags.length ? _tags.length : _tags.length + (opts.maxTabCount - _tags.length > opts.initTabCount ? opts.initTabCount : opts.maxTabCount - _tags.length);
-        var checkReg = /[^A-Za-z0-9_\u4E00-\u9FA5]+/gi; //匹配非法字符
+        var checkReg = /[^A-Za-z0-9?？_\u4E00-\u9FA5]+/gi; //匹配非法字符
         var initTab = function (obj, index) {//初始化标签输入
             var textHtml = "<input class='tabinput' name='tabinput' style='width:" + opts.tabW + "px;height:" + opts.tabH + "px;' type='text'/>";
             obj.append(textHtml);

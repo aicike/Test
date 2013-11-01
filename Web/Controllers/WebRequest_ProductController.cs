@@ -107,6 +107,31 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(list);
         }
 
-
+        /// <summary>
+        /// 获取订单列表
+        /// </summary>
+        /// <param name="accountID"></param>
+        /// <param name="isComplete"></param>
+        /// <returns></returns>
+        public string GetOrderByAccountID(int accountID, bool isComplete)
+        {
+            var model = Factory.Get<IOrderModel>(SystemConst.IOC_Model.OrderModel);
+            var list = model.GetByAccountID(accountID, isComplete).Select(a => new App_Order()
+            {
+                ID = a.ID,
+                OrderNum=a.OrderNum,
+                OrderDate = a.OrderDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                BeginDate=a.BeginDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                EndDate = a.EndDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                OrderUserInfoID=a.OrderUserInfoID,
+                OrderUserInfoName = a.OrderUserInfo.Receiver,
+                OrderUserInfoPhone=a.OrderUserInfo.RPhone,
+                ProductName=a.OrderDetail.FirstOrDefault().ProductName,
+                Price=a.Price,
+                Status=a.status,
+                DeliveryType=a.DeliveryType
+            });
+            return Newtonsoft.Json.JsonConvert.SerializeObject(list);
+        }
     }
 }

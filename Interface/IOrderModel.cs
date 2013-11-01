@@ -8,10 +8,10 @@ namespace Interface
 {
     public interface IOrderModel : IBaseModel<Order>
     {
-        public IQueryable<Order> GetByAccountMianID(int accountMainID);
+        IQueryable<Order> GetByAccountMianID(int accountMainID);
 
-        public IQueryable<Order> GetByAccountID(int accountID);
+        IQueryable<Order> GetByAccountID(int accountID);
 
-        public IQueryable<Order> GetByAccountID(int accountID, bool orderStatusComplete);
+        IQueryable<Order> GetByAccountID(int accountID, bool orderStatusComplete);
     }
 }
