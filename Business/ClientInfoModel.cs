@@ -30,6 +30,7 @@ namespace Business
                 if (user != null)
                 {
                     isHasUser = true;
+                    result.Entity = new App_User() { ID = user.ID, Email = user.UserLoginInfo.Email, Pwd = Common.DESEncrypt.Decrypt(user.UserLoginInfo.LoginPwd) };
                 }
             }
 
