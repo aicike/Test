@@ -69,7 +69,6 @@ namespace Poco
         [Display(Name = "关键字")]
         [Required(ErrorMessage = "请输入关键字")]
         [StringLength(20, ErrorMessage = "长度小于20")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Token { get; set; }
     }
 
