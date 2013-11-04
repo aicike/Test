@@ -118,22 +118,28 @@ namespace Web.Controllers
             var model = Factory.Get<IOrderModel>(SystemConst.IOC_Model.OrderModel);
             var list = model.GetByAccountID(accountID, isComplete).Select(a => new App_Order()
             {
-                ID = a.ID,
+                OrderID = a.ID,
                 OrderNum = a.OrderNum,
+                OrderStatus=model.GetOrderStatusName((EnumOrderStatus)a.status),
+                OrderUserName=a.OrderUserInfo.Receiver,
+                OrderUserPhone=a.OrderUserInfo.RPhone,
+                OrderUserAddress=a.OrderUserInfo.Address,
                 OrderDate = a.OrderDate.ToString("yyyy-MM-dd HH:mm:ss"),
                 BeginDate = a.BeginDate.ToString("yyyy-MM-dd HH:mm:ss"),
                 EndDate = a.EndDate.ToString("yyyy-MM-dd HH:mm:ss"),
-                OrderUserInfoID = a.OrderUserInfoID,
-                OrderUserInfoName = a.OrderUserInfo.Receiver,
-                OrderUserInfoPhone = a.OrderUserInfo.RPhone,
+                Remark = a.Remark,
                 ProductName = a.OrderDetail.FirstOrDefault().ProductName,
-                Price = a.Price,
-                Status = a.status,
-                DeliveryType = a.DeliveryType
+                TotalPrice = a.Price,
+                DeliveryType = model.GeDeliveryTypeName((EnumDeliveryType)a.DeliveryType)
             });
             return Newtonsoft.Json.JsonConvert.SerializeObject(list);
         }
 
+        /// <summary>
+        /// 添加订单
+        /// </summary>
+        /// <param name="orderInfo"></param>
+        /// <returns></returns>
         public string AddOrder(App_OrderSubmit orderInfo)
         {
             var model = Factory.Get<IOrderModel>(SystemConst.IOC_Model.OrderModel);
@@ -143,8 +149,8 @@ namespace Web.Controllers
             order.OrderUserType = orderInfo.OrderUserType;
             OrderUserInfo orderUserInfo = new OrderUserInfo();
             orderUserInfo.ID = orderInfo.OrderUserInfoID;
-            orderUserInfo.ProvinceID=orderInfo.ProvinceID;
-            orderUserInfo.CityID =orderInfo.CityID;
+            orderUserInfo.ProvinceID = orderInfo.ProvinceID;
+            orderUserInfo.CityID = orderInfo.CityID;
             orderUserInfo.DistrictID = orderInfo.DistrictID;
             orderUserInfo.Address = orderInfo.Address;
             orderUserInfo.Receiver = orderInfo.Receiver;

@@ -61,6 +61,7 @@
     <Compile Include="AutoMessage_User.cs" />
     <Compile Include="Classify.cs" />
     <Compile Include="Conversation.cs" />
+    <Compile Include="WebAPI_Poco\App_Order.cs" />
     <Compile Include="Enum\EnumBuildingType.cs" />
     <Compile Include="Enum\EnumConversationType.cs" />
     <Compile Include="Enum\EnumDecoration.cs" />
@@ -99,7 +100,6 @@
     <Compile Include="WebAPI_Poco\App_Chat.cs" />
     <Compile Include="WebAPI_Poco\App_Image.cs" />
     <Compile Include="WebAPI_Poco\App_ImageText.cs" />
-    <Compile Include="WebAPI_Poco\App_Order.cs" />
     <Compile Include="WebAPI_Poco\App_OrderMType.cs" />
     <Compile Include="WebAPI_Poco\App_OrderSubmit.cs" />
     <Compile Include="WebAPI_Poco\App_OrderUserInfo.cs" />

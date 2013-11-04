@@ -7,6 +7,7 @@ using Interface;
 using Poco.Enum;
 using Injection.Transaction;
 using Injection;
+using Poco.WebAPI_Poco;
 
 namespace Business
 {
@@ -159,9 +160,63 @@ namespace Business
             }
             else
             {
+                App_Order app_order = new App_Order();
+                app_order.OrderID = order.ID;
+                app_order.OrderNum = order.OrderNum;
+                app_order.OrderStatus = GetOrderStatusName((EnumOrderStatus)order.status);
+                app_order.EndDate = order.EndDate.ToString("");
+                app_order.TotalPrice = order.Price;
                 result.Entity = order;
             }
             return result;
+        }
+
+        public string GetOrderStatusName(EnumOrderStatus orderStatus)
+        {
+            string value = null;
+            switch (orderStatus)
+            {
+                case EnumOrderStatus.Cancel:
+                    value = "取消";
+                    break;
+                case EnumOrderStatus.Complete:
+                    value = "已完成";
+                    break;
+                case EnumOrderStatus.Proceed:
+                    value = "进行中";
+                    break;
+                case EnumOrderStatus.Revoke:
+                    value = "撤销";
+                    break;
+                case EnumOrderStatus.WaitPayMent:
+                    value = "等待付款";
+                    break;
+                case EnumOrderStatus.Payment:
+                    value = "已付款";
+                    break;
+                case EnumOrderStatus.Shipped:
+                    value = "已发货";
+                    break;
+            }
+            return value;
+        }
+
+        public string GeDeliveryTypeName(EnumDeliveryType deliveryType)
+        {
+            string value = null;
+            switch (deliveryType)
+            {
+                case EnumDeliveryType.EveryDay:
+                    value = "每日送";
+                    break;
+                case EnumDeliveryType.OffDay:
+                    value = "仅休息日(周六-周日)送";
+                    break;
+                case EnumDeliveryType.WorkingDay:
+                    value = "仅工作日送";
+                    break;
+            }
+            return value;
         }
     }
 }

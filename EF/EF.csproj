@@ -61,6 +61,10 @@
     <Compile Include="Mapping\KeywordAutoMessageMap.cs" />
     <Compile Include="Mapping\AppUpdateMap.cs" />
     <Compile Include="Mapping\OrderUserInfoMap.cs" />
+    <Compile Include="Migrations\201311040639081_Initial.cs" />
+    <Compile Include="Migrations\201311040639081_Initial.Designer.cs">
+      <DependentUpon>201311040639081_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -77,6 +81,11 @@
   <ItemGroup>
     <Content Include="Initial.sql" />
     <Content Include="InitialProvince.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201311040639081_Initial.resx">
+      <DependentUpon>201311040639081_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
