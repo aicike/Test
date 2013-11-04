@@ -45,6 +45,36 @@ namespace Web.Controllers
             return View(list);
         }
 
-        
+
+
+        //public OrderMIntermediate GetMintermediate(int OrderID)
+        //{
+        //    var orderMinterModel = Factory.Get<IOrderMIntermediateModel>(SystemConst.IOC_Model.OrderMIntermediateModel);
+        //    var minter = orderMinterModel.GetMintByOrderID(OrderID);
+        //    return minter;
+        //}
+
+
+        //public string getOrderUserName(int userid, int userType)
+        //{
+        //    string name = "";
+        //    if(userType== (int)Poco.Enum.EnumClientUserType.Account)
+        //    {
+        //        var getuser = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
+        //        name = getuser.Get(userid).Name;
+        //    }
+
+
+        //    return name;
+            
+        //}
+
+
+        //public IQueryable<OrderDetail> GetOrderDetail(int OrderID)
+        //{
+        //    var orderDetail = Factory.Get<IOrderDetailModelcs>(SystemConst.IOC_Model.OrderDetailModel);
+
+        //    return orderDetail.GetOrderDetailByOrderID(OrderID);
+        //}
     }
 }

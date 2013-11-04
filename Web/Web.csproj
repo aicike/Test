@@ -227,6 +227,7 @@
     <Content Include="Images\banner.jpg" />
     <Content Include="Images\default_Avatar.png" />
     <Content Include="Images\down.png" />
+    <Content Include="Images\Leavemessage.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\nopicture_icon.png" />
     <Content Include="Images\SelImg.jpg" />

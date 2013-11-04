@@ -9,5 +9,10 @@ namespace Business
 {
     public class OrderMIntermediateModel : BaseModel<OrderMIntermediate>, IOrderMIntermediateModel
     {
+        public OrderMIntermediate GetMintByOrderID(int OrderID)
+        {
+            var list = List().Where(a => a.OrderID == OrderID).FirstOrDefault();
+            return list;
+        }
     }
 }

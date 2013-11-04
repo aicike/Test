@@ -8,5 +8,7 @@ namespace Interface
 {
     public interface IOrderMIntermediateModel : IBaseModel<OrderMIntermediate>
     {
+
+        OrderMIntermediate GetMintByOrderID(int OrderID);
     }
 }

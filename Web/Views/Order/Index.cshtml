@@ -2,8 +2,84 @@
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
     ViewBag.Menu = Poco.SystemConst.Menu.Order;
     var status = ViewData["Stutas"] as List<SelectListItem>;
+    
+    
+    
+    
+}
+@functions{
+    public Poco.OrderMIntermediate GetMintermediate(int OrderID)
+    {
+        var orderMinterModel = Injection.Factory.Get<Interface.IOrderMIntermediateModel>(Poco.SystemConst.IOC_Model.OrderMIntermediateModel);
+        var minter = orderMinterModel.GetMintByOrderID(OrderID);
+        return minter;
+    }
+
+    public string getOrderUserName(int userid, int userType)
+    {
+        string name = "";
+        if (userType == (int)Poco.Enum.EnumClientUserType.Account)
+        {
+            var getuser = Injection.Factory.Get<Interface.IAccountModel>(Poco.SystemConst.IOC_Model.AccountModel);
+            name = getuser.Get(userid).Name;
+        }
+
+        return name;
+
+    }
+
+    public IQueryable<Poco.OrderDetail> GetOrderDetail(int OrderID)
+    {
+        var orderDetail = Injection.Factory.Get<Interface.IOrderDetailModelcs>(Poco.SystemConst.IOC_Model.OrderDetailModel);
+
+        return orderDetail.GetOrderDetailByOrderID(OrderID);
+    }
 }
 @section head{
+    <script>
+
+        $(function () {
+
+            $("label[name=labCbFirst]").each(function () {
+                $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
+            });
+
+
+        });
+    </script>
+    <style>
+        .ortabList
+        {
+            text-align: center;
+            margin-top: 15px;
+            width: 100%;
+            border-top: 1px solid #ebebeb;
+            border-left: 1px solid #ebebeb;
+            line-height: 16px;
+        }
+        .ortabList th
+        {
+            font-weight: normal;
+            font-size: 16px;
+            height: 40px;
+            border-bottom: 1px solid #ebebeb;
+            border-right: 1px solid #ebebeb;
+        }
+        .ortabList td
+        {
+            height: 30px;
+            font-size: 14px;
+            border-bottom: 1px solid #ebebeb;
+            border-right: 1px solid #ebebeb;
+            background-color: #fff;
+        }
+        .MinTab td
+        {
+            border-right: 0px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+    </style>
 }
 @model PagedList<Poco.Order>
 <div class="title">
@@ -40,12 +116,12 @@
                     订单状态：
                 </td>
                 <td>
-                      <select id="status" name="status">
+                    <select id="status" name="status">
                         @foreach (var item in status)
                         {
-                             <option value="@item.Value">@item.Text</option>
+                            <option value="@item.Value">@item.Text</option>
                         }
-                      </select>
+                    </select>
                 </td>
                 <td width="100px">
                     <input type="submit" id="btnSubmit" value="查询" class="button" style="margin-left: 20px" />
@@ -53,56 +129,151 @@
             </tr>
         </table>
                
-        
-
-
     }
-
-
-      <table class="tableList" cellpadding="0" cellspacing="0">
+    <div class="pages" style="margin-bottom: 15px">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+    <table class="ortabList" cellpadding="0" cellspacing="0">
         <tr>
-            <th style="width: 110px;">
+            <th style="width: 250px;">
                 商品
             </th>
-            <th style="width: 230px;">
+            <th style="width: 80px;">
                 单价
             </th>
-            <th style="width: 230px;">
+            <th style="width: 80px;">
                 数量
             </th>
-              <th style="width: 230px;">
+            <th style="width: 100px;">
                 类型
             </th>
-            <th  style="width: 475px;">
-                实际金额
+            <th style="width: 100px;">
+                付款金额
             </th>
-
+            <th style="width: 90px;">
+                状态
+            </th>
             <th style="width: 100px;">
                 操作
             </th>
         </tr>
+        <tr>
+            <td colspan="7" style="height: 5px;">
+            </td>
+        </tr>
         @foreach (var item in Model)
         {
+            var minters = GetMintermediate(item.ID);
+            var orderdetail = GetOrderDetail(item.ID);
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-
+                <td style="height: 30px; padding-left: 15px; background-color: #E8F2FF" colspan="7"
+                    align="left">
+                    订单编号：@item.OrderNum &nbsp;&nbsp;&nbsp;&nbsp; 下单日期：@item.OrderDate.ToString("yyyy-MM-dd hhmm")&nbsp;&nbsp;&nbsp;&nbsp;
+                    下单人：@getOrderUserName(item.OrderUserID, item.OrderUserType) &nbsp;&nbsp;&nbsp;&nbsp;
+                    剩余配送天数：<span style="color: #FF5500">@minters.surplusDay</span>天 &nbsp;&nbsp;&nbsp;&nbsp;
+                    联系电话：@item.OrderUserInfo.RPhone
+                </td>
             </tr>
             <tr>
-                <td colspan="6" style="height:5px"></td>
+                <td colspan="3" style="padding-left: 10px;">
+                    <table class="MinTab" cellpadding="0" cellspacing="0">
+                        @foreach (var item2 in orderdetail)
+                        {
+                           
+                       
+                            <tr>
+                                <td valign="top" style="border-right: 0px" widht="80px">
+                                    @if (string.IsNullOrEmpty(item2.ProductImg))
+                                    { 
+                                        <img src="@Url.Content("~/Images/nopicture_icon.png")" style="max-width: 60px" />
+                                    }
+                                    else
+                                    { 
+                                        <img src="@Url.Content(item2.ProductImg)" style="max-width: 60px" />
+                                    }
+                                </td>
+                                <td valign="top" align="left" style="font-size: 12px; border-right: 0px; word-wrap: break-word;
+                                    padding-left: 10px; word-break: break-all" width="210px;" class="operation">
+                                    <a>@item2.ProductName</a><br />
+                                    <span style="color: #808080">规格</span>
+                                </td>
+                                <td width="90px" style="border-right: 0px">
+                                    @item2.Price
+                                </td>
+                                <td width="90px" style="border-right: 0px">
+                                    @item2.Count
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </td>
+                <td rowspan="0">
+                    @minters.MTypeDateCnt 天,每日 @minters.MTypeCount 瓶
+                </td>
+                <td>
+                    @item.Price (元)
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(@item.Remark))
+                    {
+                        <label name="labCbFirst" title="@item.Remark">
+                            <img src="@Url.Content("~/Images/Leavemessage.png")"  width="20px"/>
+                        </label>
+                        <br />
+                    }
+                    @switch (item.status)
+                    {
+                        case (int)Poco.Enum.EnumOrderStatus.Cancel:
+                        <span style="color: #808080">取消</span>
+                            break;
+                        case (int)Poco.Enum.EnumOrderStatus.Complete:
+                        <span style="color: #066601">已完成</span>
+                            break;
+                        case (int)Poco.Enum.EnumOrderStatus.Payment:
+                        <span style="color: #00aec8">已付款</span>
+                            break;
+                        case (int)Poco.Enum.EnumOrderStatus.Proceed:
+                        <span style="color: #FF5500">进行中</span>
+                            break;
+                        case (int)Poco.Enum.EnumOrderStatus.Revoke:
+                        <span style="color: Red">撤销</span>
+                            break;
+                        case (int)Poco.Enum.EnumOrderStatus.Shipped:
+                        <span style="color: #000">已发货</span>
+                            break;
+                        case (int)Poco.Enum.EnumOrderStatus.WaitPayMent:
+                        <span style="color: #000">等待付款</span>
+                            break;
+                    }
+                </td>
+                <td class="operation">
+                    @if (item.status == (int)Poco.Enum.EnumOrderStatus.Proceed)
+                    { 
+                        @Ajax.ActionLink("撤销", "Cancel", "Order", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('撤销后不可恢复 确定撤销吗?！','" + Url.Action("Cancel", "Order", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td colspan="7" style="height: 5px;">
+                </td>
             </tr>
         }
-      
     </table>
-
-
-
-
-
     <div class="pages" style="margin-bottom: 15px">
         @Html.Pager(Model, new PagerOptions
    {
