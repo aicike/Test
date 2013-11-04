@@ -11,7 +11,6 @@ namespace EF.Mapping
     {
         public OrderUserInfoMap()
         {
-            this.Ignore(a => a.IsUpdate);
         }
     }
 }

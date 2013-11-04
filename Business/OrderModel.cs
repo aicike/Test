@@ -98,16 +98,7 @@ namespace Business
             }
             //收货信息
             orderUserInfo.AccountMainID = rorder.AccountMainID;
-            if (orderUserInfo.ID != null)
-            {
-                if (orderUserInfo.IsUpdate == false)
-                {
-                    //修改
-                    var orderUserInfoModel = Factory.Get<IOrderUserInfoModel>(SystemConst.IOC_Model.OrderUserInfoModel);
-                    result = orderUserInfoModel.Edit(orderUserInfo);
-                }
-            }
-            else
+            if (orderUserInfo.ID ==0)
             {
                 //新增
                 var orderUserInfoModel = Factory.Get<IOrderUserInfoModel>(SystemConst.IOC_Model.OrderUserInfoModel);

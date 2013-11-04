@@ -87,10 +87,10 @@ namespace Web.Controllers
         /// <param name="amid"></param>
         /// <param name="orderUserID">最后一个orderUserInfo的id</param>
         /// <returns></returns>
-        public string GetOrderUserInfo(int amid, int orderUserID)
+        public string GetOrderUserInfo(int amid)
         {
             var model = Factory.Get<IOrderUserInfoModel>(SystemConst.IOC_Model.OrderUserInfoModel);
-            var list = model.GetByAccountMainID(amid).OrderBy(a => a.ID).Where(a => a.ID > orderUserID).Select(a => new App_OrderUserInfo()
+            var list = model.GetByAccountMainID(amid).OrderBy(a => a.ID).Select(a => new App_OrderUserInfo()
              {
                  ID = a.ID,
                  ProvinceID = a.ProvinceID,
@@ -156,7 +156,6 @@ namespace Web.Controllers
             orderUserInfo.Receiver = orderInfo.Receiver;
             orderUserInfo.RPhone = orderInfo.RPhone;
             orderUserInfo.TelePhone = orderInfo.TelePhone;
-            orderUserInfo.IsUpdate = orderInfo.IsUpdate;
             var resul = model.AddOrder(order, orderUserInfo, orderInfo.ProductID, orderInfo.Count);
             return Newtonsoft.Json.JsonConvert.SerializeObject(resul);
         }

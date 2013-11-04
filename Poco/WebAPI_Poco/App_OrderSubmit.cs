@@ -50,8 +50,6 @@ namespace Poco.WebAPI_Poco
 
         public string TelePhone { get; set; }
 
-        public bool IsUpdate { get; set; }
-
         #endregion
 
     }
