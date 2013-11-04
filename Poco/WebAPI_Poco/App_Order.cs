@@ -13,6 +13,8 @@ namespace Poco.WebAPI_Poco
 
         public string OrderStatus { get; set; }
 
+        public int OrderUserInfoID { get; set; }
+
         public string OrderUserName { get; set; }
 
         public string OrderUserPhone { get; set; }
