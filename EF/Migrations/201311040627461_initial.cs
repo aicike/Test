@@ -1046,6 +1046,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
 
+
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };
             foreach (var file in ddlSqlFiles)
@@ -1058,6 +1059,7 @@ namespace EF.Migrations
                         Sql(commandText);
                 }
             }
+            
         }
         
         public override void Down()

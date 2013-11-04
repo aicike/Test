@@ -162,6 +162,7 @@
     <Compile Include="Controllers\ClassifyController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ExitController.cs" />
+    <Compile Include="Controllers\HolidayController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstallAppReplyController.cs" />
     <Compile Include="Controllers\InstantMesController.cs" />

@@ -72,6 +72,7 @@
     <Compile Include="Enum\EnumPushStatus.cs" />
     <Compile Include="Enum\EnumPushType.cs" />
     <Compile Include="Enum\EnumReceiveStatus.cs" />
+    <Compile Include="Holiday.cs" />
     <Compile Include="NewsProtocol.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderDetail.cs" />
