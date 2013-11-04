@@ -181,6 +181,9 @@ namespace Poco
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
 
         public virtual ICollection<OrderMType> OrderMType { get; set; }
+
+        public virtual ICollection<Holiday> Holiday { get; set; }
+        
         
         
         

@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
-    ViewBag.Menu = Poco.SystemConst.Menu.OrderMType;
+    ViewBag.Menu = Poco.SystemConst.Menu.Product;
 }
 @section head{
 }
@@ -29,7 +29,7 @@
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.DateCnt)
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.DateCnt))
+                    <td>@Html.ValidationMessageFor(a => a.DateCnt)
                     </td>
                 </tr>
                  <tr>

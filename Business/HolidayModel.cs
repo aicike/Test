@@ -11,5 +11,9 @@ namespace Business
     {
 
 
+        public IQueryable<Holiday> GetListByAMID(int AccountMainID)
+        {
+            return List().Where(a => a.AccountMainID == AccountMainID);
+        }
     }
 }
