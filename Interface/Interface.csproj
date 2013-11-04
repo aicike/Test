@@ -59,6 +59,7 @@
     <Compile Include="ILibraryModel.cs" />
     <Compile Include="ILookupOptionModel.cs" />
     <Compile Include="IMessageModel.cs" />
+    <Compile Include="IOrderDetailModelcs.cs" />
     <Compile Include="IOrderMIntermediateModel.cs" />
     <Compile Include="IOrderModel.cs" />
     <Compile Include="IOrderMTypeModel.cs" />

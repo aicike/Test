@@ -66,14 +66,14 @@ namespace Business
 
 
                     //删除原文件
-                    if (oldImgpath != "~/Images/nopicture_icon.png")
-                    {
-                        var file = HttpContext.Current.Server.MapPath(oldImgpath);
-                        if (File.Exists(file))
-                        {
-                            File.Delete(file);
-                        }
-                    }
+                    //if (oldImgpath != "~/Images/nopicture_icon.png")
+                    //{
+                    //    var file = HttpContext.Current.Server.MapPath(oldImgpath);
+                    //    if (File.Exists(file))
+                    //    {
+                    //        File.Delete(file);
+                    //    }
+                    //}
                     result = Edit(product);
                 }
                 catch (Exception ex)
@@ -91,14 +91,14 @@ namespace Business
             Result result = new Result();
             string oldImgpath =base.Get(id).imgFilePath;
             //删除原文件
-            if (oldImgpath != "~/Images/nopicture_icon.png")
-            {
-                var file = HttpContext.Current.Server.MapPath(oldImgpath);
-                if (File.Exists(file))
-                {
-                    File.Delete(file);
-                }
-            }
+            //if (oldImgpath != "~/Images/nopicture_icon.png")
+            //{
+            //    var file = HttpContext.Current.Server.MapPath(oldImgpath);
+            //    if (File.Exists(file))
+            //    {
+            //        File.Delete(file);
+            //    }
+            //}
             string sql = string.Format("delete Product where ID={0} and AccountMainID={1}", id, AccountMainID);
             int cnt = base.SqlExecute(sql);
             if (cnt > 0)
