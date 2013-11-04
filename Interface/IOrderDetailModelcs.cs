@@ -6,7 +6,7 @@ using Poco;
 
 namespace Interface
 {
-    public interface IOrderDetailModelcs : IBaseModel<OrderDetail>
+    public interface IOrderDetailModel : IBaseModel<OrderDetail>
     {
         IQueryable<OrderDetail> GetOrderDetailByOrderID(int OrderID);
         

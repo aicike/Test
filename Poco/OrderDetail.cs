@@ -50,19 +50,5 @@ namespace Poco
         /// 数量
         /// </summary>
         public int Count { get; set; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

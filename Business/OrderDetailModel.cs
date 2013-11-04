@@ -7,7 +7,7 @@ using Poco;
 
 namespace Business
 {
-    public class OrderDetailModel : BaseModel<OrderDetail>, IOrderDetailModelcs
+    public class OrderDetailModel : BaseModel<OrderDetail>, IOrderDetailModel
     {
         public IQueryable<OrderDetail> GetOrderDetailByOrderID(int OrderID)
         {

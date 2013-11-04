@@ -55,5 +55,9 @@ namespace Poco
 
         public virtual ICollection<Order> Order { get; set; }
 
+        /// <summary>
+        /// 是否是新增的。业务字段，不会在数据库中显示
+        /// </summary>
+        public bool IsUpdate { get; set; }
     }
 }

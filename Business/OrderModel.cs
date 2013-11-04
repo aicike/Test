@@ -5,6 +5,8 @@ using System.Text;
 using Poco;
 using Interface;
 using Poco.Enum;
+using Injection.Transaction;
+using Injection;
 
 namespace Business
 {
@@ -63,7 +65,7 @@ namespace Business
             }
             if (!string.IsNullOrEmpty(orderNum))
             {
-                list.Where(a=>a.OrderNum.Contains(orderNum.Trim()));
+                list.Where(a => a.OrderNum.Contains(orderNum.Trim()));
             }
             if (!string.IsNullOrEmpty(PhoneNum))
             {
@@ -72,5 +74,94 @@ namespace Business
             return list;
         }
 
+        [Transaction]
+        public Result AddOrder(Order rorder, OrderUserInfo orderUserInfo, int productID, int count)
+        {
+            Result result = new Result();
+            //获取产品信息
+            var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
+            var product = productModel.Get(productID);
+            if (product == null)
+            {
+                result.Error = "参数错误，请稍后重试！";
+                return result;
+            }
+            //计算订单编号
+            string orderNumSql = "SELECT dbo.SetSerialNumber('R',4,1)";
+            CommonModel commonModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+            string orderNum = commonModel.SqlQuery<string>(orderNumSql).FirstOrDefault();
+            if (string.IsNullOrEmpty(orderNum) || orderNum.Length == 0)
+            {
+                result.Error = "参数错误，请稍后重试！";
+                return result;
+            }
+            //收货信息
+            orderUserInfo.AccountMainID = rorder.AccountMainID;
+            if (orderUserInfo.ID != null)
+            {
+                if (orderUserInfo.IsUpdate == false)
+                {
+                    //修改
+                    var orderUserInfoModel = Factory.Get<IOrderUserInfoModel>(SystemConst.IOC_Model.OrderUserInfoModel);
+                    result = orderUserInfoModel.Edit(orderUserInfo);
+                }
+            }
+            else
+            {
+                //新增
+                var orderUserInfoModel = Factory.Get<IOrderUserInfoModel>(SystemConst.IOC_Model.OrderUserInfoModel);
+                result = orderUserInfoModel.Add(orderUserInfo);
+            }
+            if (result.HasError)
+            {
+                result.Error = "参数错误，请稍后重试！";
+                return result;
+            }
+            //计算价格
+            var totalPrice = product.Price * count;
+
+            //订单信息
+            Order order = new Order();
+            order.AccountMainID = rorder.AccountMainID;
+            order.OrderNum = orderNum;
+            order.OrderUserID = rorder.OrderUserID;
+            order.OrderUserType = rorder.OrderUserType;
+            order.OrderDate = DateTime.Now;
+            order.BeginDate = rorder.BeginDate;
+            order.EndDate = DateTime.Now;//todo 需要计算
+            order.OrderUserInfoID = orderUserInfo.ID;
+            order.Remark = rorder.Remark;
+            order.Price = totalPrice;
+            order.status = (int)EnumOrderStatus.Proceed;
+            order.DeliveryType = rorder.DeliveryType;
+            result = base.Add(order);
+            if (result.HasError)
+            {
+                result.Error = "参数错误，请稍后重试！";
+                return result;
+            }
+            //订单详细
+            var orderDetailModel = Factory.Get<IOrderDetailModel>(SystemConst.IOC_Model.OrderDetailModel);
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.AccountMainID = order.AccountMainID;
+            orderDetail.OrderID = order.ID;
+            orderDetail.ProductID = productID;
+            orderDetail.ProductName = product.Name;
+            orderDetail.ProductImg = product.imgFilePath;
+            orderDetail.ProductType = product.Classify.Name;
+            orderDetail.Price = product.Price;
+            orderDetail.Count = count;
+            result = orderDetailModel.Add(orderDetail);
+            if (result.HasError)
+            {
+                result.Error = "参数错误，请稍后重试！";
+                return result;
+            }
+            else
+            {
+                result.Entity = order;
+            }
+            return result;
+        }
     }
 }

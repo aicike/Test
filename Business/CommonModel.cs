@@ -140,8 +140,6 @@ namespace Business
             return Context.Database.ExecuteSqlCommand(sql, parameters);
         }
 
-
-
         /// <summary>
         /// 取会话列表
         /// </summary>
@@ -167,7 +165,6 @@ namespace Business
                     id += item.ID + ",";
                 }
                 id = id.TrimEnd(',');
-
             }
             else
             {

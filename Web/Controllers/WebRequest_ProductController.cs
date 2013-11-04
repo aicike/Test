@@ -134,9 +134,25 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(list);
         }
 
-        public string AddOrder()
+        public string AddOrder(App_OrderSubmit orderInfo)
         {
-            return null;
+            var model = Factory.Get<IOrderModel>(SystemConst.IOC_Model.OrderModel);
+            Order order = new Order();
+            order.AccountMainID = orderInfo.AccountMainID;
+            order.OrderUserID = orderInfo.OrderUserID;
+            order.OrderUserType = orderInfo.OrderUserType;
+            OrderUserInfo orderUserInfo = new OrderUserInfo();
+            orderUserInfo.ID = orderInfo.OrderUserInfoID;
+            orderUserInfo.ProvinceID=orderInfo.ProvinceID;
+            orderUserInfo.CityID =orderInfo.CityID;
+            orderUserInfo.DistrictID = orderInfo.DistrictID;
+            orderUserInfo.Address = orderInfo.Address;
+            orderUserInfo.Receiver = orderInfo.Receiver;
+            orderUserInfo.RPhone = orderInfo.RPhone;
+            orderUserInfo.TelePhone = orderInfo.TelePhone;
+            orderUserInfo.IsUpdate = orderInfo.IsUpdate;
+            var resul = model.AddOrder(order, orderUserInfo, orderInfo.ProductID, orderInfo.Count);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(resul);
         }
     }
 }
