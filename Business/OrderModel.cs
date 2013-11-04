@@ -72,6 +72,5 @@ namespace Business
             return list;
         }
 
-        public 
     }
 }
