@@ -30,7 +30,7 @@
 
     public IQueryable<Poco.OrderDetail> GetOrderDetail(int OrderID)
     {
-        var orderDetail = Injection.Factory.Get<Interface.IOrderDetailModelcs>(Poco.SystemConst.IOC_Model.OrderDetailModel);
+        var orderDetail = Injection.Factory.Get<Interface.IOrderDetailModel>(Poco.SystemConst.IOC_Model.OrderDetailModel);
 
         return orderDetail.GetOrderDetailByOrderID(OrderID);
     }
@@ -84,6 +84,8 @@
 @model PagedList<Poco.Order>
 <div class="title">
     订单管理</div>
+
+
 <div class="body">
     @using (Html.BeginForm("Index", "Order", new { HostName = ViewBag.HostName }, FormMethod.Get, new { enctype = "multipart/form-data" }))
     {

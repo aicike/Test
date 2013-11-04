@@ -8,5 +8,6 @@ namespace Interface
 {
     public interface IHolidayModel : IBaseModel<Holiday>
     {
+        IQueryable<Holiday> GetListByAMID(int AccountMainID);
     }
 }

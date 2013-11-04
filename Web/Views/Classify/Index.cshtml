@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
-    ViewBag.Menu = Poco.SystemConst.Menu.Classify;
+    ViewBag.Menu = Poco.SystemConst.Menu.Product;
 }
 @section head{
     <link href="@Url.Content("~/Scripts/treeview/jquery.treeview.css")" rel="stylesheet" type="text/css" />
@@ -194,21 +194,23 @@
     <style type="text/css">
         .lefClass
         {
-            width: 500px;
-            height: 640px;
+            width: 400px;
+            height: 650px;
             float: left;
             border: 1px solid #ebebeb;
             overflow: auto;
-            padding: 10px 10px 0px 10px;
+            padding: 10px 10px 0px 0px;
+            font-size:14px;
         }
         .rigClass
         {
             border: 1px solid #ebebeb;
-            width: 370px;
-            height: 640px;
+            width: 270px;
+            height: 650px;
             float: right;
             padding-top: 10px;
             padding-left: 10px;
+            font-size:14px;
         }
         .tabList
         {
@@ -224,7 +226,17 @@
 }
 <div class="title">
     类别管理</div>
-<div class="body">
+
+    <div class="bodyLeft">
+    <ul class="ulList">
+
+        <li >@Html.ActionLink("产品管理", "Index", "Product", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li  class="select">@Html.ActionLink("类别管理", "Index", "Classify", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("订单类型", "Index", "OrderMType", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("节假日管理", "Index", "Holiday", new { HostName = ViewBag.HostName }, null, true)</li>
+    </ul>
+</div>
+<div class="bodyRight">
     <div class="rigClass">
         <div id="setDiv" style="display: none">
             @using (Html.BeginForm("Add", "Classify", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -308,10 +320,12 @@
             @Html.Raw(ViewBag.TreeView)
         </ul>
     </div>
-    <div style="clear: both">
-    </div>
+ 
 </div>
 <div id="showParent" title="选择上级" style="display: none; overflow: hidden">
     <iframe id="iframeshow" src="" style="width: 800px; height: 530px; border: none;
         overflow: hidden"></iframe>
 </div>
+
+   <div style="clear: both">
+    </div>
