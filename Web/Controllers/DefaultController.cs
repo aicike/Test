@@ -115,10 +115,6 @@ namespace Web.Controllers
         }
 
 
-        public ActionResult TestOrder() {
-            var orderModel = Factory.Get<IOrderModel>(SystemConst.IOC_Model.OrderModel);
-            orderModel.AddOrder(1);
-            return Content("test");
-        }
+        
     }
 }

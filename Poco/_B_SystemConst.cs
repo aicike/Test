@@ -141,7 +141,7 @@ namespace Poco
             public const string OrderModel = "OrderModel";
             public const string OrderMIntermediateModel = "OrderMIntermediateModel";
             public const string OrderDetailModel = "OrderDetailModel";
-            
+            public const string HolidayModel = "HolidayModel";
         }
     }
 }

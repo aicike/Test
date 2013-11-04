@@ -54,6 +54,7 @@
     <Compile Include="IBaseModel.cs" />
     <Compile Include="IClassifyModel.cs" />
     <Compile Include="IConversationModel.cs" />
+    <Compile Include="IHolidayModel.cs" />
     <Compile Include="IKeywordAutoMessageModel.cs" />
     <Compile Include="IKeywordModel.cs" />
     <Compile Include="ILibraryModel.cs" />

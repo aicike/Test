@@ -63,6 +63,8 @@
   <object id="OrderUserInfoModel" type="Business.OrderUserInfoModel" parent="EFModel" singleton="false"></object>
   <object id="OrderModel" type="Business.OrderModel" parent="EFModel" singleton="false"></object>
   <object id="OrderMIntermediateModel" type="Business.OrderMIntermediateModel" parent="EFModel" singleton="false"></object>
+  <object id="HolidayModel" type="Business.HolidayModel" parent="EFModel" singleton="false"></object>
+
 
   <object id="Push_IOS" type="Business.Push_IOS" singleton="false">
   </object>

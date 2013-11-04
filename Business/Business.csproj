@@ -87,6 +87,7 @@
     <Compile Include="ConversationModel.cs" />
     <Compile Include="DistrictModel.cs" />
     <Compile Include="EFModel.cs" />
+    <Compile Include="HolidayModel.cs" />
     <Compile Include="KeywordAutoMessageModel.cs" />
     <Compile Include="KeywordModel.cs" />
     <Compile Include="LookupFactory.cs" />

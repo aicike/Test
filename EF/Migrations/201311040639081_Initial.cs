@@ -139,6 +139,7 @@ namespace EF.Migrations
                         Receiver = c.String(),
                         RPhone = c.String(),
                         TelePhone = c.String(),
+                        IsUpdate = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)

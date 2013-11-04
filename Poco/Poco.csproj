@@ -72,6 +72,7 @@
     <Compile Include="Enum\EnumPushStatus.cs" />
     <Compile Include="Enum\EnumPushType.cs" />
     <Compile Include="Enum\EnumReceiveStatus.cs" />
+    <Compile Include="Holiday.cs" />
     <Compile Include="NewsProtocol.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderDetail.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="WebAPI_Poco\App_ImageText.cs" />
     <Compile Include="WebAPI_Poco\App_Order.cs" />
     <Compile Include="WebAPI_Poco\App_OrderMType.cs" />
+    <Compile Include="WebAPI_Poco\App_OrderSubmit.cs" />
     <Compile Include="WebAPI_Poco\App_OrderUserInfo.cs" />
     <Compile Include="WebAPI_Poco\App_Product.cs" />
     <Compile Include="WebAPI_Poco\App_User.cs" />
