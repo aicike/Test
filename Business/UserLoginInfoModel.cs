@@ -129,7 +129,16 @@ namespace Business
                         return result;
                     }
                 }
-                result.Entity = new App_User() { ID = user.ID, Email = "", Pwd = userLoginInfo.Pwd };
+                string headImg = null;
+                if (string.IsNullOrEmpty(user.UserLoginInfo.HeadImagePath) == false)
+                {
+                    headImg = SystemConst.WebUrlIP + user.UserLoginInfo.HeadImagePath.DefaultHeadImage().Replace("~", "");
+                }
+                else
+                {
+                    headImg = "";
+                }
+                result.Entity = new App_User() { ID = user.ID, Name = user.UserLoginInfo.Name, Email = "", Pwd = userLoginInfo.Pwd, HeadImagePath = headImg };
                 return result;
             }
             return result;
@@ -144,21 +153,21 @@ namespace Business
 
             var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
             var clientInfo = clientInfoModel.GetByClientID(app_UserLoginInfo.ClientID);
-           
+
             if (clientInfo == null)
             {
                 result.Error = "邮箱或密码错误，登录失败。";
                 return result;
             }
-             var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
-             var user = userModel.Get(clientInfo.EntityID.Value);
+            var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+            var user = userModel.Get(clientInfo.EntityID.Value);
 
-         
-             if (user.UserLoginInfo.Email.Equals(app_UserLoginInfo.Email, StringComparison.CurrentCultureIgnoreCase)==false || user.UserLoginInfo.LoginPwd != pwd)
-             {
-                 result.Error = "邮箱或密码错误，登录失败。";
-                 return result;
-             }
+
+            if (user.UserLoginInfo.Email.Equals(app_UserLoginInfo.Email, StringComparison.CurrentCultureIgnoreCase) == false || user.UserLoginInfo.LoginPwd != pwd)
+            {
+                result.Error = "邮箱或密码错误，登录失败。";
+                return result;
+            }
 
             App_User appuser = new App_User();
             appuser.ID = user.ID;
@@ -166,7 +175,16 @@ namespace Business
             appuser.Phone = user.UserLoginInfo.Phone;
             appuser.Email = user.UserLoginInfo.Email;
             appuser.NameNote = user.Name;
-            appuser.HeadImagePath = SystemConst.WebUrlIP + user.UserLoginInfo.HeadImagePath.DefaultHeadImage().Replace("~", "");
+            string headImg = null;
+            if (string.IsNullOrEmpty(user.UserLoginInfo.HeadImagePath) == false)
+            {
+                headImg = SystemConst.WebUrlIP + user.UserLoginInfo.HeadImagePath.DefaultHeadImage().Replace("~", "");
+            }
+            else
+            {
+                headImg = "";
+            }
+            appuser.HeadImagePath = headImg;
             result.Entity = appuser;
             return result;
         }

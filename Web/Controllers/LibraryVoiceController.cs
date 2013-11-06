@@ -39,7 +39,7 @@ namespace Web.Controllers
                 {
                     return AlertJS_NoTag(new Dialog(result.Error));
                 }
-                Task t = new Task(() => {
+                System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() => {
                     Thread.Sleep(2000);
                     libraryModel.UpdateVoiceTime(entity.ID, Server.MapPath(entity.FileMp3Path));
                 });

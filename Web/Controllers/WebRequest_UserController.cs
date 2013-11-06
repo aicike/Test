@@ -132,9 +132,18 @@ namespace Web.Controllers
             var account_UserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
             var account = account_UserModel.GetBindAccountID(userID, accountMainID);
             Result result = new Result();
+
             if (account != null)
             {
-                result.Entity = new { id = account.ID, n = account.Name };
+                string img = null;
+                if (string.IsNullOrEmpty(account.HeadImagePath)==false)
+                {
+                    img = SystemConst.WebUrlIP + account.HeadImagePath.Replace("~", "");
+                }
+                else {
+                    img = "";
+                }
+                result.Entity = new { id = account.ID, n = account.Name, i = img };
             }
             else
             {

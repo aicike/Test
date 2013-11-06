@@ -553,7 +553,7 @@ namespace AcceptanceServer
         /// </summary>
         public void LoginSendUnreadMessage()
         {
-            Task t = new Task(() =>
+            System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
             {
                 //售楼代表s；用户u
                 string AoU = jid.User.Substring(0, 1);

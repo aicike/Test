@@ -241,7 +241,7 @@ namespace Web.Controllers
             if (Connection == null)
             {
 
-                Task t = new Task(() =>
+                System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
                 {
                     Connection = new XmppClientConnection();
                     //登陆方法

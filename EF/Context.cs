@@ -55,6 +55,7 @@ namespace EF
             modelBuilder.Configurations.Add(new AppUpdateMap());
             modelBuilder.Configurations.Add(new PendingMessagesMap());
             modelBuilder.Configurations.Add(new PushMsgMap());
+            modelBuilder.Configurations.Add(new TaskMap());
         }
     }
 }

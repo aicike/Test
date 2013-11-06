@@ -171,7 +171,6 @@ namespace Poco
 
         public virtual ICollection<Role> Role { get; set; }
 
-        
         public virtual ICollection<Classify> Classify { get; set; }
 
         public virtual ICollection<Product> Product { get; set; }
@@ -183,9 +182,7 @@ namespace Poco
         public virtual ICollection<OrderMType> OrderMType { get; set; }
 
         public virtual ICollection<Holiday> Holiday { get; set; }
-        
-        
-        
-        
+
+        public virtual ICollection<TaskRule> TaskRules { get; set; }
     }
 }

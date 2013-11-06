@@ -77,6 +77,13 @@ namespace Poco
         public bool IsActivated { get; set; }
 
         /// <summary>
+        /// 父级ID
+        /// </summary>
+        public int? ParentAccountID { get; set; }
+
+        public virtual Account ParentAccount { get; set; }
+
+        /// <summary>
         /// 业务字段，不会在数据库中生成该字段
         /// </summary>
         public string HostName { get; set; }
@@ -121,5 +128,12 @@ namespace Poco
 
         public virtual ICollection<PushMsg> PushMsgs { get; set; }
 
+        public virtual ICollection<Account> Accounts { get; set; }
+
+        public virtual ICollection<Task> Tasks_Creater { get; set; }
+
+        public virtual ICollection<Task> Tasks_Receiver { get; set; }
+
+        public virtual ICollection<TaskDetail> TaskDetails { get; set; }
     }
 }

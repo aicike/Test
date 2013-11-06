@@ -223,7 +223,7 @@ namespace Web.Controllers
                     //转换文件
                     try
                     {
-                        Task t = new Task(() => {
+                        System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() => {
                             CommonModel cm = new CommonModel();
                             cm.CreateMp3Forffmpeg(FilePath, "mp3");
                         });

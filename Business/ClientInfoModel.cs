@@ -30,7 +30,16 @@ namespace Business
                 if (user != null)
                 {
                     isHasUser = true;
-                    result.Entity = new App_User() { ID = user.ID, Email = user.UserLoginInfo.Email, Pwd = Common.DESEncrypt.Decrypt(user.UserLoginInfo.LoginPwd) };
+                    string headImg = null;
+                    if (string.IsNullOrEmpty(user.UserLoginInfo.HeadImagePath) == false)
+                    {
+                        headImg = SystemConst.WebUrlIP + user.UserLoginInfo.HeadImagePath.Replace("~", "");
+                    }
+                    else
+                    {
+                        headImg = "";
+                    }
+                    result.Entity = new App_User() { ID = user.ID,Name=user.UserLoginInfo.Name, Email = user.UserLoginInfo.Email, Pwd = Common.DESEncrypt.Decrypt(user.UserLoginInfo.LoginPwd), HeadImagePath = headImg };
                 }
             }
 
@@ -68,7 +77,16 @@ namespace Business
                 else
                 {
                     var userLoginInfo = ulim.GetByClientID(clientID);
-                    result.Entity = new App_User() { ID = cl.EntityID.Value, Email = userLoginInfo.Email, Pwd = Common.DESEncrypt.Decrypt(userLoginInfo.LoginPwd) };
+                    string headImg = null;
+                    if (string.IsNullOrEmpty(userLoginInfo.HeadImagePath) == false)
+                    {
+                        headImg = SystemConst.WebUrlIP + userLoginInfo.HeadImagePath.Replace("~", "");
+                    }
+                    else
+                    {
+                        headImg = "";
+                    }
+                    result.Entity = new App_User() { ID = cl.EntityID.Value, Name = userLoginInfo.Name, Email = userLoginInfo.Email, Pwd = Common.DESEncrypt.Decrypt(userLoginInfo.LoginPwd), HeadImagePath = headImg };
                 }
             }
             return result;

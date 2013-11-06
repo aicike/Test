@@ -139,7 +139,6 @@ namespace EF.Migrations
                         Receiver = c.String(),
                         RPhone = c.String(),
                         TelePhone = c.String(),
-                        IsUpdate = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
@@ -970,6 +969,20 @@ namespace EF.Migrations
                 .Index(t => t.AccountMainID);
             
             CreateTable(
+                "dbo.Holiday",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        AccountMainID = c.Int(nullable: false),
+                        HoliDay = c.DateTime(nullable: false),
+                        Remark = c.String(maxLength: 50),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
+                .Index(t => t.AccountMainID);
+            
+            CreateTable(
                 "dbo.RoleMenu",
                 c => new
                     {
@@ -1047,7 +1060,6 @@ namespace EF.Migrations
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
 
-
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };
             foreach (var file in ddlSqlFiles)
@@ -1071,6 +1083,7 @@ namespace EF.Migrations
             DropIndex("dbo.Menu", new[] { "ParentMenuID" });
             DropIndex("dbo.RoleMenu", new[] { "MenuID" });
             DropIndex("dbo.RoleMenu", new[] { "RoleID" });
+            DropIndex("dbo.Holiday", new[] { "AccountMainID" });
             DropIndex("dbo.OrderMType", new[] { "AccountMainID" });
             DropIndex("dbo.AppWaitImg", new[] { "AccountMainID" });
             DropIndex("dbo.AppAdvertorial", new[] { "AccountMainID" });
@@ -1170,6 +1183,7 @@ namespace EF.Migrations
             DropForeignKey("dbo.Menu", "ParentMenuID", "dbo.Menu");
             DropForeignKey("dbo.RoleMenu", "MenuID", "dbo.Menu");
             DropForeignKey("dbo.RoleMenu", "RoleID", "dbo.Role");
+            DropForeignKey("dbo.Holiday", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.OrderMType", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.AppWaitImg", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.AppAdvertorial", "AccountMainID", "dbo.AccountMain");
@@ -1267,6 +1281,7 @@ namespace EF.Migrations
             DropTable("dbo.MenuOption");
             DropTable("dbo.Menu");
             DropTable("dbo.RoleMenu");
+            DropTable("dbo.Holiday");
             DropTable("dbo.OrderMType");
             DropTable("dbo.AppWaitImg");
             DropTable("dbo.AppAdvertorial");

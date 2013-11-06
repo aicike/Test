@@ -175,7 +175,7 @@ namespace Business
                     account.HeadImagePath = path + imageName;
                     if (width > 0)
                     {
-                        Task t = new Task(() =>
+                        System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
                         {
                             int ToWidth = width;
                             int ToHeight = height;
@@ -283,7 +283,7 @@ namespace Business
                     account.HeadImagePath = path + imageName;
                     if (width > 0)
                     {
-                        Task t = new Task(() =>
+                        System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
                         {
                             int ToWidth = width;
                             int ToHeight = height;
@@ -388,7 +388,7 @@ namespace Business
                     account.HeadImagePath = path + imageName;
                     if (width > 0)
                     {
-                        Task t = new Task(() =>
+                        System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
                         {
                             int ToWidth = width;
                             int ToHeight = height;
