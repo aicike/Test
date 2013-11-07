@@ -1,0 +1,79 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.Product;
+}
+@section head{
+    <link href="@Url.Content("~/Scripts/mobiscroll/css/mobiscroll.custom-2.6.2.min.css")" rel="stylesheet"  type="text/css" />
+    <script src="@Url.Content("~/Scripts/mobiscroll/js/mobiscroll.custom-2.6.2.min.js")" type="text/javascript"></script>
+
+    
+    <script type="text/javascript">
+        $(function () {
+            var curr = new Date().getFullYear();
+            var opt = {
+
+            }
+            opt.date = { preset: 'date' };
+
+            $("#default").show();
+            $('#HoliDayValue').val('').scroller('destroy').scroller($.extend(opt['date'], { theme: 'default', mode: 'mixed', display: 'inline', lang: 'zh', dateFormat: 'yy-mm-dd', dateOrder: 'yymmdd' }));
+
+            $('#HoliDayValue').val('@ViewBag.TDate')
+            
+        });
+
+    </script>
+
+
+}
+@model Poco.Holiday
+<div class="title">
+    添加节假日
+</div>
+<div class="body">
+    @using (Ajax.BeginForm("Add", "Holiday", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {
+          <fieldset>
+            <legend>基本信息</legend>
+             <table class="tableForm">
+                <tr>
+                    <td class="tdTitle" >
+                        <span class="Identification">*</span> 日期
+                    </td>
+                    <td class="tdField">
+                          <div id="default">
+                           
+                         </div>
+                          @Html.HiddenFor(a => a.HoliDayValue)
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                 <tr>
+                    <td class="tdTitle">
+                    </td>
+                    <td class="tdField">
+                    </td>
+                    <td>
+                    @Html.ValidationMessageFor(a => a.HoliDayValue)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        &nbsp;&nbsp; 备注
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Remark, new { style=" margin-left:15px"})
+                    </td>
+                    <td>
+                    @Html.ValidationMessageFor(a => a.Remark)
+                    </td>
+                </tr>
+            </table>
+          </fieldset>
+        
+         <div class="action">
+         
+            <input type="submit" id="btnSubmit" value="保存" class="button" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }
+</div>

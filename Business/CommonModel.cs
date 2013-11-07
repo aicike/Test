@@ -247,7 +247,7 @@ namespace Business
         /// <param name="str">随机数包含的字符 传"" 为默认a-z 1-9</param>
         /// <param name="length">返回的字符长度</param>
         /// <returns></returns>
-        public string CreateRandom(string str,int length)
+        public string CreateRandom(string str, int length)
         {
             if (str == "")
             {
@@ -264,5 +264,72 @@ namespace Business
 
             return tmpstr;
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="BegingDate">开始日期</param>
+        /// <param name="DateCount">天数</param>
+        /// <param name="AccountMainID">客户ID</param>
+        /// <param name="DeliveryType">配送类型 Enum </param>
+        /// <returns></returns>
+        public DateTime GetEndDate(DateTime BegingDate, int DateCount, int AccountMainID, int DeliveryType)
+        {
+            var holidayModel = Factory.Get<IHolidayModel>(SystemConst.IOC_Model.HolidayModel);
+            var holiday = holidayModel.GetListByDateAndAMID(AccountMainID, BegingDate, BegingDate.AddDays((2 * DateCount)));
+
+            if (DeliveryType == (int)Poco.Enum.EnumDeliveryType.WorkingDay)
+            {
+                DateTime Dates = RecursiveGetEndDate(BegingDate, DateCount, holiday);
+
+                return Dates;
+            }
+            else
+            {
+                return BegingDate.AddDays(DateCount-1);
+            }
+
+        }
+
+
+
+        public DateTime RecursiveGetEndDate(DateTime BegingDate, int DateCount, IQueryable<Holiday> holiday)
+        {
+            DateTime Dates = BegingDate;
+            int XCount = 0;//共多少休息日
+            for (int i = 0; i < DateCount; i++)
+            {
+                if (Dates.AddDays(i).DayOfWeek.ToString("d") == "0" || Dates.AddDays(i).DayOfWeek.ToString("d") == "6")
+                {
+                    XCount = XCount + 1;
+                }
+                else
+                {
+                    foreach (var item in holiday)
+                    {
+                        if (item.HoliDayValue == Dates.AddDays(i))
+                        {
+                            XCount = XCount + 1;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (XCount > 0)
+            {
+
+                return RecursiveGetEndDate(Dates.AddDays(DateCount), XCount, holiday);
+            }
+
+            else
+            {
+                return Dates.AddDays(DateCount-1);
+            }
+        }
+
+
+
+
     }
 }

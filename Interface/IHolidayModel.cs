@@ -9,5 +9,7 @@ namespace Interface
     public interface IHolidayModel : IBaseModel<Holiday>
     {
         IQueryable<Holiday> GetListByAMID(int AccountMainID);
+
+        IQueryable<Holiday> GetListByDateAndAMID(int AccountMainID,DateTime BeginDate,DateTime EndDate);
     }
 }

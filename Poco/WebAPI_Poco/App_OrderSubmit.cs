@@ -27,6 +27,10 @@ namespace Poco.WebAPI_Poco
 
         public int Count { get; set; }
 
+        public int OrderMTypeID { get; set; }
+
+        public int DeliveryType { get; set; }
+
         #endregion
 
         #region 订单人收货信息

@@ -33,11 +33,13 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+                <td>    
+                    @item.HoliDayValue.ToString("yyyy-MM-dd")
                 </td>
                 <td>
+                    @item.Remark
                 </td>
-                <td>
+                <td class="operation">
                     @Html.ActionLink("修改", "Edit", "Holiday", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:15px" }, true)
                     @Ajax.ActionLink("删除", "Delete", "Holiday", new { HostName = ViewBag.HostName, id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "Holiday", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
                 </td>
