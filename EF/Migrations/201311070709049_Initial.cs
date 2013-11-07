@@ -3,7 +3,7 @@ namespace EF.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -21,12 +21,15 @@ namespace EF.Migrations
                         RoleID = c.Int(nullable: false),
                         AccountStatusID = c.Int(nullable: false),
                         IsActivated = c.Boolean(nullable: false),
+                        ParentAccountID = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Role", t => t.RoleID)
                 .ForeignKey("dbo.LookupOption", t => t.AccountStatusID)
+                .ForeignKey("dbo.Account", t => t.ParentAccountID)
                 .Index(t => t.RoleID)
-                .Index(t => t.AccountStatusID);
+                .Index(t => t.AccountStatusID)
+                .Index(t => t.ParentAccountID);
             
             CreateTable(
                 "dbo.Role",
@@ -975,12 +978,68 @@ namespace EF.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         SystemStatus = c.Int(nullable: false),
                         AccountMainID = c.Int(nullable: false),
-                        HoliDay = c.DateTime(nullable: false),
+                        HoliDayValue = c.DateTime(nullable: false),
                         Remark = c.String(maxLength: 50),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
+            
+            CreateTable(
+                "dbo.TaskRule",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        AccountMainID = c.Int(nullable: false),
+                        TaskInfoName = c.String(maxLength: 400),
+                        EnumTaskType = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
+                .Index(t => t.AccountMainID);
+            
+            CreateTable(
+                "dbo.Task",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        TaskRuleID = c.Int(nullable: false),
+                        CreateAccountID = c.Int(nullable: false),
+                        ReceiverAccountID = c.Int(nullable: false),
+                        CreateDate = c.DateTime(nullable: false),
+                        BeginDate = c.DateTime(nullable: false),
+                        EndDate = c.DateTime(nullable: false),
+                        EnumTaskStatus = c.Int(nullable: false),
+                        TaskSpecification = c.String(maxLength: 4000),
+                        Quantity = c.Double(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.TaskRule", t => t.TaskRuleID)
+                .ForeignKey("dbo.Account", t => t.CreateAccountID)
+                .ForeignKey("dbo.Account", t => t.ReceiverAccountID)
+                .Index(t => t.TaskRuleID)
+                .Index(t => t.CreateAccountID)
+                .Index(t => t.ReceiverAccountID);
+            
+            CreateTable(
+                "dbo.TaskDetail",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        TaskID = c.Int(nullable: false),
+                        Content = c.String(maxLength: 4000),
+                        CreateDate = c.DateTime(nullable: false),
+                        Quantity = c.Double(),
+                        AccountID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Task", t => t.TaskID)
+                .ForeignKey("dbo.Account", t => t.AccountID)
+                .Index(t => t.TaskID)
+                .Index(t => t.AccountID);
             
             CreateTable(
                 "dbo.RoleMenu",
@@ -1060,6 +1119,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
 
+
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };
             foreach (var file in ddlSqlFiles)
@@ -1083,6 +1143,12 @@ namespace EF.Migrations
             DropIndex("dbo.Menu", new[] { "ParentMenuID" });
             DropIndex("dbo.RoleMenu", new[] { "MenuID" });
             DropIndex("dbo.RoleMenu", new[] { "RoleID" });
+            DropIndex("dbo.TaskDetail", new[] { "AccountID" });
+            DropIndex("dbo.TaskDetail", new[] { "TaskID" });
+            DropIndex("dbo.Task", new[] { "ReceiverAccountID" });
+            DropIndex("dbo.Task", new[] { "CreateAccountID" });
+            DropIndex("dbo.Task", new[] { "TaskRuleID" });
+            DropIndex("dbo.TaskRule", new[] { "AccountMainID" });
             DropIndex("dbo.Holiday", new[] { "AccountMainID" });
             DropIndex("dbo.OrderMType", new[] { "AccountMainID" });
             DropIndex("dbo.AppWaitImg", new[] { "AccountMainID" });
@@ -1174,6 +1240,7 @@ namespace EF.Migrations
             DropIndex("dbo.AccountMain", new[] { "ProvinceID" });
             DropIndex("dbo.Role", new[] { "AccountMainID" });
             DropIndex("dbo.Role", new[] { "ParentRoleID" });
+            DropIndex("dbo.Account", new[] { "ParentAccountID" });
             DropIndex("dbo.Account", new[] { "AccountStatusID" });
             DropIndex("dbo.Account", new[] { "RoleID" });
             DropForeignKey("dbo.ActivateEmail", "AccountID", "dbo.Account");
@@ -1183,6 +1250,12 @@ namespace EF.Migrations
             DropForeignKey("dbo.Menu", "ParentMenuID", "dbo.Menu");
             DropForeignKey("dbo.RoleMenu", "MenuID", "dbo.Menu");
             DropForeignKey("dbo.RoleMenu", "RoleID", "dbo.Role");
+            DropForeignKey("dbo.TaskDetail", "AccountID", "dbo.Account");
+            DropForeignKey("dbo.TaskDetail", "TaskID", "dbo.Task");
+            DropForeignKey("dbo.Task", "ReceiverAccountID", "dbo.Account");
+            DropForeignKey("dbo.Task", "CreateAccountID", "dbo.Account");
+            DropForeignKey("dbo.Task", "TaskRuleID", "dbo.TaskRule");
+            DropForeignKey("dbo.TaskRule", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.Holiday", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.OrderMType", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.AppWaitImg", "AccountMainID", "dbo.AccountMain");
@@ -1274,6 +1347,7 @@ namespace EF.Migrations
             DropForeignKey("dbo.AccountMain", "ProvinceID", "dbo.Province");
             DropForeignKey("dbo.Role", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.Role", "ParentRoleID", "dbo.Role");
+            DropForeignKey("dbo.Account", "ParentAccountID", "dbo.Account");
             DropForeignKey("dbo.Account", "AccountStatusID", "dbo.LookupOption");
             DropForeignKey("dbo.Account", "RoleID", "dbo.Role");
             DropTable("dbo.ActivateEmail");
@@ -1281,6 +1355,9 @@ namespace EF.Migrations
             DropTable("dbo.MenuOption");
             DropTable("dbo.Menu");
             DropTable("dbo.RoleMenu");
+            DropTable("dbo.TaskDetail");
+            DropTable("dbo.Task");
+            DropTable("dbo.TaskRule");
             DropTable("dbo.Holiday");
             DropTable("dbo.OrderMType");
             DropTable("dbo.AppWaitImg");

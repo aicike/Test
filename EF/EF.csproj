@@ -62,24 +62,9 @@
     <Compile Include="Mapping\AppUpdateMap.cs" />
     <Compile Include="Mapping\OrderUserInfoMap.cs" />
     <Compile Include="Mapping\TaskMap.cs" />
-    <Compile Include="Migrations\201311060750448_Initial.cs" />
-    <Compile Include="Migrations\201311060750448_Initial.Designer.cs">
-      <DependentUpon>201311060750448_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201311060952195_tt.cs" />
-    <Compile Include="Migrations\201311060952195_tt.Designer.cs">
-      <DependentUpon>201311060952195_tt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201311070421477_aa.cs" />
-    <Compile Include="Migrations\201311070421477_aa.Designer.cs">
-      <DependentUpon>201311070421477_aa.cs</DependentUpon>
-    <Compile Include="Migrations\201311040839437_initial.cs" />
-    <Compile Include="Migrations\201311040839437_initial.Designer.cs">
-      <DependentUpon>201311040839437_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201311050307045_AA.cs" />
-    <Compile Include="Migrations\201311050307045_AA.Designer.cs">
-      <DependentUpon>201311050307045_AA.cs</DependentUpon>
+    <Compile Include="Migrations\201311070709049_Initial.cs" />
+    <Compile Include="Migrations\201311070709049_Initial.Designer.cs">
+      <DependentUpon>201311070709049_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,19 +84,8 @@
     <Content Include="InitialProvince.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201311060750448_Initial.resx">
-      <DependentUpon>201311060750448_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201311060952195_tt.resx">
-      <DependentUpon>201311060952195_tt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201311070421477_aa.resx">
-      <DependentUpon>201311070421477_aa.cs</DependentUpon>
-    <EmbeddedResource Include="Migrations\201311040839437_initial.resx">
-      <DependentUpon>201311040839437_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201311050307045_AA.resx">
-      <DependentUpon>201311050307045_AA.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201311070709049_Initial.resx">
+      <DependentUpon>201311070709049_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
