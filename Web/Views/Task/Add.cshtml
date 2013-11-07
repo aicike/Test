@@ -1,0 +1,120 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.Task;
+}
+@section head{
+    <script type="text/javascript">
+
+        var isTrue = true;
+        var isCommit = true; //验证只能连续点击一次添加按钮
+
+        $(function () {
+            $("#BeginDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                onSelect: function (selectedDate) {
+                    $("#EndDate").datepicker("option", "minDate", selectedDate);
+                }
+            });
+
+            $("#EndDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                onSelect: function (selectedDate) {
+                    $("#BeginDate").datepicker("option", "maxDate", selectedDate);
+                }
+            });
+        });
+    </script>
+}
+@model Poco.Task
+<div class="title">
+    指派任务</div>
+<div class="body">
+    @using (Ajax.BeginForm("Add", "Task", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {        
+        <fieldset>
+            <legend>任务详细</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 任务规则
+                    </td>
+                    <td class="tdField">
+                        @Html.DropDownListFor(a => a.TaskRuleID, ViewData["TaskRule"] as List<SelectListItem>, new { })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.TaskRuleID)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 任务描述
+                    </td>
+                    <td class="tdField">
+                        @Html.TextAreaFor(a => a.TaskSpecification)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.TaskSpecification)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 执行人
+                    </td>
+                    <td class="tdField">
+                        @Html.DropDownListFor(a => a.ReceiverAccountID, ViewData["AccountList"] as List<SelectListItem>, new { })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.ReceiverAccountID)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 开始时间
+                    </td>
+                    <td class="tdField">
+                        @Html.TextBoxFor(a => a.BeginDate, new { @readonly = "readonly" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.BeginDate)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 结束时间
+                    </td>
+                    <td class="tdField">
+                        @Html.TextBoxFor(a => a.EndDate, new { @readonly = "readonly" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.EndDate)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification"></span>完成额
+                    </td>
+                    <td class="tdField">
+                        @Html.TextBoxFor(a => a.Quantity)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Quantity)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 状态
+                    </td>
+                    <td class="tdField">
+                        <select name="EnumTaskStatus">
+                            <option value="0">未开始</option>
+                            <option value="1">执行中</option>
+                            <option value="2">任务完成</option>
+                            <option value="2">任务未完成</option>
+                            <option value="2">任务取消</option>
+                        </select>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="submit" id="btnSubmit" value="保存" class="button" style="margin-right: 20px" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
+        </div>
+    }</div>

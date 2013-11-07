@@ -183,6 +183,8 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SalesMessageController.cs" />
     <Compile Include="Controllers\SetController.cs" />
+    <Compile Include="Controllers\TaskController.cs" />
+    <Compile Include="Controllers\TaskRuleController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\SingleChatController.cs" />
     <Compile Include="Controllers\UserManageController.cs" />
@@ -831,6 +833,11 @@
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Default\AppQrCode.cshtml" />
     <Content Include="Views\Holiday\Index.cshtml" />
+    <Content Include="Views\Task\Index.cshtml" />
+    <Content Include="Views\TaskRule\Index.cshtml" />
+    <Content Include="Views\TaskRule\Add.cshtml" />
+    <Content Include="Views\TaskRule\Edit.cshtml" />
+    <Content Include="Views\Task\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

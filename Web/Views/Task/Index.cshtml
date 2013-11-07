@@ -1,0 +1,80 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.Task;
+}
+@model PagedList<Poco.Task>
+<div class="title">
+    任务管理</div>
+<div class="bodyLeft">
+    <ul class="ulList">
+        <li class="select">@Html.ActionLink("任务管理", "Index", "Task", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("我的任务", "Index", "BasisSet", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("任务规则制定", "Index", "TaskRule", new { HostName = ViewBag.HostName }, null, true)</li>
+    </ul>
+</div>
+<div class="bodyRight">
+    <div class="option">
+        <div class="option">@Html.ActionLink("指派任务", "Add", "Task", new { HostName = ViewBag.HostName }, new { @class = "button" }, true)</div>
+    </div>
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th style="width: 230px;">
+                任务
+            </th>
+            <th style="width: 105px;">
+                执行者
+            </th>
+            <th style="width: 185px;">
+                任务时间
+            </th>
+            <th style="width: 95px;">
+                状态
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @item.TaskRule.TaskInfoName
+                </td>
+                <td>
+                    @item.ReceiverAccount.Name
+                </td>
+                <td>
+                    @item.BeginDate.ToString("yyyy-MM-dd")至
+                    @item.EndDate.ToString("yyyy-MM-dd")
+                </td>
+                <td class="operation">
+                    @Html.ActionLink("修改", "Edit", "Task", new { HostName = ViewBag.HostName, id = item.ID }, null)
+                    @Ajax.ActionLink("删除", "Delete", "Task", new { HostName = ViewBag.HostName, id = item.ID, }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "Task", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" })
+                </td>
+            </tr>
+            }
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
+<div style="clear: both">
+</div>

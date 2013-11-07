@@ -74,6 +74,7 @@
     <Compile Include="ISystemUserModel.cs" />
     <Compile Include="ISystemUserRoleModel.cs" />
     <Compile Include="ISystemUserRole_SystemUserMenuModel.cs" />
+    <Compile Include="ITaskRuleModel.cs" />
     <Compile Include="ITemporayInstantMesModel.cs" />
     <Compile Include="IUserLoginInfoModel.cs" />
     <Compile Include="IUserModel.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="IRoleMenuModel.cs" />
     <Compile Include="IAccount_UserModel.cs" />
     <Compile Include="IOrderUserInfoModel.cs" />
+    <Compile Include="ITaskModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Poco\Poco.csproj">
@@ -120,6 +122,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ILibraryVoiceModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ITaskDetailModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

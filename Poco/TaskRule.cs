@@ -23,7 +23,7 @@ namespace Poco
         /// 任务名称
         /// </summary>
         [Display(Name = "任务名称")]
-        [StringLength(30, ErrorMessage = "长度小于30")]
+        [StringLength(400, ErrorMessage = "长度小于200")]
         public string TaskInfoName { get; set; }
 
         /// <summary>

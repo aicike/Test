@@ -207,6 +207,10 @@ INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (27, 0, N'节假日管理', NULL, N'Holiday', N'Index', 4, 23)
 
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (28, 0, N'订单管理', NULL, N'Order', N'Index', 4, NULL)
+
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (29, 0, N'任务管理', NULL, N'Task', N'Index', 5, NULL)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (30, 0, N'我的任务', NULL, N'TaskRule', N'Index', 1, 29)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (31, 0, N'任务制定', NULL, N'TaskRule', N'Index', 2, 29)
 SET IDENTITY_INSERT [dbo].[Menu] OFF
 
 -----------------------------[MenuOption]--------------------------
@@ -253,7 +257,6 @@ INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  (
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,9,'删除','Delete',4)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,9,'启用/禁用','SetAccountStatus',5)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,9,'重置密码','ResetPwd',6)
-
 
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,10,'项目列表','Index',1)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,10,'查看项目详细信息','Select',2)
@@ -316,9 +319,21 @@ INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  (
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,27,'修改节假日','Edit',3)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,27,'删除节假日','Delete',4)
 
-
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,28,'订单列表','Index',1)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,28,'取消订单','Cancel',2)
+
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,29,'任务列表','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,29,'指派任务','Add',2)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,29,'修改指派任务','Edit',3)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,29,'删除指派任务','Delete',4)
+
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,30,'我的任务','Index',1)
+
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,31,'任务制定','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,31,'新增','Add',2)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,31,'修改','Edit',3)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,31,'删除','Delete',4)
+
 
 -----------------------------RoleMenu--------------------------
 --SET IDENTITY_INSERT [dbo].[RoleMenu] ON

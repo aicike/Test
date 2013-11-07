@@ -15,7 +15,7 @@ namespace Poco
 
         public int SystemStatus { get; set; }
 
-        public int TaskInfoID { get; set; }
+        public int TaskRuleID { get; set; }
 
         public virtual TaskRule TaskRule { get; set; }
 

@@ -45,7 +45,13 @@ namespace Interface
 
         Result ResetPwd(int id,string pwd);
 
-
         bool CheckHasPermissions_User(int accountID, int userID);
+
+        /// <summary>
+        /// 获取下级账号
+        /// </summary>
+        /// <param name="accountID"></param>
+        /// <returns></returns>
+        List<Account> GetSubAccounts(int accountID);
     }
 }

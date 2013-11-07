@@ -61,11 +61,11 @@ namespace Web.Controllers
                 }
 
             }
-            PagedList<Account> pageList = null;
+            PagedList<Account> pageList = new PagedList<Account>(new List<Account>(), 1, 15);
             if (accountList != null)
             {
                 pageList = accountList.ToPagedList(id ?? 1, 15);
-                
+
                 ViewBag.AccountAdminList = accountList.ToList();
             }
             ViewBag.RoleID = roleID.HasValue ? roleID.Value : RoleShowID;
@@ -101,7 +101,7 @@ namespace Web.Controllers
             IAccount_AccountMainModel model = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
             CommonModel cm = new CommonModel();
 
-            account_accountMain.Account.LoginPwd = cm.CreateRandom("",6);
+            account_accountMain.Account.LoginPwd = cm.CreateRandom("", 6);
             var result = model.Add(account_accountMain, HeadImagePathFile, w, h, x1, y1, tw, th);
             if (result.HasError)
             {
@@ -194,7 +194,7 @@ namespace Web.Controllers
         }
 
 
-        public ActionResult ResetPwd(int id,string mail)
+        public ActionResult ResetPwd(int id, string mail)
         {
             IAccountModel model = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             CommonModel cm = new CommonModel();

@@ -77,8 +77,6 @@ namespace Business
             return accountMain.Account_AccountMains.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Select(a => a.Account).Where(a => a.RoleID == roleID).AsQueryable();
         }
 
-
-
         [Transaction]
         public Result Add(Account account, int accountMainID, System.Web.HttpPostedFileBase HeadImagePathFile)
         {
@@ -279,7 +277,7 @@ namespace Business
                     var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
                     var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
                     HeadImagePathFile.SaveAs(imagePath);
-                    
+
                     account.HeadImagePath = path + imageName;
                     if (width > 0)
                     {
@@ -641,7 +639,7 @@ namespace Business
 
         public Result ResetPwd(int id, string pwd)
         {
-            string sql = string.Format("update Account set loginPwd = '{0}' where id={1}",pwd,id);
+            string sql = string.Format("update Account set loginPwd = '{0}' where id={1}", pwd, id);
             int cnt = base.SqlExecute(sql);
             Result result = new Result();
             if (cnt <= 0)
@@ -652,5 +650,14 @@ namespace Business
             return result;
         }
 
+        /// <summary>
+        /// 获取下级账号
+        /// </summary>
+        /// <param name="accountID">父级账号</param>
+        /// <returns></returns>
+        public List<Account> GetSubAccounts(int accountID)
+        {
+            return List().Where(a => a.ParentAccountID == accountID).ToList();
+        }
     }
 }

@@ -1,0 +1,43 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.Task;
+}
+@model Poco.TaskRule
+<div class="title">
+    制定任务规则</div>
+<div class="body">
+    @using (Ajax.BeginForm("Add", "TaskRule", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {        
+        <fieldset>
+            <legend>任务规则</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 规则名称
+                    </td>
+                    <td class="tdField">
+                        @Html.TextAreaFor(a => a.TaskInfoName)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.TaskInfoName)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="Identification">*</span> 规则类型
+                    </td>
+                    <td class="tdField">
+                        <select name="EnumTaskType">
+                            <option value="0">文字描述</option>
+                            <option value="1">数字</option>
+                            <option value="2">百分比</option>
+                        </select>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="submit" id="btnSubmit" value="保存" class="button" style="margin-right: 20px" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
+        </div>
+    }</div>

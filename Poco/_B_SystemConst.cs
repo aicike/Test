@@ -77,6 +77,7 @@ namespace Poco
             public const string Product = "Product";
             public const string OrderMType = "OrderMType";
             public const string Order = "Order";
+            public const string Task = "Task";
         }
 
         public class IOC_Model
@@ -142,6 +143,10 @@ namespace Poco
             public const string OrderMIntermediateModel = "OrderMIntermediateModel";
             public const string OrderDetailModel = "OrderDetailModel";
             public const string HolidayModel = "HolidayModel";
+
+            public const string TaskRuleModel = "TaskRuleModel";
+            public const string TaskModel = "TaskModel";
+            public const string TaskDetailModel = "TaskDetailModel";
         }
     }
 }
