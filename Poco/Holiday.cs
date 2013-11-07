@@ -18,7 +18,7 @@ namespace Poco
 
 
 
-        public DateTime HoliDay { get; set; }
+        public DateTime HoliDayValue { get; set; }
 
 
         [StringLength(50, ErrorMessage = "长度小于50")]

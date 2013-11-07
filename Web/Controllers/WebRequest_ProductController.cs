@@ -116,11 +116,11 @@ namespace Web.Controllers
         public string GetOrderByAccountID(int accountID, bool isComplete)
         {
             var model = Factory.Get<IOrderModel>(SystemConst.IOC_Model.OrderModel);
-            var list = model.GetByAccountID(accountID, isComplete).Select(a => new App_Order()
+            var list = model.GetByAccountID(accountID, isComplete).ToList().Select(a => new App_Order()
             {
                 OrderID = a.ID,
                 OrderNum = a.OrderNum,
-                OrderStatus=model.GetOrderStatusName((EnumOrderStatus)a.status),
+                OrderStatus= model.GetOrderStatusName((EnumOrderStatus)a.status),
                 OrderUserName=a.OrderUserInfo.Receiver,
                 OrderUserPhone=a.OrderUserInfo.RPhone,
                 OrderUserAddress=a.OrderUserInfo.Address,
@@ -130,8 +130,12 @@ namespace Web.Controllers
                 Remark = a.Remark,
                 ProductName = a.OrderDetail.FirstOrDefault().ProductName,
                 TotalPrice = a.Price,
-                DeliveryType = model.GeDeliveryTypeName((EnumDeliveryType)a.DeliveryType)
+                DeliveryType = model.GeDeliveryTypeName((EnumDeliveryType)a.DeliveryType),
+                DistrictName = a.OrderUserInfo.District.Name
             });
+         
+            //model.GetOrderStatusName((EnumOrderStatus)a.status),
+            // model.GeDeliveryTypeName((EnumDeliveryType)a.DeliveryType)
             return Newtonsoft.Json.JsonConvert.SerializeObject(list);
         }
 
@@ -147,6 +151,7 @@ namespace Web.Controllers
             order.AccountMainID = orderInfo.AccountMainID;
             order.OrderUserID = orderInfo.OrderUserID;
             order.OrderUserType = orderInfo.OrderUserType;
+            order.BeginDate = orderInfo.BeginDate;
             OrderUserInfo orderUserInfo = new OrderUserInfo();
             orderUserInfo.ID = orderInfo.OrderUserInfoID;
             orderUserInfo.ProvinceID = orderInfo.ProvinceID;
@@ -156,7 +161,8 @@ namespace Web.Controllers
             orderUserInfo.Receiver = orderInfo.Receiver;
             orderUserInfo.RPhone = orderInfo.RPhone;
             orderUserInfo.TelePhone = orderInfo.TelePhone;
-            var resul = model.AddOrder(order, orderUserInfo, orderInfo.ProductID, orderInfo.Count);
+            
+            var resul = model.AddOrder(order, orderUserInfo, orderInfo.ProductID, orderInfo.Count,orderInfo.OrderMTypeID);
             return Newtonsoft.Json.JsonConvert.SerializeObject(resul);
         }
     }

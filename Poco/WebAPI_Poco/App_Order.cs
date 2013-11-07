@@ -25,6 +25,8 @@ namespace Poco.WebAPI_Poco
 
         public string BeginDate { get; set; }
 
+        public string DistrictName { get; set; }
+
         /// <summary>
         /// 配送截止时间
         /// </summary>

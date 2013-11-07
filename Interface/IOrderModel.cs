@@ -17,10 +17,13 @@ namespace Interface
 
         IQueryable<Order> GetList(int accountMainID, int daybyday, string orderNum, string PhoneNum, string status);
 
-        Result AddOrder(Order rorder, OrderUserInfo orderUserInfo, int productID, int count);
+        Result AddOrder(Order rorder, OrderUserInfo orderUserInfo, int productID, int count, int OrderMTypeID);
 
         string GetOrderStatusName(EnumOrderStatus orderStatus);
 
         string GeDeliveryTypeName(EnumDeliveryType deliveryType);
+
+
+        Result SetOrderStatus(int id, int status);
     }
 }

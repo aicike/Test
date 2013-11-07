@@ -15,5 +15,12 @@ namespace Business
         {
             return List().Where(a => a.AccountMainID == AccountMainID);
         }
+
+
+        public IQueryable<Holiday> GetListByDateAndAMID(int AccountMainID, DateTime BeginDate, DateTime EndDate)
+        {
+            var list = List().Where(a => a.AccountMainID == AccountMainID && a.HoliDayValue >= BeginDate && a.HoliDayValue <= EndDate);
+            return list;
+        }
     }
 }

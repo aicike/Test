@@ -37,5 +37,13 @@ namespace Web.Controllers
             //application/vnd.android.package-archive
             return File(path, "application/vnd.android.package-archive");
         }
+
+        public ActionResult GetEndDate()
+        {
+            CommonModel cm = new CommonModel();
+            DateTime dt = Convert.ToDateTime("2013-11-05");
+            ViewBag.aa = cm.GetEndDate(dt, 6, 1, 0);
+            return View();
+        }
     }
 }

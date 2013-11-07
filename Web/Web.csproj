@@ -255,6 +255,10 @@
     <Content Include="Scripts\Jcrop\Jcrop.gif" />
     <Content Include="Scripts\Jcrop\jquery.Jcrop.css" />
     <Content Include="Scripts\Jcrop\jquery.Jcrop.js" />
+    <Content Include="Scripts\mobiscroll\css\mobiscroll.custom-2.6.2.min.css" />
+    <Content Include="Scripts\mobiscroll\css\wp_icons.png" />
+    <Content Include="Scripts\mobiscroll\css\wp_icons_light.png" />
+    <Content Include="Scripts\mobiscroll\js\mobiscroll.custom-2.6.2.min.js" />
     <Content Include="Scripts\nivoSlider\bar\arrows.png" />
     <Content Include="Scripts\nivoSlider\bar\bar.css" />
     <Content Include="Scripts\nivoSlider\bar\bullets.png" />
@@ -831,6 +835,10 @@
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Default\AppQrCode.cshtml" />
     <Content Include="Views\Holiday\Index.cshtml" />
+    <Content Include="Views\Holiday\Add.cshtml" />
+    <Content Include="Views\Holiday\Edit.cshtml" />
+    <Content Include="Views\Test\GetEndDate.cshtml" />
+    <Content Include="Views\Order\OrderInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
