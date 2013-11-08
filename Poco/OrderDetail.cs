@@ -49,5 +49,10 @@ namespace Poco
         /// 数量
         /// </summary>
         public int Count { get; set; }
+
+        /// <summary>
+        /// 规格
+        /// </summary>
+        public string Specification { get; set; }
     }
 }

@@ -184,5 +184,8 @@ namespace Poco
         public virtual ICollection<Holiday> Holiday { get; set; }
 
         public virtual ICollection<TaskRule> TaskRules { get; set; }
+
+        public virtual ICollection<Task> Task { get; set; }
+        
     }
 }

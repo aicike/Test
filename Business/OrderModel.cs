@@ -169,6 +169,7 @@ namespace Business
                 orderDetail.ProductName = product.Name;
                 orderDetail.ProductImg = product.imgFilePath;
                 orderDetail.ProductType = product.Classify.Name;
+                orderDetail.Specification = product.Specification;
                 orderDetail.Price = product.Price;
                 orderDetail.Count = count;
                 result = orderDetailModel.Add(orderDetail);
