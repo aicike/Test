@@ -27,6 +27,10 @@ namespace Business
             account.RoleID = account_accountMain.Account.RoleID;
             account.AccountStatusID = account_accountMain.Account.AccountStatusID;
             account.IsActivated = account_accountMain.Account.IsActivated;
+            if (account_accountMain.Account.ParentAccountID.HasValue && account_accountMain.Account.ParentAccountID.Value > 0)
+            {
+                account.ParentAccountID = account_accountMain.Account.ParentAccountID;
+            }
             var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             result = accountModel.Add(account, account_accountMain.AccountMainID, HeadImagePathFile);
             if (result.HasError == false)
@@ -90,6 +94,10 @@ namespace Business
             account.RoleID = account_accountMain.Account.RoleID;
             account.AccountStatusID = account_accountMain.Account.AccountStatusID;
             account.IsActivated = account_accountMain.Account.IsActivated;
+            if (account_accountMain.Account.ParentAccountID.HasValue && account_accountMain.Account.ParentAccountID.Value > 0)
+            {
+                account.ParentAccountID = account_accountMain.Account.ParentAccountID;
+            }
             var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             result = accountModel.Add(account, account_accountMain.AccountMainID, HeadImagePathFile, x1, y1, w, h, tw, th);
             if (result.HasError == false)

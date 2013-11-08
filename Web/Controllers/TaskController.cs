@@ -7,6 +7,7 @@ using Controllers;
 using Injection;
 using Interface;
 using Poco;
+using Poco.Enum;
 
 namespace Web.Controllers
 {
@@ -34,13 +35,15 @@ namespace Web.Controllers
             newTaskRuleList.Add(new SelectListItem { Text = "请选择", Value = "select", Selected = true });
             newTaskRuleList.AddRange(selectListTaskRule);
             ViewData["TaskRule"] = newTaskRuleList;
+            ViewBag.TaskRule_Number = taskRules.Where(a => a.EnumTaskType == (int)EnumTaskType.Number).Select(a => a.ID).ToList().ConvertToString(",");
+            ViewBag.TaskRule_Percent = taskRules.Where(a => a.EnumTaskType == (int)EnumTaskType.Percent).Select(a => a.ID).ToList().ConvertToString(",");
 
             var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             var subAccountList = accountModel.GetSubAccounts(LoginAccount.ID);
             var selectListSubAccounts = new SelectList(subAccountList, "ID", "Name");
             List<SelectListItem> newSubAccountList = new List<SelectListItem>();
             newSubAccountList.Add(new SelectListItem { Text = "请选择", Value = "select", Selected = true });
-            newSubAccountList.AddRange(selectListTaskRule);
+            newSubAccountList.AddRange(selectListSubAccounts);
             ViewData["AccountList"] = newSubAccountList;
 
             return View();
@@ -50,6 +53,7 @@ namespace Web.Controllers
         public ActionResult Add(Task task)
         {
             var taskModel = Factory.Get<ITaskModel>(SystemConst.IOC_Model.TaskModel);
+            task.CreateDate = DateTime.Now;
             var result = taskModel.Add(task);
             if (result.HasError)
             {

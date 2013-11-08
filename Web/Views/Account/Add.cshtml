@@ -2,27 +2,21 @@
   
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
     ViewBag.Menu = Poco.SystemConst.Menu.Account;
+    var roleList = ViewBag.RoleList as List<Poco.Role>;
 }
 @section head{
-     <script src="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.js")" type="text/javascript"></script>
     <link href="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.css")" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
 
         var isTrue = true;
-        var isCommit = true;//验证只能连续点击一次添加按钮
+        var isCommit = true; //验证只能连续点击一次添加按钮
         var Cnt = 0;
         $(function () {
             var CheckIsExistAdminUrl = '@Url.Action("CheckIsExistAdmin", "Account")';
 
-//            $("#btnUpload").click(function () {
-//                $("#HeadImagePathFile").click();
-            //            });
-
 
             var jcrop_api, boundx, boundy;
-
-
-
 
             function updatePreview(c) {
                 if (parseInt(c.w) > 0) {
@@ -173,16 +167,46 @@
                     });
                     return false;
                 }
-//                if (!isCommit) {
-//                    return false;
-//                }
-//                isCommit = false;
+            });
 
+            $("#parentAccount").click(function () {
+                $("#dialogUser").dialog({
+                    resizable: false,
+                    height: 600,
+                    width: 800,
+                    modal: true,
+                    buttons: {
+                        "确定": function () {
+                            var uids = "";
+                            var name = "";
+                            $.each($("#dialogUser").find(":checked"), function (i, n) {
+                                uids = $(n).val();
+                                name = $(n).attr("nv");
+                            });
+                            if (uids.length > 0) {
+                                $("#Account_ParentAccountID").val(uids);
+                                $("#parentAccount").val(name);
+                                $(this).dialog("close");
+                            } else {
+                                $("#parentAccount").val("");
+                                $(this).dialog("close");
+                            }
+                        },
+                        "取消": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
 
+            $("#btnClear").click(function () {
+                $("#parentAccount").val("");
+                $("#Account_ParentAccountID").val("");
+                $(":radio").attr("checked", false)
             });
         });
     </script>
-     <style type="text/css">
+    <style type="text/css">
         .middle-out
         {
             width: 320px;
@@ -191,6 +215,25 @@
             vertical-align: middle;
             text-align: center;
             border: 1px solid #d0d0d0;
+        }
+        .ulUser
+        {
+            padding: 0px;
+            margin: 5px 0px;
+        }
+        .ulUser li
+        {
+            list-style-type: none;
+        }
+        .ulUserTitle
+        {
+            height: 30px;
+            line-height: 30px;
+        }
+        .ulUserList
+        {
+            min-height: 30px;
+            border-bottom: 1px solid #E7E7E7;
         }
     </style>
 }
@@ -254,7 +297,6 @@
         <fieldset>
             <legend>账号信息</legend>
             <table>
-            
                 <tr>
                     <td class="tdTitle">
                         <span class="Identification">*</span> 名称
@@ -283,7 +325,6 @@
                     <td>@Html.ValidationMessageFor(a => a.Account.Phone)
                     </td>
                 </tr>
-               
                 <tr>
                     <td>
                         <span class="Identification">*</span> 角色
@@ -294,9 +335,41 @@
                         @Html.ValidationMessageFor(a => a.Account.RoleID)
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <span class="Identification"></span>上级账号
+                    </td>
+                    <td>
+                        <input type="text" id="parentAccount" readonly="readonly" />
+                        <input type="hidden" id="Account_ParentAccountID" name="Account.ParentAccountID"
+                            value="0" />
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(a => a.Account.ParentAccountID)
+                    </td>
+                </tr>
             </table>
         </fieldset>
         <div class="action">
-            <input type="submit" id="btnSubmit" value="保存" class="button"  style="margin-right: 20px" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
+            <input type="submit" id="btnSubmit" value="保存" class="button" style="margin-right: 20px" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
         </div>
     }</div>
+<div id="dialogUser" title="选择账号" style="display: none">
+    <ul class="ulUser">
+        <li>
+            <input type="button" value="清空" id="btnClear" class="button" />
+        </li>
+        @foreach (var item in roleList)
+        {
+            <li>
+                <div class="ulUserTitle">@item.Name</div>
+                <div class="ulUserList">
+                    @foreach (var user in item.Accounts)
+                    {
+                        <input type="radio" id="cb_@user.ID" value="@user.ID" name="parentAccount" nv="@user.Name" /><label for="cb_@user.ID">@user.Name</label>
+                    }
+                </div>
+            </li>
+        }
+    </ul>
+</div>

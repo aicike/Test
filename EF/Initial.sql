@@ -209,7 +209,7 @@ INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (28, 0, N'订单管理', NULL, N'Order', N'Index', 4, NULL)
 
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (29, 0, N'任务管理', NULL, N'Task', N'Index', 5, NULL)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (30, 0, N'我的任务', NULL, N'TaskRule', N'Index', 1, 29)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (30, 0, N'我的任务', NULL, N'MyTask', N'Index', 1, 29)
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (31, 0, N'任务制定', NULL, N'TaskRule', N'Index', 2, 29)
 SET IDENTITY_INSERT [dbo].[Menu] OFF
 

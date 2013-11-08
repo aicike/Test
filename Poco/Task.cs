@@ -15,6 +15,7 @@ namespace Poco
 
         public int SystemStatus { get; set; }
 
+        [RegularExpression(@"\d+", ErrorMessage = "请选择任务规则")]
         public int TaskRuleID { get; set; }
 
         public virtual TaskRule TaskRule { get; set; }
@@ -29,6 +30,7 @@ namespace Poco
         /// <summary>
         /// 执行者
         /// </summary>
+        [RegularExpression(@"\d+", ErrorMessage = "请选择执行人")]
         public int ReceiverAccountID { get; set; }
 
         public Account ReceiverAccount { get; set; }
@@ -67,6 +69,7 @@ namespace Poco
         /// 任务类型为百分数，则按照百分数进行统计
         /// 任务类型为字符串，不统计
         /// </summary>
+        [RegularExpression(@"\d+.?\d*", ErrorMessage = "{0}必须是一个数字。")]
         public double? Quantity { get; set; }
 
         public virtual ICollection<TaskDetail> TaskDetails { get; set; }

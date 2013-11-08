@@ -12,6 +12,7 @@
             $("#BeginDate").datepicker({
                 changeMonth: true,
                 changeYear: true,
+                minDate: new Date(),
                 onSelect: function (selectedDate) {
                     $("#EndDate").datepicker("option", "minDate", selectedDate);
                 }
@@ -23,6 +24,13 @@
                 onSelect: function (selectedDate) {
                     $("#BeginDate").datepicker("option", "maxDate", selectedDate);
                 }
+            });
+
+            var tr_number = '@ViewBag.TaskRule_Number';
+            var tr_percent = '@ViewBag.TaskRule_Percent';
+
+            $("#TaskRuleID").change(function () {
+                
             });
         });
     </script>
@@ -101,7 +109,7 @@
                         <span class="Identification">*</span> 状态
                     </td>
                     <td class="tdField">
-                        <select name="EnumTaskStatus">
+                        <select name="EnumTaskStatus" disabled="disabled">
                             <option value="0">未开始</option>
                             <option value="1">执行中</option>
                             <option value="2">任务完成</option>
