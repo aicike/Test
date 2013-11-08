@@ -17,6 +17,9 @@ namespace Poco
 
         public int TaskRuleID { get; set; }
 
+        public int AccountMainID { get; set; }
+        public virtual AccountMain AccountMain { get; set; }
+
         public virtual TaskRule TaskRule { get; set; }
 
         /// <summary>

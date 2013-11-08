@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8CBA02AA-FF14-472C-ADD2-C75F9832C16A}</ProjectGuid>
+    <ProjectGuid>{D7E5574B-F1A4-4B74-B2FA-DF82F4A78794}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FinishORder</RootNamespace>
-    <AssemblyName>FinishORder</AssemblyName>
+    <RootNamespace>FinishTask</RootNamespace>
+    <AssemblyName>FinishTask</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
