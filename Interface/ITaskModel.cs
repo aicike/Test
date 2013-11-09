@@ -9,5 +9,7 @@ namespace Interface
     public interface ITaskModel : IBaseModel<Task>
     {
         IQueryable<Task> GetByCreateAccountID(int createAccountID);
+
+        IQueryable<Task> GetMyTasks(int accountID);
     }
 }

@@ -178,6 +178,7 @@
     <Compile Include="Controllers\BaseController\ManageSystemUserController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\LibraryTextController.cs" />
+    <Compile Include="Controllers\MyTaskController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\OrderMTypeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -846,6 +847,8 @@
     <Content Include="Views\Holiday\Edit.cshtml" />
     <Content Include="Views\Test\GetEndDate.cshtml" />
     <Content Include="Views\Order\OrderInfo.cshtml" />
+    <Content Include="Views\Task\Edit.cshtml" />
+    <Content Include="Views\MyTask\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

@@ -343,7 +343,7 @@
         $sel = $('<div />') 
         .css({
           position: 'absolute',
-          zIndex: 300
+          zIndex: 21
         }).insertBefore($img).append($img_holder, $hdl_holder); 
 
     if (ie6mode) {
@@ -357,7 +357,7 @@
       position: 'absolute',
       top: px(-bound),
       left: px(-bound),
-      zIndex: 290
+      zIndex: 20
     }).mousedown(newSelection);
 
     /* }}} */
@@ -1003,7 +1003,7 @@
       var $track = newTracker().mousedown(createDragger('move')).css({
         cursor: 'move',
         position: 'absolute',
-        zIndex: 360
+        zIndex: 21
       });
 
       if (Touch.support) {
@@ -1057,7 +1057,7 @@
       function toBack() //{{{
       {
         $trk.css({
-          zIndex: 290
+          zIndex: 20
         });
         if (trackDoc) {
           $(document)

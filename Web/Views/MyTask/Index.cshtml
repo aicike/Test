@@ -2,27 +2,29 @@
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
     ViewBag.Menu = Poco.SystemConst.Menu.Task;
 }
-@model PagedList<Poco.TaskRule>
+@model PagedList<Poco.Task>
 <div class="title">
     任务管理</div>
 <div class="bodyLeft">
     <ul class="ulList">
         <li>@Html.ActionLink("任务管理", "Index", "Task", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li>@Html.ActionLink("我的任务", "Index", "MyTask", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li class="select">@Html.ActionLink("任务规则制定", "Index", "TaskRule", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li class="select">@Html.ActionLink("我的任务", "Index", "MyTask", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("任务规则制定", "Index", "TaskRule", new { HostName = ViewBag.HostName }, null, true)</li>
     </ul>
 </div>
 <div class="bodyRight">
     <div class="option">
-        <div class="option">@Html.ActionLink("制定任务规则", "Add", "TaskRule", new { HostName = ViewBag.HostName }, new { @class = "button" }, true)</div>
     </div>
     <table class="tableList" cellpadding="0" cellspacing="0">
         <tr>
-            <th style="width: 440px;">
-                规则名称
+            <th style="width: 280px;">
+                任务
             </th>
-            <th style="width: 130px;">
-                规则类型
+            <th style="width: 180px;">
+                任务时间
+            </th>
+            <th style="width: 120px;">
+                状态
             </th>
             <th>
                 操作
@@ -34,25 +36,33 @@
             {
             <tr>
                 <td>
-                    @item.TaskInfoName
+                    @item.TaskRule.TaskInfoName
+                </td>
+                <td style="font-size: 12px">
+                    @item.BeginDate.ToString("yyyy-MM-dd")&nbsp;至&nbsp;@item.EndDate.ToString("yyyy-MM-dd")
                 </td>
                 <td>
-                    @switch (item.EnumTaskType)
+                    @switch (item.EnumTaskStatus)
                     {
-                        case (int)Poco.Enum.EnumTaskType.Text:
-                        @:文字描述
-                                                break;
-                        case (int)Poco.Enum.EnumTaskType.Number:
-                        @:数字要求
-                                                break;
-                        case (int)Poco.Enum.EnumTaskType.Percent:
-                        @:百分比要求
-                                                break;
+                        case (int)Poco.Enum.EnumTaskStatus.Cancel:
+                        @:取消
+                            break;
+                        case (int)Poco.Enum.EnumTaskStatus.Finish:
+                        @:完成
+                            break;
+                        case (int)Poco.Enum.EnumTaskStatus.None:
+                        @:未开始
+                            break;
+                        case (int)Poco.Enum.EnumTaskStatus.Process:
+                        @:执行中
+                            break;
+                        case (int)Poco.Enum.EnumTaskStatus.UnFinish:
+                        @:未完成
+                            break;
                     }
                 </td>
                 <td class="operation">
-                    @Html.ActionLink("修改", "Edit", "TaskRule", new { HostName = ViewBag.HostName, id = item.ID }, null)
-                    @Ajax.ActionLink("删除", "Delete", "TaskRule", new { HostName = ViewBag.HostName, id = item.ID, }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "TaskRule", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" })
+                    @Html.ActionLink("详细", "Detail", "MyTask", new { HostName = ViewBag.HostName, id = item.ID }, null)
                 </td>
             </tr>
             }

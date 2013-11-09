@@ -28,7 +28,7 @@ namespace Poco
         /// </summary>
         public int CreateAccountID { get; set; }
 
-        public Account CreateAccount { get; set; }
+        public virtual Account CreateAccount { get; set; }
 
         /// <summary>
         /// 执行者
@@ -36,7 +36,7 @@ namespace Poco
         [RegularExpression(@"\d+", ErrorMessage = "请选择执行人")]
         public int ReceiverAccountID { get; set; }
 
-        public Account ReceiverAccount { get; set; }
+        public virtual Account ReceiverAccount { get; set; }
 
         /// <summary>
         /// 创建时间
@@ -72,6 +72,7 @@ namespace Poco
         /// 任务类型为百分数，则按照百分数进行统计
         /// 任务类型为字符串，不统计
         /// </summary>
+        [Display(Name = "任务量")]
         [RegularExpression(@"\d+.?\d*", ErrorMessage = "{0}必须是一个数字。")]
         public double? Quantity { get; set; }
 

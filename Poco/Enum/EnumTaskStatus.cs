@@ -13,22 +13,22 @@ namespace Poco.Enum
         /// <summary>
         /// 未开始
         /// </summary>
-        None,
+        None=0,
         /// <summary>
         /// 执行中
         /// </summary>
-        Process,
+        Process=1,
         /// <summary>
         /// 任务完成
         /// </summary>
-        Finish,
+        Finish=2,
         /// <summary>
         /// 任务未完成
         /// </summary>
-        UnFinish,
+        UnFinish=3,
         /// <summary>
         /// 任务取消
         /// </summary>
-        Cancel
+        Cancel=4
     }
 }

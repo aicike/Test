@@ -8,7 +8,7 @@
 <div class="bodyLeft">
     <ul class="ulList">
         <li class="select">@Html.ActionLink("任务管理", "Index", "Task", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li>@Html.ActionLink("我的任务", "Index", "BasisSet", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("我的任务", "Index", "MyTask", new { HostName = ViewBag.HostName }, null, true)</li>
         <li>@Html.ActionLink("任务规则制定", "Index", "TaskRule", new { HostName = ViewBag.HostName }, null, true)</li>
     </ul>
 </div>
@@ -21,10 +21,10 @@
             <th style="width: 230px;">
                 任务
             </th>
-            <th style="width: 105px;">
+            <th style="width: 110px;">
                 执行者
             </th>
-            <th style="width: 185px;">
+            <th style="width: 175px;">
                 任务时间
             </th>
             <th style="width: 95px;">
@@ -45,9 +45,28 @@
                 <td>
                     @item.ReceiverAccount.Name
                 </td>
+                <td style="font-size: 12px">
+                    @item.BeginDate.ToString("yyyy-MM-dd")&nbsp;至&nbsp;@item.EndDate.ToString("yyyy-MM-dd")
+                </td>
                 <td>
-                    @item.BeginDate.ToString("yyyy-MM-dd")至
-                    @item.EndDate.ToString("yyyy-MM-dd")
+                    @switch (item.EnumTaskStatus)
+                    {
+                        case (int)Poco.Enum.EnumTaskStatus.Cancel:
+                        @:取消
+                            break;
+                        case (int)Poco.Enum.EnumTaskStatus.Finish:
+                        @:完成
+                            break;
+                        case (int)Poco.Enum.EnumTaskStatus.None:
+                        @:未开始
+                            break;
+                        case (int)Poco.Enum.EnumTaskStatus.Process:
+                        @:执行中
+                            break;
+                        case (int)Poco.Enum.EnumTaskStatus.UnFinish:
+                        @:未完成
+                                                                                                                                break;
+                    }
                 </td>
                 <td class="operation">
                     @Html.ActionLink("修改", "Edit", "Task", new { HostName = ViewBag.HostName, id = item.ID }, null)
