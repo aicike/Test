@@ -64,8 +64,8 @@
     <Compile Include="Enum\EnumTaskStatus.cs" />
     <Compile Include="Enum\EnumTaskType.cs" />
     <Compile Include="Task.cs" />
+    <Compile Include="TaskAccount.cs" />
     <Compile Include="TaskDetail.cs" />
-    <Compile Include="TaskRule.cs" />
     <Compile Include="WebAPI_Poco\App_Order.cs" />
     <Compile Include="Enum\EnumBuildingType.cs" />
     <Compile Include="Enum\EnumConversationType.cs" />

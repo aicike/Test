@@ -74,7 +74,6 @@
     <Compile Include="ISystemUserModel.cs" />
     <Compile Include="ISystemUserRoleModel.cs" />
     <Compile Include="ISystemUserRole_SystemUserMenuModel.cs" />
-    <Compile Include="ITaskRuleModel.cs" />
     <Compile Include="ITemporayInstantMesModel.cs" />
     <Compile Include="IUserLoginInfoModel.cs" />
     <Compile Include="IUserModel.cs" />

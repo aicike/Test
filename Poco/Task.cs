@@ -14,14 +14,9 @@ namespace Poco
         public int ID { get; set; }
 
         public int SystemStatus { get; set; }
-
-        [RegularExpression(@"\d+", ErrorMessage = "请选择任务规则")]
-        public int TaskRuleID { get; set; }
-
+        
         public int AccountMainID { get; set; }
         public virtual AccountMain AccountMain { get; set; }
-
-        public virtual TaskRule TaskRule { get; set; }
 
         /// <summary>
         /// 创建者

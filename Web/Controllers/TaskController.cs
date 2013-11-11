@@ -27,17 +27,7 @@ namespace Web.Controllers
         public ActionResult Add()
         {
             string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-任务管理", LoginAccount.CurrentAccountMainName, SystemConst.WebTitleRemark);
-
-            var taskRuleModel = Factory.Get<ITaskRuleModel>(SystemConst.IOC_Model.TaskRuleModel);
-            var taskRules = taskRuleModel.GetByAccountMainID(LoginAccount.CurrentAccountMainID).ToList();
-            var selectListTaskRule = new SelectList(taskRules, "ID", "TaskInfoName");
-            List<SelectListItem> newTaskRuleList = new List<SelectListItem>();
-            newTaskRuleList.Add(new SelectListItem { Text = "请选择", Value = "select", Selected = true });
-            newTaskRuleList.AddRange(selectListTaskRule);
-            ViewData["TaskRule"] = newTaskRuleList;
-            ViewBag.TaskRule_Number = taskRules.Where(a => a.EnumTaskType == (int)EnumTaskType.Number).Select(a => a.ID).ToList().ConvertToString(",");
-            ViewBag.TaskRule_Percent = taskRules.Where(a => a.EnumTaskType == (int)EnumTaskType.Percent).Select(a => a.ID).ToList().ConvertToString(",");
-
+            
             var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             var subAccountList = accountModel.GetSubAccounts(LoginAccount.ID);
             var selectListSubAccounts = new SelectList(subAccountList, "ID", "Name");
@@ -72,17 +62,7 @@ namespace Web.Controllers
             (result.AccountMainID == LoginAccount.CurrentAccountMainID).NotAuthorizedPage();
             string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-任务管理", LoginAccount.CurrentAccountMainName, SystemConst.WebTitleRemark);
             ViewBag.HostName = LoginAccount.HostName;
-
-            var taskRuleModel = Factory.Get<ITaskRuleModel>(SystemConst.IOC_Model.TaskRuleModel);
-            var taskRules = taskRuleModel.GetByAccountMainID(LoginAccount.CurrentAccountMainID).ToList();
-            var selectListTaskRule = new SelectList(taskRules, "ID", "TaskInfoName");
-            List<SelectListItem> newTaskRuleList = new List<SelectListItem>();
-            newTaskRuleList.Add(new SelectListItem { Text = "请选择", Value = "select", Selected = true });
-            newTaskRuleList.AddRange(selectListTaskRule);
-            ViewData["TaskRule"] = newTaskRuleList;
-            ViewBag.TaskRule_Number = taskRules.Where(a => a.EnumTaskType == (int)EnumTaskType.Number).Select(a => a.ID).ToList().ConvertToString(",");
-            ViewBag.TaskRule_Percent = taskRules.Where(a => a.EnumTaskType == (int)EnumTaskType.Percent).Select(a => a.ID).ToList().ConvertToString(",");
-
+            
             var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             var subAccountList = accountModel.GetSubAccounts(LoginAccount.ID);
             var selectListSubAccounts = new SelectList(subAccountList, "ID", "Name");

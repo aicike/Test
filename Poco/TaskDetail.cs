@@ -39,5 +39,7 @@ namespace Poco
         public int AccountID { get; set; }
 
         public virtual Account Account { get; set; }
+
+        public virtual ICollection<TaskAccount> TaskAccounts { get; set; }
     }
 }

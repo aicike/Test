@@ -21,14 +21,10 @@ namespace Poco.Enum
         /// <summary>
         /// 任务完成
         /// </summary>
-        Finish=2,
-        /// <summary>
-        /// 任务未完成
-        /// </summary>
-        UnFinish=3,
+        End=2,
         /// <summary>
         /// 任务取消
         /// </summary>
-        Cancel=4
+        Cancel=3
     }
 }

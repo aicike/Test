@@ -135,5 +135,7 @@ namespace Poco
         public virtual ICollection<Task> Tasks_Receiver { get; set; }
 
         public virtual ICollection<TaskDetail> TaskDetails { get; set; }
+
+        public virtual ICollection<TaskAccount> TaskAccounts { get; set; }
     }
 }
