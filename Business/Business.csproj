@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="agsXMPP, Version=0.9.0.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL">
+      <HintPath>..\packages\agsXMPP\agsXMPP.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
@@ -108,6 +111,7 @@
     <Compile Include="Push_IOS.cs" />
     <Compile Include="QrCodeModel.cs" />
     <Compile Include="RoleModel.cs" />
+    <Compile Include="SMS_Model.cs" />
     <Compile Include="SystemUserModel.cs" />
     <Compile Include="Account_AccountMainModel.cs" />
     <Compile Include="ActivateEmailModel.cs" />

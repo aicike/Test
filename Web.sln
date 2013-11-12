@@ -25,6 +25,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinishORder", "FinishORder\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetTaskStatus", "FinishTask\SetTaskStatus.csproj", "{D7E5574B-F1A4-4B74-B2FA-DF82F4A78794}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SMS", "SMS", "{852BDA83-BDD7-4AF1-A335-C50036996E40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMS_Server", "SMS_Server\SMS_Server.csproj", "{956C5EA8-AB58-41DB-9953-A1DC6C5A5300}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -155,6 +159,16 @@ Global
 		{D7E5574B-F1A4-4B74-B2FA-DF82F4A78794}.Release|Mixed Platforms.Build.0 = Release|x86
 		{D7E5574B-F1A4-4B74-B2FA-DF82F4A78794}.Release|x86.ActiveCfg = Release|x86
 		{D7E5574B-F1A4-4B74-B2FA-DF82F4A78794}.Release|x86.Build.0 = Release|x86
+		{956C5EA8-AB58-41DB-9953-A1DC6C5A5300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{956C5EA8-AB58-41DB-9953-A1DC6C5A5300}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{956C5EA8-AB58-41DB-9953-A1DC6C5A5300}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{956C5EA8-AB58-41DB-9953-A1DC6C5A5300}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{956C5EA8-AB58-41DB-9953-A1DC6C5A5300}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{956C5EA8-AB58-41DB-9953-A1DC6C5A5300}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{956C5EA8-AB58-41DB-9953-A1DC6C5A5300}.Release|Any CPU.Build.0 = Release|Any CPU
+		{956C5EA8-AB58-41DB-9953-A1DC6C5A5300}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{956C5EA8-AB58-41DB-9953-A1DC6C5A5300}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{956C5EA8-AB58-41DB-9953-A1DC6C5A5300}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -162,5 +176,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{8CBA02AA-FF14-472C-ADD2-C75F9832C16A} = {CC04025F-6351-4007-8D78-482209B32E82}
 		{D7E5574B-F1A4-4B74-B2FA-DF82F4A78794} = {CC04025F-6351-4007-8D78-482209B32E82}
+		{956C5EA8-AB58-41DB-9953-A1DC6C5A5300} = {852BDA83-BDD7-4AF1-A335-C50036996E40}
 	EndGlobalSection
 EndGlobal

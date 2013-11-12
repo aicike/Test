@@ -63,6 +63,7 @@
     <Compile Include="Conversation.cs" />
     <Compile Include="Enum\EnumTaskStatus.cs" />
     <Compile Include="Enum\EnumTaskType.cs" />
+    <Compile Include="SMS.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="TaskAccount.cs" />
     <Compile Include="TaskDetail.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="WebAPI_Poco\App_OrderSubmit.cs" />
     <Compile Include="WebAPI_Poco\App_OrderUserInfo.cs" />
     <Compile Include="WebAPI_Poco\App_Product.cs" />
+    <Compile Include="WebAPI_Poco\App_Task.cs" />
     <Compile Include="WebAPI_Poco\App_User.cs" />
     <Compile Include="WebAPI_Poco\App_UserLoginInfo.cs" />
     <Compile Include="WebAPI_Poco\App_Voice.cs" />
@@ -169,6 +171,7 @@
     <Compile Include="_Menu.cs" />
     <Compile Include="_RoleMenu.cs" />
     <Compile Include="_RoleOption.cs" />
+    <Compile Include="XMPP_Body_SMS.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

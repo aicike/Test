@@ -54,7 +54,7 @@ namespace Poco
         public int EnumTaskStatus { get; set; }
 
         /// <summary>
-        /// 任务说明，要求等
+        /// 任务说明，要求等，标题
         /// </summary>
         [Display(Name = "任务说明")]
         [StringLength(4000, ErrorMessage = "长度小于4000")]

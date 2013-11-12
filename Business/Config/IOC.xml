@@ -74,7 +74,6 @@
 
   <object id="AutoMessage_UserModel" type="Business.AutoMessage_UserModel" parent="EFModel" singleton="false"></object>
   
-  <object id="TaskRuleModel" type="Business.TaskRuleModel" parent="EFModel" singleton="false"></object>
   <object id="TaskModel" type="Business.TaskModel" parent="EFModel" singleton="false"></object>
   <object id="TaskDetailModel" type="Business.TaskDetailModel" parent="EFModel" singleton="false"></object>
   
