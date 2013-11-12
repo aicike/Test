@@ -228,6 +228,16 @@ namespace AcceptanceServer
                             }
                             else
                             {
+                                //群聊
+                                if (Np.MSD == "4")
+                                {
+
+                                }
+                                else
+                                { 
+                                
+                                }
+
                                 //本条消息数据库ID
                                 ThisMessageID = int.Parse(dt.Rows[0][0].ToString());
                                 //在线
@@ -255,18 +265,18 @@ namespace AcceptanceServer
                                 else
                                 {
                                     
-                                    //存储离线记录
-                                    int cnt = DataBusiness.InsertOffLineData(msg, Np, ThisMessageID);
-                                    if (cnt <= 0)
-                                    {
-                                        //return  6发送失败
-                                        SendMessageStatus("6", msg.To.User);
-                                    }
-                                    else
-                                    {
+                                    ////存储离线记录
+                                    //int cnt = DataBusiness.InsertOffLineData(msg, Np, ThisMessageID);
+                                    //if (cnt <= 0)
+                                    //{
+                                    //    //return  6发送失败
+                                    //    SendMessageStatus("6", msg.To.User);
+                                    //}
+                                    //else
+                                    //{
                                         //推送
                                         PushMessage(msg, Np);
-                                    }
+                                    //}
 
                                 }
                             }
@@ -478,17 +488,17 @@ namespace AcceptanceServer
                         {
                             if (ThisMessageID != 0)
                             {
-                                int cnt = DataBusiness.InsertOffLineData(msg, Np, ThisMessageID);
-                                if (cnt <= 0)
-                                {
-                                    //return  6发送失败
-                                    SendMessageStatus("6", msg.To.User);
-                                }
-                                else
-                                {
+                                //int cnt = DataBusiness.InsertOffLineData(msg, Np, ThisMessageID);
+                                //if (cnt <= 0)
+                                //{
+                                //    //return  6发送失败
+                                //    SendMessageStatus("6", msg.To.User);
+                                //}
+                                //else
+                                //{
                                     //推送
                                     PushMessage(msg, Np);
-                                }
+                                //}
                             }
                         }
                         catch { }

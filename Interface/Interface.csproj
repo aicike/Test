@@ -53,6 +53,7 @@
     <Compile Include="IAutoMessage_UserModel.cs" />
     <Compile Include="IBaseModel.cs" />
     <Compile Include="IClassifyModel.cs" />
+    <Compile Include="IConversationDetailedModel.cs" />
     <Compile Include="IConversationModel.cs" />
     <Compile Include="IHolidayModel.cs" />
     <Compile Include="IKeywordAutoMessageModel.cs" />

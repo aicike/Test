@@ -52,7 +52,45 @@ namespace AcceptanceServer.DataBllOperate
                 Pmg.FromAccountID = null;
                 Pmg.ToUserID = null;
             }
-
+            //业务人员对业务人员发消息
+            else if (Np.MSD == ((int)EnumMessageSendDirection.Account_Account).ToString())
+            {
+                Pmg.EnumMessageSendDirectionID = (int)EnumMessageSendDirection.Account_Account;
+                Pmg.FromAccountID = int.Parse(msg.From.User.Substring(1));
+                Pmg.ToAccountID = int.Parse(msg.To.User.Substring(1));
+                Pmg.FromUserID = null;
+                Pmg.ToUserID = null;
+            }
+            //用户对用户发消息
+            else if (Np.MSD == ((int)EnumMessageSendDirection.User_User).ToString())
+            {
+                Pmg.EnumMessageSendDirectionID = (int)EnumMessageSendDirection.User_User;
+                Pmg.FromUserID = int.Parse(msg.From.User.Substring(1));
+                Pmg.ToUserID = int.Parse(msg.To.User.Substring(1));
+                Pmg.FromAccountID = null;
+                Pmg.ToAccountID = null;
+            
+            }
+            //多人聊天
+            else if (Np.MSD == ((int)EnumMessageSendDirection.GroupChat).ToString())
+            {
+                Pmg.EnumMessageSendDirectionID = (int)EnumMessageSendDirection.GroupChat;
+                string AOU = msg.From.User.Substring(0,1);
+                if (AOU == "s")
+                {
+                    Pmg.FromAccountID = int.Parse(msg.From.User.Substring(1));
+                    Pmg.ToUserID = null;
+                    Pmg.FromUserID = null;
+                    Pmg.ToAccountID = null;
+                }
+                else if (AOU == "u")
+                {
+                    Pmg.FromUserID = int.Parse(msg.From.User.Substring(1));
+                    Pmg.ToUserID = null;
+                    Pmg.FromAccountID = null;
+                    Pmg.ToAccountID = null;
+                }
+            }
             return  DataHandle.InsertChatRecord(Pmg); //存储
         }
 

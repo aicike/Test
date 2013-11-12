@@ -186,6 +186,13 @@ namespace Poco
         public virtual ICollection<TaskRule> TaskRules { get; set; }
 
         public virtual ICollection<Task> Task { get; set; }
+
+
+        public virtual ICollection<ConversationDetailed> ConversationDetailed { get; set; }
+
+        public virtual ICollection<MessageGroupChat> MessageGroupChat { get; set; }
+
+        
         
     }
 }

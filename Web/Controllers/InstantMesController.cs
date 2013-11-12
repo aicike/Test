@@ -34,7 +34,7 @@ namespace Web.Controllers
             //var TemporayList = TemporayModel.GetList(LoginAccount.ID).ToPagedList(id ?? 1, 15); 
 
             var commonModel = Factory.Get<CommonModel>(SystemConst.IOC_Model.CommonModel);
-            var TemporayList = commonModel.getSessionList(LoginAccount.ID, 0);
+            var TemporayList = commonModel.getSessionList(LoginAccount.ID, 0,LoginAccount.CurrentAccountMainID);
 
 
             return View(TemporayList.ToPagedList(id ?? 1, 15));

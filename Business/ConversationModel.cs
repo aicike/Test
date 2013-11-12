@@ -5,6 +5,9 @@ using System.Text;
 using Poco;
 using Interface;
 using System.Data;
+using Injection;
+using Injection.Transaction;
+using Poco.Enum;
 
 namespace Business
 {
@@ -12,90 +15,102 @@ namespace Business
     {
 
         /// <summary>
-        /// 查找会话ID
+        /// 查找创建会话ID（单人会话）
         /// </summary>
         /// <param name="AccountMainID">售楼部ID</param>
         /// <param name="AID">售楼用户ID 当Ctype为2时 此字段存用户ID</param>
         /// <param name="UID">用户ID 当Ctype为1时 此字段存售楼用户ID</param>
         /// <param name="Ctype">会话类型 0 ：售楼部与用户间对话，1：售楼部与售楼部间对话 ，2：用户与用户间对话</param>
         /// <returns></returns>
+        [Transaction]
         public int GetCID(string AccountMainID, string AID, string UID, string Ctype)
         {
             if (!string.IsNullOrEmpty(Ctype))
             {
-                IQueryable<Conversation> ICon = null;
-                if (Ctype == "0")
+                var cdModel = Factory.Get<IConversationDetailedModel>(SystemConst.IOC_Model.ConversationDetailedModel);
+                int cid = cdModel.GetConversationIDOne(AccountMainID, AID, UID, Ctype);
+                if (cid != 0)
                 {
-                    ICon = List().Where(a => a.AccountMainID == AccountMainID && a.Ctype == Ctype && a.User1ID == AID && a.User2ID == UID);
+                    return cid;
                 }
                 else
                 {
-                    ICon = List().Where(a => a.AccountMainID == AccountMainID && a.Ctype == Ctype && (a.User1ID == AID || a.User1ID == UID) && (a.User2ID == UID || a.User2ID == AID));
-                }
+                    Conversation conversation = new Conversation();
+                    conversation.AccountMainID = int.Parse(AccountMainID);
+                    conversation.CType = 0;
+                    conversation.Cname = "";
+                    conversation.Cimg = "";
+                    base.Add(conversation);
 
-                if (ICon.Count() > 0)
-                {
-                    return ICon.First().ID;
-                }
-                else
-                {
-                    Conversation conver = new Conversation();
-                    conver.AccountMainID = AccountMainID;
-                    conver.User1ID = AID;
-                    conver.User2ID = UID;
-                    conver.Ctype = Ctype;
-                    base.Add(conver);
-                    return conver.ID;
+                    switch (Ctype)
+                    { 
+                        case "0":
+                            cdModel.InsertOne(conversation.ID, int.Parse(AccountMainID), int.Parse(AID), (int)EnumClientUserType.Account, 0);
+                            cdModel.InsertOne(conversation.ID, int.Parse(AccountMainID), int.Parse(UID), (int)EnumClientUserType.User, 0);
+                            break;
+
+                        case "1":
+                            cdModel.InsertOne(conversation.ID, int.Parse(AccountMainID), int.Parse(AID), (int)EnumClientUserType.Account, 0);
+                            cdModel.InsertOne(conversation.ID, int.Parse(AccountMainID), int.Parse(UID), (int)EnumClientUserType.Account, 0);
+                            break;
+
+                        case"2":
+                            cdModel.InsertOne(conversation.ID, int.Parse(AccountMainID), int.Parse(AID), (int)EnumClientUserType.User, 0);
+                            cdModel.InsertOne(conversation.ID, int.Parse(AccountMainID), int.Parse(UID), (int)EnumClientUserType.User, 0);
+                            break;
+                    }
+
+                    return conversation.ID;
                 }
             }
-            else {
+            else
+            {
                 return -1;
             }
         }
 
-        public IQueryable<Conversation> GetAllCID(string AoU, int UID)
-        {
-            string sql = "";
-            if (AoU == "s")
-            {
-                sql = string.Format("select * from dbo.[Conversation] where (ctype='0' and User1ID='{0}') or (ctype='1' and User1ID='{0}') or(ctype ='1' and User2ID = '{0}')", UID);
-            }
-            else
-            {
-                sql = string.Format("select * from dbo.[Conversation] where (ctype='0' and User2ID='{0}') or (ctype='2' and User1ID='{0}') or(ctype ='2' and User2ID = '{0}')", UID);
-            }
-            return base.SqlQuery(sql);
-        }
+
+
+
+        //public Result DelCID(string uid, string AID, string AccountMainID)
+        //{
+        //    IQueryable<Conversation> ICon = null;
+        //    ICon = List().Where(a => a.AccountMainID == AccountMainID && a.Ctype == "0" && a.User1ID == AID && a.User2ID == uid);
+        //    Result result = new Result();
+        //    int SID = 0;
+        //    if (ICon.Count() > 0)
+        //    {
+        //        SID = ICon.FirstOrDefault().ID;
+        //        result = base.Delete(SID);
+        //    }
+        //    return result;
+        //}
+
+
+        //public Result StartCID(string uid, string AID, string AccountMainID)
+        //{
+        //    Result result = new Result();
+        //    IQueryable<Conversation> ICon = null;
+        //    ICon = GlobalList().Where(a => a.AccountMainID == AccountMainID && a.Ctype == "0" && a.User1ID == AID && a.User2ID == uid );
+        //    int OK = 0;
+        //    if (ICon.Count() > 0)
+        //    {
+        //        string sql = "update Conversation set SystemStatus = 0 where id=" + ICon.FirstOrDefault().ID;
+        //        OK = base.SqlExecute(sql);
+        //    }
+        //    return result;
+        //}
 
 
 
         public Result DelCID(string uid, string AID, string AccountMainID)
         {
-            IQueryable<Conversation> ICon = null;
-            ICon = List().Where(a => a.AccountMainID == AccountMainID && a.Ctype == "0" && a.User1ID == AID && a.User2ID == uid);
-            Result result = new Result();
-            int SID = 0;
-            if (ICon.Count() > 0)
-            {
-                SID = ICon.FirstOrDefault().ID;
-                result = base.Delete(SID);
-            }
-            return result;
+            throw new NotImplementedException();
         }
-
 
         public Result StartCID(string uid, string AID, string AccountMainID)
         {
-            Result result = new Result();
-            IQueryable<Conversation> ICon = null;
-            ICon = GlobalList().Where(a => a.AccountMainID == AccountMainID && a.Ctype == "0" && a.User1ID == AID && a.User2ID == uid );
-            int OK = 0;
-            if (ICon.Count() > 0)
-            {
-                string sql = "update Conversation set SystemStatus = 0 where id=" + ICon.FirstOrDefault().ID;
-                OK = base.SqlExecute(sql);
-            }
-            return result;
+            throw new NotImplementedException();
         }
     }
 }

@@ -77,7 +77,12 @@
   <object id="TaskRuleModel" type="Business.TaskRuleModel" parent="EFModel" singleton="false"></object>
   <object id="TaskModel" type="Business.TaskModel" parent="EFModel" singleton="false"></object>
   <object id="TaskDetailModel" type="Business.TaskDetailModel" parent="EFModel" singleton="false"></object>
+
+
+  <object id="ConversationDetailedModel" type="Business.ConversationDetailedModel" parent="EFModel" singleton="false"></object>
   
+
+
   <!--<object id="UserModel" type="NightClubBooth.Business.UserModel" parent="EFModel" singleton="false">
     <property name="LookupOptionModel" ref="LookupOptionModel"/>
     <property name="RoleModel" ref="RoleModel"/>

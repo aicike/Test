@@ -152,13 +152,11 @@ namespace AcceptanceServer.DataOperate
             string sql = "";
             if (AoU == "s")
             {
-                sql = string.Format("update [Message] set IsReceive = 'true' where ConversationID={0} and IsReceive='false' and ToAccountID= {1} "
-                                    + "delete dbo.PendingMessages where conversationID={0} and ToAccountID ={1}", SID, ToUID);
+                sql = string.Format("update [Message] set IsReceive = 'true' where ConversationID={0} and IsReceive='false' and ToAccountID= {1}", SID, ToUID);
             }
             else
             {
-                sql = string.Format("update [Message] set IsReceive = 'true' where ConversationID={0} and IsReceive='false' and ToUserID= {1} "
-                                    + "delete dbo.PendingMessages where conversationID={0} and ToUserID ={1}", SID, ToUID);
+                sql = string.Format("update [Message] set IsReceive = 'true' where ConversationID={0} and IsReceive='false' and ToUserID= {1} ", SID, ToUID);
             }
             return SqlHelper.ExecuteNonQuery(sql);
         }

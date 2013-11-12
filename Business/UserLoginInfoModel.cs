@@ -130,7 +130,7 @@ namespace Business
                     }
                 }
                 string headImg = null;
-                if (string.IsNullOrEmpty(user.UserLoginInfo.HeadImagePath) == false)
+                if (user.UserLoginInfo!=null&&string.IsNullOrEmpty(user.UserLoginInfo.HeadImagePath) == false)
                 {
                     headImg = SystemConst.WebUrlIP + user.UserLoginInfo.HeadImagePath.DefaultHeadImage().Replace("~", "");
                 }
@@ -138,7 +138,7 @@ namespace Business
                 {
                     headImg = "";
                 }
-                result.Entity = new App_User() { ID = user.ID, Name = user.UserLoginInfo.Name, Email = "", Pwd = userLoginInfo.Pwd, HeadImagePath = headImg };
+                result.Entity = new App_User() { ID = user.ID, Name = user.Name, Email = "", Pwd = userLoginInfo.Pwd, HeadImagePath = headImg };
                 return result;
             }
             return result;

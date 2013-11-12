@@ -84,6 +84,7 @@
     <Compile Include="CommonModel.cs" />
     <Compile Include="BaseModel.cs" />
     <Compile Include="CityModel.cs" />
+    <Compile Include="ConversationDetailedModel.cs" />
     <Compile Include="ConversationModel.cs" />
     <Compile Include="DistrictModel.cs" />
     <Compile Include="EFModel.cs" />

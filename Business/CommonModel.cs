@@ -11,6 +11,7 @@ using Poco;
 using Interface;
 using Injection;
 using System.Web;
+using Poco.Enum;
 
 namespace Business
 {
@@ -146,16 +147,15 @@ namespace Business
         /// <param name="userID">用户ID</param>
         /// <param name="userType">用户类型 0：售楼部，1：用户</param>
         /// <returns></returns>
-        public IQueryable<UnreadMessage> getSessionList(int userID, int userType)
+        public IQueryable<UnreadMessage> getSessionList(int userID, int userType,int AccountMainID)
         {
-            string AoU = "s";
-            //用户
+            int UserType = (int)EnumClientUserType.Account;
             if (userType == 1)
             {
-                AoU = "u";
+                UserType = (int)EnumClientUserType.User;
             }
-            var conversModel = Factory.Get<IConversationModel>(SystemConst.IOC_Model.ConversationModel);
-            var convers = conversModel.GetAllCID(AoU, userID);
+            var conversModel = Factory.Get<IConversationDetailedModel>(SystemConst.IOC_Model.ConversationDetailedModel);
+            var convers = conversModel.GetUserAllSID(UserType, userID, AccountMainID);
             string id = "";
             if (convers.Count() > 0)
             {

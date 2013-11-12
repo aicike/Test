@@ -62,11 +62,17 @@
     <Compile Include="Mapping\AppUpdateMap.cs" />
     <Compile Include="Mapping\OrderUserInfoMap.cs" />
     <Compile Include="Mapping\TaskMap.cs" />
-    <Compile Include="Migrations\201311080343589_Initial.cs" />
-    <Compile Include="Migrations\201311080343589_Initial.Designer.cs">
-      <DependentUpon>201311080343589_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201311120244242_initial.cs" />
+    <Compile Include="Migrations\201311120244242_initial.Designer.cs">
+      <DependentUpon>201311120244242_initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\201311120333459_initials.cs" />
+    <Compile Include="Migrations\201311120333459_initials.Designer.cs">
+      <DependentUpon>201311120333459_initials.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -84,8 +90,11 @@
     <Content Include="InitialProvince.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201311080343589_Initial.resx">
-      <DependentUpon>201311080343589_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201311120244242_initial.resx">
+      <DependentUpon>201311120244242_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201311120333459_initials.resx">
+      <DependentUpon>201311120333459_initials.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

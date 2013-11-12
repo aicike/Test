@@ -74,9 +74,13 @@ namespace Poco
         public int ConversationID { get; set; }
         public virtual Conversation Conversation { get; set; }
 
+        //会话类型 0：单人会话 1：多人会话
+        [Display(Name = "会话类型")]
+        public int CType { get; set; }
+
         public virtual ICollection<PendingMessages> PendingMessages { get; set; }
 
-
+        public virtual ICollection<MessageGroupChat> MessageGroupChat { get; set; }
 
     }
 }
