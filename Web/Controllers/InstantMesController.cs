@@ -45,9 +45,9 @@ namespace Web.Controllers
         [AllowCheckPermissions(false)]
         public String SendMessage()
         {
-            var PendModel = Factory.Get<IPendingMessagesModel>(SystemConst.IOC_Model.PendingMessagesModel);
-            string count = PendModel.SendMessageCount(LoginAccount.ID);
-            return count;
+            var MessageModel = Factory.Get<IMessageModel>(SystemConst.IOC_Model.MessageModel);
+            int count = MessageModel.getUnreadCnt(LoginAccount.ID);
+            return count.ToString();
         }
     }
 }

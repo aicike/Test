@@ -45,8 +45,7 @@ namespace Business
         /// <returns></returns>
         public int UpAndDelData(int SID, int UID)
         {
-            string sql = "update dbo.Message set isReceive = 1 where  fromUserID = " + UID + " and ToAccountID =" + SID
-                        + " delete PendingMessages where  FromUserID =  " + UID + " and ToAccountID = " + SID;
+            string sql = "update dbo.Message set isReceive = 1 where  fromUserID = " + UID + " and ToAccountID =" + SID;
             return base.SqlExecute(sql);
         }
 
@@ -57,12 +56,16 @@ namespace Business
         /// <returns></returns>
         public int getUnreadCnt(int AccountID)
         {
+            int cnt = 0;
             var list = List().Where(a => a.ToAccountID == AccountID && a.IsReceive==false);
+
             if (list != null)
             {
-                return list.Count();
+                cnt = list.Count();
             }
-            return 0;
+            var messGroupModel = Factory.Get<IMessageGroupChatModel>(SystemConst.IOC_Model.MessageGroupChatModel);
+            int cnts = messGroupModel.GetMessageGroupCnt(AccountID, 1);
+            return cnt+cnts;
         }
 
         /// <summary>

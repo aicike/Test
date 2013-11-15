@@ -30,6 +30,7 @@ namespace AcceptanceServer.DataBllOperate
             }
             Pmg.LibraryImageTextsID = null;
             Pmg.ConversationID = int.Parse(Np.SID);
+            Pmg.CType = 0;
             if(Np.ImgTextID != null)
             {
                 Pmg.LibraryImageTextsID = int.Parse(Np.ImgTextID);
@@ -74,6 +75,7 @@ namespace AcceptanceServer.DataBllOperate
             //多人聊天
             else if (Np.MSD == ((int)EnumMessageSendDirection.GroupChat).ToString())
             {
+                Pmg.CType = 1;
                 Pmg.EnumMessageSendDirectionID = (int)EnumMessageSendDirection.GroupChat;
                 string AOU = msg.From.User.Substring(0,1);
                 if (AOU == "s")
@@ -181,6 +183,48 @@ namespace AcceptanceServer.DataBllOperate
         public static int UpandDelMessType(int SID, string AoU, int ToUID)
         {
             return DataHandle.UpandDelMessType(SID,AoU,ToUID);
+        }
+        /// <summary>
+        /// 获取一个会话ID中的所有用户
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <returns></returns>
+        public static DataTable GetSidUser(int SID)
+        {
+            return DataHandle.GetSidUser(SID);
+        }
+
+
+
+        /// <summary>
+        /// 存储群发时 用户不在线处理
+        /// </summary>
+        /// <param name="mgc"></param>
+        /// <returns></returns>
+        public static int InsertMessageGroupChat(int MessageID,int UserID,int UserType,int SID)
+        {
+            MessageGroupChat mgc = new MessageGroupChat();
+            mgc.MessageID = MessageID;
+            mgc.UserID = UserID;
+            mgc.UserType = UserType;
+            mgc.SID = SID;
+
+            return DataHandle.InsertMessageGroupChat(mgc);
+
+        }
+
+        /// <summary>
+        /// 删除未读消息( 多人)
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="UserType"></param>
+        /// <param name="SID"></param>
+        /// <returns></returns>
+        public static int DelMessGroupChat(int userID, int UserType, int SID)
+        {
+
+
+            return DataHandle.DelMessGroupChat(userID, UserType, SID);
         }
     }
 }

@@ -12,11 +12,6 @@ namespace Poco
 
         public int SystemStatus { get; set; }
 
-        /// <summary>
-        /// 售楼部ID
-        /// </summary>
-        public int AccountMainID { get; set; }
-        public virtual AccountMain AccountMain { get; set; }
 
         /// <summary>
         /// 消息ID

@@ -147,13 +147,17 @@ namespace Business
         /// <param name="userID">用户ID</param>
         /// <param name="userType">用户类型 0：售楼部，1：用户</param>
         /// <returns></returns>
-        public IQueryable<UnreadMessage> getSessionList(int userID, int userType,int AccountMainID)
+        public IQueryable<UnreadMessage> getSessionList(int userID, int userType, int AccountMainID)
         {
+            //这里的用户类型与enum没有对应 要自己处理
+
             int UserType = (int)EnumClientUserType.Account;
             if (userType == 1)
             {
                 UserType = (int)EnumClientUserType.User;
             }
+
+
             var conversModel = Factory.Get<IConversationDetailedModel>(SystemConst.IOC_Model.ConversationDetailedModel);
             var convers = conversModel.GetUserAllSID(UserType, userID, AccountMainID);
             string id = "";
@@ -162,7 +166,7 @@ namespace Business
 
                 foreach (var item in convers)
                 {
-                    id += item.ID + ",";
+                    id += item.ConversationID + ",";
                 }
                 id = id.TrimEnd(',');
             }
@@ -175,66 +179,100 @@ namespace Business
             //用户
             if (userType == 1)
             {
-                sql = string.Format(@"select x.*,case when x.T='s' 
-	                                        then 
-		                                        (select  Name from dbo.Account where systemStatus=0 and id=x.I)
-	                                        else
-		                                        (select b.Name from dbo.[User] a,dbo.UserLoginInfo b where a.userLoginInfoID=b.id and a.id=x.I and a.systemStatus=0)
+                sql = string.Format(@"select 
+	                                        MessTwo.*,
+	                                        case when MessTwo.T='s' then (select Name from Account where ID = MessTwo.I)
+		                                         when MessTwo.T='u' then (select Name from UserLoginInfo where ID = (select UserLoginInfoID from [User] where ID = MessTwo.I))
+		                                         when MessTwo.T='' then (select Cname from [Conversation] where ID = MessTwo.S)
 	                                        end as N,
-                                            case when x.T='s' 
-                                            then 
-                                                ''
-                                            else
-                                                (select Name from dbo.[User] where id=x.I and systemStatus=0)
-                                            end as B,
-	                                        case when x.T='s' 
-	                                        then 
-		                                        (select  HeadImagePath from dbo.Account where systemStatus=0 and id=x.I)
-	                                        else
-		                                        (select b.HeadImagePath from dbo.[User] a,dbo.UserLoginInfo b where a.userLoginInfoID=b.id and a.id=x.I and a.systemStatus=0)
+	                                        case when MessTwo.T='u' then (select Name from [User] where ID = MessTwo.I)
+		                                         else ''
+	                                        end as B,
+	                                        case when MessTwo.T='s' then (select HeadImagePath from Account where ID = MessTwo.I)
+		                                         when MessTwo.T='u' then (select HeadImagePath from UserLoginInfo where ID = (select UserLoginInfoID from [User] where ID = MessTwo.I))
+		                                         when MessTwo.T='' then (select Cimg from [Conversation] where ID = MessTwo.S)
 	                                        end as P
                                         from 
-                                        (select ConversationID as S,Convert(varchar(50),Max(SendTime),20) as D,
-                                        (select case when ctype = 0 then User1ID when ctype = 2 then  case when user1id= {1} then user2ID else user1id end end as FromID from dbo.Conversation where id = a.ConversationID) as I,
-                                        (select case when ctype = 0 then 's' when ctype = 2 then 'u' end as FromUserID from dbo.Conversation where id = a.ConversationID) as T,
-                                        (select count(isreceive)  from dbo.[Message] where ConversationID  = a.ConversationID and ToUserID ={1} and IsReceive='false' ) as C,
-                                        (select TextContent  from dbo.[Message] where SendTime = Max(a.SendTime)) as CT,
-                                        (select EnumMessageSendDirectionID  from dbo.[Message] where SendTime = Max(a.SendTime)) as M,
-                                        (select EnumMessageTypeID  from dbo.[Message] where SendTime = Max(a.SendTime)) as E
-                                        from dbo.[Message] a  where ConversationID in ({0}) group by ConversationID) x"
-                                    , id, userID);//and ToUserID ={1} 
+                                        (
+	                                        select 
+		                                        MessOne.*,
+		                                        case when MessOne.M = 4 then 
+			                                        (select count(*) from MessageGroupChat where [SID]=MessOne.S and UserID={0} and userType = 2) 
+		                                        else
+			                                        (select count(*) from [Message] where ConversationID=MessOne.S and ToUserID={0} and IsReceive = 'false')
+		                                        end as C,
+		                                        case when MessOne.M !=4 then 
+			                                        (select  Convert(varchar(20),UserID)  from ConversationDetailed where ConversationID=MessOne.S and(userid!={0} or usertype!=2))
+		                                        else ''
+		                                        end as I,
+		                                        case when MessOne.M !=4 then 
+			                                        (select case when UserType=1 then 's' when UserType=2 then 'u' else '' end as T from ConversationDetailed where ConversationID=MessOne.S and(userid!={0} or usertype!=2))
+		                                        else ''
+		                                        end as T
+	                                        from 
+	                                        (
+		                                        select 
+			                                        (select TextContent from [Message] where ID = MessageID) as CT,
+			                                        (select Convert(varchar(20),SendTime,20) as D  from [Message] where ID = MessageID) as D,
+			                                        (select EnumMessageTypeID from [Message] where ID = MessageID) as E,
+			                                        (select EnumMessageSendDirectionID from [Message] where ID = MessageID) as M,
+			                                        (select ConversAtionID from [Message] where ID = MessageID) as S
+		                                        from 
+		                                        (
+			                                        select max(ID) as MessageID from dbo.Message where ConversationID in ({1})  group by ConversationID
+		                                        ) as MessageID
+	                                        ) as MessOne
+                                        ) as MessTwo"
+                                    , userID, id);//and ToUserID ={1} 
             }
             //售楼代表
             else
             {
-                sql = string.Format(@"select x.*,case when x.T='s' 
-	                                        then 
-		                                        (select  Name from dbo.Account where systemStatus=0 and id=x.I)
-	                                        else
-		                                        (select b.Name from dbo.[User] a,dbo.UserLoginInfo b where a.userLoginInfoID=b.id and a.id=x.I and a.systemStatus=0)
+                sql = string.Format(@"select 
+	                                        MessTwo.*,
+	                                        case when MessTwo.T='s' then (select Name from Account where ID = MessTwo.I)
+		                                         when MessTwo.T='u' then (select Name from UserLoginInfo where ID = (select UserLoginInfoID from [User] where ID = MessTwo.I))
+		                                         when MessTwo.T='' then (select Cname from [Conversation] where ID = MessTwo.S)
 	                                        end as N,
-                                            case when x.T='s' 
-                                            then 
-                                                ''
-                                            else
-                                                (select Name from dbo.[User] where id=x.I and systemStatus=0)
-                                            end as B,
-	                                        case when x.T='s' 
-	                                        then 
-		                                        (select  HeadImagePath from dbo.Account where systemStatus=0 and id=x.I)
-	                                        else
-		                                        (select b.HeadImagePath from dbo.[User] a,dbo.UserLoginInfo b where a.userLoginInfoID=b.id and a.id=x.I and a.systemStatus=0)
+	                                        case when MessTwo.T='u' then (select Name from [User] where ID = MessTwo.I)
+		                                         else ''
+	                                        end as B,
+	                                        case when MessTwo.T='s' then (select HeadImagePath from Account where ID = MessTwo.I)
+		                                         when MessTwo.T='u' then (select HeadImagePath from UserLoginInfo where ID = (select UserLoginInfoID from [User] where ID = MessTwo.I))
+		                                         when MessTwo.T='' then (select Cimg from [Conversation] where ID = MessTwo.S)
 	                                        end as P
                                         from 
-                                        (select ConversationID as S,Convert(varchar(50),Max(SendTime),20) as D,
-                                        (select case when ctype = 0 then User2ID when ctype = 1 then  case when user1id= {1} then user2ID else user1id end end as FromID from dbo.Conversation where id = a.ConversationID) as I,
-                                        (select case when ctype = 0 then 'u' when ctype = 1 then 's' end as FromUserID from dbo.Conversation where id = a.ConversationID) as T,
-                                        (select count(isreceive)  from dbo.[Message] where ConversationID  = a.ConversationID and ToAccountID ={1} and IsReceive='false' ) as C,
-                                        (select TextContent  from dbo.[Message] where SendTime = Max(a.SendTime)) as CT,
-                                        (select EnumMessageSendDirectionID  from dbo.[Message] where SendTime = Max(a.SendTime)) as M,
-                                        (select EnumMessageTypeID  from dbo.[Message] where SendTime = Max(a.SendTime)) as E
-                                        from dbo.[Message] a  where ConversationID in ({0}) group by ConversationID) x"
-                                    , id, userID);//and ToAccountID ={1} 
+                                        (
+	                                        select 
+		                                        MessOne.*,
+		                                        case when MessOne.M = 4 then 
+			                                        (select count(*) from MessageGroupChat where [SID]=MessOne.S and UserID={0} and userType = 1) 
+		                                        else
+			                                        (select count(*) from [Message] where ConversationID=MessOne.S and ToAccountID={0} and IsReceive = 'false')
+		                                        end as C,
+		                                        case when MessOne.M !=4 then 
+			                                        (select Convert(varchar(20),UserID) from ConversationDetailed where ConversationID=MessOne.S and(userid!={0} or usertype!=1))
+		                                        else ''
+		                                        end as I,
+		                                        case when MessOne.M !=4 then 
+			                                        (select case when UserType=1 then 's' when UserType=2 then 'u' else '' end as T from ConversationDetailed where ConversationID=MessOne.S and(userid!={0} or usertype!=1))
+		                                        else ''
+		                                        end as T
+	                                        from 
+	                                        (
+		                                        select 
+			                                        (select TextContent from [Message] where ID = MessageID) as CT,
+			                                        (select Convert(varchar(20),SendTime,20) as D from [Message] where ID = MessageID) as D,
+			                                        (select EnumMessageTypeID from [Message] where ID = MessageID) as E,
+			                                        (select EnumMessageSendDirectionID from [Message] where ID = MessageID) as M,
+			                                        (select ConversAtionID from [Message] where ID = MessageID) as S
+		                                        from 
+		                                        (
+			                                        select max(ID) as MessageID from dbo.Message where ConversationID in ({1})   group by ConversationID
+		                                        ) as MessageID
+	                                        ) as MessOne
+                                        ) as MessTwo"
+                                    , userID, id);//and ToAccountID ={1} 
             }
             return SqlQuery<UnreadMessage>(sql);
 
@@ -287,7 +325,7 @@ namespace Business
             }
             else
             {
-                return BegingDate.AddDays(DateCount-1);
+                return BegingDate.AddDays(DateCount - 1);
             }
 
         }
@@ -324,7 +362,7 @@ namespace Business
 
             else
             {
-                return Dates.AddDays(DateCount-1);
+                return Dates.AddDays(DateCount - 1);
             }
         }
 

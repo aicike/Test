@@ -190,7 +190,6 @@ namespace Poco
 
         public virtual ICollection<ConversationDetailed> ConversationDetailed { get; set; }
 
-        public virtual ICollection<MessageGroupChat> MessageGroupChat { get; set; }
 
         
         

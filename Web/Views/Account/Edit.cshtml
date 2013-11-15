@@ -306,7 +306,7 @@
                     <td class="tdTitle">
                         <span class="Identification">*</span> 名称
                     </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.ID)@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.IsActivated)@Html.HiddenFor(a => a.LoginPwd)
+                    <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.ID)@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.IsActivated)@Html.HiddenFor(a => a.LoginPwd)@Html.HiddenFor(a => a.ParentAccountID)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Name)
                     </td>

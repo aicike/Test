@@ -476,6 +476,21 @@ namespace EF.Migrations
                 .Index(t => t.ConversationID);
             
             CreateTable(
+                "dbo.MessageGroupChat",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        MessageID = c.Int(nullable: false),
+                        UserID = c.Int(nullable: false),
+                        UserType = c.Int(nullable: false),
+                        SID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Message", t => t.MessageID)
+                .Index(t => t.MessageID);
+            
+            CreateTable(
                 "dbo.Account_User",
                 c => new
                     {
@@ -1224,6 +1239,7 @@ namespace EF.Migrations
             DropIndex("dbo.Account_User", new[] { "GroupID" });
             DropIndex("dbo.Account_User", new[] { "UserID" });
             DropIndex("dbo.Account_User", new[] { "AccountID" });
+            DropIndex("dbo.MessageGroupChat", new[] { "MessageID" });
             DropIndex("dbo.ConversationDetailed", new[] { "ConversationID" });
             DropIndex("dbo.ConversationDetailed", new[] { "AccountMainID" });
             DropIndex("dbo.Conversation", new[] { "AccountMainID" });
@@ -1335,6 +1351,7 @@ namespace EF.Migrations
             DropForeignKey("dbo.Account_User", "GroupID", "dbo.Group");
             DropForeignKey("dbo.Account_User", "UserID", "dbo.User");
             DropForeignKey("dbo.Account_User", "AccountID", "dbo.Account");
+            DropForeignKey("dbo.MessageGroupChat", "MessageID", "dbo.Message");
             DropForeignKey("dbo.ConversationDetailed", "ConversationID", "dbo.Conversation");
             DropForeignKey("dbo.ConversationDetailed", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.Conversation", "AccountMainID", "dbo.AccountMain");
@@ -1423,6 +1440,7 @@ namespace EF.Migrations
             DropTable("dbo.SystemUser");
             DropTable("dbo.Group");
             DropTable("dbo.Account_User");
+            DropTable("dbo.MessageGroupChat");
             DropTable("dbo.ConversationDetailed");
             DropTable("dbo.Conversation");
             DropTable("dbo.PendingMessages");

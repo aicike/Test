@@ -16,8 +16,8 @@ namespace AcceptanceServer.DataOperate
         /// <returns></returns>
         public static DataSet InsertChatRecord(Message mg)
         {
-            string sql = @"insert into [Message](SystemStatus,TextContent,EnumMessageSendDirectionID,EnumMessageTypeID,FromAccountID,FromUserID,ToAccountID,ToUserID,IsReceive,SendTime,ReceiveTime,fileUrl,LibraryImageTextsID,ConversationID,voiceMP3Url,FileLength) 
-                                         values(0,@TextContent,@EnumMessageSendDirectionID,@EnumMessageTypeID,@FromAccountID,@FromUserID,@ToAccountID,@ToUserID,'false',getdate(),getdate(),@fileUrl,@LibraryImageTextsID,@ConversationID,@voiceMP3Url,@FileLength) select @@IDENTITY as TID";
+            string sql = @"insert into [Message](SystemStatus,TextContent,EnumMessageSendDirectionID,EnumMessageTypeID,FromAccountID,FromUserID,ToAccountID,ToUserID,IsReceive,SendTime,ReceiveTime,fileUrl,LibraryImageTextsID,ConversationID,voiceMP3Url,FileLength,Ctype) 
+                                         values(0,@TextContent,@EnumMessageSendDirectionID,@EnumMessageTypeID,@FromAccountID,@FromUserID,@ToAccountID,@ToUserID,'false',getdate(),getdate(),@fileUrl,@LibraryImageTextsID,@ConversationID,@voiceMP3Url,@FileLength,@Ctype) select @@IDENTITY as TID";
             SqlParameter[] sp = new SqlParameter[]{
                 new SqlParameter("@TextContent",mg.TextContent == null?"" :mg.TextContent),
                 new SqlParameter("@EnumMessageSendDirectionID",mg.EnumMessageSendDirectionID),
@@ -30,13 +30,40 @@ namespace AcceptanceServer.DataOperate
                 new SqlParameter("@LibraryImageTextsID",mg.LibraryImageTextsID == null?null:mg.LibraryImageTextsID.ToString()),
                 new SqlParameter("@ConversationID",mg.ConversationID),
                 new SqlParameter("@voiceMP3Url",mg.voiceMP3Url),
-                new SqlParameter("@FileLength",mg.FileLength)
+                new SqlParameter("@FileLength",mg.FileLength),
+                new SqlParameter("@Ctype",mg.CType)
+                
             };
 
 
             return SqlHelper.ExecuteDataset(sql, sp);
         }
 
+        /// <summary>
+        /// 存储群发时 用户不在线处理
+        /// </summary>
+        /// <param name="mgc"></param>
+        /// <returns></returns>
+        public static int InsertMessageGroupChat(MessageGroupChat mgc)
+        {
+            string sql = string.Format("insert into MessageGroupChat(systemStatus,MessageID,UserID,UserType,SID) values(0,{0},{1},{2},{3})",mgc.MessageID,mgc.UserID,mgc.UserType,mgc.SID);
+
+            return SqlHelper.ExecuteNonQuery(sql);
+            
+        }
+
+        /// <summary>
+        /// 获取一个会话ID中的所有用户
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <returns></returns>
+        public static DataTable GetSidUser(int sid)
+        {
+            string sql = string.Format("select case when UserType = 1 then 's'+Convert(varchar(5),UserID) when UserType = 2 then 'u'+Convert(varchar(5),UserID) end as juid ,userID,UserType from dbo.ConversationDetailed a where ConversationID={0}", sid);
+            DataTable dt = SqlHelper.ExecuteDataset(sql).Tables[0];
+
+            return dt;
+        }
 
         /// <summary>
         /// 存储离线数据
@@ -158,6 +185,20 @@ namespace AcceptanceServer.DataOperate
             {
                 sql = string.Format("update [Message] set IsReceive = 'true' where ConversationID={0} and IsReceive='false' and ToUserID= {1} ", SID, ToUID);
             }
+            return SqlHelper.ExecuteNonQuery(sql);
+        }
+
+        /// <summary>
+        /// 删除未读消息( 多人)
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="UserType"></param>
+        /// <param name="SID"></param>
+        /// <returns></returns>
+        public static int DelMessGroupChat(int userID, int UserType, int SID)
+        {
+            string sql = string.Format("delete MessageGroupChat where SID = {0} and UserID={1} and UserType={2}",SID,userID,UserType);
+
             return SqlHelper.ExecuteNonQuery(sql);
         }
     }

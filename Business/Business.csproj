@@ -93,6 +93,7 @@
     <Compile Include="KeywordModel.cs" />
     <Compile Include="LookupFactory.cs" />
     <Compile Include="LookupOptionModel.cs" />
+    <Compile Include="MessageGroupChatModel.cs" />
     <Compile Include="MessageModel.cs" />
     <Compile Include="OrderDetailModel.cs" />
     <Compile Include="OrderMIntermediateModel.cs" />

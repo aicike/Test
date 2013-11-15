@@ -102,15 +102,42 @@ namespace Business
         //}
 
 
-
+        [Transaction]
         public Result DelCID(string uid, string AID, string AccountMainID)
         {
-            throw new NotImplementedException();
+            Result result = new Result();
+            var cdModel = Factory.Get<IConversationDetailedModel>(SystemConst.IOC_Model.ConversationDetailedModel);
+            int cid = cdModel.GetConversationIDOne(AccountMainID, AID, uid, "0");
+            if (cid != 0)
+            {
+                result = cdModel.delSid(cid);
+                if (!result.HasError)
+                {
+                    result = base.Delete(cid);
+                }
+            }
+            return result;
         }
-
+         [Transaction]
         public Result StartCID(string uid, string AID, string AccountMainID)
         {
-            throw new NotImplementedException();
+            Result result = new Result();
+            var cdModel = Factory.Get<IConversationDetailedModel>(SystemConst.IOC_Model.ConversationDetailedModel);
+            int cid = cdModel.GetConversationIDOneW(AccountMainID, AID, uid, "0");
+            if (cid != 0)
+            {
+                result = cdModel.StartSID(cid);
+                if (!result.HasError)
+                {
+                    string sql = "update Conversation set SystemStatus = 0 where id=" + cid;
+                    if (base.SqlExecute(sql) <= 0)
+                    {
+                        result.HasError = true;
+                        result.Error = "失败";
+                    }
+                }
+            }
+            return result;
         }
     }
 }
