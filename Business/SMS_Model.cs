@@ -8,6 +8,8 @@ using System.Threading;
 using Poco;
 using Injection;
 using Interface;
+using Common;
+using System.Text.RegularExpressions;
 
 namespace Business
 {
@@ -27,6 +29,32 @@ namespace Business
             }
             string sms = string.Format("恭喜您成功开通Imtimely App,登录账号为您的手机号码。");
             result = SendSMS(userLoginInfo.Phone, sms);
+            return result;
+        }
+
+        public Result Send_AccountRegister(int accountID) {
+            var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
+            var account = accountModel.Get(accountID);
+            Result result = new Result();
+            if (account == null )
+            {
+                result.Error = "参数有误，未找到该账号。";
+                return result;
+            }
+            if (string.IsNullOrEmpty(account.Phone)) {
+                result.Error = "该账号未配置电话号码。";
+                return result;
+            }
+            Regex regex = new Regex(@"(1[3,5,8][0-9])\d{8}");
+            bool isOk = regex.IsMatch(account.Phone);
+            if (isOk==false)
+            {
+                result.Error = "该账号配置的电话号码格式错误，无法发送短信。";
+                return result;
+            }
+            var pwd= DESEncrypt.Decrypt(account.LoginPwd);
+            string sms = string.Format("恭喜您成功开通Imtimely App,登录账号为您的手机号码或邮箱，您的密码为{0}。",pwd);
+            result = SendSMS(account.Phone, sms);
             return result;
         }
 
@@ -79,7 +107,6 @@ namespace Business
                     //登陆方法
                     Connection.OnLogin += new ObjectHandler((object sender) =>
                     {
-
                         Connection.Show = ShowType.chat;
                         Connection.SendMyPresence();
                     }

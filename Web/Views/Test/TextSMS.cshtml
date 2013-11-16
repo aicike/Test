@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "TextSMS";
+}
+<h2>
+    TextSMS</h2>
+@using (Html.BeginForm("TextSMS", "Test"))
+{ 
+    <input type="text" name="txtPhone" />
+    <input type="text" name="txtContent" />
+    <input type="submit" value="测试" />
+}

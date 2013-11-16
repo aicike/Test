@@ -40,6 +40,11 @@ namespace Business
                 entity.AccountID = account.ID;
                 result = base.Add(entity);
             }
+            if (result.HasError == false)
+            {
+                SMS_Model smsModel = new SMS_Model();
+                smsModel.Send_AccountRegister(account.ID);
+            }
             return result;
         }
 
@@ -106,6 +111,11 @@ namespace Business
                 entity.AccountMainID = account_accountMain.AccountMainID;
                 entity.AccountID = account.ID;
                 result = base.Add(entity);
+            }
+            if (result.HasError == false)
+            {
+                SMS_Model smsModel = new SMS_Model();
+                smsModel.Send_AccountRegister(account.ID);
             }
             return result;
         }

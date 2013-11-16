@@ -45,5 +45,19 @@ namespace Web.Controllers
             ViewBag.aa = cm.GetEndDate(dt, 6, 1, 0);
             return View();
         }
+
+        [HttpGet]
+        public ActionResult TextSMS()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult TextSMS(string txtPhone,string txtContent)
+        {
+            SMS_Model model = new SMS_Model();
+            model.SendSMS(txtPhone, txtContent);
+            return View();
+        }
     }
 }

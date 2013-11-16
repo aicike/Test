@@ -46,11 +46,11 @@ namespace AcceptanceServer
                 Listen();
             });
             t.Start();
-            ShowErrorMessage("服务开启.....端口号：5222");
+            ShowErrorMessage("服务开启.....端口号：5333");
         }
         private void Listen()
         {
-            IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, 5222);
+            IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, 5333);
 
             listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 

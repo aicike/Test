@@ -33,7 +33,6 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnUpOrDown = new System.Windows.Forms.Button();
             this.tabpage33 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.DGType = new System.Windows.Forms.DataGridView();
@@ -81,17 +80,6 @@
             this.设置ToolStripMenuItem.Name = "设置ToolStripMenuItem";
             this.设置ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.设置ToolStripMenuItem.Text = "设置";
-            // 
-            // btnUpOrDown
-            // 
-            this.btnUpOrDown.BackgroundImage = global::AcceptanceServer.Properties.Resources.Start;
-            this.btnUpOrDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnUpOrDown.Location = new System.Drawing.Point(12, 34);
-            this.btnUpOrDown.Name = "btnUpOrDown";
-            this.btnUpOrDown.Size = new System.Drawing.Size(58, 59);
-            this.btnUpOrDown.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.btnUpOrDown, "启动");
-            this.btnUpOrDown.UseVisualStyleBackColor = true;
             // 
             // tabpage33
             // 
@@ -255,7 +243,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(957, 555);
             this.Controls.Add(this.tabpage33);
-            this.Controls.Add(this.btnUpOrDown);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
@@ -282,7 +269,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 设置ToolStripMenuItem;
-        private System.Windows.Forms.Button btnUpOrDown;
         private System.Windows.Forms.TabControl tabpage33;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.DataGridView DGType;

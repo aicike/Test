@@ -10,6 +10,7 @@ using Common;
 using Injection.Transaction;
 using Poco.WebAPI_Poco;
 using System.Web;
+using System.Text.RegularExpressions;
 
 namespace Business
 {
@@ -53,6 +54,7 @@ namespace Business
                 return result;
             }
 
+            int userLoginInfoID=0;
             if (userLoginInfo.UserID.HasValue && oldUserLoginInfo != null)
             {
                 //已有账号，需要修改userLoginInfo信息
@@ -61,6 +63,7 @@ namespace Business
                 oldUserLoginInfo.LoginPwdPage = "000000";
                 oldUserLoginInfo.Phone = userLoginInfo.Phone;
                 oldUserLoginInfo.Name = userLoginInfo.Name;
+                userLoginInfoID=oldUserLoginInfo.ID;
                 result = base.Edit(oldUserLoginInfo);
             }
             else
@@ -70,8 +73,10 @@ namespace Business
                 userlogin.LoginPwd = DESEncrypt.Encrypt(userLoginInfo.Pwd);
                 userlogin.LoginPwdPage = "000000";
                 userlogin.Name = userLoginInfo.Name;
+                userlogin.Phone = userLoginInfo.Phone;
                 userlogin.Email = userLoginInfo.Email;
                 result = base.Add(userlogin);
+                userLoginInfoID=userlogin.ID;
                 if (result.HasError)
                 {
                     return result;
@@ -130,17 +135,21 @@ namespace Business
                     }
                 }
                 string headImg = null;
-                if (string.IsNullOrEmpty(user.UserLoginInfo.HeadImagePath) == false)
-                {
-                    headImg = SystemConst.WebUrlIP + user.UserLoginInfo.HeadImagePath.DefaultHeadImage().Replace("~", "");
-                }
-                else
-                {
-                    headImg = "";
-                }
-                result.Entity = new App_User() { ID = user.ID, Name = user.UserLoginInfo.Name, Email = "", Pwd = userLoginInfo.Pwd, HeadImagePath = headImg };
+                headImg = SystemConst.WebUrlIP + "".DefaultHeadImage().Replace("~", "");
+                result.Entity = new App_User() { ID = user.ID, Name = userLoginInfo.Name, Email = "", Pwd = userLoginInfo.Pwd, HeadImagePath = headImg };
                 return result;
             }
+            
+            if (string.IsNullOrEmpty(userLoginInfo.Phone) == false)
+            {
+                Regex regex = new Regex("(1[3,5,8][0-9])/d{8}");
+                bool isOk= regex.IsMatch(userLoginInfo.Phone);
+                if (isOk&&userLoginInfoID!=0) {
+                    SMS_Model smsModel = new SMS_Model();
+                    smsModel.Send_UserRegister(userLoginInfoID);
+                }
+            }
+
             return result;
         }
 

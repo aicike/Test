@@ -37,7 +37,7 @@ namespace Interface
 
         Result ChangeStatus(int accountID, EnumAccountStatus status, int accountMainID);
 
-        Result Login(string email, string pwd);
+        Result Login(string email_phone, string pwd);
 
         Result LoginApp(string email, string pwd);
 

@@ -134,6 +134,11 @@ namespace Business
                 var groupModel = Factory.Get<IGroupModel>(SystemConst.IOC_Model.GroupModel);
                 result = groupModel.AddDefaultGroup(account.ID, accountMainID);
             }
+            if (result.HasError == false)
+            {
+                SMS_Model smsModel = new SMS_Model();
+                smsModel.Send_AccountRegister(account.ID);
+            }
             return result;
         }
 

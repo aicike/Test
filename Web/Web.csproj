@@ -846,6 +846,7 @@
     <Content Include="Views\Order\OrderInfo.cshtml" />
     <Content Include="Views\Task\Edit.cshtml" />
     <Content Include="Views\MyTask\Index.cshtml" />
+    <Content Include="Views\Test\TextSMS.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
