@@ -228,47 +228,105 @@ namespace AcceptanceServer
                             }
                             else
                             {
-                                //本条消息数据库ID
                                 ThisMessageID = int.Parse(dt.Rows[0][0].ToString());
-                                //在线
-                                if (OnlineUser.onlinuser.Any(a => a.jid.User == msg.To.User))
+                                //群聊
+                                if (Np.MSD == "4")
                                 {
-                                    msg.From = jid;
-                                    if (Np.FielUrl != null)
+                                    try
                                     {
-                                        Np.FielUrl = WebUrlIP + Np.FielUrl.Remove(0, 1);
-                                    }
-                                    //转发发送消息 所有设备IEnumerable
-                                    List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
-                                    foreach (XmppServerConnection xcon in cons)
+                                     DataTable userDT = DataBusiness.GetSidUser(int.Parse(Np.SID));
+                                    foreach (DataRow  row in userDT.Rows)
                                     {
-                                        xcon.Send(msg, ThisMessageID);
+                                        if (row["juid"].ToString() != msg.From.User)
+                                        {
+                                            //在线
+                                            if (OnlineUser.onlinuser.Any(a => a.jid.User == row["juid"].ToString()))
+                                            {
+                                                msg.From = jid;
+                                                if (Np.FielUrl != null)
+                                                {
+                                                    Np.FielUrl = WebUrlIP + Np.FielUrl.Remove(0, 1);
+                                                }
+                                                //转发发送消息 所有设备IEnumerable
+                                                List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == row["juid"].ToString()).ToList();
+                                                foreach (XmppServerConnection xcon in cons)
+                                                {
+                                                    xcon.Send(msg, ThisMessageID);
+                                                }
+
+                                            }
+                                            //不在线
+                                            else
+                                            {
+                                                try
+                                                {
+                                                    int UserID = int.Parse(row["userID"].ToString());
+                                                    int UserType = int.Parse(row["UserType"].ToString());
+                                                    DataBusiness.InsertMessageGroupChat(ThisMessageID, UserID, UserType, int.Parse(Np.SID));
+                                                }
+                                                catch { }
+                                                PushMessage(msg, Np);
+                                            }
+
+
+                                        }
                                     }
 
-                                    //发给一设备
-                                    //XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList()[0];
-                                    //con.Send(msg,ThisMessageID);
-
+                                    }
+                                    catch
+                                    {
+                                    
+                                    }
+                                   
 
                                 }
-                                //不在线
+                                //单人聊天
                                 else
                                 {
-                                    
-                                    //存储离线记录
-                                    int cnt = DataBusiness.InsertOffLineData(msg, Np, ThisMessageID);
-                                    if (cnt <= 0)
+                                    //本条消息数据库ID
+                                   
+                                    //在线
+                                    if (OnlineUser.onlinuser.Any(a => a.jid.User == msg.To.User))
                                     {
-                                        //return  6发送失败
-                                        SendMessageStatus("6", msg.To.User);
+                                        msg.From = jid;
+                                        if (Np.FielUrl != null)
+                                        {
+                                            Np.FielUrl = WebUrlIP + Np.FielUrl.Remove(0, 1);
+                                        }
+                                        //转发发送消息 所有设备IEnumerable
+                                        List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
+                                        foreach (XmppServerConnection xcon in cons)
+                                        {
+                                            xcon.Send(msg, ThisMessageID);
+                                        }
+
+                                        //发给一设备
+                                        //XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList()[0];
+                                        //con.Send(msg,ThisMessageID);
+
+
                                     }
+                                    //不在线
                                     else
                                     {
+
+                                        ////存储离线记录
+                                        //int cnt = DataBusiness.InsertOffLineData(msg, Np, ThisMessageID);
+                                        //if (cnt <= 0)
+                                        //{
+                                        //    //return  6发送失败
+                                        //    SendMessageStatus("6", msg.To.User);
+                                        //}
+                                        //else
+                                        //{
                                         //推送
                                         PushMessage(msg, Np);
-                                    }
+                                        //}
 
+                                    }
                                 }
+
+                                
                             }
                         }
                         catch
@@ -283,16 +341,40 @@ namespace AcceptanceServer
                         //修改数据库状态
                         //售楼代表s；用户u
                         string AoU = jid.User.Substring(0, 1);
+                        //当前用户类型
+                        int utype = 0;
+                        if (AoU == "s")
+                        {
+                            utype = (int)EnumClientUserType.Account;
+                        }
+                        else if (AoU == "u")
+                        {
+                            utype = (int)EnumClientUserType.User;
+                        }
+
                         //ID
                         string AoUID = jid.User.Substring(1);
-                        DataBusiness.UpandDelMessType(int.Parse(Np.SID), AoU, int.Parse(AoUID));
-                        //在线
-                        if (OnlineUser.onlinuser.Any(a => a.jid.User == msg.To.User))
+                        //不是多人聊天的
+                        if (Np.MSD != "4")
                         {
-                            //转发发送消息
-                            XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList()[0];
-                            msg.From = jid;
-                            con.Send(msg,0);
+                            DataBusiness.UpandDelMessType(int.Parse(Np.SID), AoU, int.Parse(AoUID));
+                            //在线
+                            if (OnlineUser.onlinuser.Any(a => a.jid.User == msg.To.User))
+                            {
+                                //转发发送消息
+                                XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList()[0];
+                                msg.From = jid;
+                                con.Send(msg, 0);
+                            }
+                        }
+                        //多人聊天的处理
+                        else
+                        {
+                            try
+                            {
+                                DataBusiness.DelMessGroupChat(int.Parse(AoUID), utype, int.Parse(Np.SID));
+                            }
+                            catch { }
                         }
                     }
 
@@ -320,13 +402,13 @@ namespace AcceptanceServer
                         iq.Type = IqType.result;
                         auth.AddChild(new Element("Password"));
                         auth.AddChild(new Element("digest"));
-                        Send(iq,0);
+                        Send(iq, 0);
                         break;
                     case IqType.set:
                         //上线
                         this.jid = new Jid(auth.Username, "localhost", "Resource");
-                        string AoU = auth.Username.Substring(0,1);
-                        
+                        string AoU = auth.Username.Substring(0, 1);
+
                         if (auth.Resource != "web")
                         {
                             if (AoU == "u")
@@ -368,7 +450,7 @@ namespace AcceptanceServer
                         iq.SwitchDirection();
                         iq.Type = IqType.result;
                         iq.Query = null;
-                        Send(iq,0);
+                        Send(iq, 0);
                         break;
                 }
 
@@ -397,7 +479,7 @@ namespace AcceptanceServer
                     ri.Jid = new Jid(ri.Name + "@localhost");
                     iq.Query.AddChild(ri);
                 }
-                Send(iq,0);
+                Send(iq, 0);
 
                 //将其他人的信息发送
                 Presence pre;
@@ -407,7 +489,7 @@ namespace AcceptanceServer
                 {
                     pre.From = con.jid;
                     pre.Value = con.m_Sock.RemoteEndPoint.ToString();
-                    Send(pre,0);
+                    Send(pre, 0);
                 }
             }
         }
@@ -435,7 +517,7 @@ namespace AcceptanceServer
 
             sb.Append("'>");
 
-            Send(sb.ToString(), null,0);
+            Send(sb.ToString(), null, 0);
         }
 
         private void Send(Element el, int ThisMessageID)
@@ -443,7 +525,7 @@ namespace AcceptanceServer
             Send(el.ToString(), el, ThisMessageID);
         }
 
-        private void Send(string data, Node n,int ThisMessageID)
+        private void Send(string data, Node n, int ThisMessageID)
         {
             try
             {
@@ -478,23 +560,24 @@ namespace AcceptanceServer
                         {
                             if (ThisMessageID != 0)
                             {
-                                int cnt = DataBusiness.InsertOffLineData(msg, Np, ThisMessageID);
-                                if (cnt <= 0)
-                                {
-                                    //return  6发送失败
-                                    SendMessageStatus("6", msg.To.User);
-                                }
-                                else
-                                {
-                                    //推送
-                                    PushMessage(msg, Np);
-                                }
+                                //int cnt = DataBusiness.InsertOffLineData(msg, Np, ThisMessageID);
+                                //if (cnt <= 0)
+                                //{
+                                //    //return  6发送失败
+                                //    SendMessageStatus("6", msg.To.User);
+                                //}
+                                //else
+                                //{
+                                //推送
+                                PushMessage(msg, Np);
+                                //}
                             }
                         }
                         catch { }
 
                     }
-                    catch( Exception ex) {
+                    catch (Exception ex)
+                    {
                         string ShowError = ConfigurationManager.AppSettings["ShowError"].ToString();
                         if (ShowError == "true")
                         {
@@ -537,7 +620,7 @@ namespace AcceptanceServer
             {
                 try
                 {
-                    cons[i].Send(msg,0);
+                    cons[i].Send(msg, 0);
                 }
                 catch
                 {
@@ -575,7 +658,7 @@ namespace AcceptanceServer
                 {
                     msg.Body = UMlist.ObjectToJson();
                     msg.AddChild(np);
-                    con.Send(msg,0);
+                    con.Send(msg, 0);
                 }
                 catch { }
 

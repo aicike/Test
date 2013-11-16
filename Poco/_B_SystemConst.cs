@@ -147,6 +147,10 @@ namespace Poco
             public const string TaskRuleModel = "TaskRuleModel";
             public const string TaskModel = "TaskModel";
             public const string TaskDetailModel = "TaskDetailModel";
+
+            public const string ConversationDetailedModel = "ConversationDetailedModel";
+            public const string MessageGroupChatModel = "MessageGroupChatModel";
+            
         }
     }
 }

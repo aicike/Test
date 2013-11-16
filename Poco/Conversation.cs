@@ -13,28 +13,33 @@ namespace Poco
 
         public int SystemStatus { get; set; }
 
-        //售楼部ID
+        /// <summary>
+        /// 售楼部ID
+        /// </summary>
         [Display(Name = "售楼部")]
-        public string AccountMainID { get; set; }
-
-        //AccountUser 时 存的AccountID 
-        [Display(Name = "用户ID1")]
-        public string User1ID { get; set; }
-
-        //AccountUser 时 存的UserID 
-        [Display(Name = "用户ID2")]
-        public string User2ID { get; set; }
+        public int AccountMainID { get; set; }
+        public virtual AccountMain AccountMain { get; set; }
 
         /// <summary>
-        /// 消息分类 0 ：AccountUser，1：Account ，2：User
+        /// 会话类型 0：单人会话 1：多人会话
         /// </summary>
-        [Display(Name="消息分类")]
-        public string Ctype { get; set; }
+        [Display(Name = "会话类型")]
+        public int CType { get; set; }
 
+        //会话名称 多人会话有值
+        [Display(Name = "会话名称")]
+        public string Cname { get; set; }
+
+        //会话头像 多人会话有值
+        [Display(Name = "会话头像")]
+        public string Cimg { get; set; }
 
         public virtual ICollection<Message> Message { get; set; }
 
         public virtual ICollection<PendingMessages> PendingMessages { get; set; }
+
+        public virtual ICollection<ConversationDetailed> ConversationDetailed { get; set; }
+
 
     }
 }

@@ -65,7 +65,9 @@
   <object id="OrderDetailModel" type="Business.OrderDetailModel" parent="EFModel" singleton="false"></object>
   <object id="OrderMIntermediateModel" type="Business.OrderMIntermediateModel" parent="EFModel" singleton="false"></object>
   <object id="HolidayModel" type="Business.HolidayModel" parent="EFModel" singleton="false"></object>
+  <object id="MessageGroupChatModel" type="Business.MessageGroupChatModel" parent="EFModel" singleton="false"></object>
 
+  
 
   <object id="Push_IOS" type="Business.Push_IOS" singleton="false">
   </object>
@@ -76,7 +78,12 @@
   
   <object id="TaskModel" type="Business.TaskModel" parent="EFModel" singleton="false"></object>
   <object id="TaskDetailModel" type="Business.TaskDetailModel" parent="EFModel" singleton="false"></object>
+
+
+  <object id="ConversationDetailedModel" type="Business.ConversationDetailedModel" parent="EFModel" singleton="false"></object>
   
+
+
   <!--<object id="UserModel" type="NightClubBooth.Business.UserModel" parent="EFModel" singleton="false">
     <property name="LookupOptionModel" ref="LookupOptionModel"/>
     <property name="RoleModel" ref="RoleModel"/>

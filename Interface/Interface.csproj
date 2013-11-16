@@ -53,12 +53,14 @@
     <Compile Include="IAutoMessage_UserModel.cs" />
     <Compile Include="IBaseModel.cs" />
     <Compile Include="IClassifyModel.cs" />
+    <Compile Include="IConversationDetailedModel.cs" />
     <Compile Include="IConversationModel.cs" />
     <Compile Include="IHolidayModel.cs" />
     <Compile Include="IKeywordAutoMessageModel.cs" />
     <Compile Include="IKeywordModel.cs" />
     <Compile Include="ILibraryModel.cs" />
     <Compile Include="ILookupOptionModel.cs" />
+    <Compile Include="IMessageGroupChatModel.cs" />
     <Compile Include="IMessageModel.cs" />
     <Compile Include="IOrderDetailModelcs.cs" />
     <Compile Include="IOrderMIntermediateModel.cs" />

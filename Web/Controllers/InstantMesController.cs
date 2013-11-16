@@ -34,7 +34,7 @@ namespace Web.Controllers
             //var TemporayList = TemporayModel.GetList(LoginAccount.ID).ToPagedList(id ?? 1, 15); 
 
             var commonModel = Factory.Get<CommonModel>(SystemConst.IOC_Model.CommonModel);
-            var TemporayList = commonModel.getSessionList(LoginAccount.ID, 0);
+            var TemporayList = commonModel.getSessionList(LoginAccount.ID, 0,LoginAccount.CurrentAccountMainID);
 
 
             return View(TemporayList.ToPagedList(id ?? 1, 15));
@@ -45,9 +45,9 @@ namespace Web.Controllers
         [AllowCheckPermissions(false)]
         public String SendMessage()
         {
-            var PendModel = Factory.Get<IPendingMessagesModel>(SystemConst.IOC_Model.PendingMessagesModel);
-            string count = PendModel.SendMessageCount(LoginAccount.ID);
-            return count;
+            var MessageModel = Factory.Get<IMessageModel>(SystemConst.IOC_Model.MessageModel);
+            int count = MessageModel.getUnreadCnt(LoginAccount.ID);
+            return count.ToString();
         }
     }
 }

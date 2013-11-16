@@ -184,6 +184,12 @@ namespace Poco
         public virtual ICollection<Holiday> Holiday { get; set; }
 
         public virtual ICollection<Task> Task { get; set; }
+
+
+        public virtual ICollection<ConversationDetailed> ConversationDetailed { get; set; }
+
+
+        
         
     }
 }

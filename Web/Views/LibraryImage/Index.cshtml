@@ -87,27 +87,32 @@
             //图片
             if (Type == "1") {
 
+               
                 $("#ShowImg").attr("src", MesURL);
-                $("#dialogShowMessage").dialog({
-                    resizable: false,
-                    height: "auto",
-                    width: "auto",
-                    modal: true,
-                    draggable: false,
-                    title: "图片",
-                    position: "center",
-                    buttons: {
-                        "关闭浏览": function () {
-                            $(this).dialog("close");
-                        }
-                    }
-                });
+                $("#ShowImg").onload = ShowImg();
                 
             }
         }
 
 
-
+        function ShowImg()
+        {
+            $("#dialogShowMessage").dialog({
+                resizable: false,
+                height: "auto",
+                width: "auto",
+                modal: true,
+                draggable: false,
+                title: "图片",
+                position: "center",
+                buttons: {
+                    "关闭浏览": function () {
+                        $("#ShowImg").attr("src", "");
+                        $(this).dialog("close");
+                    }
+                }
+            });
+        }
 
 
     </script>

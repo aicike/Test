@@ -254,12 +254,12 @@ namespace Web.Controllers
         /// <param name="UserID">用户ID</param>
         /// <param name="UserType">用户类型 0：售楼部，1：用户</param>
         /// <returns></returns>
-        public string GetSessionList(int UserID,int UserType)
+        public string GetSessionList(int UserID, int UserType, int AccountMainID)
         {
             var libraryImageTextModel = Factory.Get<CommonModel>(SystemConst.IOC_Model.CommonModel);
 
             List<UnreadMessage> UMlist = new List<UnreadMessage>();
-            UMlist = libraryImageTextModel.getSessionList(UserID, UserType).ToList();
+            UMlist = libraryImageTextModel.getSessionList(UserID, UserType, AccountMainID).ToList();
 
             return Newtonsoft.Json.JsonConvert.SerializeObject(UMlist);
         }

@@ -61,9 +61,11 @@
     <Compile Include="AutoMessage_User.cs" />
     <Compile Include="Classify.cs" />
     <Compile Include="Conversation.cs" />
+    <Compile Include="ConversationDetailed.cs" />
     <Compile Include="Enum\EnumTaskStatus.cs" />
     <Compile Include="Enum\EnumTaskType.cs" />
     <Compile Include="SMS.cs" />
+    <Compile Include="MessageGroupChat.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="TaskAccount.cs" />
     <Compile Include="TaskDetail.cs" />

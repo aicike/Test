@@ -10,6 +10,10 @@ namespace Poco.Enum
         Account_User,
         User_Account,
         Account_Account,
-        User_User
+        User_User,
+        /// <summary>
+        /// 群聊
+        /// </summary>
+        GroupChat
     }
 }

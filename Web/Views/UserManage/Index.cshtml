@@ -112,11 +112,13 @@
             $(".spanChangeGroup").click(function () {
                 var rawGroupID = $(this).attr("rawGroup");
                 var userID = $(this).attr("value");
-                var newGroupID = $(this).prev().val();
+                var newGroupID = $(this).parent().prev().val();
+
+                var CurrentID = '@ViewBag.GroupID';
                 if (rawGroupID != newGroupID) {
                     $.ajax({
                         type: "post",
-                        data: { userID: userID, groupID: newGroupID },
+                        data: { userID: userID, groupID: newGroupID, currentGroupID: CurrentID },
                         url: changeGroupUrl,
                         success: function (result) {
                             if (result != undefined && result != null && result.length > 0) {
