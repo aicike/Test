@@ -161,10 +161,10 @@
             $("#Email").blur(function () {
 
                 var values = $("#Email").val();
-
+                var ID =  $("#ID").val();
                 if (values != "" && values != undefined) {
                     var YZUrl = '@Url.Action("OnlyValidation", "Ajax", new { Area = "", HostName = "" })';
-                    $.post(YZUrl, { tableName: "Account", field: "Email", value: values }, function (result) {
+                    $.post(YZUrl, { tableName: "Account", field: "Email", value: values ,id:ID}, function (result) {
 
                         if (result == "True") {
                             isTrue = true;
@@ -187,10 +187,10 @@
             $("#Phone").blur(function () {
 
                 var values = $("#Phone").val();
-
+                 var ID =  $("#ID").val();
                 if (values != "" && values != undefined) {
                     var YZUrl = '@Url.Action("OnlyValidation", "Ajax", new { Area = "", HostName = "" })';
-                    $.post(YZUrl, { tableName: "Account", field: "Phone", value: values }, function (result) {
+                    $.post(YZUrl, { tableName: "Account", field: "Phone", value: values ,id:ID }, function (result) {
 
                         if (result == "True") {
                             isTruePhone = true;

@@ -17,10 +17,10 @@ namespace Web.Controllers
         /// <summary>
         /// 售楼部App登录
         /// </summary>
-        public string AccountLogin(int accountMainID, string phone_email, string pwd)
+        public string AccountLogin(int accountMainID, string email, string pwd)
         {
             var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-            var result = accountModel.LoginApp(phone_email, pwd);
+            var result = accountModel.LoginApp(email, pwd);
             if (result.HasError)
             {
                 result = new Result() { Error = result.Error };

@@ -227,6 +227,7 @@
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\userStyle.css" />
     <Content Include="File\LoginPageShow\Default\Default.jpg" />
+    <Content Include="Images\404-2.png" />
     <Content Include="Images\AppDefault.png" />
     <Content Include="Images\banner.jpg" />
     <Content Include="Images\default_Avatar.png" />

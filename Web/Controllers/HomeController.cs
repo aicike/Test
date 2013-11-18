@@ -111,6 +111,8 @@ namespace Web.Controllers
             ViewBag.Title = webTitle;
 
 
+            ViewBag.AMID = LoginAccount.CurrentAccountMainID;
+
             return View();
         }
     }
