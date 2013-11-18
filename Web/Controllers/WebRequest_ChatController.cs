@@ -242,10 +242,7 @@ namespace Web.Controllers
                 result.Entity = new { URL = "", Token = Token };
                 return Newtonsoft.Json.JsonConvert.SerializeObject(result);
             }
-
         }
-
-
         #endregion
 
         /// <summary>

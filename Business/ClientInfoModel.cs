@@ -67,7 +67,7 @@ namespace Business
                     App_UserLoginInfo userloginInfo = new App_UserLoginInfo();
                     userloginInfo.Email = "";
                     userloginInfo.Pwd = "pass123!";
-                    userloginInfo.Name = DateTime.Now.ToString("MMddHH:mm:ss");
+                    userloginInfo.Name = DateTime.Now.ToString("MMddHHmmss");
                     userloginInfo.AccountMainID = accountMainID;
                     userloginInfo.ClientID = clientID;
                     userloginInfo.EnumClientSystemType = (int)EnumClientSystemType.Android;
@@ -101,7 +101,7 @@ namespace Business
                         App_UserLoginInfo userloginInfo = new App_UserLoginInfo();
                         userloginInfo.Email = "";
                         userloginInfo.Pwd = "pass123!";
-                        userloginInfo.Name = DateTime.Now.ToString("MMddHH:mm:ss");
+                        userloginInfo.Name = DateTime.Now.ToString("MMddHHmmss");
                         userloginInfo.AccountMainID = accountMainID;
                         userloginInfo.ClientID = clientID;
                         userloginInfo.EnumClientSystemType = (int)EnumClientSystemType.Android;
