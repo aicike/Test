@@ -185,7 +185,7 @@ namespace Web.Controllers
                     userLoginInfo.LoginPwd = DESEncrypt.Encrypt(value);
                     break;
                 case "headimg":
-                    userLoginInfo.HeadImagePath = value;
+                    userLoginInfo.HeadImagePath = value.Replace(SystemConst.WebUrlIP, "~");
                     break;
             }
             userLoginInfo.LoginPwdPage = "000000";

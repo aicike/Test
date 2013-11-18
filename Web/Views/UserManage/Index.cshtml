@@ -231,7 +231,7 @@
                     @if (!string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath))
                     { 
                         <img id="imgLogo" style="max-width:80px;max-height:80px;"
-                src="http://@Url.Content(item.UserLoginInfo.HeadImagePath)" />
+                src="@Url.Content(item.UserLoginInfo.HeadImagePath)" />
                     }
                     else
                     { 

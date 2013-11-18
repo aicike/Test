@@ -247,7 +247,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "lbUser";
-            this.Text = "数据接收服务";
+            this.Text = "SMS服务";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.lbUser_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);

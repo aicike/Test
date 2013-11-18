@@ -92,7 +92,7 @@
             <td>
                 @if (!string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath))
                 { 
-                    <img src="http://@item.UserLoginInfo.HeadImagePath" style="max-width: 50px; border: 0px" />
+                    <img src="@Url.Content(item.UserLoginInfo.HeadImagePath)" style="max-width: 50px; border: 0px" />
                 }
                 else
                 { 
