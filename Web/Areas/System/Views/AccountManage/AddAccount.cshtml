@@ -8,6 +8,7 @@
     <link href="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.css")" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         var isTrue = true;
+        var isTruePhone = true;
         var Cnt = 0;
         $(function () {
 
@@ -166,6 +167,38 @@
 
             });
 
+
+             //唯一验证 电话
+            $("#Account_Phone").blur(function () {
+
+                var values = $("#Account_Phone").val();
+
+                if (values != "" && values != undefined) {
+                    var YZUrl = '@Url.Action("OnlyValidation", "Ajax", new { Area = "", HostName = "" })';
+                    $.post(YZUrl, { tableName: "Account", field: "Phone", value: values }, function (result) {
+
+                        if (result == "True") {
+                            isTruePhone = true;
+                        }
+                        else {
+                            isTruePhone = false;
+                            JAlert({
+                                Message: "该电话已存在！请换个电话试试！",
+                                DialogType: "Ok",
+                                BtnOk: "确定"
+                            });
+                        }
+                    });
+                }
+
+            });
+
+
+
+
+
+
+
             $("#btnSubmit").click(function () {
                 if (!isTrue) {
                     JAlert({
@@ -174,11 +207,26 @@
                         BtnOk: "确定"
                     });
                 }
-                return isTrue;
+                if (!isTruePhone) {
+                    JAlert({
+                        Message: "该电话已存在！请换个电话试试！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                }
+                if(isTrue && isTruePhone)
+                {
+                    return true;
+                }
+                else
+                {
+                    return isTrue;
+                }
             });
 
 
 
+            
 
 
 
