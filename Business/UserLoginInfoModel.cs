@@ -234,30 +234,27 @@ namespace Business
         {
             Result result = new Result();
             var pwd = DESEncrypt.Encrypt(app_UserLoginInfo.Pwd);
-
             var accountStatus = EnumAccountStatus.Enabled.ToString();
 
-            var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
-            var clientInfo = clientInfoModel.GetByClientID(app_UserLoginInfo.ClientID);
-
-            if (clientInfo == null)
+            var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
+            var userLoginInfo = userLoginInfoModel.List().Where(a => (a.Email.Equals(app_UserLoginInfo.Email, StringComparison.CurrentCultureIgnoreCase) == true && a.LoginPwd == pwd) ||
+                (a.Email.Equals(app_UserLoginInfo.Phone, StringComparison.CurrentCultureIgnoreCase) == true && a.LoginPwd == pwd)).FirstOrDefault();
+            if (userLoginInfo == null)
             {
                 result.Error = "账号或密码错误，登录失败。";
                 return result;
             }
-            var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
-            var user = userModel.Get(clientInfo.EntityID.Value);
+            var user = userLoginInfo.Users.Where(a => a.AccountMainID == app_UserLoginInfo.AccountMainID).FirstOrDefault();
+            if (user == null)
+            {
+                result.Error = "账号或密码错误，登录失败。";
+                return result;
+            }
 
-            bool isLogin = false;
-            if (user.UserLoginInfo.Email.Equals(app_UserLoginInfo.Email, StringComparison.CurrentCultureIgnoreCase) == true && user.UserLoginInfo.LoginPwd == pwd)
-            {
-                isLogin = true;
-            }
-            if (user.UserLoginInfo.Phone.Equals(app_UserLoginInfo.Phone, StringComparison.CurrentCultureIgnoreCase) == true && user.UserLoginInfo.LoginPwd == pwd)
-            {
-                isLogin = true;
-            }
-            if (isLogin == false)
+            var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
+
+            var clientInfo = clientInfoModel.List().Where(a => a.EntityID == user.ID && a.ClientID == app_UserLoginInfo.ClientID).FirstOrDefault();
+            if (clientInfo == null)
             {
                 result.Error = "账号或密码错误，登录失败。";
                 return result;
@@ -265,14 +262,14 @@ namespace Business
 
             App_User appuser = new App_User();
             appuser.ID = user.ID;
-            appuser.Name = user.UserLoginInfo.Name;
-            appuser.Phone = user.UserLoginInfo.Phone;
-            appuser.Email = user.UserLoginInfo.Email;
+            appuser.Name = userLoginInfo.Name;
+            appuser.Phone = userLoginInfo.Phone;
+            appuser.Email = userLoginInfo.Email;
             appuser.NameNote = user.Name;
             string headImg = null;
-            if (string.IsNullOrEmpty(user.UserLoginInfo.HeadImagePath) == false)
+            if (string.IsNullOrEmpty(userLoginInfo.HeadImagePath) == false)
             {
-                headImg = SystemConst.WebUrlIP + user.UserLoginInfo.HeadImagePath.DefaultHeadImage().Replace("~", "");
+                headImg = SystemConst.WebUrlIP + userLoginInfo.HeadImagePath.DefaultHeadImage().Replace("~", "");
             }
             else
             {
@@ -293,7 +290,7 @@ namespace Business
 
         public UserLoginInfo GetByClientID(string clientID)
         {
-            var clientInfo = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel).GetByClientID(clientID);
+            var clientInfo = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel).GetByClientID(clientID, null);
             return GetByUserID(clientInfo.EntityID.Value);
         }
 

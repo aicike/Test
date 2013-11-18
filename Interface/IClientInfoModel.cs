@@ -10,6 +10,6 @@ namespace Interface
     public interface IClientInfoModel : IBaseModel<ClientInfo>
     {
         Result PostClientID(string clientID, int accountMainID, int? userID);
-        ClientInfo GetByClientID(string clientID);
+        ClientInfo GetByClientID(string clientID, int? userID);
     }
 }
