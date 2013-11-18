@@ -145,6 +145,7 @@
             font-size: 18px;
             font-family: @@黑体;
             margin-bottom: 10px;
+            height:30px;
         }
         .TZdiv
         {
@@ -171,7 +172,12 @@
 <div class="body">
     <div id="divHY" class="HYdiv">
         欢迎你 , @ViewBag.UNAme
+
+            <div id="divEr" style=" float:right">
+                <a href="/Default/AppQrCode?amid=@ViewBag.AMID" target="_blank" title="点击进入扫描二维码"><img src="@Url.Action("CreateQrCode", "Default", new { AMID = ViewBag.AMID })" width="45px" /></a>
+            </div>
     </div>
+
     <div id="divTZ" class="TZdiv">
         <div>
             <a href="@Url.Action("Index", "InstantMes")">你有 <span style="font-size: 14; font-weight: bold;

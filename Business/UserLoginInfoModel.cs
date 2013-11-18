@@ -173,24 +173,20 @@ namespace Business
             var user = userModel.Get(clientInfo.EntityID.Value);
 
             bool isLogin = false;
-            if (user.UserLoginInfo.Email.Equals(app_UserLoginInfo.Email, StringComparison.CurrentCultureIgnoreCase) == false || user.UserLoginInfo.LoginPwd != pwd)
+            if (user.UserLoginInfo.Email.Equals(app_UserLoginInfo.Email, StringComparison.CurrentCultureIgnoreCase) == true && user.UserLoginInfo.LoginPwd == pwd)
+            {
+                isLogin = true;
+            }
+            if (user.UserLoginInfo.Phone.Equals(app_UserLoginInfo.Phone, StringComparison.CurrentCultureIgnoreCase) == true && user.UserLoginInfo.LoginPwd == pwd)
+            {
+                isLogin = true;
+            }
+            if (isLogin == false)
             {
                 result.Error = "账号或密码错误，登录失败。";
                 return result;
             }
-            else
-            {
-                isLogin = true;
-            }
-            if (user.UserLoginInfo.Phone.Equals(app_UserLoginInfo.Phone, StringComparison.CurrentCultureIgnoreCase) == false || user.UserLoginInfo.LoginPwd != pwd)
-            {
-                result.Error = "账号或密码错误，登录失败。";
-                return result;
-            }
-            else
-            {
-                isLogin = true;
-            }
+
             App_User appuser = new App_User();
             appuser.ID = user.ID;
             appuser.Name = user.UserLoginInfo.Name;
@@ -247,7 +243,7 @@ namespace Business
         /// <summary>
         /// 检查电话是否存在
         /// </summary>
-        public bool ExistPhone(string phone,int ?userLoginInfoID=null)
+        public bool ExistPhone(string phone, int? userLoginInfoID = null)
         {
             if (!string.IsNullOrEmpty(phone))
             {
