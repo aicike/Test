@@ -74,6 +74,8 @@ namespace EF.Migrations
                         IOSDownloadPath = c.String(),
                         AndroidDownloadPath = c.String(),
                         AndroidVersion = c.String(),
+                        AndroidSellDownloadPath = c.String(),
+                        AndroidSellVersion = c.String(),
                         IOSVersion = c.String(),
                         AppUpdateID = c.Int(),
                         SystemUserID = c.Int(nullable: false),

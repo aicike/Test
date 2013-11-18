@@ -22,7 +22,7 @@
             {
                 if (!string.IsNullOrEmpty(item.FromUser.UserLoginInfo.HeadImagePath))
                 { 
-                <img id="imgUHead" style="max-width: 50px; max-height: 50px;" src="http://@Url.Content(item.FromUser.UserLoginInfo.HeadImagePath)" />
+                <img id="imgUHead" style="max-width: 50px; max-height: 50px;" src="@Url.Content(item.FromUser.UserLoginInfo.HeadImagePath)" />
                 }
                 else
                 { 

@@ -97,7 +97,7 @@ namespace Web.Controllers
         public void CreateQrCode(int AMID)
         {
             QrCodeModel model = new QrCodeModel();
-            string url = SystemConst.WebUrlIP + "/Default/QrCodeSkip?AMID=" + AMID;
+            string url = "http://"+SystemConst.WebUrl + "/Default/QrCodeSkip?AMID=" + AMID;
             MemoryStream ms = model.Get_Android_DownloadUrl(url);
             if (null != ms)
             {
