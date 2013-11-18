@@ -23,7 +23,7 @@ namespace Business
         public bool CheckIsUniqueAccount(string AccountMainID, string tableName, string field, string value, int? id = null)
         {
             string sql = null;
-
+            value = value.Trim();
             if (id.HasValue && id.Value > 0)
             {
                 sql = string.Format("SELECT ID FROM {0} WHERE {1}='{2}' AND SystemStatus=0 AND ID<>{3} AND AccountMainID={4}", tableName, field, value, id.Value, AccountMainID);
@@ -49,7 +49,7 @@ namespace Business
         public bool CheckIsUnique(string tableName, string field, string value, int? id = null)
         {
             string sql = null;
-
+            value = value.Trim();
             if (id.HasValue && id.Value > 0)
             {
                 sql = string.Format("SELECT ID FROM {0} WHERE {1}='{2}' AND SystemStatus=0 AND ID<>{3}", tableName, field, value, id.Value);

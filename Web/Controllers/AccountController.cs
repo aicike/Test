@@ -110,7 +110,7 @@ namespace Web.Controllers
             }
             EmailInfo emailInfo = new EmailInfo();
             emailInfo.To = account_accountMain.Account.Email;
-            emailInfo.Subject = "IMtimely - 账号注册成功";
+            emailInfo.Subject = "ImTimely - 账号注册成功";
             emailInfo.IsHtml = true;
             emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您的ImTimely账号已创建成功,<a href='http://{0}.ImTimely.com' target='_blank'>请点击此处</a>&nbsp;登录。", LoginAccount.HostName) +
                              string.Format("登录名为您当前邮箱账号。<br/> 密码：{0}<br/>", account_accountMain.Account.LoginPwd) +
@@ -209,7 +209,7 @@ namespace Web.Controllers
             }
             EmailInfo emailInfo = new EmailInfo();
             emailInfo.To = mail;
-            emailInfo.Subject = "IMtimely - 密码重置成功";
+            emailInfo.Subject = "ImTimely - 密码重置成功";
             emailInfo.IsHtml = true;
             emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您的ImTimely账号密码重置成功,<a href='http://{0}.ImTimely.com' target='_blank'>请点击此处</a>&nbsp;登录。", LoginAccount.HostName) +
                              string.Format("登录名为您当前邮箱账号。<br/> 密码：{0}<br/>", LoginPwd) +
@@ -222,7 +222,8 @@ namespace Web.Controllers
             {
                 return Alert(new Dialog("邮件发送失败！请重新生成密码！"));
             }
-
+            SMS_Model sms = new SMS_Model();
+            sms.Send_AccountRegisterPWD(id);
 
             return Alert(new Dialog("密码重置成功！"));
         }
