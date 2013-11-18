@@ -171,7 +171,9 @@
                         @Html.TextBoxFor(a => a.Name, new { @readonly = "readonly" })@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.CreateTime)@Html.HiddenFor(a => a.SystemUserID)
                         @Html.HiddenFor(a => a.FileLimit)@Html.HiddenFor(a => a.Phone)@Html.HiddenFor(a => a.HostName)@Html.HiddenFor(a => a.ID)
                         @Html.HiddenFor(a => a.AndroidDownloadPath)@Html.HiddenFor(a => a.IOSDownloadPath)
-
+                        @Html.HiddenFor(a => a.AndroidVersion)
+                        @Html.HiddenFor(a => a.AndroidSellDownloadPath)
+                        @Html.HiddenFor(a => a.AndroidSellVersion)
                        <input type="file" style=" display:none" id="AndroidPathFile" name="AndroidPathFile"  />
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Name)

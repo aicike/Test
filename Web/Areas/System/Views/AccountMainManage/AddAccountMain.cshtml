@@ -176,7 +176,7 @@
                 </tr>
                 <tr>
                     <td>
-                        Android安装文件：
+                        Android用户端安装文件：
                     </td>
                     <td>
                          @Html.TextBoxFor(a => a.AndroidDownloadPath, new { @readonly = "readonly" })
@@ -188,12 +188,34 @@
                 </tr>
                 <tr>
                     <td>
-                        Android App版本号：
+                        Android用户端版本号：
                     </td>
                     <td>
                          @Html.TextBoxFor(a => a.AndroidVersion)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.AndroidVersion)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Android销售端安装文件：
+                    </td>
+                    <td>
+                         @Html.TextBoxFor(a => a.AndroidSellDownloadPath, new { @readonly = "readonly" })
+                        <input type="file" id="AndroidSellPathFile" name="AndroidSellPathFile"  />
+                        
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AndroidSellDownloadPath)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Android销售端版本号：
+                    </td>
+                    <td>
+                         @Html.TextBoxFor(a => a.AndroidSellVersion)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AndroidSellVersion)
                     </td>
                 </tr>
             </table>

@@ -27,10 +27,10 @@ namespace Web.Areas.System.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePathFile, HttpPostedFileBase AndroidPathFile)
+        public ActionResult AddAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePathFile, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile)
         {
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
-            var result = accountMainModel.Add(accountMain, LogoImagePathFile, LoginSystemUser.ID,AndroidPathFile);
+            var result = accountMainModel.Add(accountMain, LogoImagePathFile, LoginSystemUser.ID, AndroidPathFile, AndroidSellPathFile);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);
@@ -48,10 +48,10 @@ namespace Web.Areas.System.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePathFile,HttpPostedFileBase AndroidPathFile)
+        public ActionResult EditAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePathFile, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile)
         {
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
-            var result = accountMainModel.Edit_Permission(accountMain, LogoImagePathFile,AndroidPathFile, LoginSystemUser.ID);
+            var result = accountMainModel.Edit_Permission(accountMain, LogoImagePathFile, AndroidPathFile, AndroidSellPathFile, LoginSystemUser.ID);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);

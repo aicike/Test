@@ -51,7 +51,7 @@ namespace Business
         }
 
         [Transaction]
-        public Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID, HttpPostedFileBase AndroidPathFile)
+        public Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile)
         {
             accountMain.SystemUserID = createUserID;
             accountMain.CreateTime = DateTime.Now;
@@ -114,8 +114,21 @@ namespace Business
                         var Downpath = string.Format("~/Download/{0}", accountMain.ID);
                         var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidPathFile.FileName);
                         AndroidPathFile.SaveAs(androidPathDown);
-
                         accountMain.AndroidDownloadPath = Downpath2;
+                    }
+
+                    if (AndroidSellPathFile != null)
+                    {
+                        var androidSellPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
+                        var androidSellPathDown = string.Format("{0}/{1}_{2}", androidSellPath, token, AndroidSellPathFile.FileName);
+                        if (Directory.Exists(androidSellPath) == false)
+                        {
+                            Directory.CreateDirectory(androidSellPath);
+                        }
+                        var Downpath = string.Format("~/Download/{0}", accountMain.ID);
+                        var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidSellPathFile.FileName);
+                        AndroidSellPathFile.SaveAs(androidSellPathDown);
+                        accountMain.AndroidSellDownloadPath = Downpath2;
                     }
                     result = Edit(accountMain);
                 }
@@ -132,7 +145,7 @@ namespace Business
         }
 
         [Transaction]
-        public Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, int loginSystemUserID = 0)
+        public Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, int loginSystemUserID = 0)
         {
             if (!CheckHasPermissions(loginSystemUserID, accountMain.ID))
             {
@@ -207,6 +220,27 @@ namespace Business
                     accountMain.AndroidDownloadPath = Downpath2;
                 }
 
+                if (result.HasError == false && AndroidSellPathFile != null) {
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    //删除原路径
+                    var androidAbsolutePath = HttpContext.Current.Server.MapPath(accountMain.AndroidSellDownloadPath);
+                    if (File.Exists(androidAbsolutePath))
+                    {
+                        File.Delete(androidAbsolutePath);
+                    }
+                    var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
+                    var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, AndroidSellPathFile.FileName);
+                    if (Directory.Exists(androidPath) == false)
+                    {
+                        Directory.CreateDirectory(androidPath);
+                    }
+                    var Downpath = string.Format("~/Download/{0}", accountMain.ID);
+                    var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidSellPathFile.FileName);
+
+                    AndroidSellPathFile.SaveAs(androidPathDown);
+                    accountMain.AndroidSellDownloadPath = Downpath2;
+                }
+
                 result = Edit(accountMain);
             }
             catch (Exception ex)
@@ -222,7 +256,7 @@ namespace Business
         }
 
         [Transaction]
-        public Result Edit_ByAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile)
+        public Result Edit_ByAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile)
         {
             var result = base.Edit(accountMain);
             if (result.HasError == false && LogoImagePath != null)
@@ -291,6 +325,28 @@ namespace Business
 
                     AndroidPathFile.SaveAs(androidPathDown);
                     accountMain.AndroidDownloadPath = Downpath2;
+                }
+
+                if (result.HasError == false && AndroidSellPathFile != null)
+                {
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    //删除原路径
+                    var androidAbsolutePath = HttpContext.Current.Server.MapPath(accountMain.AndroidSellDownloadPath);
+                    if (File.Exists(androidAbsolutePath))
+                    {
+                        File.Delete(androidAbsolutePath);
+                    }
+                    var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
+                    var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, AndroidSellPathFile.FileName);
+                    if (Directory.Exists(androidPath) == false)
+                    {
+                        Directory.CreateDirectory(androidPath);
+                    }
+                    var Downpath = string.Format("~/Download/{0}", accountMain.ID);
+                    var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidSellPathFile.FileName);
+
+                    AndroidSellPathFile.SaveAs(androidPathDown);
+                    accountMain.AndroidSellDownloadPath = Downpath2;
                 }
 
                 result = Edit(accountMain);
@@ -436,6 +492,52 @@ namespace Business
                             string path = (accountMain.AndroidDownloadPath.Replace("~", ""));
                             path = path.Substring(0, path.LastIndexOf('/')+1) + appName;
                             versionInfo.AppPath = SystemConst.WebUrlIP + (accountMain.AndroidDownloadPath.Replace("~", ""));
+                            versionInfo.AppName = appName;
+                        }
+                        break;
+                }
+            }
+            int rawNum = 0;
+            int appNum = 0;
+            if (string.IsNullOrEmpty(v) == false)
+            {
+                rawNum = Convert.ToInt32(v.Replace(".", ""));
+            } if (string.IsNullOrEmpty(version) == false)
+            {
+                appNum = Convert.ToInt32(version.Replace(".", ""));
+            }
+            if (rawNum > appNum)
+            {
+                versionInfo.HasNewVersion = true;
+            }
+            return versionInfo;
+        }
+
+        public AppVersionInfo CheckAppSellVersion(EnumClientSystemType type, int amid, string version)
+        {
+            var accountMain = Get(amid);
+            AppVersionInfo versionInfo = new AppVersionInfo();
+            versionInfo.HasNewVersion = false;
+            string appName = null;
+            string v = null;
+            if (accountMain != null)
+            {
+                switch (type)
+                {
+                    case EnumClientSystemType.IOS:
+                        v = accountMain.IOSVersion;
+
+                        break;
+                    case EnumClientSystemType.Android:
+                        v = accountMain.AndroidSellVersion;
+                        if (string.IsNullOrEmpty(accountMain.AndroidSellDownloadPath) == false)
+                        {
+                            versionInfo.VersionCode = accountMain.AndroidSellVersion;
+                            appName = accountMain.AndroidSellDownloadPath.Substring(accountMain.AndroidSellDownloadPath.LastIndexOf('_') + 1);
+                            appName = appName.Substring(0, appName.LastIndexOf('.')) + versionInfo.VersionCode + ".apk";
+                            string path = (accountMain.AndroidSellDownloadPath.Replace("~", ""));
+                            path = path.Substring(0, path.LastIndexOf('/') + 1) + appName;
+                            versionInfo.AppPath = SystemConst.WebUrlIP + (accountMain.AndroidSellDownloadPath.Replace("~", ""));
                             versionInfo.AppName = appName;
                         }
                         break;

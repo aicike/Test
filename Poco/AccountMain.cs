@@ -105,12 +105,19 @@ namespace Poco
         [Display(Name = "IOS下载地址")]
         public string IOSDownloadPath { get; set; }
 
-        [Display(Name = "Android下载地址")]
+        [Display(Name = "Android用户端下载地址")]
         public string AndroidDownloadPath { get; set; }
 
-        [Display(Name = "Android版本")]
+        [Display(Name = "Android用户端版本号")]
         [RegularExpression(@"^\d{1,3}.\d.\d$", ErrorMessage = "版本号格式：x.x.x")]
         public string AndroidVersion { get; set; }
+
+        [Display(Name = "Android销售端下载地址")]
+        public string AndroidSellDownloadPath { get; set; }
+
+        [Display(Name = "Android销售端版本号")]
+        [RegularExpression(@"^\d{1,3}.\d.\d$", ErrorMessage = "版本号格式：x.x.x")]
+        public string AndroidSellVersion { get; set; }
 
         [Display(Name = "IOS版本")]
         [RegularExpression(@"^\d{1,3}.\d.\d$", ErrorMessage = "版本号格式：x.x.x")]
