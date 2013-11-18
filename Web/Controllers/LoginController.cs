@@ -111,10 +111,10 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult UserLogin(Account user)
+        public ActionResult UserLogin(string phone_email,string password)
         {
             IAccountModel accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-            var result = accountModel.Login(user.Email, user.LoginPwdPage);
+            var result = accountModel.Login(phone_email, password);
             if (result.HasError)
             {
                 return JavaScript("LandWaitFor('login','WaitImg',2);" + AlertJS_NoTag(new Dialog(result.Error)));

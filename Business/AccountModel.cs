@@ -563,11 +563,12 @@ namespace Business
             return Edit(entity);
         }
 
-        public Result Login(string email, string pwd)
+        public Result Login(string phone_email, string pwd)
         {
             Result result = new Result();
             pwd = DESEncrypt.Encrypt(pwd);
-            var account = List().Where(a => a.Email.Equals(email, StringComparison.OrdinalIgnoreCase) && a.LoginPwd.Equals(pwd)).FirstOrDefault();
+            var account = List().Where(a => (a.Email.Equals(phone_email, StringComparison.OrdinalIgnoreCase) && a.LoginPwd.Equals(pwd)) ||
+                (a.Phone.Equals(phone_email, StringComparison.OrdinalIgnoreCase) && a.LoginPwd.Equals(pwd))).FirstOrDefault();
             if (account == null)
             {
                 result.Error = "用户名或密码错误。";
@@ -606,7 +607,8 @@ namespace Business
         {
             Result result = new Result();
             pwd = DESEncrypt.Encrypt(pwd);
-            var account = List().Where(a => a.Email.Equals(email, StringComparison.OrdinalIgnoreCase) && a.LoginPwd.Equals(pwd)).FirstOrDefault();
+            var account = List().Where(a => (a.Email.Equals(email, StringComparison.OrdinalIgnoreCase) && a.LoginPwd.Equals(pwd)) ||
+                (a.Phone.Equals(email, StringComparison.OrdinalIgnoreCase) && a.LoginPwd.Equals(pwd))).FirstOrDefault();
             if (account == null)
             {
                 result.Error = "用户名或密码错误";

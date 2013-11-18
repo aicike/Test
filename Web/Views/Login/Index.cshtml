@@ -63,21 +63,33 @@
             }
 
             // $(".nivo-controlNav").attr("style", "display:none");
+            $("#login").click(function () {
+                var phone = $("phone_email").val().trim();
+                var pwd = $("password").val().trim();
+                if (phone.length > 0 && pwd.length > 0) {
+                    return true;
+                }
+                else {
+                    JAlert({
+                        Message: "请输入有效的账号和密码。",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return false;
+                }
+            });
         });
-
-   
-
     </script>
 }
 @model Poco.Account
 <div id="wrapper" style="min-width: 1024px">
     <div class="slider-wrapper theme-default">
-        <div id="slider" class="nivoSlider" style="margin-bottom: 0px; ">
+        <div id="slider" class="nivoSlider" style="margin-bottom: 0px;">
             @if (ShowDt != null)
             {
                 for (int i = 0; i < ShowDt.Rows.Count; i++)
                 {
-                    <img  src="@Url.Content(ShowDt.Rows[i]["path"].ToString())" data-thumb="@Url.Content(ShowDt.Rows[i]["path"].ToString())" title='' alt="" />
+                <img  src="@Url.Content(ShowDt.Rows[i]["path"].ToString())" data-thumb="@Url.Content(ShowDt.Rows[i]["path"].ToString())" title='' alt="" />
                 }
             }
         </div>
@@ -90,16 +102,16 @@
         { 
             
             <div>
-                @Html.TextBoxFor(a => a.Email, new { placeholder = "邮箱", @class = "inputLogin", style = "background-color:#faffbd" })
+                <input name="phone_email" id="phone_email" type="text" class="inputLogin" placeholder="电话或邮箱"
+                    style="background-color: #faffbd" />
             </div>
             <div>
-                @Html.PasswordFor(a => a.LoginPwdPage, new { placeholder = "密码", @class = "inputLogin", style = "background-color:#faffbd" })
+                <input name="password" id="password" type="password" class="inputLogin" placeholder="密码"
+                    style="background-color: #faffbd" />
             </div>
             <div>
                 <input id="login" onclick="" type="submit" value="登录" class="button2" />
-                @Html.ValidationMessageFor(a => a.Email)
-                @Html.ValidationMessageFor(a => a.LoginPwdPage)
-                <img id="WaitImg" src="../../Images/LandWaitFor.gif" style="display: none" />
+                <img id="WaitImg" src="@Url.Content("~/Images/LandWaitFor.gif")" style="display: none" />
             </div>
         }
     </div>

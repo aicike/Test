@@ -15,6 +15,8 @@ namespace Interface
 
         bool ExistEmail(string email, int? userLoginInfoID = null);
 
+        bool ExistPhone(string phone, int? userLoginInfoID = null);
+
         UserLoginInfo GetByUserID(int userID);
 
         UserLoginInfo GetByClientID(string clientID);

@@ -19,7 +19,7 @@ namespace Web.Controllers
         public string UserLogin(string email, string loginPwd, int accountMainID, string clientID)
         {
             var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
-            var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email, Pwd = loginPwd, AccountMainID = accountMainID, ClientID = clientID });
+            var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email, Phone = email, Pwd = loginPwd, AccountMainID = accountMainID, ClientID = clientID });
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
@@ -75,6 +75,21 @@ namespace Web.Controllers
             if (userLoginInfoModel.ExistEmail(email, userLoginInfoID))
             {
                 result.Error = "已存在相同邮箱。";
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+        /// <summary>
+        /// 检查电话是否已存在
+        /// </summary>
+        [HttpPost]
+        public string CheckPhoneOnRegister(string phone, int? userLoginInfoID)
+        {
+            Result result = new Result();
+            var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
+            if (userLoginInfoModel.ExistPhone(phone, userLoginInfoID))
+            {
+                result.Error = "已存在相同电话。";
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
@@ -136,11 +151,12 @@ namespace Web.Controllers
             if (account != null)
             {
                 string img = null;
-                if (string.IsNullOrEmpty(account.HeadImagePath)==false)
+                if (string.IsNullOrEmpty(account.HeadImagePath) == false)
                 {
                     img = SystemConst.WebUrlIP + account.HeadImagePath.Replace("~", "");
                 }
-                else {
+                else
+                {
                     img = "";
                 }
                 result.Entity = new { id = account.ID, n = account.Name, i = img };
@@ -185,7 +201,7 @@ namespace Web.Controllers
                     userLoginInfo.LoginPwd = DESEncrypt.Encrypt(value);
                     break;
                 case "headimg":
-                    userLoginInfo.HeadImagePath = value.Replace(SystemConst.WebUrlIP,"~");
+                    userLoginInfo.HeadImagePath = value.Replace(SystemConst.WebUrlIP, "~");
                     break;
             }
             userLoginInfo.LoginPwdPage = "000000";

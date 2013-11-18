@@ -39,7 +39,7 @@ namespace Interface
 
         Result Login(string email_phone, string pwd);
 
-        Result LoginApp(string email, string pwd);
+        Result LoginApp(string phone_email, string pwd);
 
         Result Delete(int id);
 

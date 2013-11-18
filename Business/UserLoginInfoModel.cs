@@ -54,7 +54,7 @@ namespace Business
                 return result;
             }
 
-            int userLoginInfoID=0;
+            int userLoginInfoID = 0;
             if (userLoginInfo.UserID.HasValue && oldUserLoginInfo != null)
             {
                 //已有账号，需要修改userLoginInfo信息
@@ -63,7 +63,7 @@ namespace Business
                 oldUserLoginInfo.LoginPwdPage = "000000";
                 oldUserLoginInfo.Phone = userLoginInfo.Phone;
                 oldUserLoginInfo.Name = userLoginInfo.Name;
-                userLoginInfoID=oldUserLoginInfo.ID;
+                userLoginInfoID = oldUserLoginInfo.ID;
                 result = base.Edit(oldUserLoginInfo);
             }
             else
@@ -76,7 +76,7 @@ namespace Business
                 userlogin.Phone = userLoginInfo.Phone;
                 userlogin.Email = userLoginInfo.Email;
                 result = base.Add(userlogin);
-                userLoginInfoID=userlogin.ID;
+                userLoginInfoID = userlogin.ID;
                 if (result.HasError)
                 {
                     return result;
@@ -139,12 +139,13 @@ namespace Business
                 result.Entity = new App_User() { ID = user.ID, Name = userLoginInfo.Name, Email = "", Pwd = userLoginInfo.Pwd, HeadImagePath = headImg };
                 return result;
             }
-            
+
             if (string.IsNullOrEmpty(userLoginInfo.Phone) == false)
             {
                 Regex regex = new Regex("(1[3,5,8][0-9])/d{8}");
-                bool isOk= regex.IsMatch(userLoginInfo.Phone);
-                if (isOk&&userLoginInfoID!=0) {
+                bool isOk = regex.IsMatch(userLoginInfo.Phone);
+                if (isOk && userLoginInfoID != 0)
+                {
                     SMS_Model smsModel = new SMS_Model();
                     smsModel.Send_UserRegister(userLoginInfoID);
                 }
@@ -165,19 +166,31 @@ namespace Business
 
             if (clientInfo == null)
             {
-                result.Error = "邮箱或密码错误，登录失败。";
+                result.Error = "账号或密码错误，登录失败。";
                 return result;
             }
             var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
             var user = userModel.Get(clientInfo.EntityID.Value);
 
-
+            bool isLogin = false;
             if (user.UserLoginInfo.Email.Equals(app_UserLoginInfo.Email, StringComparison.CurrentCultureIgnoreCase) == false || user.UserLoginInfo.LoginPwd != pwd)
             {
-                result.Error = "邮箱或密码错误，登录失败。";
+                result.Error = "账号或密码错误，登录失败。";
                 return result;
             }
-
+            else
+            {
+                isLogin = true;
+            }
+            if (user.UserLoginInfo.Phone.Equals(app_UserLoginInfo.Phone, StringComparison.CurrentCultureIgnoreCase) == false || user.UserLoginInfo.LoginPwd != pwd)
+            {
+                result.Error = "账号或密码错误，登录失败。";
+                return result;
+            }
+            else
+            {
+                isLogin = true;
+            }
             App_User appuser = new App_User();
             appuser.ID = user.ID;
             appuser.Name = user.UserLoginInfo.Name;
@@ -226,6 +239,25 @@ namespace Business
                 else
                 {
                     return List().Any(a => a.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase));
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 检查电话是否存在
+        /// </summary>
+        public bool ExistPhone(string phone,int ?userLoginInfoID=null)
+        {
+            if (!string.IsNullOrEmpty(phone))
+            {
+                if (userLoginInfoID != null && userLoginInfoID.HasValue && userLoginInfoID.Value > 0)
+                {
+                    return List().Any(a => a.Phone.Equals(phone, StringComparison.CurrentCultureIgnoreCase) && a.ID != userLoginInfoID.Value);
+                }
+                else
+                {
+                    return List().Any(a => a.Phone.Equals(phone, StringComparison.CurrentCultureIgnoreCase));
                 }
             }
             return false;
