@@ -57,7 +57,7 @@ namespace Poco
 
         #region 账号信息
         /// <summary>
-        /// 账号ID
+        /// 账号ID(User表)
         /// </summary>
         public int? EntityID { get; set; }
         /// <summary>

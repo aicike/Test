@@ -27,6 +27,13 @@ namespace Business
                 result.Error = "参数有误，未找到该账号。";
                 return result;
             }
+            Regex regex = new Regex(@"(1[3,5,8][0-9])\d{8}");
+            bool isOk = regex.IsMatch(userLoginInfo.Phone);
+            if (isOk == false)
+            {
+                result.Error = "电话号码格式错误，无法发送短信。";
+                return result;
+            }
             string sms = string.Format("恭喜您成功开通Imtimely App,登录账号为您的手机号码。");
             result = SendSMS(userLoginInfo.Phone, sms);
             return result;

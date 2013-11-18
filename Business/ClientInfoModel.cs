@@ -21,11 +21,11 @@ namespace Business
             Result result = new Result();
             bool isHas = true;
 
+            var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
             bool isHasUser = false;
             if (userID.HasValue)
             {
                 //判断userID是否存在
-                var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
                 var user = userModel.Get(userID.Value);
                 if (user != null)
                 {
@@ -39,7 +39,7 @@ namespace Business
                     {
                         headImg = "";
                     }
-                    result.Entity = new App_User() { ID = user.ID,Name=user.UserLoginInfo.Name, Email = user.UserLoginInfo.Email, Pwd = Common.DESEncrypt.Decrypt(user.UserLoginInfo.LoginPwd), HeadImagePath = headImg };
+                    result.Entity = new App_User() { ID = user.ID, Name = user.UserLoginInfo.Name, Email = user.UserLoginInfo.Email, Pwd = Common.DESEncrypt.Decrypt(user.UserLoginInfo.LoginPwd), HeadImagePath = headImg };
                 }
             }
 
@@ -67,7 +67,7 @@ namespace Business
                     App_UserLoginInfo userloginInfo = new App_UserLoginInfo();
                     userloginInfo.Email = "";
                     userloginInfo.Pwd = "pass123!";
-                    userloginInfo.Name = "匿名";
+                    userloginInfo.Name = DateTime.Now.ToString("MMddHH:mm:ss");
                     userloginInfo.AccountMainID = accountMainID;
                     userloginInfo.ClientID = clientID;
                     userloginInfo.EnumClientSystemType = (int)EnumClientSystemType.Android;
@@ -76,17 +76,38 @@ namespace Business
                 }
                 else
                 {
-                    var userLoginInfo = ulim.GetByClientID(clientID);
-                    string headImg = null;
-                    if (string.IsNullOrEmpty(userLoginInfo.HeadImagePath) == false)
+                    //判断ClientInfo的accountMainID是否与传递过来的amid相同
+                    //相同则有账号信息，不同则为其他售楼部新增用户，需要新注册
+                    var hasUser = userModel.List().Any(a => a.ID == cl.EntityID.Value && a.AccountMainID == accountMainID);
+                    if (hasUser)
                     {
-                        headImg = SystemConst.WebUrlIP + userLoginInfo.HeadImagePath.Replace("~", "");
+                        //已有账号
+                        var userLoginInfo = ulim.GetByClientID(clientID);
+                        string headImg = null;
+                        if (string.IsNullOrEmpty(userLoginInfo.HeadImagePath) == false)
+                        {
+                            headImg = SystemConst.WebUrlIP + userLoginInfo.HeadImagePath.Replace("~", "");
+                        }
+                        else
+                        {
+                            headImg = "";
+                        }
+                        result.Entity = new App_User() { ID = cl.EntityID.Value, Name = userLoginInfo.Name, Email = userLoginInfo.Email, Pwd = Common.DESEncrypt.Decrypt(userLoginInfo.LoginPwd), HeadImagePath = headImg };
                     }
                     else
                     {
-                        headImg = "";
+                        //新注册
+                        //只添加User,ClientInfo 不添加,UserLoginInfo
+                        App_UserLoginInfo userloginInfo = new App_UserLoginInfo();
+                        userloginInfo.Email = "";
+                        userloginInfo.Pwd = "pass123!";
+                        userloginInfo.Name = DateTime.Now.ToString("MMddHH:mm:ss");
+                        userloginInfo.AccountMainID = accountMainID;
+                        userloginInfo.ClientID = clientID;
+                        userloginInfo.EnumClientSystemType = (int)EnumClientSystemType.Android;
+                        userloginInfo.EnumClientUserType = (int)EnumClientUserType.User;
+                        result = ulim.Register2(userloginInfo, cl.ID);
                     }
-                    result.Entity = new App_User() { ID = cl.EntityID.Value, Name = userLoginInfo.Name, Email = userLoginInfo.Email, Pwd = Common.DESEncrypt.Decrypt(userLoginInfo.LoginPwd), HeadImagePath = headImg };
                 }
             }
             return result;
