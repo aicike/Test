@@ -257,7 +257,13 @@ namespace Web.Controllers
 
             List<UnreadMessage> UMlist = new List<UnreadMessage>();
             UMlist = libraryImageTextModel.getSessionList(UserID, UserType, AccountMainID).ToList();
-
+            foreach (var item in UMlist)
+            {
+                if (!string.IsNullOrEmpty(item.P))
+                {
+                    item.P = item.P.Replace("~",SystemConst.WebUrlIP);
+                }
+            }
             return Newtonsoft.Json.JsonConvert.SerializeObject(UMlist);
         }
 
