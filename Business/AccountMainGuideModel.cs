@@ -94,27 +94,27 @@ namespace Business
             }
 
             //是否设置安装App自动回复
-            var AutoMessageModel = Factory.Get<IAutoMessage_AddModel>(SystemConst.IOC_Model.AutoMessage_AddModel);
-            var AutoMessage = AutoMessageModel.GetInfo(AccountMainID);
-            if (AutoMessage != null)
-            {
-                DataRow row = dt.NewRow();
-                row["Title"] = "第四步：在 <span style='font-weight:bold'>设置 </span>-><span style='font-weight:bold'> 安装App自动回复 </span>中录入安装App后的自动回复！";
-                row["Conntroller"] = "";
-                row["View"] = "";
-                row["Status"] = "2";
-                dt.Rows.Add(row);
-            }
-            else
-            {
-                DataRow row = dt.NewRow();
-                row["Title"] = "第四步：在 <span style='font-weight:bold'>设置 </span>-><span style='font-weight:bold'> 安装App自动回复 </span>中录入安装App后的自动回复！";
-                row["Conntroller"] = "InstallAppReply";
-                row["View"] = "Index";
-                row["Status"] = "1";
-                dt.Rows.Add(row);
-                i = true;
-            }
+            //var AutoMessageModel = Factory.Get<IAutoMessage_AddModel>(SystemConst.IOC_Model.AutoMessage_AddModel);
+            //var AutoMessage = AutoMessageModel.GetInfo(AccountMainID);
+            //if (AutoMessage != null)
+            //{
+            //    DataRow row = dt.NewRow();
+            //    row["Title"] = "第四步：在 <span style='font-weight:bold'>设置 </span>-><span style='font-weight:bold'> 安装App自动回复 </span>中录入安装App后的自动回复！";
+            //    row["Conntroller"] = "";
+            //    row["View"] = "";
+            //    row["Status"] = "2";
+            //    dt.Rows.Add(row);
+            //}
+            //else
+            //{
+            //    DataRow row = dt.NewRow();
+            //    row["Title"] = "第四步：在 <span style='font-weight:bold'>设置 </span>-><span style='font-weight:bold'> 安装App自动回复 </span>中录入安装App后的自动回复！";
+            //    row["Conntroller"] = "InstallAppReply";
+            //    row["View"] = "Index";
+            //    row["Status"] = "1";
+            //    dt.Rows.Add(row);
+            //    i = true;
+            //}
             //是否设置App软文
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             var AppAdvertorial = AppAdvertorialModel.GetList(AccountMainID);
@@ -123,7 +123,7 @@ namespace Business
                 if (AppAdvertorial.Count() > 0)
                 {
                     DataRow row = dt.NewRow();
-                    row["Title"] = "第五步：在 <span style='font-weight:bold'>设置 </span>-><span style='font-weight:bold'> App动态软文 </span>中录入App动态软文！";
+                    row["Title"] = "第四步：在 <span style='font-weight:bold'>设置 </span>-><span style='font-weight:bold'> App动态软文 </span>中录入App动态软文！";
                     row["Conntroller"] = "";
                     row["View"] = "";
                     row["Status"] = "2";
@@ -132,7 +132,7 @@ namespace Business
                 else
                 {
                     DataRow row = dt.NewRow();
-                    row["Title"] = "第五步：在 <span style='font-weight:bold'>设置 </span>-><span style='font-weight:bold'> App动态软文 </span>中录入App动态软文！";
+                    row["Title"] = "第四步：在 <span style='font-weight:bold'>设置 </span>-><span style='font-weight:bold'> App动态软文 </span>中录入App动态软文！";
                     row["Conntroller"] = "InstallAppReply";
                     row["View"] = "Index";
                     row["Status"] = "1";
@@ -149,7 +149,7 @@ namespace Business
             //添加账号
 
             DataRow row1 = dt.NewRow();
-            row1["Title"] = "第六步：在<span style='font-weight:bold'> 账号管理 </span>中添加账户！";
+            row1["Title"] = "第五步：在<span style='font-weight:bold'> 账号管理 </span>中添加账户！";
             row1["Conntroller"] = "Account";
             row1["View"] = "Index";
             row1["Status"] = "3";
@@ -158,7 +158,7 @@ namespace Business
 
             //上传素材
             DataRow row2 = dt.NewRow();
-            row2["Title"] = "第七步：在<span style='font-weight:bold'> 素材管理 </span>中完善您的素材库！";
+            row2["Title"] = "第五步：在<span style='font-weight:bold'> 素材管理 </span>中完善您的素材库！";
             row2["Conntroller"] = "LibraryImage";
             row2["View"] = "Index";
             row2["Status"] = "3";
