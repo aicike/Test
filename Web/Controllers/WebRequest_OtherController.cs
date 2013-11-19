@@ -229,7 +229,7 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// 检查更新
+        /// 检查更新用户端
         /// </summary>
         /// <param name="type">IOS=0,Android=1,</param>
         /// <param name="amid"></param>
@@ -240,6 +240,21 @@ namespace Web.Controllers
             var accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             var osType = (EnumClientSystemType)type;
             var versionInfo = accountMainModel.CheckAppVersion(osType, amid, version);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(versionInfo);
+        }
+
+        /// <summary>
+        /// 检查更新销售端
+        /// </summary>
+        /// <param name="type">IOS=0,Android=1,</param>
+        /// <param name="amid"></param>
+        /// <param name="version"></param>
+        /// <returns>1:有更新 0:无更新</returns>
+        public string CheckAppVersion_Sell(int type, int amid, string version)
+        {
+            var accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
+            var osType = (EnumClientSystemType)type;
+            var versionInfo = accountMainModel.CheckAppSellVersion(osType, amid, version);
             return Newtonsoft.Json.JsonConvert.SerializeObject(versionInfo);
         }
     }
