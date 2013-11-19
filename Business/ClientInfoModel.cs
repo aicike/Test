@@ -79,6 +79,7 @@ namespace Business
                     //判断ClientInfo的accountMainID是否与传递过来的amid相同
                     //相同则有账号信息，不同则为其他售楼部新增用户，需要新注册
                     var hasUser = userModel.List().Any(a => a.ID == cl.EntityID.Value && a.AccountMainID == accountMainID);
+                    var SQL= userModel.List().Where(a => a.ID == cl.EntityID.Value && a.AccountMainID == accountMainID);
                     var userLoginInfo = ulim.GetByClientID(clientID);
                     if (hasUser)
                     {

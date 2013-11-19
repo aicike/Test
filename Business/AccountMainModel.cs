@@ -84,10 +84,12 @@ namespace Business
                     {
                         Directory.CreateDirectory(fileLibraryPath);
                     }
+                    CommonModel com = new CommonModel();
+                    var LastName = com.CreateRandom("", 5)+LogoImagePath.FileName.GetFileSuffix();
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                     var height = 58;
-                    var imageName = string.Format("{0}_{1}", token, LogoImagePath.FileName);
-                    var imageThumbnailName = string.Format("{0}_{1}_{2}", token, height, LogoImagePath.FileName);
+                    var imageName = string.Format("{0}_{1}", token, LastName);
+                    var imageThumbnailName = string.Format("{0}_{1}_{2}", token, height, LastName);
                     var imagePath = string.Format("{0}/{1}", basePath, imageName);
                     var imageThumbnailPath = string.Format("{0}/{1}", basePath, imageThumbnailName);
                     LogoImagePath.SaveAs(imagePath);
@@ -169,10 +171,12 @@ namespace Business
                     {
                         File.Delete(logoImageThumbnailPath);
                     }
+                    CommonModel com = new CommonModel();
+                    var LastName = com.CreateRandom("", 5) + LogoImagePath.FileName.GetFileSuffix();
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                     var height = 58;
-                    var imageName = string.Format("{0}_{1}", token, LogoImagePath.FileName);
-                    var imageThumbnailName = string.Format("{0}_{1}_{2}", token, height, LogoImagePath.FileName);
+                    var imageName = string.Format("{0}_{1}", token, LastName);
+                    var imageThumbnailName = string.Format("{0}_{1}_{2}", token, height, LastName);
                     var imagePath = string.Format("{0}/{1}", basePath, imageName);
                     var imageThumbnailPath = string.Format("{0}/{1}", basePath, imageThumbnailName);
                     LogoImagePath.SaveAs(imagePath);
@@ -276,10 +280,12 @@ namespace Business
                     {
                         File.Delete(logoImageThumbnailPath);
                     }
+                    CommonModel com = new CommonModel();
+                    var LastName = com.CreateRandom("", 5) + LogoImagePath.FileName.GetFileSuffix();
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                     var height = 58;
-                    var imageName = string.Format("{0}_{1}", token, LogoImagePath.FileName);
-                    var imageThumbnailName = string.Format("{0}_{1}_{2}", token, height, LogoImagePath.FileName);
+                    var imageName = string.Format("{0}_{1}", token, LastName);
+                    var imageThumbnailName = string.Format("{0}_{1}_{2}", token, height, LastName);
                     var imagePath = string.Format("{0}/{1}", basePath, imageName);
                     var imageThumbnailPath = string.Format("{0}/{1}", basePath, imageThumbnailName);
                     LogoImagePath.SaveAs(imagePath);

@@ -132,5 +132,22 @@ namespace System
             }
             return path;
         }
+
+        /// <summary>
+        /// 获取字符窜后缀名
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns>.xxx</returns>
+        public static string GetFileSuffix(this string path)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                return "";
+            }
+            else
+            {
+                return path.Substring(path.LastIndexOf('.'));
+            }
+        }
     }
 }
