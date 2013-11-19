@@ -110,7 +110,7 @@ namespace Web.Controllers
             var AccountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             var AccountModel = AccountMainModel.Get(AMID);
             if (AccountModel.AndroidDownloadPath!=null)
-                AccountModel.AndroidDownloadPath = SystemConst.WebUrlIP + Url.Content(AccountModel.AndroidDownloadPath);
+                AccountModel.AndroidDownloadPath = "http://" + SystemConst.WebUrl + Url.Content(AccountModel.AndroidDownloadPath);
             return View(AccountModel);
         }
 
