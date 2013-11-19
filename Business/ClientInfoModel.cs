@@ -59,9 +59,9 @@ namespace Business
             else
             {
                 //保存clientID信息，临时注册
-                var cl = List().Where(a => a.ClientID == clientID).FirstOrDefault();
+                var userids = List().Where(a => a.ClientID == clientID).Select(a => a.EntityID).ToList();
                 var ulim = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
-                if (cl == null)
+                if (userids == null || userids.Count == 0)
                 {
                     //添加UserLoginInfo,User,ClientInfo
                     App_UserLoginInfo userloginInfo = new App_UserLoginInfo();
@@ -78,10 +78,11 @@ namespace Business
                 {
                     //判断ClientInfo的accountMainID是否与传递过来的amid相同
                     //相同则有账号信息，不同则为其他售楼部新增用户，需要新注册
-                    var hasUser = userModel.List().Any(a => a.ID == cl.EntityID.Value && a.AccountMainID == accountMainID);
-                    var userLoginInfo = ulim.GetByClientID(clientID);
-                    if (hasUser)
+                    var user = userModel.List().Where(a => userids.Contains(a.ID) && a.AccountMainID == accountMainID).FirstOrDefault();
+                    UserLoginInfo userLoginInfo = null;
+                    if (user != null)
                     {
+                        userLoginInfo = ulim.GetByUserID(user.ID);
                         //已有账号
                         string headImg = null;
                         if (string.IsNullOrEmpty(userLoginInfo.HeadImagePath) == false)
@@ -92,10 +93,11 @@ namespace Business
                         {
                             headImg = "";
                         }
-                        result.Entity = new App_User() { ID = cl.EntityID.Value, Name = userLoginInfo.Name, Email = userLoginInfo.Email, Pwd = Common.DESEncrypt.Decrypt(userLoginInfo.LoginPwd), HeadImagePath = headImg };
+                        result.Entity = new App_User() { ID = user.ID, Name = userLoginInfo.Name, Email = userLoginInfo.Email, Pwd = Common.DESEncrypt.Decrypt(userLoginInfo.LoginPwd), HeadImagePath = headImg };
                     }
                     else
                     {
+                        userLoginInfo = ulim.GetByClientID(clientID);
                         //新注册
                         //只添加User,ClientInfo 不添加,UserLoginInfo
                         App_UserLoginInfo userloginInfo = new App_UserLoginInfo();
@@ -107,7 +109,7 @@ namespace Business
                         userloginInfo.Phone = userLoginInfo.Phone;
                         userloginInfo.EnumClientSystemType = (int)EnumClientSystemType.Android;
                         userloginInfo.EnumClientUserType = (int)EnumClientUserType.User;
-                        result = ulim.Register2(userloginInfo, cl.ID);
+                        result = ulim.Register2(userloginInfo, userLoginInfo.ID);
                     }
                 }
             }
@@ -115,14 +117,15 @@ namespace Business
         }
 
 
-        public ClientInfo GetByClientID(string clientID,int? userID)
+        public ClientInfo GetByClientID(string clientID, int? userID)
         {
             if (userID.HasValue == false)
             {
                 return List().Where(a => a.ClientID.Equals(clientID)).FirstOrDefault();
             }
-            else {
-                return List().Where(a => a.ClientID.Equals(clientID)&&a.EntityID.Value==userID.Value).FirstOrDefault();
+            else
+            {
+                return List().Where(a => a.ClientID.Equals(clientID) && a.EntityID.Value == userID.Value).FirstOrDefault();
             }
         }
     }
