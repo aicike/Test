@@ -29,15 +29,18 @@ namespace Business
             
             try
             {
+
+                CommonModel com = new CommonModel();
+                var LastName = com.CreateRandom("", 5) + HousShowImagePathFile.FileName.GetFileSuffix();
                 var path = string.Format(SystemConst.Business.PathBase, appadvertorial.AccountMainID);
                 var accountPath = HttpContext.Current.Server.MapPath(path);
                 var token = DateTime.Now.ToString("yyyyMMddHHmmss");
 
-                var imageName = string.Format("{0}_{1}", token, HousShowImagePathFile.FileName);
+                var imageName = string.Format("{0}_{1}", token, LastName);
                 var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
-                var imageminiName = string.Format("{0}_{1}_{2}", token, "mini", HousShowImagePathFile.FileName);
+                var imageminiName = string.Format("{0}_{1}_{2}", token, "mini", LastName);
                 var imageminiPath = string.Format("{0}\\{1}", accountPath, imageminiName);
-                var imageshowName = string.Format("{0}_{1}_{2}", token, "show", HousShowImagePathFile.FileName);
+                var imageshowName = string.Format("{0}_{1}_{2}", token, "show", LastName);
                 var imageshowPath = string.Format("{0}\\{1}", accountPath, imageshowName);
                 HousShowImagePathFile.SaveAs(imagePath);
 
@@ -143,16 +146,18 @@ namespace Business
             var appadvertorials = this.Get(appadvertorial.ID);
             if (HousShowImagePathFile != null)
             {
-        
+
+                CommonModel com = new CommonModel();
+                var LastName = com.CreateRandom("", 5) + HousShowImagePathFile.FileName.GetFileSuffix();
                 var path = string.Format(SystemConst.Business.PathBase, appadvertorial.AccountMainID);
                 var accountPath = HttpContext.Current.Server.MapPath(path);
                 var token = DateTime.Now.ToString("yyyyMMddHHmmss");
 
-                var imageName = string.Format("{0}_{1}", token, HousShowImagePathFile.FileName);
+                var imageName = string.Format("{0}_{1}", token, LastName);
                 var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
-                var imageminiName = string.Format("{0}_{1}_{2}", token, "mini", HousShowImagePathFile.FileName);
+                var imageminiName = string.Format("{0}_{1}_{2}", token, "mini", LastName);
                 var imageminiPath = string.Format("{0}\\{1}", accountPath, imageminiName);
-                var imageshowName = string.Format("{0}_{1}_{2}", token, "show", HousShowImagePathFile.FileName);
+                var imageshowName = string.Format("{0}_{1}_{2}", token, "show", LastName);
                 var imageshowPath = string.Format("{0}\\{1}", accountPath, imageshowName);
                 HousShowImagePathFile.SaveAs(imagePath);
                 try

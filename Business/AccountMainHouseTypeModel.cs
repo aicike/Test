@@ -25,9 +25,11 @@ namespace Business
             {
                 try
                 {
+                    CommonModel com = new CommonModel();
+                    var LastName = com.CreateRandom("", 5) + HouseImagePath.FileName.GetFileSuffix();
                     var path = string.Format(SystemConst.Business.PathBase, accountMainID);
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
-                    var imageName = string.Format("{0}_{1}", token, HouseImagePath.FileName);
+                    var imageName = string.Format("{0}_{1}", token, LastName);
                     var imagePath = string.Format("{0}\\{1}", path, imageName);
                     var imagePath2 = HttpContext.Current.Server.MapPath(imagePath);
                     HouseImagePath.SaveAs(imagePath2);
@@ -59,9 +61,11 @@ namespace Business
                         File.Delete(file);
                     }
                     //上传新文件
+                    CommonModel com = new CommonModel();
+                    var LastName = com.CreateRandom("", 5) + HouseImagePath.FileName.GetFileSuffix();
                     var path = string.Format(SystemConst.Business.PathBase, accountMainID);
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
-                    var imageName = string.Format("{0}_{1}", token, HouseImagePath.FileName);
+                    var imageName = string.Format("{0}_{1}", token, LastName);
                     var imagePath = string.Format("{0}\\{1}", path, imageName);
                     var imagePath2 = HttpContext.Current.Server.MapPath(imagePath);
                     HouseImagePath.SaveAs(imagePath2);

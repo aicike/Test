@@ -69,7 +69,7 @@
             <legend>基本信息</legend>
             <table class="tableForm">
                 <tr>
-                    <td width="150px">
+                    <td width="200px">
                         Logo：
                     </td>
                     <td>
@@ -179,7 +179,7 @@
                         Android用户端安装文件：
                     </td>
                     <td>
-                         @Html.TextBoxFor(a => a.AndroidDownloadPath, new { @readonly = "readonly" })
+                         @Html.TextBoxFor(a => a.AndroidDownloadPath, new { style="display:none"})
                         <input type="file" id="AndroidPathFile" name="AndroidPathFile"  />
                         
                     </td>
@@ -201,7 +201,7 @@
                         Android销售端安装文件：
                     </td>
                     <td>
-                         @Html.TextBoxFor(a => a.AndroidSellDownloadPath, new { @readonly = "readonly" })
+                         @Html.TextBoxFor(a => a.AndroidSellDownloadPath, new { style = "display:none" })
                         <input type="file" id="AndroidSellPathFile" name="AndroidSellPathFile"  />
                         
                     </td>

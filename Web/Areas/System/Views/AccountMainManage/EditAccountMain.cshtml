@@ -66,7 +66,7 @@
             <legend>基本信息</legend>
             <table class="tableForm">
                 <tr>
-                    <td width="150px">
+                    <td width="200px">
                         Logo：
                     </td>
                     <td>
@@ -157,12 +157,12 @@
                 </tr>
                 <tr>
                     <td>
-                        IOS下载地址：<br />
+                        IOS下载地址：<br /> 例：http://www.xxx.com
                     </td>
                     <td>@Html.TextBoxFor(a => a.IOSDownloadPath)
                     </td>
                     <td>
-                        例：http://www.xxx.com
+                       
                         <br />@Html.ValidationMessageFor(a => a.IOSDownloadPath)
                     </td>
                 </tr>
@@ -181,7 +181,8 @@
                         Android用户端安装文件：
                     </td>
                     <td>
-                        @Html.TextBoxFor(a => a.AndroidDownloadPath, new { @readonly = "readonly" })
+                        @Model.AndroidDownloadPath
+                        @Html.HiddenFor(a=>a.AndroidDownloadPath)
                         <input type="file" id="AndroidPathFile" name="AndroidPathFile" />
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.AndroidDownloadPath)
@@ -202,7 +203,8 @@
                         Android销售端安装文件：
                     </td>
                     <td>
-                        @Html.TextBoxFor(a => a.AndroidSellDownloadPath, new { @readonly = "readonly" })
+                        @Model.AndroidSellDownloadPath
+                        @Html.HiddenFor(a => a.AndroidSellDownloadPath)
                         <input type="file" id="AndroidSellPathFile" name="AndroidSellPathFile" />
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.AndroidSellDownloadPath)

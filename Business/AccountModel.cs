@@ -166,11 +166,13 @@ namespace Business
             {
                 try
                 {
+                    CommonModel com = new CommonModel();
+                    var LastName = com.CreateRandom("", 5) + HeadImagePathFile.FileName.GetFileSuffix();
                     var path = string.Format(SystemConst.Business.PathAccount, accountMainID);
                     var accountPath = HttpContext.Current.Server.MapPath(path);
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
-                    var imageName = string.Format("{0}_{1}", token, HeadImagePathFile.FileName);
-                    var imageName2 = string.Format("{0}_M_{1}", token, HeadImagePathFile.FileName);
+                    var imageName = string.Format("{0}_{1}", token, LastName);
+                    var imageName2 = string.Format("{0}_M_{1}", token, LastName);
                     var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
                     var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
                     HeadImagePathFile.SaveAs(imagePath);
@@ -274,11 +276,13 @@ namespace Business
                             File.Delete(file);
                         }
                     }
+                    CommonModel com = new CommonModel();
+                    var LastName = com.CreateRandom("", 5) + HeadImagePathFile.FileName.GetFileSuffix();
                     var path = string.Format(SystemConst.Business.PathAccount, accountMainID);
                     var accountPath = HttpContext.Current.Server.MapPath(path);
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
-                    var imageName = string.Format("{0}_{1}", token, HeadImagePathFile.FileName);
-                    var imageName2 = string.Format("{0}_M_{1}", token, HeadImagePathFile.FileName);
+                    var imageName = string.Format("{0}_{1}", token, LastName);
+                    var imageName2 = string.Format("{0}_M_{1}", token, LastName);
                     var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
                     var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
                     HeadImagePathFile.SaveAs(imagePath);
@@ -379,11 +383,13 @@ namespace Business
                             File.Delete(file);
                         }
                     }
+                    CommonModel com = new CommonModel();
+                    var LastName = com.CreateRandom("", 5) + HeadImagePathFile.FileName.GetFileSuffix();
                     var path = string.Format(SystemConst.Business.PathAccount, accountMainID);
                     var accountPath = HttpContext.Current.Server.MapPath(path);
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
-                    var imageName = string.Format("{0}_{1}", token, HeadImagePathFile.FileName);
-                    var imageName2 = string.Format("{0}_M_{1}", token, HeadImagePathFile.FileName);
+                    var imageName = string.Format("{0}_{1}", token, LastName);
+                    var imageName2 = string.Format("{0}_M_{1}", token, LastName);
                     var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
                     var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
                     HeadImagePathFile.SaveAs(imagePath);
