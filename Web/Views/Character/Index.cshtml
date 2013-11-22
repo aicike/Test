@@ -1,0 +1,71 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.Character;
+}
+@model PagedList<Poco.Role>
+<div class="title">
+    角色管理</div>
+<div class="body">
+    <div class="option">@Html.ActionLink("添加", "Add", "Role", new { Area = "System", AccountMainID = ViewBag.AccountMainID }, null, true)</div>
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th style="width: 450px;">
+                名称
+            </th>
+            <th style="width: 150px;">
+                可被用户查找和添加
+            </th>
+            <th style="width: 250px;">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @if (item.IsCanFindByUser.HasValue && item.IsCanFindByUser.Value)
+                    { 
+                        <input class="cbCanFind" value="@item.ID" type="checkbox" checked="checked" />    
+                    }
+                    else
+                    { 
+                        <input class="cbCanFind" value="@item.ID" type="checkbox" />
+                    }
+                </td>
+                <td class="operation">
+                    @if (item.IsCanDelete)
+                    { 
+                        @Html.ActionLink("修改", "Edit", "Character", new { id = item.ID }, null, true)
+                    }
+                    @Html.ActionLink("分配权限", "Permission", "Character", new { id = item.ID }, null, true)
+                    @if (item.IsCanDelete)
+                    { 
+                        @Ajax.ActionLink("删除", "Delete", "Character", new { id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "Character", new { id = item.ID }) + "',null)" }, true)
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+
+        <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
