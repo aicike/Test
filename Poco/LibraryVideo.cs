@@ -16,13 +16,11 @@ namespace Poco
         [Display(Name = "视频名称")]
         [Required(ErrorMessage = "请输入视频名称")]
         [StringLength(50, ErrorMessage = "长度小于50")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string FileName { get; set; }
 
         [Display(Name = "视频文件")]
         [Required(ErrorMessage = "请上传文件")]
         [StringLength(500, ErrorMessage = "长度小于500")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string FilePath { get; set; }
 
         //时长 秒

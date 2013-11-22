@@ -106,8 +106,11 @@ namespace AcceptanceServer
             }
             catch (Exception ex)
             {
-
-                frm.ShowErrorMessage(ex.Message);
+                string ShowError = ConfigurationManager.AppSettings["ShowError"].ToString();
+                if (ShowError == "true")
+                {
+                    frm.ShowErrorMessage(ex.Message);
+                }
             }
         }
 
@@ -156,14 +159,14 @@ namespace AcceptanceServer
                 if (pres.Show == ShowType.chat && pres.Type == PresenceType.available)//pres.Show == ShowType.chat &&
                 {
                     string showUP = ConfigurationManager.AppSettings["UPnotice"].ToString();
-                    if (showUP == "true")
-                    {
-                        ////显示当前谁上线了
-                        frm.Invoke(new dosomethings(delegate()
-                        {
-                            frm.ShowOlineUser(jid.User, jid.Bare + "||" + jid.Server);
-                        }));
-                    }
+                    //if (showUP == "true")
+                    //{
+                    //    ////显示当前谁上线了
+                    //    frm.Invoke(new dosomethings(delegate()
+                    //    {
+                    //        frm.ShowOlineUser(jid.User, jid.Bare + "||" + jid.Server);
+                    //    }));
+                    //}
 
                     ////暂时屏蔽
                     //pres.From = this.jid;
@@ -359,13 +362,22 @@ namespace AcceptanceServer
                         {
                             DataBusiness.UpandDelMessType(int.Parse(Np.SID), AoU, int.Parse(AoUID));
                             //在线
-                            if (OnlineUser.onlinuser.Any(a => a.jid.User == msg.To.User))
+
+                            List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
+                            msg.From = jid;
+                            foreach (XmppServerConnection xcon in cons)
                             {
-                                //转发发送消息
-                                XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList()[0];
-                                msg.From = jid;
-                                con.Send(msg, 0);
+                               
+                                xcon.Send(msg, 0);
                             }
+
+                            //if (OnlineUser.onlinuser.Any(a => a.jid.User == msg.To.User))
+                            //{
+                            //    //转发发送消息
+                            //    XmppServerConnection con = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList()[0];
+                            //    msg.From = jid;
+                            //    con.Send(msg, 0);
+                            //}
                         }
                         //多人聊天的处理
                         else
@@ -411,8 +423,8 @@ namespace AcceptanceServer
 
                         if (auth.Resource != "web")
                         {
-                            if (AoU == "u")
-                            {
+                            //if (AoU == "u")
+                            //{
                                 List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == auth.Username).ToList();
                                 if (cons.Count > 0)
                                 {
@@ -425,7 +437,7 @@ namespace AcceptanceServer
                                         }
                                     }
                                 }
-                            }
+                            //}
                         }
 
 
@@ -542,17 +554,17 @@ namespace AcceptanceServer
                         agsXMPP.protocol.client.Message msg = n as agsXMPP.protocol.client.Message;
                         NewsProtocol Np = msg.SelectSingleElement(typeof(NewsProtocol)) as NewsProtocol;
                         List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
-                        if (cons.Count > 0)
-                        {
-                            for (int i = 0; i < OnlineUser.onlinuser.Count; i++)
-                            {
-                                if (OnlineUser.onlinuser[i].jid.User == msg.To.User)
-                                {
-                                    OnlineUser.onlinuser.RemoveAt(i);
-                                    i--;
-                                }
-                            }
-                        }
+                        //if (cons.Count > 0)
+                        //{
+                        //    for (int i = 0; i < OnlineUser.onlinuser.Count; i++)
+                        //    {
+                        //        if (OnlineUser.onlinuser[i].jid.User == msg.To.User)
+                        //        {
+                        //            OnlineUser.onlinuser.RemoveAt(i);
+                        //            i--;
+                        //        }
+                        //    }
+                        //}
 
 
                         //存储离线记录

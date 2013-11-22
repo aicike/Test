@@ -18,12 +18,10 @@ namespace Poco
 
         [Display(Name = "备注名称")]
         [StringLength(10, ErrorMessage = "长度小于10")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Name { get; set; }
         
         [Display(Name = "电话")]
         [StringLength(20, ErrorMessage = "长度小于20")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Phone { get; set; }
 
         /// <summary>
@@ -35,7 +33,6 @@ namespace Poco
 
         [Display(Name = "证件号码")]
         [StringLength(30, ErrorMessage = "长度小于30")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string IdentityCard { get; set; }
 
         public int AccountMainID { get; set; }

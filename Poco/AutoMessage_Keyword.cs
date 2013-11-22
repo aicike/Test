@@ -16,7 +16,6 @@ namespace Poco
         [Display(Name = "规则名称")]
         [Required(ErrorMessage = "请输入规则名称")]
         [StringLength(30, ErrorMessage = "长度小于30")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string RuleName { get; set; }
 
         [Display(Name = "规则编号")]
@@ -25,7 +24,6 @@ namespace Poco
         [Display(Name = "规则编号")]
         [Required(ErrorMessage = "请输入规则编号")]
         [StringLength(50, ErrorMessage = "长度小于50")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string FullRuleNo { get; set; }
 
         public int AccountMainID { get; set; }

@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "YLDl";
+}
+
+ <div>
+         @using (Ajax.BeginForm("YLdengluWeb", "Test", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert"}))
+         {
+             <a>循环次数</a>
+             <input type="text" id="a" name="cnt" />
+             <input type="submit" id="btnSubmita" value="登陆 模仿" class="button" style="margin-right: 20px" />
+         }
+
+         @using (Ajax.BeginForm("YLdenglu", "Test", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+         {
+             <input type="submit" id="btnSubmitb" value="登陆" class="button" style="margin-right: 20px" />
+         }
+
+         @using (Ajax.BeginForm("YLfaxiaoxi", "Test", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+         {<a>循环次数</a>
+               <input type="text" id="aaa" name="cnt" />
+             <input type="submit" id="btnSubmitc" value="发送消息10000次" class="button" style="margin-right: 20px" />
+         }
+    </div>

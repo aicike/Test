@@ -37,8 +37,8 @@
             foreach (var item in list)
             {
             <tr>
-                <td align="left">
-                    @item.HtmlShow
+                <td align="left" valign="top">
+                    @Html.Raw(item.HtmlShow)
                 </td>
                 <td>
                     @item.GetPushStatus()

@@ -14,29 +14,24 @@ namespace Poco
         public int SystemStatus { get; set; }
 
         [Display(Name = "名称")]
-        [StringLength(10, ErrorMessage = "长度小于10")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
+        [StringLength(10, ErrorMessage = "长度小于10")] 
         [Required]
         public string Name { get; set; }
 
         [Display(Name = "地址")]
-        [StringLength(50, ErrorMessage = "长度小于50")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
+        [StringLength(50, ErrorMessage = "长度小于50")] 
         public string Address { get; set; }
 
         [Display(Name = "电话")]
-        [StringLength(20, ErrorMessage = "长度小于20")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
+        [StringLength(20, ErrorMessage = "长度小于20")] 
         public string Phone { get; set; }
 
         [Display(Name = "头像")]
-        [StringLength(500, ErrorMessage = "长度小于500")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
+        [StringLength(500, ErrorMessage = "长度小于500")] 
         public string HeadImagePath { get; set; }
 
         [Display(Name = "证件号码")]
-        [StringLength(30, ErrorMessage = "长度小于30")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
+        [StringLength(30, ErrorMessage = "长度小于30")] 
         public string IdentityCard { get; set; }
 
         [Display(Name = "邮箱")]

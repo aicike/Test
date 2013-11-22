@@ -25,14 +25,14 @@ namespace Web.Controllers
 
         [HttpPost]
         [AllowCheckPermissions(false)]
-        public ActionResult Index(AppWaitImg appWaitImg,HttpPostedFileBase HousShowImagePathFile)
+        public ActionResult Index(AppWaitImg appWaitImg, HttpPostedFileBase HousShowImagePathFile, int w, int h, int x1, int y1, int tw, int th)
         {
 
             appWaitImg.AccountMainID = LoginAccount.CurrentAccountMainID;
             var appWaitImgModel = Factory.Get<IAppWaitImgModel>(SystemConst.IOC_Model.AppWaitImgModel);
             if (HousShowImagePathFile != null)
             {
-                appWaitImgModel.UpAppWaitImg(appWaitImg, HousShowImagePathFile);
+                appWaitImgModel.UpAppWaitImg(appWaitImg, HousShowImagePathFile, w, h, x1, y1, tw, th);
             }
             return RedirectToAction("Index", "AppWaitImg");
         }

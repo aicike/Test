@@ -16,7 +16,6 @@ namespace Poco
         [Display(Name = "组名")]
         [Required(ErrorMessage = "请输入组名")]
         [StringLength(20, ErrorMessage = "长度小于20")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string GroupName { get; set; }
 
         /// <summary>

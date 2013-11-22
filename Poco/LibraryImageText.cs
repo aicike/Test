@@ -16,18 +16,15 @@ namespace Poco
         [Display(Name = "标题")]
         [Required(ErrorMessage = "请输入标题")]
         [StringLength(50, ErrorMessage = "长度小于50")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Title { get; set; }
 
         [Display(Name = "封面图片")]
         [Required(ErrorMessage = "请上传封面图片")]
         [StringLength(500, ErrorMessage = "长度小于500")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string ImagePath { get; set; }
 
         [Display(Name = "摘要")]
         [StringLength(200, ErrorMessage = "长度小于200")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Summary { get; set; }
 
         [Display(Name = "正文")]

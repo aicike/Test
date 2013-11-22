@@ -25,8 +25,9 @@ namespace Business
         public Result Upload(LibraryImage entity, System.Web.HttpPostedFileBase image)
         {
             var token = DateTime.Now.ToString("yyyyMMddHHmmss");
-
-            var fileName = string.Format("{0}_{1}", token, image.FileName);
+            CommonModel com = new CommonModel();
+            var LastName = com.CreateRandom("", 5) + image.FileName.GetFileSuffix();
+            var fileName = string.Format("{0}_{1}", token, LastName);
             var filePath = string.Format("~/File/{0}/FileLibrary/{1}", entity.AccountMainID, fileName);
             var fileThumbnailPath = string.Format("~/File/{0}/FileLibrary/_{1}", entity.AccountMainID, fileName);
             var pathIO = HttpContext.Current.Server.MapPath(filePath);

@@ -22,7 +22,6 @@ namespace Poco
 
 
         [StringLength(50, ErrorMessage = "长度小于50")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Remark { get; set; }
 
     }

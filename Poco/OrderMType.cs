@@ -15,7 +15,6 @@ namespace Poco
         [Display(Name = "名称")]
         [DropDownList(ErrorMessage = "请添加名称")]
         [StringLength(30, ErrorMessage = "长度小于30")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Name { get; set; }
 
         [Display(Name = "订购天数")]

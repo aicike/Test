@@ -43,10 +43,13 @@
             this.infoGread = new System.Windows.Forms.DataGridView();
             this.InfoTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.infoPoint = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.dgUser = new System.Windows.Forms.DataGridView();
-            this.UName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.other = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.menuStrip1.SuspendLayout();
@@ -55,8 +58,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.DGType)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.infoGread)).BeginInit();
-            this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgUser)).BeginInit();
+            this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -100,7 +103,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabpage33.Controls.Add(this.tabPage1);
             this.tabpage33.Controls.Add(this.tabPage2);
-            this.tabpage33.Controls.Add(this.tabPage3);
+            this.tabpage33.Controls.Add(this.tabPage4);
             this.tabpage33.Location = new System.Drawing.Point(12, 109);
             this.tabpage33.Name = "tabpage33";
             this.tabpage33.SelectedIndex = 0;
@@ -198,48 +201,79 @@
             this.infoPoint.ReadOnly = true;
             this.infoPoint.Width = 700;
             // 
-            // tabPage3
+            // tabPage4
             // 
-            this.tabPage3.Controls.Add(this.dgUser);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(925, 388);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "在线用户信息";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.tabPage4.Controls.Add(this.label2);
+            this.tabPage4.Controls.Add(this.label1);
+            this.tabPage4.Controls.Add(this.button1);
+            this.tabPage4.Controls.Add(this.dataGridView1);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(925, 388);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "查找在线用户";
+            this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // dgUser
+            // label2
             // 
-            this.dgUser.AllowUserToAddRows = false;
-            this.dgUser.AllowUserToDeleteRows = false;
-            this.dgUser.BackgroundColor = System.Drawing.Color.PaleGreen;
-            this.dgUser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgUser.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.UName,
-            this.other});
-            this.dgUser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgUser.Location = new System.Drawing.Point(3, 3);
-            this.dgUser.Name = "dgUser";
-            this.dgUser.RowHeadersVisible = false;
-            this.dgUser.RowTemplate.Height = 23;
-            this.dgUser.Size = new System.Drawing.Size(919, 382);
-            this.dgUser.TabIndex = 0;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(198, 11);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(29, 12);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "暂无";
             // 
-            // UName
+            // label1
             // 
-            this.UName.DataPropertyName = "UName";
-            this.UName.HeaderText = "用户名称";
-            this.UName.Name = "UName";
-            this.UName.ReadOnly = true;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(116, 11);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(89, 12);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "当前用户总数：";
             // 
-            // other
+            // button1
             // 
-            this.other.DataPropertyName = "other";
-            this.other.HeaderText = "其他信息";
-            this.other.Name = "other";
-            this.other.ReadOnly = true;
-            this.other.Width = 750;
+            this.button1.Location = new System.Drawing.Point(6, 6);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(91, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "查询在线用户";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.MistyRose;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2});
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.dataGridView1.Location = new System.Drawing.Point(3, 41);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(919, 344);
+            this.dataGridView1.TabIndex = 1;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "UNames";
+            this.dataGridViewTextBoxColumn1.HeaderText = "用户名称";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "others";
+            this.dataGridViewTextBoxColumn2.HeaderText = "其他信息";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Width = 750;
             // 
             // notifyIcon1
             // 
@@ -270,8 +304,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.DGType)).EndInit();
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.infoGread)).EndInit();
-            this.tabPage3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgUser)).EndInit();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -291,13 +326,16 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Times;
         private System.Windows.Forms.DataGridViewTextBoxColumn Point;
         private System.Windows.Forms.DataGridView infoGread;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.DataGridView dgUser;
         private System.Windows.Forms.DataGridViewTextBoxColumn InfoTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn infoPoint;
-        private System.Windows.Forms.DataGridViewTextBoxColumn UName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn other;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
     }
 }
 

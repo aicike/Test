@@ -16,8 +16,7 @@ namespace AcceptanceServer
         public static DataTable ErrorMessageDt;
         //运行信息（开发测试）
         public static DataTable MessageDt;
-        //在线用户信息
-        public static DataTable OlineUserDt;
+
 
 
         public lbUser()
@@ -26,7 +25,6 @@ namespace AcceptanceServer
             //初始化显示界面显示数据dt
             initErrorMessageDT();
             initMessageDT();
-            initOlineUserDt();
 
             agsXMPP.Factory.ElementFactory.AddElementType("NewsProtocol", "agsoftware:NewsProtocol", typeof(NewsProtocol));
         }
@@ -40,7 +38,7 @@ namespace AcceptanceServer
             //Thread myThread = new Thread(myThreadDelegate);
             //myThread.Start();
             //myThread.IsBackground = true;
-           
+
             System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
             {
                 Listen();
@@ -161,32 +159,17 @@ namespace AcceptanceServer
         }
 
         //初始化在线用户dt
-        public void initOlineUserDt()
-        {
-            OlineUserDt = new DataTable();
-            OlineUserDt.Columns.Add("uname");
-            OlineUserDt.Columns.Add("other");
-        }
+     
 
-        //显示在线用户
-        public void ShowOlineUser(string name, string other)
-        {
-            DataRow row = OlineUserDt.NewRow();
-            row["UName"] = name;
-            row["other"] = other;
-            OlineUserDt.Rows.Add(row);
-
-            dgUser.DataSource = OlineUserDt;
-        }
-
+ 
 
 
 
         #endregion
 
- 
 
-       
+
+
 
         private void lbUser_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -228,6 +211,29 @@ namespace AcceptanceServer
         }
 
 
-      
+        //查询当前在线用户
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataTable dtuser = new DataTable();
+                dtuser.Columns.Add("unames");
+                dtuser.Columns.Add("others");
+                foreach (var item in OnlineUser.onlinuser)
+                {
+                    DataRow row = dtuser.NewRow();
+                    row["unames"] = item.jid.User.ToString();
+                    row["others"] = item.jid.Bare + "||" + item.jid.Resource + "||" + item.jid.Server;
+                    dtuser.Rows.Add(row);
+                }
+                dataGridView1.DataSource = dtuser;
+
+                label2.Text = OnlineUser.onlinuser.Count.ToString();
+            }
+            catch { }
+        }
+
+
+
     }
 }
