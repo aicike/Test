@@ -78,6 +78,7 @@ namespace Poco
             public const string OrderMType = "OrderMType";
             public const string Order = "Order";
             public const string Task = "Task";
+            public const string Character = "Character";
         }
 
         public class IOC_Model

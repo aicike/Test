@@ -159,6 +159,7 @@
     <Compile Include="Controllers\AppWaitImgController.cs" />
     <Compile Include="Controllers\BaseController\BaseController.cs" />
     <Compile Include="Controllers\BasisSetController.cs" />
+    <Compile Include="Controllers\CharacterController.cs" />
     <Compile Include="Controllers\ClassifyController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ExitController.cs" />
@@ -851,6 +852,7 @@
     <Content Include="Views\MyTask\Index.cshtml" />
     <Content Include="Views\Test\TextSMS.cshtml" />
     <Content Include="Views\Test\YLDl.cshtml" />
+    <Content Include="Views\Character\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
