@@ -226,6 +226,7 @@ namespace Web.Controllers
             {
                 ac.Lat = accountmain.Lat;
                 ac.Lng = accountmain.Lng;
+                ac.Name = accountmain.Name;
                 result.Entity = ac;
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);

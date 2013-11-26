@@ -26,5 +26,10 @@ namespace Poco.WebAPI_Poco
             get { return lat; }
             set { lat = value; }
         }
+
+        /// <summary>
+        /// 售楼部名称
+        /// </summary>
+        public string Name { get; set; }
     }
 }
