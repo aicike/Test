@@ -153,7 +153,7 @@ namespace Business
                 }
                 string headImg = null;
                 headImg = SystemConst.WebUrlIP + "".DefaultHeadImage().Replace("~", "");
-                result.Entity = new App_User() { ID = user.ID, Name = userLoginInfo.Name, Email = "", Pwd = userLoginInfo.Pwd, HeadImagePath = headImg };
+                result.Entity = new App_User() { ID = user.ID, Phone = userLoginInfo.Phone == null ? "" : userLoginInfo.Phone, Name = userLoginInfo.Name, Email = "", Pwd = userLoginInfo.Pwd, HeadImagePath = headImg };
                 return result;
             }
             if (string.IsNullOrEmpty(userLoginInfo.Phone) == false && userLoginInfoID != 0)
@@ -226,7 +226,7 @@ namespace Business
             }
             string headImg = null;
             headImg = SystemConst.WebUrlIP + "".DefaultHeadImage().Replace("~", "");
-            result.Entity = new App_User() { ID = user.ID, Name = userLoginInfo.Name, Email = "", Pwd = userLoginInfo.Pwd, HeadImagePath = headImg };
+            result.Entity = new App_User() { ID = user.ID, Phone = userLoginInfo == null ? "" : userLoginInfo.Phone == null ? "" : userLoginInfo.Phone, Name = userLoginInfo.Name, Email = "", Pwd = userLoginInfo.Pwd, HeadImagePath = headImg };
             return result;
         }
 
@@ -262,10 +262,10 @@ namespace Business
 
             App_User appuser = new App_User();
             appuser.ID = user.ID;
-            appuser.Name = userLoginInfo.Name;
-            appuser.Phone = userLoginInfo.Phone;
-            appuser.Email = userLoginInfo.Email;
-            appuser.NameNote = user.Name;
+            appuser.Name = userLoginInfo.Name == null ? "" : userLoginInfo.Name;
+            appuser.Phone = userLoginInfo.Phone == null ? "" : userLoginInfo.Phone;
+            appuser.Email = userLoginInfo.Email == null ? "" : userLoginInfo.Email;
+            appuser.NameNote = user.Name == null ? "" : user.Name;
             string headImg = null;
             if (string.IsNullOrEmpty(userLoginInfo.HeadImagePath) == false)
             {

@@ -39,7 +39,7 @@ namespace Business
                     {
                         headImg = "";
                     }
-                    result.Entity = new App_User() { ID = user.ID, Name = user.UserLoginInfo.Name, Email = user.UserLoginInfo.Email, Pwd = Common.DESEncrypt.Decrypt(user.UserLoginInfo.LoginPwd), HeadImagePath = headImg };
+                    result.Entity = new App_User() { ID = user.ID, Phone = user.UserLoginInfo == null ? "" : user.UserLoginInfo.Phone == null ? "" : user.UserLoginInfo.Phone, Name = user.UserLoginInfo.Name, Email = user.UserLoginInfo.Email, Pwd = Common.DESEncrypt.Decrypt(user.UserLoginInfo.LoginPwd), HeadImagePath = headImg };
                 }
             }
 
@@ -93,7 +93,7 @@ namespace Business
                         {
                             headImg = "";
                         }
-                        result.Entity = new App_User() { ID = user.ID, Name = userLoginInfo.Name, Email = userLoginInfo.Email, Pwd = Common.DESEncrypt.Decrypt(userLoginInfo.LoginPwd), HeadImagePath = headImg };
+                        result.Entity = new App_User() { ID = user.ID, Phone = userLoginInfo == null ? "" : userLoginInfo.Phone == null ? "" : userLoginInfo.Phone, Name = userLoginInfo.Name, Email = userLoginInfo.Email, Pwd = Common.DESEncrypt.Decrypt(userLoginInfo.LoginPwd), HeadImagePath = headImg };
                     }
                     else
                     {
