@@ -226,7 +226,19 @@
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\userStyle.css" />
+    <Content Include="File\LoginPageShow\Client\361037.jpg" />
+    <Content Include="File\LoginPageShow\Client\363609.jpg" />
+    <Content Include="File\LoginPageShow\Client\394388.jpg" />
     <Content Include="File\LoginPageShow\Default\Default.jpg" />
+    <Content Include="File\LoginPageShow\System\347327.jpg" />
+    <Content Include="File\LoginPageShow\System\5.jpg" />
+    <Content Include="File\LoginPageShow\System\6.jpg" />
+    <Content Include="File\LoginPageShow\System\7.jpg" />
+    <Content Include="File\platform\1.jpg" />
+    <Content Include="File\platform\2.jpg" />
+    <Content Include="File\platform\20130926154527_80_p1.jpg" />
+    <Content Include="File\platform\20130926154629_80_p2.jpg" />
+    <Content Include="File\platform\3.jpg" />
     <Content Include="Images\404-2.png" />
     <Content Include="Images\android.png" />
     <Content Include="Images\AppDefault.png" />
@@ -234,9 +246,12 @@
     <Content Include="Images\banner.jpg" />
     <Content Include="Images\default_Avatar.png" />
     <Content Include="Images\down.png" />
+    <Content Include="Images\ImgSH.gif" />
+    <Content Include="Images\ImgSH2.gif" />
     <Content Include="Images\iphone.png" />
     <Content Include="Images\Leavemessage.png" />
     <Content Include="Images\logo.png" />
+    <Content Include="Images\Logo_144.png" />
     <Content Include="Images\nopicture_icon.png" />
     <Content Include="Images\SelImg.jpg" />
     <Content Include="Images\sep.png" />
@@ -561,9 +576,10 @@
     <Folder Include="Areas\System\Models\" />
     <Folder Include="Areas\System\Views\Shared\" />
     <Folder Include="Download\" />
-    <Folder Include="File\LoginPageShow\Client\" />
-    <Folder Include="File\LoginPageShow\System\" />
-    <Folder Include="File\platform\" />
+    <Folder Include="File\1.Message\" />
+    <Folder Include="File\1\Account\" />
+    <Folder Include="File\1\Base\" />
+    <Folder Include="File\1\FileLibrary\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -853,6 +869,10 @@
     <Content Include="Views\Test\TextSMS.cshtml" />
     <Content Include="Views\Test\YLDl.cshtml" />
     <Content Include="Views\Character\Index.cshtml" />
+    <Content Include="Views\Character\Add.cshtml" />
+    <Content Include="Views\Character\Edit.cshtml" />
+    <Content Include="Views\Character\Power.cshtml" />
+    <Content Include="Views\Default\QrCodeSkipAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

@@ -43,6 +43,10 @@ namespace Web.Controllers
         [ValidateInput(false)]
         public ActionResult Add(AppAdvertorial appAdver, HttpPostedFileBase HousShowImagePathFile, int w, int h, int x1, int y1, int tw, int th)
         {
+            if (w <= 0)
+            {
+                return JavaScript(AlertJS_NoTag(new Dialog("请在图片上选择展示区域")));
+            }
             appAdver.AccountMainID = LoginAccount.CurrentAccountMainID;
             appAdver.Sort = 0;
             appAdver.IssueDate = DateTime.Now;
@@ -71,6 +75,13 @@ namespace Web.Controllers
         [ValidateInput(false)]
         public ActionResult Edit(AppAdvertorial appadver, HttpPostedFileBase HousShowImagePathFile, int w, int h, int x1, int y1, int tw, int th)
         {
+            if (HousShowImagePathFile != null)
+            {
+                if (w <= 0)
+                {
+                    return JavaScript(AlertJS_NoTag(new Dialog("请在图片上选择展示区域")));
+                }
+            }
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             Result result = AppAdvertorialModel.EditAppAdvertorial(appadver, HousShowImagePathFile, w, h, x1, y1, tw, th);
             if (result.HasError)

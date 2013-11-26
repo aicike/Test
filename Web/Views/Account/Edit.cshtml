@@ -191,7 +191,15 @@
 
 
 
-
+            
+       
+            $("form").submit(function () {
+                if ($(".validation-summary-errors").find("li[style!='display:none']").length == 0) {
+                    ShowLayout_Later("请稍后", "请稍后，正在努力为您上传数据中...");
+                } else {
+                    $(".validation-summary-errors").find("li").remove();
+                }
+            });
 
 
             $("#btnSubmit").click(function () {
@@ -353,7 +361,7 @@
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.ID)@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.IsActivated)@Html.HiddenFor(a => a.LoginPwd)@Html.HiddenFor(a => a.ParentAccountID)
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.Name)
+                    <td>@Html.ValidationMessageFor(a => a.Name) <div style="display:none">@Html.ValidationSummary()</div>
                     </td>
                 </tr>
                 <tr>
@@ -410,7 +418,7 @@
             <input type="submit" id="btnSubmit" value="保存" class="button" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
         </div>
     }</div>
-<div id="dialogUser" title="选择账号" style="display: none;z-index: 99999;">
+<div id="dialogUser" title="选择账号" style="display: none; z-index: 99999;">
     <ul class="ulUser">
         <li>
             <input type="button" value="清空" id="btnClear" class="button" />

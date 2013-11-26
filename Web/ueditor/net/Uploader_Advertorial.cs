@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Web;
 using System.IO;
 using System.Collections;
+using System.Drawing;
+using Common;
 
     /// <summary>
     /// UEditor编辑器通用上传类
@@ -53,7 +55,19 @@ using System.Collections;
                 if (state == "SUCCESS")
                 {
                     filename = reName();
-                    uploadFile.SaveAs(uploadpath + filename);
+                    //uploadFile.SaveAs(uploadpath + filename);
+
+                    int dataLengthToRead = (int)uploadFile.InputStream.Length;//获取下载的文件总大小
+                    byte[] buffer = new byte[dataLengthToRead];
+
+
+                    int r = uploadFile.InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+                    Stream tream = new MemoryStream(buffer);
+                    Image img = Image.FromStream(tream);
+
+                    Tool.SuperGetPicThumbnail(img, uploadpath + filename, 70, 800, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+        
+
                     URL = pathbase + filename;
                 }
             }

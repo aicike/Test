@@ -15,6 +15,10 @@ using System.Threading;
 using agsXMPP.protocol.client;
 using System.Configuration;
 using Poco.WebAPI_Poco;
+using System.IO;
+using System.Drawing;
+using Common;
+using Business;
 
 namespace Web.Controllers
 {
@@ -123,11 +127,29 @@ namespace Web.Controllers
                             {
                                 System.IO.Directory.CreateDirectory(Server.MapPath(path));
                             }
+                            CommonModel com = new CommonModel();
+                            var LastName = com.CreateRandom("", 5) + TypeImagePathFile.FileName.GetFileSuffix();
                             var token = DateTime.Now.ToString("yyyyMMddHHmmss");
-                            var imageName = string.Format("{0}_{1}", token, TypeImagePathFile.FileName);
+                            var imageName = string.Format("{0}_{1}", token, LastName);
                             var imagePath = string.Format("{0}\\{1}", path, imageName);
                             var imagePath2 = Server.MapPath(imagePath);
-                            TypeImagePathFile.SaveAs(imagePath2);
+
+
+                            int dataLengthToRead = (int)TypeImagePathFile.InputStream.Length;//获取下载的文件总大小
+                            byte[] buffer = new byte[dataLengthToRead];
+
+
+                            int r = TypeImagePathFile.InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+                            Stream tream = new MemoryStream(buffer);
+                            Image img = Image.FromStream(tream);
+
+
+                            Tool.SuperGetPicThumbnail(img, imagePath2, 70, 800, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+        
+
+
+
+
                             np.FielUrl =imagePath;
                         }
                         else

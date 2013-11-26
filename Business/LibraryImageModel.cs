@@ -9,6 +9,7 @@ using System.Web;
 using Injection.Transaction;
 using System.IO;
 using Common;
+using System.Drawing;
 
 namespace Business
 {
@@ -32,24 +33,22 @@ namespace Business
             var fileThumbnailPath = string.Format("~/File/{0}/FileLibrary/_{1}", entity.AccountMainID, fileName);
             var pathIO = HttpContext.Current.Server.MapPath(filePath);
             var thumbnailPathIO = HttpContext.Current.Server.MapPath(fileThumbnailPath);
-            image.SaveAs(pathIO);
 
-            //缩略图
-            //if (Tool.Thumbnail(pathIO, thumbnailPathIO, Convert.ToInt32(SystemConst.Business.ThumbnailImage_Width)))
-            //{
-            if (Tool.GetPicThumbnail(pathIO, thumbnailPathIO,90))
-            {
-                //删除原头像
-                if (File.Exists(pathIO))
-                {
-                    File.Delete(pathIO);
-                }
-                entity.FilePath = fileThumbnailPath;
-            }
-            else
-            {
-                entity.FilePath = filePath;
-            }
+
+
+            int dataLengthToRead = (int)image.InputStream.Length;//获取下载的文件总大小
+            byte[] buffer = new byte[dataLengthToRead];
+
+
+            int r = image.InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+            Stream tream = new MemoryStream(buffer);
+            Image img = Image.FromStream(tream);
+
+
+            Tool.SuperGetPicThumbnail(img, pathIO, 70, 800, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+        
+            entity.FilePath = filePath;
+           
             entity.FileName = image.FileName.Substring(0, image.FileName.LastIndexOf('.'));
             Result result = base.Add(entity);
             result.Entity = entity.FilePath;

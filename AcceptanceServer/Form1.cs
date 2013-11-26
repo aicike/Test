@@ -34,11 +34,6 @@ namespace AcceptanceServer
         //开启服务
         private void Form1_Load(object sender, EventArgs e)
         {
-            //ThreadStart myThreadDelegate = new ThreadStart(Listen);
-            //Thread myThread = new Thread(myThreadDelegate);
-            //myThread.Start();
-            //myThread.IsBackground = true;
-
             System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
             {
                 Listen();
@@ -92,18 +87,18 @@ namespace AcceptanceServer
         #region(源数据)
         public void ShowRecvMessage(string str)
         {
-            this.Invoke(new dosomethings(delegate()
-               {
-                   //doc.LoadXml(str);
-                   //foreach (Node var in doc.ChildNodes)
-                   //{
-                   //    string s = var.ChildNodes.Item(1).ChildNodes.Item(1).ChildNodes.Item(0).ToString();
-                   //    listBox1.Items.Add(s);
-                   //}
-                   //listBox1.Items.Add("接收的" + str);
-                   //ShowMesage("接收的：" + str);
+            //this.Invoke(new dosomethings(delegate()
+            //   {
+            //       //doc.LoadXml(str);
+            //       //foreach (Node var in doc.ChildNodes)
+            //       //{
+            //       //    string s = var.ChildNodes.Item(1).ChildNodes.Item(1).ChildNodes.Item(0).ToString();
+            //       //    listBox1.Items.Add(s);
+            //       //}
+            //       //listBox1.Items.Add("接收的" + str);
+            //       //ShowMesage("接收的：" + str);
 
-               }));
+            //   }));
         }
 
         public void ShowSendMessage(string str)

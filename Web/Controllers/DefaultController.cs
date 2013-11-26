@@ -91,7 +91,7 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// 二维码
+        /// 二维码用户端
         /// </summary>
         /// <param name="AMID"></param>
         public void CreateQrCode(int AMID)
@@ -105,6 +105,26 @@ namespace Web.Controllers
             }
         }
 
+
+        /// <summary>
+        /// 二维码销售端
+        /// </summary>
+        /// <param name="AMID"></param>
+        public void CreateQrCodeAccount(int AMID)
+        {
+            QrCodeModel model = new QrCodeModel();
+            string url = "http://" + SystemConst.WebUrl + "/Default/QrCodeSkipAccount?AMID=" + AMID;
+            MemoryStream ms = model.Get_Android_DownloadUrl(url);
+            if (null != ms)
+            {
+                Response.BinaryWrite(ms.ToArray());
+            }
+        }
+
+        /// <summary>
+        /// 二维码用户端界面
+        /// </summary>
+        /// <param name="AMID"></param>
         public ActionResult QrCodeSkip(int AMID)
         {
             var AccountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
@@ -114,6 +134,20 @@ namespace Web.Controllers
             return View(AccountModel);
         }
 
-        
+        /// <summary>
+        /// 二维码销售端界面
+        /// </summary>
+        /// <param name="AMID"></param>
+        public ActionResult QrCodeSkipAccount(int AMID)
+        {
+            var AccountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
+            var AccountModel = AccountMainModel.Get(AMID);
+            if (AccountModel.AndroidSellDownloadPath != null)
+                AccountModel.AndroidSellDownloadPath = "http://" + SystemConst.WebUrl + Url.Content(AccountModel.AndroidSellDownloadPath);
+            return View(AccountModel);
+        }
+
+
+
     }
 }

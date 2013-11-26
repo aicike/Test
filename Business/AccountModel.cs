@@ -175,52 +175,34 @@ namespace Business
                     var imageName2 = string.Format("{0}_M_{1}", token, LastName);
                     var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
                     var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
-                    HeadImagePathFile.SaveAs(imagePath);
 
-                    account.HeadImagePath = path + imageName;
+
+                    int dataLengthToRead = (int)HeadImagePathFile.InputStream.Length;//获取下载的文件总大小
+                    byte[] buffer = new byte[dataLengthToRead];
+
+
+                    int r = HeadImagePathFile.InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+                    Stream tream = new MemoryStream(buffer);
+                    Image img = Image.FromStream(tream);
+
                     if (width > 0)
                     {
-                        System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
+                        Tool.SuperGetPicThumbnailJT(img, imagePath, 70, width, height, x1, y1, Twidth, Theight, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+
+
+                        Tool.SuperGetPicThumbnail(imagePath, imagePath2, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                        if (File.Exists(imagePath))
                         {
-                            int ToWidth = width;
-                            int ToHeight = height;
-                            int ToX1 = x1;
-                            int ToY1 = y1;
+                            File.Delete(imagePath);
+                        }
 
-                            Bitmap sourceBitmap = new Bitmap(imagePath);
-
-                            int YW = sourceBitmap.Width;
-                            int YH = sourceBitmap.Height;
-
-                            if (YH != Theight)
-                            {
-                                double ratio = double.Parse(YH.ToString()) / double.Parse(Theight.ToString());
-                                //ratio = Math.Round(ratio, 2);
-                                ToWidth = (int)(ToWidth * ratio);
-                                ToHeight = (int)(ToHeight * ratio);
-                                ToX1 = (int)(ToX1 * ratio);
-                                ToY1 = (int)(ToY1 * ratio);
-                            }
-                            Bitmap resultBitmap = new Bitmap(ToWidth, ToHeight);
-
-                            using (Graphics g = Graphics.FromImage(resultBitmap))
-                            {
-                                Rectangle resultRectangle = new Rectangle(0, 0, ToWidth, ToHeight);
-                                Rectangle sourceRectangle = new Rectangle(0 + ToX1, 0 + ToY1, ToWidth, ToHeight);
-                                g.DrawImage(sourceBitmap, resultRectangle, sourceRectangle, GraphicsUnit.Pixel);
-                            }
-                            EncoderParameters ep = new EncoderParameters();
-
-                            resultBitmap.Save(imagePath2, sourceBitmap.RawFormat);
-                            resultBitmap.Dispose();
-                            sourceBitmap.Dispose();
-                            if (File.Exists(imagePath))
-                            {
-                                File.Delete(imagePath);
-                            }
-                        });
-                        t.Start();
                         account.HeadImagePath = path + imageName2;
+
+                    }
+                    else
+                    {
+                        Tool.SuperGetPicThumbnail(img, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                        account.HeadImagePath = path + imageName;
                     }
 
                     result = Edit(account);
@@ -285,53 +267,33 @@ namespace Business
                     var imageName2 = string.Format("{0}_M_{1}", token, LastName);
                     var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
                     var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
-                    HeadImagePathFile.SaveAs(imagePath);
 
-                    account.HeadImagePath = path + imageName;
+                    int dataLengthToRead = (int)HeadImagePathFile.InputStream.Length;//获取下载的文件总大小
+                    byte[] buffer = new byte[dataLengthToRead];
+
+
+                    int r = HeadImagePathFile.InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+                    Stream tream = new MemoryStream(buffer);
+                    Image img = Image.FromStream(tream);
+
                     if (width > 0)
                     {
-                        System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
+                        Tool.SuperGetPicThumbnailJT(img, imagePath, 70, width, height, x1, y1, Twidth, Theight, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+
+
+                        Tool.SuperGetPicThumbnail(imagePath, imagePath2, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                        if (File.Exists(imagePath))
                         {
-                            int ToWidth = width;
-                            int ToHeight = height;
-                            int ToX1 = x1;
-                            int ToY1 = y1;
+                            File.Delete(imagePath);
+                        }
 
-                            Bitmap sourceBitmap = new Bitmap(imagePath);
-
-                            int YW = sourceBitmap.Width;
-                            int YH = sourceBitmap.Height;
-
-
-                            if (YH != Theight)
-                            {
-                                double ratio = double.Parse(YH.ToString()) / double.Parse(Theight.ToString());
-                                //ratio = Math.Round(ratio, 2);
-                                ToWidth = (int)(ToWidth * ratio);
-                                ToHeight = (int)(ToHeight * ratio);
-                                ToX1 = (int)(ToX1 * ratio);
-                                ToY1 = (int)(ToY1 * ratio);
-                            }
-                            Bitmap resultBitmap = new Bitmap(ToWidth, ToHeight);
-
-                            using (Graphics g = Graphics.FromImage(resultBitmap))
-                            {
-                                Rectangle resultRectangle = new Rectangle(0, 0, ToWidth, ToHeight);
-                                Rectangle sourceRectangle = new Rectangle(0 + ToX1, 0 + ToY1, ToWidth, ToHeight);
-                                g.DrawImage(sourceBitmap, resultRectangle, sourceRectangle, GraphicsUnit.Pixel);
-                            }
-                            EncoderParameters ep = new EncoderParameters();
-
-                            resultBitmap.Save(imagePath2, sourceBitmap.RawFormat);
-                            resultBitmap.Dispose();
-                            sourceBitmap.Dispose();
-                            if (File.Exists(imagePath))
-                            {
-                                File.Delete(imagePath);
-                            }
-                        });
-                        t.Start();
                         account.HeadImagePath = path + imageName2;
+
+                    }
+                    else
+                    {
+                        Tool.SuperGetPicThumbnail(img, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                        account.HeadImagePath = path + imageName;
                     }
 
 
@@ -389,59 +351,36 @@ namespace Business
                     var accountPath = HttpContext.Current.Server.MapPath(path);
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                     var imageName = string.Format("{0}_{1}", token, LastName);
-                    var imageName2 = string.Format("{0}_M_{1}", token, LastName);
+                    var imageName2 = string.Format("{0}Y_{1}", token, LastName);
                     var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
                     var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
-                    HeadImagePathFile.SaveAs(imagePath);
 
-                    account.HeadImagePath = path + imageName;
+                    int dataLengthToRead = (int)HeadImagePathFile.InputStream.Length;//获取下载的文件总大小
+                    byte[] buffer = new byte[dataLengthToRead];
+
+                    int r = HeadImagePathFile.InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+                    Stream tream = new MemoryStream(buffer);
+                    Image img = Image.FromStream(tream);
+
                     if (width > 0)
                     {
-                        System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
+                        Tool.SuperGetPicThumbnailJT(img, imagePath, 70, width, height, x1, y1, Twidth, Theight, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+
+
+                        Tool.SuperGetPicThumbnail(imagePath, imagePath2, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                        if (File.Exists(imagePath))
                         {
-                            int ToWidth = width;
-                            int ToHeight = height;
-                            int ToX1 = x1;
-                            int ToY1 = y1;
+                            File.Delete(imagePath);
+                        }
 
-                            Bitmap sourceBitmap = new Bitmap(imagePath);
-
-                            int YW = sourceBitmap.Width;
-                            int YH = sourceBitmap.Height;
-
-
-                            if (YH != Theight)
-                            {
-                                double ratio = double.Parse(YH.ToString()) / double.Parse(Theight.ToString());
-                                //ratio = Math.Round(ratio, 2);
-                                ToWidth = (int)(ToWidth * ratio);
-                                ToHeight = (int)(ToHeight * ratio);
-                                ToX1 = (int)(ToX1 * ratio);
-                                ToY1 = (int)(ToY1 * ratio);
-                            }
-                            Bitmap resultBitmap = new Bitmap(ToWidth, ToHeight);
-
-                            using (Graphics g = Graphics.FromImage(resultBitmap))
-                            {
-                                Rectangle resultRectangle = new Rectangle(0, 0, ToWidth, ToHeight);
-                                Rectangle sourceRectangle = new Rectangle(0 + ToX1, 0 + ToY1, ToWidth, ToHeight);
-                                g.DrawImage(sourceBitmap, resultRectangle, sourceRectangle, GraphicsUnit.Pixel);
-                            }
-                            EncoderParameters ep = new EncoderParameters();
-
-                            resultBitmap.Save(imagePath2, sourceBitmap.RawFormat);
-                            resultBitmap.Dispose();
-                            sourceBitmap.Dispose();
-                            if (File.Exists(imagePath))
-                            {
-                                File.Delete(imagePath);
-                            }
-                        });
-                        t.Start();
                         account.HeadImagePath = path + imageName2;
+
                     }
-
-
+                    else
+                    {
+                        Tool.SuperGetPicThumbnail(img, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                        account.HeadImagePath = path + imageName;
+                    }
                     result = Edit(account);
                 }
                 catch (Exception ex)

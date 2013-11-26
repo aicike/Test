@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.Character;
+}
+@section head{
+}
+@model Poco.Role
+<div class="title">
+    添加角色</div>
+<div class="body">
+    @using (Ajax.BeginForm("Add", "Character", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {
+        <fieldset>
+            <legend>角色</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        名称
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Name)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Name)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="submit" id="btnSubmit" value="保存" class="button" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button"  />
+        </div>
+    }
+</div>

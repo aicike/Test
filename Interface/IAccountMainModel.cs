@@ -17,9 +17,9 @@ namespace Interface
 
         Result Delete_Permission(int id, int loginSystemUserID);
         
-        Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile);
+        Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile,HttpPostedFileBase AppLogoImageFile);
 
-        Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, int loginSystemUserID = 0);
+        Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, int loginSystemUserID = 0);
 
         Result Edit_ByAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile);
 

@@ -1,8 +1,9 @@
 ﻿@{
-    ViewBag.Title = "二维码";
+    ViewBag.Title = "二维码扫描 - Imtimely - 沟通零距离";
     Layout = null;
 }
 <html>
+<!-- web端-->
 <head>
     <style>
         .Title
@@ -21,11 +22,22 @@
     </style>
 </head>
 <body>
-    <div class="Title">
+    <div class="Title" style=" padding:25px">
         感谢您的使用
     </div>
     <div class="Center">
-        <img src="@Url.Action("CreateQrCode", "Default", new { AMID = ViewBag.AMID })" />
+        <table align="center" width="650px">
+            <tr align="center">
+                <td> <img width="250px" src="@Url.Action("CreateQrCodeAccount", "Default", new { AMID = ViewBag.AMID })" /></td>
+                <td> <img width="250px" src="@Url.Action("CreateQrCode", "Default", new { AMID = ViewBag.AMID })" /></td>
+            </tr>
+            <tr align="center" style=" color:#606060;">
+                <td> 销售端二维码</td>
+                <td> 用户端二维码</td>
+            </tr>
+        </table>
+        
+       
     </div>
 </body>
 </html>

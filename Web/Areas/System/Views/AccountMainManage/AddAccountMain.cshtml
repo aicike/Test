@@ -44,6 +44,39 @@
                 return false;
             });
 
+
+            $("#AppLogoImageFile").change(function () {
+                var fileName = $("#AppLogoImageFile").val();
+                $("#AppLogoImagePath").val(fileName);
+                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+                $("span[data-valmsg-for='AppLogoImagePath']").empty().attr("class", "field-validation-valid");
+                switch (suffix) {
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".gif":
+                    case ".bmp":
+                        break;
+                    default:
+                        $("span[data-valmsg-for='AppLogoImagePath']").text("支持下列图片格式：.jpg|.jpeg|.png|.gif|.bmp").attr("class", "field-validation-error");
+                        break;
+                }
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#imgAppLogo").attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+                return false;
+            });
+
+            
+
+
+
+
             $("#Name").focusout(function () {
                 if ($("#Name").length > 0) {
                     $.ajax({
@@ -156,7 +189,7 @@
                 </tr>
                 <tr>
                     <td>
-                        IOS下载地址： <br />
+                        IOS用户端下载地址： <br />
                         例：http://www.xxx.com
                     </td>
                     <td>@Html.TextBoxFor(a => a.IOSDownloadPath)
@@ -166,10 +199,30 @@
                 </tr>
                  <tr>
                     <td>
-                        IOS App版本号：
+                        IOS用户端App版本号：
                     </td>
                     <td>
                          @Html.TextBoxFor(a => a.IOSVersion)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.IOSVersion)
+                    </td>
+                </tr>
+                 <tr>
+                    <td>
+                        IOS销售端下载地址： <br />
+                        例：http://www.xxx.com
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.IOSSellDownloadPath)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.IOSDownloadPath)
+                    </td>
+                </tr>
+                 <tr>
+                    <td>
+                        IOS销售端App版本号：
+                    </td>
+                    <td>
+                         @Html.TextBoxFor(a => a.IOSSellVersion)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.IOSVersion)
                     </td>
@@ -216,6 +269,19 @@
                          @Html.TextBoxFor(a => a.AndroidSellVersion)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.AndroidSellVersion)
+                    </td>
+                </tr>
+                 <tr>
+                    <td>
+                        APPLogo：
+                    </td>
+                    <td>
+                        <img id="imgAppLogo" style="max-width: 80px; max-height: 80px; float: left" />
+                        <input type="file" id="AppLogoImageFile" name="AppLogoImageFile"  />
+                        @Html.TextBoxFor(a => a.AppLogoImagePath, new { style = "width:0px;visibility:hidden" })
+
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AppLogoImagePath)
                     </td>
                 </tr>
             </table>

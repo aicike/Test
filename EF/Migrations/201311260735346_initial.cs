@@ -64,6 +64,7 @@ namespace EF.Migrations
                         Phone = c.String(nullable: false, maxLength: 30),
                         LogoImageThumbnailPath = c.String(nullable: false, maxLength: 500),
                         LogoImagePath = c.String(nullable: false, maxLength: 500),
+                        AppLogoImagePath = c.String(),
                         AccountStatusID = c.Int(nullable: false),
                         FileLimit = c.Double(nullable: false),
                         SaleAddress = c.String(nullable: false, maxLength: 200),
@@ -72,11 +73,13 @@ namespace EF.Migrations
                         Lng = c.String(),
                         Lat = c.String(),
                         IOSDownloadPath = c.String(),
+                        IOSVersion = c.String(),
+                        IOSSellDownloadPath = c.String(),
+                        IOSSellVersion = c.String(),
                         AndroidDownloadPath = c.String(),
                         AndroidVersion = c.String(),
                         AndroidSellDownloadPath = c.String(),
                         AndroidSellVersion = c.String(),
-                        IOSVersion = c.String(),
                         AppUpdateID = c.Int(),
                         SystemUserID = c.Int(nullable: false),
                         CreateTime = c.DateTime(nullable: false),
@@ -1160,6 +1163,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
+
 
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };

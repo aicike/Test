@@ -42,7 +42,7 @@ namespace Poco
         [Display(Name = "电话")]
         [Required(ErrorMessage = "请输入电话")]
         [StringLength(30, ErrorMessage = "长度小于30")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
+        [RegularExpression(@"(1[3,5,8][0-9])\d{8}", ErrorMessage = "请输入正确的电话号码。")]
         public string Phone { get; set; }
 
         [Display(Name = "头像")]

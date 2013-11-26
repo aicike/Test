@@ -11,6 +11,7 @@ using Poco.Enum;
 using Common;
 using Injection.Transaction;
 using Poco.WebAPI_Poco;
+using System.Drawing;
 
 namespace Business
 {
@@ -51,7 +52,7 @@ namespace Business
         }
 
         [Transaction]
-        public Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile)
+        public Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile)
         {
             accountMain.SystemUserID = createUserID;
             accountMain.CreateTime = DateTime.Now;
@@ -90,8 +91,10 @@ namespace Business
                     var height = 58;
                     var imageName = string.Format("{0}_{1}", token, LastName);
                     var imageThumbnailName = string.Format("{0}_{1}_{2}", token, height, LastName);
+                    var appimgName = string.Format("{0}_{1}_APP{2}", token, height, LastName);
                     var imagePath = string.Format("{0}/{1}", basePath, imageName);
                     var imageThumbnailPath = string.Format("{0}/{1}", basePath, imageThumbnailName);
+                    var appimgPath = string.Format("{0}/{1}", basePath, appimgName);
                     LogoImagePath.SaveAs(imagePath);
                     //缩略图
                     bool IsOK = Tool.Thumbnail(imagePath, height, imageThumbnailPath);
@@ -132,6 +135,21 @@ namespace Business
                         AndroidSellPathFile.SaveAs(androidSellPathDown);
                         accountMain.AndroidSellDownloadPath = Downpath2;
                     }
+
+                    if (AppLogoImageFile != null)
+                    {
+
+                        int dataLengthToRead = (int)AppLogoImageFile.InputStream.Length;//获取下载的文件总大小
+                        byte[] buffer = new byte[dataLengthToRead];
+
+
+                        int r = AppLogoImageFile.InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+                        Stream tream = new MemoryStream(buffer);
+                        Image img = Image.FromStream(tream);
+
+                        Tool.SuperGetPicThumbnail(img, appimgPath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                        accountMain.AppLogoImagePath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + appimgName;
+                    }
                     result = Edit(accountMain);
                 }
                 catch (Exception ex)
@@ -147,13 +165,42 @@ namespace Business
         }
 
         [Transaction]
-        public Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, int loginSystemUserID = 0)
+        public Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, int loginSystemUserID = 0)
         {
             if (!CheckHasPermissions(loginSystemUserID, accountMain.ID))
             {
                 throw new ApplicationException(SystemConst.Notice.NotAuthorized);
             }
+
             var result = base.Edit(accountMain);
+            if (result.HasError == false && AppLogoImageFile != null)
+            {
+
+                var AppLogoImageAbsolute = HttpContext.Current.Server.MapPath(accountMain.AppLogoImagePath);
+                if (File.Exists(AppLogoImageAbsolute))
+                {
+                    File.Delete(AppLogoImageAbsolute);
+                }
+                CommonModel com2 = new CommonModel();
+                var LastName = com2.CreateRandom("", 5) + AppLogoImageFile.FileName.GetFileSuffix();
+                var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                var path = HttpContext.Current.Server.MapPath(string.Format("~/File/{0}", accountMain.ID));
+                var basePath = string.Format("{0}/{1}", path, "Base");
+                var appimgName = string.Format("{0}_APP{1}", token, LastName);
+                var appimgPath = string.Format("{0}/{1}", basePath, appimgName);
+
+                int dataLengthToRead = (int)AppLogoImageFile.InputStream.Length;//获取下载的文件总大小
+                byte[] buffer = new byte[dataLengthToRead];
+
+
+                int r = AppLogoImageFile.InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+                Stream tream = new MemoryStream(buffer);
+                Image img = Image.FromStream(tream);
+
+                Tool.SuperGetPicThumbnail(img, appimgPath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                accountMain.AppLogoImagePath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + appimgName;
+                result = base.Edit(accountMain);
+            }
             if (result.HasError == false && LogoImagePath != null)
             {
                 try
@@ -177,8 +224,10 @@ namespace Business
                     var height = 58;
                     var imageName = string.Format("{0}_{1}", token, LastName);
                     var imageThumbnailName = string.Format("{0}_{1}_{2}", token, height, LastName);
+                    var appimgName = string.Format("{0}_{1}_APP{2}", token, height, LastName);
                     var imagePath = string.Format("{0}/{1}", basePath, imageName);
                     var imageThumbnailPath = string.Format("{0}/{1}", basePath, imageThumbnailName);
+                    var appimgPath = string.Format("{0}/{1}", basePath, appimgName);
                     LogoImagePath.SaveAs(imagePath);
                     //缩略图
                     bool IsOK = Tool.Thumbnail(imagePath, height, imageThumbnailPath);
@@ -192,6 +241,7 @@ namespace Business
                         accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
                     }
 
+                   
                     result = Edit(accountMain);
                 }
                 catch (Exception ex)

@@ -15,7 +15,7 @@
                 if (parseInt(c.w) > 0) {
                     var rx = 200 / c.w;
                     var ry = 300 / c.h;
-                    
+
                     $('#imgSet').css({
                         width: Math.round(rx * boundx) + 'px',
                         height: Math.round(ry * boundy) + 'px',
@@ -56,10 +56,12 @@
                         break;
                 }
                 var input = this;
+                
                 if (input.files && input.files[0]) {
+                    ShowLayout_Later("请稍后", "请稍后，正在努力为您加载图片中...");
                     var reader = new FileReader();
                     reader.onload = function (e) {
-
+                        CloseLayout_Later();
                         if (Cnt > 0) {
                             jcrop_api.destroy();
                             $('#x1').val("0");
@@ -95,6 +97,7 @@
                 return false;
             });
         });
+
     </script>
 
         <style type="text/css">
@@ -183,11 +186,13 @@
                 </tr>
             </table>
             <div class="action">
-                <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px" />
+                <input type="submit" id="btnSubmit" onclick=" ShowLayout_Later('请稍后','请稍后，正在努力为您上传数据...');" class="button" value="保存" style="margin-right: 20px" />
                 <input type="button" id="btnDelete"  onclick="location.href='@Url.Action("Delete", "AppWaitImg", new { HostName = ViewBag.HostName })'" class="button" value="删除"   />
             </div>
         </fieldset>
     }
 </div>
+
+
 <div style="clear: both">
 </div>

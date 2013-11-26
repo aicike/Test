@@ -18,6 +18,10 @@ namespace Interface
 
         IQueryable<Role> GetListByAMID(int AccountMainID);
 
+        IQueryable<Role> GetListNoAdmin(int AccountMainID);
+
         Result IsCanFindByUser(int id, bool value);
+
+        Result DelteByIDAndAMID(int id, int AccountMainID);
     }
 }

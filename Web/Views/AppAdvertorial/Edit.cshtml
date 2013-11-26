@@ -88,8 +88,10 @@
                 }
                 var input = this;
                 if (input.files && input.files[0]) {
+                 ShowLayout_Later("请稍后", "请稍后，正在努力为您加载图片...");
                     var reader = new FileReader();
                     reader.onload = function (e) {
+                     CloseLayout_Later();
                         if (Cnt > 0) {
                             jcrop_api.destroy();
                             $('#x1').val("0");
@@ -126,6 +128,59 @@
                 }
                 return false;
             });
+
+
+
+             $("form").submit(function () {
+                if ($(".validation-summary-errors").find("li[style!='display:none']").length == 0) {
+                    ShowLayout_Later("请稍后", "请稍后，正在努力为您上传数据中...");
+                } else {
+                    $(".validation-summary-errors").find("li").remove();
+                }
+            });
+
+
+
+            
+            $("#btnSubmit").click(function () {
+               var pathFile= $('#HousShowImagePathFile').val();
+                if(pathFile!=undefined&&pathFile!="")
+                {
+            
+                   if ($("#w").val() == "0") {
+                        JAlert({
+                            Message: "请选择App列表展示区域！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        alert("asdf");
+                        return false;
+                    }
+                }
+                if (IsStick == 1) {
+                    JAlert({
+                        Message: "最多允许“5”篇软文置顶！请重新选择！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return false;
+                }
+
+                if (ue.getContent().length == 0) {
+                    JAlert({
+                        Message: "正文不能为空！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return false;
+                }
+
+
+            });
+
+
+
+
         });
 
          var IsStick = 0;
@@ -153,35 +208,13 @@
             }
         }
 
-        function CKOnsubmit()
-        {
-            var pathFile= $('#HousShowImagePathFile').val();
-            if(pathFile!=undefined&&pathFile!="")
-            {
-            
-               if ($("#w").val() == "0") {
-                    JAlert({
-                        Message: "请选择App列表展示区域！",
-                        DialogType: "Ok",
-                        BtnOk: "确定"
-                    });
-                    alert("asdf");
-                    return false;
-                }
+        $("form").submit(function () {
+            if ($(".validation-summary-valid").find("li[style='display:none']").length == 0) {
+                ShowLayout_Later("请稍后", "请稍后，正在努力为您加载图片...");
             }
-            if (IsStick == 1) {
-                JAlert({
-                    Message: "最多允许“5”篇软文置顶！请重新选择！",
-                    DialogType: "Ok",
-                    BtnOk: "确定"
-                });
-                return false;
-            }
-            if (iscansub == 1) {
-                return false;
-            }
-            iscansub = 1;
-        }
+        });
+
+      
     </script>
     <style type="text/css">
         .middle-out
@@ -223,7 +256,8 @@
                         </div>
                     </td>
                     <td valign="top">
-                        <p> App列表页展示图
+                        <p>
+                            App列表页展示图
                         </p>
                         <div style="width: 200px; height: 100px; overflow: hidden;">
                             <img id="imgLogo" src="@Url.Content(Model.AppShowImagePath)" style="width:200px; height:100px"/>
@@ -274,7 +308,7 @@
                         @Html.HiddenFor(a => a.AppShowImagePath)
                         @Html.HiddenFor(a => a.MinImagePath)
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.Title)
+                    <td>@Html.ValidationMessageFor(a => a.Title)<div style="display: none">@Html.ValidationSummary()</div>
                     </td>
                 </tr>
                 <tr>
@@ -311,7 +345,8 @@
             </table>
         </fieldset>
         <div class="action">
-            <input type="submit" id="btnSubmit" onclick="return CKOnsubmit()" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+            <input type="submit" id="btnSubmit" onclick="return CKOnsubmit()" class="button"
+                value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
         </div>
     }
 </div>

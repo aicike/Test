@@ -2,11 +2,31 @@
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
     ViewBag.Menu = Poco.SystemConst.Menu.Character;
 }
+@section head{
+<script>
+    $(function () {
+        var isCanFindByUserUrl = '@Url.Action("IsCanFindByUser", "Character")';
+        $(".cbCanFind").change(function () {
+            var status = $(this).attr("checked");
+            var value = false;
+            if (status != undefined && status == "checked") {
+                value = true;
+            }
+            var id = $(this).val();
+            $.get(isCanFindByUserUrl, { id: id, value: value }, function (result) {
+                eval(result);
+            });
+        });
+    });
+</script>
+
+
+}
 @model PagedList<Poco.Role>
 <div class="title">
     角色管理</div>
 <div class="body">
-    <div class="option">@Html.ActionLink("添加", "Add", "Role", new { Area = "System", AccountMainID = ViewBag.AccountMainID }, null, true)</div>
+    <div class="option">@Html.ActionLink("添加", "Add", "Character", new { AccountMainID = ViewBag.AccountMainID }, null, true)</div>
     <table class="tableList" cellpadding="0" cellspacing="0">
         <tr>
             <th style="width: 450px;">
@@ -40,7 +60,7 @@
                     { 
                         @Html.ActionLink("修改", "Edit", "Character", new { id = item.ID }, null, true)
                     }
-                    @Html.ActionLink("分配权限", "Permission", "Character", new { id = item.ID }, null, true)
+                    @Html.ActionLink("分配权限", "Power", "Character", new { id = item.ID }, null, true)
                     @if (item.IsCanDelete)
                     { 
                         @Ajax.ActionLink("删除", "Delete", "Character", new { id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "Character", new { id = item.ID }) + "',null)" }, true)

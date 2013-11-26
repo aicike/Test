@@ -86,11 +86,11 @@ namespace AcceptanceServer
             {
                 //下线------------
                 //frm.ShowErrorMessage(ex.Message);
-                string ShowError = ConfigurationManager.AppSettings["ShowError"].ToString();
-                if (ShowError == "true")
-                {
-                    frm.ShowErrorMessage(ex.Message);
-                }
+                //string ShowError = ConfigurationManager.AppSettings["ShowError"].ToString();
+                //if (ShowError == "true")
+                //{
+                //    frm.ShowErrorMessage(ex.Message);
+                //}
 
             }
         }
@@ -106,11 +106,11 @@ namespace AcceptanceServer
             }
             catch (Exception ex)
             {
-                string ShowError = ConfigurationManager.AppSettings["ShowError"].ToString();
-                if (ShowError == "true")
-                {
-                    frm.ShowErrorMessage(ex.Message);
-                }
+                //string ShowError = ConfigurationManager.AppSettings["ShowError"].ToString();
+                //if (ShowError == "true")
+                //{
+                //    frm.ShowErrorMessage(ex.Message);
+                //}
             }
         }
 

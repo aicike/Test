@@ -8,6 +8,8 @@ using Interface;
 using Injection.Transaction;
 using System.Web;
 using System.IO;
+using System.Drawing;
+using Common;
 
 namespace Business
 {
@@ -24,11 +26,28 @@ namespace Business
             try
             {
                 //保存封面图片
+                CommonModel com = new CommonModel();
+                var LastName = com.CreateRandom("", 5) + coverImagePathFile.FileName.GetFileSuffix();
                 var token = DateTime.Now.ToString("yyyyMMddHHmmss");
-                var imageName = string.Format("{0}_{1}", token, coverImagePathFile.FileName);
+                var imageName = string.Format("{0}_{1}", token, LastName);
                 var imagePath = string.Format("{0}{1}", string.Format(SystemConst.Business.PathFileLibrary, libraryImageText.AccountMainID), imageName);
                 var savePath = HttpContext.Current.Server.MapPath(imagePath);
-                coverImagePathFile.SaveAs(savePath);
+
+  
+
+                int dataLengthToRead = (int)coverImagePathFile.InputStream.Length;//获取下载的文件总大小
+                byte[] buffer = new byte[dataLengthToRead];
+
+
+                int r = coverImagePathFile.InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+                Stream tream = new MemoryStream(buffer);
+                Image img = Image.FromStream(tream);
+
+
+                Tool.SuperGetPicThumbnail(img, savePath, 70, 800, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+        
+
+
                 libraryImageText.ImagePath = imagePath;
 
                 var libraryImgModel = Factory.Get<ILibraryImageModel>(SystemConst.IOC_Model.LibraryImageModel);
@@ -61,11 +80,28 @@ namespace Business
                     }
 
                     //保存封面图片
+                    CommonModel com = new CommonModel();
+                    var LastName = com.CreateRandom("", 5) + coverImagePathFile.FileName.GetFileSuffix();
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
-                    var imageName = string.Format("{0}_{1}", token, coverImagePathFile.FileName);
+                    var imageName = string.Format("{0}_{1}", token, LastName);
                     var imagePath = string.Format("{0}{1}", string.Format(SystemConst.Business.PathFileLibrary, libraryImageText.AccountMainID), imageName);
                     var savePath = HttpContext.Current.Server.MapPath(imagePath);
-                    coverImagePathFile.SaveAs(savePath);
+   
+
+
+                    int dataLengthToRead = (int)coverImagePathFile.InputStream.Length;//获取下载的文件总大小
+                    byte[] buffer = new byte[dataLengthToRead];
+
+
+                    int r = coverImagePathFile.InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+                    Stream tream = new MemoryStream(buffer);
+                    Image img = Image.FromStream(tream);
+
+
+                    Tool.SuperGetPicThumbnail(img, savePath, 70, 800, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+        
+
+
                     libraryImageText.ImagePath = imagePath;
                 }
                 return base.Edit(libraryImageText);

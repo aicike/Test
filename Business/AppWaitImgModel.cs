@@ -34,7 +34,7 @@ namespace Business
             appWaitImg.ImgPath = path + imageName;
             if (await != null) //修改
             {
-                string path2 =  HttpContext.Current.Server.MapPath(await.ImgPath);
+                string path2 = HttpContext.Current.Server.MapPath(await.ImgPath);
                 if (File.Exists(path2))
                 {
                     File.Delete(path2);
@@ -44,8 +44,8 @@ namespace Business
             }
             else //添加
             {
-               result = base.Add(appWaitImg);
-               
+                result = base.Add(appWaitImg);
+
             }
 
             return result;
@@ -83,105 +83,42 @@ namespace Business
             var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
             var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
             var imagePath3 = string.Format("{0}\\{1}", accountPath, imageName3);
-             var imagePath4 = string.Format("{0}\\{1}", accountPath, imageName4);
-            HousShowImagePathFile.SaveAs(imagePath);
-
-            appWaitImg.ImgPath = path + imageName;
+            var imagePath4 = string.Format("{0}\\{1}", accountPath, imageName4);
 
 
+
+            int dataLengthToRead = (int)HousShowImagePathFile.InputStream.Length;//获取下载的文件总大小
+            byte[] buffer = new byte[dataLengthToRead];
+
+
+            int r = HousShowImagePathFile.InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+            Stream tream = new MemoryStream(buffer);
+            Image img = Image.FromStream(tream);
+
+            //Tool.SuperGetPicThumbnail(img, imagePath,70,960,0,System.Drawing.Drawing2D.SmoothingMode.HighQuality,System.Drawing.Drawing2D.CompositingQuality.Default,System.Drawing.Drawing2D.InterpolationMode.High);
             if (w > 0)
             {
-                //System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
-                //{
-                    int ToWidth = w;
-                    int ToHeight = h;
-                    int ToX1 = x1;
-                    int ToY1 = y1;
+                Tool.SuperGetPicThumbnailJT(img, imagePath, 70, w, h, x1, y1, tw, th, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
 
-                    Bitmap sourceBitmap = new Bitmap(imagePath);
-
-                    int YW = sourceBitmap.Width;
-                    int YH = sourceBitmap.Height;
-
-
-                    if (YH != th )
-                    {
-                        double ratio = double.Parse(YH.ToString()) / double.Parse(th.ToString());
-                        //ratio = Math.Round(ratio, 2);
-                        ToWidth = (int)(ToWidth * ratio);
-                        ToHeight = (int)(ToHeight * ratio);
-                        ToX1 = (int)(ToX1 * ratio);
-                        ToY1 = (int)(ToY1 * ratio);
-                    }
-                    Bitmap resultBitmap = new Bitmap(ToWidth, ToHeight);
-
-                    using (Graphics g = Graphics.FromImage(resultBitmap))
-                    {
-                        Rectangle resultRectangle = new Rectangle(0, 0, ToWidth, ToHeight);
-                        Rectangle sourceRectangle = new Rectangle(0 + ToX1, 0 + ToY1, ToWidth, ToHeight);
-                        g.DrawImage(sourceBitmap, resultRectangle, sourceRectangle, GraphicsUnit.Pixel);
-                    }
-                    EncoderParameters ep = new EncoderParameters();
-
-                    resultBitmap.Save(imagePath2, sourceBitmap.RawFormat);
-                    resultBitmap.Dispose();
-                    sourceBitmap.Dispose();
-                    if (File.Exists(imagePath))
-                    {
-                        File.Delete(imagePath);
-                    } 
-                
-                    appWaitImg.ImgPath = path + imageName2;
-                    if (Tool.Thumbnail(imagePath2, imagePath3, 640))
-                    {
-                        if (File.Exists(imagePath2))
-                        {
-                            File.Delete(imagePath2);
-                        }
-                        Tool.GetPicThumbnail(imagePath3, imagePath4, 50);
-
-                        appWaitImg.ImgPath = path + imageName4;
-                        if (File.Exists(imagePath3))
-                        {
-                            File.Delete(imagePath3);
-                        }
-                    }
-                //});
-                //t.Start();
-               
+                Tool.SuperGetPicThumbnail(imagePath, imagePath2, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                appWaitImg.ImgPath = path + imageName2;
+                if (File.Exists(imagePath))
+                {
+                    File.Delete(imagePath);
+                }
             }
             else
             {
-                if (Tool.Thumbnail(imagePath, imagePath3, 640))
-                {
-                    if (File.Exists(imagePath))
-                    {
-                        File.Delete(imagePath);
-                    }
-                    
-
-                    Tool.GetPicThumbnail(imagePath3, imagePath4, 50);
-
-                    appWaitImg.ImgPath = path + imageName4;
-
-                    if (File.Exists(imagePath3))
-                    {
-                        File.Delete(imagePath3);
-                    }
-                }
-                else
-                {
-                    Tool.GetPicThumbnail(imagePath, imagePath4, 50);
-
-                    appWaitImg.ImgPath = path + imageName4;
-                    if (File.Exists(imagePath))
-                    {
-                        File.Delete(imagePath);
-                    }
-                }
+                Tool.SuperGetPicThumbnail(img, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                appWaitImg.ImgPath = path + imageName;
             }
+          
 
-   
+           
+
+
+
+
 
             if (await != null) //修改
             {

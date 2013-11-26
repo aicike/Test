@@ -29,8 +29,10 @@
                 }
                 var input = this;
                 if (input.files && input.files[0]) {
+                    ShowLayout_Later("请稍后", "请稍后，正在努力为您加载图片...");
                     var reader = new FileReader();
                     reader.onload = function (e) {
+                        CloseLayout_Later();
                         $("#imgHousType").attr('src', e.target.result);
                     };
                     reader.readAsDataURL(input.files[0]);
@@ -39,7 +41,19 @@
             });
 
 
+            $("form").submit(function () {
+                if ($(".validation-summary-errors").find("li[style!='display:none']").length == 0) {
+                    ShowLayout_Later("请稍后", "请稍后，正在努力为您上传数据中...");
+                } else {
+                    $(".validation-summary-errors").find("li").remove();
+                }
+            });
+
         });
+
+
+
+       
 
     </script>
 }
@@ -59,7 +73,7 @@
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.HName) @Html.HiddenFor(a => a.AccountMainHousesID)
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.HName)
+                    <td>@Html.ValidationMessageFor(a => a.HName) <div style="display:none">@Html.ValidationSummary()</div>
                     </td>
                 </tr>
                 <tr>

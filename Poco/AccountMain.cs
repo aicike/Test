@@ -65,6 +65,9 @@ namespace Poco
         [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string LogoImagePath { get; set; }
 
+        [Display(Name = "APPLogo")]
+        public string AppLogoImagePath { get; set; }
+
         /// <summary>
         /// 账号类型，启用禁用
         /// </summary>
@@ -83,7 +86,6 @@ namespace Poco
         [Display(Name = "售楼地址")]
         [Required(ErrorMessage = "请输入售楼地址")]
         [StringLength(200, ErrorMessage = "长度小于200")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string SaleAddress { get; set; }
 
         [Display(Name = "售楼电话")]
@@ -91,7 +93,6 @@ namespace Poco
         public string SalePhone { get; set; }
 
         [Display(Name = "售楼地图定位地址")]
-        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string SaleMapAddress { get; set; }
 
         [Display(Name = "纬度")]
@@ -102,8 +103,19 @@ namespace Poco
         [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Lat { get; set; }
 
-        [Display(Name = "IOS下载地址")]
+        [Display(Name = "IOS用户端下载地址")]
         public string IOSDownloadPath { get; set; }
+
+        [Display(Name = "IOS用户端端版本号")]
+        [RegularExpression(@"^\d{1,3}.\d.\d$", ErrorMessage = "版本号格式：x.x.x")]
+        public string IOSVersion { get; set; }
+
+        [Display(Name = "IOS销售端下载地址")]
+        public string IOSSellDownloadPath { get; set; }
+
+        [Display(Name = "IOS销售端端版本号")]
+        [RegularExpression(@"^\d{1,3}.\d.\d$", ErrorMessage = "版本号格式：x.x.x")]
+        public string IOSSellVersion { get; set; }
 
         [Display(Name = "Android用户端下载地址")]
         public string AndroidDownloadPath { get; set; }
@@ -119,9 +131,7 @@ namespace Poco
         [RegularExpression(@"^\d{1,3}.\d.\d$", ErrorMessage = "版本号格式：x.x.x")]
         public string AndroidSellVersion { get; set; }
 
-        [Display(Name = "IOS版本")]
-        [RegularExpression(@"^\d{1,3}.\d.\d$", ErrorMessage = "版本号格式：x.x.x")]
-        public string IOSVersion { get; set; }
+        
 
         /// <summary>
         /// 数据更新信息

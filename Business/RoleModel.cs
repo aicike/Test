@@ -67,6 +67,10 @@ namespace Business
             return base.List().Where(a => a.AccountMainID == AccountMainID).OrderBy(a => a.ID);
         }
 
+        public IQueryable<Role> GetListNoAdmin(int AccountMainID)
+        {
+            return base.List().Where(a => a.AccountMainID == AccountMainID&&a.IsCanDelete==true).OrderBy(a => a.ID);
+        }
 
         [Transaction]
         public new Result Delete(int id)
@@ -95,5 +99,33 @@ namespace Business
             entity.IsCanFindByUser = value;
             return base.Edit(entity);
         }
+
+        public Result DelteByIDAndAMID(int id, int AccountMainID)
+        {
+            Result result = new Result();
+            var list = List().Where(a => a.ID == id && a.AccountMainID == AccountMainID);
+            if (list.Count() > 0)
+            {
+                var role = Get(id);
+                if (!role.IsCanDelete)
+                {
+                    result.Error = "\"管理员\"是系统初始化数据，无法删除。";
+                    return result;
+                }
+                if (role.Accounts.Any(a => a.SystemStatus == (int)EnumSystemStatus.Active))
+                {
+                    result.Error = "该角色已经被使用，无法删除。";
+                    return result;
+                }
+                result = base.CompleteDelete(id);
+                return result;
+            }
+            else
+            {
+                result.Error = "删除数据有误。";
+                return result;
+            }
+        }
+
     }
 }

@@ -95,9 +95,10 @@
                 } if (isOk) {
                     var input = this;
                     if (input.files && input.files[0]) {
+                        ShowLayout_Later("请稍后","请稍后，正在努力为您加载图片...");
                         var reader = new FileReader();
                         reader.onload = function (e) {
-
+                         CloseLayout_Later();
                             if(Cnt>0)
                             {
                                 jcrop_api.destroy();
@@ -209,8 +210,13 @@
             });
 
 
-
-
+            $("form").submit(function () {
+                if ($(".validation-summary-errors").find("li[style!='display:none']").length == 0) {
+                    ShowLayout_Later("请稍后", "请稍后，正在努力为您上传数据中...");
+                }else {
+                    $(".validation-summary-errors").find("li").remove();
+                }
+            });
 
 
 
@@ -242,15 +248,13 @@
 
 
 
-
-
-
-
-
-
-
-
         });
+
+
+
+
+
+
     </script>
     <style type="text/css">
         .middle-out
@@ -338,7 +342,7 @@
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.ID)@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.IsActivated)@Html.HiddenFor(a => a.RoleID)
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.Name)
+                    <td>@Html.ValidationMessageFor(a => a.Name) <div style="display:none">@Html.ValidationSummary()</div>
                     </td>
                 </tr>
                 <tr>
@@ -380,9 +384,13 @@
             </table>
         </fieldset>
         <div class="action">
-            <input type="submit" id="btnSubmit" value="保存" class="button" />
+            <input type="submit" id="btnSubmit"  value="保存" class="button" />
         </div>
     }
 </div>
+
+
+
+
 <div style="clear: both">
 </div>

@@ -7,6 +7,8 @@ using Interface;
 using Injection.Transaction;
 using System.Web;
 using System.IO;
+using System.Drawing;
+using Common;
 
 namespace Business
 {
@@ -32,7 +34,19 @@ namespace Business
                     var imageName = string.Format("{0}_{1}", token, LastName);
                     var imagePath = string.Format("{0}\\{1}", path, imageName);
                     var imagePath2 = HttpContext.Current.Server.MapPath(imagePath);
-                    HouseImagePath.SaveAs(imagePath2);
+
+                    int dataLengthToRead = (int)HouseImagePath.InputStream.Length;//获取下载的文件总大小
+                    byte[] buffer = new byte[dataLengthToRead];
+
+
+                    int r = HouseImagePath.InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+                    Stream tream = new MemoryStream(buffer);
+                    Image img = Image.FromStream(tream);
+
+
+                    Tool.SuperGetPicThumbnail(img, imagePath2, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+
+
                     HouseType.HouseTypeImagePath = imagePath;
 
                     result = Edit(HouseType);
@@ -68,7 +82,19 @@ namespace Business
                     var imageName = string.Format("{0}_{1}", token, LastName);
                     var imagePath = string.Format("{0}\\{1}", path, imageName);
                     var imagePath2 = HttpContext.Current.Server.MapPath(imagePath);
-                    HouseImagePath.SaveAs(imagePath2);
+
+                    int dataLengthToRead = (int)HouseImagePath.InputStream.Length;//获取下载的文件总大小
+                    byte[] buffer = new byte[dataLengthToRead];
+
+
+                    int r = HouseImagePath.InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+                    Stream tream = new MemoryStream(buffer);
+                    Image img = Image.FromStream(tream);
+
+
+                    Tool.SuperGetPicThumbnail(img, imagePath2, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+
+
                     HouseType.HouseTypeImagePath = imagePath;
 
                     result = Edit(HouseType);

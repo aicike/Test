@@ -279,6 +279,56 @@ namespace Business
 
         }
 
+
+
+
+        /// <summary>
+        /// 获取所有未读消息数
+        /// </summary>
+        /// <param name="UserID">用户ID</param>
+        /// <param name="UserType">用户类型 0：售楼部，1：用户</param>
+        /// <param name="AccountMainID"></param>
+        /// <returns>未读数</returns>
+        public string GetUnreadCnt(int UserID, int userType, int AccountMainID)
+        {
+            int UserType = (int)EnumClientUserType.Account;
+            if (userType == 1)
+            {
+                UserType = (int)EnumClientUserType.User;
+            }
+
+            var conversModel = Factory.Get<IConversationDetailedModel>(SystemConst.IOC_Model.ConversationDetailedModel);
+            var convers = conversModel.GetUserAllSID(UserType, UserID, AccountMainID);
+            string id = "";
+            if (convers.Count() > 0)
+            {
+
+                foreach (var item in convers)
+                {
+                    id += item.ConversationID + ",";
+                }
+                id = id.TrimEnd(',');
+            }
+            else
+            {
+                id = "0";
+            }
+
+            string sql = string.Format(@"
+                                        select (a.d+b.ds) as cnt from 
+                                        (select count(*) as d from dbo.Message where ConversationID in ({0}) and IsReceive='false' and EnumMessageSendDirectionID!=4) a,
+                                        (select count(*) as ds from MessageGroupChat where UserID={1} and UserType ={2} and sid in({0})) b",
+                                        id, UserID, UserType);
+
+            return SqlQuery<int>(sql).FirstOrDefault().ToString();
+        }
+
+
+
+
+
+
+
         /// <summary>
         /// 创建随机字符窜（不唯一）
         /// </summary>

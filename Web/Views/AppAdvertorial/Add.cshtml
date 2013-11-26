@@ -87,9 +87,10 @@
                 }
                 var input = this;
                 if (input.files && input.files[0]) {
+                    ShowLayout_Later("请稍后", "请稍后，正在努力为您加载图片...");
                     var reader = new FileReader();
                     reader.onload = function (e) {
-
+                        CloseLayout_Later();
                         if (Cnt > 0) {
                             jcrop_api.destroy();
                             $('#x1').val("0");
@@ -120,17 +121,55 @@
                         Cnt = 1;
 
 
-
-
-
-
-
-
                     };
                     reader.readAsDataURL(input.files[0]);
                 }
                 return false;
             });
+
+
+            $("#btnSubmit").click(function () {
+                if ($("#w").val() == "0") {
+                    JAlert({
+                        Message: "请选择App列表展示区域！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return false;
+                }
+
+                if (IsStick == 1) {
+                    JAlert({
+                        Message: "最多允许“5”篇软文置顶！请重新选择！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return false;
+                }
+
+                if (ue.getContent().length == 0) {
+                    JAlert({
+                        Message: "正文不能为空！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return false;
+                }
+
+
+            });
+
+
+            $("form").submit(function () {
+                if ($(".validation-summary-errors").find("li[style!='display:none']").length == 0) {
+                    ShowLayout_Later("请稍后", "请稍后，正在努力为您上传数据中...");
+                } else {
+                    $(".validation-summary-errors").find("li").remove();
+                }
+            });
+
+
+
 
         });
         var IsStick = 0;
@@ -158,32 +197,8 @@
             }
         }
 
-        function CKOnsubmit()
-        {
-            if ($("#w").val() == "0") {
-                JAlert({
-                    Message: "请选择App列表展示区域！",
-                    DialogType: "Ok",
-                    BtnOk: "确定"
-                });
-                return false;
-            }
-            
-            if (IsStick == 1) {
-                JAlert({
-                    Message: "最多允许“5”篇软文置顶！请重新选择！",
-                    DialogType: "Ok",
-                    BtnOk: "确定"
-                });
-                return false;
-            }
 
 
-            if (iscansub == 1) {
-                return false;
-            }
-            iscansub = 1;
-        }
 
     </script>
         <style type="text/css">
@@ -195,6 +210,10 @@
             vertical-align: middle;
             text-align: center;
             border: 1px solid #d0d0d0;
+        }
+        .view p img
+        {
+             max-width:100%;    
         }
     </style>
 }
@@ -233,7 +252,7 @@
                         <div style="width: 200px; height: 100px; overflow: hidden;">
                             <img id="imgLogo" src="@Url.Content("~/Images/SelImg.jpg")" style="width:200px; height:100px"/>
                         </div>
-                       (<span style="font-size: 12px; color: #979797">320*160 缩略图)</span>
+                       <span style="font-size: 12px; color: #979797">(320*160 缩略图)</span>
                         <div style="width: 120px; height: 60px; overflow: hidden; margin-top: 17px">
                             <img id="imgLogo2" src="@Url.Content("~/Images/SelImg.jpg")" style="width:120px; height:60px"/>
                         </div>
@@ -281,7 +300,7 @@
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.Title)
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.Title)
+                    <td>@Html.ValidationMessageFor(a => a.Title)   <div style="">@Html.ValidationSummary()</div>
                     </td>
                 </tr>
                 <tr>
@@ -320,7 +339,7 @@
             </table>
         </fieldset>
         <div class="action">
-            <input type="submit" id="btnSubmit" onclick="return CKOnsubmit()" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+            <input type="submit" id="btnSubmit"  class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
         </div>
     }
 </div>

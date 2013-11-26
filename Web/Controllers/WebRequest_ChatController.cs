@@ -14,6 +14,9 @@ using Business;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Data;
+using System.Drawing;
+using System.IO;
+using Common;
 
 namespace Web.Controllers
 {
@@ -206,24 +209,41 @@ namespace Web.Controllers
                     System.IO.Directory.CreateDirectory(Server.MapPath(Path));
                 }
                 string hz = Request.Files[0].FileName.Substring(Request.Files[0].FileName.LastIndexOf('.'), Request.Files[0].FileName.Length - Request.Files[0].FileName.LastIndexOf('.'));
-                
+
                 long tick = DateTime.Now.Ticks;
                 Random ran = new Random((int)(tick & 0xffffffffL) | (int)(tick >> 32));
 
 
-                Path = Path + "/" + UPFileHname + "_"+ran.Next().ToString() + hz;// + Request.Files[0].FileName;
+                Path = Path + "/" + UPFileHname + "_" + ran.Next().ToString() + hz;// + Request.Files[0].FileName;
                 //全路径
                 string FilePath = Server.MapPath(Path);
 
-                //保存文件
-                Request.Files[0].SaveAs(FilePath);
+                if (FileType == 1)//图片
+                {
+                    int dataLengthToRead = (int)Request.Files[0].InputStream.Length;//获取下载的文件总大小
+                    byte[] buffer = new byte[dataLengthToRead];
+
+
+                    int r = Request.Files[0].InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+                    Stream tream = new MemoryStream(buffer);
+                    Image img = Image.FromStream(tream);
+
+                    Tool.SuperGetPicThumbnail(img, FilePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+
+                }
+                else
+                {
+                    //保存文件
+                    Request.Files[0].SaveAs(FilePath);
+                }
                 //音频
                 if (FileType == 2)
                 {
                     //转换文件
                     try
                     {
-                        System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() => {
+                        System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
+                        {
                             CommonModel cm = new CommonModel();
                             cm.CreateMp3Forffmpeg(FilePath, "mp3");
                         });
@@ -261,11 +281,31 @@ namespace Web.Controllers
             {
                 if (!string.IsNullOrEmpty(item.P))
                 {
-                    item.P = item.P.Replace("~",SystemConst.WebUrlIP);
+                    item.P = item.P.Replace("~", SystemConst.WebUrlIP);
                 }
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(UMlist);
         }
 
+        /// <summary>
+        /// 获取所有未读消息数
+        /// </summary>
+        /// <param name="UserID">用户ID</param>
+        /// <param name="UserType">用户类型 0：售楼部，1：用户</param>
+        /// <param name="AccountMainID"></param>
+        /// <returns>未读数</returns>
+        public string GetUnreadCnt(int UserID, int UserType, int AccountMainID)
+        {
+            try
+            {
+                var comModel = Factory.Get<CommonModel>(SystemConst.IOC_Model.CommonModel);
+                string cnt = comModel.GetUnreadCnt(UserID, UserType, AccountMainID);
+                return cnt;
+            }
+            catch
+            {
+                return "0";
+            }
+        }
     }
 }

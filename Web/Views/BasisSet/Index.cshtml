@@ -124,7 +124,19 @@
                 var myCity = new BMap.LocalCity();
                 myCity.get(myFun);
             }
+
+
+
+            $("form").submit(function () {
+                if ($(".validation-summary-errors").find("li[style!='display:none']").length == 0) {
+                    ShowLayout_Later("请稍后", "请稍后，正在努力为您上传数据中...");
+                } else {
+                    $(".validation-summary-errors").find("li").remove();
+                }
+            });
         });
+
+
     </script>
 }
 @model Poco.AccountMain
@@ -160,7 +172,7 @@
                         @Html.TextBoxFor(a => a.LogoImagePath, new { style = "width:0px;visibility:hidden" })
                         @Html.HiddenFor(a => a.LogoImageThumbnailPath)
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.LogoImagePath)
+                    <td>@Html.ValidationMessageFor(a => a.LogoImagePath)  <div style="display:none">@Html.ValidationSummary()</div>
                     </td>
                 </tr>
                 <tr>
@@ -170,10 +182,15 @@
                     <td class="tdField">
                         @Html.TextBoxFor(a => a.Name, new { @readonly = "readonly" })@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.CreateTime)@Html.HiddenFor(a => a.SystemUserID)
                         @Html.HiddenFor(a => a.FileLimit)@Html.HiddenFor(a => a.Phone)@Html.HiddenFor(a => a.HostName)@Html.HiddenFor(a => a.ID)
-                        @Html.HiddenFor(a => a.AndroidDownloadPath)@Html.HiddenFor(a => a.IOSDownloadPath)
+                        @Html.HiddenFor(a => a.AndroidDownloadPath)
                         @Html.HiddenFor(a => a.AndroidVersion)
                         @Html.HiddenFor(a => a.AndroidSellDownloadPath)
                         @Html.HiddenFor(a => a.AndroidSellVersion)
+                        @Html.HiddenFor(a => a.IOSSellDownloadPath)
+                        @Html.HiddenFor(a => a.IOSSellVersion)
+                        @Html.HiddenFor(a => a.IOSDownloadPath)
+                        @Html.HiddenFor(a => a.IOSVersion)
+                        @Html.HiddenFor(a => a.AppLogoImagePath)
                        <input type="file" style=" display:none" id="AndroidPathFile" name="AndroidPathFile"  />
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Name)
@@ -248,7 +265,7 @@
             </table>
         </fieldset>
         <div class="action">
-            <input type="submit" id="btnSubmit" class="button" value="保存" />
+            <input type="submit" id="btnSubmit"  class="button" value="保存" />
         </div>
     }
 </div>
