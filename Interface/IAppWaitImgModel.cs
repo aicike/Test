@@ -15,6 +15,8 @@ namespace Interface
 
         Result UpAppWaitImg(AppWaitImg appWaitImg, HttpPostedFileBase HousShowImagePathFile, int w, int h, int x1, int y1, int tw, int th);
 
+        Result UpAppWaitImg(AppWaitImg appWaitImg, int w, int h, int x1, int y1, int tw, int th);
+
         int DelAppWaitImg(int AccountMainID);
     }
 }

@@ -13,8 +13,73 @@
     <script src="@Url.Content("/ueditor/ueditor.all.js")" type="text/javascript"></script>
     <script>
         var stick = @ViewBag.stick
-          var Cnt = 0;
+        var Cnt = 0;
+        var UpImgUrl = '@Url.Action("UpImg", "AppAdvertorial", new { HostName = ViewBag.HostName })';
         $(function () {
+
+            
+            $("#file_upload").uploadify({
+                height: 30,
+                swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
+                uploader: UpImgUrl,
+                width: 64,
+                fileSizeLimit: '5MB',
+                uploadLimit: 1,
+                fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
+                onUploadSuccess: function (file, data, response) {
+
+                    if (data == "" || data == undefined || data == "false") {
+                        JAlert({
+                            Message: "上传失败请重新上传！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return;
+                    }
+
+
+                      if (Cnt > 0) {
+                            jcrop_api.destroy();
+                            $('#x1').val("0");
+                            $('#y1').val("0");
+                            $('#w').val("0");
+                            $('#h').val("0");
+                            $('#tw').val("0");
+                            $('#th').val("0");
+                        }
+                        $("#imgSel").attr('src', data);
+                        $("#imgLogo").attr('src', data);
+                        $("#imgLogo2").attr('src', data);
+
+                        $("#MainImagPath").val(data);
+
+
+                        $('#imgSel').Jcrop({
+                            onChange: updatePreview,
+                            onSelect: updatePreview,
+                            aspectRatio: 2
+                        }, function () {
+                            // Use the API to get the real image size
+                            var bounds = this.getBounds();
+                            boundx = bounds[0];
+                            boundy = bounds[1];
+                            // Store the API in the jcrop_api variable
+                            jcrop_api = this;
+                        });
+                        Cnt = 1;
+
+
+
+
+
+
+
+                }
+            });
+
+
+
+
 
             $("#stick").val(stick);
             var imgpath = $("#MainImagPath").val();
@@ -70,7 +135,24 @@
             };
 
 
-            $("#HousShowImagePathFile").change(function () {
+            $("#HousShowImagePathFile").live("change", function () { 
+
+                var fileCNT = (this.files[0].size / 1024).toFixed(2);
+                if (fileCNT > 5120) {
+                    JAlert({
+                        Message: "最大只能上传5MB大小的图片！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+
+
+                    var afile = $("#HousShowImagePathFile");
+
+                    afile.after(afile.clone().val(""));
+                    afile.remove();
+                    return;
+                }
+
                 var fileName = $("#HousShowImagePathFile").val();
                 $("#MainImagPath").val(fileName);
                 var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
@@ -267,29 +349,36 @@
                             <img id="imgLogo2" src="@Url.Content(Model.MinImagePath)" style="width:120px; height:60px"/>
                         </div>
                         <span style="font-size: 12px; color: #979797">(120*60 缩略图)</span>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div style="color: Red">
+                            提示：请上传小于5MB的图片
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="file" id="HousShowImagePathFile" name="HousShowImagePathFile" />
-                        @Html.TextBoxFor(a => a.MainImagPath, new { style = "width:0px;visibility:hidden" })
+                        <input id="file_upload" name="file_upload" type="file" multiple="false" />
+                        @Html.TextBoxFor(a => a.MainImagPath, new { style = "width:0px;display:none" })
                         @Html.ValidationMessageFor(a => a.MainImagPath)
                         <div style="font-size: 12px; color: Red">
-                            注：为了减少App端 在未接入WIFI的情况下的压力，请尽量上传文件较小的图片</div>
-                        <div style="display: none">
-                            X1
-                            <input type="text" size="4" id="x1" name="x1" value="0" />
-                            Y1
-                            <input type="text" size="4" id="y1" name="y1" value="0" />
-                            W
-                            <input type="text" size="4" id="w" name="w" value="0" />
-                            H
-                            <input type="text" size="4" id="h" name="h" value="0" />
-                            TW
-                            <input type="text" size="4" id="tw" name="tw" value="0" />
-                            TH
-                            <input type="text" size="4" id="th" name="th" value="0" />
-                        </div>
+                            <div style="display: none">
+                                X1
+                                <input type="text" size="4" id="x1" name="x1" value="0" />
+                                Y1
+                                <input type="text" size="4" id="y1" name="y1" value="0" />
+                                W
+                                <input type="text" size="4" id="w" name="w" value="0" />
+                                H
+                                <input type="text" size="4" id="h" name="h" value="0" />
+                                TW
+                                <input type="text" size="4" id="tw" name="tw" value="0" />
+                                TH
+                                <input type="text" size="4" id="th" name="th" value="0" />
+                            </div>
                     </td>
                 </tr>
             </table>
@@ -345,8 +434,7 @@
             </table>
         </fieldset>
         <div class="action">
-            <input type="submit" id="btnSubmit" onclick="return CKOnsubmit()" class="button"
-                value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+            <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
         </div>
     }
 </div>

@@ -26,7 +26,7 @@ namespace Business
         public Result AddAppAdvertorial(AppAdvertorial appadvertorial, System.Web.HttpPostedFileBase HousShowImagePathFile, int w, int h, int x1, int y1, int tw, int th)
         {
             Result result = new Result();
-            
+
             try
             {
 
@@ -65,12 +65,12 @@ namespace Business
                 {
                     File.Delete(imagePath2);
                 }
-                
+
                 //缩略图mini
                 Tool.SuperGetPicThumbnail(imageshowPath, imageminiPath, 70, 120, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
 
-                appadvertorial.MainImagPath =path + imageName;
-                appadvertorial.AppShowImagePath =path + imageshowName;
+                appadvertorial.MainImagPath = path + imageName;
+                appadvertorial.AppShowImagePath = path + imageshowName;
                 appadvertorial.MinImagePath = path + imageminiName;
             }
             catch (Exception ex)
@@ -89,6 +89,76 @@ namespace Business
             }
             return result;
         }
+
+
+
+
+        [Transaction]
+        public Result AddAppAdvertorial(AppAdvertorial appadvertorial, int w, int h, int x1, int y1, int tw, int th)
+        {
+            Result result = new Result();
+
+            try
+            {
+
+                var path = string.Format(SystemConst.Business.PathBase, appadvertorial.AccountMainID);
+                var accountPath = HttpContext.Current.Server.MapPath(path);
+                var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                CommonModel com = new CommonModel();
+                var LastName = com.CreateRandom("", 5) + appadvertorial.MainImagPath.GetFileSuffix();
+
+
+                var imageName = string.Format("{0}_{1}", token, LastName);
+                var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
+                var imageName2 = string.Format("{0}Y_{1}", token, LastName);
+                var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
+                var imageminiName = string.Format("{0}_{1}_{2}", token, "mini", LastName);
+                var imageminiPath = string.Format("{0}\\{1}", accountPath, imageminiName);
+                var imageshowName = string.Format("{0}_{1}_{2}", token, "show", LastName);
+                var imageshowPath = string.Format("{0}\\{1}", accountPath, imageshowName);
+
+
+                var lsImgPath = appadvertorial.MainImagPath;
+                var lsImaFilePath = HttpContext.Current.Server.MapPath(lsImgPath);
+
+
+                Tool.SuperGetPicThumbnail(lsImaFilePath, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+
+
+                Tool.SuperGetPicThumbnailJT(lsImaFilePath, imagePath2, 70, w, h, x1, y1, tw, th, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+
+                Tool.SuperGetPicThumbnail(imagePath2, imageshowPath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+
+                if (File.Exists(imagePath2))
+                {
+                    File.Delete(imagePath2);
+                }
+
+                //缩略图mini
+                Tool.SuperGetPicThumbnail(imageshowPath, imageminiPath, 70, 120, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+
+                appadvertorial.MainImagPath = path + imageName;
+                appadvertorial.AppShowImagePath = path + imageshowName;
+                appadvertorial.MinImagePath = path + imageminiName;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            result = base.Add(appadvertorial);
+            if (appadvertorial.stick == 1)
+            {
+                int cnt = EditAppAdvertorialStick(appadvertorial.ID, appadvertorial.stick, appadvertorial.AccountMainID, appadvertorial.Sort);
+                if (cnt <= 0)
+                {
+                    result.HasError = true;
+                    result.Error = "添加失败 请稍后再试！";
+                }
+            }
+            return result;
+        }
+
+
 
         [Transaction]
         public Result DelAppAdvertorial(int ID)
@@ -166,7 +236,7 @@ namespace Business
                     //缩略图mini
                     Tool.SuperGetPicThumbnail(imageshowPath, imageminiPath, 70, 120, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
 
-                   
+
                     string path2 = HttpContext.Current.Server.MapPath(appadvertorials.MinImagePath);
                     if (File.Exists(path2))
                     {
@@ -192,7 +262,7 @@ namespace Business
                     throw;
                 }
             }
-            Result result= base.Edit(appadvertorial);
+            Result result = base.Edit(appadvertorial);
             if (appadvertorial.stick != appadvertorials.stick)
             {
 
@@ -205,6 +275,96 @@ namespace Business
             }
             return result;
         }
+
+
+        [Transaction]
+        public Result EditAppAdvertorial(AppAdvertorial appadvertorial, int w, int h, int x1, int y1, int tw, int th)
+        {
+            var appadvertorials = this.Get(appadvertorial.ID);
+
+            if (appadvertorials.MainImagPath != appadvertorial.MainImagPath)
+            {
+                CommonModel com = new CommonModel();
+                var LastName = com.CreateRandom("", 5) + appadvertorial.MainImagPath.GetFileSuffix();
+
+
+                var path = string.Format(SystemConst.Business.PathBase, appadvertorial.AccountMainID);
+                var accountPath = HttpContext.Current.Server.MapPath(path);
+                var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+
+                var imageName = string.Format("{0}_{1}", token, LastName);
+                var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
+                var imageName2 = string.Format("{0}Y_{1}", token, LastName);
+                var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
+                var imageminiName = string.Format("{0}_{1}_{2}", token, "mini", LastName);
+                var imageminiPath = string.Format("{0}\\{1}", accountPath, imageminiName);
+                var imageshowName = string.Format("{0}_{1}_{2}", token, "show", LastName);
+                var imageshowPath = string.Format("{0}\\{1}", accountPath, imageshowName);
+
+                try
+                {
+
+                    var lsImgPath = appadvertorial.MainImagPath;
+                    var lsImaFilePath = HttpContext.Current.Server.MapPath(lsImgPath);
+
+                    Tool.SuperGetPicThumbnail(lsImaFilePath, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+
+
+                    Tool.SuperGetPicThumbnailJT(lsImaFilePath, imagePath2, 70, w, h, x1, y1, tw, th, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+
+                    Tool.SuperGetPicThumbnail(imagePath2, imageshowPath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+
+                    if (File.Exists(imagePath2))
+                    {
+                        File.Delete(imagePath2);
+                    }
+
+                    //缩略图mini
+                    Tool.SuperGetPicThumbnail(imageshowPath, imageminiPath, 70, 120, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+
+
+                    string path2 = HttpContext.Current.Server.MapPath(appadvertorials.MinImagePath);
+                    if (File.Exists(path2))
+                    {
+                        File.Delete(path2);
+                    }
+                    path2 = HttpContext.Current.Server.MapPath(appadvertorials.MainImagPath);
+                    if (File.Exists(path2))
+                    {
+                        File.Delete(path2);
+                    }
+                    path2 = HttpContext.Current.Server.MapPath(appadvertorials.AppShowImagePath);
+                    if (File.Exists(path2))
+                    {
+                        File.Delete(path2);
+                    }
+
+                    appadvertorial.MainImagPath = path + imageName;
+                    appadvertorial.AppShowImagePath = path + imageshowName;
+                    appadvertorial.MinImagePath = path + imageminiName;
+                }
+                catch
+                {
+                    throw;
+                }
+            }
+            Result result = base.Edit(appadvertorial);
+            if (appadvertorial.stick != appadvertorials.stick)
+            {
+
+                int cnt = EditAppAdvertorialStick(appadvertorial.ID, appadvertorial.stick, appadvertorial.AccountMainID, appadvertorial.Sort);
+                if (cnt <= 0)
+                {
+                    result.HasError = true;
+                    result.Error = "修改失败 请稍后再试！";
+                }
+            }
+            return result;
+        }
+
+
+
+
 
         //修改置顶 isok 1 置顶 0 取消
         [Transaction]
@@ -237,8 +397,8 @@ namespace Business
             }
             else
             {
-               
-              
+
+
                 string sql = "";
                 if (type == 1) //向上
                 {

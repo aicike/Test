@@ -236,8 +236,6 @@
     <Content Include="File\LoginPageShow\System\7.jpg" />
     <Content Include="File\platform\1.jpg" />
     <Content Include="File\platform\2.jpg" />
-    <Content Include="File\platform\20130926154527_80_p1.jpg" />
-    <Content Include="File\platform\20130926154629_80_p2.jpg" />
     <Content Include="File\platform\3.jpg" />
     <Content Include="Images\404-2.png" />
     <Content Include="Images\android.png" />
@@ -574,6 +572,7 @@
     <Folder Include="File\1\Account\" />
     <Folder Include="File\1\Base\" />
     <Folder Include="File\1\FileLibrary\" />
+    <Folder Include="File\Temporary\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

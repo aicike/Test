@@ -598,11 +598,14 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 			// Run the default event handler
 			if ($.inArray('onDialogClose', settings.overrideEvents) < 0) {
 				if (this.queueData.filesErrored > 0) {
-                    JAlert({
-                        Message: this.queueData.errorMsg,
-                        DialogType: "Ok",
-                        BtnOk: "确定"
-                    });
+                    var msg=this.queueData.errorMsg;
+                    alert(msg);
+//                    JAlert({
+//                        Message: msg,
+//                        DialogType: "Ok",
+//                        BtnOk: "确定"
+//                    });
+//                    
 				}
 			}
 
@@ -707,13 +710,15 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 				switch(errorCode) {
 					case SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED:
 						if (settings.queueSizeLimit > errorMsg) {
-							this.queueData.errorMsg += '\nThe number of files selected exceeds the remaining upload limit (' + errorMsg + ').';
+//							this.queueData.errorMsg += '\nThe number of files selected exceeds the remaining upload limit (' + errorMsg + ').';
+                            this.queueData.errorMsg += '\n最多只能选中(' + errorMsg + ')个文件.';
 						} else {
 							this.queueData.errorMsg += '\nThe number of files selected exceeds the queue size limit (' + settings.queueSizeLimit + ').';
 						}
 						break;
 					case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT:
-						this.queueData.errorMsg += '\nThe file "' + file.name + '" exceeds the size limit (' + settings.fileSizeLimit + ').';
+//						this.queueData.errorMsg = '\n上传失败！文件 "' + file.name + '" 大于 (' + settings.fileSizeLimit + ').';
+                        this.queueData.errorMsg = '\n上传失败！文件 请上传小于(' + settings.fileSizeLimit + ')的文件.';
 						break;
 					case SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE:
 						this.queueData.errorMsg += '\nThe file "' + file.name + '" is empty.';
@@ -831,6 +836,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
                         DialogType: "Ok",
                         BtnOk: "确定"
                     });
+
 					errorString = 'Exceeds Upload Limit';
 					break;
 				case SWFUpload.UPLOAD_ERROR.UPLOAD_FAILED:
@@ -869,7 +875,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 
 				// Add the error message to the queue item
 				if (errorCode != SWFUpload.UPLOAD_ERROR.SPECIFIED_FILE_ID_NOT_FOUND && file.status != SWFUpload.FILE_STATUS.COMPLETE) {
-					$('#' + file.id).find('.data').html(' - ' + errorString);
+					//$('#' + file.id).find('.data').html(' - ' + errorString);
 				}
 			}
 

@@ -191,9 +191,8 @@
             <div>
                 <div class="div_title">
                     封面</div>
-                <input type="button" value="选择文件" onclick="$('#CoverImagePathFile').click()" class="button" />
-                <input type="file" id="CoverImagePathFile" name="CoverImagePathFile" style="visibility: hidden;
-                    float: left; width: 0px;" />
+               @* <input type="button" value="选择文件" onclick="$('#CoverImagePathFile').click()" class="button" />*@
+                <input type="file" value="选择文件" id="CoverImagePathFile" name="CoverImagePathFile"  />
                 @Html.TextBoxFor(a => a.ImagePath, new { style = "width:0px;visibility:hidden" })
             </div>
             <div>

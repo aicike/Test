@@ -24,10 +24,13 @@
                     modal: true,
                     title:"图文",
                     position:"center",
-                    draggable: false,
+                    draggable: false,beforeClose: function (event, ui) {
+                        $("#iframeShowImgText").attr("src", "");
+                    },
                     buttons: {
                         "关闭浏览": function () {
                             $(this).dialog("close");
+                             $("#iframeShowImgText").attr("src", "");
                         }
                     }
                 });

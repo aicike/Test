@@ -9,6 +9,7 @@
             data.BtnOkClick += " window.location='/" + data.Controller + '/' + data.Action + "';";
         }
         jqueryAlert += (data.BtnOk ? data.BtnOk : "OK") + ":function () {" + (data.BtnOkClick ? data.BtnOkClick : "$(this).dialog('close');") + "}}";
+      //  jqueryAlert += (data.BtnOk ? data.BtnOk : "OK") + ":function () {" + (data.BtnOkClick ? data.BtnOkClick : "alert($(this).dialog());") + "}}";
     } else {
         jqueryAlert += (data.BtnOk ? data.BtnOk : "OK") + ":function () {" + (data.BtnOkClick ? data.BtnOkClick : "$(this).dialog('close');") + "},";
         jqueryAlert += data.BtnCancel + ":function () {" + data.BtnCancelClick + "}}";

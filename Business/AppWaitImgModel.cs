@@ -139,5 +139,70 @@ namespace Business
 
             return result;
         }
+
+
+
+        public Result UpAppWaitImg(AppWaitImg appWaitImg, int w, int h, int x1, int y1, int tw, int th)
+        {
+            AppWaitImg await = getAppWaitImg(appWaitImg.AccountMainID);
+            Result result = new Result();
+            var path = string.Format(SystemConst.Business.PathBase, appWaitImg.AccountMainID);
+            var accountPath = HttpContext.Current.Server.MapPath(path);
+            var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+            CommonModel com = new CommonModel();
+            var LastName = com.CreateRandom("", 5) + appWaitImg.ImgPath.GetFileSuffix();
+
+            var imageName = string.Format("{0}_{1}", token, LastName);
+            var imageName2 = string.Format("{0}j_{1}", token, LastName);
+            var imageName3 = string.Format("{0}y_{1}", token, LastName);
+            var imageName4 = string.Format("{0}z_{1}", token, LastName);
+            var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
+            var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
+            var imagePath3 = string.Format("{0}\\{1}", accountPath, imageName3);
+            var imagePath4 = string.Format("{0}\\{1}", accountPath, imageName4);
+
+            var lsImgPath = appWaitImg.ImgPath;
+            var lsImaFilePath = HttpContext.Current.Server.MapPath(lsImgPath);
+
+            //Tool.SuperGetPicThumbnail(img, imagePath,70,960,0,System.Drawing.Drawing2D.SmoothingMode.HighQuality,System.Drawing.Drawing2D.CompositingQuality.Default,System.Drawing.Drawing2D.InterpolationMode.High);
+            if (w > 0)
+            {
+                Tool.SuperGetPicThumbnailJT(lsImaFilePath, imagePath, 70, w, h, x1, y1, tw, th, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+
+                Tool.SuperGetPicThumbnail(imagePath, imagePath2, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                appWaitImg.ImgPath = path + imageName2;
+                if (File.Exists(imagePath))
+                {
+                    File.Delete(imagePath);
+                }
+            }
+            else
+            {
+                Tool.SuperGetPicThumbnail(lsImaFilePath, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                appWaitImg.ImgPath = path + imageName;
+            }
+
+
+
+
+            if (await != null) //修改
+            {
+                string path2 = HttpContext.Current.Server.MapPath(await.ImgPath);
+                if (File.Exists(path2))
+                {
+                    File.Delete(path2);
+                }
+
+                appWaitImg.ID = await.ID;
+                result = base.Edit(appWaitImg);
+            }
+            else //添加
+            {
+                result = base.Add(appWaitImg);
+
+            }
+
+            return result;
+        }
     }
 }

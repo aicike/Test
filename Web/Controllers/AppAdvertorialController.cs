@@ -7,6 +7,10 @@ using Controllers;
 using Injection;
 using Interface;
 using Poco;
+using Common;
+using Business;
+using System.IO;
+using System.Drawing;
 
 namespace Web.Controllers
 {
@@ -41,7 +45,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Add(AppAdvertorial appAdver, HttpPostedFileBase HousShowImagePathFile, int w, int h, int x1, int y1, int tw, int th)
+        public ActionResult Add(AppAdvertorial appAdver, int w, int h, int x1, int y1, int tw, int th)
         {
             if (w <= 0)
             {
@@ -51,7 +55,7 @@ namespace Web.Controllers
             appAdver.Sort = 0;
             appAdver.IssueDate = DateTime.Now;
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            Result result = AppAdvertorialModel.AddAppAdvertorial(appAdver, HousShowImagePathFile,w,h,x1,y1,tw,th);
+            Result result = AppAdvertorialModel.AddAppAdvertorial(appAdver,w,h,x1,y1,tw,th);
           
 
             return RedirectToAction("Index", "AppAdvertorial");
@@ -73,17 +77,27 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(AppAdvertorial appadver, HttpPostedFileBase HousShowImagePathFile, int w, int h, int x1, int y1, int tw, int th)
+        public ActionResult Edit(AppAdvertorial appadver, int w, int h, int x1, int y1, int tw, int th)
         {
-            if (HousShowImagePathFile != null)
+            //if (HousShowImagePathFile != null)
+            //{
+            //    if (w <= 0)
+            //    {
+            //        return JavaScript(AlertJS_NoTag(new Dialog("请在图片上选择展示区域")));
+            //    }
+            //}
+            var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
+
+            var appadvertorials = AppAdvertorialModel.Get(appadver.ID);
+            if (appadvertorials.MainImagPath != appadver.MainImagPath)
             {
                 if (w <= 0)
                 {
                     return JavaScript(AlertJS_NoTag(new Dialog("请在图片上选择展示区域")));
                 }
             }
-            var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            Result result = AppAdvertorialModel.EditAppAdvertorial(appadver, HousShowImagePathFile, w, h, x1, y1, tw, th);
+
+            Result result = AppAdvertorialModel.EditAppAdvertorial(appadver, w, h, x1, y1, tw, th);
             if (result.HasError)
             {
                 return JavaScript(" isCommit = true;" + AlertJS_NoTag(new Dialog(result.Error)));
@@ -173,6 +187,38 @@ namespace Web.Controllers
 
             return View();
         }
+
+        [HttpPost]
+        [AllowCheckPermissions(false)]
+        public string UpImg()
+        {
+            if (Request.Files.Count > 0)
+            {
+                string Path = Tool.GetTemporaryPath();
+                CommonModel com = new CommonModel();
+                var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                var LastName = token + com.CreateRandom("", 5) + Request.Files[0].FileName.GetFileSuffix();
+                //图片显示界面
+                var ImagePath = Path + "\\" + LastName;
+                var mapePath = Server.MapPath(Path) + "\\" + LastName;
+                int dataLengthToRead = (int)Request.Files[0].InputStream.Length;//获取下载的文件总大小
+                byte[] buffer = new byte[dataLengthToRead];
+
+                int r = Request.Files[0].InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+                Stream tream = new MemoryStream(buffer);
+                Image img = Image.FromStream(tream);
+
+                Tool.SuperGetPicThumbnail(img, mapePath, 70, 1280, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+
+                return Url.Content(ImagePath);
+
+            }
+            else
+            {
+                return "false";
+            }
+        }
+
 
     }
 }

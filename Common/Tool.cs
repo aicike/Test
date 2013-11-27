@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Web;
 
 namespace Common
 {
@@ -511,6 +512,126 @@ namespace Common
 
 
 
+        /// <summary>
+        /// 按比例截图，裁剪，压缩方法 传Image对象
+        /// </summary>
+        /// <param name="imgSrc">原始图片</param>
+        /// <param name="SavePath">保存路径</param>
+        /// <param name="flag">压缩比例，一般设置在70-100之间</param>
+        /// <param name="w">当前截图宽度</param>
+        /// <param name="h">当前截图高度</param>
+        /// <param name="x1">当前截图x坐标</param>
+        /// <param name="y1">当前截图y坐标</param>
+        /// <param name="tw">当前截图显示宽度</param>
+        /// <param name="th">当前截图显示高度</param>
+        /// <param name="sm">抗锯齿</param>
+        /// <param name="cq">影像合成</param>
+        /// <param name="im">图片质量</param>
+        /// <returns></returns>
+        public static bool SuperGetPicThumbnailJT(string imgSrc, string SavePath, int flag, int w, int h, int x1, int y1, int tw, int th, SmoothingMode sm = SmoothingMode.HighQuality, CompositingQuality cq = CompositingQuality.HighQuality, InterpolationMode im = InterpolationMode.High)
+        {
+            Image image = System.Drawing.Image.FromFile(imgSrc);
+            Bitmap sourceBitmap = new Bitmap(image);
+            EncoderParameter eParam = null;
+            EncoderParameters ep = null;
+            try
+            {
+                //接着创建一个System.Drawing.Bitmap对象，并设置你希望的缩略图的宽度和高度。
+                int srcWidth = image.Width;
+                int srcHeight = image.Height;
+
+
+                int ToWidth = w;
+                int ToHeight = h;
+                int ToX1 = x1;
+                int ToY1 = y1;
+
+
+                int YW = sourceBitmap.Width;
+                int YH = sourceBitmap.Height;
+
+                if (YH != th)
+                {
+                    double ratio = double.Parse(YH.ToString()) / double.Parse(th.ToString());
+                    //ratio = Math.Round(ratio, 2);
+                    ToWidth = (int)(ToWidth * ratio);
+                    ToHeight = (int)(ToHeight * ratio);
+                    ToX1 = (int)(ToX1 * ratio);
+                    ToY1 = (int)(ToY1 * ratio);
+                }
+
+                Bitmap resultBitmap = new Bitmap(ToWidth, ToHeight);
+
+                using (Graphics g = Graphics.FromImage(resultBitmap))
+                {
+                    g.SmoothingMode = sm;
+                    //下面这个也设成高质量
+                    g.CompositingQuality = cq;
+                    //下面这个设成High
+                    g.InterpolationMode = im;
+                    Rectangle resultRectangle = new Rectangle(0, 0, ToWidth, ToHeight);
+                    Rectangle sourceRectangle = new Rectangle(0 + ToX1, 0 + ToY1, ToWidth, ToHeight);
+                    g.DrawImage(sourceBitmap, resultRectangle, sourceRectangle, GraphicsUnit.Pixel);
+                }
+
+
+                //resultBitmap.Save(SavePath, sourceBitmap.RawFormat);
+
+
+
+                ImageFormat tFormat = image.RawFormat;
+                //以下代码为保存图片时，设置压缩质量 
+                ep = new EncoderParameters();
+                long[] qy = new long[1];
+                qy[0] = flag;//设置压缩的比例1-100 
+                eParam = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, qy);
+                ep.Param[0] = eParam;
+                ImageCodecInfo[] arrayICI = ImageCodecInfo.GetImageEncoders();
+                ImageCodecInfo jpegICIinfo = null;
+                for (int x = 0; x < arrayICI.Length; x++)
+                {
+                    if (arrayICI[x].FormatDescription.Equals("JPEG"))
+                    {
+                        jpegICIinfo = arrayICI[x];
+                        break;
+                    }
+                }
+                if (jpegICIinfo != null)
+                {
+                    resultBitmap.Save(SavePath, jpegICIinfo, ep);//dFile是压缩后的新路径 
+                }
+                else
+                {
+                    resultBitmap.Save(SavePath, tFormat);
+                }
+                resultBitmap.Dispose();
+                sourceBitmap.Dispose();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+
+                if (ep != null)
+                {
+                    ep.Dispose();
+                }
+                if (eParam != null)
+                {
+                    eParam.Dispose();
+                }
+                if (image != null)
+                {
+                    image.Dispose();
+                }
+            }
+        }
+
+
+
 
         /// <summary>
         /// 按比例截图，裁剪，压缩方法 传Image对象
@@ -634,7 +755,20 @@ namespace Common
 
 
 
-
+        /// <summary>
+        /// 获取平台临时文件夹位置
+        /// </summary>
+        /// <returns></returns>
+        public static string GetTemporaryPath()
+        {
+            string Path = "/File/Temporary/"+DateTime.Now.ToString("yyyy-MM-dd");
+            //string TempPath = HttpContext.Current.Server.MapPath(Path);
+            if (Directory.Exists(Path) == false)
+            {
+                Directory.CreateDirectory(Path);
+            }
+            return Path;
+        }
 
     }
 }
