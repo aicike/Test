@@ -19,6 +19,9 @@ using System.Threading.Tasks;
 using Business;
 using System.Security.Policy;
 using System.Configuration;
+using Interface;
+using Injection;
+using Poco.WebAPI_Poco;
 
 
 
@@ -232,62 +235,96 @@ namespace AcceptanceServer
                             else
                             {
                                 ThisMessageID = int.Parse(dt.Rows[0][0].ToString());
+
+                                //处理多图文
+                                if (!string.IsNullOrEmpty(Np.EID))
+                                {
+                                    if (Np.EID == "4")
+                                    {
+                                        var ImgTextID = Np.ImgTextID;
+                                        var libraryImageTextModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
+                                        var itext = libraryImageTextModel.Get(int.Parse(ImgTextID));
+                                        if (itext != null)
+                                        {
+                                            if (itext.LibraryImageTexts.Count > 0)
+                                            {
+                                                List<App_AutoMessageReplyContent> subImageText = new List<App_AutoMessageReplyContent>();
+                                                foreach (var it in itext.LibraryImageTexts)
+                                                {
+                                                    App_AutoMessageReplyContent rep_it = new App_AutoMessageReplyContent();
+                                                    rep_it.ID = it.ID;
+                                                    rep_it.Type = (int)EnumMessageType.ImageText;
+                                                    rep_it.FileTitle = it.Title;
+                                                    rep_it.FileUrl = SystemConst.WebUrlIP + it.ImagePath.Replace("~", "");
+                                                    //rep_it.SendTime = sendTime;
+                                                    subImageText.Add(rep_it);
+                                                }
+                                                Np.Subcontent = Newtonsoft.Json.JsonConvert.SerializeObject(subImageText);
+                                            }
+                                        }
+                                    
+                                    }
+                                }
+
+
                                 //群聊
                                 if (Np.MSD == "4")
                                 {
                                     try
                                     {
-                                     DataTable userDT = DataBusiness.GetSidUser(int.Parse(Np.SID));
-                                    foreach (DataRow  row in userDT.Rows)
-                                    {
-                                        if (row["juid"].ToString() != msg.From.User)
+                                        DataTable userDT = DataBusiness.GetSidUser(int.Parse(Np.SID));
+                                        foreach (DataRow row in userDT.Rows)
                                         {
-                                            //在线
-                                            if (OnlineUser.onlinuser.Any(a => a.jid.User == row["juid"].ToString()))
+                                            if (row["juid"].ToString() != msg.From.User)
                                             {
-                                                msg.From = jid;
-                                                if (Np.FielUrl != null)
+                                                //在线
+                                                if (OnlineUser.onlinuser.Any(a => a.jid.User == row["juid"].ToString()))
                                                 {
-                                                    Np.FielUrl = WebUrlIP + Np.FielUrl.Remove(0, 1);
+                                                    msg.From = jid;
+                                                    if (Np.FielUrl != null)
+                                                    {
+                                                        Np.FielUrl = WebUrlIP + Np.FielUrl.Remove(0, 1);
+                                                    }
+                                                    //转发发送消息 所有设备IEnumerable
+                                                    List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == row["juid"].ToString()).ToList();
+                                                    foreach (XmppServerConnection xcon in cons)
+                                                    {
+                                                        xcon.Send(msg, ThisMessageID);
+                                                    }
+
                                                 }
-                                                //转发发送消息 所有设备IEnumerable
-                                                List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == row["juid"].ToString()).ToList();
-                                                foreach (XmppServerConnection xcon in cons)
+                                                //不在线
+                                                else
                                                 {
-                                                    xcon.Send(msg, ThisMessageID);
+                                                    try
+                                                    {
+                                                        int UserID = int.Parse(row["userID"].ToString());
+                                                        int UserType = int.Parse(row["UserType"].ToString());
+                                                        DataBusiness.InsertMessageGroupChat(ThisMessageID, UserID, UserType, int.Parse(Np.SID));
+                                                        PushMessage(msg, Np);
+                                                    }
+                                                    catch { }
+
+
                                                 }
+
 
                                             }
-                                            //不在线
-                                            else
-                                            {
-                                                try
-                                                {
-                                                    int UserID = int.Parse(row["userID"].ToString());
-                                                    int UserType = int.Parse(row["UserType"].ToString());
-                                                    DataBusiness.InsertMessageGroupChat(ThisMessageID, UserID, UserType, int.Parse(Np.SID));
-                                                }
-                                                catch { }
-                                                PushMessage(msg, Np);
-                                            }
-
-
                                         }
-                                    }
 
                                     }
                                     catch
                                     {
-                                    
+
                                     }
-                                   
+
 
                                 }
                                 //单人聊天
                                 else
                                 {
                                     //本条消息数据库ID
-                                   
+
                                     //在线
                                     if (OnlineUser.onlinuser.Any(a => a.jid.User == msg.To.User))
                                     {
@@ -323,13 +360,17 @@ namespace AcceptanceServer
                                         //else
                                         //{
                                         //推送
-                                        PushMessage(msg, Np);
+                                        try
+                                        {
+                                            PushMessage(msg, Np);
+                                        }
+                                        catch { };
                                         //}
 
                                     }
                                 }
 
-                                
+
                             }
                         }
                         catch
@@ -367,7 +408,7 @@ namespace AcceptanceServer
                             msg.From = jid;
                             foreach (XmppServerConnection xcon in cons)
                             {
-                               
+
                                 xcon.Send(msg, 0);
                             }
 
@@ -425,18 +466,18 @@ namespace AcceptanceServer
                         {
                             //if (AoU == "u")
                             //{
-                                List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == auth.Username).ToList();
-                                if (cons.Count > 0)
+                            List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == auth.Username).ToList();
+                            if (cons.Count > 0)
+                            {
+                                for (int i = 0; i < OnlineUser.onlinuser.Count; i++)
                                 {
-                                    for (int i = 0; i < OnlineUser.onlinuser.Count; i++)
+                                    if (OnlineUser.onlinuser[i].jid.User == auth.Username)
                                     {
-                                        if (OnlineUser.onlinuser[i].jid.User == auth.Username)
-                                        {
-                                            OnlineUser.onlinuser.RemoveAt(i);
-                                            i--;
-                                        }
+                                        OnlineUser.onlinuser.RemoveAt(i);
+                                        i--;
                                     }
                                 }
+                            }
                             //}
                         }
 
@@ -453,11 +494,11 @@ namespace AcceptanceServer
                         //    //frm.listBox2.Items.Add(auth.Username);
                         //}));
 
-                        if (auth.Resource != "web")
-                        {
-                            //刚刚登陆获取未读消息
-                            //LoginSendUnreadMessage();
-                        }
+                        //if (auth.Resource != "web")
+                        //{
+                        //刚刚登陆获取未读消息
+                        //LoginSendUnreadMessage();
+                        //}
 
                         iq.SwitchDirection();
                         iq.Type = IqType.result;
@@ -553,7 +594,7 @@ namespace AcceptanceServer
                     {
                         agsXMPP.protocol.client.Message msg = n as agsXMPP.protocol.client.Message;
                         NewsProtocol Np = msg.SelectSingleElement(typeof(NewsProtocol)) as NewsProtocol;
-                        List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
+                        //List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
                         //if (cons.Count > 0)
                         //{
                         //    for (int i = 0; i < OnlineUser.onlinuser.Count; i++)
@@ -581,7 +622,11 @@ namespace AcceptanceServer
                                 //else
                                 //{
                                 //推送
-                                PushMessage(msg, Np);
+                                try
+                                {
+                                    PushMessage(msg, Np);
+                                }
+                                catch { }
                                 //}
                             }
                         }
@@ -590,11 +635,11 @@ namespace AcceptanceServer
                     }
                     catch (Exception ex)
                     {
-                        string ShowError = ConfigurationManager.AppSettings["ShowError"].ToString();
-                        if (ShowError == "true")
-                        {
-                            frm.ShowErrorMessage(ex.Message);
-                        }
+                        //string ShowError = ConfigurationManager.AppSettings["ShowError"].ToString();
+                        //if (ShowError == "true")
+                        //{
+                        //    frm.ShowErrorMessage(ex.Message);
+                        //}
                     }
                     //data
 
@@ -602,11 +647,11 @@ namespace AcceptanceServer
             }
             catch (Exception ex)
             {
-                string ShowError = ConfigurationManager.AppSettings["ShowError"].ToString();
-                if (ShowError == "true")
-                {
-                    frm.ShowErrorMessage(ex.Message);
-                }
+                //string ShowError = ConfigurationManager.AppSettings["ShowError"].ToString();
+                //if (ShowError == "true")
+                //{
+                //    frm.ShowErrorMessage(ex.Message);
+                //}
                 throw;
             }
         }
@@ -636,7 +681,7 @@ namespace AcceptanceServer
                 }
                 catch
                 {
-                    OnlineUser.onlinuser.Remove(cons[i]);
+                    //OnlineUser.onlinuser.Remove(cons[i]);
                 }
             }
 

@@ -7,6 +7,13 @@ namespace Poco.WebAPI_Poco
 {
     public class App_Coordinate
     {
+        string name;
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
         string lng;
         /// <summary>
         /// 纬度

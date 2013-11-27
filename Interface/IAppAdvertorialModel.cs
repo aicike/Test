@@ -13,9 +13,13 @@ namespace Interface
 
         Result AddAppAdvertorial(AppAdvertorial appadvertorial, HttpPostedFileBase HousShowImagePathFile, int w, int h, int x1, int y1, int tw, int th);
 
+        Result AddAppAdvertorial(AppAdvertorial appadvertorial, int w, int h, int x1, int y1, int tw, int th);
+
         Result DelAppAdvertorial(int ID);
 
         Result EditAppAdvertorial(AppAdvertorial appadvertorial, HttpPostedFileBase HousShowImagePathFile, int w, int h, int x1, int y1, int tw, int th);
+
+        Result EditAppAdvertorial(AppAdvertorial appadvertorial,  int w, int h, int x1, int y1, int tw, int th);
 
         int EditAppAdvertorialStick(int ID, int isok, int accoutMainID, int Sort);
 

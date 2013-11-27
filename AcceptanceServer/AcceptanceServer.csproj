@@ -70,6 +70,9 @@
       <HintPath>..\packages\agsXMPP\agsXMPP.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -170,6 +173,14 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{1D926C61-B1CC-48BC-93AA-3F52D05B8FD0}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Injection\Injection.csproj">
+      <Project>{54A9C2CC-9266-47D4-9F94-9D92B8370024}</Project>
+      <Name>Injection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Interface\Interface.csproj">
+      <Project>{524B3A46-76B0-41CE-AD35-2B1BEEB19968}</Project>
+      <Name>Interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\Poco\Poco.csproj">
       <Project>{DDFA1F60-3A1E-42BD-AD5C-64E5F5CCDEEE}</Project>

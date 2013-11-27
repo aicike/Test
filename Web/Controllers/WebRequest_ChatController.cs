@@ -218,24 +218,24 @@ namespace Web.Controllers
                 //全路径
                 string FilePath = Server.MapPath(Path);
 
-                if (FileType == 1)//图片
-                {
-                    int dataLengthToRead = (int)Request.Files[0].InputStream.Length;//获取下载的文件总大小
-                    byte[] buffer = new byte[dataLengthToRead];
+                //if (FileType == 1)//图片
+                //{
+                //    int dataLengthToRead = (int)Request.Files[0].InputStream.Length;//获取下载的文件总大小
+                //    byte[] buffer = new byte[dataLengthToRead];
 
 
-                    int r = Request.Files[0].InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
-                    Stream tream = new MemoryStream(buffer);
-                    Image img = Image.FromStream(tream);
+                //    int r = Request.Files[0].InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+                //    Stream tream = new MemoryStream(buffer);
+                //    Image img = Image.FromStream(tream);
 
-                    Tool.SuperGetPicThumbnail(img, FilePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                //    Tool.SuperGetPicThumbnail(img, FilePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
 
-                }
-                else
-                {
+                //}
+                //else
+                //{
                     //保存文件
                     Request.Files[0].SaveAs(FilePath);
-                }
+                //}
                 //音频
                 if (FileType == 2)
                 {

@@ -31,6 +31,7 @@ namespace Web.Controllers
                 var libraryModel = Factory.Get<ILibraryImageModel>(SystemConst.IOC_Model.LibraryImageModel);
                 LibraryImage entity = new LibraryImage();
                 entity.AccountMainID = LoginAccount.CurrentAccountMainID;
+                
                 var result = libraryModel.Upload(entity, Request.Files[0]);
                 if (result.HasError)
                 {

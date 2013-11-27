@@ -87,10 +87,20 @@
             //图片
             if (Type == "1") {
 
-
                 $("#ShowImg").attr("src", MesURL);
+               
+               
+                $("#ShowImg").onload = ShowImg();
+                 
+            }
+        }
 
-                $("#dialogShowMessage").dialog({
+
+        function ShowImg()
+        {
+
+
+            $("#dialogShowMessage").dialog({
                     resizable: false,
                     height: "auto",
                     width: "auto",
@@ -105,15 +115,6 @@
                         }
                     }
                 });
-//                $("#ShowImg").onload = ShowImg();
-                
-            }
-        }
-
-
-        function ShowImg()
-        {
-           
         }
 
 

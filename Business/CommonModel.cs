@@ -313,12 +313,26 @@ namespace Business
             {
                 id = "0";
             }
-
-            string sql = string.Format(@"
+            string sql = "";
+            //用户
+            if (userType == 1)
+            {
+                sql = string.Format(@"
                                         select (a.d+b.ds) as cnt from 
-                                        (select count(*) as d from dbo.Message where ConversationID in ({0}) and IsReceive='false' and EnumMessageSendDirectionID!=4) a,
+                                        (select count(*) as d from dbo.Message where ConversationID in ({0}) and IsReceive='false' and ToUserID={1} and EnumMessageSendDirectionID!=4) a,
                                         (select count(*) as ds from MessageGroupChat where UserID={1} and UserType ={2} and sid in({0})) b",
-                                        id, UserID, UserType);
+                                       id, UserID, UserType);
+            }
+            else
+            {
+                sql = string.Format(@"
+                                        select (a.d+b.ds) as cnt from 
+                                        (select count(*) as d from dbo.Message where ConversationID in ({0}) and IsReceive='false'  and ToAccountID={1} and EnumMessageSendDirectionID!=4) a,
+                                        (select count(*) as ds from MessageGroupChat where UserID={1} and UserType ={2} and sid in({0})) b",
+                                           id, UserID, UserType);
+            }
+
+           
 
             return SqlQuery<int>(sql).FirstOrDefault().ToString();
         }
