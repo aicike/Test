@@ -8,6 +8,8 @@ using Interface;
 using Injection;
 using Business;
 using System.IO;
+using Common;
+using System.Drawing;
 
 namespace Web.Controllers
 {
@@ -155,6 +157,41 @@ namespace Web.Controllers
                 return cm.CheckIsUnique( tableName, field, value).ToString();
             }
         }
+
+        /// <summary>
+        /// 上传文件到临时文件夹中
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public string UpImg()
+        {
+            if (Request.Files.Count > 0)
+            {
+                string Path = Tool.GetTemporaryPath();
+                CommonModel com = new CommonModel();
+                var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                var LastName = token + com.CreateRandom("", 5) + Request.Files[0].FileName.GetFileSuffix();
+                //图片显示界面
+                var ImagePath = Path + "\\" + LastName;
+                var mapePath = Server.MapPath(Path) + "\\" + LastName;
+                int dataLengthToRead = (int)Request.Files[0].InputStream.Length;//获取下载的文件总大小
+                byte[] buffer = new byte[dataLengthToRead];
+
+                int r = Request.Files[0].InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+                Stream tream = new MemoryStream(buffer);
+                Image img = Image.FromStream(tream);
+
+                Tool.SuperGetPicThumbnail(img, mapePath, 70, 1280, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+
+                return Url.Content(ImagePath);
+
+            }
+            else
+            {
+                return "false";
+            }
+        }
+
 
     }
 }

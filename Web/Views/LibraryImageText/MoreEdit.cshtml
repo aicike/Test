@@ -156,6 +156,8 @@
                 swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
                 uploader: uploadUrl,
                 width: 64,
+                fileSizeLimit: '5MB',
+                multi: false,
                 fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
                 onUploadSuccess: function (file, data, response) {
                     if (currentIndex == -1) {

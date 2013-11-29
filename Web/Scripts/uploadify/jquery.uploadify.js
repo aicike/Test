@@ -831,11 +831,11 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 					errorString = 'Security Error';
 					break;
 				case SWFUpload.UPLOAD_ERROR.UPLOAD_LIMIT_EXCEEDED:
-                    JAlert({
-                        Message: "文件大小过大，上传失败。",
-                        DialogType: "Ok",
-                        BtnOk: "确定"
-                    });
+//                    JAlert({
+//                        Message: "文件大小过大，上传失败。",
+//                        DialogType: "Ok",
+//                        BtnOk: "确定"
+//                    });
 
 					errorString = 'Exceeds Upload Limit';
 					break;

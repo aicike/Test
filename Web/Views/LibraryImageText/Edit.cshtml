@@ -59,6 +59,7 @@
         }
     </style>
     <script type="text/javascript">
+        var UpImgUrl = '@Url.Action("UpImg", "Ajax", new { HostName = ViewBag.HostName })';
         $(function () {
             var uploadUrl = '@Url.Action("Upload", "LibraryImageText", new { HostName = ViewBag.HostName })';
             window.UEDITOR_HOME_URL = "/ueditor/";
@@ -75,38 +76,67 @@
 
             var ue = UE.getEditor('editor', options);
 
-            $("#CoverImagePathFile").change(function () {
-                var fileName = $("#CoverImagePathFile").val();
-                if (fileName.length == 0) { return false; }
-                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
-                switch (suffix) {
-                    case ".jpg":
-                    case ".jpeg":
-                    case ".png":
-                    case ".gif":
-                    case ".bmp":
-                        break;
-                    default:
+//            $("#CoverImagePathFile").change(function () {
+//                var fileName = $("#CoverImagePathFile").val();
+//                if (fileName.length == 0) { return false; }
+//                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+//                switch (suffix) {
+//                    case ".jpg":
+//                    case ".jpeg":
+//                    case ".png":
+//                    case ".gif":
+//                    case ".bmp":
+//                        break;
+//                    default:
+//                        JAlert({
+//                            Message: "格式限制：jpg, jpge, gif, png, bmp",
+//                            DialogType: "Ok",
+//                            BtnOk: "确定"
+//                        });
+//                        return false;
+//                        break;
+//                }
+//                var input = this;
+//                if (input.files && input.files[0]) {
+//                    ShowLayout_Later("请稍后", "请稍后，正在努力为您加载图片...");
+//                    var reader = new FileReader();
+//                    reader.onload = function (e) {
+//                        CloseLayout_Later();
+//                        $("#imgCoverPreview").attr('src', e.target.result);
+//                    };
+//                    reader.readAsDataURL(input.files[0]);
+//                }
+//                return false;
+//            });
+
+            $("#file_upload").uploadify({
+                height: 30,
+                swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
+                uploader: UpImgUrl,
+                width: 64,
+                fileSizeLimit: '5MB',
+                multi: false,
+                fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
+                onUploadSuccess: function (file, data, response) {
+
+                    if (data == "" || data == undefined || data == "false") {
                         JAlert({
-                            Message: "格式限制：jpg, jpge, gif, png, bmp",
+                            Message: "上传失败请重新上传！",
                             DialogType: "Ok",
                             BtnOk: "确定"
                         });
-                        return false;
-                        break;
+                        return;
+                    }
+
+                    $("#imgCoverPreview").attr('src', data);
+
+                    $("#ImagePath").val(data);
+
                 }
-                var input = this;
-                if (input.files && input.files[0]) {
-                    ShowLayout_Later("请稍后", "请稍后，正在努力为您加载图片...");
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        CloseLayout_Later();
-                        $("#imgCoverPreview").attr('src', e.target.result);
-                    };
-                    reader.readAsDataURL(input.files[0]);
-                }
-                return false;
             });
+
+
+
 
 
 
@@ -187,8 +217,8 @@
                 <div class="div_title">
                     封面</div>
                @* <input type="button" value="选择文件" onclick="$('#CoverImagePathFile').click()" class="button" />*@
-                <input type="file" id="CoverImagePathFile" name="CoverImagePathFile"  value="选择文件"  />
-                @Html.TextBoxFor(a => a.ImagePath, new { style = "width:0px;visibility:hidden" })
+                          <input id="file_upload" name="file_upload" type="file" multiple="false" />
+                @Html.TextBoxFor(a => a.ImagePath, new { style = "width:0px;display:none" })
             </div>
             <div>
                 <div class="div_title">

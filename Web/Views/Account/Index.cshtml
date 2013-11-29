@@ -55,7 +55,14 @@
             {
             <tr>
                 <td>
-                    <img id="imgLogo" style="max-width:80px;max-height:80px;" src="@Url.Content(@item.HeadImagePath)" />
+                    @if (string.IsNullOrEmpty(item.HeadImagePath))
+                    {
+                    <img id="imgLogo" style="max-width:80px;max-height:80px;" src="@Url.Content("~/Images/default_Avatar.png")" />
+                    }
+                    else
+                    {                    
+                        <img id="imgLogo" style="max-width:80px;max-height:80px;" src="@Url.Content(@item.HeadImagePath)" />
+                    }
                 </td>
                 <td>
                     @item.Name

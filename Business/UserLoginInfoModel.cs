@@ -16,6 +16,8 @@ namespace Business
 {
     public class UserLoginInfoModel : BaseModel<UserLoginInfo>, IUserLoginInfoModel
     {
+        private readonly object obj = new object();
+
         public new Result Edit(UserLoginInfo userLogiInfo)
         {
             Result result = new Result();
@@ -31,77 +33,154 @@ namespace Business
         [Transaction]
         public Result Register(App_UserLoginInfo userLoginInfo)
         {
-            Result result = new Result();
-            bool isExist = false;
+            lock (obj)
+            {
+                Result result = new Result();
+                bool isExist = false;
 
-            UserLoginInfo oldUserLoginInfo = null;
-            if (userLoginInfo.UserID.HasValue)
-            {
-                oldUserLoginInfo = GetByUserID(userLoginInfo.UserID.Value);
-                if (oldUserLoginInfo != null)
+                UserLoginInfo oldUserLoginInfo = null;
+                if (userLoginInfo.UserID.HasValue)
                 {
-                    isExist = ExistEmail(userLoginInfo.Email, oldUserLoginInfo.ID);
+                    oldUserLoginInfo = GetByUserID(userLoginInfo.UserID.Value);
+                    if (oldUserLoginInfo != null)
+                    {
+                        isExist = ExistEmail(userLoginInfo.Email, oldUserLoginInfo.ID);
+                    }
                 }
-            }
-            else
-            {
-                isExist = ExistEmail(userLoginInfo.Email);
-            }
-            //检查邮箱是否通过，是否可以注册
-            if (isExist)
-            {
-                result.Error = "该邮箱已存在,不能创建账号.";
-                return result;
-            }
-            if (userLoginInfo.UserID.HasValue)
-            {
-                if (oldUserLoginInfo != null)
+                else
                 {
-                    isExist = ExistPhone(userLoginInfo.Phone, oldUserLoginInfo.ID);
+                    isExist = ExistEmail(userLoginInfo.Email);
                 }
-            }
-            else
-            {
-                isExist = ExistPhone(userLoginInfo.Phone);
-            }
-            //检查电话是否通过，是否可以注册
-            if (isExist)
-            {
-                result.Error = "该电话已存在,不能创建账号.";
-                return result;
-            }
-
-            int userLoginInfoID = 0;
-            if (userLoginInfo.UserID.HasValue && oldUserLoginInfo != null)
-            {
-                //已有账号，需要修改userLoginInfo信息
-                oldUserLoginInfo.Email = userLoginInfo.Email;
-                oldUserLoginInfo.LoginPwd = DESEncrypt.Encrypt(userLoginInfo.Pwd);
-                oldUserLoginInfo.LoginPwdPage = "000000";
-                oldUserLoginInfo.Phone = userLoginInfo.Phone;
-                oldUserLoginInfo.Name = userLoginInfo.Name;
-                userLoginInfoID = oldUserLoginInfo.ID;
-                result = base.Edit(oldUserLoginInfo);
-            }
-            else
-            {
-                //没有账号，需要新建userLoginInfo信息
-                UserLoginInfo userlogin = new UserLoginInfo();
-                userlogin.LoginPwd = DESEncrypt.Encrypt(userLoginInfo.Pwd);
-                userlogin.LoginPwdPage = "000000";
-                userlogin.Name = userLoginInfo.Name;
-                userlogin.Phone = userLoginInfo.Phone;
-                userlogin.Email = userLoginInfo.Email;
-                result = base.Add(userlogin);
-                userLoginInfoID = userlogin.ID;
-                if (result.HasError)
+                //检查邮箱是否通过，是否可以注册
+                if (isExist)
                 {
+                    result.Error = "该邮箱已存在,不能创建账号.";
                     return result;
                 }
+                if (userLoginInfo.UserID.HasValue)
+                {
+                    if (oldUserLoginInfo != null)
+                    {
+                        isExist = ExistPhone(userLoginInfo.Phone, oldUserLoginInfo.ID);
+                    }
+                }
+                else
+                {
+                    isExist = ExistPhone(userLoginInfo.Phone);
+                }
+                //检查电话是否通过，是否可以注册
+                if (isExist)
+                {
+                    result.Error = "该电话已存在,不能创建账号.";
+                    return result;
+                }
+
+                int userLoginInfoID = 0;
+                if (userLoginInfo.UserID.HasValue && oldUserLoginInfo != null)
+                {
+                    //已有账号，需要修改userLoginInfo信息
+                    oldUserLoginInfo.Email = userLoginInfo.Email;
+                    oldUserLoginInfo.LoginPwd = DESEncrypt.Encrypt(userLoginInfo.Pwd);
+                    oldUserLoginInfo.LoginPwdPage = "000000";
+                    oldUserLoginInfo.Phone = userLoginInfo.Phone;
+                    oldUserLoginInfo.Name = userLoginInfo.Name;
+                    userLoginInfoID = oldUserLoginInfo.ID;
+                    result = base.Edit(oldUserLoginInfo);
+                }
+                else
+                {
+                    //没有账号，需要新建userLoginInfo信息
+                    UserLoginInfo userlogin = new UserLoginInfo();
+                    userlogin.LoginPwd = DESEncrypt.Encrypt(userLoginInfo.Pwd);
+                    userlogin.LoginPwdPage = "000000";
+                    userlogin.Name = userLoginInfo.Name;
+                    userlogin.Phone = userLoginInfo.Phone;
+                    userlogin.Email = userLoginInfo.Email;
+                    result = base.Add(userlogin);
+                    userLoginInfoID = userlogin.ID;
+                    if (result.HasError)
+                    {
+                        return result;
+                    }
+                    //添加用户User
+                    User user = new User();
+                    user.UserLoginInfoID = userlogin.ID;
+                    user.Name = userlogin.Name + userlogin.ID;
+                    user.AccountMainID = userLoginInfo.AccountMainID;
+                    var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+                    result = userModel.Add(user);
+                    if (result.HasError)
+                    {
+                        return result;
+                    }
+                    //添加用户和Account关系
+                    if (userLoginInfo.AccountID != null && userLoginInfo.AccountID.HasValue)
+                    {
+                        var account_UserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
+                        result = account_UserModel.BindUser_Account(userLoginInfo.AccountID.Value, user.ID);
+                    }
+                    if (result.HasError)
+                    {
+                        return result;
+                    }
+                    //添加用户和ClientInfo信息
+                    var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
+                    var client = clientInfoModel.List().Where(a => a.ClientID.Equals(userLoginInfo.ClientID)).FirstOrDefault();
+                    int enumClientSystemTypeID = LookupFactory.GetLookupOptionIdByToken((EnumClientSystemType)userLoginInfo.EnumClientSystemType);
+                    int enumClientUserTypeID = LookupFactory.GetLookupOptionIdByToken((EnumClientUserType)userLoginInfo.EnumClientUserType);
+                    if (client == null)
+                    {
+                        //数据库中没有client信息，需要新增
+                        ClientInfo clientInfo = new ClientInfo();
+                        clientInfo.EnumClientSystemTypeID = enumClientSystemTypeID;
+                        clientInfo.SetupTiem = DateTime.Now;
+                        clientInfo.EnumClientUserTypeID = enumClientUserTypeID;
+                        clientInfo.ClientID = userLoginInfo.ClientID;
+                        clientInfo.EntityID = user.ID;
+                        result = clientInfoModel.Add(clientInfo);
+                        if (result.HasError)
+                        {
+                            return result;
+                        }
+                    }
+                    else
+                    {
+                        //数据库中有client信息，需要绑定
+                        client.EnumClientSystemTypeID = enumClientSystemTypeID;
+                        client.EnumClientUserTypeID = enumClientUserTypeID;
+                        client.EntityID = user.ID;
+                        result = clientInfoModel.Edit(client);
+                        if (result.HasError)
+                        {
+                            return result;
+                        }
+                    }
+                    string headImg = null;
+                    headImg = SystemConst.WebUrlIP + "".DefaultHeadImage().Replace("~", "");
+                    result.Entity = new App_User() { ID = user.ID, Phone = userLoginInfo.Phone == null ? "" : userLoginInfo.Phone, Name = userLoginInfo.Name, Email = "", Pwd = userLoginInfo.Pwd, HeadImagePath = headImg };
+                    return result;
+                }
+                if (string.IsNullOrEmpty(userLoginInfo.Phone) == false && userLoginInfoID != 0)
+                {
+                    SMS_Model smsModel = new SMS_Model();
+                    smsModel.Send_UserRegister(userLoginInfoID);
+                }
+                return result;
+            }
+        }
+
+        [Transaction]
+        public Result Register2(App_UserLoginInfo userLoginInfo, int userLoginInfoID)
+        {
+            lock (obj)
+            {
+                Result result = new Result();
+
+
                 //添加用户User
                 User user = new User();
-                user.UserLoginInfoID = userlogin.ID;
-                user.Name = userlogin.Name;
+                user.UserLoginInfoID = userLoginInfoID;
+                user.Name = userLoginInfo.Name;
                 user.AccountMainID = userLoginInfo.AccountMainID;
                 var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
                 result = userModel.Add(user);
@@ -121,7 +200,7 @@ namespace Business
                 }
                 //添加用户和ClientInfo信息
                 var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
-                var client = clientInfoModel.List().Where(a => a.ClientID.Equals(userLoginInfo.ClientID)).FirstOrDefault();
+                var client = clientInfoModel.List().Where(a => a.ClientID.Equals(userLoginInfo.ClientID) && a.EntityID == user.ID).FirstOrDefault();
                 int enumClientSystemTypeID = LookupFactory.GetLookupOptionIdByToken((EnumClientSystemType)userLoginInfo.EnumClientSystemType);
                 int enumClientUserTypeID = LookupFactory.GetLookupOptionIdByToken((EnumClientUserType)userLoginInfo.EnumClientUserType);
                 if (client == null)
@@ -134,10 +213,6 @@ namespace Business
                     clientInfo.ClientID = userLoginInfo.ClientID;
                     clientInfo.EntityID = user.ID;
                     result = clientInfoModel.Add(clientInfo);
-                    if (result.HasError)
-                    {
-                        return result;
-                    }
                 }
                 else
                 {
@@ -146,88 +221,21 @@ namespace Business
                     client.EnumClientUserTypeID = enumClientUserTypeID;
                     client.EntityID = user.ID;
                     result = clientInfoModel.Edit(client);
-                    if (result.HasError)
-                    {
-                        return result;
-                    }
+                }
+                if (result.HasError)
+                {
+                    return result;
+                }
+                if (string.IsNullOrEmpty(userLoginInfo.Phone) == false && userLoginInfoID != 0)
+                {
+                    SMS_Model smsModel = new SMS_Model();
+                    smsModel.Send_UserRegister(userLoginInfoID);
                 }
                 string headImg = null;
                 headImg = SystemConst.WebUrlIP + "".DefaultHeadImage().Replace("~", "");
-                result.Entity = new App_User() { ID = user.ID, Phone = userLoginInfo.Phone == null ? "" : userLoginInfo.Phone, Name = userLoginInfo.Name, Email = "", Pwd = userLoginInfo.Pwd, HeadImagePath = headImg };
+                result.Entity = new App_User() { ID = user.ID, Phone = userLoginInfo == null ? "" : userLoginInfo.Phone == null ? "" : userLoginInfo.Phone, Name = userLoginInfo.Name, Email = "", Pwd = userLoginInfo.Pwd, HeadImagePath = headImg };
                 return result;
             }
-            if (string.IsNullOrEmpty(userLoginInfo.Phone) == false && userLoginInfoID != 0)
-            {
-                SMS_Model smsModel = new SMS_Model();
-                smsModel.Send_UserRegister(userLoginInfoID);
-            }
-            return result;
-        }
-
-        [Transaction]
-        public Result Register2(App_UserLoginInfo userLoginInfo, int userLoginInfoID)
-        {
-            Result result = new Result();
-
-
-            //添加用户User
-            User user = new User();
-            user.UserLoginInfoID = userLoginInfoID;
-            user.Name = userLoginInfo.Name;
-            user.AccountMainID = userLoginInfo.AccountMainID;
-            var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
-            result = userModel.Add(user);
-            if (result.HasError)
-            {
-                return result;
-            }
-            //添加用户和Account关系
-            if (userLoginInfo.AccountID != null && userLoginInfo.AccountID.HasValue)
-            {
-                var account_UserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
-                result = account_UserModel.BindUser_Account(userLoginInfo.AccountID.Value, user.ID);
-            }
-            if (result.HasError)
-            {
-                return result;
-            }
-            //添加用户和ClientInfo信息
-            var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
-            var client = clientInfoModel.List().Where(a => a.ClientID.Equals(userLoginInfo.ClientID) && a.EntityID == user.ID).FirstOrDefault();
-            int enumClientSystemTypeID = LookupFactory.GetLookupOptionIdByToken((EnumClientSystemType)userLoginInfo.EnumClientSystemType);
-            int enumClientUserTypeID = LookupFactory.GetLookupOptionIdByToken((EnumClientUserType)userLoginInfo.EnumClientUserType);
-            if (client == null)
-            {
-                //数据库中没有client信息，需要新增
-                ClientInfo clientInfo = new ClientInfo();
-                clientInfo.EnumClientSystemTypeID = enumClientSystemTypeID;
-                clientInfo.SetupTiem = DateTime.Now;
-                clientInfo.EnumClientUserTypeID = enumClientUserTypeID;
-                clientInfo.ClientID = userLoginInfo.ClientID;
-                clientInfo.EntityID = user.ID;
-                result = clientInfoModel.Add(clientInfo);
-            }
-            else
-            {
-                //数据库中有client信息，需要绑定
-                client.EnumClientSystemTypeID = enumClientSystemTypeID;
-                client.EnumClientUserTypeID = enumClientUserTypeID;
-                client.EntityID = user.ID;
-                result = clientInfoModel.Edit(client);
-            }
-            if (result.HasError)
-            {
-                return result;
-            }
-            if (string.IsNullOrEmpty(userLoginInfo.Phone) == false && userLoginInfoID != 0)
-            {
-                SMS_Model smsModel = new SMS_Model();
-                smsModel.Send_UserRegister(userLoginInfoID);
-            }
-            string headImg = null;
-            headImg = SystemConst.WebUrlIP + "".DefaultHeadImage().Replace("~", "");
-            result.Entity = new App_User() { ID = user.ID, Phone = userLoginInfo == null ? "" : userLoginInfo.Phone == null ? "" : userLoginInfo.Phone, Name = userLoginInfo.Name, Email = "", Pwd = userLoginInfo.Pwd, HeadImagePath = headImg };
-            return result;
         }
 
         public Result App_Login(Poco.WebAPI_Poco.App_UserLoginInfo app_UserLoginInfo)

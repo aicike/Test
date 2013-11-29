@@ -220,6 +220,147 @@ namespace Business
             return result;
         }
 
+        public Result Add(Account account, int accountMainID, int x1, int y1, int width, int height, int Twidth, int Theight)
+        {
+            //获取项目管理员角色ID
+            IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
+            int sysRoleID = roleModel.GetRoleIscandelete(accountMainID);
+            Result result = new Result();
+            if (account.RoleID == sysRoleID)
+            {
+                var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
+                if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID))
+                {
+                    result.Error = SystemConst.Notice.MultipleAccountMainAdminAccount;
+                    return result;
+                }
+            }
+            //account.HeadImagePath = SystemConst.Business.DefaultHeadImage;
+            account.AccountStatusID = LookupFactory.GetLookupOptionIdByToken(EnumAccountStatus.Enabled);
+            account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwd);
+            account.IsActivated = true;
+            result = base.Add(account);
+            if (result.HasError == false && account.HeadImagePath != null)
+            {
+                try
+                {
+                    CommonModel com = new CommonModel();
+                    var LastName = com.CreateRandom("", 5) + account.HeadImagePath.GetFileSuffix();
+                    var path = string.Format(SystemConst.Business.PathAccount, accountMainID);
+                    var accountPath = HttpContext.Current.Server.MapPath(path);
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var imageName = string.Format("{0}_{1}", token, LastName);
+                    var imageName2 = string.Format("{0}_M_{1}", token, LastName);
+                    var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
+                    var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
+
+                    var lsImgPath = account.HeadImagePath;
+                    var lsImaFilePath = HttpContext.Current.Server.MapPath(lsImgPath);
+
+                    if (width > 0)
+                    {
+                        Tool.SuperGetPicThumbnailJT(lsImaFilePath, imagePath, 70, width, height, x1, y1, Twidth, Theight, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+
+
+                        Tool.SuperGetPicThumbnail(imagePath, imagePath2, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                        if (File.Exists(imagePath))
+                        {
+                            File.Delete(imagePath);
+                        }
+
+                        account.HeadImagePath = path + imageName2;
+
+                    }
+                    else
+                    {
+                        Tool.SuperGetPicThumbnail(lsImaFilePath, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                        account.HeadImagePath = path + imageName;
+                    }
+
+                    result = Edit(account);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            if (result.HasError == false)
+            {
+                var groupModel = Factory.Get<IGroupModel>(SystemConst.IOC_Model.GroupModel);
+                result = groupModel.AddDefaultGroup(account.ID, accountMainID);
+            }
+            return result;
+        }
+
+
+        public Result Edit(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile)
+        {
+            Result result = new Result();
+            if (account.RoleID == 1)
+            {
+                var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
+                if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID, account.ID))
+                {
+                    result.Error = SystemConst.Notice.MultipleAccountMainAdminAccount;
+                    return result;
+                }
+            }
+            //检查邮箱是否唯一
+            CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+            var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
+            if (isOk == false)
+            {
+                result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
+                return result;
+            }
+            account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
+            result = base.Edit(account);
+            if (result.HasError == false && HeadImagePathFile != null)
+            {
+                try
+                {
+                    //删除原头像
+                    if (account.HeadImagePath != "~/Images/default_Avatar.png")
+                    {
+                        var file = HttpContext.Current.Server.MapPath(account.HeadImagePath);
+                        if (File.Exists(file))
+                        {
+                            File.Delete(file);
+                        }
+                    }
+                    var path = string.Format(SystemConst.Business.PathAccount, accountMainID);
+                    var accountPath = HttpContext.Current.Server.MapPath(path);
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var width = 80;
+                    var imageName = string.Format("{0}_{1}", token, HeadImagePathFile.FileName);
+                    var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
+                    var imageThumbnailName = string.Format("{0}_{1}_{2}", token, width, HeadImagePathFile.FileName);
+                    var imageThumbnailPath = string.Format("{0}\\{1}", accountPath, imageThumbnailName);
+                    HeadImagePathFile.SaveAs(imagePath);
+                    //缩略图
+                    if (Tool.Thumbnail(imagePath, imageThumbnailPath, width))
+                    {
+                        account.HeadImagePath = path + imageThumbnailName;
+                        //删除原头像
+                        if (File.Exists(imagePath))
+                        {
+                            File.Delete(imagePath);
+                        }
+                    }
+                    else
+                    {
+                        account.HeadImagePath = path + imageName;
+                    }
+                    result = Edit(account);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            return result;
+        }
+
         public Result Edit(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile, int x1, int y1, int width, int height, int Twidth, int Theight)
         {
             //获取项目管理员角色ID
@@ -307,6 +448,93 @@ namespace Business
             return result;
         }
 
+        public Result Edit(Account account, int accountMainID, int x1, int y1, int width, int height, int Twidth, int Theight)
+        {
+            //获取项目管理员角色ID
+            IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
+            int sysRoleID = roleModel.GetRoleIscandelete(accountMainID);
+            Result result = new Result();
+            if (account.RoleID == sysRoleID)
+            {
+                var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
+                if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID, account.ID))
+                {
+                    result.Error = SystemConst.Notice.MultipleAccountMainAdminAccount;
+                    return result;
+                }
+            }
+            //检查邮箱是否唯一
+            CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+            var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
+            if (isOk == false)
+            {
+                result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
+                return result;
+            }
+            //account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
+
+            var Yaccount = this.Get(account.ID);
+
+            result = base.Edit(account);
+            if (result.HasError == false && account.HeadImagePath != Yaccount.HeadImagePath)
+            {
+                try
+                {
+                    //删除原头像
+                    if (Yaccount.HeadImagePath != "~/Images/default_Avatar.png")
+                    {
+                        var file = HttpContext.Current.Server.MapPath(Yaccount.HeadImagePath);
+                        if (File.Exists(file))
+                        {
+                            File.Delete(file);
+                        }
+                    }
+                    CommonModel com = new CommonModel();
+                    var LastName = com.CreateRandom("", 5) + account.HeadImagePath.GetFileSuffix();
+                    var path = string.Format(SystemConst.Business.PathAccount, accountMainID);
+                    var accountPath = HttpContext.Current.Server.MapPath(path);
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var imageName = string.Format("{0}_{1}", token, LastName);
+                    var imageName2 = string.Format("{0}_M_{1}", token, LastName);
+                    var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
+                    var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
+
+                    var lsImgPath = account.HeadImagePath;
+                    var lsImaFilePath = HttpContext.Current.Server.MapPath(lsImgPath);
+
+                    if (width > 0)
+                    {
+                        Tool.SuperGetPicThumbnailJT(lsImaFilePath, imagePath, 70, width, height, x1, y1, Twidth, Theight, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+
+
+                        Tool.SuperGetPicThumbnail(imagePath, imagePath2, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                        if (File.Exists(imagePath))
+                        {
+                            File.Delete(imagePath);
+                        }
+
+                        account.HeadImagePath = path + imageName2;
+
+                    }
+                    else
+                    {
+                        Tool.SuperGetPicThumbnail(lsImaFilePath, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                        account.HeadImagePath = path + imageName;
+                    }
+
+
+                    result = Edit(account);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            return result;
+        }
+
+
+
         public Result SetEdit(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile, int x1, int y1, int width, int height, int Twidth, int Theight)
         {
             //获取项目管理员角色ID
@@ -391,11 +619,13 @@ namespace Business
             return result;
         }
 
-
-        public Result Edit(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile)
+        public Result SetEdit(Account account, int accountMainID, int x1, int y1, int width, int height, int Twidth, int Theight)
         {
+            //获取项目管理员角色ID
+            IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
+            int sysRoleID = roleModel.GetRoleIscandelete(accountMainID);
             Result result = new Result();
-            if (account.RoleID == 1)
+            if (account.RoleID == sysRoleID)
             {
                 var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
                 if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID, account.ID))
@@ -413,41 +643,56 @@ namespace Business
                 return result;
             }
             account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
+
+
+            var YAccount = this.Get(account.ID);
+
             result = base.Edit(account);
-            if (result.HasError == false && HeadImagePathFile != null)
+
+            if (YAccount.HeadImagePath != account.HeadImagePath && account.HeadImagePath!=""&&result.HasError==false)
             {
+
                 try
                 {
                     //删除原头像
-                    if (account.HeadImagePath != "~/Images/default_Avatar.png")
+                    if (YAccount.HeadImagePath != "~/Images/default_Avatar.png")
                     {
-                        var file = HttpContext.Current.Server.MapPath(account.HeadImagePath);
+                        var file = HttpContext.Current.Server.MapPath(YAccount.HeadImagePath);
                         if (File.Exists(file))
                         {
                             File.Delete(file);
                         }
                     }
+                    CommonModel com = new CommonModel();
+                    var LastName = com.CreateRandom("", 5) + account.HeadImagePath.GetFileSuffix();
                     var path = string.Format(SystemConst.Business.PathAccount, accountMainID);
                     var accountPath = HttpContext.Current.Server.MapPath(path);
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
-                    var width = 80;
-                    var imageName = string.Format("{0}_{1}", token, HeadImagePathFile.FileName);
+                    var imageName = string.Format("{0}_{1}", token, LastName);
+                    var imageName2 = string.Format("{0}Y_{1}", token, LastName);
                     var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
-                    var imageThumbnailName = string.Format("{0}_{1}_{2}", token, width, HeadImagePathFile.FileName);
-                    var imageThumbnailPath = string.Format("{0}\\{1}", accountPath, imageThumbnailName);
-                    HeadImagePathFile.SaveAs(imagePath);
-                    //缩略图
-                    if (Tool.Thumbnail(imagePath, imageThumbnailPath, width))
+                    var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
+
+                    var lsImgPath = account.HeadImagePath;
+                    var lsImaFilePath = HttpContext.Current.Server.MapPath(lsImgPath);
+
+                    if (width > 0)
                     {
-                        account.HeadImagePath = path + imageThumbnailName;
-                        //删除原头像
+                        Tool.SuperGetPicThumbnailJT(lsImaFilePath, imagePath, 70, width, height, x1, y1, Twidth, Theight, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+
+
+                        Tool.SuperGetPicThumbnail(imagePath, imagePath2, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
                         if (File.Exists(imagePath))
                         {
                             File.Delete(imagePath);
                         }
+
+                        account.HeadImagePath = path + imageName2;
+
                     }
                     else
                     {
+                        Tool.SuperGetPicThumbnail(lsImaFilePath, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
                         account.HeadImagePath = path + imageName;
                     }
                     result = Edit(account);
@@ -457,8 +702,11 @@ namespace Business
                     throw ex;
                 }
             }
+           
             return result;
         }
+
+
 
         [Transaction]
         public new Result Delete(int id)

@@ -28,10 +28,10 @@ namespace Web.Controllers
 
         //修改数据
         [AllowCheckPermissions(false)]
-        public ActionResult Edit(AccountMain accountMain, HttpPostedFileBase LogoImagePathFile, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile)
+        public ActionResult Edit(AccountMain accountMain)
         {
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
-            var entity = accountMainModel.Edit_ByAccountMain(accountMain, LogoImagePathFile,AndroidPathFile,AndroidSellPathFile);
+            var entity = accountMainModel.Edit_ByAccountMain(accountMain);
             return RedirectToAction("Index", "BasisSet", new { HostName = LoginAccount.HostName });
             
         }

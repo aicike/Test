@@ -60,6 +60,46 @@ namespace Business
             return result;
         }
 
+        [Transaction]
+        public Result AddInfo(AccountMainHouseType HouseType, int accountMainID)
+        {
+            var result = base.Add(HouseType);
+            if (result.HasError == false && string.IsNullOrEmpty(HouseType.HouseTypeImagePath) == false)
+            {
+                try
+                {
+                    CommonModel com = new CommonModel();
+                    var LastName = com.CreateRandom("", 5) + HouseType.HouseTypeImagePath.GetFileSuffix();
+                    var path = string.Format(SystemConst.Business.PathBase, accountMainID);
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var imageName = string.Format("{0}_{1}", token, LastName);
+                    var imagePath = string.Format("{0}\\{1}", path, imageName);
+                    var imagePath2 = HttpContext.Current.Server.MapPath(imagePath);
+
+                    var lsImgPath = HouseType.HouseTypeImagePath;
+                    var lsImaFilePath = HttpContext.Current.Server.MapPath(lsImgPath);
+
+
+
+                    Tool.SuperGetPicThumbnail(lsImaFilePath, imagePath2, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+
+
+                    HouseType.HouseTypeImagePath = imagePath;
+
+                    result = Edit(HouseType);
+                }
+                catch (Exception ex)
+                {
+                    result.Error = ex.Message;
+                }
+            }
+
+            return result;
+        }
+
+
+
+
 
         public Result EditInfo(AccountMainHouseType HouseType, int accountMainID, HttpPostedFileBase HouseImagePath)
         {
@@ -106,6 +146,52 @@ namespace Business
             }
             return result;
         }
+
+
+        public Result EditInfo(AccountMainHouseType HouseType, int accountMainID)
+        {
+            var YHouser = this.Get(HouseType.ID);
+            var result = base.Edit(HouseType);
+            if (result.HasError == false && HouseType.HouseTypeImagePath != YHouser.HouseTypeImagePath)
+            {
+                try
+                {
+                    //删除原文件
+                    var file = HttpContext.Current.Server.MapPath(YHouser.HouseTypeImagePath);
+                    if (File.Exists(file))
+                    {
+                        File.Delete(file);
+                    }
+                    //上传新文件
+                    CommonModel com = new CommonModel();
+                    var LastName = com.CreateRandom("", 5) + HouseType.HouseTypeImagePath.GetFileSuffix();
+                    var path = string.Format(SystemConst.Business.PathBase, accountMainID);
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var imageName = string.Format("{0}_{1}", token, LastName);
+                    var imagePath = string.Format("{0}\\{1}", path, imageName);
+                    var imagePath2 = HttpContext.Current.Server.MapPath(imagePath);
+
+
+                    var lsImgPath = HouseType.HouseTypeImagePath;
+                    var lsImaFilePath = HttpContext.Current.Server.MapPath(lsImgPath);
+
+
+                    Tool.SuperGetPicThumbnail(lsImaFilePath, imagePath2, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+
+
+                    HouseType.HouseTypeImagePath = imagePath;
+
+                    result = Edit(HouseType);
+                }
+                catch (Exception ex)
+                {
+                    result.Error = ex.Message;
+                }
+            }
+            return result;
+        }
+
+
 
         public Result DeleteInfo(int id)
         {

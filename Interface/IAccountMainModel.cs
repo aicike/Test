@@ -23,6 +23,10 @@ namespace Interface
 
         Result Edit_ByAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile);
 
+        Result Edit_ByAccountMain(AccountMain accountMain);
+
+
+
         Result ChangeStatus_Permission(int accountMainID, EnumAccountStatus status, int loginSystemUserID);
 
         /// <summary>

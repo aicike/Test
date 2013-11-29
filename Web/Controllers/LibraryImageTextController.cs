@@ -36,11 +36,11 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Add(LibraryImageText libraryImageText, HttpPostedFileBase CoverImagePathFile)
+        public ActionResult Add(LibraryImageText libraryImageText)
         {
             libraryImageText.AccountMainID = LoginAccount.CurrentAccountMainID;
             var libraryModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
-            var result = libraryModel.Add(libraryImageText, CoverImagePathFile);
+            var result = libraryModel.Add(libraryImageText);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);
@@ -210,10 +210,10 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(LibraryImageText libraryImageText, HttpPostedFileBase CoverImagePathFile)
+        public ActionResult Edit(LibraryImageText libraryImageText)
         {
             var libraryModel = Factory.Get<ILibraryImageTextModel>(SystemConst.IOC_Model.LibraryImageTextModel);
-            var result = libraryModel.Edit(libraryImageText, CoverImagePathFile);
+            var result = libraryModel.Edit(libraryImageText);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);

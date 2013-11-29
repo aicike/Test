@@ -62,10 +62,10 @@ namespace Web.Controllers
         /// <param name="MainHouseInfo"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Add(AccountMainHouseType MainHouseType, HttpPostedFileBase HousTypeImagePathFile)
+        public ActionResult Add(AccountMainHouseType MainHouseType)
         {
             var hounsesTypeModel = Factory.Get<IAccountMainHouseTypeModel>(SystemConst.IOC_Model.AccountMainHouseTypeModel);
-            var result = hounsesTypeModel.AddInfo(MainHouseType, LoginAccount.CurrentAccountMainID, HousTypeImagePathFile);
+            var result = hounsesTypeModel.AddInfo(MainHouseType, LoginAccount.CurrentAccountMainID);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));
@@ -99,10 +99,10 @@ namespace Web.Controllers
         /// <param name="MainHouseInfo"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Edit(AccountMainHouseType MainHouseType, HttpPostedFileBase HousTypeImagePathFile)
+        public ActionResult Edit(AccountMainHouseType MainHouseType )
         {
             var hounsesTypeModel = Factory.Get<IAccountMainHouseTypeModel>(SystemConst.IOC_Model.AccountMainHouseTypeModel);
-            var result = hounsesTypeModel.EditInfo(MainHouseType,LoginAccount.CurrentAccountMainID,HousTypeImagePathFile);
+            var result = hounsesTypeModel.EditInfo(MainHouseType,LoginAccount.CurrentAccountMainID);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));

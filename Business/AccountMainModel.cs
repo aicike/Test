@@ -419,6 +419,85 @@ namespace Business
             return result;
         }
 
+
+
+        [Transaction]
+        public Result Edit_ByAccountMain(AccountMain accountMain)
+        {
+
+            var ThAccountmain = this.Get(accountMain.ID);
+
+            var result = base.Edit(accountMain);
+
+
+            if (result.HasError == false && accountMain.LogoImagePath != ThAccountmain.LogoImagePath)
+            {
+                try
+                {
+                    //删除原logo及缩略图
+                    var path = HttpContext.Current.Server.MapPath(string.Format("~/File/{0}", accountMain.ID));
+                    var basePath = string.Format("{0}/{1}", path, "Base");
+                    var logoImageAbsolutePath = HttpContext.Current.Server.MapPath(ThAccountmain.LogoImagePath);
+                    if (File.Exists(logoImageAbsolutePath))
+                    {
+                        File.Delete(logoImageAbsolutePath);
+                    }
+                    var logoImageThumbnailPath = HttpContext.Current.Server.MapPath(ThAccountmain.LogoImageThumbnailPath);
+                    if (File.Exists(logoImageThumbnailPath))
+                    {
+                        File.Delete(logoImageThumbnailPath);
+                    }
+                    CommonModel com = new CommonModel();
+                    var LastName = com.CreateRandom("", 5) + accountMain.LogoImagePath.GetFileSuffix();
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var height = 58;
+                    var imageName = string.Format("{0}_{1}", token, LastName);
+                    var imageThumbnailName = string.Format("{0}_{1}_{2}", token, height, LastName);
+                    var imagePath = string.Format("{0}/{1}", basePath, imageName);
+                    var imageThumbnailPath = string.Format("{0}/{1}", basePath, imageThumbnailName);
+
+                    var lsImgPath = accountMain.LogoImagePath;
+                    var lsImaFilePath = HttpContext.Current.Server.MapPath(lsImgPath);
+
+
+
+                    
+                    Tool.SuperGetPicThumbnail(lsImaFilePath, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                    //缩略图
+                    Tool.SuperGetPicThumbnail(imagePath, imageThumbnailPath, 70, 0, 58, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+
+
+                    accountMain.LogoImagePath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
+                  
+                    accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageThumbnailName;
+                  
+
+                    result = Edit(accountMain);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+       
+            if (result.HasError == false)
+            {
+                //IAccountMainExpandInfoModel accountMainExpandInfoModel = Factory.Get<IAccountMainExpandInfoModel>(SystemConst.IOC_Model.AccountMainExpandInfoModel);
+                //result = accountMainExpandInfoModel.Edit(accountMain.AccountMainExpandInfo);
+            }
+            return result;
+        }
+
+
+
+
+
+
+
+
+
+
         [Transaction]
         public Result Delete_Permission(int id, int loginSystemUserID = 0)
         {

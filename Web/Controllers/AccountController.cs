@@ -97,13 +97,13 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add(Account_AccountMain account_accountMain, HttpPostedFileBase HeadImagePathFile, int w, int h, int x1, int y1, int tw, int th)
+        public ActionResult Add(Account_AccountMain account_accountMain, int w, int h, int x1, int y1, int tw, int th)
         {
             IAccount_AccountMainModel model = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
             CommonModel cm = new CommonModel();
 
             account_accountMain.Account.LoginPwd = cm.CreateRandom("", 6);
-            var result = model.Add(account_accountMain, HeadImagePathFile, w, h, x1, y1, tw, th);
+            var result = model.Add(account_accountMain, w, h, x1, y1, tw, th);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);
@@ -148,12 +148,12 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Poco.Account account, HttpPostedFileBase HeadImagePathFile, int w, int h, int x1, int y1, int tw, int th)
+        public ActionResult Edit(Poco.Account account,  int w, int h, int x1, int y1, int tw, int th)
         {
             account.LoginPwdPage = "aaaaaa";
             account.LoginPwdPageCompare = "aaaaaa";
             IAccountModel model = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-            var result = model.Edit(account, LoginAccount.CurrentAccountMainID, HeadImagePathFile, x1, y1, w, h, tw, th);
+            var result = model.Edit(account, LoginAccount.CurrentAccountMainID, x1, y1, w, h, tw, th);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);

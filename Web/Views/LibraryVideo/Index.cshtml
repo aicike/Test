@@ -20,6 +20,7 @@
                 swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
                 uploader: uploadUrl,
                 width: 64,
+                fileSizeLimit: '20MB',
                 fileTypeExts: '*.mpeg;*.mp4',
                 onUploadSuccess: function (file, data, response) {
                     eval(data);

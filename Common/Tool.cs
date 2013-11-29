@@ -762,10 +762,10 @@ namespace Common
         public static string GetTemporaryPath()
         {
             string Path = "/File/Temporary/"+DateTime.Now.ToString("yyyy-MM-dd");
-            //string TempPath = HttpContext.Current.Server.MapPath(Path);
-            if (Directory.Exists(Path) == false)
+            string TempPath = HttpContext.Current.Server.MapPath(Path);
+            if (Directory.Exists(TempPath) == false)
             {
-                Directory.CreateDirectory(Path);
+                Directory.CreateDirectory(TempPath);
             }
             return Path;
         }

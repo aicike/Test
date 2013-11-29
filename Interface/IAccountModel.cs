@@ -30,10 +30,17 @@ namespace Interface
 
         Result Add(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile);
         Result Add(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile,int x1,int y1,int width,int height,int Twidth,int Theight);
+        Result Add(Account account, int accountMainID, int x1, int y1, int width, int height, int Twidth, int Theight);
+
 
         Result Edit(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile);
         Result Edit(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile, int x1, int y1, int width, int height, int Twidth, int Theight);
+        Result Edit(Account account, int accountMainID, int x1, int y1, int width, int height, int Twidth, int Theight);
+
+
         Result SetEdit(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile, int x1, int y1, int width, int height, int Twidth, int Theight);
+        Result SetEdit(Account account, int accountMainID,  int x1, int y1, int width, int height, int Twidth, int Theight);
+
 
         Result ChangeStatus(int accountID, EnumAccountStatus status, int accountMainID);
 

@@ -59,6 +59,15 @@ namespace Poco
             set { SetTag("fileurl", value); }
         }
 
+        /// <summary>
+        /// 文件地址( 音频 mp3)
+        /// </summary>
+        public string FielUrlMP3
+        {
+            get { return GetTag("fileurlmp3"); }
+            set { SetTag("fileurlmp3", value); }
+        }
+
 
         /// <summary>
         /// 图文ID

@@ -16,12 +16,14 @@
                 swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
                 uploader: uploadUrl,
                 width: 64,
+                fileSizeLimit: '5MB',
+                multi: false,
                 fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
                 onUploadSuccess: function (file, data, response) {
                     eval(data);
                 }
             });
-            $("#file_upload-button").after('<div id="div_message" style="position: absolute;top: 0px;left: 100px;width:260px">格式限制：jpg, jpge, gif, png, bmp</div>');
+            $("#file_upload-button").after('<div id="div_message" style="position: absolute;top: 0px;left: 100px;width:500px">图片大小限制：5M,格式限制：jpg, jpge, gif, png, bmp</div>');
             $("a[name='btnReName']").click(function () {
                 var tr = $(this).parent().parent();
                 tr.find(".spanFileName").hide();

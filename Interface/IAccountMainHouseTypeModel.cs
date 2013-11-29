@@ -13,8 +13,11 @@ namespace Interface
 
         Result AddInfo(AccountMainHouseType HouseType, int accountMainID, HttpPostedFileBase HouseImagePath);
 
+        Result AddInfo(AccountMainHouseType HouseType, int accountMainID);
 
         Result EditInfo(AccountMainHouseType HouseType, int accountMainID, HttpPostedFileBase HouseImagePath);
+
+        Result EditInfo(AccountMainHouseType HouseType, int accountMainID);
 
         Result DeleteInfo(int id);
 

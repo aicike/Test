@@ -16,6 +16,7 @@ namespace Business
         /// <summary>
         /// User App
         /// </summary>
+        [Transaction]
         public Result PostClientID(string clientID, int accountMainID, int? userID)
         {
             Result result = new Result();
@@ -67,12 +68,14 @@ namespace Business
                     App_UserLoginInfo userloginInfo = new App_UserLoginInfo();
                     userloginInfo.Email = "";
                     userloginInfo.Pwd = "pass123!";
-                    userloginInfo.Name = DateTime.Now.ToString("MMddHHmmss");
+                    //userloginInfo.Name = DateTime.Now.ToString("MMddHHmmss");
+                    userloginInfo.Name = "匿名";
                     userloginInfo.AccountMainID = accountMainID;
                     userloginInfo.ClientID = clientID;
                     userloginInfo.EnumClientSystemType = (int)EnumClientSystemType.Android;
                     userloginInfo.EnumClientUserType = (int)EnumClientUserType.User;
                     result = ulim.Register(userloginInfo);
+                  
                 }
                 else
                 {

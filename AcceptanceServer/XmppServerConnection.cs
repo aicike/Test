@@ -161,7 +161,7 @@ namespace AcceptanceServer
                 //处理用户上线消息
                 if (pres.Show == ShowType.chat && pres.Type == PresenceType.available)//pres.Show == ShowType.chat &&
                 {
-                    string showUP = ConfigurationManager.AppSettings["UPnotice"].ToString();
+                    //string showUP = ConfigurationManager.AppSettings["UPnotice"].ToString();
                     //if (showUP == "true")
                     //{
                     //    ////显示当前谁上线了
@@ -236,9 +236,10 @@ namespace AcceptanceServer
                             {
                                 ThisMessageID = int.Parse(dt.Rows[0][0].ToString());
 
-                                //处理多图文
+                                
                                 if (!string.IsNullOrEmpty(Np.EID))
-                                {
+                                {   
+                                    //处理多图文
                                     if (Np.EID == "4")
                                     {
                                         var ImgTextID = Np.ImgTextID;
@@ -263,6 +264,15 @@ namespace AcceptanceServer
                                             }
                                         }
                                     
+                                    }
+                                    //处理音频MP3
+                                    else if (Np.EID == "3")
+                                    {
+                                        try
+                                        {
+                                            Np.FielUrlMP3 = Np.FielUrl.Substring(0, Np.FielUrl.LastIndexOf('.')) + ".mp3";
+                                        }
+                                        catch { }
                                     }
                                 }
 

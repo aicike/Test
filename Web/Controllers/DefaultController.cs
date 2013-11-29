@@ -73,6 +73,14 @@ namespace Web.Controllers
             return View(advertorial);
         }
 
+        public ActionResult News(int id)
+        {
+            var AdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
+            var advertorial = AdvertorialModel.Get(id);
+
+            return View(advertorial);
+        }
+
 
         
 

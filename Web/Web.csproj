@@ -866,6 +866,7 @@
     <Content Include="Views\Character\Edit.cshtml" />
     <Content Include="Views\Character\Power.cshtml" />
     <Content Include="Views\Default\QrCodeSkipAccount.cshtml" />
+    <Content Include="Views\Default\News.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
@@ -888,7 +889,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>30062</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://192.168.1.166/</IISUrl>
+          <IISUrl>http://192.168.1.138/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -65,6 +65,49 @@ namespace Business
             }
         }
 
+
+
+        [Transaction]
+        public Result Add(LibraryImageText libraryImageText)
+        {
+            try
+            {
+                //保存封面图片
+                CommonModel com = new CommonModel();
+                var LastName = com.CreateRandom("", 5) + libraryImageText.ImagePath.GetFileSuffix();
+                var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                var imageName = string.Format("{0}_{1}", token, LastName);
+                var imagePath = string.Format("{0}{1}", string.Format(SystemConst.Business.PathFileLibrary, libraryImageText.AccountMainID), imageName);
+                var savePath = HttpContext.Current.Server.MapPath(imagePath);
+
+
+                var lsImgPath = libraryImageText.ImagePath;
+                var lsImaFilePath = HttpContext.Current.Server.MapPath(lsImgPath);
+
+
+                Tool.SuperGetPicThumbnail(lsImaFilePath, savePath, 70, 800, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+
+
+
+                libraryImageText.ImagePath = imagePath;
+
+                var libraryImgModel = Factory.Get<ILibraryImageModel>(SystemConst.IOC_Model.LibraryImageModel);
+                LibraryImage entity = new LibraryImage();
+                entity.AccountMainID = libraryImageText.AccountMainID;
+                entity.FileName = libraryImageText.Title;
+                entity.FilePath = imagePath;
+                libraryImgModel.Add(entity);
+
+                return base.Add(libraryImageText);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
         [Transaction]
         public Result Edit(LibraryImageText libraryImageText, HttpPostedFileBase coverImagePathFile)
         {
@@ -111,6 +154,55 @@ namespace Business
                 throw ex;
             }
         }
+
+
+
+
+        [Transaction]
+        public Result Edit(LibraryImageText libraryImageText )
+        {
+            try
+            {
+                var Ylivary = this.Get(libraryImageText.ID);
+                if (Ylivary.ImagePath != libraryImageText.ImagePath)
+                {
+                    //删除原封面图片
+                    var rawImagePath = HttpContext.Current.Server.MapPath(Ylivary.ImagePath);
+                    if (File.Exists(rawImagePath))
+                    {
+                        File.Delete(rawImagePath);
+                    }
+
+                    //保存封面图片
+                    CommonModel com = new CommonModel();
+                    var LastName = com.CreateRandom("", 5) + libraryImageText.ImagePath.GetFileSuffix();
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var imageName = string.Format("{0}_{1}", token, LastName);
+                    var imagePath = string.Format("{0}{1}", string.Format(SystemConst.Business.PathFileLibrary, libraryImageText.AccountMainID), imageName);
+                    var savePath = HttpContext.Current.Server.MapPath(imagePath);
+
+
+                    var lsImgPath = libraryImageText.ImagePath;
+                    var lsImaFilePath = HttpContext.Current.Server.MapPath(lsImgPath);
+
+
+                    Tool.SuperGetPicThumbnail(lsImaFilePath, savePath, 70, 800, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+
+
+
+                    libraryImageText.ImagePath = imagePath;
+                }
+                return base.Edit(libraryImageText);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+
 
         public Result Delete(int id, int accountMainID)
         {

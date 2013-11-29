@@ -119,5 +119,42 @@ namespace Business
             }
             return result;
         }
+
+
+        [Transaction]
+        public Result Add(Account_AccountMain account_accountMain, int w, int h, int x1, int y1, int tw, int th)
+        {
+            Result result = new Result();
+            Account account = new Account();
+            account.Name = account_accountMain.Account.Name;
+            account.LoginPwd = account_accountMain.Account.LoginPwd;
+            account.LoginPwdPage = "aaaaaa";
+            account.LoginPwdPageCompare = "aaaaaa";
+            account.Phone = account_accountMain.Account.Phone;
+            account.HeadImagePath = account_accountMain.Account.HeadImagePath;
+            account.Email = account_accountMain.Account.Email;
+            account.RoleID = account_accountMain.Account.RoleID;
+            account.AccountStatusID = account_accountMain.Account.AccountStatusID;
+            account.IsActivated = account_accountMain.Account.IsActivated;
+            if (account_accountMain.Account.ParentAccountID.HasValue && account_accountMain.Account.ParentAccountID.Value > 0)
+            {
+                account.ParentAccountID = account_accountMain.Account.ParentAccountID;
+            }
+            var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
+            result = accountModel.Add(account, account_accountMain.AccountMainID, x1, y1, w, h, tw, th);
+            if (result.HasError == false)
+            {
+                Account_AccountMain entity = new Account_AccountMain();
+                entity.AccountMainID = account_accountMain.AccountMainID;
+                entity.AccountID = account.ID;
+                result = base.Add(entity);
+            }
+            if (result.HasError == false)
+            {
+                SMS_Model smsModel = new SMS_Model();
+                smsModel.Send_AccountRegister(account.ID);
+            }
+            return result;
+        }
     }
 }
