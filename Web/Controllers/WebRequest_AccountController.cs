@@ -183,7 +183,7 @@ namespace Web.Controllers
                 appuser.Phone = user.UserLoginInfo.Phone ?? "";
                 appuser.Email = user.UserLoginInfo.Email ?? "";
                 appuser.NameNote = user.Name ?? "";
-                appuser.HeadImagePath = string.IsNullOrEmpty(user.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrlIP + Url.Content(user.UserLoginInfo.HeadImagePath.DefaultHeadImage())) : (SystemConst.WebUrlIP + Url.Content(user.UserLoginInfo.HeadImagePath));
+                appuser.HeadImagePath = string.IsNullOrEmpty(user.UserLoginInfo.HeadImagePath) ?"" : (SystemConst.WebUrlIP + Url.Content(user.UserLoginInfo.HeadImagePath));
                 appuser.Pwd = Common.DESEncrypt.Decrypt(user.UserLoginInfo.LoginPwd);
                 result.Entity = appuser;
             }

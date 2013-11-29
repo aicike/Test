@@ -109,7 +109,9 @@ namespace Web.Controllers
                 ID = a.ID,
                 Name = a.Name,
                 HeadImagePath = hostUrl + Url.Content(a.HeadImagePath),
-                Email = a.Email
+                Email = a.Email,
+                Phone=a.Phone,
+                Role=a.Role.Name
             });
             return Newtonsoft.Json.JsonConvert.SerializeObject(accountList);
         }
@@ -256,7 +258,17 @@ namespace Web.Controllers
             }
             else
             {
-                result.Entity = new { n = entity.Name, a = entity.SaleAddress, p = string.IsNullOrEmpty(entity.SalePhone) ? "" : entity.SalePhone };
+                var house = entity.AccountMainHousess.FirstOrDefault();
+                result.Entity = new
+                {
+                    n = entity.Name,//售楼部名称
+                    a = entity.SaleAddress,//地址
+                    p = string.IsNullOrEmpty(entity.SalePhone) ? "" : entity.SalePhone,//电话
+                    i = house == null ? "" : house.HIntroduce ?? "",//介绍
+                    sp = house == null ? "" : house.PreSalePermit ?? "",//预售证
+                    cd = house == null ? "" : house.HCompletedDate.ToString("yyyy年MM月dd日"),//竣工时间
+                    t = house == null ? "" : house.Traffic ?? ""//交通
+                };
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
