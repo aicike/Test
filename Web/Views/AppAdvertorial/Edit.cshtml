@@ -333,7 +333,7 @@
                     <td style="width: 365px">
                         <div class="middle-out">
                             <div class="middle-in" style="margin: auto 0px">
-                                <img id="imgSel"  src="@Url.Content(Model.MainImagPath)"   style="max-height:320px; max-width:320px;" />
+                                <img id="imgSel"  src="@Url.Content(Model.MainImagPath ?? "")"   style="max-height:320px; max-width:320px;" />
                             </div>
                         </div>
                     </td>
@@ -342,11 +342,11 @@
                             App列表页展示图
                         </p>
                         <div style="width: 200px; height: 100px; overflow: hidden;">
-                            <img id="imgLogo" src="@Url.Content(Model.AppShowImagePath)" style="width:200px; height:100px"/>
+                            <img id="imgLogo" src="@Url.Content(Model.AppShowImagePath ?? "")" style="width:200px; height:100px"/>
                         </div>
                         <span style="font-size: 12px; color: #979797">(320*160 缩略图)</span>
                         <div style="width: 120px; height: 60px; overflow: hidden; margin-top: 17px">
-                            <img id="imgLogo2" src="@Url.Content(Model.MinImagePath)" style="width:120px; height:60px"/>
+                            <img id="imgLogo2" src="@Url.Content(Model.MinImagePath ?? "")" style="width:120px; height:60px"/>
                         </div>
                         <span style="font-size: 12px; color: #979797">(120*60 缩略图)</span>
                         <br />

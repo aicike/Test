@@ -60,6 +60,8 @@ namespace Business
             else
             {
                 //保存clientID信息，临时注册
+                CommonModel com = new CommonModel();
+                
                 var userids = List().Where(a => a.ClientID == clientID).Select(a => a.EntityID).ToList();
                 var ulim = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
                 if (userids == null || userids.Count == 0)
@@ -69,7 +71,8 @@ namespace Business
                     userloginInfo.Email = "";
                     userloginInfo.Pwd = "pass123!";
                     //userloginInfo.Name = DateTime.Now.ToString("MMddHHmmss");
-                    userloginInfo.Name = "匿名";
+
+                    userloginInfo.Name = "游客" + com.CreateRandom("0123456789", 4);
                     userloginInfo.AccountMainID = accountMainID;
                     userloginInfo.ClientID = clientID;
                     userloginInfo.EnumClientSystemType = (int)EnumClientSystemType.Android;

@@ -34,7 +34,6 @@ namespace AcceptanceServer
         private byte[] buffer = new byte[BUFFERSIZE];
         private lbUser frm;
         public Jid jid;
-        public string LandingApproach = "";
         public delegate void mydelegate(string str);
 
         #endregion
@@ -84,13 +83,6 @@ namespace AcceptanceServer
             }
             catch (Exception ex)
             {
-                //下线------------
-                //frm.ShowErrorMessage(ex.Message);
-                string ShowError = ConfigurationManager.AppSettings["ShowError"].ToString();
-                if (ShowError == "true")
-                {
-                    frm.ShowErrorMessage(ex.Message);
-                }
 
             }
         }
@@ -107,7 +99,6 @@ namespace AcceptanceServer
             catch (Exception ex)
             {
 
-                frm.ShowErrorMessage(ex.Message);
             }
         }
 
@@ -155,15 +146,15 @@ namespace AcceptanceServer
                 //处理用户上线消息
                 if (pres.Show == ShowType.chat && pres.Type == PresenceType.available)//pres.Show == ShowType.chat &&
                 {
-                    string showUP = ConfigurationManager.AppSettings["UPnotice"].ToString();
-                    if (showUP == "true")
-                    {
-                        ////显示当前谁上线了
-                        frm.Invoke(new dosomethings(delegate()
-                        {
-                            frm.ShowOlineUser(jid.User, jid.Bare + "||" + jid.Server);
-                        }));
-                    }
+                    //string showUP = ConfigurationManager.AppSettings["UPnotice"].ToString();
+                    //if (showUP == "true")
+                    //{
+                    //    ////显示当前谁上线了
+                    //    frm.Invoke(new dosomethings(delegate()
+                    //    {
+                    //        frm.ShowOlineUser(jid.User, jid.Bare + "||" + jid.Server);
+                    //    }));
+                    //}
 
 
                 }
@@ -307,30 +298,30 @@ namespace AcceptanceServer
                 else //不在线
                 {
 
-                    agsXMPP.protocol.client.Message msg = n as agsXMPP.protocol.client.Message;
-                    NewsProtocol Np = msg.SelectSingleElement(typeof(NewsProtocol)) as NewsProtocol;
-                    List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
-                    if (cons.Count > 0)
-                    {
-                        for (int i = 0; i < OnlineUser.onlinuser.Count; i++)
-                        {
-                            if (OnlineUser.onlinuser[i].jid.User == msg.To.User)
-                            {
-                                OnlineUser.onlinuser.RemoveAt(i);
-                                i--;
-                            }
-                        }
-                    }
+                    //agsXMPP.protocol.client.Message msg = n as agsXMPP.protocol.client.Message;
+                    //NewsProtocol Np = msg.SelectSingleElement(typeof(NewsProtocol)) as NewsProtocol;
+                    //List<XmppServerConnection> cons = OnlineUser.onlinuser.Where(a => a.jid.User == msg.To.User).ToList();
+                    //if (cons.Count > 0)
+                    //{
+                    //    for (int i = 0; i < OnlineUser.onlinuser.Count; i++)
+                    //    {
+                    //        if (OnlineUser.onlinuser[i].jid.User == msg.To.User)
+                    //        {
+                    //            OnlineUser.onlinuser.RemoveAt(i);
+                    //            i--;
+                    //        }
+                    //    }
+                    //}
                 }
             }
             catch (Exception ex)
             {
-                string ShowError = ConfigurationManager.AppSettings["ShowError"].ToString();
-                if (ShowError == "true")
-                {
-                    frm.ShowErrorMessage(ex.Message);
-                }
-                throw;
+                //string ShowError = ConfigurationManager.AppSettings["ShowError"].ToString();
+                //if (ShowError == "true")
+                //{
+                //    frm.ShowErrorMessage(ex.Message);
+                //}
+                //throw;
             }
         }
 

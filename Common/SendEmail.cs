@@ -13,12 +13,16 @@ namespace Common
 {
     public static class SendEmail
     {
+        public static object obj;
+        static SendEmail()
+        {
+            obj = new object();
+        }
+
         public static void SendMailAsync(EmailInfo email)
         {
             ThreadPool.QueueUserWorkItem(delegate { SendMail(email); });
         }
-
-        public static object obj;
         public static int exceptionCount = 0;
 
         private static void SendMail(EmailInfo email)

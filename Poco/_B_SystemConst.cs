@@ -151,6 +151,8 @@ namespace Poco
 
             public const string ConversationDetailedModel = "ConversationDetailedModel";
             public const string MessageGroupChatModel = "MessageGroupChatModel";
+
+            public const string ReportFormPowerModel = "ReportFormPowerModel";
             
         }
     }

@@ -53,11 +53,16 @@ namespace Web.Controllers
                         chat.Content = item.TextContent;
                         break;
                     case (int)EnumMessageType.Image:
-                        chat.FileUrl = SystemConst.WebUrlIP + Url.Content(item.FileUrl);
+                        chat.FileUrl = SystemConst.WebUrlIP + Url.Content(item.FileUrl ?? "");
                         break;
                     case (int)EnumMessageType.Video:
+                        chat.FileUrl = SystemConst.WebUrlIP + Url.Content(item.FileUrl ?? "");
+                        chat.FL = String.IsNullOrEmpty(item.FileLength) ? "0" : item.FileLength;
+                        break;
                     case (int)EnumMessageType.Voice:
-                        chat.FileUrl = SystemConst.WebUrlIP + Url.Content(item.FileUrl);
+
+                        chat.FileUrl = SystemConst.WebUrlIP + Url.Content(item.FileUrl ?? "");
+                        chat.FileUrlMP3 = SystemConst.WebUrlIP + Url.Content(item.FileUrl.Substring(0, item.FileUrl.LastIndexOf('.'))??"") + ".mp3";;
                         chat.FL = String.IsNullOrEmpty(item.FileLength) ? "0" : item.FileLength;
                         break;
                     case (int)EnumMessageType.ImageText:
@@ -67,7 +72,7 @@ namespace Web.Controllers
                             chat.ID = itext.ID;
                             chat.FileTitle = itext.Title;
                             chat.Summary = itext.Summary;
-                            chat.FileUrl = SystemConst.WebUrlIP + Url.Content(itext.ImagePath);
+                            chat.FileUrl = SystemConst.WebUrlIP + Url.Content(itext.ImagePath ?? "");
                             if (itext.LibraryImageTexts.Count > 0)
                             {
                                 List<App_AutoMessageReplyContent> subImageText = new List<App_AutoMessageReplyContent>();
@@ -77,7 +82,7 @@ namespace Web.Controllers
                                     rep_it.ID = it.ID;
                                     rep_it.Type = (int)EnumMessageType.ImageText;
                                     rep_it.FileTitle = it.Title;
-                                    rep_it.FileUrl = SystemConst.WebUrlIP + Url.Content(itext.ImagePath);
+                                    rep_it.FileUrl = SystemConst.WebUrlIP + Url.Content(it.ImagePath ?? "");
                                     //rep_it.SendTime = sendTime;
                                     subImageText.Add(rep_it);
                                 }
@@ -233,8 +238,8 @@ namespace Web.Controllers
                 //}
                 //else
                 //{
-                    //保存文件
-                    Request.Files[0].SaveAs(FilePath);
+                //保存文件
+                Request.Files[0].SaveAs(FilePath);
                 //}
                 //音频
                 if (FileType == 2)
@@ -253,7 +258,7 @@ namespace Web.Controllers
                 }
                 //System.IO.File.WriteAllBytes(FilePath, FileBuffers);
                 //返回路径
-                result.Entity = new { URL = SystemConst.WebUrlIP + Url.Content(Path), Token = Token };
+                result.Entity = new { URL = SystemConst.WebUrlIP + Url.Content(Path ?? ""), Token = Token };
                 return Newtonsoft.Json.JsonConvert.SerializeObject(result);
             }
             catch (Exception ex)
@@ -299,12 +304,15 @@ namespace Web.Controllers
             try
             {
                 var comModel = Factory.Get<CommonModel>(SystemConst.IOC_Model.CommonModel);
-                string cnt = comModel.GetUnreadCnt(UserID, UserType, AccountMainID);
-                return cnt;
+                var unreadCnt = comModel.GetUnreadCntP(UserID, UserType, AccountMainID).FirstOrDefault();
+                return Newtonsoft.Json.JsonConvert.SerializeObject(unreadCnt);
             }
             catch
             {
-                return "0";
+                UnreadCnt uc = new UnreadCnt();
+                uc.mc = 0;
+                uc.sc = 0;
+                return Newtonsoft.Json.JsonConvert.SerializeObject(uc);
             }
         }
     }

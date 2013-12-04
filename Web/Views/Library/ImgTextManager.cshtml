@@ -20,7 +20,7 @@
     }
     .tabdiv
     {
-        height: 465px;
+        height: 523px;
         overflow-y: auto;
     }
 </style>
@@ -29,8 +29,8 @@
         @foreach (var item in mmageTextList)
         {
             <div class="item">
-                <input type="hidden" fileID="@item.ID" fileType="LibraryImageText" value="@Url.Content(item.ImagePath)" /><input
-                    type="radio" name="radioImg" />&nbsp;&nbsp;<img style="max-width: 200px;max-height:200px;vertical-align:middle" src="@Url.Content(item.ImagePath)" />&nbsp;&nbsp;<label>@item.Title</label>
+                <input type="hidden" fileID="@item.ID" fileType="LibraryImageText" value="@Url.Content(item.ImagePath ?? "")" /><input
+                    type="radio" name="radioImg" />&nbsp;&nbsp;<img style="max-width: 200px;max-height:200px;vertical-align:middle" src="@Url.Content(item.ImagePath ?? "")" />&nbsp;&nbsp;<label>@item.Title</label>
             </div>        
         }
     </div>

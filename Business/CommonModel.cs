@@ -131,6 +131,28 @@ namespace Business
         }
 
 
+        public void CreateVideoImg(string FilePath, string ToFilePath)
+        {
+            Thread.Sleep(2000);
+            //string ffmpegFile = HttpContext.Current.Server.MapPath("/App_Data/ffmpeg.exe");
+            string ffmpegFile = AppDomain.CurrentDomain.BaseDirectory + "/App_Data/ffmpeg.exe";
+            using (System.Diagnostics.Process pro = new System.Diagnostics.Process())
+            {
+                pro.StartInfo.UseShellExecute = false;
+                pro.StartInfo.ErrorDialog = false;
+                pro.StartInfo.RedirectStandardError = true;
+
+                pro.StartInfo.FileName = ffmpegFile;
+                pro.StartInfo.Arguments = " -i " + FilePath + " -y -f image2 -ss 8 -t 0.001 -s 350x240 " + ToFilePath;
+                pro.Start();
+            }
+
+        }
+
+
+
+
+
         public IQueryable<T> SqlQuery<T>(string sql, params object[] parameters)
         {
             return Context.Database.SqlQuery<T>(sql, parameters).AsQueryable();
@@ -337,6 +359,82 @@ namespace Business
             return SqlQuery<int>(sql).FirstOrDefault().ToString();
         }
 
+
+        /// <summary>
+        /// 获取所有未读消息数 与发消息的人数
+        /// </summary>
+        /// <param name="UserID">用户ID</param>
+        /// <param name="UserType">用户类型 0：售楼部，1：用户</param>
+        /// <param name="AccountMainID"></param>
+        /// <returns>未读数</returns>
+        public IQueryable<UnreadCnt> GetUnreadCntP(int UserID, int userType, int AccountMainID)
+        {
+            int UserType = (int)EnumClientUserType.Account;
+            if (userType == 1)
+            {
+                UserType = (int)EnumClientUserType.User;
+            }
+
+            var conversModel = Factory.Get<IConversationDetailedModel>(SystemConst.IOC_Model.ConversationDetailedModel);
+            var convers = conversModel.GetUserAllSID(UserType, UserID, AccountMainID);
+            string id = "";
+            if (convers.Count() > 0)
+            {
+
+                foreach (var item in convers)
+                {
+                    id += item.ConversationID + ",";
+                }
+                id = id.TrimEnd(',');
+            }
+            else
+            {
+                id = "0";
+            }
+            string sql = "";
+            //用户
+            if (userType == 1)
+            {
+                sql = string.Format(@"select * from 
+                                        (
+	                                        select (a.d+b.ds) as mc from 
+	                                        (select count(*) as d from dbo.Message where ConversationID in ({0}) and IsReceive='false' and ToUserID={1} and EnumMessageSendDirectionID!=4) a,
+	                                        (select count(*) as ds from MessageGroupChat where UserID={1} and UserType ={2} and sid in({0})) b
+                                        ) m
+                                        ,
+                                        (
+	                                        select (x.d+y.ds) as sc from 
+	                                        (select count(*)as d  from 
+	                                        (select ConversationID from dbo.Message where ConversationID in ({0}) and IsReceive='false' and ToUserID={1} and EnumMessageSendDirectionID!=4 group by ConversationID) c) x
+	                                        ,
+	                                        (select count(*)as ds from 
+	                                        (select sid  from MessageGroupChat where UserID={1} and UserType ={2} and sid in({0}) group by sid) d) y
+                                        ) s",
+                                       id, UserID, UserType);
+            }
+            else
+            {
+                sql = string.Format(@"select * from 
+                                        (
+	                                        select (a.d+b.ds) as mc from 
+	                                        (select count(*) as d from dbo.Message where ConversationID in ({0}) and IsReceive='false' and ToAccountID={1} and EnumMessageSendDirectionID!=4) a,
+	                                        (select count(*) as ds from MessageGroupChat where UserID={1} and UserType ={2} and sid in({0})) b
+                                        ) m
+                                        ,
+                                        (
+	                                        select (x.d+y.ds) as sc from 
+	                                        (select count(*)as d  from 
+	                                        (select ConversationID from dbo.Message where ConversationID in ({0}) and IsReceive='false' and ToAccountID={1} and EnumMessageSendDirectionID!=4 group by ConversationID) c) x
+	                                        ,
+	                                        (select count(*)as ds from 
+	                                        (select sid  from MessageGroupChat where UserID={1} and UserType ={2} and sid in({0}) group by sid) d) y
+                                        ) s",
+                                           id, UserID, UserType);
+            }
+
+
+            return SqlQuery<UnreadCnt>(sql);
+        }
 
 
 

@@ -109,6 +109,7 @@ namespace Web.Controllers
                     np.MT = "1";  //消息
                     np.EID = MesType; //消息类型
                     np.SID = SID;//会话ID
+                    np.UserName = LoginAccount.Name; //用户名称
                     np.Sendtime = DateTime.Now.ToString(SystemConst.Business.TimeFomatFull);//发送时间
                     //文本
                     if (MesType == ((int)EnumMessageType.Text).ToString())
@@ -298,7 +299,7 @@ namespace Web.Controllers
                 ID=imgText.ID,
                 Title = imgText.Title,
                 Content = imgText.Content,
-                ImagePath = Url.Content(imgText.ImagePath)
+                ImagePath = Url.Content(imgText.ImagePath ?? "")
             }, JsonRequestBehavior.AllowGet);
         }
     }

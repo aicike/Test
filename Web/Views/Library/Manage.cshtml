@@ -40,8 +40,8 @@
             @foreach (var item in imageList)
             {
                 <div class="item">
-                    <input type="hidden" fileID="@item.ID" fileType="LibraryImage" value="@Url.Content(item.FilePath)" /><input
-                        type="radio" name="radioImg" />&nbsp;&nbsp;<img style="max-width: 200px;max-height:200px;vertical-align:middle" src="@Url.Content(item.FilePath)" />&nbsp;&nbsp;<label>@item.FileName</label>
+                    <input type="hidden" fileID="@item.ID" fileType="LibraryImage" value="@Url.Content(item.FilePath ?? "")" /><input
+                        type="radio" name="radioImg" />&nbsp;&nbsp;<img style="max-width: 200px;max-height:200px;vertical-align:middle" src="@Url.Content(item.FilePath ?? "")" />&nbsp;&nbsp;<label>@item.FileName</label>
                 </div>        
             }
         </div>
@@ -49,7 +49,7 @@
             @foreach (var item in voiceList)
             {
                 <div class="item">
-                    <input type="hidden" fileID="@item.ID" fileType="LibraryVoice" value="@Url.Content(item.FilePath)" /><input
+                    <input type="hidden" fileID="@item.ID" fileType="LibraryVoice" value="@Url.Content(item.FilePath ?? "")" /><input
                         type="radio" name="radioImg" />&nbsp;&nbsp;<span>点击播放</span>&nbsp;&nbsp;<label>@item.FileName</label>
                 </div>        
             }
@@ -58,7 +58,7 @@
             @foreach (var item in videoList)
             {
                 <div class="item">
-                    <input type="hidden" fileID="@item.ID" fileType="LibraryVideo" value="@Url.Content(item.FilePath)" /><input
+                    <input type="hidden" fileID="@item.ID" fileType="LibraryVideo" value="@Url.Content(item.FilePath ?? "")" /><input
                         type="radio" name="radioImg" />&nbsp;&nbsp;<span>点击播放</span>&nbsp;&nbsp;<label>@item.FileName</label>
                 </div>        
             }
@@ -67,8 +67,8 @@
             @foreach (var item in mmageTextList)
             {
                 <div class="item">
-                    <input type="hidden" fileID="@item.ID" fileType="LibraryImageText" value="@Url.Content(item.ImagePath)" /><input
-                        type="radio" name="radioImg" />&nbsp;&nbsp;<img style="max-width: 200px;max-height:200px;vertical-align:middle" src="@Url.Content(item.ImagePath)" />&nbsp;&nbsp;<label>@item.Title</label>
+                    <input type="hidden" fileID="@item.ID" fileType="LibraryImageText" value="@Url.Content(item.ImagePath ?? "")" /><input
+                        type="radio" name="radioImg" />&nbsp;&nbsp;<img style="max-width: 200px;max-height:200px;vertical-align:middle" src="@Url.Content(item.ImagePath ?? "")" />&nbsp;&nbsp;<label>@item.Title</label>
                 </div>        
             }
         </div>

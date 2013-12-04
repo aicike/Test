@@ -99,7 +99,7 @@
                         头像
                     </td>
                     <td>
-                        <img id="imgLogo" style="max-width: 80px; max-height: 80px; float: left" src="@Url.Content(Model.HeadImage.DefaultHeadImage())"/>
+                        <img id="imgLogo" style="max-width: 80px; max-height: 80px; float: left" src="@Url.Content(Model.HeadImage.DefaultHeadImage() ?? "")"/>
                         <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" style="display: none" />
                         &nbsp;&nbsp;<input type="button" class="button" value="上传" id="btnUpload" />
                         @Html.TextBoxFor(a => a.HeadImage, new { style = "width:0px;visibility:hidden" })

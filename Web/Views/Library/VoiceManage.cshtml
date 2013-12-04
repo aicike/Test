@@ -4,9 +4,14 @@
     List<Poco.LibraryVoice> voiceList = ViewBag.VoiceList as List<Poco.LibraryVoice>;
 }
 <link href="@Url.Content("~/Content/themes/base/jquery-ui-1.10.2.custom.min.css")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~//Content/Style.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/Style.css")" rel="stylesheet" type="text/css" />
 <script src="@Url.Content("~/Scripts/jquery-1.8.3.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery-ui-1.10.3.custom.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#tabs").tabs();
+    });
+</script>
 <style>
     .item
     {
@@ -14,7 +19,7 @@
     }
     .tabdiv
     {
-        height: 465px;
+        height: 523px;
         overflow-y: auto;
     }
 </style>
@@ -24,7 +29,7 @@
             {
                 <div class="item">
                    
-                    <input type="hidden" fileID="@item.ID" fileType="LibraryVoice" value="@Url.Content(item.FilePath)" mp3value="@Url.Content(item.FileMp3Path)" lengthvalue="@item.FileLength" /><input
+                    <input type="hidden" fileID="@item.ID" fileType="LibraryVoice" value="@Url.Content(item.FilePath ?? "")" mp3value="@Url.Content(item.FileMp3Path ?? "")" lengthvalue="@item.FileLength" /><input
                         type="radio" name="radioImg" />&nbsp;&nbsp;<label>@item.FileName</label>
                 </div>        
             }

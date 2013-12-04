@@ -23,6 +23,10 @@ namespace Poco
         [StringLength(500, ErrorMessage = "长度小于500")]
         public string FilePath { get; set; }
 
+
+        [Display(Name = "视频截图")]
+        public string FileImgPath { get; set; }
+
         //时长 秒
         public string FileLength { get; set; }
 

@@ -42,6 +42,15 @@ namespace Poco
         }
 
         /// <summary>
+        /// 用户名册
+        /// </summary>
+        public string UserName
+        {
+            get { return GetTag("username"); }
+            set { SetTag("username", value); }
+        }
+
+        /// <summary>
         /// 消息类型  0：文本库 1：图片库 2：视频库 3：音频库 4：图文库 
         /// </summary>
         public string EID 

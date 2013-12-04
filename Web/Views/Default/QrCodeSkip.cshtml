@@ -98,7 +98,7 @@
            <img src="/Images/Logo_144.png" width="144px" />
         }
         else {
-         <img src="@Url.Content(Model.AppLogoImagePath)" width="144px"  />
+         <img src="@Url.Content(Model.AppLogoImagePath??"")" width="144px"  />
         }
     </div>
     <div class="divFont">

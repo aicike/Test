@@ -141,7 +141,7 @@
                     }
                 </td>
                 <td>
-                    <img style="width: 150px;  cursor:pointer "  onclick="clickInfo(@item.ID)" src="@Url.Content(item.AppShowImagePath)" />
+                    <img style="width: 150px;  cursor:pointer "  onclick="clickInfo(@item.ID)" src="@Url.Content(item.AppShowImagePath ?? "")" />
                 </td>
                 <td style="font-size: 14px"  class="operation">
                     <label name="labCbFirst" title="@item.Depict" onclick="clickInfo(@item.ID)" style=" cursor:pointer">

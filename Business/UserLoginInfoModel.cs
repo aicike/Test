@@ -105,7 +105,7 @@ namespace Business
                     //添加用户User
                     User user = new User();
                     user.UserLoginInfoID = userlogin.ID;
-                    user.Name = userlogin.Name + userlogin.ID;
+                    user.Name = "";
                     user.AccountMainID = userLoginInfo.AccountMainID;
                     var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
                     result = userModel.Add(user);

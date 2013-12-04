@@ -17,6 +17,7 @@ namespace Poco
 
         [Display(Name = "标题")]
         [Required(ErrorMessage = "请输入标题")]
+        [StringLength(30, ErrorMessage = "长度小于30")]
         public string Title { get; set; }
 
         [Display(Name = "置顶 1是 0 否")]
@@ -31,6 +32,7 @@ namespace Poco
 
         [Display(Name= "描述")]
         [Required(ErrorMessage = "请输入描述")]
+        [StringLength(100, ErrorMessage = "长度小于100")]
         public string Depict { get; set; }
 
         [Display(Name = "发布日期")]

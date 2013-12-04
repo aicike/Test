@@ -71,7 +71,7 @@
                         <span class="Identification">*</span> 户型图
                     </td>
                     <td class="tdField">
-                        <img id="imgHousType" style="max-width: 80px; max-height: 80px; float: left" src="@Url.Content(Model.HouseTypeImagePath)" />
+                        <img id="imgHousType" style="max-width: 80px; max-height: 80px; float: left" src="@Url.Content(Model.HouseTypeImagePath ?? "")" />
 
                         @Html.TextBoxFor(a => a.HouseTypeImagePath, new { style = "width:0px;visibility:hidden" })
                     </td>

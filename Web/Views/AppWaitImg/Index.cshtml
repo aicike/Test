@@ -182,7 +182,7 @@
                             {
                                 if (Model.ImgPath != "")
                                 {
-                                <img id="imgSet"  src="@Url.Content(Model.ImgPath)"   style="height:300px; width:200px;" />
+                                <img id="imgSet"  src="@Url.Content(Model.ImgPath ?? "")"   style="height:300px; width:200px;" />
                                 }
                                 else
                                 { 

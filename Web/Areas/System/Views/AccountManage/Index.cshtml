@@ -51,7 +51,7 @@
         {
             <tr>
                 <td>
-                    <img id="imgLogo" style="max-width:80px;max-height:80px;" src="@Url.Content(@item.HeadImagePath.DefaultHeadImage())" />
+                    <img id="imgLogo" style="max-width:80px;max-height:80px;" src="@Url.Content(item.HeadImagePath.DefaultHeadImage() ?? "")" />
                 </td>
                 <td>
                     @item.Name

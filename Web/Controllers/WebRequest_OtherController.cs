@@ -35,7 +35,7 @@ namespace Web.Controllers
                 {
                     App_ImageText app = new App_ImageText();
                     app.ID = item.ID;
-                    app.I = SystemConst.WebUrlIP + Url.Content(item.ImagePath);
+                    app.I = SystemConst.WebUrlIP + Url.Content(item.ImagePath ?? "");
                     app.T = item.Title;
                     app.S = item.Summary;
                     app.C = item.Content;
@@ -46,7 +46,7 @@ namespace Web.Controllers
                         {
                             App_ImageText appSub = new App_ImageText();
                             appSub.ID = sub.ID;
-                            appSub.I = SystemConst.WebUrlIP + Url.Content(sub.ImagePath);
+                            appSub.I = SystemConst.WebUrlIP + Url.Content(sub.ImagePath ?? "");
                             appSub.T = sub.Title;
                             appSub.S = sub.Summary;
                             appSub.C = sub.Content;
@@ -79,7 +79,7 @@ namespace Web.Controllers
                 {
                     App_Image app = new App_Image();
                     app.ID = item.ID;
-                    app.I = SystemConst.WebUrlIP + Url.Content(item.FilePath);
+                    app.I = SystemConst.WebUrlIP + Url.Content(item.FilePath ?? "");
                     app.T = item.FileName;
                     appList.Add(app);
                 }
@@ -102,7 +102,7 @@ namespace Web.Controllers
                 {
                     App_Voice app = new App_Voice();
                     app.ID = item.ID;
-                    app.I = SystemConst.WebUrlIP + Url.Content(item.FilePath);
+                    app.I = SystemConst.WebUrlIP + Url.Content(item.FilePath ?? "");
                     app.T = item.FileName;
                     app.L = item.FileLength;
                     appList.Add(app);
@@ -126,7 +126,7 @@ namespace Web.Controllers
                 {
                     App_Video app = new App_Video();
                     app.ID = item.ID;
-                    app.I = SystemConst.WebUrlIP + Url.Content(item.FilePath);
+                    app.I = SystemConst.WebUrlIP + Url.Content(item.FilePath ?? "");
                     app.T = item.FileName;
                     app.L = item.FileLength;
                     appList.Add(app);
@@ -168,7 +168,7 @@ namespace Web.Controllers
                     _B_Advertorial ADVERTORIAL = new _B_Advertorial();
                     ADVERTORIAL.I = item.ID;
                     ADVERTORIAL.T = item.Title;
-                    ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath);
+                    ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
                     TitleShow.Add(ADVERTORIAL);
                 }
             }
@@ -182,7 +182,7 @@ namespace Web.Controllers
                     ADVERTORIAL.T = item.Title;
                     ADVERTORIAL.P = item.Depict;
                     ADVERTORIAL.D = item.IssueDate.ToString("yyyy-MM-dd");
-                    ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.MinImagePath);
+                    ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.MinImagePath ?? "");
                     ListShow.Add(ADVERTORIAL);
                 }
             }
@@ -207,7 +207,7 @@ namespace Web.Controllers
             ADVERTORIAL.I = Info.ID;
             ADVERTORIAL.T = Info.Title;
             ADVERTORIAL.D = Info.IssueDate.ToString("yyyy-MM-dd");
-            ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(Info.MainImagPath);
+            ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(Info.MainImagPath ?? "");
             ADVERTORIAL.C = Info.Content;
 
             return Newtonsoft.Json.JsonConvert.SerializeObject(ADVERTORIAL);
@@ -223,7 +223,7 @@ namespace Web.Controllers
             var waitimg = AppWaitImgModel.getAppWaitImg(AMID);
             if (waitimg != null)
             {
-                return SystemConst.WebUrlIP + Url.Content(waitimg.ImgPath);
+                return SystemConst.WebUrlIP + Url.Content(waitimg.ImgPath ?? "");
             }
             return "";
         }

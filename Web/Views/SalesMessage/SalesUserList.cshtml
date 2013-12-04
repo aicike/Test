@@ -92,7 +92,7 @@
             <td>
                 @if (!string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath))
                 { 
-                    <img src="@Url.Content(item.UserLoginInfo.HeadImagePath)" style="max-width: 50px; border: 0px" />
+                    <img src="@Url.Content(item.UserLoginInfo.HeadImagePath ?? "")" style="max-width: 50px; border: 0px" />
                 }
                 else
                 { 
@@ -156,7 +156,7 @@
             <div>
                 @if (!string.IsNullOrEmpty(item.HeadImagePath))
                 {
-                    <img  onclick="ClickUserAccount(@item.ID)"  src="@Url.Content(@item.HeadImagePath)" style="max-width: 50px; max-height:50px; border: 0px; cursor:pointer" />
+                    <img  onclick="ClickUserAccount(@item.ID)"  src="@Url.Content(@item.HeadImagePath ?? "")" style="max-width: 50px; max-height:50px; border: 0px; cursor:pointer" />
                 }
                 else
                 { 

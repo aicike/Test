@@ -95,7 +95,7 @@ namespace Web.Controllers
                         var msg = libraryImageModel.Get(pm.LibraryID.Value);
                         if (msg != null)
                         {
-                            sb.AppendFormat("[图片] <img src='{0}' style='width:80px' />", Url.Content(msg.FilePath));
+                            sb.AppendFormat("[图片] <img src='{0}' style='width:80px' />", Url.Content(msg.FilePath ?? ""));
                         }
                         break;
                     case (int)Poco.Enum.EnumMessageType.Video:

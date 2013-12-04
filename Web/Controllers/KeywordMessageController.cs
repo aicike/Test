@@ -140,7 +140,7 @@ namespace Web.Controllers
                             if (img == null) {
                                 continue;
                             }
-                            file.url = Url.Content(img.FilePath);
+                            file.url = Url.Content(img.FilePath ?? "");
                             file.fileTitle = img.FileName;
                             break;
                         case "Video":
@@ -150,7 +150,7 @@ namespace Web.Controllers
                             {
                                 continue;
                             }
-                            file.url = Url.Content(video.FilePath);
+                            file.url = Url.Content(video.FilePath ?? "");
                             file.fileTitle = video.FileName;
                             break;
                         case "Voice":
@@ -160,13 +160,13 @@ namespace Web.Controllers
                             {
                                 continue;
                             }
-                            file.url = Url.Content(voice.FilePath);
+                            file.url = Url.Content(voice.FilePath ?? "");
                             file.fileTitle = voice.FileName;
                             break;
                         case "ImageText":
                             file.type = "LibraryImageText";
                             var imageText = libraryImageTextModel.Get(item.MessageID);
-                            file.url = Url.Content(imageText.ImagePath);
+                            file.url = Url.Content(imageText.ImagePath ?? "");
                             file.fileTitle = imageText.Title;
                             break;
                     }

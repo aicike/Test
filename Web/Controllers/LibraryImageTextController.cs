@@ -129,7 +129,7 @@ namespace Web.Controllers
             var entity = libraryModel.Get(id);
             ImageText it = new ImageText();
             it.title = entity.Title;
-            it.image = @Url.Content(entity.ImagePath);
+            it.image = @Url.Content(entity.ImagePath ?? "");
             it.summary = entity.Summary;
             it.body = entity.Content;
             if (entity.LibraryImageTexts != null)
@@ -140,7 +140,7 @@ namespace Web.Controllers
                     it.sub.Add(new ImageText()
                     {
                         title = item.Title,
-                        image = @Url.Content(item.ImagePath),
+                        image = @Url.Content(item.ImagePath ?? ""),
                         summary = item.Summary,
                         body = item.Content,
                     });

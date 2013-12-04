@@ -6,6 +6,7 @@ using System.Data;
 using Poco;
 using AcceptanceServer.DataOperate;
 using Poco.Enum;
+using System.IO;
 
 namespace AcceptanceServer.DataBllOperate
 {
@@ -226,5 +227,46 @@ namespace AcceptanceServer.DataBllOperate
 
             return DataHandle.DelMessGroupChat(userID, UserType, SID);
         }
+
+
+        /// <summary>
+        /// 生成自定义异常消息
+        /// </summary>
+        /// <param name="ex">异常对象</param>
+        /// <param name="backStr">备用异常消息：当ex为null时有效</param>
+        /// <returns>异常字符串文本</returns>
+        public static void SetLog(Exception ex)
+        {
+            try
+            {
+
+
+                string fileName = DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
+                string filePath = Environment.CurrentDirectory + "\\log";
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+                FileStream aFile = new FileStream(filePath + "\\" + fileName, FileMode.Append);
+                StreamWriter sw = new StreamWriter(aFile);
+                sw.WriteLine("*************************异常文本****************************");
+                sw.WriteLine("【出现时间】：" + DateTime.Now.ToString());
+                if (ex != null)
+                {
+                    sw.WriteLine("【异常类型】：" + ex.GetType().Name);
+                    sw.WriteLine("【异常信息】：" + ex.Message);
+                    sw.WriteLine("【堆栈调用】：" + ex.StackTrace);
+                }
+                else
+                {
+                    sw.WriteLine("【未处理异常】：" + ex.StackTrace);
+                }
+                sw.WriteLine("************************************************************");
+                sw.Close();
+                aFile.Close();
+            }
+            catch { }
+        }
+
     }
 }

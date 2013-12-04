@@ -146,6 +146,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\System\Controllers\AccountMainManageController.cs" />
     <Compile Include="Areas\System\Controllers\AccountManageController.cs" />
+    <Compile Include="Areas\System\Controllers\ReportController.cs" />
     <Compile Include="Areas\System\Controllers\RoleController.cs" />
     <Compile Include="Areas\System\Controllers\SystemSetController.cs" />
     <Compile Include="Areas\System\Controllers\SystemUserHomeController.cs" />
@@ -798,6 +799,7 @@
   <ItemGroup>
     <Content Include="Areas\System\Views\SystemUser\Add.cshtml" />
     <Content Include="Areas\System\Views\SystemUser\Edit.cshtml" />
+    <Content Include="Areas\System\Views\Report\Index.cshtml" />
     <None Include="Scripts\nivoSlider\dark\.DS_Store" />
     <Content Include="ueditor\net\imageUp_Advertorial.ashx" />
     <None Include="video-js\font\vjs.eot" />
@@ -890,6 +892,8 @@
           <DevelopmentServerPort>30062</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://192.168.1.138/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://192.168.1.138/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

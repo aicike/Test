@@ -87,7 +87,7 @@
                     <div id="slider" class="nivoSlider" style=" margin-bottom:0px;height:160px">
                         @foreach (var item in TitleImg)
                         {
-                            <img  src="@Url.Content(item.AppShowImagePath)" data-thumb="@Url.Content(@item.AppShowImagePath)" title='@item.Title.Show(15, "..")' alt="" />
+                            <img  src="@Url.Content(item.AppShowImagePath)" data-thumb="@Url.Content(@item.AppShowImagePath ?? "")" title='@item.Title.Show(15, "..")' alt="" />
                         }
                     </div>
                 </div>
@@ -106,7 +106,7 @@
                     </tr>
                     <tr style="height: 50px">
                         <td rowspan="2" style="width: 125px; padding-left: 5px">
-                            <img style="height:60px; width:120px"  src="@Url.Content(item.MinImagePath)" />
+                            <img style="height:60px; width:120px"  src="@Url.Content(item.MinImagePath ?? "")" />
                         </td>
                         <td valign="top" style="color: #525252; padding-left:5px; line-height:15px">
                             @item.Depict.Show(42, "..")

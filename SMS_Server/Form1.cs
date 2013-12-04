@@ -12,21 +12,13 @@ namespace AcceptanceServer
 {
     public partial class lbUser : Form
     {
-        //错误信息
-        public static DataTable ErrorMessageDt;
-        //运行信息（开发测试）
-        public static DataTable MessageDt;
-        //在线用户信息
-        public static DataTable OlineUserDt;
+       
 
 
         public lbUser()
         {
             InitializeComponent();
             //初始化显示界面显示数据dt
-            initErrorMessageDT();
-            initMessageDT();
-            initOlineUserDt();
 
             agsXMPP.Factory.ElementFactory.AddElementType("NewsProtocol", "agsoftware:NewsProtocol", typeof(NewsProtocol));
         }
@@ -36,17 +28,16 @@ namespace AcceptanceServer
         //开启服务
         private void Form1_Load(object sender, EventArgs e)
         {
-            //ThreadStart myThreadDelegate = new ThreadStart(Listen);
-            //Thread myThread = new Thread(myThreadDelegate);
-            //myThread.Start();
-            //myThread.IsBackground = true;
+            ThreadStart myThreadDelegate = new ThreadStart(Listen);
+            Thread myThread = new Thread(myThreadDelegate);
+            myThread.Start();
+            myThread.IsBackground = true;
            
-            System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
-            {
-                Listen();
-            });
-            t.Start();
-            ShowErrorMessage("服务开启.....端口号：5333");
+            //System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
+            //{
+            //    Listen();
+            //});
+            //t.Start();
         }
         private void Listen()
         {
@@ -65,11 +56,6 @@ namespace AcceptanceServer
                 {
                     allDone.Reset();
 
-                    //    this.Invoke(new dosomethings(delegate()
-                    //{
-                    //    //listBox1.Items.Add("等待客户端连接！");
-                    //}));
-
                     listener.BeginAccept(new AsyncCallback(AcceptCallBack), null);
 
                     allDone.WaitOne();
@@ -78,7 +64,7 @@ namespace AcceptanceServer
 
             catch (Exception ex)
             {
-                ShowErrorMessage(ex.Message);
+
             }
         }
         public delegate void dosomethings();
@@ -116,74 +102,7 @@ namespace AcceptanceServer
 
         #endregion
 
-        #region 界面显示信息与日志
-
-        //初始化显示异常消失dt
-        public void initErrorMessageDT()
-        {
-            ErrorMessageDt = new DataTable();
-            ErrorMessageDt.Columns.Add("Times");
-            ErrorMessageDt.Columns.Add("Point");
-        }
-
-        //显示异常信息（日志）
-        public void ShowErrorMessage(string message)
-        {
-            DataRow row = ErrorMessageDt.NewRow();
-            row["Times"] = DateTime.Now;
-            row["Point"] = message;
-            ErrorMessageDt.Rows.Add(row);
-
-            DGType.DataSource = ErrorMessageDt;
-
-            //日志
-
-
-        }
-
-        //初始化运行信息dt
-        public void initMessageDT()
-        {
-            MessageDt = new DataTable();
-            MessageDt.Columns.Add("infoTime");
-            MessageDt.Columns.Add("infoPoint");
-        }
-
-        //显示运行信息
-        public void ShowMesage(string message)
-        {
-            DataRow row = MessageDt.NewRow();
-            row["infoTime"] = DateTime.Now;
-            row["infoPoint"] = message;
-            MessageDt.Rows.Add(row);
-
-            infoGread.DataSource = MessageDt;
-        }
-
-        //初始化在线用户dt
-        public void initOlineUserDt()
-        {
-            OlineUserDt = new DataTable();
-            OlineUserDt.Columns.Add("uname");
-            OlineUserDt.Columns.Add("other");
-        }
-
-        //显示在线用户
-        public void ShowOlineUser(string name, string other)
-        {
-            DataRow row = OlineUserDt.NewRow();
-            row["UName"] = name;
-            row["other"] = other;
-            OlineUserDt.Rows.Add(row);
-
-            dgUser.DataSource = OlineUserDt;
-        }
-
-
-
-
-        #endregion
-
+        
  
 
        
@@ -211,14 +130,6 @@ namespace AcceptanceServer
             }
 
 
-            //if (e.CloseReason == CloseReason.UserClosing)
-            //{
-            //    e.Cancel = true;    //取消"关闭窗口"事件
-            //    this.WindowState = FormWindowState.Minimized;    //使关闭时窗口向右下角缩小的效果
-            //    notifyIcon1.Visible = true;
-            //    this.Hide();
-            //    return;
-            //}
 
         }
 

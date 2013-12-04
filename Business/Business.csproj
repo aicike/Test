@@ -112,6 +112,7 @@
     <Compile Include="Push_Getui.cs" />
     <Compile Include="Push_IOS.cs" />
     <Compile Include="QrCodeModel.cs" />
+    <Compile Include="ReportFormPowerModel.cs" />
     <Compile Include="RoleModel.cs" />
     <Compile Include="SMS_Model.cs" />
     <Compile Include="SystemUserModel.cs" />

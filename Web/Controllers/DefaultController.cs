@@ -138,7 +138,7 @@ namespace Web.Controllers
             var AccountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             var AccountModel = AccountMainModel.Get(AMID);
             if (AccountModel.AndroidDownloadPath!=null)
-                AccountModel.AndroidDownloadPath = "http://" + SystemConst.WebUrl + Url.Content(AccountModel.AndroidDownloadPath);
+                AccountModel.AndroidDownloadPath = "http://" + SystemConst.WebUrl + Url.Content(AccountModel.AndroidDownloadPath ?? "");
             return View(AccountModel);
         }
 
@@ -151,7 +151,7 @@ namespace Web.Controllers
             var AccountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             var AccountModel = AccountMainModel.Get(AMID);
             if (AccountModel.AndroidSellDownloadPath != null)
-                AccountModel.AndroidSellDownloadPath = "http://" + SystemConst.WebUrl + Url.Content(AccountModel.AndroidSellDownloadPath);
+                AccountModel.AndroidSellDownloadPath = "http://" + SystemConst.WebUrl + Url.Content(AccountModel.AndroidSellDownloadPath ?? "");
             return View(AccountModel);
         }
 

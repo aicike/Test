@@ -38,7 +38,7 @@
                 <td>@item.ID
                 </td>
                 <td>
-                    <img id="imgLogo" style="max-width:80px;max-height:80px;" src="@Url.Content(@item.LogoImageThumbnailPath)" />
+                    <img id="imgLogo" style="max-width:80px;max-height:80px;" src="@Url.Content(@item.LogoImageThumbnailPath??"")" />
                 </td>
                 <td>
                     @item.Name
@@ -98,6 +98,7 @@
                     <br />
                     @Html.ActionLink("角色管理", "Index", "Role", new { Area = "System",AccountMainID=item.ID }, null, true)
                     @Html.ActionLink("账号管理", "Index", "AccountManage", new { Area = "System", accountMainId = item.ID }, null, true)
+                    @Html.ActionLink("报表管理", "Index", "Report", new { Area = "System", accountMainId = item.ID }, null, true)
                 </td>
             </tr>
         }

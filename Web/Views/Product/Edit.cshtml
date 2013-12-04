@@ -122,7 +122,7 @@
                     <td class="tdTitle">
                         &nbsp;&nbsp; 图片
                     </td>
-                    <td class="tdField"><img  src="@Url.Content(Model.imgFilePath)" id="imgHousType" style="max-width: 220px;  float: left" />
+                    <td class="tdField"><img  src="@Url.Content(Model.imgFilePath ?? "")" id="imgHousType" style="max-width: 220px;  float: left" />
                         <input type="file" id="HousTypeImagePathFile" name="HousTypeImagePathFile"  />
 
                         @Html.TextBoxFor(a => a.imgFilePath, new { style = "width:0px;visibility:hidden" })

@@ -197,7 +197,7 @@
             @Model.Title</div>
         <div style="height: 160px; position: relative; border: 1px solid #E7E7E7; margin-top: 10px;">
             <span class="item_img_maintext">封面图片</span>
-            <img id="imgCoverPreview" src="@Url.Content(Model.ImagePath)" style="width: 298px; max-height: 160px; margin: auto 0px;
+            <img id="imgCoverPreview" src="@Url.Content(Model.ImagePath ?? "")" style="width: 298px; max-height: 160px; margin: auto 0px;
                 z-index: 1; position: absolute;" />
         </div>
         <div id="itemMain_summary" style="margin-top: 15px; margin-bottom: 10px; width: 300px;

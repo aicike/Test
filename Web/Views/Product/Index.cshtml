@@ -47,7 +47,7 @@
         {
             <tr>
                 <td>
-                    <img src="@Url.Content(item.imgFilePath)" style=" max-width:98px" />
+                    <img src="@Url.Content(item.imgFilePath ?? "")" style=" max-width:98px" />
                 </td>
                 <td>
                     @item.Name

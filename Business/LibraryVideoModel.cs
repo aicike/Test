@@ -20,10 +20,19 @@ namespace Business
 
         public Result Upload(LibraryVideo entity, System.Web.HttpPostedFileBase video)
         {
+
+            CommonModel com = new CommonModel();
+            var LastName = com.CreateRandom("", 5);
+            var VideoName = LastName + video.FileName.GetFileSuffix();
+            var ImgName = LastName + ".jpg";
+
             var token = DateTime.Now.ToString("yyyyMMddHHmmss");
-            var fileName = string.Format("{0}{1}", token, video.FileName.Substring(video.FileName.LastIndexOf(".")));
+            var fileName = string.Format("{0}_{1}", token, VideoName);
+            var fileImgName = string.Format("{0}_{1}", token, ImgName);
             var filePath = string.Format("~/File/{0}/FileLibrary/{1}", entity.AccountMainID, fileName);
+            var fileImgPath = string.Format("~/File/{0}/FileLibrary/{1}", entity.AccountMainID, fileImgName);
             var pathIO = HttpContext.Current.Server.MapPath(filePath);
+            var pathImgIO = HttpContext.Current.Server.MapPath(fileImgPath);
             video.SaveAs(pathIO);
 
             try

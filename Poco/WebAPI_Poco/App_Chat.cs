@@ -23,6 +23,11 @@ namespace Poco.WebAPI_Poco
 
         public string FileUrl { get; set; }
 
+        /// <summary>
+        /// 只有语音会使用的字段
+        /// </summary>
+        public string FileUrlMP3 { get; set; }
+
         public string FL { get; set; }
 
         /// <summary>

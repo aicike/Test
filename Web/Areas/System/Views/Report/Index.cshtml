@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.AccountMainManage;
+
+
+    System.Data.DataTable Report = ViewBag.dicDT as System.Data.DataTable;
+    var ReportPower = ViewBag.PowerIDs as List<int>;
+    
+}
+@section head{
+    <link href="@Url.Content("~/Scripts/treeview/jquery.treeview.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/treeview/jquery.treeview.js")"></script>
+    <script>
+        $(function () {
+            $("#browser").treeview({
+                toggle: function () {
+                    console.log("%s was toggled.", $(this).find(">span").text());
+                }
+            });
+        });
+    
+    </script>
+}
+<div class="title">
+    报表管理</div>
+<div class="body">
+    @using (Ajax.BeginForm("Edit", "Report", new { Area = "System", accountMainID = ViewBag.AccountMainID }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {
+        <div style="margin-bottom: 10px;">
+            <input type="submit" id="btnSubmit" value="保存" class="button" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
+        </div>
+        <fieldset>
+            <legend>报表展示权限</legend>
+            <table>
+                <tr>
+                    <td>
+                        <ul id="browser">
+                            @foreach (System.Data.DataRow item in Report.Rows)
+                            {
+                                <li id="li1"><span style="font-size: 16px;">
+                                    @if (ReportPower.Contains(int.Parse(item["id"].ToString())))
+                                    {
+                                        <input type="checkbox" id="M_@item["id"].ToString()" name="checkboxMenu" value="@item["id"].ToString()" checked="checked"/>
+                                    }
+                                    else
+                                    { 
+                                        <input type="checkbox" id="M_@item["id"].ToString()" name="checkboxMenu" value="@item["id"].ToString()"/>
+                                    }
+                                    <label for="M_@item["id"].ToString()">@item["name"].ToString()</label></span> </li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        
+        <div style="margin-bottom: 10px;">
+            <input type="submit" id="btnSubmit" value="保存" class="button" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
+        </div>
+    }
+</div>

@@ -168,7 +168,7 @@
                     <div class="spanFileName" style="display: block; height: 28px; padding-top: 15px">@item.FileName</div>
                     <input class="txtFileName" type="text" rawID="@item.ID" rawValue="@item.FileName" value="@item.FileName" style="display:none" />
                     <div class="media" id="divMedia_@item.ID" style="display: none;">
-                        <audio style="width:100%" id="player2" src="@Url.Content(item.FileMp3Path)" 
+                        <audio style="width:100%" id="player2" src="@Url.Content(item.FileMp3Path ?? "")" 
                             controls="controls"></audio>
                     </div>
                 </td>

@@ -13,9 +13,9 @@ namespace AcceptanceServer
     public partial class lbUser : Form
     {
         //错误信息
-        public static DataTable ErrorMessageDt;
-        //运行信息（开发测试）
-        public static DataTable MessageDt;
+        //public static DataTable ErrorMessageDt;
+        ////运行信息（开发测试）
+        //public static DataTable MessageDt;
 
 
 
@@ -23,8 +23,8 @@ namespace AcceptanceServer
         {
             InitializeComponent();
             //初始化显示界面显示数据dt
-            initErrorMessageDT();
-            initMessageDT();
+            //initErrorMessageDT();
+            //initMessageDT();
 
             agsXMPP.Factory.ElementFactory.AddElementType("NewsProtocol", "agsoftware:NewsProtocol", typeof(NewsProtocol));
         }
@@ -34,12 +34,21 @@ namespace AcceptanceServer
         //开启服务
         private void Form1_Load(object sender, EventArgs e)
         {
-            System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
-            {
-                Listen();
-            });
-            t.Start();
-            ShowErrorMessage("服务开启.....端口号：5222");
+            //System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
+            //{
+            //    Listen();
+            //});
+           
+            //t.Start();
+
+            ThreadStart myThreadDelegate = new ThreadStart(Listen);
+            Thread myThread = new Thread(myThreadDelegate);
+            myThread.Start();
+            myThread.IsBackground = true;
+
+
+
+            //ShowErrorMessage("服务开启.....端口号：5222");
         }
         private void Listen()
         {
@@ -47,8 +56,8 @@ namespace AcceptanceServer
 
             listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-            try
-            {
+            //try
+            //{
                 listener.Bind(localEndPoint);
                 listener.Listen(20);
 
@@ -67,12 +76,12 @@ namespace AcceptanceServer
 
                     allDone.WaitOne();
                 }
-            }
+            //}
 
-            catch (Exception ex)
-            {
-                ShowErrorMessage(ex.Message);
-            }
+            //catch (Exception ex)
+            //{
+            //    //ShowErrorMessage(ex.Message);
+            //}
         }
         public delegate void dosomethings();
         public void AcceptCallBack(IAsyncResult ar)
@@ -112,46 +121,46 @@ namespace AcceptanceServer
         #region 界面显示信息与日志
 
         //初始化显示异常消失dt
-        public void initErrorMessageDT()
-        {
-            ErrorMessageDt = new DataTable();
-            ErrorMessageDt.Columns.Add("Times");
-            ErrorMessageDt.Columns.Add("Point");
-        }
+        //public void initErrorMessageDT()
+        //{
+        //    ErrorMessageDt = new DataTable();
+        //    ErrorMessageDt.Columns.Add("Times");
+        //    ErrorMessageDt.Columns.Add("Point");
+        //}
 
         //显示异常信息（日志）
-        public void ShowErrorMessage(string message)
-        {
-            DataRow row = ErrorMessageDt.NewRow();
-            row["Times"] = DateTime.Now;
-            row["Point"] = message;
-            ErrorMessageDt.Rows.Add(row);
+        //public void ShowErrorMessage(string message)
+        //{
+        //    DataRow row = ErrorMessageDt.NewRow();
+        //    row["Times"] = DateTime.Now;
+        //    row["Point"] = message;
+        //    ErrorMessageDt.Rows.Add(row);
 
-            DGType.DataSource = ErrorMessageDt;
+        //    DGType.DataSource = ErrorMessageDt;
 
-            //日志
+        //    //日志
 
 
-        }
+        //}
 
         //初始化运行信息dt
-        public void initMessageDT()
-        {
-            MessageDt = new DataTable();
-            MessageDt.Columns.Add("infoTime");
-            MessageDt.Columns.Add("infoPoint");
-        }
+        //public void initMessageDT()
+        //{
+        //    MessageDt = new DataTable();
+        //    MessageDt.Columns.Add("infoTime");
+        //    MessageDt.Columns.Add("infoPoint");
+        //}
 
         //显示运行信息
-        public void ShowMesage(string message)
-        {
-            DataRow row = MessageDt.NewRow();
-            row["infoTime"] = DateTime.Now;
-            row["infoPoint"] = message;
-            MessageDt.Rows.Add(row);
+        //public void ShowMesage(string message)
+        //{
+        //    DataRow row = MessageDt.NewRow();
+        //    row["infoTime"] = DateTime.Now;
+        //    row["infoPoint"] = message;
+        //    MessageDt.Rows.Add(row);
 
-            infoGread.DataSource = MessageDt;
-        }
+        //    infoGread.DataSource = MessageDt;
+        //}
 
         //初始化在线用户dt
      

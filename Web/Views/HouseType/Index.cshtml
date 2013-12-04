@@ -30,7 +30,7 @@
         {
             <tr>
                 <td >
-                    <img id="imgHousType" style="max-width: 100px; max-height: 80px; " src="@Url.Content(item.HouseTypeImagePath)" /> 
+                    <img id="imgHousType" style="max-width: 100px; max-height: 80px; " src="@Url.Content(item.HouseTypeImagePath ?? "")" /> 
                 </td>
                 <td>
                     @item.HName
