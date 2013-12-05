@@ -56,8 +56,8 @@ namespace AcceptanceServer
 
             listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-            //try
-            //{
+            try
+            {
                 listener.Bind(localEndPoint);
                 listener.Listen(20);
 
@@ -76,12 +76,11 @@ namespace AcceptanceServer
 
                     allDone.WaitOne();
                 }
-            //}
-
-            //catch (Exception ex)
-            //{
-            //    //ShowErrorMessage(ex.Message);
-            //}
+            }
+            catch (Exception ex)
+            {
+                //ShowErrorMessage(ex.Message);
+            }
         }
         public delegate void dosomethings();
         public void AcceptCallBack(IAsyncResult ar)

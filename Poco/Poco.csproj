@@ -65,6 +65,7 @@
     <Compile Include="Enum\EnumReportForm.cs" />
     <Compile Include="Enum\EnumTaskStatus.cs" />
     <Compile Include="Enum\EnumTaskType.cs" />
+    <Compile Include="ReportBody.cs" />
     <Compile Include="ReportFormPower.cs" />
     <Compile Include="SMS.cs" />
     <Compile Include="MessageGroupChat.cs" />

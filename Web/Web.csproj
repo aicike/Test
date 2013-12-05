@@ -156,6 +156,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountMainGuideController.cs" />
     <Compile Include="Controllers\AjaxController.cs" />
+    <Compile Include="Controllers\AjaxReportController.cs" />
     <Compile Include="Controllers\AppAdvertorialController.cs" />
     <Compile Include="Controllers\AppWaitImgController.cs" />
     <Compile Include="Controllers\BaseController\BaseController.cs" />
@@ -299,6 +300,8 @@
     <Content Include="Scripts\nivoSlider\light\loading.gif" />
     <Content Include="Scripts\nivoSlider\nivo-slider.css" />
     <Content Include="Scripts\nivoSlider\style.css" />
+    <Content Include="Scripts\ReportJS\Report.css" />
+    <Content Include="Scripts\ReportJS\Report.js" />
     <Content Include="Scripts\tytabs.js" />
     <Content Include="Scripts\JSONLoader.js" />
     <Content Include="Scripts\Highcharts\adapters\mootools-adapter.js" />

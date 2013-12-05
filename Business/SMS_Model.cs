@@ -121,6 +121,7 @@ namespace Business
                     Presence p = new Presence();
                     p.Type = PresenceType.unavailable;
                     Connection.Send(p);
+
                 }
                 else
                 {
