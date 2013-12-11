@@ -68,5 +68,12 @@ namespace Business
 
 
         }
+
+
+        public VIPInfo getByCardNum(string cardNum, int AccountMainID)
+        {
+            var list = List().Where(a => a.AccountMainID == AccountMainID&& a.CardNumber==cardNum.Trim());
+            return list.FirstOrDefault();
+        }
     }
 }

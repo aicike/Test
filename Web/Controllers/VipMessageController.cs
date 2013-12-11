@@ -104,5 +104,31 @@ namespace Web.Controllers
             return View();
         }
 
+
+        public ActionResult Recharge()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Recharge(VIPInfo vipinfo)
+        {
+
+            return View();
+        }
+
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public string SelVipInfo(string cardNum)
+        {
+            var vipModel = Factory.Get<IVipMessageModel>(SystemConst.IOC_Model.VipMessageModel);
+            var vipinfo = vipModel.getByCardNum(cardNum,LoginAccount.CurrentAccountMainID);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(vipinfo);
+        }
+
     }
 }

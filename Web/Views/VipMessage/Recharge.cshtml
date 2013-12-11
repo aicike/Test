@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Menu = Poco.SystemConst.Menu.VipMessage;
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@section head{
+<script>
+
+    function CheckID() {
+        var vid = $("#ID").val();
+        if (vid == "" || vid == undefined) {
+            JAlert({
+                Message: "未查询到用户！",
+                DialogType: "Ok",
+                BtnOk: "确定"
+            });
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    function selVip() {
+        var cardNum = $("#cardNum").val();
+        if (cardNum == "" || cardNum == undefined) {
+            JAlert({
+                Message: "请输入卡号！",
+                DialogType: "Ok",
+                BtnOk: "确定"
+            });
+            return false;
+        }
+        else {
+            var URL = '@Url.Action("SelVipInfo", "VipMessage")';
+            $.post(URL, { cardNum: cardNum }, function (result) {
+
+
+                var a = result.User.UserLoginInfo.Phone;
+                alert(a);
+            }, "json");
+        }
+
+
+    }
+</script>
+
+}
+@model Poco.VIPInfo
+<div class="title">
+    会员充值
+</div>
+<div class="bodyLeft">
+    <ul class="ulList">
+        <li class="select">@Html.ActionLink("会员管理", "Index", "VipMessage", new { HostName = ViewBag.HostName }, null, true)</li>
+    </ul>
+</div>
+<div class="bodyRight" style="font-size: 14px">
+    @using (Ajax.BeginForm("Recharge", "VipMessage", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {
+         <fieldset>
+            <legend>卡号</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 卡号
+                    </td>
+                    <td class="tdField">
+                        <input type="text" id="cardNum" name="cardNum" /> <input  type="button" class="button" value="查询" id="btnSel"/>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>基本信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 会员名称
+                    </td>
+                    <td class="tdField">
+                        <label id="Uname"></label>
+                       @Html.HiddenFor(a=>a.ID)
+                    </td>
+                </tr>
+                 <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 电话号码
+                    </td>
+                    <td class="tdField">
+                        <label id="Uphone"></label>
+                    </td>
+                </tr>
+                 <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 充值金额
+                    </td>
+                    <td class="tdField">
+                        @Html.TextBoxFor(a => a.Balance)
+                    </td>
+                      <td>
+                      @Html.ValidationMessageFor(a => a.Balance)
+                    </td>
+                </tr>
+            </table>
+
+             <input type="submit" id="btnSubmit" onclick="return CheckID()" value="提交" onclick="return checkPhone()" class="button" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        </fieldset>
+    }
+</div>

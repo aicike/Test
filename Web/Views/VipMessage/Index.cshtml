@@ -26,7 +26,7 @@
     </ul>
 </div>
 <div class="bodyRight" style="font-size: 14px">
-    <div class="option">@Html.ActionLink("添加", "Add", "VipMessage", new { HostName = ViewBag.HostName, id = ViewBag.HID }, null, true)</div>
+    <div class="option">@Html.ActionLink("添加", "Add", "VipMessage", new { HostName = ViewBag.HostName, id = ViewBag.HID }, null, true)   @Html.ActionLink("充值", "Recharge", "VipMessage", new { HostName = ViewBag.HostName, id = ViewBag.HID }, null, true)</div>
     @using (Html.BeginForm("Index", "VipMessage", new { HostName = ViewBag.HostName }, FormMethod.Get, new { enctype = "multipart/form-data" }))
     {
         <table>

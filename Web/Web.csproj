@@ -874,6 +874,7 @@
     <Content Include="Views\VipMessage\Index.cshtml" />
     <Content Include="Views\VipMessage\Add.cshtml" />
     <Content Include="Views\VipMessage\Edit.cshtml" />
+    <Content Include="Views\VipMessage\Recharge.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

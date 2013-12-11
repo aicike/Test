@@ -24,5 +24,12 @@ namespace Interface
         /// <param name="AccountMainID"></param>
         /// <returns>-1 为注册 0 已注册</returns>
         int CheckPhoneGetID(string phone,int AccountMainID);
+
+        /// <summary>
+        /// 根据卡号 查询会员
+        /// </summary>
+        /// <param name="cardNum"></param>
+        /// <returns></returns>
+        VIPInfo getByCardNum(string cardNum,int AccountMainID);
     }
 }
