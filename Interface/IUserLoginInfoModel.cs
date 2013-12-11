@@ -47,5 +47,9 @@ namespace Interface
         /// 找回密码_修改密码
         /// </summary>
         Result FindPwd_ChangePwd(string code, string pwd);
+
+        //根据电话号查询用户
+        UserLoginInfo getUserByPhone(string phone);
+
     }
 }

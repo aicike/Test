@@ -286,6 +286,25 @@
                         </div>
                     </td>
                     <td valign="top">
+                        @if (string.IsNullOrEmpty(Model.HeadImagePath))
+                        {
+                          <div style="width: 120px; height: 120px; overflow: hidden;">
+                            <img id="imgLogo" src="@Url.Content("~/Images/default_avatar.png")" style="width:120px; height:120px"/>
+                        </div>
+                        <span style="font-size: 12px; color: #979797">(120*120)</span>
+                        <div style="width: 80px; height: 80px; overflow: hidden; margin-top: 17px">
+                            <img id="imgLogo2" src="@Url.Content("~/Images/default_avatar.png")" style="width:80px; height:80px"/>
+                        </div>
+                        <span style="font-size: 12px; color: #979797">(80*80)</span>
+                        <div style="width: 32px; height: 32px; overflow: hidden; margin-top: 17px">
+                            <img id="imgLogo3" src="@Url.Content("~/Images/default_avatar.png")" style="width:32px; height:32px"/>
+                        </div>
+                        <span style="font-size: 12px; color: #979797">(32*32)</span>
+                        }
+                        else
+                        { 
+                        
+                        
                         <div style="width: 120px; height: 120px; overflow: hidden;">
                             <img id="imgLogo" src="@Url.Content(Model.HeadImagePath ?? "~/Images/default_avatar.png")" style="width:120px; height:120px"/>
                         </div>
@@ -298,6 +317,7 @@
                             <img id="imgLogo3" src="@Url.Content(Model.HeadImagePath ?? "~/Images/default_avatar.png")" style="width:32px; height:32px"/>
                         </div>
                         <span style="font-size: 12px; color: #979797">(32*32)</span>
+                        }
                         <div style="color: Red; font-size: 14px">
                             提示：请上传小于5MB的图片
                         </div>
@@ -306,7 +326,7 @@
                 <tr>
                     <td colspan="2">
                         <input id="file_upload" name="file_upload" type="file" multiple="false" />
-                        @Html.TextBoxFor(a => a.HeadImagePath, new { style = "width:0px;display:none" })
+                        @Html.HiddenFor(a => a.HeadImagePath)
                         @Html.ValidationMessageFor(a => a.HeadImagePath)
                         <div style="display: none">
                             X1

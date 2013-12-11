@@ -69,5 +69,7 @@ namespace Poco
         public virtual ICollection<PendingMessages> SendPendingMessages { get; set; }
 
         public virtual ICollection<PendingMessages> ReceivePendingMessages { get; set; }
+
+        public virtual ICollection<VIPInfo> VIPInfo { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace Web.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.AccountID = LoginAccount.ID;
             //判断是否打开配置向导
             //获取网站管理员
             var model = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
@@ -58,13 +59,6 @@ namespace Web.Controllers
             //获取用户数
             var AccountUserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
             ViewBag.UserCnt = AccountUserModel.GetAccountUser(LoginAccount.ID);
-
-            
-            ViewBag.AccountID = LoginAccount.ID;
-
-            //获取每日接收消息数
-            
-
 
 
             string WebTitleRemark = SystemConst.WebTitleRemark;

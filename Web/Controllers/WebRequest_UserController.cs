@@ -104,15 +104,28 @@ namespace Web.Controllers
 
             string hostUrl = SystemConst.WebUrlIP;
 
-            var accountList = account_AccountMainModel.GetAccountListByAccountMainID(accountMainID).Select(a => new App_Account
+
+            string headimg = "";
+
+            var accountList = account_AccountMainModel.GetAccountListByAccountMainID(accountMainID)
+            .Select(a => new App_Account
             {
                 ID = a.ID,
                 Name = a.Name,
-                HeadImagePath = hostUrl + Url.Content(a.HeadImagePath),
+                HeadImagePath =a.HeadImagePath ,
                 Email = a.Email,
                 Phone=a.Phone,
                 Role=a.Role.Name
-            });
+            }).ToList();
+            foreach (var item in accountList)
+            {
+                headimg = "";
+                if (!string.IsNullOrEmpty(item.HeadImagePath))
+                {
+                    headimg = hostUrl + Url.Content(item.HeadImagePath ?? "~/Images/default_avatar.png");
+                }
+                item.HeadImagePath = headimg;
+            }
             return Newtonsoft.Json.JsonConvert.SerializeObject(accountList);
         }
 

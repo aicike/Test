@@ -73,6 +73,7 @@
     <Compile Include="TaskAccount.cs" />
     <Compile Include="TaskDetail.cs" />
     <Compile Include="UnreadCnt.cs" />
+    <Compile Include="VIPInfo.cs" />
     <Compile Include="WebAPI_Poco\App_Order.cs" />
     <Compile Include="Enum\EnumBuildingType.cs" />
     <Compile Include="Enum\EnumConversationType.cs" />

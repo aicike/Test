@@ -80,6 +80,7 @@
     <Compile Include="ITemporayInstantMesModel.cs" />
     <Compile Include="IUserLoginInfoModel.cs" />
     <Compile Include="IUserModel.cs" />
+    <Compile Include="IVipMessageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ICityModel.cs" />
     <Compile Include="IDistrictModel.cs" />

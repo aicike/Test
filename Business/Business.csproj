@@ -132,6 +132,7 @@
     <Compile Include="UserModel.cs" />
     <Compile Include="UserLoginInfoModel.cs" />
     <Compile Include="OrderUserInfoModel.cs" />
+    <Compile Include="VipMessageModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

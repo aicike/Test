@@ -194,9 +194,11 @@
     <Compile Include="Controllers\LibraryVoiceController.cs" />
     <Compile Include="Controllers\LibraryVideoController.cs" />
     <Compile Include="Controllers\LibraryImageTextController.cs" />
+    <Compile Include="Controllers\VipMessageController.cs" />
     <Compile Include="Controllers\WebRequest_ChatController.cs" />
     <Compile Include="Controllers\WebRequest_OtherController.cs" />
     <Compile Include="Controllers\WebRequest_ProductController.cs" />
+    <Compile Include="Controllers\WebRequest_PropertyController.cs" />
     <Compile Include="Controllers\WebRequest_TaskController.cs" />
     <Compile Include="Controllers\WebRequest_UserController.cs" />
     <Compile Include="Controllers\WebRequest_AccountController.cs" />
@@ -236,9 +238,6 @@
     <Content Include="File\LoginPageShow\System\5.jpg" />
     <Content Include="File\LoginPageShow\System\6.jpg" />
     <Content Include="File\LoginPageShow\System\7.jpg" />
-    <Content Include="File\platform\1.jpg" />
-    <Content Include="File\platform\2.jpg" />
-    <Content Include="File\platform\3.jpg" />
     <Content Include="Images\404-2.png" />
     <Content Include="Images\android.png" />
     <Content Include="Images\AppDefault.png" />
@@ -872,6 +871,9 @@
     <Content Include="Views\Character\Power.cshtml" />
     <Content Include="Views\Default\QrCodeSkipAccount.cshtml" />
     <Content Include="Views\Default\News.cshtml" />
+    <Content Include="Views\VipMessage\Index.cshtml" />
+    <Content Include="Views\VipMessage\Add.cshtml" />
+    <Content Include="Views\VipMessage\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

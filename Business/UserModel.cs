@@ -36,5 +36,11 @@ namespace Business
         {
             return base.Edit(user);
         }
+        
+        public User getUserByLoginID(int AccountMainID, int LoginID)
+        {
+            var list = List().Where(a => a.AccountMainID == AccountMainID && a.UserLoginInfoID == LoginID).FirstOrDefault();
+            return list;
+        }
     }
 }

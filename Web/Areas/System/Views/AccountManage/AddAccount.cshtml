@@ -289,7 +289,7 @@
                 <tr>
                     <td colspan="2">
                         <input type="file" id="HeadImagePathFile" name="HeadImagePathFile" />
-                        @Html.TextBoxFor(a => a.Account.HeadImagePath, new { style = "width:0px;visibility:hidden" })
+                        @Html.HiddenFor(a => a.Account.HeadImagePath)
                         @Html.ValidationMessageFor(a => a.Account.HeadImagePath)
                         <div style="display: none">
                             X1

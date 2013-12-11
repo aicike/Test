@@ -7,12 +7,39 @@ using Poco;
 using Injection;
 using Interface;
 using System.Data;
+using Poco.Enum;
 
 namespace Web.Controllers
 {
     public class AjaxReportController : BaseController, IController
     {
-        
+        [HttpPost]
+        public string GetAcctionMainReport(int AccountMainID)
+        {
+            //获取报表权限
+            IReportFormPowerModel ReportModel = Factory.Get<IReportFormPowerModel>(SystemConst.IOC_Model.ReportFormPowerModel);
+            var ReportPower = ReportModel.GetReportByAMID(AccountMainID).OrderBy(a=>a.EunmReportID);
+            string ReportName = "";
+            foreach (var item in ReportPower)
+            {
+                switch (item.EunmReportID) {
+                    case (int)EnumReportForm.DayAddPeople:
+                        ReportName += "DayAddPeople,";
+                        break;
+                    case (int)EnumReportForm.DayAddNews:
+                        ReportName += "DayAddNews,";
+                        break;
+                    
+                }
+            }
+            if (ReportName.Length > 0)
+            {
+                ReportName = ReportName.TrimEnd(',');
+            }
+            return ReportName;
+        }
+
+
         /// <summary>
         /// 获取每日净增人数数据
         /// </summary>

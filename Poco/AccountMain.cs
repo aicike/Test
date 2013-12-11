@@ -131,7 +131,11 @@ namespace Poco
         [RegularExpression(@"^\d{1,3}.\d.\d$", ErrorMessage = "版本号格式：x.x.x")]
         public string AndroidSellVersion { get; set; }
 
-        
+        [Display(Name = "随机码")]
+        [Required(ErrorMessage = "请输入随机码")]
+        [StringLength(50, ErrorMessage = "长度小于50")]
+        public string RandomCode { get; set; }
+
 
         /// <summary>
         /// 数据更新信息
@@ -206,6 +210,9 @@ namespace Poco
         public virtual ICollection<ConversationDetailed> ConversationDetailed { get; set; }
 
         public virtual ICollection<ReportFormPower> ReportFormPower { get; set; }
+
+
+        public virtual ICollection<VIPInfo> VIPInfo { get; set; }
         
         
     }

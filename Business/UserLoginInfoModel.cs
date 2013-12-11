@@ -504,5 +504,11 @@ namespace Business
             result = base.Edit(userLoginInfo);
             return result;
         }
+
+        public UserLoginInfo getUserByPhone(string phone)
+        {
+            var list = List().Where(a => a.Phone == phone).FirstOrDefault();
+            return list;
+        }
     }
 }

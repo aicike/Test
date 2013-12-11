@@ -83,6 +83,13 @@ namespace Poco
 
         public virtual Account ParentAccount { get; set; }
 
+
+
+
+
+
+
+
         /// <summary>
         /// 业务字段，不会在数据库中生成该字段
         /// </summary>

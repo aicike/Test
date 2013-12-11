@@ -25,7 +25,13 @@ namespace Interface
 
         Result Edit_ByAccountMain(AccountMain accountMain);
 
-
+        /// <summary>
+        /// 查询 随机编码是否与AccountMain匹配 true：匹配，false:错误
+        /// </summary>
+        /// <param name="AccountMainID"></param>
+        /// <param name="RandomCode"></param>
+        /// <returns></returns>
+        bool CheckPropertyRandomCode(int AccountMainID, string RandomCode);
 
         Result ChangeStatus_Permission(int accountMainID, EnumAccountStatus status, int loginSystemUserID);
 

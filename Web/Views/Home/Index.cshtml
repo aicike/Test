@@ -24,16 +24,12 @@
                 });
             }
 
-           
-            $('#divShowReport').ShowReport({
-                type: "DayAddPeople",
+        
+            $('#divShowReport').ReportPowerIndex({
+                accountmainid: @ViewBag.AMID,
                 accountid: @ViewBag.AccountID
             });
            
-            $('#divShowReport').ShowReport({
-                type: "DayAddNews",
-                accountid: @ViewBag.AccountID
-            });
 
         });
           

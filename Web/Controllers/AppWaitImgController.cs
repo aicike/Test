@@ -78,7 +78,7 @@ namespace Web.Controllers
                 Stream tream = new MemoryStream(buffer);
                 Image img = Image.FromStream(tream);
 
-                Tool.SuperGetPicThumbnail(img, mapePath, 70, 1280, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                Tool.SuperGetPicThumbnail(img, mapePath, 50, 1024, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
 
                 return Url.Content(ImagePath);
 

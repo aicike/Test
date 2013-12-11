@@ -90,7 +90,7 @@ namespace Business
                     return result;
                 }
             }
-            account.HeadImagePath = SystemConst.Business.DefaultHeadImage;
+            account.HeadImagePath = "";//SystemConst.Business.DefaultHeadImage;
             account.AccountStatusID = LookupFactory.GetLookupOptionIdByToken(EnumAccountStatus.Enabled);
             account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
             account.IsActivated = true;
@@ -157,7 +157,7 @@ namespace Business
                     return result;
                 }
             }
-            account.HeadImagePath = SystemConst.Business.DefaultHeadImage;
+            account.HeadImagePath = ""; //SystemConst.Business.DefaultHeadImage;
             account.AccountStatusID = LookupFactory.GetLookupOptionIdByToken(EnumAccountStatus.Enabled);
             account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwd);
             account.IsActivated = true;
@@ -235,12 +235,12 @@ namespace Business
                     return result;
                 }
             }
-            account.HeadImagePath = SystemConst.Business.DefaultHeadImage;
+            account.HeadImagePath = ""; //SystemConst.Business.DefaultHeadImage;
             account.AccountStatusID = LookupFactory.GetLookupOptionIdByToken(EnumAccountStatus.Enabled);
             account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwd);
             account.IsActivated = true;
             result = base.Add(account);
-            if (result.HasError == false && account.HeadImagePath != null)
+            if (result.HasError == false && account.HeadImagePath != null && account.HeadImagePath != "")
             {
                 try
                 {
@@ -314,6 +314,10 @@ namespace Business
                 return result;
             }
             account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
+            if (string.IsNullOrEmpty(account.HeadImagePath))
+            {
+                account.HeadImagePath = "";
+            }
             result = base.Edit(account);
             if (result.HasError == false && HeadImagePathFile != null)
             {
@@ -383,6 +387,11 @@ namespace Business
             {
                 result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
                 return result;
+            } 
+            
+            if (string.IsNullOrEmpty(account.HeadImagePath))
+            {
+                account.HeadImagePath = "";
             }
             //account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
             result = base.Edit(account);
@@ -474,9 +483,12 @@ namespace Business
             //account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
 
             var Yaccount = this.Get(account.ID);
-
+            if (string.IsNullOrEmpty(account.HeadImagePath))
+            {
+                account.HeadImagePath = "";
+            }
             result = base.Edit(account);
-            if (result.HasError == false && account.HeadImagePath != Yaccount.HeadImagePath)
+            if (result.HasError == false && account.HeadImagePath != Yaccount.HeadImagePath && account.HeadImagePath != "")
             {
                 try
                 {
@@ -649,7 +661,7 @@ namespace Business
 
             result = base.Edit(account);
 
-            if (YAccount.HeadImagePath != account.HeadImagePath && account.HeadImagePath!=""&&result.HasError==false)
+            if (YAccount.HeadImagePath != account.HeadImagePath && account.HeadImagePath != "" && result.HasError == false)
             {
 
                 try
@@ -702,7 +714,7 @@ namespace Business
                     throw ex;
                 }
             }
-           
+
             return result;
         }
 

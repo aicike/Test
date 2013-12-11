@@ -167,9 +167,9 @@ namespace Business
             //Tool.SuperGetPicThumbnail(img, imagePath,70,960,0,System.Drawing.Drawing2D.SmoothingMode.HighQuality,System.Drawing.Drawing2D.CompositingQuality.Default,System.Drawing.Drawing2D.InterpolationMode.High);
             if (w > 0)
             {
-                Tool.SuperGetPicThumbnailJT(lsImaFilePath, imagePath, 70, w, h, x1, y1, tw, th, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                Tool.SuperGetPicThumbnailJT(lsImaFilePath, imagePath, 55, w, h, x1, y1, tw, th, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
 
-                Tool.SuperGetPicThumbnail(imagePath, imagePath2, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                Tool.SuperGetPicThumbnail(imagePath, imagePath2, 55, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
                 appWaitImg.ImgPath = path + imageName2;
                 if (File.Exists(imagePath))
                 {
@@ -178,7 +178,7 @@ namespace Business
             }
             else
             {
-                Tool.SuperGetPicThumbnail(lsImaFilePath, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                Tool.SuperGetPicThumbnail(lsImaFilePath, imagePath, 55, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
                 appWaitImg.ImgPath = path + imageName;
             }
 

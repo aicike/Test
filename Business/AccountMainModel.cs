@@ -59,6 +59,8 @@ namespace Business
             accountMain.LogoImagePath = SystemConst.Business.DefaultLogo;
             accountMain.LogoImageThumbnailPath = SystemConst.Business.DefaultLogo;
             accountMain.AccountStatusID = LookupFactory.GetLookupOptionIdByToken(EnumAccountStatus.Enabled);
+            CommonModel com = new CommonModel();
+            accountMain.RandomCode = com.CreateRandom("", 6);
             var result = base.Add(accountMain);
             if (result.HasError == false && LogoImagePath != null)
             {
@@ -85,8 +87,7 @@ namespace Business
                     {
                         Directory.CreateDirectory(fileLibraryPath);
                     }
-                    CommonModel com = new CommonModel();
-                    var LastName = com.CreateRandom("", 5)+LogoImagePath.FileName.GetFileSuffix();
+                    var LastName = com.CreateRandom("", 5) + LogoImagePath.FileName.GetFileSuffix();
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                     var height = 58;
                     var imageName = string.Format("{0}_{1}", token, LastName);
@@ -157,8 +158,8 @@ namespace Business
                     throw ex;
                 }
 
-                string sql =string.Format("INSERT INTO dbo.Role ( SystemStatus, NAME,IsCanDelete,Token,AccountMainID ) VALUES  ( 0,'管理员',0,'AccountAdmin',{0})"
-                           + " insert into classify(SystemStatus,AccountMainID,Name,ParentID,[Level],sort,Subordinate) values(0,{0},'{1}',0,0,0,0)", accountMain.ID,accountMain.Name);
+                string sql = string.Format("INSERT INTO dbo.Role ( SystemStatus, NAME,IsCanDelete,Token,AccountMainID ) VALUES  ( 0,'管理员',0,'AccountAdmin',{0})"
+                           + " insert into classify(SystemStatus,AccountMainID,Name,ParentID,[Level],sort,Subordinate) values(0,{0},'{1}',0,0,0,0)", accountMain.ID, accountMain.Name);
                 base.SqlExecute(sql);
             }
             return result;
@@ -241,7 +242,7 @@ namespace Business
                         accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
                     }
 
-                   
+
                     result = Edit(accountMain);
                 }
                 catch (Exception ex)
@@ -274,7 +275,8 @@ namespace Business
                     accountMain.AndroidDownloadPath = Downpath2;
                 }
 
-                if (result.HasError == false && AndroidSellPathFile != null) {
+                if (result.HasError == false && AndroidSellPathFile != null)
+                {
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                     //删除原路径
                     var androidAbsolutePath = HttpContext.Current.Server.MapPath(accountMain.AndroidSellDownloadPath);
@@ -461,16 +463,16 @@ namespace Business
 
 
 
-                    
+
                     Tool.SuperGetPicThumbnail(lsImaFilePath, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
                     //缩略图
                     Tool.SuperGetPicThumbnail(imagePath, imageThumbnailPath, 70, 0, 58, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
 
 
                     accountMain.LogoImagePath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
-                  
+
                     accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageThumbnailName;
-                  
+
 
                     result = Edit(accountMain);
                 }
@@ -480,7 +482,7 @@ namespace Business
                 }
 
             }
-       
+
             if (result.HasError == false)
             {
                 //IAccountMainExpandInfoModel accountMainExpandInfoModel = Factory.Get<IAccountMainExpandInfoModel>(SystemConst.IOC_Model.AccountMainExpandInfoModel);
@@ -622,10 +624,10 @@ namespace Business
                         if (string.IsNullOrEmpty(accountMain.AndroidDownloadPath) == false)
                         {
                             versionInfo.VersionCode = accountMain.AndroidVersion;
-                            appName = accountMain.AndroidDownloadPath.Substring(accountMain.AndroidDownloadPath.LastIndexOf('_')+1);
+                            appName = accountMain.AndroidDownloadPath.Substring(accountMain.AndroidDownloadPath.LastIndexOf('_') + 1);
                             appName = appName.Substring(0, appName.LastIndexOf('.')) + versionInfo.VersionCode + ".apk";
                             string path = (accountMain.AndroidDownloadPath.Replace("~", ""));
-                            path = path.Substring(0, path.LastIndexOf('/')+1) + appName;
+                            path = path.Substring(0, path.LastIndexOf('/') + 1) + appName;
                             versionInfo.AppPath = SystemConst.WebUrlIP + (accountMain.AndroidDownloadPath.Replace("~", ""));
                             versionInfo.AppName = appName;
                         }
@@ -692,6 +694,26 @@ namespace Business
                 versionInfo.HasNewVersion = true;
             }
             return versionInfo;
+        }
+
+
+        /// <summary>
+        /// 验证随机码与物业是否匹配 true：匹配，false:错误
+        /// </summary>
+        /// <param name="AccountMainID"></param>
+        /// <param name="RandomCode"></param>
+        /// <returns></returns>
+        public bool CheckPropertyRandomCode(int AccountMainID, string RandomCode)
+        {
+            var list = this.List().Where(a => a.ID == AccountMainID && a.RandomCode == RandomCode);
+            if (list.Count() > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

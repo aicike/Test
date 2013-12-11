@@ -79,6 +79,7 @@ namespace Poco
             public const string Order = "Order";
             public const string Task = "Task";
             public const string Character = "Character";
+            public const string VipMessage = "VipMessage";
         }
 
         public class IOC_Model
@@ -153,7 +154,7 @@ namespace Poco
             public const string MessageGroupChatModel = "MessageGroupChatModel";
 
             public const string ReportFormPowerModel = "ReportFormPowerModel";
-            
+            public const string VipMessageModel = "VipMessageModel";
         }
     }
 }

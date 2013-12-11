@@ -22,5 +22,8 @@ namespace Interface
         /// 根据 accountMainID和 accountID获取全部用户列表
         /// </summary>
         List<User> GetUserListByAccountID(int accountMainID, int accountID);
+
+
+        User getUserByLoginID(int AccountMainID, int LoginID);
     }
 }

@@ -28,13 +28,18 @@ namespace Web.Controllers
             }
             var account = result.Entity as Account;
             string hostUrl = SystemConst.WebUrlIP;
+            string HeadPath = "";
+            if (!string.IsNullOrEmpty(account.HeadImagePath))
+            {
+                HeadPath = hostUrl + Url.Content(account.HeadImagePath ?? "~/Images/default_avatar.png");
+            }
             result = new Result()
             {
                 Entity = new App_Account()
                 {
                     ID = account.ID,
                     Name = account.Name,
-                    HeadImagePath = hostUrl + Url.Content(account.HeadImagePath ?? ""),
+                    HeadImagePath = HeadPath,
                     Phone = account.Phone,
                     Email = account.Email,
                     Pwd = pwd
@@ -52,14 +57,19 @@ namespace Web.Controllers
         {
             var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             var account = accountModel.Get(aid);
+            string HeadPath = "";
+            if (!string.IsNullOrEmpty(account.HeadImagePath))
+            {
+                HeadPath = SystemConst.WebUrlIP + Url.Content(account.HeadImagePath ?? "~/Images/default_avatar.png");
+            }
             Result result = new Result()
             {
                 Entity = new App_Account()
                 {
                     ID = account.ID,
                     Name = account.Name,
-                    HeadImagePath = SystemConst.WebUrlIP + Url.Content(account.HeadImagePath),
-                    Phone=account.Phone,
+                    HeadImagePath = HeadPath,
+                    Phone = account.Phone,
                     Email = account.Email,
                     Pwd = account.LoginPwd
                 }
@@ -98,7 +108,7 @@ namespace Web.Controllers
                     account.LoginPwd = DESEncrypt.Encrypt(value);
                     break;
                 case "headimg":
-                    account.HeadImagePath = value.Replace(SystemConst.WebUrlIP,"~");
+                    account.HeadImagePath = value.Replace(SystemConst.WebUrlIP, "~");
                     break;
             }
             account.LoginPwdPage = "000000";
@@ -124,7 +134,7 @@ namespace Web.Controllers
                         ID = item.ID,
                         Name = item.UserLoginInfo.Name,
                         NameNote = item.Name,
-                        HeadImagePath = string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrlIP + Url.Content(item.UserLoginInfo.HeadImagePath.DefaultHeadImage() ?? "")) : (SystemConst.WebUrlIP + Url.Content(item.UserLoginInfo.HeadImagePath)),
+                        HeadImagePath = string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrlIP + Url.Content(item.UserLoginInfo.HeadImagePath.DefaultHeadImage() ?? "~/Images/default_avatar.png")) : (SystemConst.WebUrlIP + Url.Content(item.UserLoginInfo.HeadImagePath ?? "~/Images/default_avatar.png")),
                         GN = item.Account_Users.FirstOrDefault().Group.GroupName
                     });
                 }
@@ -156,7 +166,7 @@ namespace Web.Controllers
                             ID = a.UserID,
                             Name = a.User.UserLoginInfo.Name,
                             NameNote = a.User.Name,
-                            HeadImagePath = string.IsNullOrEmpty(a.User.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrlIP + Url.Content(a.User.UserLoginInfo.HeadImagePath.DefaultHeadImage() ?? "")) : (SystemConst.WebUrlIP + Url.Content(a.User.UserLoginInfo.HeadImagePath)),
+                            HeadImagePath = string.IsNullOrEmpty(a.User.UserLoginInfo.HeadImagePath) ? (SystemConst.WebUrlIP + Url.Content(a.User.UserLoginInfo.HeadImagePath.DefaultHeadImage() ?? "~/Images/default_avatar.png")) : (SystemConst.WebUrlIP + Url.Content(a.User.UserLoginInfo.HeadImagePath ?? "~/Images/default_avatar.png")),
                             GN = item.GroupName
                         }).ToList()
                     });
@@ -183,7 +193,7 @@ namespace Web.Controllers
                 appuser.Phone = user.UserLoginInfo.Phone ?? "";
                 appuser.Email = user.UserLoginInfo.Email ?? "";
                 appuser.NameNote = user.Name ?? "";
-                appuser.HeadImagePath = string.IsNullOrEmpty(user.UserLoginInfo.HeadImagePath) ? "" : (SystemConst.WebUrlIP + Url.Content(user.UserLoginInfo.HeadImagePath ?? ""));
+                appuser.HeadImagePath = string.IsNullOrEmpty(user.UserLoginInfo.HeadImagePath) ? "" : (SystemConst.WebUrlIP + Url.Content(user.UserLoginInfo.HeadImagePath ?? "~/Images/default_avatar.png"));
                 appuser.Pwd = Common.DESEncrypt.Decrypt(user.UserLoginInfo.LoginPwd);
                 result.Entity = appuser;
             }

@@ -38,7 +38,7 @@ namespace AcceptanceServer
             //{
             //    Listen();
             //});
-           
+
             //t.Start();
 
             ThreadStart myThreadDelegate = new ThreadStart(Listen);
@@ -85,11 +85,18 @@ namespace AcceptanceServer
         public delegate void dosomethings();
         public void AcceptCallBack(IAsyncResult ar)
         {
+
             allDone.Set();
 
             Socket newSock = listener.EndAccept(ar);
-
-            AcceptanceServer.XmppServerConnection con = new AcceptanceServer.XmppServerConnection(this, newSock);
+            try
+            {
+                AcceptanceServer.XmppServerConnection con = new AcceptanceServer.XmppServerConnection(this, newSock);
+            }
+            catch
+            {
+                newSock.Close();
+            }
         }
 
         #region(源数据)
@@ -162,9 +169,9 @@ namespace AcceptanceServer
         //}
 
         //初始化在线用户dt
-     
 
- 
+
+
 
 
 
