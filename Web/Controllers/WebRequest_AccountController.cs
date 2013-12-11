@@ -199,5 +199,21 @@ namespace Web.Controllers
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
+
+        /// <summary>
+        /// 修改用户备注
+        /// </summary>
+        /// <returns></returns>
+        public string ChangeUserNameNote(int userID, string nameNote)
+        {
+            var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+            var user = userModel.Get(userID);
+            if (user != null)
+            {
+                user.Name = nameNote;
+            }
+            var result = userModel.Edit(user);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
     }
 }

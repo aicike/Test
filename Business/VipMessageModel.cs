@@ -10,6 +10,10 @@ namespace Business
 {
     public class VipMessageModel : BaseModel<VIPInfo>, IVipMessageModel
     {
+        public VIPInfo GetVIPInfoByID(int userID)
+        {
+            return List().Where(a => a.UserID == userID).FirstOrDefault();
+        }
 
         public IQueryable<VIPInfo> getList(int AccountMainID, string cardNum, string phoneNum)
         {

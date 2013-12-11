@@ -24,5 +24,7 @@ namespace Interface
         /// <param name="AccountMainID"></param>
         /// <returns>-1 为注册 0 已注册</returns>
         int CheckPhoneGetID(string phone,int AccountMainID);
+
+        VIPInfo GetVIPInfoByID(int userID);
     }
 }
