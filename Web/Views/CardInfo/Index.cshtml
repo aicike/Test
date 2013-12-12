@@ -99,14 +99,14 @@
                     </td>
                     <td>@item.CreateDate.ToString("yyyy-MM-dd hh:mm")
                     </td>
-                    <td>
+                    <td class="operation">
                         @if (item.Status == 0)
                         { 
-                            @:冻结
+                             @Ajax.ActionLink("冻结", "SetStatus", "CardInfo", new { HostName = ViewBag.HostName, id = item.ID, status = item.Status }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定解锁该卡?','" + Url.Action("SetStatus", "CardInfo", new { HostName = ViewBag.HostName, id = item.ID, status = item.Status }) + "',null)" }, true)
                         }
                         else
                         { 
-                            @:正常
+                             @Ajax.ActionLink("正常", "SetStatus", "CardInfo", new { HostName = ViewBag.HostName, id = item.ID, status = item.Status }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定冻结该卡?','" + Url.Action("SetStatus", "CardInfo", new { HostName = ViewBag.HostName, id = item.ID, status = item.Status }) + "',null)" }, true)
                         }
                     </td>
                 </tr>

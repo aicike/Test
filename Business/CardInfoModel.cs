@@ -21,10 +21,49 @@ namespace Business
 
             if (!string.IsNullOrEmpty(cardNum))
             {
-                list = list.Where(a => a.CardPrefix.Contains(cardNum.Trim()));
+                list = list.Where(a => a.CardNum.Contains(cardNum.Trim()));
             }
 
             return list;
+        }
+
+
+        public bool ckbCardRepeat(string cardNum, string qz,int AccountMainID)
+        {
+            var list = List().Where(a => a.AccountMainID == AccountMainID && a.CardNum == cardNum && a.CardPrefix == qz);
+            if (list.Count() > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public Result DelAll(string CardIDs)
+        {
+            Result result = new Result();
+            string sql = "delete CardInfo where ID in(" + CardIDs + ")";
+            int cnt = base.SqlExecute(sql);
+            if (cnt <= 0)
+            {
+                result.HasError = true;
+            }
+            return result;
+        }
+
+
+        public Result SetStatus(int ID, int Status)
+        {
+            Result result = new Result();
+            string sql = "update CardInfo set Status = "+Status+"  where ID =" + ID ;
+            int cnt = base.SqlExecute(sql);
+            if (cnt <= 0)
+            {
+                result.HasError = true;
+            }
+            return result;
         }
     }
 }

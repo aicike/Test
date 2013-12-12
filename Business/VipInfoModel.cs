@@ -79,5 +79,19 @@ namespace Business
             var list = List().Where(a => a.AccountMainID == AccountMainID&& a.CardInfo.CardNum==cardNum.Trim());
             return list.FirstOrDefault();
         }
+
+
+        public bool ckbIsbind(int [] CardIDs)
+        {
+            var list = List().Where(a => CardIDs.Contains(a.CardInfoID));
+            if (list.Count() > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

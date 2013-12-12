@@ -58,7 +58,10 @@ namespace Web.Controllers
             cardinfo.AccountMainID = LoginAccount.CurrentAccountMainID;
             cardinfo.CreateDate = DateTime.Now;
             var CardModel = Factory.Get<ICardInfoModel>(SystemConst.IOC_Model.CardInfoModel);
-
+            if (CardModel.ckbCardRepeat(cardinfo.CardNum, cardinfo.CardPrefix, LoginAccount.CurrentAccountMainID))
+            {
+                return JavaScript(AlertJS_NoTag(new Dialog("卡号重复！")));
+            }
             var result = CardModel.Add(cardinfo);
             if (result.HasError)
             {
@@ -72,12 +75,23 @@ namespace Web.Controllers
         {
             var checkboxMenu = Request["ckbOK"];
 
-
             if (!string.IsNullOrEmpty(checkboxMenu))
             {
-                string[] str = checkboxMenu.Split(',');
+                int[] CardIDs = checkboxMenu.Split(',').ConvertToIntArray();
+               
 
-                return Alert(new Dialog("删除成功"));
+                var VipModel = Factory.Get<IVipInfoModel>(SystemConst.IOC_Model.VipInfoModel);
+                if (VipModel.ckbIsbind(CardIDs))
+                {
+                    return Alert(new Dialog("您选中的卡号中 有被绑定,不能删除！"));
+                }
+                else
+                {
+                    var CardModel = Factory.Get<ICardInfoModel>(SystemConst.IOC_Model.CardInfoModel);
+                    var result = CardModel.DelAll(checkboxMenu);
+                }
+
+                return JavaScript("window.location.href='" + Url.Action("Index", "CardInfo", new { HostName = LoginAccount.HostName }) + "'");
             }
             else {
 
@@ -85,6 +99,21 @@ namespace Web.Controllers
             }
             
         }
+
+         public ActionResult SetStatus(int id,int status)
+         {
+             var CardModel = Factory.Get<ICardInfoModel>(SystemConst.IOC_Model.CardInfoModel);
+             if (status == 0)
+             {
+                 status = 1;
+             }
+             else
+             {
+                 status = 0;
+             }
+             CardModel.SetStatus(id,status);
+             return JavaScript("window.location.href='" + Url.Action("Index", "CardInfo", new { HostName = LoginAccount.HostName }) + "'");
+         }
 
     }
 }

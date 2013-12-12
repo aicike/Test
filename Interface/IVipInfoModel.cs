@@ -26,10 +26,19 @@ namespace Interface
         int CheckPhoneGetID(string phone,int AccountMainID);
 
         VIPInfo GetVIPInfoByID(int userID);
+
         /// 根据卡号 查询会员
         /// </summary>
         /// <param name="cardNum"></param>
         /// <returns></returns>
         VIPInfo getByCardNum(string cardNum,int AccountMainID);
+
+
+        /// <summary>
+        /// 校验是否绑定
+        /// </summary>
+        /// <param name="CardIDs">卡ID</param>
+        /// <returns>true:已绑定 false：未绑定</returns>
+        bool ckbIsbind(int[] CardIDs);
     }
 }
