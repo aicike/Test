@@ -286,6 +286,11 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
+        /// <summary>
+        /// 获取VIP信息
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
         public string GetVIPInfo(int userID)
         {
             IVipInfoModel model = Factory.Get<IVipInfoModel>(SystemConst.IOC_Model.VipInfoModel);
@@ -305,6 +310,25 @@ namespace Web.Controllers
                 result.Entity = entity;
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+        /// <summary>
+        /// 检查是否有VIP信息
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public string CheckHasVIPInfo(int userID)
+        {
+            IVipInfoModel model = Factory.Get<IVipInfoModel>(SystemConst.IOC_Model.VipInfoModel);
+            var vipinfo = model.GetVIPInfoByID(userID);
+            if (vipinfo == null)
+            {
+                return "false";
+            }
+            else
+            {
+                return "true";
+            }
         }
     }
 }
