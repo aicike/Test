@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Menu = Poco.SystemConst.Menu.VipInfo;
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+
+        $(function () {
+            $("#Balance").val(0);
+        });
+
+    </script>
+}
+@model Poco.CardInfo
+<div class="title">
+    添加卡片
+</div>
+<div class="bodyLeft">
+    <ul class="ulList">
+        <li>@Html.ActionLink("会员管理", "Index", "VipInfo", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li class="select">@Html.ActionLink("卡片管理", "Index", "CardInfo", new { HostName = ViewBag.HostName }, null, true)</li>
+    </ul>
+</div>
+<div class="bodyRight" style="font-size: 14px">
+    @using (Ajax.BeginForm("Add", "CardInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {
+        <fieldset>
+            <legend>基本信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 前缀
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.CardPrefix)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.CardPrefix)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 卡号
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.CardNum)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.CardNum)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 初始金额
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Balance)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Balance)
+                    </td>
+                </tr>
+            </table>
+
+            <div class="action">
+            <input type="submit" id="btnSubmit" value="保存" onclick="return checkPhone()" class="button" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+        </fieldset>
+    }
+</div>
+<div style="clear: both">
+</div>

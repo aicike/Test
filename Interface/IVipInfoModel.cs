@@ -6,10 +6,10 @@ using Poco;
 
 namespace Interface
 {
-    public interface IVipMessageModel : IBaseModel<VIPInfo>
+    public interface IVipInfoModel : IBaseModel<VIPInfo>
     {
         /// <summary>
-        /// 获取用户列表
+        /// 获取会员列表
         /// </summary>
         /// <param name="AccountMainID"></param>
         /// <param name="cardNum"></param>
@@ -25,7 +25,7 @@ namespace Interface
         /// <returns>-1 为注册 0 已注册</returns>
         int CheckPhoneGetID(string phone,int AccountMainID);
 
-        /// <summary>
+        VIPInfo GetVIPInfoByID(int userID);
         /// 根据卡号 查询会员
         /// </summary>
         /// <param name="cardNum"></param>

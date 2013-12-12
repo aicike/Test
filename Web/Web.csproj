@@ -161,6 +161,7 @@
     <Compile Include="Controllers\AppWaitImgController.cs" />
     <Compile Include="Controllers\BaseController\BaseController.cs" />
     <Compile Include="Controllers\BasisSetController.cs" />
+    <Compile Include="Controllers\CardInfoController.cs" />
     <Compile Include="Controllers\CharacterController.cs" />
     <Compile Include="Controllers\ClassifyController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
@@ -194,7 +195,7 @@
     <Compile Include="Controllers\LibraryVoiceController.cs" />
     <Compile Include="Controllers\LibraryVideoController.cs" />
     <Compile Include="Controllers\LibraryImageTextController.cs" />
-    <Compile Include="Controllers\VipMessageController.cs" />
+    <Compile Include="Controllers\VipInfoController.cs" />
     <Compile Include="Controllers\WebRequest_ChatController.cs" />
     <Compile Include="Controllers\WebRequest_OtherController.cs" />
     <Compile Include="Controllers\WebRequest_ProductController.cs" />
@@ -871,10 +872,12 @@
     <Content Include="Views\Character\Power.cshtml" />
     <Content Include="Views\Default\QrCodeSkipAccount.cshtml" />
     <Content Include="Views\Default\News.cshtml" />
-    <Content Include="Views\VipMessage\Index.cshtml" />
-    <Content Include="Views\VipMessage\Add.cshtml" />
-    <Content Include="Views\VipMessage\Edit.cshtml" />
-    <Content Include="Views\VipMessage\Recharge.cshtml" />
+    <Content Include="Views\VipInfo\Index.cshtml" />
+    <Content Include="Views\VipInfo\Add.cshtml" />
+    <Content Include="Views\VipInfo\Edit.cshtml" />
+    <Content Include="Views\VipInfo\Recharge.cshtml" />
+    <Content Include="Views\CardInfo\Index.cshtml" />
+    <Content Include="Views\CardInfo\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

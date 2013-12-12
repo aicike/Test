@@ -19,13 +19,8 @@ namespace Poco
         public int? UserID { get; set; }
         public virtual User User { get; set; }
 
-        [Display(Name = "卡号")]
-        [Required(ErrorMessage = "请输入卡号")]
-        public string CardNumber { get; set; }
-
-        [Display(Name = "余额")]
-        [Required(ErrorMessage = "请输入余额")]
-        public decimal Balance { get; set; }
+        public int CardInfoID { get; set; }
+        public virtual CardInfo CardInfo { get; set; }
 
         [Display(Name = "开卡日期")]
         [Required(ErrorMessage = "请输入开卡日期")]
@@ -37,6 +32,9 @@ namespace Poco
         [Display(Name = "积分")]
         public int score{get;set;}
 
+        /// <summary>
+        /// 0:冻结 1：正常
+        /// </summary>
         [Display(Name = "状态")]
         public int Status { get; set; }
     }

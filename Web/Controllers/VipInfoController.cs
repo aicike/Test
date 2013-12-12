@@ -10,7 +10,7 @@ using Interface;
 
 namespace Web.Controllers
 {
-    public class VipMessageController : ManageAccountController
+    public class VipInfoController : ManageAccountController
     {
         //
         // GET: /VipMessage/
@@ -39,7 +39,7 @@ namespace Web.Controllers
                 ViewBag.phoneNum = "";
             }
 
-            var vipModel = Factory.Get<IVipMessageModel>(SystemConst.IOC_Model.VipMessageModel);
+            var vipModel = Factory.Get<IVipInfoModel>(SystemConst.IOC_Model.VipInfoModel);
             var viplist = vipModel.getList(LoginAccount.CurrentAccountMainID, cardNum, phoneNum).ToPagedList(id ?? 1, 15);
 
             return View(viplist);
@@ -56,7 +56,7 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult Add(VIPInfo vipinfo, string phoneNum)
         {
-            var vipModel = Factory.Get<IVipMessageModel>(SystemConst.IOC_Model.VipMessageModel);
+            var vipModel = Factory.Get<IVipInfoModel>(SystemConst.IOC_Model.VipInfoModel);
             var ID = vipModel.CheckPhoneGetID(phoneNum, LoginAccount.CurrentAccountMainID);
             if (ID == 0)
             {
@@ -84,7 +84,7 @@ namespace Web.Controllers
             ViewBag.Title = webTitle;
             ViewBag.HostName = LoginAccount.HostName;
 
-            var vipModel = Factory.Get<IVipMessageModel>(SystemConst.IOC_Model.VipMessageModel);
+            var vipModel = Factory.Get<IVipInfoModel>(SystemConst.IOC_Model.VipInfoModel);
             var vipinfo = vipModel.Get(id);
 
 
@@ -93,7 +93,7 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult Edit(VIPInfo vipinfo)
         {
-            var vipModel = Factory.Get<IVipMessageModel>(SystemConst.IOC_Model.VipMessageModel);
+            var vipModel = Factory.Get<IVipInfoModel>(SystemConst.IOC_Model.VipInfoModel);
             vipModel.Edit(vipinfo);
             return JavaScript("window.location.href='" + Url.Action("Index", "VipMessage", new { HostName = LoginAccount.HostName }) + "'");
         }
@@ -125,7 +125,7 @@ namespace Web.Controllers
         [HttpPost]
         public string SelVipInfo(string cardNum)
         {
-            var vipModel = Factory.Get<IVipMessageModel>(SystemConst.IOC_Model.VipMessageModel);
+            var vipModel = Factory.Get<IVipInfoModel>(SystemConst.IOC_Model.VipInfoModel);
             var vipinfo = vipModel.getByCardNum(cardNum,LoginAccount.CurrentAccountMainID);
             return Newtonsoft.Json.JsonConvert.SerializeObject(vipinfo);
         }

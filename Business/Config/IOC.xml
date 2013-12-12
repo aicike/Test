@@ -67,7 +67,10 @@
   <object id="HolidayModel" type="Business.HolidayModel" parent="EFModel" singleton="false"></object>
   <object id="MessageGroupChatModel" type="Business.MessageGroupChatModel" parent="EFModel" singleton="false"></object>
   <object id="ReportFormPowerModel" type="Business.ReportFormPowerModel" parent="EFModel" singleton="false"></object>
-  <object id="VipMessageModel" type="Business.VipMessageModel" parent="EFModel" singleton="false"></object>
+  <object id="VipInfoModel" type="Business.VipInfoModel" parent="EFModel" singleton="false"></object>
+  <object id="CardInfoModel" type="Business.CardInfoModel" parent="EFModel" singleton="false"></object>
+  
+
 
   <object id="Push_IOS" type="Business.Push_IOS" singleton="false">
   </object>

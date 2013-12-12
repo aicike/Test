@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Menu = Poco.SystemConst.Menu.VipInfo;
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@model PagedList<Poco.CardInfo>
+@section head{
+    <script>
+        $(function () {
+            $("#cardNum").val('@ViewBag.cardNum');
+            $("#qz").val('@ViewBag.qz');
+
+
+            $("#delAll").attr("href", "#");
+            $("#delAll").click(function () {
+                $("#del").click();
+
+            });
+        });
+
+        function ChickALL() {
+            var ckball = $("#ckbAll").is(':checked');
+
+            $("#tableList :checkbox").attr("checked", ckball);
+
+            $("#playList :checkbox").attr("checked", ckball);
+        }
+    </script>
+}
+<div class="title">
+    卡片管理</div>
+<div class="bodyLeft">
+    <ul class="ulList">
+        <li>@Html.ActionLink("会员管理", "Index", "VipInfo", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li class="select">@Html.ActionLink("卡片管理", "Index", "CardInfo", new { HostName = ViewBag.HostName }, null, true)</li>
+    </ul>
+</div>
+<div class="bodyRight" style="font-size: 14px">
+    <div class="option">
+        @Html.ActionLink("添加", "Add", "CardInfo", new { HostName = ViewBag.HostName }, null, true)
+        @Html.ActionLink("批量删除", "Delete", "CardInfo", new { HostName = ViewBag.HostName }, new { id="delAll" }, true)
+   </div>
+    @using (Html.BeginForm("Index", "CardInfo", new { HostName = ViewBag.HostName }, FormMethod.Get, new { enctype = "multipart/form-data" }))
+    {
+        <table>
+            <tr>
+                <td>
+                    前缀：
+                </td>
+                <td>
+                    <input type="text" id="qz" name="qz" />
+                </td>
+                <td>
+                    卡号：
+                </td>
+                <td>
+                    <input type="text" id="cardNum" name="cardNum" />
+                </td>
+                <td width="100px">
+                    <input type="submit" id="btnSubmit" value="查询" class="button" style="margin-left: 20px" />
+                </td>
+            </tr>
+        </table>
+               
+    }
+     @using (Ajax.BeginForm("Delete", "CardInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert"}))
+    {
+        <table class="tableList" id="tableList" cellpadding="0" cellspacing="0">
+            <tr>
+                <th width="50px">
+                    <input type="checkbox" id="ckbAll" name="ckbAll" onclick="ChickALL()" />
+                </th>
+                <th width="80px">
+                    前缀
+                </th>
+                <th>
+                    卡号
+                </th>
+                <th width="120px">
+                    金额
+                </th>
+                <th>
+                    创建日期
+                </th>
+                <th>
+                    当前状态
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" id="ckbOK" name="ckbOK" value="@item.ID" />
+                    </td>
+                    <td>@item.CardPrefix
+                    </td>
+                    <td>@item.CardNum
+                    </td>
+                    <td>@item.Balance
+                    </td>
+                    <td>@item.CreateDate.ToString("yyyy-MM-dd hh:mm")
+                    </td>
+                    <td>
+                        @if (item.Status == 0)
+                        { 
+                            @:冻结
+                        }
+                        else
+                        { 
+                            @:正常
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+          <input type="submit" id="del" style="margin-right: 20px; visibility:hidden" />
+    }
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
+<div style="clear: both">
+</div>

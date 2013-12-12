@@ -112,10 +112,10 @@ namespace Web.Controllers
             {
                 ID = a.ID,
                 Name = a.Name,
-                HeadImagePath =a.HeadImagePath ,
+                HeadImagePath = a.HeadImagePath,
                 Email = a.Email,
-                Phone=a.Phone,
-                Role=a.Role.Name
+                Phone = a.Phone,
+                Role = a.Role.Name
             }).ToList();
             foreach (var item in accountList)
             {
@@ -282,6 +282,27 @@ namespace Web.Controllers
                     cd = house == null ? "" : house.HCompletedDate.ToString("yyyy年MM月dd日"),//竣工时间
                     t = house == null ? "" : house.Traffic ?? ""//交通
                 };
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+        public string GetVIPInfo(int userID)
+        {
+            IVipInfoModel model = Factory.Get<IVipInfoModel>(SystemConst.IOC_Model.VipInfoModel);
+            var vipinfo = model.GetVIPInfoByID(userID);
+            Result result = new Result();
+            if (vipinfo == null)
+            {
+                result.Error = "未找到会员卡信息，请稍后重试。";
+            }
+            else
+            {
+                App_VIPInfo entity = new App_VIPInfo();
+                entity.ID = vipinfo.ID;
+                entity.Balance = vipinfo.CardInfo.Balance;
+                entity.score = vipinfo.score;
+                entity.CreateDate = vipinfo.CreateDate.ToString("yyyy-MM-dd");
+                result.Entity = entity;
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }

@@ -213,7 +213,7 @@ namespace Poco
 
 
         public virtual ICollection<VIPInfo> VIPInfo { get; set; }
-        
-        
+
+        public virtual ICollection<CardInfo> CardInfo { get; set; }
     }
 }

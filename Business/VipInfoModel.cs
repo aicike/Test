@@ -8,8 +8,12 @@ using Injection;
 
 namespace Business
 {
-    public class VipMessageModel : BaseModel<VIPInfo>, IVipMessageModel
+    public class VipInfoModel : BaseModel<VIPInfo>, IVipInfoModel
     {
+        public VIPInfo GetVIPInfoByID(int userID)
+        {
+            return List().Where(a => a.UserID == userID).FirstOrDefault();
+        }
 
         public IQueryable<VIPInfo> getList(int AccountMainID, string cardNum, string phoneNum)
         {
@@ -17,12 +21,12 @@ namespace Business
 
             if (!string.IsNullOrEmpty(cardNum))
             {
-                list = list.Where(a => a.User.UserLoginInfo.Phone.Contains(phoneNum.Trim()));
+                list = list.Where(a => a.User.UserLoginInfo.Phone.Contains(cardNum.Trim()));
             }
 
             if (!string.IsNullOrEmpty(phoneNum))
             {
-                list = list.Where(a => a.CardNumber.Contains(cardNum.Trim()));
+                list = list.Where(a => a.CardInfo.CardNum.Contains(phoneNum.Trim()));
             }
 
             return list;
@@ -72,7 +76,7 @@ namespace Business
 
         public VIPInfo getByCardNum(string cardNum, int AccountMainID)
         {
-            var list = List().Where(a => a.AccountMainID == AccountMainID&& a.CardNumber==cardNum.Trim());
+            var list = List().Where(a => a.AccountMainID == AccountMainID&& a.CardInfo.CardNum==cardNum.Trim());
             return list.FirstOrDefault();
         }
     }
