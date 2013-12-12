@@ -330,5 +330,18 @@ namespace Web.Controllers
                 return "true";
             }
         }
+
+        public string GetVIPInfoExpenseDetailList(int userID)
+        {
+            IVIPInfoExpenseDetailModel model = Factory.Get<IVIPInfoExpenseDetailModel>(SystemConst.IOC_Model.VIPInfoExpenseDetailModel);
+            var list = model.GetByUserID(userID).ToList().Select(a => new App_VIPInfoExpenseDetail()
+            {
+                ID=a.ID,
+                ExpenseDate=a.ExpenseDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                ExpensePrice=a.ExpensePrice,
+                Balance=a.Balance
+            });
+            return Newtonsoft.Json.JsonConvert.SerializeObject(list);
+        }
     }
 }

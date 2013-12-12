@@ -30,12 +30,14 @@ namespace Poco
         public int? VIPType { get; set; }
 
         [Display(Name = "积分")]
-        public int score{get;set;}
+        public int score { get; set; }
 
         /// <summary>
         /// 0:冻结 1：正常
         /// </summary>
         [Display(Name = "状态")]
         public int Status { get; set; }
+
+        public virtual ICollection<VIPInfoExpenseDetail> ExpenseDetails { get; set; }
     }
 }

@@ -51,7 +51,7 @@
   <object id="KeywordAutoMessageModel" type="Business.KeywordAutoMessageModel" parent="EFModel" singleton="false"></object>
   <object id="PendingMessagesModel" type="Business.PendingMessagesModel" parent="EFModel" singleton="false"></object>
   <object id="TemporayInstantMesModel" type="Business.TemporayInstantMesModel" parent="EFModel" singleton="false"></object>
-  
+
   <object id="PushMsgModel" type="Business.PushMsgModel" parent="EFModel" singleton="false"></object>
   <object id="PushMsgDetailModel" type="Business.PushMsgDetailModel" parent="EFModel" singleton="false"></object>
   <object id="ConversationModel" type="Business.ConversationModel" parent="EFModel" singleton="false"></object>
@@ -69,22 +69,19 @@
   <object id="ReportFormPowerModel" type="Business.ReportFormPowerModel" parent="EFModel" singleton="false"></object>
   <object id="VipInfoModel" type="Business.VipInfoModel" parent="EFModel" singleton="false"></object>
   <object id="CardInfoModel" type="Business.CardInfoModel" parent="EFModel" singleton="false"></object>
-  
-
-
   <object id="Push_IOS" type="Business.Push_IOS" singleton="false">
   </object>
   <object id="Push_Getui" type="Business.Push_Getui" singleton="false">
   </object>
 
   <object id="AutoMessage_UserModel" type="Business.AutoMessage_UserModel" parent="EFModel" singleton="false"></object>
-  
+
   <object id="TaskModel" type="Business.TaskModel" parent="EFModel" singleton="false"></object>
   <object id="TaskDetailModel" type="Business.TaskDetailModel" parent="EFModel" singleton="false"></object>
 
 
   <object id="ConversationDetailedModel" type="Business.ConversationDetailedModel" parent="EFModel" singleton="false"></object>
-  
+  <object id="VIPInfoExpenseDetailModel" type="Business.VIPInfoExpenseDetailModel" parent="EFModel" singleton="false"></object>
 
 
   <!--<object id="UserModel" type="NightClubBooth.Business.UserModel" parent="EFModel" singleton="false">

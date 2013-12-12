@@ -158,6 +158,7 @@ namespace Poco
             public const string ReportFormPowerModel = "ReportFormPowerModel";
             public const string VipInfoModel = "VipInfoModel";
             public const string CardInfoModel = "CardInfoModel";
+            public const string VIPInfoExpenseDetailModel = "VIPInfoExpenseDetailModel";
             
         }
     }
