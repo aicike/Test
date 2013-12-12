@@ -19,7 +19,7 @@ namespace Poco
         [Display(Name = "备注名称")]
         [StringLength(10, ErrorMessage = "长度小于10")]
         public string Name { get; set; }
-        
+
         [Display(Name = "电话")]
         [StringLength(20, ErrorMessage = "长度小于20")]
         public string Phone { get; set; }
@@ -71,5 +71,7 @@ namespace Poco
         public virtual ICollection<PendingMessages> ReceivePendingMessages { get; set; }
 
         public virtual ICollection<VIPInfo> VIPInfo { get; set; }
+
+        public virtual ICollection<VIPInfoExpenseDetail> VIPInfoExpenseDetails { get; set; }
     }
 }

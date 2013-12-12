@@ -286,6 +286,11 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
+        /// <summary>
+        /// 获取VIP信息
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
         public string GetVIPInfo(int userID)
         {
             IVipInfoModel model = Factory.Get<IVipInfoModel>(SystemConst.IOC_Model.VipInfoModel);
@@ -305,6 +310,38 @@ namespace Web.Controllers
                 result.Entity = entity;
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+        /// <summary>
+        /// 检查是否有VIP信息
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public string CheckHasVIPInfo(int userID)
+        {
+            IVipInfoModel model = Factory.Get<IVipInfoModel>(SystemConst.IOC_Model.VipInfoModel);
+            var vipinfo = model.GetVIPInfoByID(userID);
+            if (vipinfo == null)
+            {
+                return "false";
+            }
+            else
+            {
+                return "true";
+            }
+        }
+
+        public string GetVIPInfoExpenseDetailList(int userID)
+        {
+            IVIPInfoExpenseDetailModel model = Factory.Get<IVIPInfoExpenseDetailModel>(SystemConst.IOC_Model.VIPInfoExpenseDetailModel);
+            var list = model.GetByUserID(userID).ToList().Select(a => new App_VIPInfoExpenseDetail()
+            {
+                ID=a.ID,
+                ExpenseDate=a.ExpenseDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                ExpensePrice=a.ExpensePrice,
+                Balance=a.Balance
+            });
+            return Newtonsoft.Json.JsonConvert.SerializeObject(list);
         }
     }
 }
