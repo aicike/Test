@@ -89,14 +89,14 @@ namespace AcceptanceServer
             allDone.Set();
 
             Socket newSock = listener.EndAccept(ar);
-            try
-            {
+            //try
+            //{
                 AcceptanceServer.XmppServerConnection con = new AcceptanceServer.XmppServerConnection(this, newSock);
-            }
-            catch
-            {
-                newSock.Close();
-            }
+            //}
+            //catch
+            //{
+            //    newSock.Close();
+            //}
         }
 
         #region(源数据)

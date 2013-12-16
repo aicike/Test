@@ -2,6 +2,8 @@
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 
     ViewBag.Menu = Poco.SystemConst.Menu.VipInfo;
+
+    var frefix = ViewBag.Frefix as List<Poco.CardPrefix>;
 }
 
 @model Poco.VIPInfo
@@ -10,7 +12,27 @@
 <script>
     $(function () {
         $("#phoneNum").val('.');
+
+
+        $("#selPrefix").val('@Model.CardInfo.CardPrefixID');
     });
+
+
+
+    function checkfrefix() {
+        var sel = $("#selPrefix").val();
+        if (sel == "" || sel == undefined) {
+            JAlert({
+                Message: "请先录入前缀！",
+                DialogType: "Ok",
+                BtnOk: "确定"
+            });
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 </script>
 
 }
@@ -29,19 +51,41 @@
         <fieldset>
             <legend>基本信息</legend>
         <table class="tableForm">
+        <tr>
+                <td class="tdTitle">
+                    <span class="Identification">*</span> 前缀
+                </td>
+                <td class="tdField">
+                    <select id="selPrefix" name="selPrefix">
+                            @foreach (var item in frefix)
+                            {
+                                <option value="@item.ID">@item.PrefixName</option>
+                            }
+                        </select>
+                </td>
+                <td>
+                </td>
+            </tr>
             <tr>
+
                 <td class="tdTitle">
                     <span class="Identification">*</span> 卡号
                 </td>
-                <td class="tdField">@Html.TextBoxFor(a => a.CardNumber) 
-                @Html.HiddenFor(a=>a.AccountMainID)
-                @Html.HiddenFor(a=>a.CreateDate)
-                @Html.HiddenFor(a=>a.score)
-                @Html.HiddenFor(a=>a.Status)
-                @Html.HiddenFor(a=>a.UserID)
-                @Html.HiddenFor(a => a.VIPType)
+                <td class="tdField">@Html.TextBoxFor(a => a.CardInfo.CardNum) 
+                @Html.HiddenFor(a=>a.ID)
+                @Html.HiddenFor(a=>a.CardInfoID)
                 </td>
-                <td>@Html.ValidationMessageFor(a => a.CardNumber)
+                <td>
+                </td>
+            </tr>
+             <tr>
+                <td class="tdTitle">
+                    <span class="Identification">*</span> 会员姓名
+                </td>
+                <td class="tdField">
+                    @Model.User.UserLoginInfo.Name
+                </td>
+                <td>
                 </td>
             </tr>
             <tr>
@@ -49,7 +93,7 @@
                     <span class="Identification">*</span> 电话
                 </td>
                 <td class="tdField">
-                    @Html.TextBoxFor(a => a.User.UserLoginInfo.Phone)
+                    @Model.User.UserLoginInfo.Phone
                 </td>
                 <td>
                 </td>
@@ -58,7 +102,7 @@
                 <td class="tdTitle">
                     <span class="Identification">*</span> 金额
                 </td>
-                <td class="tdField">@Html.LabelFor(a => a.Balance)
+                <td class="tdField">@Model.CardInfo.Balance
                 </td>
                 <td>
                 </td>
@@ -67,7 +111,7 @@
          </fieldset>
         
         <div class="action">
-            <input type="submit" id="btnSubmit" value="保存" class="button" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+            <input type="submit" id="btnSubmit" value="保存"  onclick="return checkfrefix()"  class="button" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
         </div>
         
     }

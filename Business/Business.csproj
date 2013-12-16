@@ -84,6 +84,7 @@
     <Compile Include="App_AutoMessageReplyContentModel.cs" />
     <Compile Include="AutoMessage_UserModel.cs" />
     <Compile Include="CardInfoModel.cs" />
+    <Compile Include="CardPrefixModel.cs" />
     <Compile Include="ClassifyModel.cs" />
     <Compile Include="CommonModel.cs" />
     <Compile Include="BaseModel.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="UserModel.cs" />
     <Compile Include="UserLoginInfoModel.cs" />
     <Compile Include="OrderUserInfoModel.cs" />
+    <Compile Include="VIPInfoExpenseDetailModel.cs" />
     <Compile Include="VipInfoModel.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -534,6 +534,78 @@ namespace EF.Migrations
                 .Index(t => t.AccountMainID);
             
             CreateTable(
+                "dbo.VIPInfo",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        AccountMainID = c.Int(nullable: false),
+                        UserID = c.Int(),
+                        CardInfoID = c.Int(nullable: false),
+                        CreateDate = c.DateTime(nullable: false),
+                        VIPType = c.Int(),
+                        score = c.Int(nullable: false),
+                        Status = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
+                .ForeignKey("dbo.User", t => t.UserID)
+                .ForeignKey("dbo.CardInfo", t => t.CardInfoID)
+                .Index(t => t.AccountMainID)
+                .Index(t => t.UserID)
+                .Index(t => t.CardInfoID);
+            
+            CreateTable(
+                "dbo.CardInfo",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        AccountMainID = c.Int(nullable: false),
+                        CardPrefixID = c.Int(nullable: false),
+                        CardNum = c.String(nullable: false),
+                        Balance = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        CreateDate = c.DateTime(nullable: false),
+                        Status = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
+                .ForeignKey("dbo.CardPrefix", t => t.CardPrefixID)
+                .Index(t => t.AccountMainID)
+                .Index(t => t.CardPrefixID);
+            
+            CreateTable(
+                "dbo.CardPrefix",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        AccountMainID = c.Int(nullable: false),
+                        PrefixName = c.String(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
+                .Index(t => t.AccountMainID);
+            
+            CreateTable(
+                "dbo.VIPInfoExpenseDetail",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        ExpenseDate = c.DateTime(nullable: false),
+                        ExpensePrice = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Balance = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        VIPInfoID = c.Int(nullable: false),
+                        UserID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.VIPInfo", t => t.VIPInfoID)
+                .ForeignKey("dbo.User", t => t.UserID)
+                .Index(t => t.VIPInfoID)
+                .Index(t => t.UserID);
+            
+            CreateTable(
                 "dbo.SystemUser",
                 c => new
                     {
@@ -1179,7 +1251,6 @@ namespace EF.Migrations
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
 
-
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };
             foreach (var file in ddlSqlFiles)
@@ -1192,6 +1263,7 @@ namespace EF.Migrations
                         Sql(commandText);
                 }
             }
+
         }
         
         public override void Down()
@@ -1254,6 +1326,14 @@ namespace EF.Migrations
             DropIndex("dbo.SystemUserRole", new[] { "ParentSystemUserRoleID" });
             DropIndex("dbo.SystemUser", new[] { "SystemUserRoleID" });
             DropIndex("dbo.SystemUser", new[] { "AccountStatusID" });
+            DropIndex("dbo.VIPInfoExpenseDetail", new[] { "UserID" });
+            DropIndex("dbo.VIPInfoExpenseDetail", new[] { "VIPInfoID" });
+            DropIndex("dbo.CardPrefix", new[] { "AccountMainID" });
+            DropIndex("dbo.CardInfo", new[] { "CardPrefixID" });
+            DropIndex("dbo.CardInfo", new[] { "AccountMainID" });
+            DropIndex("dbo.VIPInfo", new[] { "CardInfoID" });
+            DropIndex("dbo.VIPInfo", new[] { "UserID" });
+            DropIndex("dbo.VIPInfo", new[] { "AccountMainID" });
             DropIndex("dbo.Group", new[] { "AccountMainID" });
             DropIndex("dbo.Group", new[] { "AccountID" });
             DropIndex("dbo.Account_User", new[] { "GroupID" });
@@ -1367,6 +1447,14 @@ namespace EF.Migrations
             DropForeignKey("dbo.SystemUserRole", "ParentSystemUserRoleID", "dbo.SystemUserRole");
             DropForeignKey("dbo.SystemUser", "SystemUserRoleID", "dbo.SystemUserRole");
             DropForeignKey("dbo.SystemUser", "AccountStatusID", "dbo.LookupOption");
+            DropForeignKey("dbo.VIPInfoExpenseDetail", "UserID", "dbo.User");
+            DropForeignKey("dbo.VIPInfoExpenseDetail", "VIPInfoID", "dbo.VIPInfo");
+            DropForeignKey("dbo.CardPrefix", "AccountMainID", "dbo.AccountMain");
+            DropForeignKey("dbo.CardInfo", "CardPrefixID", "dbo.CardPrefix");
+            DropForeignKey("dbo.CardInfo", "AccountMainID", "dbo.AccountMain");
+            DropForeignKey("dbo.VIPInfo", "CardInfoID", "dbo.CardInfo");
+            DropForeignKey("dbo.VIPInfo", "UserID", "dbo.User");
+            DropForeignKey("dbo.VIPInfo", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.Group", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.Group", "AccountID", "dbo.Account");
             DropForeignKey("dbo.Account_User", "GroupID", "dbo.Group");
@@ -1460,6 +1548,10 @@ namespace EF.Migrations
             DropTable("dbo.SystemUserRole_Option");
             DropTable("dbo.SystemUserRole");
             DropTable("dbo.SystemUser");
+            DropTable("dbo.VIPInfoExpenseDetail");
+            DropTable("dbo.CardPrefix");
+            DropTable("dbo.CardInfo");
+            DropTable("dbo.VIPInfo");
             DropTable("dbo.Group");
             DropTable("dbo.Account_User");
             DropTable("dbo.MessageGroupChat");

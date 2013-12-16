@@ -1,51 +1,107 @@
 ﻿@{
     ViewBag.Menu = Poco.SystemConst.Menu.VipInfo;
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
+
+    var frefix = ViewBag.Frefix as List<Poco.CardPrefix>;
 }
 @section head{
-<script>
+    <script>
 
-    function CheckID() {
-        var vid = $("#ID").val();
-        if (vid == "" || vid == undefined) {
-            JAlert({
-                Message: "未查询到用户！",
-                DialogType: "Ok",
-                BtnOk: "确定"
-            });
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
+        $(function () {
+            var isok = '@ViewBag.IsOK';
+            if (isok == 1) {
+                JAlert({
+                    Message: "充值成功！",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+            }
+        });
 
-    function selVip() {
-        var cardNum = $("#cardNum").val();
-        if (cardNum == "" || cardNum == undefined) {
-            JAlert({
-                Message: "请输入卡号！",
-                DialogType: "Ok",
-                BtnOk: "确定"
-            });
-            return false;
-        }
-        else {
-            var URL = '@Url.Action("SelVipInfo", "VipInfo")';
-            $.post(URL, { cardNum: cardNum }, function (result) {
+        function CheckID() {
+            var vid = $("#UserID").val();
+            var money = $("#Balance").val();
+            if (vid == "" || vid == undefined) {
+                JAlert({
+                    Message: "未查询到用户！",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+                return false;
+            }
+            if (money == "" || money == undefined) {
+                JAlert({
+                    Message: "请输入重置金额！",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+                return false;
+            }
 
-
-                var a = result.User.UserLoginInfo.Phone;
-                alert(a);
-            }, "json");
         }
 
+        function selVip() {
+            var cardNum = $("#cardNum").val();
+            var sel = $("#selPrefix").val();
+            if (sel == "" || sel == undefined) {
+                JAlert({
+                    Message: "请先录入前缀！",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+                return false;
+            }
+            if (cardNum == "" || cardNum == undefined) {
+                JAlert({
+                    Message: "请输入卡号！",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+                return false;
+            }
+            else {
+                var URL = '@Url.Action("SelVipInfo", "VipInfo")';
+                $.post(URL, { cardNum: cardNum, Prefix: sel }, function (result) {
 
-    }
-</script>
+                    if (result == 0) {
+                        JAlert({
+                            Message: "该卡号不存在！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                    }
+                    else if (result == 1) {
+                        JAlert({
+                            Message: "该卡号未绑定用户！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                    }
+                    else if (result == 2) {
+                        JAlert({
+                            Message: "您输入的卡号已被冻结！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                    }
+                    else {
 
+                        $("#Uname").text(result.UserName);
+                        $("#Uphone").text(result.UserPhone);
+                        $("#CardID").val(result.CardID);
+                        $("#UserID").val(result.UserID);
+
+
+
+                    }
+                }, "json");
+            }
+
+
+        }
+    </script>
 }
-@model Poco.VIPInfo
+@model Poco.CardInfo
 <div class="title">
     会员充值
 </div>
@@ -58,15 +114,33 @@
 <div class="bodyRight" style="font-size: 14px">
     @using (Ajax.BeginForm("Recharge", "VipInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
-         <fieldset>
+        <fieldset>
             <legend>卡号</legend>
             <table class="tableForm">
                 <tr>
                     <td class="tdTitle">
-                        <span class="Identification">*</span> 卡号
+                        <span class="Identification">*</span> 前缀:
                     </td>
                     <td class="tdField">
-                        <input type="text" id="cardNum" name="cardNum" /> <input  type="button" class="button" value="查询" id="btnSel"/>
+                          <select id="selPrefix" name="selPrefix">
+                            @foreach (var item in frefix)
+                            {
+                                <option value="@item.ID">@item.PrefixName</option>
+                            }
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 卡号:
+                    </td>
+                    <td class="tdField">
+                        <input type="text" id="cardNum" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <input type="button" class="button" value="查询" id="btnSel" onclick="selVip()" />
                     </td>
                 </tr>
             </table>
@@ -76,35 +150,37 @@
             <table class="tableForm">
                 <tr>
                     <td class="tdTitle">
-                        <span class="Identification">*</span> 会员名称
+                        <span class="Identification">*</span> 会员名称:
                     </td>
                     <td class="tdField">
-                        <label id="Uname"></label>
-                       @Html.HiddenFor(a=>a.ID)
+                        <label id="Uname"> </label>
+                        <input id="CardID" type="hidden" name="CardID" />
+                        <input id="UserID" type="hidden" name="UserID" />
                     </td>
                 </tr>
-                 <tr>
+                <tr>
                     <td class="tdTitle">
-                        <span class="Identification">*</span> 电话号码
+                        <span class="Identification">*</span> 电话号码:
                     </td>
                     <td class="tdField">
-                        <label id="Uphone"></label>
+                        <label id="Uphone">
+                        </label>
                     </td>
                 </tr>
-                 <tr>
+                <tr>
                     <td class="tdTitle">
-                        <span class="Identification">*</span> 充值金额
+                        <span class="Identification">*</span> 充值金额:
                     </td>
                     <td class="tdField">
-                        @Html.TextBoxFor(a => a.CardInfo.Balance)
+                        @Html.TextBoxFor(a => a.Balance)
                     </td>
-                      <td>
-                      @Html.ValidationMessageFor(a => a.CardInfo.Balance)
+                    <td>
+                        @Html.ValidationMessageFor(a => a.Balance)
                     </td>
                 </tr>
             </table>
-
-             <input type="submit" id="btnSubmit" onclick="return CheckID()" value="提交" onclick="return checkPhone()" class="button" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+            <input type="submit" id="btnSubmit" onclick="return CheckID()" value="提交" onclick="return checkPhone()"
+                class="button" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@Url.Action("Index","VipInfo")'" />
         </fieldset>
     }
 </div>

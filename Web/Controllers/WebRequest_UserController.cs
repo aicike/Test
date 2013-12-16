@@ -24,6 +24,17 @@ namespace Web.Controllers
         }
 
         /// <summary>
+        /// 安卓临时登录
+        /// </summary>
+        public string UserTempLogin(string email, string loginPwd, int accountMainID, string clientID)
+        {
+            var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
+            var result = userLoginInfoModel.App_LoginForTempLogin(new App_UserLoginInfo() { Email = email, Phone = email, Pwd = loginPwd, AccountMainID = accountMainID, ClientID = clientID });
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+
+        /// <summary>
         /// IOS登录
         /// </summary>
         public string UserLoginIOS(string email, string loginPwd, int accountMainID, string clientID)
@@ -32,6 +43,19 @@ namespace Web.Controllers
             var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email, Pwd = loginPwd, AccountMainID = accountMainID, ClientID = clientID });
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
+
+
+        /// <summary>
+        /// IOS临时登录
+        /// </summary>
+        public string UserTempLoginIOS(string email, string loginPwd, int accountMainID, string clientID)
+        {
+            var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
+            var result = userLoginInfoModel.App_LoginForTempLogin(new App_UserLoginInfo() { Email = email, Pwd = loginPwd, AccountMainID = accountMainID, ClientID = clientID });
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+
 
         /// <summary>
         /// 注册
@@ -306,8 +330,12 @@ namespace Web.Controllers
                 entity.ID = vipinfo.ID;
                 entity.Balance = vipinfo.CardInfo.Balance;
                 entity.score = vipinfo.score;
+                entity.UserName = vipinfo.User.UserLoginInfo.Name;
+                entity.UserPhone = vipinfo.User.UserLoginInfo.Phone;
                 entity.CreateDate = vipinfo.CreateDate.ToString("yyyy-MM-dd");
+                entity.CardNumber = vipinfo.CardInfo.CardPrefix + "." + vipinfo.CardInfo.CardNum;
                 result.Entity = entity;
+
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
@@ -343,5 +371,184 @@ namespace Web.Controllers
             });
             return Newtonsoft.Json.JsonConvert.SerializeObject(list);
         }
+
+        /// <summary>
+        /// 校验消费卡片
+        /// </summary>
+        /// <param name="CardNum">前缀卡号</param>
+        /// <param name="Money">金额</param>
+        /// <returns></returns>
+        public string CheckCardIsRight(string CardNums, double Money)
+        {
+            string cards = DESEncrypt.Decrypt(CardNums);
+            Result result = new Result();
+            string[] cardStr = cards.Split('.');
+            if (cardStr.Length != 3)
+            {
+                result.HasError = true;
+                result.Error = "该卡号无效！";
+            }
+            else
+            {
+                string CardNum = cardStr[1];
+                string Prefix = cardStr[0];
+                int AccountMainID =int.Parse(cardStr[2]);
+
+                var CardModel = Factory.Get<ICardInfoModel>(SystemConst.IOC_Model.CardInfoModel);
+                var vipModel = Factory.Get<IVipInfoModel>(SystemConst.IOC_Model.VipInfoModel);
+
+                var cardinfo = CardModel.GetCardInfoBy(CardNum.Trim(), Prefix.Trim(), AccountMainID);
+                if (cardinfo == null)
+                {
+                    result.HasError = true;
+                    result.Error = "该卡号无效！";
+                }
+                else
+                {
+                    var vipinfo = vipModel.GetInfoBYCardID(cardinfo.ID, AccountMainID);
+                    if (vipinfo != null)
+                    {
+                        if (cardinfo.Status == 0)
+                        {
+                            result.HasError = true;
+                            result.Error = "该卡已被冻结！";
+
+                        }
+                        else
+                        {
+                            App_VIPInfo b_vip = new App_VIPInfo();
+                            b_vip.ID = vipinfo.ID;
+                            b_vip.CardNumber = cardinfo.CardPrefix + "." + cardinfo.CardNum;
+                            b_vip.Balance = cardinfo.Balance;
+                            b_vip.UserID = vipinfo.UserID ?? 0;
+                            b_vip.UserName = vipinfo.User.UserLoginInfo.Name;
+                            b_vip.UserPhone = vipinfo.User.UserLoginInfo.Phone;
+                            b_vip.CardID = cardinfo.ID;
+                            if (Convert.ToDecimal(Money) > b_vip.Balance)
+                            {
+                                result.HasError = true;
+                                result.Error = "该卡余额不足！";
+                            }
+                            result.Entity = b_vip;
+                        }
+
+                    }
+                    else
+                    {
+                        result.HasError = true;
+                        result.Error = "该卡还未绑定用户！";
+                    }
+
+
+                }
+            }
+
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+        /// <summary>
+        /// 卡片消费
+        /// </summary>
+        /// <param name="CardNums">卡好  前缀.号码.amid</param>
+        /// <param name="Money">消费金额</param>
+        /// <returns></returns>
+        public string CardConsumption( string CardNums, double Money)
+        {
+            Result result = new Result();
+            var CardModel = Factory.Get<ICardInfoModel>(SystemConst.IOC_Model.CardInfoModel);
+            var vipModel = Factory.Get<IVipInfoModel>(SystemConst.IOC_Model.VipInfoModel);
+
+            string cards = DESEncrypt.Decrypt(CardNums);
+
+            //int CardID, int UserID, int vipinfoID, int AccountMainID
+
+            string[] cardStr = cards.Split('.');
+            if (cardStr.Length != 3)
+            {
+                result.HasError = true;
+                result.Error = "该卡号无效！";
+            }
+            else
+            {
+                string CardNum = cardStr[1];
+                string Prefix = cardStr[0];
+                int AccountMainID =int.Parse(cardStr[2]);
+
+
+                var cardinfo = CardModel.GetCardInfoBy(CardNum.Trim(), Prefix.Trim(), AccountMainID);
+                if (cardinfo == null)
+                {
+                    result.HasError = true;
+                    result.Error = "该卡无效！";
+                }
+                else
+                {
+                    var vipinfo = vipModel.GetInfoBYCardID(cardinfo.ID, AccountMainID);
+                    if (vipinfo != null)
+                    {
+                        if (cardinfo.Status == 0)
+                        {
+                            result.HasError = true;
+                            result.Error = "该卡已被冻结！";
+
+                        }
+                        else
+                        {
+
+                            if (Convert.ToDecimal(Money) > cardinfo.Balance)
+                            {
+                                result.HasError = true;
+                                result.Error = "该卡余额不足！";
+                            }
+                            else
+                            {
+                                //App_VIPInfo b_vip = new App_VIPInfo();
+                                //b_vip.ID = vipinfo.ID;
+                                //b_vip.Balance = cardinfo.Balance;
+                                //b_vip.UserID = vipinfo.UserID ?? 0;
+                                //b_vip.UserName = vipinfo.User.UserLoginInfo.Name;
+                                //b_vip.UserPhone = vipinfo.User.UserLoginInfo.Phone;
+                                //b_vip.CardID = cardinfo.ID;
+
+                                var res = CardModel.Consumption(Convert.ToDecimal(Money), cardinfo.ID, AccountMainID, vipinfo.UserID ?? 0, vipinfo.ID, (cardinfo.Balance - Convert.ToDecimal(Money)));
+                                if (res.HasError)
+                                {
+                                    result.HasError = true;
+                                    result.Error = "操作失败，请稍后再试！";
+                                }
+                                else
+                                {
+                                    App_VIPInfo appvip = new App_VIPInfo();
+                                    appvip.Balance = cardinfo.Balance - Convert.ToDecimal(Money);
+                                    appvip.UserID = vipinfo.UserID ?? 0;
+                                    appvip.CardNumber = cardinfo.CardPrefix + "." + cardinfo.CardNum;
+                                    appvip.CreateDate = vipinfo.CreateDate.ToString("yyyy-MM-dd hh:mm");
+                                    appvip.score = vipinfo.score;
+                                    appvip.Status = cardinfo.Status == 0 ? "冻结" : "正常";
+                                    appvip.VIPType = "";
+                                    result.Entity = appvip;
+                                }
+
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        result.HasError = true;
+                        result.Error = "该卡还未绑定用户！";
+                    }
+
+
+                }
+            }
+
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+
+
     }
 }

@@ -47,18 +47,29 @@ namespace Web.Controllers
 
         public ActionResult Add()
         {
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "卡片管理-添加卡片", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
+            ViewBag.HostName = LoginAccount.HostName;
+
+
+            var PrefixModel = Factory.Get<ICardPrefixModel>(SystemConst.IOC_Model.CardPrefixModel);
+            var frefixlist = PrefixModel.getList(LoginAccount.CurrentAccountMainID).ToList();
+            ViewBag.Frefix = frefixlist;
+
             return View();
         }
 
         [HttpPost]
-        public ActionResult Add(CardInfo cardinfo)
+        public ActionResult Add(CardInfo cardinfo, int selPrefix)
         {
 
             cardinfo.Status = 1;
             cardinfo.AccountMainID = LoginAccount.CurrentAccountMainID;
+            cardinfo.CardPrefixID = selPrefix;
             cardinfo.CreateDate = DateTime.Now;
             var CardModel = Factory.Get<ICardInfoModel>(SystemConst.IOC_Model.CardInfoModel);
-            if (CardModel.ckbCardRepeat(cardinfo.CardNum, cardinfo.CardPrefix, LoginAccount.CurrentAccountMainID))
+            if (CardModel.ckbCardRepeat(cardinfo.CardNum, cardinfo.CardPrefixID, LoginAccount.CurrentAccountMainID))
             {
                 return JavaScript(AlertJS_NoTag(new Dialog("卡号重复！")));
             }
@@ -115,5 +126,53 @@ namespace Web.Controllers
              return JavaScript("window.location.href='" + Url.Action("Index", "CardInfo", new { HostName = LoginAccount.HostName }) + "'");
          }
 
+        //前缀列表
+         public ActionResult AddPrefix()
+         {
+             var PrefixModel = Factory.Get<ICardPrefixModel>(SystemConst.IOC_Model.CardPrefixModel);
+             var frefixlist = PrefixModel.getList(LoginAccount.CurrentAccountMainID);
+
+
+             string WebTitleRemark = SystemConst.WebTitleRemark;
+             string webTitle = string.Format(SystemConst.Business.WebTitle, "卡片管理-前缀录入", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+             ViewBag.Title = webTitle;
+             ViewBag.HostName = LoginAccount.HostName;
+
+
+             return View(frefixlist);
+         }
+
+         [HttpPost]
+         public ActionResult AddPrefix(string  PName)
+         {
+             var PrefixModel = Factory.Get<ICardPrefixModel>(SystemConst.IOC_Model.CardPrefixModel);
+
+             var result = PrefixModel.CheckName(PName, LoginAccount.CurrentAccountMainID);
+             if (result.HasError)
+             {
+                 return Alert(new Dialog(result.Error));
+             }
+             
+             CardPrefix cp = new CardPrefix();
+             cp.AccountMainID = LoginAccount.CurrentAccountMainID;
+             cp.PrefixName = PName.Trim();
+             cp.SystemStatus = 0;
+             PrefixModel.Add(cp);
+
+             return JavaScript("window.location.href='" + Url.Action("AddPrefix", "CardInfo", new { HostName = LoginAccount.HostName }) + "'");
+         }
+
+         [HttpPost]
+         [AllowCheckPermissions(false)]
+         public ActionResult DeletePrefix(int id)
+         {
+             var PrefixModel = Factory.Get<ICardPrefixModel>(SystemConst.IOC_Model.CardPrefixModel);
+             var result = PrefixModel.CompleteDelete(id);
+             if (result.HasError)
+             {
+                 return Alert(new Dialog("该前缀已被使用 不能修改"));
+             }
+             return JavaScript("window.location.href='" + Url.Action("AddPrefix", "CardInfo", new { HostName = LoginAccount.HostName }) + "'");
+         }
     }
 }

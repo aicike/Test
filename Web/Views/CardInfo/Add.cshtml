@@ -1,6 +1,9 @@
 ﻿@{
     ViewBag.Menu = Poco.SystemConst.Menu.VipInfo;
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
+
+
+    var frefix = ViewBag.Frefix as List<Poco.CardPrefix>;
 }
 @section head{
     <script type="text/javascript">
@@ -9,6 +12,21 @@
             $("#Balance").val(0);
         });
 
+
+        function checkfrefix() {
+            var sel = $("#selPrefix").val();
+            if (sel == "" || sel == undefined) {
+                JAlert({
+                    Message: "请先录入前缀！",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
     </script>
 }
 @model Poco.CardInfo
@@ -31,9 +49,15 @@
                     <td class="tdTitle">
                         <span class="Identification">*</span> 前缀
                     </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.CardPrefix)
+                    <td class="tdField">
+                        <select id="selPrefix" name="selPrefix">
+                            @foreach (var item in frefix)
+                            {
+                                <option value="@item.ID">@item.PrefixName</option>
+                            }
+                        </select>
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.CardPrefix)
+                    <td>
                     </td>
                 </tr>
                 <tr>
@@ -55,10 +79,10 @@
                     </td>
                 </tr>
             </table>
-
             <div class="action">
-            <input type="submit" id="btnSubmit" value="保存" onclick="return checkPhone()" class="button" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
-        </div>
+                <input type="submit" id="btnSubmit" value="保存" onclick="return checkfrefix()" class="button"
+                    style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+            </div>
         </fieldset>
     }
 </div>

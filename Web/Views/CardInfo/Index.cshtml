@@ -36,7 +36,8 @@
 </div>
 <div class="bodyRight" style="font-size: 14px">
     <div class="option">
-        @Html.ActionLink("添加", "Add", "CardInfo", new { HostName = ViewBag.HostName }, null, true)
+        @Html.ActionLink("添加卡片", "Add", "CardInfo", new { HostName = ViewBag.HostName }, null, true)
+        @Html.ActionLink("前缀录入", "AddPrefix", "CardInfo", new { HostName = ViewBag.HostName }, new { style = "margin-left:10px;margin-right:10px" }, true)
         @Html.ActionLink("批量删除", "Delete", "CardInfo", new { HostName = ViewBag.HostName }, new { id="delAll" }, true)
    </div>
     @using (Html.BeginForm("Index", "CardInfo", new { HostName = ViewBag.HostName }, FormMethod.Get, new { enctype = "multipart/form-data" }))
@@ -91,7 +92,7 @@
                     <td>
                         <input type="checkbox" id="ckbOK" name="ckbOK" value="@item.ID" />
                     </td>
-                    <td>@item.CardPrefix
+                    <td>@item.CardPrefix.PrefixName
                     </td>
                     <td>@item.CardNum
                     </td>

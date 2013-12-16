@@ -26,5 +26,18 @@ namespace Poco.WebAPI_Poco
 
         //状态
         public string Status { get; set; }
+
+        //用户ID
+        public int UserID { get; set; }
+
+        //用户名称
+        public string UserName { get; set; }
+
+        //用户电话
+        public string UserPhone { get; set; }
+
+        //卡ID
+        public int CardID { get; set; }
+
     }
 }

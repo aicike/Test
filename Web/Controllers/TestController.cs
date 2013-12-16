@@ -31,7 +31,7 @@ namespace Web.Controllers
             QrCodeModel model = new QrCodeModel();
 
 
-            MemoryStream ms = model.Get_Android_DownloadUrl("http://192.168.1.166/Test/Download/");
+            MemoryStream ms = model.Get_Android_DownloadUrl("PH.00001.1");
             if (null != ms)
             {
                 Response.BinaryWrite(ms.ToArray());
@@ -179,6 +179,11 @@ namespace Web.Controllers
             Connection.Open();
         }
 
+        public ActionResult JqueryMobileDome()
+        {
+
+            return View();
+        }
 
 
     }

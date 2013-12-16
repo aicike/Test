@@ -8,6 +8,7 @@ using Interface;
 using Poco;
 using Business;
 using System.IO;
+using Common;
 
 namespace Web.Controllers
 {
@@ -58,9 +59,10 @@ namespace Web.Controllers
             return View();
         }
 
-        public ActionResult ContactUs() {
+        public ActionResult ContactUs()
+        {
             string WebTitleRemark = SystemConst.WebTitleRemark;
-            string webTitle = string.Format(SystemConst.Business.WebTitle, "联系我们", WebTitleRemark,"");
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "联系我们", WebTitleRemark, "");
             ViewBag.Title = webTitle;
             return View();
         }
@@ -82,7 +84,7 @@ namespace Web.Controllers
         }
 
 
-        
+
 
         #endregion
 
@@ -105,7 +107,7 @@ namespace Web.Controllers
         public void CreateQrCode(int AMID)
         {
             QrCodeModel model = new QrCodeModel();
-            string url = "http://"+SystemConst.WebUrl + "/Default/QrCodeSkip?AMID=" + AMID;
+            string url = "http://" + SystemConst.WebUrl + "/Default/QrCodeSkip?AMID=" + AMID;
             MemoryStream ms = model.Get_Android_DownloadUrl(url);
             if (null != ms)
             {
@@ -137,7 +139,7 @@ namespace Web.Controllers
         {
             var AccountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             var AccountModel = AccountMainModel.Get(AMID);
-            if (AccountModel.AndroidDownloadPath!=null)
+            if (AccountModel.AndroidDownloadPath != null)
                 AccountModel.AndroidDownloadPath = "http://" + SystemConst.WebUrl + Url.Content(AccountModel.AndroidDownloadPath ?? "");
             return View(AccountModel);
         }
@@ -156,6 +158,24 @@ namespace Web.Controllers
         }
 
 
+
+
+        /// <summary>
+        /// 会员二维码
+        /// </summary>
+        /// <param name="AMID"></param>
+        public void GetVIPQrCode(string CardNum)
+        {
+            string number = DESEncrypt.Encrypt(CardNum);
+
+            QrCodeModel model = new QrCodeModel();
+
+            MemoryStream ms = model.Get_Android_DownloadUrl(number);
+            if (null != ms)
+            {
+                Response.BinaryWrite(ms.ToArray());
+            }
+        }
 
     }
 }

@@ -27,11 +27,6 @@ namespace Interface
 
         VIPInfo GetVIPInfoByID(int userID);
 
-        /// 根据卡号 查询会员
-        /// </summary>
-        /// <param name="cardNum"></param>
-        /// <returns></returns>
-        VIPInfo getByCardNum(string cardNum,int AccountMainID);
 
 
         /// <summary>
@@ -40,5 +35,22 @@ namespace Interface
         /// <param name="CardIDs">卡ID</param>
         /// <returns>true:已绑定 false：未绑定</returns>
         bool ckbIsbind(int[] CardIDs);
+
+        /// <summary>
+        /// 修改用户的卡信息
+        /// </summary>
+        /// <param name="VIPID"></param>
+        /// <param name="CardID"></param>
+        /// <param name="AccountMainID"></param>
+        /// <returns></returns>
+        Result EditCID(int VIPID, int CardID, int AccountMainID);
+
+        /// <summary>
+        /// 根据卡ID 查询vip信息
+        /// </summary>
+        /// <param name="CardID"></param>
+        /// <param name="AccountMainID"></param>
+        /// <returns></returns>
+        VIPInfo GetInfoBYCardID(int CardID, int AccountMainID);
     }
 }

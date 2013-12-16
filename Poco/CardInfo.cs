@@ -15,10 +15,11 @@ namespace Poco
         public int AccountMainID { get; set; }
         public virtual AccountMain AccountMain { get; set; }
 
-
-        [Display(Name = "卡前缀")]
-        [Required(ErrorMessage = "请输入卡前缀")]
-        public string CardPrefix { get; set; }
+        /// <summary>
+        /// 前缀
+        /// </summary>
+        public int CardPrefixID { get; set; }
+        public virtual CardPrefix CardPrefix { get; set; }
 
 
         [Display(Name = "卡号")]

@@ -277,6 +277,13 @@
     <Content Include="Scripts\Jcrop\Jcrop.gif" />
     <Content Include="Scripts\Jcrop\jquery.Jcrop.css" />
     <Content Include="Scripts\Jcrop\jquery.Jcrop.js" />
+    <Content Include="Scripts\JqueryMobile\images\ajax-loader.gif" />
+    <Content Include="Scripts\JqueryMobile\images\icons-18-black.png" />
+    <Content Include="Scripts\JqueryMobile\images\icons-18-white.png" />
+    <Content Include="Scripts\JqueryMobile\images\icons-36-black.png" />
+    <Content Include="Scripts\JqueryMobile\images\icons-36-white.png" />
+    <Content Include="Scripts\JqueryMobile\jquery.mobile-1.3.2.min.css" />
+    <Content Include="Scripts\JqueryMobile\jquery.mobile-1.3.2.min.js" />
     <Content Include="Scripts\mobiscroll\css\mobiscroll.custom-2.6.2.min.css" />
     <Content Include="Scripts\mobiscroll\css\wp_icons.png" />
     <Content Include="Scripts\mobiscroll\css\wp_icons_light.png" />
@@ -878,6 +885,8 @@
     <Content Include="Views\VipInfo\Recharge.cshtml" />
     <Content Include="Views\CardInfo\Index.cshtml" />
     <Content Include="Views\CardInfo\Add.cshtml" />
+    <Content Include="Views\Test\JqueryMobileDome.cshtml" />
+    <Content Include="Views\CardInfo\AddPrefix.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
@@ -900,9 +909,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>30062</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://192.168.1.166/</IISUrl>
+          <IISUrl>http://192.168.1.138/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://192.168.1.166/</IISAppRootUrl>
+          <IISAppRootUrl>http://192.168.1.138/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

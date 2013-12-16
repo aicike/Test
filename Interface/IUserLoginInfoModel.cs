@@ -11,6 +11,9 @@ namespace Interface
     {
         Result App_Login(App_UserLoginInfo app_UserLoginInfo);
 
+        Result App_LoginForTempLogin(Poco.WebAPI_Poco.App_UserLoginInfo app_UserLoginInfo);
+
+
         /// <summary>
         /// 添加ClientInfo，[User]，UserLoginInfo（第一次注册）
         /// </summary>

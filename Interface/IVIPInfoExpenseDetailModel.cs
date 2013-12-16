@@ -9,5 +9,6 @@ namespace Interface
     public interface IVIPInfoExpenseDetailModel : IBaseModel<VIPInfoExpenseDetail>
     {
         IQueryable<VIPInfoExpenseDetail> GetByUserID(int userID);
+
     }
 }

@@ -69,6 +69,8 @@
   <object id="ReportFormPowerModel" type="Business.ReportFormPowerModel" parent="EFModel" singleton="false"></object>
   <object id="VipInfoModel" type="Business.VipInfoModel" parent="EFModel" singleton="false"></object>
   <object id="CardInfoModel" type="Business.CardInfoModel" parent="EFModel" singleton="false"></object>
+  <object id="CardPrefixModel" type="Business.CardPrefixModel" parent="EFModel" singleton="false"></object>
+  
   <object id="Push_IOS" type="Business.Push_IOS" singleton="false">
   </object>
   <object id="Push_Getui" type="Business.Push_Getui" singleton="false">

@@ -19,14 +19,14 @@ namespace Business
         {
             var list = List().Where(a => a.AccountMainID == AccountMainID);
 
-            if (!string.IsNullOrEmpty(cardNum))
-            {
-                list = list.Where(a => a.User.UserLoginInfo.Phone.Contains(cardNum.Trim()));
-            }
-
             if (!string.IsNullOrEmpty(phoneNum))
             {
-                list = list.Where(a => a.CardInfo.CardNum.Contains(phoneNum.Trim()));
+                list = list.Where(a => a.User.UserLoginInfo.Phone.Contains(phoneNum.Trim()));
+            }
+
+            if (!string.IsNullOrEmpty(cardNum))
+            {
+                list = list.Where(a => a.CardInfo.CardNum.Contains(cardNum.Trim()));
             }
 
             return list;
@@ -74,13 +74,13 @@ namespace Business
         }
 
 
-        public VIPInfo getByCardNum(string cardNum, int AccountMainID)
-        {
-            var list = List().Where(a => a.AccountMainID == AccountMainID&& a.CardInfo.CardNum==cardNum.Trim());
-            return list.FirstOrDefault();
-        }
 
 
+        /// <summary>
+        /// 校验是否绑定
+        /// </summary>
+        /// <param name="CardIDs">卡ID</param>
+        /// <returns>true:已绑定 false：未绑定</returns>
         public bool ckbIsbind(int [] CardIDs)
         {
             var list = List().Where(a => CardIDs.Contains(a.CardInfoID));
@@ -92,6 +92,42 @@ namespace Business
             {
                 return false;
             }
+        }
+
+
+        /// <summary>
+        /// 修改用户的卡信息
+        /// </summary>
+        /// <param name="VIPID"></param>
+        /// <param name="CardID"></param>
+        /// <param name="AccountMainID"></param>
+        /// <returns></returns>
+        public Result EditCID(int VIPID, int CardID, int AccountMainID)
+        {
+            Result result = new Result();
+            string sql = "update VIPInfo set CardInfoID  = " + CardID + "  where ID =" + VIPID + " and AccountMainID =" + AccountMainID;
+            int cnt = base.SqlExecute(sql);
+            if (cnt <= 0)
+            {
+                result.HasError = true;
+            }
+            return result;
+        }
+
+
+
+
+
+        /// <summary>
+        /// 根据卡ID 查询vip信息
+        /// </summary>
+        /// <param name="CardID"></param>
+        /// <param name="AccountMainID"></param>
+        /// <returns></returns>
+        public VIPInfo GetInfoBYCardID(int CardID, int AccountMainID)
+        {
+            var list = List().Where(a => a.AccountMainID == AccountMainID && a.CardInfoID == CardID).FirstOrDefault();
+            return list;
         }
     }
 }

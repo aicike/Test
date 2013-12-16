@@ -17,7 +17,7 @@ namespace Business
             QrEncoder qrEncoder = new QrEncoder(ErrorCorrectionLevel.H);
             QrCode qrCode = qrEncoder.Encode(url);
 
-            GraphicsRenderer renderer = new GraphicsRenderer(new FixedModuleSize(5, QuietZoneModules.Two), Brushes.Black, Brushes.White);
+            GraphicsRenderer renderer = new GraphicsRenderer(new FixedModuleSize(5, QuietZoneModules.Two), Brushes.Black, Brushes.Transparent);
 
             MemoryStream ms = new MemoryStream();
             renderer.WriteToStream(qrCode.Matrix, ImageFormat.Png, ms);
