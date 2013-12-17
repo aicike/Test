@@ -6,6 +6,8 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using EF;
+using System.Data.Entity;
 
 namespace Web
 {
@@ -16,6 +18,7 @@ namespace Web
     {
         protected void Application_Start()
         {
+            Database.SetInitializer<Context>(null);
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
