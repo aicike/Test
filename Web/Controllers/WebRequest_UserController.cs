@@ -333,7 +333,7 @@ namespace Web.Controllers
                 entity.UserName = vipinfo.User.UserLoginInfo.Name;
                 entity.UserPhone = vipinfo.User.UserLoginInfo.Phone;
                 entity.CreateDate = vipinfo.CreateDate.ToString("yyyy-MM-dd");
-                entity.CardNumber = vipinfo.CardInfo.CardPrefix + "." + vipinfo.CardInfo.CardNum;
+                entity.CardNumber = vipinfo.CardInfo.CardPrefix.PrefixName + "." + vipinfo.CardInfo.CardNum;
                 result.Entity = entity;
 
             }
@@ -418,7 +418,7 @@ namespace Web.Controllers
                         {
                             App_VIPInfo b_vip = new App_VIPInfo();
                             b_vip.ID = vipinfo.ID;
-                            b_vip.CardNumber = cardinfo.CardPrefix + "." + cardinfo.CardNum;
+                            b_vip.CardNumber = cardinfo.CardPrefix.PrefixName + "." + cardinfo.CardNum;
                             b_vip.Balance = cardinfo.Balance;
                             b_vip.UserID = vipinfo.UserID ?? 0;
                             b_vip.UserName = vipinfo.User.UserLoginInfo.Name;
@@ -522,7 +522,7 @@ namespace Web.Controllers
                                     App_VIPInfo appvip = new App_VIPInfo();
                                     appvip.Balance = cardinfo.Balance - Convert.ToDecimal(Money);
                                     appvip.UserID = vipinfo.UserID ?? 0;
-                                    appvip.CardNumber = cardinfo.CardPrefix + "." + cardinfo.CardNum;
+                                    appvip.CardNumber = cardinfo.CardPrefix.PrefixName + "." + cardinfo.CardNum;
                                     appvip.CreateDate = vipinfo.CreateDate.ToString("yyyy-MM-dd hh:mm");
                                     appvip.score = vipinfo.score;
                                     appvip.Status = cardinfo.Status == 0 ? "冻结" : "正常";
