@@ -597,6 +597,10 @@
       <Project>{1D926C61-B1CC-48BC-93AA-3F52D05B8FD0}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EF\EF.csproj">
+      <Project>{4B93EF90-8EC8-462A-91B5-B537EAD5C3C0}</Project>
+      <Name>EF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Injection\Injection.csproj">
       <Project>{54A9C2CC-9266-47D4-9F94-9D92B8370024}</Project>
       <Name>Injection</Name>
@@ -909,9 +913,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>30062</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://192.168.1.138/</IISUrl>
+          <IISUrl>http://192.168.1.166/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://192.168.1.138/</IISAppRootUrl>
+          <IISAppRootUrl>http://192.168.1.166/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
