@@ -12,5 +12,6 @@ namespace Interface
         List<Menu> GetAllMenuByRoleID(int roleID);
         List<Menu> List_Cache();
         bool CheckHasPermissions(int roleID, string action, string controller, string area);
+        void ReSetCache();
     }
 }

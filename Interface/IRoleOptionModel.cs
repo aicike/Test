@@ -9,5 +9,6 @@ namespace Interface
     public interface IRoleOptionModel : IBaseModel<RoleOption>
     {
         List<RoleOption> List_Cache();
+        void ReSetCache();
     }
 }

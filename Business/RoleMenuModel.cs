@@ -28,6 +28,8 @@ namespace Business
         [Transaction]
         public void BindPermission(int roleID, int[] menuIDs, int[] menuOptionIDs)
         {
+            var roleOptionModel = Factory.Get<IRoleOptionModel>(SystemConst.IOC_Model.RoleOptionModel);
+            IMenuModel menuModel = Factory.Get<IMenuModel>(SystemConst.IOC_Model.MenuModel);
             CommonModel commonModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
             //删除原绑定的菜单
             string deleteMenuListSQL = "DELETE dbo.RoleMenu WHERE RoleID=" + roleID;
@@ -50,7 +52,6 @@ namespace Business
             //绑定新功能
             if (menuIDs != null && menuOptionIDs.Length > 0)
             {
-                var roleOptionModel = Factory.Get<IRoleOptionModel>(SystemConst.IOC_Model.RoleOptionModel);
                 StringBuilder addOptionListStringBuilder = new StringBuilder("INSERT dbo.RoleOption ( SystemStatus ,RoleID , MenuOptionID ) ");
                 foreach (var item in menuOptionIDs)
                 {
@@ -63,6 +64,18 @@ namespace Business
             CacheModel.ClearCache(SystemConst.Cache.Menu);
             CacheModel.ClearCache(SystemConst.Cache.RoleMenu);
             CacheModel.ClearCache(SystemConst.Cache.RoleOption);
+
+
+            menuModel.ReSetCache();
+            ReSetCache();
+            roleOptionModel.ReSetCache();
+        }
+
+
+        public void ReSetCache()
+        {
+            var list = base.List().ToList();
+            CacheModel.SetCache(SystemConst.Cache.RoleMenu, list);
         }
     }
 }

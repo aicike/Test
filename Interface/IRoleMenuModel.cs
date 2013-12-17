@@ -10,5 +10,6 @@ namespace Interface
     {
         List<RoleMenu> List_Cache();
         void BindPermission(int roleID, int[]menuIDs, int[] menuOptionIDs);
+        void ReSetCache();
     }
 }
