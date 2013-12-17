@@ -16,7 +16,7 @@
 
 
             $("#btnYL").click(function () {
-                var src = '@Url.Action("Preview", "AppAdvertorial")';
+                var src = '@Url.Action("Preview", "AppAdvertorialAccount")';
                 $("#iframeShow").attr("src", src);
                 $("#dialogShow").dialog({
                     resizable: false,
@@ -47,7 +47,7 @@
             $("#AdvertorialID_stick").val(ID);
             if (ckb.checked) {
 
-                var Url = '@Url.Action("chickStick", "AppAdvertorial")';
+                var Url = '@Url.Action("chickStick", "AppAdvertorialAccount")';
                 $.post(Url, { ID: ID }, function (result) {
 
                     if (result == "No") {
@@ -94,8 +94,8 @@
     <ul class="ulList">
         <li>@Html.ActionLink("个人信息", "Index", "Set", new { HostName = ViewBag.HostName }, null, true)</li>
         <li>@Html.ActionLink("基础设置", "Index", "BasisSet", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li class="select">@Html.ActionLink("App动态软文", "Index", "AppAdvertorial", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li>@Html.ActionLink("App销售端软文", "Index", "AppAdvertorialAccount", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("App动态软文", "Index", "AppAdvertorial", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li class="select">@Html.ActionLink("App销售端软文", "Index", "AppAdvertorialAccount", new { HostName = ViewBag.HostName }, null, true)</li>
         <li>@Html.ActionLink("App等待画面", "Index", "AppWaitImg", new { HostName = ViewBag.HostName }, null, true)</li>
         <li>@Html.ActionLink("关键词自动回复", "Index", "KeywordMessage", new { HostName = ViewBag.HostName }, null, true)</li>
         <li>@Html.ActionLink("安装App自动回复", "Index", "InstallAppReply", new { HostName = ViewBag.HostName }, null, true)</li>
@@ -103,7 +103,7 @@
 </div>
 <div class="bodyRight">
     <div class="option">
-        @Html.ActionLink("添加", "Add", "AppAdvertorial", new { HostName = ViewBag.HostName }, null, true)
+        @Html.ActionLink("添加", "Add", "AppAdvertorialAccount", new { HostName = ViewBag.HostName }, null, true)
         <input type="button" id="btnYL" class="button" style="margin-left: 10px; height: 30px"
             value="App预览" />
     </div>
@@ -168,8 +168,8 @@
                      }
                 </td>
                 <td class="operation">
-                    @Html.ActionLink("修改", "Edit", "AppAdvertorial", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:10px" }, true)
-                    @Ajax.ActionLink("删除", "Delete", "AppAdvertorial", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?！','" + Url.Action("Delete", "AppAdvertorial", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
+                    @Html.ActionLink("修改", "Edit", "AppAdvertorialAccount", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:10px" }, true)
+                    @Ajax.ActionLink("删除", "Delete", "AppAdvertorialAccount", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?！','" + Url.Action("Delete", "AppAdvertorialAccount", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
                 </td>
             </tr>
         }
@@ -195,14 +195,14 @@
 </div>
 <div style="clear: both">
 </div>
-@using (Html.BeginForm("Stick", "AppAdvertorial", new { HostName = ViewBag.HostName }, FormMethod.Post))
+@using (Html.BeginForm("Stick", "AppAdvertorialAccount", new { HostName = ViewBag.HostName }, FormMethod.Post))
 {
     <input type="hidden" id="AdvertorialID_stick" name="AdvertorialID" />
     <input type="hidden" id="isok" name="isok" />
     <input type="hidden" id="Sort" name="Sort" />
     <input type="submit" id="btnStick" style="visibility: hidden" />
 }
-@using (Html.BeginForm("Sort", "AppAdvertorial", new { HostName = ViewBag.HostName }, FormMethod.Post))
+@using (Html.BeginForm("Sort", "AppAdvertorialAccount", new { HostName = ViewBag.HostName }, FormMethod.Post))
 {
     <input type="hidden" id="AdvertorialID_sort" name="AdvertorialID" />
     <input type="hidden" id="Sort_sort" name="Sort" />

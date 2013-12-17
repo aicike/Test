@@ -6,6 +6,7 @@ using Poco;
 using Interface;
 using Injection.Transaction;
 using Injection;
+using Poco.Enum;
 
 namespace Business
 {
@@ -106,7 +107,8 @@ namespace Business
         /// <param name="cardID"></param>
         /// <param name="AccountMainID"></param>
         /// <returns></returns>
-        public Result Recharge(decimal money, int cardID, int AccountMainID)
+        [Transaction]
+        public Result Recharge(decimal money, int cardID, int AccountMainID,int AccountID)
         {
             Result result = new Result();
             string sql = "update CardInfo set Balance =( Balance+" + money + ")  where AccountMainID =" + AccountMainID + " and ID=" + cardID;
@@ -114,6 +116,23 @@ namespace Business
             if (cnt <= 0)
             {
                 result.HasError = true;
+            }
+            else
+            {
+                var vipModel = Factory.Get<IVipInfoModel>(SystemConst.IOC_Model.VipInfoModel);
+                var vipinfo = vipModel.GetInfoBYCardID(cardID, AccountMainID);
+
+                IVIPInfoExpenseDetailModel model = Factory.Get<IVIPInfoExpenseDetailModel>(SystemConst.IOC_Model.VIPInfoExpenseDetailModel);
+                VIPInfoExpenseDetail vipdetail = new VIPInfoExpenseDetail();
+                vipdetail.SystemStatus = 0;
+                vipdetail.ExpenseDate = DateTime.Now;
+                vipdetail.ExpensePrice = money;
+                vipdetail.VIPInfoID = vipinfo.ID;
+                vipdetail.UserID = vipinfo.UserID ?? 0;
+                vipdetail.EnumVIPOperate = (int)EnumVIPOperate.Recharge;
+                vipdetail.AccountID = AccountID;
+                result = model.Add(vipdetail);
+
             }
             return result;
         }
@@ -128,7 +147,7 @@ namespace Business
         /// <param name="vipinfoID"></param>
         /// <returns></returns>
         [Transaction]
-        public Result Consumption(decimal Money, int CardID, int AccountMainID, int UserID, int vipinfoID, decimal YE)
+        public Result Consumption(decimal Money, int CardID, int AccountMainID, int AccountID)
         {
             Result result = new Result();
             string sql = "update CardInfo set Balance =( Balance-" + Money + ")  where AccountMainID =" + AccountMainID + " and ID=" + CardID;
@@ -139,15 +158,19 @@ namespace Business
             }
             else
             {
+                var vipModel = Factory.Get<IVipInfoModel>(SystemConst.IOC_Model.VipInfoModel);
+                var vipinfo = vipModel.GetInfoBYCardID(CardID, AccountMainID);
+
                 IVIPInfoExpenseDetailModel model = Factory.Get<IVIPInfoExpenseDetailModel>(SystemConst.IOC_Model.VIPInfoExpenseDetailModel);
                 VIPInfoExpenseDetail vipdetail = new VIPInfoExpenseDetail();
                 vipdetail.SystemStatus = 0;
                 vipdetail.ExpenseDate = DateTime.Now;
                 vipdetail.ExpensePrice = Money;
-                vipdetail.VIPInfoID = vipinfoID;
-                vipdetail.UserID = UserID;
-                vipdetail.Balance = YE;
-                model.Add(vipdetail);
+                vipdetail.VIPInfoID = vipinfo.ID;
+                vipdetail.UserID = vipinfo.UserID ?? 0;
+                vipdetail.EnumVIPOperate = (int)EnumVIPOperate.Consume;
+                vipdetail.AccountID = AccountID;
+                result = model.Add(vipdetail);
             }
             return result;
         }

@@ -64,9 +64,11 @@
     <Compile Include="Classify.cs" />
     <Compile Include="Conversation.cs" />
     <Compile Include="ConversationDetailed.cs" />
+    <Compile Include="Enum\EnumAdvertorialUType.cs" />
     <Compile Include="Enum\EnumReportForm.cs" />
     <Compile Include="Enum\EnumTaskStatus.cs" />
     <Compile Include="Enum\EnumTaskType.cs" />
+    <Compile Include="Enum\EnumVIPOperate.cs" />
     <Compile Include="ReportBody.cs" />
     <Compile Include="ReportFormPower.cs" />
     <Compile Include="SMS.cs" />

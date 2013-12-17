@@ -157,6 +157,7 @@
     <Compile Include="Controllers\AccountMainGuideController.cs" />
     <Compile Include="Controllers\AjaxController.cs" />
     <Compile Include="Controllers\AjaxReportController.cs" />
+    <Compile Include="Controllers\AppAdvertorialAccountController.cs" />
     <Compile Include="Controllers\AppAdvertorialController.cs" />
     <Compile Include="Controllers\AppWaitImgController.cs" />
     <Compile Include="Controllers\BaseController\BaseController.cs" />
@@ -891,6 +892,10 @@
     <Content Include="Views\CardInfo\Add.cshtml" />
     <Content Include="Views\Test\JqueryMobileDome.cshtml" />
     <Content Include="Views\CardInfo\AddPrefix.cshtml" />
+    <Content Include="Views\AppAdvertorialAccount\Index.cshtml" />
+    <Content Include="Views\AppAdvertorialAccount\Add.cshtml" />
+    <Content Include="Views\AppAdvertorialAccount\Edit.cshtml" />
+    <Content Include="Views\AppAdvertorialAccount\Preview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
@@ -913,9 +918,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>30062</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://192.168.1.166/</IISUrl>
+          <IISUrl>http://192.168.1.138/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://192.168.1.166/</IISAppRootUrl>
+          <IISAppRootUrl>http://192.168.1.138/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

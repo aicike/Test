@@ -16,9 +16,15 @@ namespace Business
 {
     public class AppAdvertorialModel : BaseModel<AppAdvertorial>, IAppAdvertorialModel
     {
-        public IQueryable<AppAdvertorial> GetList(int AccountMainID)
+
+        /// <summary>
+        /// 获取列表
+        /// </summary>
+        /// <param name="AccountMainID"></param>
+        /// <returns></returns>
+        public IQueryable<AppAdvertorial> GetList(int AccountMainID, int AdverTorialType)
         {
-            var appadverlist = List().Where(a => a.AccountMainID == AccountMainID).OrderByDescending(a => a.stick).ThenByDescending(a => a.Sort).ThenByDescending(a => a.IssueDate);
+            var appadverlist = List().Where(a => a.AccountMainID == AccountMainID && a.EnumAdvertorialUType == AdverTorialType).OrderByDescending(a => a.stick).ThenByDescending(a => a.Sort).ThenByDescending(a => a.IssueDate);
             return appadverlist;
         }
 
@@ -80,7 +86,7 @@ namespace Business
             result = base.Add(appadvertorial);
             if (appadvertorial.stick == 1)
             {
-                int cnt = EditAppAdvertorialStick(appadvertorial.ID, appadvertorial.stick, appadvertorial.AccountMainID, appadvertorial.Sort);
+                int cnt = EditAppAdvertorialStick(appadvertorial.ID, appadvertorial.stick, appadvertorial.AccountMainID, appadvertorial.Sort, appadvertorial.EnumAdvertorialUType);
                 if (cnt <= 0)
                 {
                     result.HasError = true;
@@ -148,7 +154,7 @@ namespace Business
             result = base.Add(appadvertorial);
             if (appadvertorial.stick == 1)
             {
-                int cnt = EditAppAdvertorialStick(appadvertorial.ID, appadvertorial.stick, appadvertorial.AccountMainID, appadvertorial.Sort);
+                int cnt = EditAppAdvertorialStick(appadvertorial.ID, appadvertorial.stick, appadvertorial.AccountMainID, appadvertorial.Sort, appadvertorial.EnumAdvertorialUType);
                 if (cnt <= 0)
                 {
                     result.HasError = true;
@@ -161,7 +167,7 @@ namespace Business
 
 
         [Transaction]
-        public Result DelAppAdvertorial(int ID)
+        public Result DelAppAdvertorial(int ID, int AdverTorialType)
         {
             var appadivertorial = base.Get(ID);
             string path = HttpContext.Current.Server.MapPath(appadivertorial.MinImagePath);
@@ -181,12 +187,13 @@ namespace Business
             }
             if (appadivertorial.stick == 1)
             {
-                string sql = string.Format("update AppAdvertorial set Sort=(Sort-1) where AccountMainID = {0} and stick=1 and sort>{1}", appadivertorial.AccountMainID, appadivertorial.Sort);
+                string sql = string.Format("update AppAdvertorial set Sort=(Sort-1) where AccountMainID = {0} and EnumAdvertorialUType={1} and stick=1 and sort>{2}", appadivertorial.AccountMainID,AdverTorialType, appadivertorial.Sort);
                 base.SqlExecute(sql);
             }
 
             return base.CompleteDelete(ID);
         }
+
 
         [Transaction]
         public Result EditAppAdvertorial(AppAdvertorial appadvertorial, HttpPostedFileBase HousShowImagePathFile, int w, int h, int x1, int y1, int tw, int th)
@@ -266,7 +273,7 @@ namespace Business
             if (appadvertorial.stick != appadvertorials.stick)
             {
 
-                int cnt = EditAppAdvertorialStick(appadvertorial.ID, appadvertorial.stick, appadvertorial.AccountMainID, appadvertorial.Sort);
+                int cnt = EditAppAdvertorialStick(appadvertorial.ID, appadvertorial.stick, appadvertorial.AccountMainID, appadvertorial.Sort, appadvertorial.EnumAdvertorialUType);
                 if (cnt <= 0)
                 {
                     result.HasError = true;
@@ -352,7 +359,7 @@ namespace Business
             if (appadvertorial.stick != appadvertorials.stick)
             {
 
-                int cnt = EditAppAdvertorialStick(appadvertorial.ID, appadvertorial.stick, appadvertorial.AccountMainID, appadvertorial.Sort);
+                int cnt = EditAppAdvertorialStick(appadvertorial.ID, appadvertorial.stick, appadvertorial.AccountMainID, appadvertorial.Sort, appadvertorial.EnumAdvertorialUType);
                 if (cnt <= 0)
                 {
                     result.HasError = true;
@@ -368,7 +375,7 @@ namespace Business
 
         //修改置顶 isok 1 置顶 0 取消
         [Transaction]
-        public int EditAppAdvertorialStick(int ID, int isok, int accoutMainID, int Sort)
+        public int EditAppAdvertorialStick(int ID, int isok, int accoutMainID, int Sort, int AdverTorialType)
         {
             string sql = "";
             if (isok == 1)
@@ -380,7 +387,7 @@ namespace Business
             else
             {
                 sql = string.Format("update AppAdvertorial set stick = {0}, sort=0 where id ={1}", isok, ID);
-                string sql2 = string.Format("update AppAdvertorial set Sort = (Sort-1) where stick = 1 and Sort>{0} and accountMainID={1}", Sort, accoutMainID);
+                string sql2 = string.Format("update AppAdvertorial set Sort = (Sort-1) where stick = 1 and Sort>{0} and accountMainID={1} and EnumAdvertorialUType={2}", Sort, accoutMainID, AdverTorialType);
                 base.SqlExecute(sql2);
             }
 
@@ -388,7 +395,7 @@ namespace Business
         }
 
         //排序 type 1 向上 0 向下
-        public int EditAppAdvertorialSort(int ID, int AccountMainID, int Sort, int type)
+        public int EditAppAdvertorialSort(int ID, int AccountMainID, int Sort, int type, int AdverTorialType)
         {
             int cnt = List().Where(a => a.AccountMainID == AccountMainID && a.stick == 1).Count();
             if ((Sort == 1 && type == 0) || (Sort == cnt && type == 1))
@@ -402,13 +409,13 @@ namespace Business
                 string sql = "";
                 if (type == 1) //向上
                 {
-                    sql = string.Format(@"update AppAdvertorial set Sort = (Sort-1) where accountMainID={1} and Sort=({2}+1) and stick=1 
-                                    update AppAdvertorial set Sort = (Sort+1) where ID={0} ", ID, AccountMainID, Sort);
+                    sql = string.Format(@"update AppAdvertorial set Sort = (Sort-1) where accountMainID={1}  and EnumAdvertorialUType={3} and Sort=({2}+1) and stick=1 
+                                    update AppAdvertorial set Sort = (Sort+1) where ID={0} ", ID, AccountMainID, Sort, AdverTorialType);
                 }
                 else
                 {
-                    sql = string.Format(@"update AppAdvertorial set Sort = (Sort+1) where accountMainID={1} and Sort=({2}-1) and stick=1 
-                                    update AppAdvertorial set Sort = (Sort-1) where ID={0} ", ID, AccountMainID, Sort);
+                    sql = string.Format(@"update AppAdvertorial set Sort = (Sort+1) where accountMainID={1}  and EnumAdvertorialUType={3} and Sort=({2}-1) and stick=1 
+                                    update AppAdvertorial set Sort = (Sort-1) where ID={0} ", ID, AccountMainID, Sort, AdverTorialType);
                 }
 
 

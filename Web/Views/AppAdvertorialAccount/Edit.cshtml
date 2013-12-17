@@ -14,7 +14,7 @@
     <script>
         var stick = @ViewBag.stick
         var Cnt = 0;
-        var UpImgUrl = '@Url.Action("UpImg", "AppAdvertorial", new { HostName = ViewBag.HostName })';
+        var UpImgUrl = '@Url.Action("UpImg", "AppAdvertorialAccount", new { HostName = ViewBag.HostName })';
         $(function () {
 
             
@@ -225,7 +225,7 @@
 
             
             $("#btnSubmit").click(function () {
-               if ($("#w").val() == "0") {
+                 if ($("#w").val() == "0") {
                     JAlert({
                         Message: "请选择App列表展示区域！",
                         DialogType: "Ok",
@@ -264,7 +264,7 @@
         function chickStick(ID) {
             if ($("#stick").val() == 1) {
                 var ID= $("#ID").val()
-                var Url = '@Url.Action("chickUpdStick", "AppAdvertorial")';
+                var Url = '@Url.Action("chickUpdStick", "AppAdvertorialAccount")';
                 $.post(Url, { ID:ID }, function (result) {
 
                     if (result == "No") {
@@ -320,7 +320,7 @@
     </ul>
 </div>
 <div class="bodyRight">
-    @using (Html.BeginForm("Edit", "AppAdvertorial", new { HostName = ViewBag.HostName, id = Model.ID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Edit", "AppAdvertorialAccount", new { HostName = ViewBag.HostName, id = Model.ID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <fieldset style="font-size: 14px">
             <legend>展示图片</legend>

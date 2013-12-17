@@ -51,5 +51,8 @@ namespace Poco
         [Display(Name = "展示缩略图 小")]
         public string MinImagePath { get; set; }
 
+        [Display(Name = "软文类型")]
+        public int EnumAdvertorialUType { get; set; }
+
     }
 }

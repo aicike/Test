@@ -20,8 +20,8 @@ namespace Poco.WebAPI_Poco
         public decimal ExpensePrice { get; set; }
 
         /// <summary>
-        /// 本次消费后余额
+        /// 操作类型
         /// </summary>
-        public decimal Balance { get; set; }
+        public string ExpenseType { get; set; }
     }
 }

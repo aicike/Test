@@ -76,7 +76,7 @@ namespace Interface
         /// <param name="cardID"></param>
         /// <param name="AccountMainID"></param>
         /// <returns></returns>
-        Result Recharge(decimal money, int cardID, int AccountMainID);
+        Result Recharge(decimal money, int cardID, int AccountMainID, int AccountID);
 
         /// <summary>
         /// 消费
@@ -87,7 +87,7 @@ namespace Interface
         /// <param name="UserID"></param>
         /// <param name="vipinfoID"></param>
         /// <returns></returns>
-        Result Consumption(decimal Money, int CardID, int AccountMainID, int UserID, int vipinfoID,decimal YE);
+        Result Consumption(decimal Money, int CardID, int AccountMainID, int AccountID);
 
     }
 }

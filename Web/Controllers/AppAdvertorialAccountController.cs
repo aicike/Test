@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Controllers;
+using Poco;
 using Injection;
 using Interface;
-using Poco;
 using Common;
 using Business;
 using System.IO;
@@ -15,17 +15,17 @@ using Poco.Enum;
 
 namespace Web.Controllers
 {
-    public class AppAdvertorialController : ManageAccountController
+    public class AppAdvertorialAccountController : ManageAccountController
     {
         //
-        // GET: /AppAdvertorial/
+        // GET: /AppAdvertorialAccount/
 
         public ActionResult Index(int? id)
         {
             ViewBag.HostName = LoginAccount.HostName;
 
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd).ToPagedList(id ?? 1, 15);
+            var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.AccountEnd).ToPagedList(id ?? 1, 15);
 
 
             string WebTitleRemark = SystemConst.WebTitleRemark;
@@ -55,18 +55,18 @@ namespace Web.Controllers
             appAdver.AccountMainID = LoginAccount.CurrentAccountMainID;
             appAdver.Sort = 0;
             appAdver.IssueDate = DateTime.Now;
-            appAdver.EnumAdvertorialUType= (int)EnumAdvertorialUType.UserEnd;
+            appAdver.EnumAdvertorialUType = (int)EnumAdvertorialUType.AccountEnd;
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             Result result = AppAdvertorialModel.AddAppAdvertorial(appAdver, w, h, x1, y1, tw, th);
-          
 
-            return RedirectToAction("Index", "AppAdvertorial");
+
+            return RedirectToAction("Index", "AppAdvertorialAccount");
         }
 
         public ActionResult Edit(int id)
         {
             ViewBag.HostName = LoginAccount.HostName;
-          
+
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-App动态软文-添加项目", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
@@ -98,25 +98,25 @@ namespace Web.Controllers
                     return JavaScript(AlertJS_NoTag(new Dialog("请在图片上选择展示区域")));
                 }
             }
-            appadver.EnumAdvertorialUType = (int)EnumAdvertorialUType.UserEnd;
+            appadver.EnumAdvertorialUType = (int)EnumAdvertorialUType.AccountEnd;
             Result result = AppAdvertorialModel.EditAppAdvertorial(appadver, w, h, x1, y1, tw, th);
             if (result.HasError)
             {
                 return JavaScript(" isCommit = true;" + AlertJS_NoTag(new Dialog(result.Error)));
             }
-            return RedirectToAction("Index", "AppAdvertorial");
+            return RedirectToAction("Index", "AppAdvertorialAccount");
         }
 
         public ActionResult Delete(int id)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var result = AppAdvertorialModel.DelAppAdvertorial(id, (int)EnumAdvertorialUType.UserEnd);
+            var result = AppAdvertorialModel.DelAppAdvertorial(id, (int)EnumAdvertorialUType.AccountEnd);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));
             }
 
-            return JavaScript("window.location.href='" + Url.Action("Index", "AppAdvertorial", new { HostName = LoginAccount.HostName }) + "'");
+            return JavaScript("window.location.href='" + Url.Action("Index", "AppAdvertorialAccount", new { HostName = LoginAccount.HostName }) + "'");
         }
 
         //校验是否可以置顶
@@ -125,7 +125,7 @@ namespace Web.Controllers
         public string chickStick(int ID)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var AppAdvertorial = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd);
+            var AppAdvertorial = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.AccountEnd);
             if (AppAdvertorial.Where(a => a.stick == 1).Count() >= 5)
             {
                 return "No";
@@ -134,17 +134,17 @@ namespace Web.Controllers
             {
                 return "Yes";
             }
-            
+
         }
-       
+
         //校验修改是否可以置顶
         [HttpPost]
         [AllowCheckPermissions(false)]
         public string chickUpdStick(int ID)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var AppAdvertorial = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd);
-            if (AppAdvertorial.Where(a => a.stick == 1&&a.ID!=ID).Count() >= 5)
+            var AppAdvertorial = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.AccountEnd);
+            if (AppAdvertorial.Where(a => a.stick == 1 && a.ID != ID).Count() >= 5)
             {
                 return "No";
             }
@@ -158,25 +158,25 @@ namespace Web.Controllers
         //置顶 isok =1 置顶 0 取消置顶
         [AllowCheckPermissions(false)]
         [HttpPost]
-        public ActionResult Stick(int AdvertorialID,int isok,int Sort)
+        public ActionResult Stick(int AdvertorialID, int isok, int Sort)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
 
-            AppAdvertorialModel.EditAppAdvertorialStick(AdvertorialID, isok, LoginAccount.CurrentAccountMainID, Sort, (int)EnumAdvertorialUType.UserEnd);
+            AppAdvertorialModel.EditAppAdvertorialStick(AdvertorialID, isok, LoginAccount.CurrentAccountMainID, Sort, (int)EnumAdvertorialUType.AccountEnd);
 
-            return RedirectToAction("Index", "AppAdvertorial", new { HostName = LoginAccount.HostName });
+            return RedirectToAction("Index", "AppAdvertorialAccount", new { HostName = LoginAccount.HostName });
         }
 
         //排序
         [AllowCheckPermissions(false)]
         [HttpPost]
-        public ActionResult Sort(int AdvertorialID,int Sort,int Type)
+        public ActionResult Sort(int AdvertorialID, int Sort, int Type)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
 
-            AppAdvertorialModel.EditAppAdvertorialSort(AdvertorialID, LoginAccount.CurrentAccountMainID, Sort, Type, (int)EnumAdvertorialUType.UserEnd);
+            AppAdvertorialModel.EditAppAdvertorialSort(AdvertorialID, LoginAccount.CurrentAccountMainID, Sort, Type, (int)EnumAdvertorialUType.AccountEnd);
 
-            return RedirectToAction("Index", "AppAdvertorial", new { HostName = LoginAccount.HostName });
+            return RedirectToAction("Index", "AppAdvertorialAccount", new { HostName = LoginAccount.HostName });
         }
 
         //预览
@@ -184,7 +184,7 @@ namespace Web.Controllers
         public ActionResult Preview()
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd);
+            var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.AccountEnd);
             ViewBag.TitleImg = list.Where(a => a.stick == 1).ToPagedList(1, 5);
             ViewBag.ListImg = list.Where(a => a.stick == 0).ToPagedList(1, 5);
 
@@ -221,7 +221,6 @@ namespace Web.Controllers
                 return "false";
             }
         }
-
 
 
     }

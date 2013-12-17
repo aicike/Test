@@ -218,7 +218,7 @@ namespace Web.Controllers
         public ActionResult Recharge(CardInfo cardInfo, int CardID)
         {
             var CardModel = Factory.Get<ICardInfoModel>(SystemConst.IOC_Model.CardInfoModel);
-            var result = CardModel.Recharge(cardInfo.Balance, CardID, LoginAccount.CurrentAccountMainID);
+            var result = CardModel.Recharge(cardInfo.Balance, CardID, LoginAccount.CurrentAccountMainID,LoginAccount.ID);
             if (result.HasError)
             {
                 return JavaScript(" isCommit = true;" + AlertJS_NoTag(new Dialog("充值失败 请稍后再试！")));

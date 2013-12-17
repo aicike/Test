@@ -8,6 +8,7 @@ using Interface;
 using Poco;
 using Poco.WebAPI_Poco;
 using Common;
+using Poco.Enum;
 
 namespace Web.Controllers
 {
@@ -364,10 +365,11 @@ namespace Web.Controllers
             IVIPInfoExpenseDetailModel model = Factory.Get<IVIPInfoExpenseDetailModel>(SystemConst.IOC_Model.VIPInfoExpenseDetailModel);
             var list = model.GetByUserID(userID).ToList().Select(a => new App_VIPInfoExpenseDetail()
             {
-                ID=a.ID,
-                ExpenseDate=a.ExpenseDate.ToString("yyyy-MM-dd hh:mm:ss"),
-                ExpensePrice=a.ExpensePrice,
-                Balance=a.Balance
+                ID = a.ID,
+                ExpenseDate = a.ExpenseDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                ExpensePrice = a.ExpensePrice,
+                ExpenseType = a.EnumVIPOperate == (int)EnumVIPOperate.Consume ? "消费" : "充值"
+
             });
             return Newtonsoft.Json.JsonConvert.SerializeObject(list);
         }
@@ -450,10 +452,11 @@ namespace Web.Controllers
         /// <summary>
         /// 卡片消费
         /// </summary>
-        /// <param name="CardNums">卡好  前缀.号码.amid</param>
+        /// <param name="CardNums">卡号  前缀.号码.amid</param>
         /// <param name="Money">消费金额</param>
+        /// <param name="AccountID">当前销售人ID</param>
         /// <returns></returns>
-        public string CardConsumption( string CardNums, double Money)
+        public string CardConsumption( string CardNums, double Money,int AccountID)
         {
             Result result = new Result();
             var CardModel = Factory.Get<ICardInfoModel>(SystemConst.IOC_Model.CardInfoModel);
@@ -511,7 +514,7 @@ namespace Web.Controllers
                                 //b_vip.UserPhone = vipinfo.User.UserLoginInfo.Phone;
                                 //b_vip.CardID = cardinfo.ID;
 
-                                var res = CardModel.Consumption(Convert.ToDecimal(Money), cardinfo.ID, AccountMainID, vipinfo.UserID ?? 0, vipinfo.ID, (cardinfo.Balance - Convert.ToDecimal(Money)));
+                                var res = CardModel.Consumption(Convert.ToDecimal(Money), cardinfo.ID, AccountMainID, AccountID);
                                 if (res.HasError)
                                 {
                                     result.HasError = true;

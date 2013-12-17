@@ -145,7 +145,7 @@ namespace Web.Controllers
         public string GetAdvertorialList(int AMID, int ID, int ListCnt)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var list = AppAdvertorialModel.GetList(AMID);
+            var list = AppAdvertorialModel.GetList(AMID, (int)EnumAdvertorialUType.UserEnd);
             PagedList<AppAdvertorial> RtitleImg = null;
             PagedList<AppAdvertorial> RListImg = null;
             if (ID == 0)
@@ -201,7 +201,7 @@ namespace Web.Controllers
         public string GetAdvertorialInfo(int AMID, int ID)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var list = AppAdvertorialModel.GetList(AMID);
+            var list = AppAdvertorialModel.GetList(AMID, (int)EnumAdvertorialUType.UserEnd);
             var Info = list.Where(a => a.ID == ID).FirstOrDefault();
             _B_Advertorial ADVERTORIAL = new _B_Advertorial();
             ADVERTORIAL.I = Info.ID;
