@@ -69,5 +69,12 @@ namespace Business
                                                          a.MenuOption.Action.Equals(action, StringComparison.CurrentCultureIgnoreCase));
             return result;
         }
+
+
+        public void ReSetCache()
+        {
+            var list = base.List().ToList();
+            CacheModel.SetCache(SystemConst.Cache.Menu, list);
+        }
     }
 }

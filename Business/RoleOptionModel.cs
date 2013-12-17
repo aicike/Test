@@ -23,5 +23,12 @@ namespace Business
             CacheModel.SetCache(SystemConst.Cache.RoleOption, list);
             return list;
         }
+
+
+        public void ReSetCache()
+        {
+            var list = base.List().ToList();
+            CacheModel.SetCache(SystemConst.Cache.RoleOption, list);
+        }
     }
 }
