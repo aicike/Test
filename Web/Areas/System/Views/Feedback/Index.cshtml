@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
+}
+@section head{
+
+<script>
+    function clickInfo(id) {
+        var src = '@Url.Action("GetInfo", "Feedback")';
+        $("#iframeShowInfo").attr("src", src + "/" + id);
+        $("#dialogShowInfo").dialog({
+            resizable: false,
+            height: 530,
+            width: 420,
+            modal: true,
+            draggable: false,
+            close: function (event, ui) {
+                $("#iframeShowInfo").attr("src", "");
+            }
+        });
+    }
+</script>
+}
+@model PagedList<Poco.Feedback>
+<div class="title">
+    问题反馈</div>
+<div class="body">
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th >
+                客户端
+            </th>
+            <th>
+                客户
+            </th>
+            <th style="width: 250px;">
+                内容
+            </th>
+            <th style="width: 200px;">
+                联系方式
+            </th>
+            <th  style="width:150px;">
+                提交日期
+            </th>
+        </tr>
+          @foreach (var item in Model)
+          {
+            <tr>
+                <td>@item.client</td>
+                <td>@item.AccountMain.Name</td>
+                <td  class="operation"><div style="width: 250px;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><a onclick="clickInfo(@item.ID)" title="查看详细">@item.Content</a></div></td>
+                <td><div style="width: 200px;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">@item.contact</div></td>
+                <td>@item.CreateDate.ToString("yyyy-MM-dd HH:mm")</td>
+            </tr>
+          }
+    </table>
+
+
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+           {
+               PageIndexParameterName = "ID",
+               CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+               NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+               NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+               CssClass = "manage_pages pages",
+               SeparatorHtml = "&nbsp;",
+               AutoHide = false,
+               /*LastPageText = "Last",
+               FirstPageText = "First",
+               PrevPageText = "Back",
+               NextPageText = "Next",*/
+               PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+               ShowFirstLast = false
+           })
+    </div>
+</div>
+<div style="clear: both">
+</div>
+<div id="dialogShowInfo" title="详细内容" style="display: none; padding: 0px">
+    <iframe id="iframeShowInfo" src="#" style="width: 420px; height: 480px; border: none;
+        overflow: auto"></iframe>
+</div>

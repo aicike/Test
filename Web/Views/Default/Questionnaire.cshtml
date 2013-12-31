@@ -1,0 +1,325 @@
+﻿@{
+    ViewBag.Title = "Questionnaire";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+@section head{
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <script>
+        $(document).bind("mobileinit", function () {
+            // disable ajax nav
+            $.mobile.ajaxEnabled = false
+        });
+    </script>
+    <script src="@Url.Content("~/Scripts/JqueryMobile/jquery.mobile-1.3.2.min.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Scripts/JqueryMobile/jquery.mobile-1.3.2.min.css")" rel="stylesheet" type="text/css" />
+    <script>
+
+
+        function NoClickDelay(el) {
+            this.element = typeof el == 'object' ? el : document.getElementById(el);
+            if (window.Touch) this.element.addEventListener('touchstart', this, false);
+        }
+        NoClickDelay.prototype = {
+            handleEvent: function (e) {
+                switch (e.type) {
+                    case 'touchstart':
+                        this.onTouchStart(e);
+                        break;
+                    case 'touchmove':
+                        this.onTouchMove(e);
+                        break;
+                    case 'touchend':
+                        this.onTouchEnd(e);
+                        break;
+                }
+            },
+            onTouchStart: function (e) {
+                e.preventDefault(); this.moved = false;
+                this.theTarget = document.elementFromPoint(e.targetTouches[0].clientX, e.targetTouches[0].clientY);
+                if (this.theTarget.nodeType == 3) this.theTarget = theTarget.parentNode;
+                this.theTarget.className += ' pressed';
+                this.element.addEventListener('touchmove', this, false);
+                this.element.addEventListener('touchend', this, false);
+            },
+            onTouchMove: function (e) {
+                this.moved = true;
+                this.theTarget.className = this.theTarget.className.replace(/ ?pressed/gi, '');
+            },
+            onTouchEnd: function (e) {
+                this.element.removeEventListener('touchmove', this, false);
+                this.element.removeEventListener('touchend', this, false);
+                if (!this.moved && this.theTarget) {
+                    this.theTarget.className = this.theTarget.className.replace(/ ?pressed/gi, '');
+                    var theEvent = document.createEvent('MouseEvents');
+                    theEvent.initEvent('click', true, true);
+                    this.theTarget.dispatchEvent(theEvent);
+                }
+                this.theTarget = undefined;
+            }
+        };
+
+
+
+
+        function AnswerModel() {
+            var it = new Object;
+            it.SurveyTroubleID = 0;
+            it.SurveyOptionID = 0;
+            it.Content = "";
+
+            return it;
+        }
+        var items = [];
+
+
+
+        $(function () {
+
+            $('.BeginT').click("swipeleft", function () {
+                var nextpage = $(this).parentsUntil(".ui_page").parent().next('div[data-role="page"]');
+
+                if (nextpage.length > 0) {
+                    $.mobile.changePage(nextpage, { transition: "slide",
+                        reverse: false
+                    }, "slide", false, true);
+                }
+            });
+            $('.lastT').click("swipeleft", function () {
+                var nextpage = $(this).parentsUntil(".ui_page").parent().next('div[data-role="page"]');
+
+                if (nextpage.length > 0) {
+                    $.mobile.changePage(nextpage, { transition: "slide",
+                        reverse: false
+                    }, "slide", false, true);
+                }
+            });
+            $('.topT').click("swiperight", function () {
+                var prevpage = $(this).parentsUntil(".ui_page").parent().prev('div[data-role="page"]');
+
+                if (prevpage.length > 0) {
+                    $.mobile.changePage(prevpage, { transition: "slide",
+                        reverse: true
+                    }, true, true);
+                }
+            });
+
+
+            //------------------其他-----
+
+
+
+            //--------------处理300毫秒-----------------
+            $(".topT").each(function (i, n) {
+                new NoClickDelay(n);
+            });
+            $(".lastT").each(function (i, n) {
+                new NoClickDelay(n);
+            });
+
+            //----------------提交后状态----
+            var isok = '@ViewBag.isok';
+            if (isok == 1) {
+                $('#insert').hide();
+                $('#isok').show();
+
+            }
+            else {
+                $('#insert').show();
+                $('#isok').hide();
+            }
+
+        });
+
+        //校验
+        function chickButton(type, tid, oid) {
+            //单选
+            if (type == 0) {
+                $('#btn_' + tid).button("enable");
+            }
+            //多选
+            else if (type == 1) {
+                var j = 0;
+                $("input[name='" + type + "_" + tid + "']").each(function () {
+                    if ($(this).attr("checked")) {
+                        j++;
+                    }
+                });
+                if (j > 0) {
+                    $('#btn_' + tid).button("enable");
+                }
+                else {
+                    $('#btn_' + tid).button("disable");
+                }
+            }
+            //文本
+            else if (type == 2) {
+
+                var txt = $("#" + type + "_" + tid).val().trim();
+                if (txt != "" || tx != undefined) {
+                    $('#btn_' + tid).button("enable");
+                }
+
+            }
+        }
+
+        //获取答案
+        function GetAnswer() {
+
+            items = [];
+            //单选
+            $("input[class='RDOAnswer']").each(function () {
+                if ($(this).attr("checked")) {
+                    var AM = new AnswerModel();
+                    var str = $(this).val().split('_');
+                    AM.SurveyTroubleID = str[1];
+                    AM.SurveyOptionID = str[2];
+                    items.push(AM);
+                }
+            });
+            //多选
+            $("input[class='CKBAnswer']").each(function () {
+                if ($(this).attr("checked")) {
+                    var AM = new AnswerModel();
+                    var str = $(this).val().split('_');
+                    AM.SurveyTroubleID = str[1];
+                    AM.SurveyOptionID = str[2];
+                    items.push(AM);
+                }
+            });
+            //文本
+            $(".TxtAnswer").each(function () {
+                var AM = new AnswerModel();
+                var str = $(this).attr("id").split('_');
+                AM.SurveyTroubleID = str[1];
+                AM.Content = $(this).val();
+                items.push(AM);
+
+            });
+
+
+            var value = JSON.stringify(items);
+            $("#Answer").val(value);
+
+        }
+
+
+    </script>
+    <style>
+        .divTitle
+        {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .divRemarks
+        {
+            font-size: 14px;
+        }
+    </style>
+}
+@model Poco.SurveyMain
+@{
+    var Trouble = Model.SurveyTrouble.OrderBy(a => a.TroubleNumber).ToList();    
+}
+@using (Html.BeginForm("AddQuestionnaire", "Default", new { surveyMainID = ViewBag.smid }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input id="UID" type="hidden" name="UID" value="@ViewBag.UID" />
+    <input id="Utype" type="hidden" name="Utype" value="@ViewBag.Utype" />
+    <input type="hidden" name="Answer" id="Answer" />
+    
+    <div id="insert" data-role="content">
+        <div data-role="page" id="ui_pages">
+            <div data-role="content">
+                <fieldset data-role="controlgroup">
+                    <div class="divTitle">@Model.SurveyTitle</div>
+                    <div class="divRemarks">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        @Model.SurveyRemarks
+                    </div>
+                </fieldset>
+                @*//0 开启 1停止*@
+                @if (Model.Status == 0)
+                { 
+                    <input type="button" id="Btnbegin" class="BeginT" value="开 始 调 查" />
+                }
+                else
+                {
+                    <input type="button" id="Btnbegin" disabled="disabled" class="BeginT" value="调 查 已 经 束" />
+                }
+            </div>
+        </div>
+        @for (int i = 0; i < Trouble.Count(); i++)
+        {
+            var Option = Trouble[i].SurveyOption.OrderBy(a => a.ID);
+            //选项命名规则 单选 多选 ：题目类型_题号_答案编号  文本：题目类型_题号
+            <div data-role="page" id="ui_pages">
+                <div data-role="content">
+                    <fieldset data-role="controlgroup">
+                        <legend>@Trouble[i].TroubleNumber、 @Trouble[i].TroubleName</legend>
+                        @if (Trouble[i].EnumTroubleType == 0)
+                        {
+
+                            foreach (var item in Option)
+                            { 
+                            <!--问题类型 0 单选-->
+                            <input name="@(Trouble[i].EnumTroubleType)_@Trouble[i].ID" id="@(Trouble[i].EnumTroubleType)_@(Trouble[i].ID)_@(item.ID)" type="radio"  value="@(Trouble[i].EnumTroubleType)_@(Trouble[i].ID)_@(item.ID)" class="RDOAnswer" onclick="chickButton(@(Trouble[i].EnumTroubleType),@Trouble[i].ID,@item.ID)">
+                            <label for="@(Trouble[i].EnumTroubleType)_@(Trouble[i].ID)_@(item.ID)">
+                                @item.Option
+                            </label>
+                            }
+                        }
+                        else if (Trouble[i].EnumTroubleType == 1)
+                        {
+                            foreach (var item in Option)
+                            { 
+                            <!--问题类型1多选 -->
+                            <input type="checkbox" name="@(Trouble[i].EnumTroubleType)_@Trouble[i].ID" id="@(Trouble[i].EnumTroubleType)_@(Trouble[i].ID)_@(item.ID)"  class="CKBAnswer"  value="@(Trouble[i].EnumTroubleType)_@(Trouble[i].ID)_@(item.ID)"  onclick="chickButton(@(Trouble[i].EnumTroubleType),@Trouble[i].ID,@(item.ID))">
+                            <label for="@(Trouble[i].EnumTroubleType)_@(Trouble[i].ID)_@(item.ID)" >
+                                @item.Option
+                            </label>
+                            }
+                        }
+                        else if (Trouble[i].EnumTroubleType == 2)
+                        {
+                            <!--问题类型2文本-->
+                            <textarea cols="40" rows="8" style="height: 150px; max-height: 150px;" name="@(Trouble[i].EnumTroubleType)_@Trouble[i].ID" class="TxtAnswer" onblur="chickButton(@(Trouble[i].EnumTroubleType),@Trouble[i].ID,0)"
+                                id="@(Trouble[i].EnumTroubleType)_@Trouble[i].ID" placeholder="必填内容（500字以内）"></textarea>
+                        }
+                    </fieldset>
+                    @if (i == 0)
+                    {
+                        <div style="float: left; width: 45%">
+                            <input type="button" class="topT" value="简介" /></div>
+                        <div style="float: right; width: 45%">
+                            <input type="button" id="btn_@Trouble[i].ID" class="lastT" disabled="disabled" value="下一题" />
+                        </div>
+                    }
+                    else if (i == (Trouble.Count() - 1))
+                    {
+                        <div style="float: left; width: 45%">
+                            <input type="button" class="topT" value="上一题" /></div>
+                        <div style="float: right; width: 45%">
+                            <input type="submit" id="btn_@Trouble[i].ID" class="Tok"   onclick="return GetAnswer()";  disabled="disabled" value="完成" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div style="float: left; width: 45%">
+                            <input type="button" class="topT" value="上一题" /></div>
+                        <div style="float: right; width: 45%">
+                            <input type="button" id="btn_@Trouble[i].ID" class="lastT"  disabled="disabled" value="下一题" />
+                        </div>
+                    }
+                </div>
+            </div>
+        
+        }
+    </div>
+}
+<div id="alert">
+</div>
+<div id="isok" data-role="content">
+    <div style="text-align: center; font-size: 25px; margin-top: 30%;">
+        提交成功<br />
+        感谢您的参与<br />
+    </div>
+</div>

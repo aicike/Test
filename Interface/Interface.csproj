@@ -57,6 +57,7 @@
     <Compile Include="IClassifyModel.cs" />
     <Compile Include="IConversationDetailedModel.cs" />
     <Compile Include="IConversationModel.cs" />
+    <Compile Include="IFeedbackModel.cs" />
     <Compile Include="IHolidayModel.cs" />
     <Compile Include="IKeywordAutoMessageModel.cs" />
     <Compile Include="IKeywordModel.cs" />
@@ -75,6 +76,10 @@
     <Compile Include="IPushMsgDetailModel.cs" />
     <Compile Include="IPushMsgModel.cs" />
     <Compile Include="IReportFormPowerModel.cs" />
+    <Compile Include="ISurveyAnswerModel.cs" />
+    <Compile Include="ISurveyMainModel.cs" />
+    <Compile Include="ISurveyOptionModel.cs" />
+    <Compile Include="ISurveyTroubleModel.cs" />
     <Compile Include="ISystemUserMenuModel.cs" />
     <Compile Include="ISystemUserModel.cs" />
     <Compile Include="ISystemUserRoleModel.cs" />

@@ -25,5 +25,13 @@ namespace Poco.WebAPI_Poco
         /// 分组名称
         /// </summary>
         public string GN { get; set; }
+
+        public string SEX { get; set; }
+
+        public int? Age { get; set; }
+
+        public string IDCard { get; set; }
+
+        public string Address { get; set; }
     }
 }

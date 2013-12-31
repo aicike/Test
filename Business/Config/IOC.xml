@@ -70,6 +70,12 @@
   <object id="VipInfoModel" type="Business.VipInfoModel" parent="EFModel" singleton="false"></object>
   <object id="CardInfoModel" type="Business.CardInfoModel" parent="EFModel" singleton="false"></object>
   <object id="CardPrefixModel" type="Business.CardPrefixModel" parent="EFModel" singleton="false"></object>
+  <object id="FeedbackModel" type="Business.FeedbackModel" parent="EFModel" singleton="false"></object>
+
+  <object id="SurveyMainModel" type="Business.SurveyMainModel" parent="EFModel" singleton="false"></object>
+  <object id="SurveyTroubleModel" type="Business.SurveyTroubleModel" parent="EFModel" singleton="false"></object>
+  <object id="SurveyAnswerModel" type="Business.SurveyAnswerModel" parent="EFModel" singleton="false"></object>
+  <object id="SurveyOptionModel" type="Business.SurveyOptionModel" parent="EFModel" singleton="false"></object>
   
   <object id="Push_IOS" type="Business.Push_IOS" singleton="false">
   </object>

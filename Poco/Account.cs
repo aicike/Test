@@ -51,10 +51,8 @@ namespace Poco
         public string HeadImagePath { get; set; }
 
         [Display(Name = "邮箱")]
-        [Required(ErrorMessage = "请输入邮箱")]
         [StringLength(50, ErrorMessage = "长度小于50")]
         [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "请输入有效的邮箱")]
-        [RemotePlus("CheckIsUniqueAccountEmail", "Ajax", "", "Default", ErrorMessage = "邮箱已存在")]
         public string Email { get; set; }
 
         [Display(Name = "角色")]
@@ -144,5 +142,8 @@ namespace Poco
         public virtual ICollection<TaskDetail> TaskDetails { get; set; }
 
         public virtual ICollection<TaskAccount> TaskAccounts { get; set; }
+
+
+        public virtual ICollection<SurveyMain> SurveyMain { get; set; }
     }
 }

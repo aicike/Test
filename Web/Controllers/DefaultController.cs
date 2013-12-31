@@ -9,10 +9,12 @@ using Poco;
 using Business;
 using System.IO;
 using Common;
+using Poco.Enum;
+using System.Security.Policy;
 
 namespace Web.Controllers
 {
-    public class DefaultController : Controller
+    public class DefaultController : BaseController
     {
         public ActionResult AppView(int id)
         {
@@ -67,20 +69,71 @@ namespace Web.Controllers
             return View();
         }
 
+        /// <summary>
+        /// web显示软文
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="imtimely_userid">用户端ID</param>
+        /// <param name="imtimely_accountid">销售端ID</param>
+        /// <returns></returns>
         public ActionResult Advertorial(int id)
         {
             var AdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             var advertorial = AdvertorialModel.Get(id);
 
             return View(advertorial);
+
+
         }
 
-        public ActionResult News(int id)
+
+
+        /// <summary>
+        /// 显示软文
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="imtimely_userid">用户端ID</param>
+        /// <param name="imtimely_accountid">销售端ID</param>
+        /// <returns></returns>
+        public ActionResult News(int id, int? imtimely_userid, int? imtimely_accountid)
         {
             var AdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             var advertorial = AdvertorialModel.Get(id);
+            if (advertorial.EnumAdverTorialType == (int)EnumAdverTorialType.url)
+            {
+                string url = advertorial.ContentURL;
 
-            return View(advertorial);
+                //用户端ID
+                if (imtimely_userid.HasValue)
+                {
+                    if (url.Contains('?'))
+                    {
+                        url = url.Replace("?", "?imtimely_userid=" + imtimely_userid + "&");
+                    }
+                    else
+                    {
+                        url = url + "?imtimely_userid=" + imtimely_userid;
+                    }
+                }
+                //销售端ID
+                else if (imtimely_accountid.HasValue)
+                {
+                    if (url.Contains('?'))
+                    {
+                        url = url.Replace("?", "?imtimely_accountid=" + imtimely_accountid + "&");
+                    }
+                    else
+                    {
+                        url = url + "?imtimely_accountid=" + imtimely_accountid;
+                    }
+                }
+
+                return Content("<script>window.location.href='" + url + "' </script>");
+            }
+            else
+            {
+                return View(advertorial);
+            }
         }
 
 
@@ -176,6 +229,121 @@ namespace Web.Controllers
                 Response.BinaryWrite(ms.ToArray());
             }
         }
+
+
+        /// <summary>
+        /// 问题反馈
+        /// </summary>
+        /// <param name="Type">0用户端，1销售端</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Feedback( int Type, int AccountMainID ,int? isok )
+        {
+           
+            ViewBag.type = Type;
+            ViewBag.accountmainid = AccountMainID;
+            ViewBag.isok = 0;
+            if (isok.HasValue)
+            {
+                ViewBag.isok = 1;
+            }
+            return View();
+        }
+
+        /// <summary>
+        /// 提交问题反馈
+        /// </summary>
+        [HttpPost]
+        public  ActionResult AddFeedback()
+        {
+            try
+            {
+            Poco.Feedback pb = new Poco.Feedback();
+            
+                string Type = Request.Form["Type"];
+                if (Type == "0")
+                {
+                    pb.client = "用户端";
+                }
+                else
+                {
+                    pb.client = "销售端";
+                }
+                pb.AccountMainID = int.Parse(Request.Form["AMID"]);
+                pb.CreateDate = DateTime.Now;
+                pb.Content = Request.Form["textJY"];
+                pb.contact = Request.Form["textDZ"];
+                var FeedbackModel = Factory.Get<IFeedbackModel>(SystemConst.IOC_Model.FeedbackModel);
+                FeedbackModel.Add(pb);
+            
+                return RedirectToAction("Feedback", "Default", new { Type = Type, AccountMainID = pb.AccountMainID, isok = 1 });
+
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Feedback", "Default", new { Type = 0, AccountMainID = 0, isok = 1 });
+            }
+        }
+
+
+        /// <summary>
+        /// 调查问卷
+        /// </summary>
+        /// <param name="surveyMainID">调用问卷ID</param>
+        /// <param name="UID"></param>
+        /// <param name="Utype"> 0用户端，1销售端</param>
+        /// <param name="isok">1 提交成功 2提交失败</param>
+        /// <param name="isok"></param>
+        /// <returns></returns>
+        public ActionResult Questionnaire(int surveyMainID,int? UID, int? Utype, int? isok)
+        {
+            if (isok.HasValue)
+            {
+                // 1 提交成功 2提交失败
+                ViewBag.isok = isok;
+            }
+            if (UID.HasValue)
+            {
+                ViewBag.UID = UID;
+            }
+            if (Utype.HasValue)
+            {
+                // 0用户端，1销售端
+                ViewBag.Utype = Utype;
+            }
+            ViewBag.smid = surveyMainID;
+            //主表
+            var MainModel = Factory.Get<ISurveyMainModel>(SystemConst.IOC_Model.SurveyMainModel);
+            var main = MainModel.Get(surveyMainID);
+
+
+
+            return View(main);
+        }
+
+        /// <summary>
+        /// 提交调查问卷
+        /// </summary>
+        /// <param name="surveyMainID"></param>
+        /// <param name="Utype"> 0用户端，1销售端</param>
+        /// <param name="isok">1 提交成功 2提交失败</param>
+        /// <param name="Answer">json</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult AddQuestionnaire(int surveyMainID, int? UID, int? Utype, string Answer)
+        {
+            List<SurveyAnswer> SA = null;
+            SA = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SurveyAnswer>>(Answer);
+
+            var AnswerModel = Factory.Get<ISurveyAnswerModel>(SystemConst.IOC_Model.SurveyAnswerModel);
+            var result = AnswerModel.InsertAnswer(SA, UID, Utype);
+            if (result.HasError)
+            {
+                return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
+            }
+            return RedirectToAction("Questionnaire", "Default", new { surveyMainID = surveyMainID, isok = 1 });
+        }
+
 
     }
 }

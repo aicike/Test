@@ -24,6 +24,26 @@ namespace Poco
         [StringLength(20, ErrorMessage = "长度小于20")]
         public string Phone { get; set; }
 
+        [Display(Name = "性别")]
+        public int? SEX { get; set; }
+
+        /// <summary>
+        /// 0:女，1:男 ，2：保密
+        /// </summary>
+        [Display(Name = "年龄")]
+        public int? Age { get; set; }
+
+        [Display(Name = "身份证")]
+        [StringLength(18, ErrorMessage = "长度小于18")]
+        public string IDCard { get; set; }
+
+
+        [Display(Name = "地址")]
+        [StringLength(200, ErrorMessage = "长度小于200")]
+        public string Address { get; set; }
+        
+        
+
         /// <summary>
         /// 账号类型，启用禁用
         /// </summary>

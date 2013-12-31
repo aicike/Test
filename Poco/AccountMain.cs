@@ -217,5 +217,12 @@ namespace Poco
         public virtual ICollection<CardInfo> CardInfo { get; set; }
 
         public virtual ICollection<CardPrefix> CardPrefix { get; set; }
+
+        public virtual ICollection<Feedback> Feedback { get; set; }
+
+        public virtual ICollection<SurveyMain> SurveyMain { get; set; }
+
+
+
     }
 }

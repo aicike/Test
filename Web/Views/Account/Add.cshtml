@@ -65,8 +65,9 @@
                 height: 30,
                 swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
                 uploader: UpImgUrl,
-                width: 64,
+                width: 70,
                 fileSizeLimit: '5MB',
+                buttonText: '选择图片',
                 multi: false,
                 fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
                 onUploadSuccess: function (file, data, response) {
@@ -423,15 +424,7 @@
                     <td>@Html.ValidationMessageFor(a => a.Account.Name) <div style="display:none">@Html.ValidationSummary()</div>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <span class="Identification">*</span> 邮箱
-                    </td>
-                    <td>@Html.TextBoxFor(a => a.Account.Email)
-                    </td>
-                    <td>@Html.ValidationMessageFor(a => a.Account.Email)
-                    </td>
-                </tr>
+                
                 <tr>
                     <td>
                         <span class="Identification">*</span> 电话
@@ -449,6 +442,15 @@
                     </td>
                     <td id="tdRoleValidation">
                         @Html.ValidationMessageFor(a => a.Account.RoleID)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                       邮箱
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.Account.Email)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Account.Email)
                     </td>
                 </tr>
                 <tr>

@@ -93,6 +93,7 @@
     <Compile Include="ConversationModel.cs" />
     <Compile Include="DistrictModel.cs" />
     <Compile Include="EFModel.cs" />
+    <Compile Include="FeedbackModel.cs" />
     <Compile Include="HolidayModel.cs" />
     <Compile Include="KeywordAutoMessageModel.cs" />
     <Compile Include="KeywordModel.cs" />
@@ -117,6 +118,10 @@
     <Compile Include="ReportFormPowerModel.cs" />
     <Compile Include="RoleModel.cs" />
     <Compile Include="SMS_Model.cs" />
+    <Compile Include="SurveyAnswerModel.cs" />
+    <Compile Include="SurveyMainModel.cs" />
+    <Compile Include="SurveyOptionModel.cs" />
+    <Compile Include="SurveyTroubleModel.cs" />
     <Compile Include="SystemUserModel.cs" />
     <Compile Include="Account_AccountMainModel.cs" />
     <Compile Include="ActivateEmailModel.cs" />

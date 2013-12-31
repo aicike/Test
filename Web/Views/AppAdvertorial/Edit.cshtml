@@ -15,6 +15,19 @@
         var stick = @ViewBag.stick
         var Cnt = 0;
         var UpImgUrl = '@Url.Action("UpImg", "AppAdvertorial", new { HostName = ViewBag.HostName })';
+         window.UEDITOR_HOME_URL = "/ueditor/";
+            //实例化编辑器
+            var options = {
+                initialFrameWidth: '100%',
+                initialFrameHeight: 300,
+                imageUrl: UEDITOR_HOME_URL + "net/imageUp_Advertorial.ashx",
+                imagePath: "",
+                imageManagerUrl: UEDITOR_HOME_URL + "net/imageManager_LibraryImageText.ashx",
+                imageManagerPath: "",
+                initialContent: ""
+            };
+
+             var ue;
         $(function () {
 
             
@@ -22,8 +35,9 @@
                 height: 30,
                 swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
                 uploader: UpImgUrl,
-                width: 64,
+                width: 70,
                 fileSizeLimit: '5MB',
+                buttonText: '选择图片',
                 multi: false,
                 fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
                 onUploadSuccess: function (file, data, response) {
@@ -85,19 +99,8 @@
             var imgpath = $("#MainImagPath").val();
             $("#imgHousType").attr("src", "http://"+imgpath);
 
-            window.UEDITOR_HOME_URL = "/ueditor/";
-            //实例化编辑器
-            var options = {
-                initialFrameWidth: '100%',
-                initialFrameHeight: 300,
-                imageUrl: UEDITOR_HOME_URL + "net/imageUp_Advertorial.ashx",
-                imagePath: "",
-                imageManagerUrl: UEDITOR_HOME_URL + "net/imageManager_LibraryImageText.ashx",
-                imageManagerPath: "",
-                initialContent: ""
-            };
+           
 
-            var ue = UE.getEditor('editor', options);
 
 
 
@@ -225,13 +228,15 @@
 
             
             $("#btnSubmit").click(function () {
-               if ($("#w").val() == "0") {
-                    JAlert({
-                        Message: "请选择App列表展示区域！",
-                        DialogType: "Ok",
-                        BtnOk: "确定"
-                    });
-                    return false;
+                 if (Cnt > 0) {
+                   if ($("#w").val() == "0") {
+                        JAlert({
+                            Message: "请选择App列表展示区域！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return false;
+                    }
                 }
                 if (IsStick == 1) {
                     JAlert({
@@ -242,17 +247,56 @@
                     return false;
                 }
 
-                if (ue.getContent().length == 0) {
-                    JAlert({
-                        Message: "正文不能为空！",
-                        DialogType: "Ok",
-                        BtnOk: "确定"
-                    });
-                    return false;
+               
+                var atype = $("#AType").val();
+                //复文本
+                if (atype == 0) {
+                    if (ue.getContent().length == 0) {
+                        JAlert({
+                            Message: "正文不能为空！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return false;
+                    }
+                }
+                //url
+                else {
+                    var urldz = $("#ContentURL").val();
+                    if (urldz == "" || urldz == undefined) {
+                        JAlert({
+                            Message: "Url地址不能为空！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return false;
+                    }
                 }
 
 
             });
+
+            var atype ='@Model.EnumAdverTorialType'
+            $("#AType").val(atype);
+            
+            //复文本
+            if (atype == 0) {
+                $("#zw").show();
+                $("#dz").hide();
+                
+                ue = UE.getEditor('editor', options);
+//                UE.getEditor('editor').setShow();//显示编辑器
+
+            }
+            //url
+            else {
+                $("#zw").hide();
+                $("#dz").show();
+//                UE.getEditor('editor').setHide();//隐藏编辑器
+            }
+
+           
+            
 
 
 
@@ -291,6 +335,25 @@
             }
         });
 
+
+         function ClickType()
+        {
+            var atype = $("#AType").val();
+            //复文本
+            if (atype == 0) {
+                $("#zw").show();
+                $("#dz").hide()
+                
+                  ue = UE.getEditor('editor', options);
+
+            }
+            //url
+            else {
+                $("#zw").hide();
+                $("#dz").show();
+                
+            }
+        }
       
     </script>
     <style type="text/css">
@@ -312,6 +375,7 @@
     <ul class="ulList">
         <li>@Html.ActionLink("个人信息", "Index", "Set", new { HostName = ViewBag.HostName }, null, true)</li>
         <li>@Html.ActionLink("基础设置", "Index", "BasisSet", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("调查问卷", "IndexMain", "SurveyMain", new { HostName = ViewBag.HostName }, null, true)</li>
         <li class="select">@Html.ActionLink("App动态软文", "Index", "AppAdvertorial", new { HostName = ViewBag.HostName }, null, true)</li>
         <li>@Html.ActionLink("App销售端软文", "Index", "AppAdvertorialAccount", new { HostName = ViewBag.HostName }, null, true)</li>
         <li>@Html.ActionLink("App等待画面", "Index", "AppWaitImg", new { HostName = ViewBag.HostName }, null, true)</li>
@@ -420,11 +484,33 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 软文类型
+                    </td>
+                    <td class="tdField">
+                        <select id="AType" onchange="ClickType()" name="AType" style="width: 100px">
+                            <option value="0">复文本</option>
+                            <option value="1">Url地址</option>
+                        </select>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr id="zw">
                     <td class="tdTitle" valign="top">
                         <span class="Identification">*</span> 正文
                     </td>
                     <td colspan="2" class="tdField">
                         <script type="text/plain" id="editor" height="300px" name="Content">@Html.Raw(Model.Content)</script>
+                    </td>
+                </tr>
+                <tr id="dz">
+                    <td class="tdTitle" valign="top">
+                        <span class="Identification">*</span> Url地址
+                    </td>
+                    <td colspan="2" class="tdField">
+                        <input type="text" id="ContentURL" name="ContentURL" value="@Model.ContentURL"/>
+                        (格式：http://imtimely.com)
                     </td>
                 </tr>
             </table>

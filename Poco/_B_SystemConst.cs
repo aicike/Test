@@ -160,6 +160,15 @@ namespace Poco
             public const string CardInfoModel = "CardInfoModel";
             public const string CardPrefixModel = "CardPrefixModel";
             public const string VIPInfoExpenseDetailModel = "VIPInfoExpenseDetailModel";
+            public const string FeedbackModel = "FeedbackModel";
+            
+            public const string SurveyMainModel = "SurveyMainModel";
+            public const string SurveyTroubleModel = "SurveyTroubleModel";
+            public const string SurveyAnswerModel = "SurveyAnswerModel";
+            public const string SurveyOptionModel = "SurveyOptionModel";
+
+
+
             
         }
     }

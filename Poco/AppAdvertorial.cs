@@ -27,7 +27,6 @@ namespace Poco
         public int Sort { get; set; }
 
         [Display(Name = "内容")]
-        [Required(ErrorMessage = "请输入内容")]
         public string Content { get; set; }
 
         [Display(Name= "描述")]
@@ -51,8 +50,14 @@ namespace Poco
         [Display(Name = "展示缩略图 小")]
         public string MinImagePath { get; set; }
 
-        [Display(Name = "软文类型")]
+        [Display(Name = "客户端类型")]
         public int EnumAdvertorialUType { get; set; }
+
+        [Display(Name = "内容地址")]
+        public string ContentURL { get; set; }
+
+        [Display(Name = "软文类型")]
+        public int EnumAdverTorialType { get; set; }
 
     }
 }

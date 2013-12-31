@@ -17,7 +17,7 @@ namespace EF.Migrations
                         LoginPwd = c.String(nullable: false, maxLength: 100),
                         Phone = c.String(nullable: false, maxLength: 30),
                         HeadImagePath = c.String(maxLength: 200),
-                        Email = c.String(nullable: false, maxLength: 50),
+                        Email = c.String(maxLength: 50),
                         RoleID = c.Int(nullable: false),
                         AccountStatusID = c.Int(nullable: false),
                         IsActivated = c.Boolean(nullable: false),
@@ -303,6 +303,10 @@ namespace EF.Migrations
                         SystemStatus = c.Int(nullable: false),
                         Name = c.String(maxLength: 10),
                         Phone = c.String(maxLength: 20),
+                        SEX = c.Int(),
+                        Age = c.Int(),
+                        IDCard = c.String(maxLength: 18),
+                        Address = c.String(maxLength: 200),
                         AccountStatusID = c.Int(nullable: false),
                         IdentityCard = c.String(maxLength: 30),
                         AccountMainID = c.Int(nullable: false),
@@ -595,15 +599,18 @@ namespace EF.Migrations
                         SystemStatus = c.Int(nullable: false),
                         ExpenseDate = c.DateTime(nullable: false),
                         ExpensePrice = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        Balance = c.Decimal(nullable: false, precision: 18, scale: 2),
                         VIPInfoID = c.Int(nullable: false),
                         UserID = c.Int(nullable: false),
+                        AccountID = c.Int(nullable: false),
+                        EnumVIPOperate = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.VIPInfo", t => t.VIPInfoID)
                 .ForeignKey("dbo.User", t => t.UserID)
+                .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.VIPInfoID)
-                .Index(t => t.UserID);
+                .Index(t => t.UserID)
+                .Index(t => t.AccountID);
             
             CreateTable(
                 "dbo.SystemUser",
@@ -1050,12 +1057,15 @@ namespace EF.Migrations
                         Title = c.String(nullable: false, maxLength: 30),
                         stick = c.Int(nullable: false),
                         Sort = c.Int(nullable: false),
-                        Content = c.String(nullable: false),
+                        Content = c.String(),
                         Depict = c.String(nullable: false, maxLength: 100),
                         IssueDate = c.DateTime(nullable: false),
                         MainImagPath = c.String(nullable: false),
                         AppShowImagePath = c.String(),
                         MinImagePath = c.String(),
+                        EnumAdvertorialUType = c.Int(nullable: false),
+                        ContentURL = c.String(),
+                        EnumAdverTorialType = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
@@ -1174,6 +1184,22 @@ namespace EF.Migrations
                 .Index(t => t.AccountMainID);
             
             CreateTable(
+                "dbo.Feedback",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        Content = c.String(),
+                        contact = c.String(),
+                        client = c.String(),
+                        CreateDate = c.DateTime(nullable: false),
+                        AccountMainID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
+                .Index(t => t.AccountMainID);
+            
+            CreateTable(
                 "dbo.RoleMenu",
                 c => new
                     {
@@ -1251,6 +1277,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
 
+
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };
             foreach (var file in ddlSqlFiles)
@@ -1263,7 +1290,7 @@ namespace EF.Migrations
                         Sql(commandText);
                 }
             }
-
+            
         }
         
         public override void Down()
@@ -1275,6 +1302,7 @@ namespace EF.Migrations
             DropIndex("dbo.Menu", new[] { "ParentMenuID" });
             DropIndex("dbo.RoleMenu", new[] { "MenuID" });
             DropIndex("dbo.RoleMenu", new[] { "RoleID" });
+            DropIndex("dbo.Feedback", new[] { "AccountMainID" });
             DropIndex("dbo.ReportFormPower", new[] { "AccountMainID" });
             DropIndex("dbo.TaskAccount", new[] { "TaskDetailID" });
             DropIndex("dbo.TaskAccount", new[] { "AccountID" });
@@ -1326,6 +1354,7 @@ namespace EF.Migrations
             DropIndex("dbo.SystemUserRole", new[] { "ParentSystemUserRoleID" });
             DropIndex("dbo.SystemUser", new[] { "SystemUserRoleID" });
             DropIndex("dbo.SystemUser", new[] { "AccountStatusID" });
+            DropIndex("dbo.VIPInfoExpenseDetail", new[] { "AccountID" });
             DropIndex("dbo.VIPInfoExpenseDetail", new[] { "UserID" });
             DropIndex("dbo.VIPInfoExpenseDetail", new[] { "VIPInfoID" });
             DropIndex("dbo.CardPrefix", new[] { "AccountMainID" });
@@ -1396,6 +1425,7 @@ namespace EF.Migrations
             DropForeignKey("dbo.Menu", "ParentMenuID", "dbo.Menu");
             DropForeignKey("dbo.RoleMenu", "MenuID", "dbo.Menu");
             DropForeignKey("dbo.RoleMenu", "RoleID", "dbo.Role");
+            DropForeignKey("dbo.Feedback", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.ReportFormPower", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.TaskAccount", "TaskDetailID", "dbo.TaskDetail");
             DropForeignKey("dbo.TaskAccount", "AccountID", "dbo.Account");
@@ -1447,6 +1477,7 @@ namespace EF.Migrations
             DropForeignKey("dbo.SystemUserRole", "ParentSystemUserRoleID", "dbo.SystemUserRole");
             DropForeignKey("dbo.SystemUser", "SystemUserRoleID", "dbo.SystemUserRole");
             DropForeignKey("dbo.SystemUser", "AccountStatusID", "dbo.LookupOption");
+            DropForeignKey("dbo.VIPInfoExpenseDetail", "AccountID", "dbo.Account");
             DropForeignKey("dbo.VIPInfoExpenseDetail", "UserID", "dbo.User");
             DropForeignKey("dbo.VIPInfoExpenseDetail", "VIPInfoID", "dbo.VIPInfo");
             DropForeignKey("dbo.CardPrefix", "AccountMainID", "dbo.AccountMain");
@@ -1515,6 +1546,7 @@ namespace EF.Migrations
             DropTable("dbo.MenuOption");
             DropTable("dbo.Menu");
             DropTable("dbo.RoleMenu");
+            DropTable("dbo.Feedback");
             DropTable("dbo.ReportFormPower");
             DropTable("dbo.TaskAccount");
             DropTable("dbo.TaskDetail");

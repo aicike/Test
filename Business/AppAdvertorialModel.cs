@@ -380,7 +380,7 @@ namespace Business
             string sql = "";
             if (isok == 1)
             {
-                var appadverSort = List().Where(a => a.AccountMainID == accoutMainID).Max(a => a.Sort);
+                var appadverSort = List().Where(a => a.AccountMainID == accoutMainID && a.EnumAdvertorialUType == AdverTorialType).Max(a => a.Sort);
                 string sort = (appadverSort + 1).ToString();
                 sql = string.Format("update AppAdvertorial set stick = {0}, sort={1} where id ={2}", isok, sort, ID);
             }

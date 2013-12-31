@@ -17,6 +17,7 @@ INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action
 INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 5,0,'系统角色管理','System','SystemUserRole','Index',4,NULL)
 INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 6,0,'账号管理','System','AccountManage','Index',2,2)
 INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 7,0,'报表管理','System','Report','Index',3,2)
+INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 8,0,'问题反馈','System','Feedback','Index',5,NULL)
 --INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 7,0,'设置','System','SystemSet','Index',6,NULL)
 SET IDENTITY_INSERT [dbo].SystemUserMenu OFF
 
@@ -58,7 +59,7 @@ INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION
 INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,6,'重置密码','ResetPwd',7)
 
 INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,7,'报表设置','Index',1)
-
+INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,8,'问题反馈','Index',1)
 --INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,7,'设置','Index',1)
 
 
@@ -225,6 +226,8 @@ INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (34, 0, N'卡片管理', NULL, N'CardInfo', N'Index', 2, 32)
 
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (35, 0, N'App销售端软文', NULL, N'AppAdvertorialAccount', N'Index', 5, 11)
+
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID]) VALUES (36, 0, N'调查问卷管理', NULL, N'SurveyMain', N'IndexMain', 7, 11)
 SET IDENTITY_INSERT [dbo].[Menu] OFF
 
 -----------------------------[MenuOption]--------------------------
@@ -365,6 +368,15 @@ INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  (
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,35,'添加软文','Add',2)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,35,'修改软文','Edit',3)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,35,'删除软文','Delete',4)
+
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,36,'调查列表','IndexMain',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,36,'创建调查','AddMain',2)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,36,'修改调查','EditMain',3)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,36,'删除调查','DeleteMain',4)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,36,'调查问题列表','IndexTrouble',5)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,36,'录入调查问题','AddTrouble',6)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,36,'修改调查问题','EditTrouble',7)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,36,'删除调查问题','DeleteTrouble',8)
 
 -----------------------------RoleMenu--------------------------
 --SET IDENTITY_INSERT [dbo].[RoleMenu] ON

@@ -4,7 +4,8 @@
 <!DOCTYPE html>
 <html class="ui-mobile">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+
     <title>JqueryMobileDome</title>
     <script src="../../Scripts/jquery-1.8.3.min.js" type="text/javascript"></script>
     <script src="../../Scripts/JqueryMobile/jquery.mobile-1.3.2.min.js" type="text/javascript"></script>
@@ -66,23 +67,23 @@
 
 
 
-//                        $('.ui_page').live("swipeleft", function () {
-//                            var nextpage = $(this).next('div[data-role="page"]');
+            //                        $('.ui_page').live("swipeleft", function () {
+            //                            var nextpage = $(this).next('div[data-role="page"]');
 
-//                            if (nextpage.length > 0) {
-//                                $.mobile.changePage(nextpage, { transition: "slide",
-//                                    reverse: false
-//                                }, "slide", false, true);
-//                            }
-//                        });
-//                        $('.ui_page').live("swiperight", function () {
-//                            var prevpage = $(this).prev('div[data-role="page"]');
-//                            if (prevpage.length > 0) {
-//                                $.mobile.changePage(prevpage, { transition: "slide",
-//                                    reverse: true
-//                                }, true, true);
-//                            }
-//                        });
+            //                            if (nextpage.length > 0) {
+            //                                $.mobile.changePage(nextpage, { transition: "slide",
+            //                                    reverse: false
+            //                                }, "slide", false, true);
+            //                            }
+            //                        });
+            //                        $('.ui_page').live("swiperight", function () {
+            //                            var prevpage = $(this).prev('div[data-role="page"]');
+            //                            if (prevpage.length > 0) {
+            //                                $.mobile.changePage(prevpage, { transition: "slide",
+            //                                    reverse: true
+            //                                }, true, true);
+            //                            }
+            //                        });
 
             $('.lastT').click("swipeleft", function () {
                 var nextpage = $(this).parentsUntil(".ui_page").parent().next('div[data-role="page"]');
@@ -107,7 +108,7 @@
 
             $(".topT").each(function (i, n) {
                 new NoClickDelay(n);
-             });
+            });
             $(".lastT").each(function (i, n) {
                 new NoClickDelay(n);
             });
@@ -115,72 +116,75 @@
     </script>
 </head>
 <body>
-    <form>
-    <div data-role="page" class="ui_page" id="ui_pages">
-        <div data-role="content">
-            <fieldset data-role="controlgroup">
-                <legend>1.请问您的性别是:</legend>
-                <input name="radio-choice-v-2" id="radio-choice-v-2a" type="radio" value="on">
-                <label for="radio-choice-v-2a">
-                    男</label>
-                <input name="radio-choice-v-2" id="radio-choice-v-2b" type="radio" value="off">
-                <label for="radio-choice-v-2b">
-                    女</label>
-                <input name="radio-choice-v-2" id="radio-choice-v-2c" type="radio" value="other">
-                <label for="radio-choice-v-2c">
-                    保密</label>
-            </fieldset>
-              
-            
-            <div style=" float:right; width:45%"> <input type="button"  class="lastT" value="下一题" /> </div>
+    @using (Ajax.BeginForm("JqueryMobileDomeAdd", "Test", new { }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "BandSubmitClick()" }))
+    {
+        <input  type="hidden" id="imtimely_userid" name="imtimely_userid" value="@ViewBag.userid"/>
+        <input  type="hidden" id="imtimely_accountid" name="imtimely_accountid" value="@ViewBag.accountid"/>
+        <div data-role="page" class="ui_page" id="ui_pages">
+            <div data-role="content">
+                <fieldset data-role="controlgroup">
+                    <legend>1.请问您的性别是:</legend>
+                    <input name="radio-choice-v-2" id="radio-choice-v-2a" type="radio" value="on">
+                    <label for="radio-choice-v-2a">
+                        男s</label>
+                    <input name="radio-choice-v-2" id="radio-choice-v-2b" type="radio" value="off">
+                    <label for="radio-choice-v-2b">
+                        女s</label>
+                    <input name="radio-choice-v-2" id="radio-choice-v-2c" type="radio" value="other">
+                    <label for="radio-choice-v-2c">
+                        保密s</label>
+                </fieldset>
+                <div style="float: right; width: 45%">
+                    <input type="button" class="lastT" value="下一题" />
+                </div>
+            </div>
         </div>
-        
-               
-    </div>
 
-    <div data-role="page" class="ui_page">
-        <div data-role="content">
-            <fieldset data-role="controlgroup">
-                <legend>2.选择你喜欢的运动:</legend>
-                <input type="checkbox" name="checkbox-v-2a" id="checkbox-v-2a">
-                <label for="checkbox-v-2a">
-                    球类</label>
-                <input type="checkbox" name="checkbox-v-2b" id="checkbox-v-2b">
-                <label for="checkbox-v-2b">
-                    游泳</label>
-                <input type="checkbox" name="checkbox-v-2c" id="checkbox-v-2c">
-                <label for="checkbox-v-2c">
-                    极限运动</label>
-                <input type="checkbox" name="checkbox-v-2d" id="checkbox-v-2d">
-                <label for="checkbox-v-2d">
-                    其他</label>
-            </fieldset>
-
-                   
-                <div style=" float:left; width:45%"> <input type="button" class="topT" value="上一题"  /></div>
-                <div style=" float:right; width:45%"> <input type="button" class="lastT" value="下一题" /> </div>
+        <div data-role="page" class="ui_page">
+            <div data-role="content">
+                <fieldset data-role="controlgroup">
+                    <legend>2.选择你喜欢的运动:</legend>
+                    <input type="checkbox" name="checkbox-v-2a" id="checkbox-v-2a">
+                    <label for="checkbox-v-2a">
+                        球类</label>
+                    <input type="checkbox" name="checkbox-v-2b" id="checkbox-v-2b">
+                    <label for="checkbox-v-2b">
+                        游泳</label>
+                    <input type="checkbox" name="checkbox-v-2c" id="checkbox-v-2c">
+                    <label for="checkbox-v-2c">
+                        极限运动</label>
+                    <input type="checkbox" name="checkbox-v-2d" id="checkbox-v-2d">
+                    <label for="checkbox-v-2d">
+                        其他</label>
+                </fieldset>
+                <div style="float: left; width: 45%">
+                    <input type="button" class="topT" value="上一题" /></div>
+                <div style="float: right; width: 45%">
+                    <input type="button" class="lastT" value="下一题" />
+                </div>
+            </div>
         </div>
-    </div>
-    <div data-role="page" class="ui_page">
-        <div data-role="content">
-            <fieldset data-role="controlgroup">
-                <legend>Vertical:</legend>
-                <input type="checkbox" name="checkbox-v-2a" id="checkbox-v-2a">
-                <label for="checkbox-v-2a">
-                    One</label>
-                <input type="checkbox" name="checkbox-v-2b" id="checkbox-v-2b">
-                <label for="checkbox-v-2b">
-                    Two</label>
-                <input type="checkbox" name="checkbox-v-2c" id="checkbox-v-2c">
-                <label for="checkbox-v-2c">
-                    Three</label>
-            </fieldset>
-
-              <div style=" float:left; width:45%"> <input type="button" class="topT" value="上一题"  /></div>
-
-
+        <div data-role="page" class="ui_page">
+            <div data-role="content">
+                <fieldset data-role="controlgroup">
+                    <legend>Vertical:</legend>
+                    <input type="checkbox" name="checkbox-v-2a" id="checkbox-v-2a">
+                    <label for="checkbox-v-2a">
+                        One</label>
+                    <input type="checkbox" name="checkbox-v-2b" id="checkbox-v-2b">
+                    <label for="checkbox-v-2b">
+                        Two</label>
+                    <input type="checkbox" name="checkbox-v-2c" id="checkbox-v-2c">
+                    <label for="checkbox-v-2c">
+                        Three</label>
+                </fieldset>
+                <div style="float: left; width: 45%">
+                    <input type="button" class="topT" value="上一题" /></div>
+                <div style="float: right; width: 45%">
+                    <input type="submit" value="完成" />
+                </div>
+            </div>
         </div>
-    </div>
-    </form>
+    }
 </body>
 </html>

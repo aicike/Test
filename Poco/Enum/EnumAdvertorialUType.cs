@@ -6,7 +6,7 @@ using System.Text;
 namespace Poco.Enum
 {
     /// <summary>
-    /// 软文类型
+    /// 客户端类型
     /// </summary>
     public enum EnumAdvertorialUType
     {

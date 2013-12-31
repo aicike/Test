@@ -307,11 +307,14 @@ namespace Business
             }
             //检查邮箱是否唯一
             CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
-            var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
-            if (isOk == false)
+            if (!string.IsNullOrEmpty(account.Email))
             {
-                result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
-                return result;
+                var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
+                if (isOk == false)
+                {
+                    result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
+                    return result;
+                }
             }
             account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
             if (string.IsNullOrEmpty(account.HeadImagePath))
@@ -382,12 +385,15 @@ namespace Business
             }
             //检查邮箱是否唯一
             CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
-            var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
-            if (isOk == false)
+            if (!string.IsNullOrEmpty(account.Email))
             {
-                result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
-                return result;
-            } 
+                var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
+                if (isOk == false)
+                {
+                    result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
+                    return result;
+                }
+            }
             
             if (string.IsNullOrEmpty(account.HeadImagePath))
             {
@@ -474,11 +480,14 @@ namespace Business
             }
             //检查邮箱是否唯一
             CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
-            var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
-            if (isOk == false)
+            if (!string.IsNullOrEmpty(account.Email))
             {
-                result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
-                return result;
+                var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
+                if (isOk == false)
+                {
+                    result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
+                    return result;
+                }
             }
             //account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
 
@@ -564,11 +573,14 @@ namespace Business
             }
             //检查邮箱是否唯一
             CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
-            var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
-            if (isOk == false)
+            if (!string.IsNullOrEmpty(account.Email))
             {
-                result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
-                return result;
+                var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
+                if (isOk == false)
+                {
+                    result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
+                    return result;
+                }
             }
             account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
             result = base.Edit(account);
@@ -648,11 +660,14 @@ namespace Business
             }
             //检查邮箱是否唯一
             CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
-            var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
-            if (isOk == false)
+            if (!string.IsNullOrEmpty(account.Email))
             {
-                result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
-                return result;
+                var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
+                if (isOk == false)
+                {
+                    result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
+                    return result;
+                }
             }
             account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
 
@@ -661,7 +676,7 @@ namespace Business
 
             result = base.Edit(account);
 
-            if (YAccount.HeadImagePath != account.HeadImagePath && account.HeadImagePath != "" && result.HasError == false)
+            if (YAccount.HeadImagePath != account.HeadImagePath && string.IsNullOrEmpty(account.HeadImagePath) == false && result.HasError == false)
             {
 
                 try

@@ -179,12 +179,25 @@ namespace Web.Controllers
             Connection.Open();
         }
 
-        public ActionResult JqueryMobileDome()
-        {
 
+        public ActionResult JqueryMobileDome(int? imtimely_userid, int? imtimely_accountid)
+        {
+            if (imtimely_userid.HasValue)
+            {
+                ViewBag.userid = imtimely_userid;
+            }
+            else if(imtimely_accountid.HasValue)
+            {
+                ViewBag.accountid = imtimely_accountid;
+            }
             return View();
         }
-
+        [HttpPost]
+        public ActionResult JqueryMobileDomeAdd()
+        {
+            string s = Request.Form["imtimely_userid"];
+            return View();
+        }
 
     }
 }
