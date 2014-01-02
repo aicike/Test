@@ -92,10 +92,9 @@ namespace Web.Controllers
         /// 显示软文
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="imtimely_userid">用户端ID</param>
-        /// <param name="imtimely_accountid">销售端ID</param>
+        /// <param name="imtimely_userid">用户ID</param>
         /// <returns></returns>
-        public ActionResult News(int id, int? imtimely_userid, int? imtimely_accountid)
+        public ActionResult News(int id, int? imtimely_userid)
         {
             var AdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             var advertorial = AdvertorialModel.Get(id);
@@ -106,27 +105,19 @@ namespace Web.Controllers
                 //用户端ID
                 if (imtimely_userid.HasValue)
                 {
+
                     if (url.Contains('?'))
                     {
-                        url = url.Replace("?", "?imtimely_userid=" + imtimely_userid + "&");
+                        url = url.Replace("?", "?imtimely_userid=" + imtimely_userid + "&imtimely_Apptype=" + advertorial.EnumAdvertorialUType + "&");
                     }
                     else
                     {
-                        url = url + "?imtimely_userid=" + imtimely_userid;
+                        url = url + "?imtimely_userid=" + imtimely_userid + "&imtimely_Apptype=" + advertorial.EnumAdvertorialUType;
                     }
                 }
-                //销售端ID
-                else if (imtimely_accountid.HasValue)
-                {
-                    if (url.Contains('?'))
-                    {
-                        url = url.Replace("?", "?imtimely_accountid=" + imtimely_accountid + "&");
-                    }
-                    else
-                    {
-                        url = url + "?imtimely_accountid=" + imtimely_accountid;
-                    }
-                }
+
+                //imtimely_userid  用户ID
+                //imtimely_Apptype 用户端类型 0用户端 1销售端 EnumAdvertorialUType
 
                 return Content("<script>window.location.href='" + url + "' </script>");
             }
@@ -237,9 +228,9 @@ namespace Web.Controllers
         /// <param name="Type">0用户端，1销售端</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Feedback( int Type, int AccountMainID ,int? isok )
+        public ActionResult Feedback(int Type, int AccountMainID, int? isok)
         {
-           
+
             ViewBag.type = Type;
             ViewBag.accountmainid = AccountMainID;
             ViewBag.isok = 0;
@@ -254,12 +245,12 @@ namespace Web.Controllers
         /// 提交问题反馈
         /// </summary>
         [HttpPost]
-        public  ActionResult AddFeedback()
+        public ActionResult AddFeedback()
         {
             try
             {
-            Poco.Feedback pb = new Poco.Feedback();
-            
+                Poco.Feedback pb = new Poco.Feedback();
+
                 string Type = Request.Form["Type"];
                 if (Type == "0")
                 {
@@ -275,7 +266,7 @@ namespace Web.Controllers
                 pb.contact = Request.Form["textDZ"];
                 var FeedbackModel = Factory.Get<IFeedbackModel>(SystemConst.IOC_Model.FeedbackModel);
                 FeedbackModel.Add(pb);
-            
+
                 return RedirectToAction("Feedback", "Default", new { Type = Type, AccountMainID = pb.AccountMainID, isok = 1 });
 
             }
@@ -295,21 +286,21 @@ namespace Web.Controllers
         /// <param name="isok">1 提交成功 2提交失败</param>
         /// <param name="isok"></param>
         /// <returns></returns>
-        public ActionResult Questionnaire(int surveyMainID,int? UID, int? Utype, int? isok)
+        public ActionResult Questionnaire(int surveyMainID, int? imtimely_userid, int? imtimely_Apptype, int? isok)
         {
             if (isok.HasValue)
             {
                 // 1 提交成功 2提交失败
                 ViewBag.isok = isok;
             }
-            if (UID.HasValue)
+            if (imtimely_userid.HasValue)
             {
-                ViewBag.UID = UID;
+                ViewBag.UID = imtimely_userid;
             }
-            if (Utype.HasValue)
+            if (imtimely_Apptype.HasValue)
             {
                 // 0用户端，1销售端
-                ViewBag.Utype = Utype;
+                ViewBag.Utype = imtimely_Apptype;
             }
             ViewBag.smid = surveyMainID;
             //主表

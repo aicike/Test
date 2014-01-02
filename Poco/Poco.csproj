@@ -88,6 +88,7 @@
     <Compile Include="UnreadCnt.cs" />
     <Compile Include="VIPInfo.cs" />
     <Compile Include="VIPInfoExpenseDetail.cs" />
+    <Compile Include="WebAPI_Poco\App_Menu.cs" />
     <Compile Include="WebAPI_Poco\App_Order.cs" />
     <Compile Include="Enum\EnumBuildingType.cs" />
     <Compile Include="Enum\EnumConversationType.cs" />

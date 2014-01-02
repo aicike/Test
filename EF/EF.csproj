@@ -61,17 +61,9 @@
     <Compile Include="Mapping\AppUpdateMap.cs" />
     <Compile Include="Mapping\OrderUserInfoMap.cs" />
     <Compile Include="Mapping\TaskMap.cs" />
-    <Compile Include="Migrations\201312310351503_Initial.cs" />
-    <Compile Include="Migrations\201312310351503_Initial.Designer.cs">
-      <DependentUpon>201312310351503_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201312310829297_tt.cs" />
-    <Compile Include="Migrations\201312310829297_tt.Designer.cs">
-      <DependentUpon>201312310829297_tt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401020250516_Menu.cs" />
-    <Compile Include="Migrations\201401020250516_Menu.Designer.cs">
-      <DependentUpon>201401020250516_Menu.cs</DependentUpon>
+    <Compile Include="Migrations\201401020706579_Initial.cs" />
+    <Compile Include="Migrations\201401020706579_Initial.Designer.cs">
+      <DependentUpon>201401020706579_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs">
       <SubType>Code</SubType>
@@ -93,14 +85,8 @@
     <Content Include="InitialProvince.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201312310351503_Initial.resx">
-      <DependentUpon>201312310351503_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312310829297_tt.resx">
-      <DependentUpon>201312310829297_tt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401020250516_Menu.resx">
-      <DependentUpon>201401020250516_Menu.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201401020706579_Initial.resx">
+      <DependentUpon>201401020706579_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

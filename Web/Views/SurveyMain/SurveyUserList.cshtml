@@ -17,6 +17,7 @@
         }
         
         
+        
         .ListTab
         {
             width: 95%;
@@ -28,6 +29,7 @@
             font-size: 16px;
             font-weight: inherit;
             line-height: 35px;
+            background-color: #f6f6f6;
         }
         .ListTab td
         {
@@ -37,67 +39,95 @@
             padding-right: 10px;
             padding-left: 5px;
             padding-bottom: 7px;
-            text-align:center;
+            text-align: center;
         }
     </style>
 }
+@model PagedList<Poco.SurveyAnswer>
 <table align="center" class="MainTab" cellpadding="0" cellspacing="0">
     <tr>
         <td>
+            <div class="pages" style="padding: 10px 10px 10px 10px;">
+                @Html.Pager(Model, new PagerOptions
+                {
+                    PageIndexParameterName = "ID",
+                    CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+                    NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+                    NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+                    CssClass = "manage_pages pages",
+                    SeparatorHtml = "&nbsp;",
+                    AutoHide = false,
+                    /*LastPageText = "Last",
+                    FirstPageText = "First",
+                    PrevPageText = "Back",
+                    NextPageText = "Next",*/
+                    PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+                    ShowFirstLast = false
+                })
+            </div>
             <table align="center" class="ListTab" cellpadding="0" cellspacing="0">
                 <tr>
-                    <th style=" width:280px">
+                    <th style="width: 280px">
                         调查问卷名称
                     </th>
-                    <th style=" width:150px">
+                    <th style="width: 100px">
                         问卷类型
                     </th>
-                    <th style=" width:150px">
+                    <th style="width: 100px">
                         提交人
                     </th>
-                    <th >
-                        总分
+                    <th style="width: 150px">
+                        提交日期
                     </th>
                 </tr>
-                <tr>
-                    <td class="operation" style=" text-align:left">
-                        <div style="width: 280px; word-break: keep-all; white-space: nowrap; overflow: hidden;
-                            text-overflow: ellipsis;">
-                            <label name="labCbFirst" title="西安印象 你的印象西安印象 你的印象">
-                                <a >西安印象 你的印象西安印象 你的印象</a>
-                            </label>
-                        </div>
-                    </td>
-                    <td>
-                        评分调查
-                    </td>
-                    <td>
-                       匿名222
-                    </td>
-                    <td>
-                        100
-                    </td>
-                </tr>
-                <tr>
-                    <td class="operation" style=" text-align:left">
-                        <div style="width: 280px; word-break: keep-all; white-space: nowrap; overflow: hidden;
-                            text-overflow: ellipsis;">
-                            <label name="labCbFirst" title="西安印象 你的印象西安印象 你的印象">
-                                <a >西安印象 你的印象西安印象 你的印象</a>
-                            </label>
-                        </div>
-                    </td>
-                    <td>
-                        评分调查
-                    </td>
-                    <td>
-                       匿名222
-                    </td>
-                    <td>
-                        100
-                    </td>
-                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="operation" style="text-align: left">
+                            <div style="width: 280px; word-break: keep-all; white-space: nowrap; overflow: hidden;
+                                text-overflow: ellipsis;">
+                                <label name="labCbFirst" title="@item.SurveyTrouble.SurveyMain.SurveyTitle">
+                                    <a href="@Url.Action("AnswerInfo", "SurveyMain", new { SMID = ViewBag.SMID, Ucode = item.UserCode })" target="_blank">@item.SurveyTrouble.SurveyMain.SurveyTitle</a>
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            @if (item.SurveyTrouble.SurveyMain.EnumSurveyMainType == (int)Poco.Enum.EnumSurveyMainType.Rate)
+                            {
+                                @:评分调查
+                            }
+                            else
+                            { 
+                                @:普通调查
+                            }
+                        </td>
+                        <td>
+                            @item.UserName
+                        </td>
+                        <td>
+                            @item.CreateDate.ToString("yyyy-MM-dd HH:mm")
+                        </td>
+                    </tr>
+                }
             </table>
+            <div class="pages" style="padding: 10px 10px 10px 10px;">
+                @Html.Pager(Model, new PagerOptions
+                {
+                    PageIndexParameterName = "ID",
+                    CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+                    NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+                    NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+                    CssClass = "manage_pages pages",
+                    SeparatorHtml = "&nbsp;",
+                    AutoHide = false,
+                    /*LastPageText = "Last",
+                    FirstPageText = "First",
+                    PrevPageText = "Back",
+                    NextPageText = "Next",*/
+                    PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+                    ShowFirstLast = false
+                })
+            </div>
         </td>
     </tr>
 </table>

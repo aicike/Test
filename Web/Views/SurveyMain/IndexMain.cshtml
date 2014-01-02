@@ -85,7 +85,7 @@
         //ajax 生成软文
         function SetAppAdver(client)
         {
-            //client  1用户端 2销售端
+            //client  EnumAdvertorialUType
             var id = $("#SMID_adver").val();
             var Url = '@Url.Action("SetAppAdverTorial", "SurveyMain")';
             $.post(Url, { id: id, client: client }, function (result) {
@@ -239,10 +239,10 @@
         <tr>
             <td align="center">
                 <input type="hidden" id="SMID_adver" />
-                <input type="button" onclick="SetAppAdver(1)" id="btnSubmitU" value="生成用户端软文" class="button" />
+                <input type="button" onclick="SetAppAdver(@((int)Poco.Enum.EnumAdvertorialUType.UserEnd))" id="btnSubmitU" value="生成用户端软文" class="button" />
             </td>
             <td align="center">
-                <input type="button" onclick="SetAppAdver(2)"  id="btnSubmitA" value="生成销售端软文" class="button" />
+                <input type="button" onclick="SetAppAdver(@((int)Poco.Enum.EnumAdvertorialUType.AccountEnd))"  id="btnSubmitA" value="生成销售端软文" class="button" />
             </td>
         </tr>
     </table>

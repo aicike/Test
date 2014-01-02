@@ -285,29 +285,36 @@
                                 id="@(Trouble[i].EnumTroubleType)_@Trouble[i].ID" placeholder="必填内容（500字以内）"></textarea>
                         }
                     </fieldset>
-                    @if (i == 0)
+                    @if (Trouble.Count() == 1)
                     {
-                        <div style="float: left; width: 45%">
-                            <input type="button" class="topT" value="简介" /></div>
-                        <div style="float: right; width: 45%">
-                            <input type="button" id="btn_@Trouble[i].ID" class="lastT" disabled="disabled" value="下一题" />
-                        </div>
-                    }
-                    else if (i == (Trouble.Count() - 1))
-                    {
-                        <div style="float: left; width: 45%">
-                            <input type="button" class="topT" value="上一题" /></div>
-                        <div style="float: right; width: 45%">
-                            <input type="submit" id="btn_@Trouble[i].ID" class="Tok"   onclick="return GetAnswer()";  disabled="disabled" value="完成" />
-                        </div>
+                            <div style="float: left; width: 45%"> <input type="button" class="topT" value="简介"
+                            /></div>
+                            <div style="float: right; width: 45%"> <input type="submit" id="btn_@Trouble[i].ID" 
+                            class="Tok" onclick="return GetAnswer()"; disabled="disabled" value="完成" /> </div>
                     }
                     else
                     {
-                        <div style="float: left; width: 45%">
-                            <input type="button" class="topT" value="上一题" /></div>
-                        <div style="float: right; width: 45%">
-                            <input type="button" id="btn_@Trouble[i].ID" class="lastT"  disabled="disabled" value="下一题" />
-                        </div>
+                        if (i == 0)
+                        {
+                            <div style="float: left; width: 45%"> <input type="button" class="topT" value="简介"
+                            /></div>
+                            <div style="float: right; width: 45%"> <input type="button" id="btn_@Trouble[i].ID"
+                            class="lastT" disabled="disabled" value="下一题" /> </div>
+                        }
+                        else if (i == (Trouble.Count() - 1))
+                        {
+                            <div style="float: left; width: 45%"> <input type="button" class="topT" value="上一题"
+                            /></div>
+                            <div style="float: right; width: 45%"> <input type="submit" id="btn_@Trouble[i].ID" 
+                            class="Tok" onclick="return GetAnswer()"; disabled="disabled" value="完成" /> </div>
+                        }
+                        else
+                        {
+                            <div style="float: left; width: 45%"> <input type="button" class="topT" value="上一题"
+                            /></div>
+                            <div style="float: right; width: 45%"> <input type="button" id="btn_@Trouble[i].ID"
+                        class="lastT" disabled="disabled" value="下一题" /> </div>
+                        }
                     }
                 </div>
             </div>

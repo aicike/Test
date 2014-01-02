@@ -25,7 +25,8 @@ namespace Poco
         //App图片
         public string S { get; set; }
 
-
+        //App分享图片
+        public string F { get; set; }
 
 
 
