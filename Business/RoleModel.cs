@@ -23,7 +23,7 @@ namespace Business
             {
                 foreach (var item in list)
                 {
-                    item.Accounts = item.Accounts.Where(a => a.Account_AccountMains.Any(b => b.AccountMainID == accountMainID.Value && b.SystemStatus == (int)EnumSystemStatus.Active )).ToList();
+                    item.Account_Roles = item.Account_Roles.Where(a => a.Account.Account_AccountMains.Any(b => b.AccountMainID == accountMainID.Value && b.SystemStatus == (int)EnumSystemStatus.Active)).ToList();
                 }
 
             }
@@ -36,7 +36,7 @@ namespace Business
 
             foreach (var item in list)
             {
-                item.Accounts = item.Accounts.Where(a => a.Account_AccountMains.Any(b => b.AccountMainID == accountMainID && b.AccountID != AccountID && b.SystemStatus == (int)EnumSystemStatus.Active)).ToList();
+                item.Account_Roles = item.Account_Roles.Where(a => a.Account.Account_AccountMains.Any(b => b.AccountMainID == accountMainID && b.AccountID != AccountID && b.SystemStatus == (int)EnumSystemStatus.Active)).ToList();
             }
 
 
@@ -50,7 +50,7 @@ namespace Business
             {
                 foreach (var item in list)
                 {
-                    item.Accounts = item.Accounts.Where(a => a.Account_AccountMains.Any(b => b.AccountMainID == accountMainID.Value && b.SystemStatus == (int)EnumSystemStatus.Active)).ToList();
+                    item.Account_Roles = item.Account_Roles.Where(a => a.Account.Account_AccountMains.Any(b => b.AccountMainID == accountMainID.Value && b.SystemStatus == (int)EnumSystemStatus.Active)).ToList();
                 }
 
             }
@@ -83,7 +83,7 @@ namespace Business
                 result.Error = "\"管理员\"是系统初始化数据，无法删除。";
                 return result;
             }
-            if (role.Accounts.Any(a => a.SystemStatus == (int)EnumSystemStatus.Active))
+            if (role.Account_Roles.Any(a => a.SystemStatus == (int)EnumSystemStatus.Active))
             {
                 result.Error = "该角色已经被使用，无法删除。";
                 return result;
@@ -112,7 +112,7 @@ namespace Business
                     result.Error = "\"管理员\"是系统初始化数据，无法删除。";
                     return result;
                 }
-                if (role.Accounts.Any(a => a.SystemStatus == (int)EnumSystemStatus.Active))
+                if (role.Account_Roles.Any(a => a.SystemStatus == (int)EnumSystemStatus.Active))
                 {
                     result.Error = "该角色已经被使用，无法删除。";
                     return result;

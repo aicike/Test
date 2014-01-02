@@ -83,10 +83,7 @@ namespace Web.Controllers
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             var roles = roleModel.GetRoleList(LoginAccount.CurrentAccountMainID);
             var selectListRoles = new SelectList(roles, "ID", "Name");
-            List<SelectListItem> newRolesList = new List<SelectListItem>();
-            newRolesList.Add(new SelectListItem { Text = "请选择", Value = "select", Selected = true });
-            newRolesList.AddRange(selectListRoles);
-            ViewData["Roles"] = newRolesList;
+            ViewData["Roles"] = selectListRoles;
             ViewBag.HostName = LoginAccount.HostName;
             ViewBag.AccountMainID = LoginAccount.CurrentAccountMainID;
             string WebTitleRemark = SystemConst.WebTitleRemark;
@@ -97,31 +94,36 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add(Account_AccountMain account_accountMain, int w, int h, int x1, int y1, int tw, int th)
+        public ActionResult Add(Account_AccountMain account_accountMain, string roleIDs, int w, int h, int x1, int y1, int tw, int th)
         {
             IAccount_AccountMainModel model = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
             CommonModel cm = new CommonModel();
 
             account_accountMain.Account.LoginPwd = cm.CreateRandom("", 6);
-            var result = model.Add(account_accountMain, w, h, x1, y1, tw, th);
+
+            List<int> RoleIDs = roleIDs.ConvertToIntArray(',').ToList();
+            var result = model.Add(account_accountMain, RoleIDs, w, h, x1, y1, tw, th);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);
             }
-            EmailInfo emailInfo = new EmailInfo();
-            emailInfo.To = account_accountMain.Account.Email;
-            emailInfo.Subject = "ImTimely - 账号注册成功";
-            emailInfo.IsHtml = true;
-            emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您的ImTimely账号已创建成功,<a href='http://{0}.ImTimely.com' target='_blank'>请点击此处</a>&nbsp;登录。", LoginAccount.HostName) +
-                             string.Format("登录名为您当前邮箱账号。<br/> 密码：{0}<br/>", account_accountMain.Account.LoginPwd) +
-                             string.Format("<br/>为了保证您的帐号安全，请尽快更改你的密码！(登录后点击设置更改)<br/><br/>IMtimely<br/><br/>{0}", DateTime.Now.ToString("yyyy-MM-dd"));
-            try
+            if (!string.IsNullOrEmpty(account_accountMain.Account.Email))
             {
-                SendEmail.SendMailAsync(emailInfo);
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("邮件发送失败！请在列表页重新生成密码！");
+                EmailInfo emailInfo = new EmailInfo();
+                emailInfo.To = account_accountMain.Account.Email;
+                emailInfo.Subject = "ImTimely - 账号注册成功";
+                emailInfo.IsHtml = true;
+                emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您的ImTimely账号已创建成功,<a href='http://{0}.ImTimely.com' target='_blank'>请点击此处</a>&nbsp;登录。", LoginAccount.HostName) +
+                                 string.Format("登录名为您当前邮箱账号。<br/> 密码：{0}<br/>", account_accountMain.Account.LoginPwd) +
+                                 string.Format("<br/>为了保证您的帐号安全，请尽快更改你的密码！(登录后点击设置更改)<br/><br/>IMtimely<br/><br/>{0}", DateTime.Now.ToString("yyyy-MM-dd"));
+                try
+                {
+                    SendEmail.SendMailAsync(emailInfo);
+                }
+                catch (Exception ex)
+                {
+                    throw new ApplicationException("邮件发送失败！请在列表页重新生成密码！");
+                }
             }
             return RedirectToAction("Index", "Account", new { HostName = LoginAccount.HostName });
         }
@@ -134,10 +136,8 @@ namespace Web.Controllers
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             var roles = roleModel.GetRoleList(LoginAccount.CurrentAccountMainID);
             var selectListRoles = new SelectList(roles, "ID", "Name");
-            List<SelectListItem> newRolesList = new List<SelectListItem>();
-            newRolesList.Add(new SelectListItem { Text = "请选择", Value = "select", Selected = true });
-            newRolesList.AddRange(selectListRoles);
-            ViewData["Roles"] = newRolesList;
+            ViewData["Roles"] = selectListRoles;
+            ViewData["SelRoles"] = entity.Account_Roles.Select(a => a.RoleID).ToList();
             ViewBag.HostName = LoginAccount.HostName;
             ViewBag.AccountMainID = LoginAccount.CurrentAccountMainID;
             string WebTitleRemark = SystemConst.WebTitleRemark;
@@ -148,12 +148,13 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Poco.Account account,  int w, int h, int x1, int y1, int tw, int th)
+        public ActionResult Edit(Poco.Account account, string roleIDs, int w, int h, int x1, int y1, int tw, int th)
         {
             account.LoginPwdPage = "aaaaaa";
             account.LoginPwdPageCompare = "aaaaaa";
             IAccountModel model = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-            var result = model.Edit(account, LoginAccount.CurrentAccountMainID, x1, y1, w, h, tw, th);
+            List<int> RoleIDs = roleIDs.ConvertToIntArray(',').ToList();
+            var result = model.Edit(account, LoginAccount.CurrentAccountMainID, RoleIDs, x1, y1, w, h, tw, th);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);
@@ -207,20 +208,23 @@ namespace Web.Controllers
             {
                 return Alert(new Dialog("密码重置失败 请重试"));
             }
-            EmailInfo emailInfo = new EmailInfo();
-            emailInfo.To = mail;
-            emailInfo.Subject = "ImTimely - 密码重置成功";
-            emailInfo.IsHtml = true;
-            emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您的ImTimely账号密码重置成功,<a href='http://{0}.ImTimely.com' target='_blank'>请点击此处</a>&nbsp;登录。", LoginAccount.HostName) +
-                             string.Format("登录名为您当前邮箱账号。<br/> 密码：{0}<br/>", LoginPwd) +
-                             string.Format("<br/>为了保证您的帐号安全，请尽快更改你的密码！(登录后点击设置更改)<br/><br/>IMtimely<br/><br/>{0}", DateTime.Now.ToString("yyyy-MM-dd"));
-            try
+            if (!string.IsNullOrEmpty(mail))
             {
-                SendEmail.SendMailAsync(emailInfo);
-            }
-            catch (Exception ex)
-            {
-                return Alert(new Dialog("邮件发送失败！请重新生成密码！"));
+                EmailInfo emailInfo = new EmailInfo();
+                emailInfo.To = mail;
+                emailInfo.Subject = "ImTimely - 密码重置成功";
+                emailInfo.IsHtml = true;
+                emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您的ImTimely账号密码重置成功,<a href='http://{0}.ImTimely.com' target='_blank'>请点击此处</a>&nbsp;登录。", LoginAccount.HostName) +
+                                 string.Format("登录名为您当前邮箱账号。<br/> 密码：{0}<br/>", LoginPwd) +
+                                 string.Format("<br/>为了保证您的帐号安全，请尽快更改你的密码！(登录后点击设置更改)<br/><br/>IMtimely<br/><br/>{0}", DateTime.Now.ToString("yyyy-MM-dd"));
+                try
+                {
+                    SendEmail.SendMailAsync(emailInfo);
+                }
+                catch (Exception ex)
+                {
+                    return Alert(new Dialog("邮件发送失败！请重新生成密码！"));
+                }
             }
             SMS_Model sms = new SMS_Model();
             sms.Send_AccountRegisterPWD(id);

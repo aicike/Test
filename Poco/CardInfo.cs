@@ -28,6 +28,7 @@ namespace Poco
 
         [Display(Name = "金额")]
         [Required(ErrorMessage = "请输入金额")]
+        [RegularExpression(@"^(([1-9]\d{0,9})|0)(\.\d{1,2})?$", ErrorMessage = "请输入正确的金额。")]
         public decimal Balance { get; set; }
 
         [Display(Name = "注册日期")]

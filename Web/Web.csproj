@@ -146,6 +146,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\System\Controllers\AccountMainManageController.cs" />
     <Compile Include="Areas\System\Controllers\AccountManageController.cs" />
+    <Compile Include="Areas\System\Controllers\FeedbackController.cs" />
     <Compile Include="Areas\System\Controllers\ReportController.cs" />
     <Compile Include="Areas\System\Controllers\RoleController.cs" />
     <Compile Include="Areas\System\Controllers\SystemSetController.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Controllers\AccountMainGuideController.cs" />
     <Compile Include="Controllers\AjaxController.cs" />
     <Compile Include="Controllers\AjaxReportController.cs" />
+    <Compile Include="Controllers\AppAdvertorialAccountController.cs" />
     <Compile Include="Controllers\AppAdvertorialController.cs" />
     <Compile Include="Controllers\AppWaitImgController.cs" />
     <Compile Include="Controllers\BaseController\BaseController.cs" />
@@ -188,6 +190,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SalesMessageController.cs" />
     <Compile Include="Controllers\SetController.cs" />
+    <Compile Include="Controllers\SurveyMainController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\SingleChatController.cs" />
@@ -271,6 +274,7 @@
     <Content Include="Images\Unread.png" />
     <Content Include="Images\m1.png" />
     <Content Include="Images\up.png" />
+    <Content Include="Scripts\blocksit.js" />
     <Content Include="Scripts\Carousel\carousel.css" />
     <Content Include="Scripts\Carousel\carousel.js" />
     <Content Include="Scripts\Carousel\jquery.flexslider.js" />
@@ -814,6 +818,8 @@
     <Content Include="Areas\System\Views\SystemUser\Add.cshtml" />
     <Content Include="Areas\System\Views\SystemUser\Edit.cshtml" />
     <Content Include="Areas\System\Views\Report\Index.cshtml" />
+    <Content Include="Areas\System\Views\Feedback\Index.cshtml" />
+    <Content Include="Areas\System\Views\Feedback\GetInfo.cshtml" />
     <None Include="Scripts\nivoSlider\dark\.DS_Store" />
     <Content Include="ueditor\net\imageUp_Advertorial.ashx" />
     <None Include="video-js\font\vjs.eot" />
@@ -891,6 +897,22 @@
     <Content Include="Views\CardInfo\Add.cshtml" />
     <Content Include="Views\Test\JqueryMobileDome.cshtml" />
     <Content Include="Views\CardInfo\AddPrefix.cshtml" />
+    <Content Include="Views\AppAdvertorialAccount\Index.cshtml" />
+    <Content Include="Views\AppAdvertorialAccount\Add.cshtml" />
+    <Content Include="Views\AppAdvertorialAccount\Edit.cshtml" />
+    <Content Include="Views\AppAdvertorialAccount\Preview.cshtml" />
+    <Content Include="Views\Default\Feedback.cshtml" />
+    <Content Include="Views\SurveyMain\IndexMain.cshtml" />
+    <Content Include="Views\SurveyMain\AddMain.cshtml" />
+    <Content Include="Views\SurveyMain\EditMain.cshtml" />
+    <Content Include="Views\Shared\_LayoutBase.cshtml" />
+    <Content Include="Views\SurveyMain\TroubleStatistics.cshtml" />
+    <Content Include="Views\SurveyMain\IndexTrouble.cshtml" />
+    <Content Include="Views\SurveyMain\AddTrouble.cshtml" />
+    <Content Include="Views\SurveyMain\EditTrouble.cshtml" />
+    <Content Include="Views\SurveyMain\ShowOption.cshtml" />
+    <Content Include="Views\SurveyMain\SurveyUserList.cshtml" />
+    <Content Include="Views\Default\Questionnaire.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
@@ -914,12 +936,9 @@
           <DevelopmentServerPort>30062</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://192.168.1.166/</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://192.168.1.166/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://192.168.1.166</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

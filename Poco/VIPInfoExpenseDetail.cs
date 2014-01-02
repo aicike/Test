@@ -21,10 +21,6 @@ namespace Poco
         /// </summary>
         public decimal ExpensePrice { get; set; }
 
-        /// <summary>
-        /// 本次消费后余额
-        /// </summary>
-        public decimal Balance { get; set; }
 
         public int VIPInfoID { get; set; }
 
@@ -33,5 +29,12 @@ namespace Poco
         public int UserID { get; set; }
 
         public virtual User User { get; set; }
+
+        public int AccountID { get; set; }
+        public virtual Account Account { get; set; }
+
+
+        public int EnumVIPOperate { get; set; }
+
     }
 }

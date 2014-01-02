@@ -14,6 +14,7 @@ using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Drawing.Imaging;
+using Poco.WebAPI_Poco;
 
 namespace Business
 {
@@ -33,7 +34,7 @@ namespace Business
         public IList<Account> GetAccountListNoAdminByAccountMain(int accountMainID)
         {
             var entity = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
-            return entity.List().Where(a => a.AccountMainID == accountMainID & a.Account.RoleID != 1).Select(a => a.Account).ToList();
+            return entity.List().Where(a => a.AccountMainID == accountMainID & a.Account.Account_Roles.Any(b => b.RoleID == 1) == false).Select(a => a.Account).ToList();
         }
 
         public IQueryable<Account> GetAccountListByAccountMain(AccountMain accountMain)
@@ -45,7 +46,7 @@ namespace Business
         /// </summary>
         public IQueryable<Account> GetAccountAdminListByAccountMain(int accountMainID)
         {
-            return GetAccountListByAccountMain(accountMainID).Where(a => a.RoleID == 1 && a.Role.IsCanDelete == false);
+            return GetAccountListByAccountMain(accountMainID).Where(a => a.Account_Roles.Any(b => b.RoleID == 1 && b.Role.IsCanDelete == false));
         }
 
         public IQueryable<Account> GetAccountAdminListByAccountMain(AccountMain accountMain)
@@ -58,30 +59,30 @@ namespace Business
                 Roleid = Role.FirstOrDefault().ID;
 
             }
-            return accountMain.Account_AccountMains.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Select(a => a.Account).Where(a => a.RoleID == Roleid).AsQueryable();
+            return accountMain.Account_AccountMains.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Select(a => a.Account).Where(a => a.Account_Roles.Any(b => b.RoleID == Roleid)).AsQueryable();
         }
         public IQueryable<Account> GetAccountAdminListByAccountMain(AccountMain accountMain, int RoleID, int AccountID)
         {
-            return accountMain.Account_AccountMains.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Select(a => a.Account).Where(a => a.RoleID == RoleID && a.ID != AccountID).AsQueryable();
+            return accountMain.Account_AccountMains.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Select(a => a.Account).Where(a => a.Account_Roles.Any(b => b.RoleID == RoleID) && a.ID != AccountID).AsQueryable();
         }
         /// <summary>
         /// 根据角色获取项目成员
         /// </summary>
         public IQueryable<Account> GetAccountListByAccountMain_RoleID(int accountMainID, int roleID, int accountID)
         {
-            return GetAccountListByAccountMain(accountMainID).Where(a => a.RoleID == roleID && a.ID != accountID);
+            return GetAccountListByAccountMain(accountMainID).Where(a => a.Account_Roles.Any(b => b.RoleID == roleID) && a.ID != accountID);
         }
 
         public IQueryable<Account> GetAccountListByAccountMain_RoleID(AccountMain accountMain, int roleID)
         {
-            return accountMain.Account_AccountMains.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Select(a => a.Account).Where(a => a.RoleID == roleID).AsQueryable();
+            return accountMain.Account_AccountMains.Where(a => a.SystemStatus == (int)EnumSystemStatus.Active).Select(a => a.Account).Where(a => a.Account_Roles.Any(b => b.RoleID == roleID)).AsQueryable();
         }
 
         [Transaction]
-        public Result Add(Account account, int accountMainID, System.Web.HttpPostedFileBase HeadImagePathFile)
+        public Result Add(Account account, int accountMainID, List<int> roleIDs, System.Web.HttpPostedFileBase HeadImagePathFile)
         {
             Result result = new Result();
-            if (account.RoleID == 1)
+            if (roleIDs.Contains(1))
             {
                 var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
                 if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID))
@@ -134,6 +135,12 @@ namespace Business
                 var groupModel = Factory.Get<IGroupModel>(SystemConst.IOC_Model.GroupModel);
                 result = groupModel.AddDefaultGroup(account.ID, accountMainID);
             }
+            //添加角色
+            if (result.HasError == false)
+            {
+                var accountRoleModel = Factory.Get<IAccountRoleModel>(SystemConst.IOC_Model.AccountRoleModel);
+                result = accountRoleModel.Add(roleIDs, account.ID);
+            }
             if (result.HasError == false)
             {
                 SMS_Model smsModel = new SMS_Model();
@@ -142,13 +149,13 @@ namespace Business
             return result;
         }
 
-        public Result Add(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile, int x1, int y1, int width, int height, int Twidth, int Theight)
+        public Result Add(Account account, int accountMainID, List<int> roleIDs, HttpPostedFileBase HeadImagePathFile, int x1, int y1, int width, int height, int Twidth, int Theight)
         {
             //获取项目管理员角色ID
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             int sysRoleID = roleModel.GetRoleIscandelete(accountMainID);
             Result result = new Result();
-            if (account.RoleID == sysRoleID)
+            if (roleIDs.Contains(sysRoleID))
             {
                 var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
                 if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID))
@@ -217,16 +224,22 @@ namespace Business
                 var groupModel = Factory.Get<IGroupModel>(SystemConst.IOC_Model.GroupModel);
                 result = groupModel.AddDefaultGroup(account.ID, accountMainID);
             }
+            //添加角色
+            if (result.HasError == false)
+            {
+                var accountRoleModel = Factory.Get<IAccountRoleModel>(SystemConst.IOC_Model.AccountRoleModel);
+                result = accountRoleModel.Add(roleIDs, account.ID);
+            }
             return result;
         }
 
-        public Result Add(Account account, int accountMainID, int x1, int y1, int width, int height, int Twidth, int Theight)
+        public Result Add(Account account, int accountMainID, List<int> roleIDs, int x1, int y1, int width, int height, int Twidth, int Theight)
         {
             //获取项目管理员角色ID
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             int sysRoleID = roleModel.GetRoleIscandelete(accountMainID);
             Result result = new Result();
-            if (account.RoleID == sysRoleID)
+            if (roleIDs.Contains(sysRoleID))
             {
                 var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
                 if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID))
@@ -289,14 +302,20 @@ namespace Business
                 var groupModel = Factory.Get<IGroupModel>(SystemConst.IOC_Model.GroupModel);
                 result = groupModel.AddDefaultGroup(account.ID, accountMainID);
             }
+            //添加角色
+            if (result.HasError == false)
+            {
+                var accountRoleModel = Factory.Get<IAccountRoleModel>(SystemConst.IOC_Model.AccountRoleModel);
+                result = accountRoleModel.Add(roleIDs, account.ID);
+            }
             return result;
         }
 
 
-        public Result Edit(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile)
+        public Result Edit(Account account, int accountMainID, List<int> roleIDs, HttpPostedFileBase HeadImagePathFile)
         {
             Result result = new Result();
-            if (account.RoleID == 1)
+            if (roleIDs.Contains(1))
             {
                 var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
                 if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID, account.ID))
@@ -307,11 +326,14 @@ namespace Business
             }
             //检查邮箱是否唯一
             CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
-            var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
-            if (isOk == false)
+            if (!string.IsNullOrEmpty(account.Email))
             {
-                result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
-                return result;
+                var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
+                if (isOk == false)
+                {
+                    result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
+                    return result;
+                }
             }
             account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
             if (string.IsNullOrEmpty(account.HeadImagePath))
@@ -356,6 +378,12 @@ namespace Business
                         account.HeadImagePath = path + imageName;
                     }
                     result = Edit(account);
+                    //添加角色
+                    if (result.HasError == false)
+                    {
+                        var accountRoleModel = Factory.Get<IAccountRoleModel>(SystemConst.IOC_Model.AccountRoleModel);
+                        result = accountRoleModel.Add(roleIDs, account.ID);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -365,13 +393,13 @@ namespace Business
             return result;
         }
 
-        public Result Edit(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile, int x1, int y1, int width, int height, int Twidth, int Theight)
+        public Result Edit(Account account, int accountMainID, List<int> roleIDs, HttpPostedFileBase HeadImagePathFile, int x1, int y1, int width, int height, int Twidth, int Theight)
         {
             //获取项目管理员角色ID
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             int sysRoleID = roleModel.GetRoleIscandelete(accountMainID);
             Result result = new Result();
-            if (account.RoleID == sysRoleID)
+            if (roleIDs.Contains(sysRoleID))
             {
                 var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
                 if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID, account.ID))
@@ -382,13 +410,16 @@ namespace Business
             }
             //检查邮箱是否唯一
             CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
-            var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
-            if (isOk == false)
+            if (!string.IsNullOrEmpty(account.Email))
             {
-                result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
-                return result;
-            } 
-            
+                var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
+                if (isOk == false)
+                {
+                    result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
+                    return result;
+                }
+            }
+
             if (string.IsNullOrEmpty(account.HeadImagePath))
             {
                 account.HeadImagePath = "";
@@ -445,25 +476,30 @@ namespace Business
                         Tool.SuperGetPicThumbnail(img, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
                         account.HeadImagePath = path + imageName;
                     }
-
-
                     result = Edit(account);
+
                 }
                 catch (Exception ex)
                 {
                     throw ex;
                 }
             }
+            //添加角色
+            if (result.HasError == false)
+            {
+                var accountRoleModel = Factory.Get<IAccountRoleModel>(SystemConst.IOC_Model.AccountRoleModel);
+                result = accountRoleModel.Add(roleIDs, account.ID);
+            }
             return result;
         }
 
-        public Result Edit(Account account, int accountMainID, int x1, int y1, int width, int height, int Twidth, int Theight)
+        public Result Edit(Account account, int accountMainID, List<int> roleIDs, int x1, int y1, int width, int height, int Twidth, int Theight)
         {
             //获取项目管理员角色ID
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             int sysRoleID = roleModel.GetRoleIscandelete(accountMainID);
             Result result = new Result();
-            if (account.RoleID == sysRoleID)
+            if (roleIDs.Contains(sysRoleID))
             {
                 var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
                 if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID, account.ID))
@@ -474,11 +510,14 @@ namespace Business
             }
             //检查邮箱是否唯一
             CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
-            var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
-            if (isOk == false)
+            if (!string.IsNullOrEmpty(account.Email))
             {
-                result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
-                return result;
+                var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
+                if (isOk == false)
+                {
+                    result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
+                    return result;
+                }
             }
             //account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
 
@@ -533,8 +572,6 @@ namespace Business
                         Tool.SuperGetPicThumbnail(lsImaFilePath, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
                         account.HeadImagePath = path + imageName;
                     }
-
-
                     result = Edit(account);
                 }
                 catch (Exception ex)
@@ -542,94 +579,104 @@ namespace Business
                     throw ex;
                 }
             }
-            return result;
-        }
-
-
-
-        public Result SetEdit(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile, int x1, int y1, int width, int height, int Twidth, int Theight)
-        {
-            //获取项目管理员角色ID
-            IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
-            int sysRoleID = roleModel.GetRoleIscandelete(accountMainID);
-            Result result = new Result();
-            if (account.RoleID == sysRoleID)
+            //添加角色
+            if (result.HasError == false)
             {
-                var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
-                if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID, account.ID))
-                {
-                    result.Error = SystemConst.Notice.MultipleAccountMainAdminAccount;
-                    return result;
-                }
-            }
-            //检查邮箱是否唯一
-            CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
-            var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
-            if (isOk == false)
-            {
-                result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
-                return result;
-            }
-            account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
-            result = base.Edit(account);
-            if (result.HasError == false && HeadImagePathFile != null)
-            {
-                try
-                {
-                    //删除原头像
-                    if (account.HeadImagePath != "~/Images/default_Avatar.png")
-                    {
-                        var file = HttpContext.Current.Server.MapPath(account.HeadImagePath);
-                        if (File.Exists(file))
-                        {
-                            File.Delete(file);
-                        }
-                    }
-                    CommonModel com = new CommonModel();
-                    var LastName = com.CreateRandom("", 5) + HeadImagePathFile.FileName.GetFileSuffix();
-                    var path = string.Format(SystemConst.Business.PathAccount, accountMainID);
-                    var accountPath = HttpContext.Current.Server.MapPath(path);
-                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
-                    var imageName = string.Format("{0}_{1}", token, LastName);
-                    var imageName2 = string.Format("{0}Y_{1}", token, LastName);
-                    var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
-                    var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
-
-                    int dataLengthToRead = (int)HeadImagePathFile.InputStream.Length;//获取下载的文件总大小
-                    byte[] buffer = new byte[dataLengthToRead];
-
-                    int r = HeadImagePathFile.InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
-                    Stream tream = new MemoryStream(buffer);
-                    Image img = Image.FromStream(tream);
-
-                    if (width > 0)
-                    {
-                        Tool.SuperGetPicThumbnailJT(img, imagePath, 70, width, height, x1, y1, Twidth, Theight, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
-
-
-                        Tool.SuperGetPicThumbnail(imagePath, imagePath2, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
-                        if (File.Exists(imagePath))
-                        {
-                            File.Delete(imagePath);
-                        }
-
-                        account.HeadImagePath = path + imageName2;
-
-                    }
-                    else
-                    {
-                        Tool.SuperGetPicThumbnail(img, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
-                        account.HeadImagePath = path + imageName;
-                    }
-                    result = Edit(account);
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+                var accountRoleModel = Factory.Get<IAccountRoleModel>(SystemConst.IOC_Model.AccountRoleModel);
+                result = accountRoleModel.Add(roleIDs, account.ID);
             }
             return result;
         }
+
+
+
+        //public Result SetEdit(Account account, int accountMainID, HttpPostedFileBase HeadImagePathFile, int x1, int y1, int width, int height, int Twidth, int Theight)
+        //{
+        //    //获取项目管理员角色ID
+        //    IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
+        //    int sysRoleID = roleModel.GetRoleIscandelete(accountMainID);
+        //    Result result = new Result();
+        //    if (account.Account_Roles.Any(b => b.RoleID == sysRoleID))
+        //    {
+        //        var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
+        //        if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID, account.ID))
+        //        {
+        //            result.Error = SystemConst.Notice.MultipleAccountMainAdminAccount;
+        //            return result;
+        //        }
+        //    }
+        //    //检查邮箱是否唯一
+        //    CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+        //    if (!string.IsNullOrEmpty(account.Email))
+        //    {
+        //        var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
+        //        if (isOk == false)
+        //        {
+        //            result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
+        //            return result;
+        //        }
+        //    }
+        //    account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
+        //    result = base.Edit(account);
+        //    if (result.HasError == false && HeadImagePathFile != null)
+        //    {
+        //        try
+        //        {
+        //            //删除原头像
+        //            if (account.HeadImagePath != "~/Images/default_Avatar.png")
+        //            {
+        //                var file = HttpContext.Current.Server.MapPath(account.HeadImagePath);
+        //                if (File.Exists(file))
+        //                {
+        //                    File.Delete(file);
+        //                }
+        //            }
+        //            CommonModel com = new CommonModel();
+        //            var LastName = com.CreateRandom("", 5) + HeadImagePathFile.FileName.GetFileSuffix();
+        //            var path = string.Format(SystemConst.Business.PathAccount, accountMainID);
+        //            var accountPath = HttpContext.Current.Server.MapPath(path);
+        //            var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+        //            var imageName = string.Format("{0}_{1}", token, LastName);
+        //            var imageName2 = string.Format("{0}Y_{1}", token, LastName);
+        //            var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
+        //            var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
+
+        //            int dataLengthToRead = (int)HeadImagePathFile.InputStream.Length;//获取下载的文件总大小
+        //            byte[] buffer = new byte[dataLengthToRead];
+
+        //            int r = HeadImagePathFile.InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+        //            Stream tream = new MemoryStream(buffer);
+        //            Image img = Image.FromStream(tream);
+
+        //            if (width > 0)
+        //            {
+        //                Tool.SuperGetPicThumbnailJT(img, imagePath, 70, width, height, x1, y1, Twidth, Theight, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+
+
+        //                Tool.SuperGetPicThumbnail(imagePath, imagePath2, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+        //                if (File.Exists(imagePath))
+        //                {
+        //                    File.Delete(imagePath);
+        //                }
+
+        //                account.HeadImagePath = path + imageName2;
+
+        //            }
+        //            else
+        //            {
+        //                Tool.SuperGetPicThumbnail(img, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+        //                account.HeadImagePath = path + imageName;
+        //            }
+        //            result = Edit(account);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            throw ex;
+        //        }
+        //    }
+        //    return result;
+        //}
+
 
         public Result SetEdit(Account account, int accountMainID, int x1, int y1, int width, int height, int Twidth, int Theight)
         {
@@ -637,22 +684,25 @@ namespace Business
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             int sysRoleID = roleModel.GetRoleIscandelete(accountMainID);
             Result result = new Result();
-            if (account.RoleID == sysRoleID)
-            {
-                var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
-                if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID, account.ID))
-                {
-                    result.Error = SystemConst.Notice.MultipleAccountMainAdminAccount;
-                    return result;
-                }
-            }
+            //if (account.Account_Roles.Any(b => b.RoleID == sysRoleID))
+            //{
+            //    var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
+            //    if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainID, account.ID))
+            //    {
+            //        result.Error = SystemConst.Notice.MultipleAccountMainAdminAccount;
+            //        return result;
+            //    }
+            //}
             //检查邮箱是否唯一
             CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
-            var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
-            if (isOk == false)
+            if (!string.IsNullOrEmpty(account.Email))
             {
-                result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
-                return result;
+                var isOk = model.CheckIsUnique("Account", "Email", account.Email, account.ID);
+                if (isOk == false)
+                {
+                    result.Error = "该邮箱已被其他账号使用，请修改邮箱。";
+                    return result;
+                }
             }
             account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwdPage);
 
@@ -661,7 +711,7 @@ namespace Business
 
             result = base.Edit(account);
 
-            if (YAccount.HeadImagePath != account.HeadImagePath && account.HeadImagePath != "" && result.HasError == false)
+            if (YAccount.HeadImagePath != account.HeadImagePath && string.IsNullOrEmpty(account.HeadImagePath) == false && result.HasError == false)
             {
 
                 try
@@ -698,7 +748,6 @@ namespace Business
                         {
                             File.Delete(imagePath);
                         }
-
                         account.HeadImagePath = path + imageName2;
 
                     }
@@ -796,7 +845,7 @@ namespace Business
             entity.Phone = account.Phone;
             entity.HeadImagePath = account.HeadImagePath;
             entity.Email = account.Email;
-            entity.RoleID = account.RoleID;
+            entity.RoleIDs = account.Account_Roles.Select(a => a.RoleID).ToList();
             entity.AccountStatusID = account.AccountStatusID;
             entity.IsActivated = account.IsActivated;
             entity.HostName = account.Account_AccountMains.FirstOrDefault().AccountMain.HostName;
@@ -829,7 +878,7 @@ namespace Business
                 entity.Phone = account.Phone;
                 entity.HeadImagePath = account.HeadImagePath;
                 entity.Email = account.Email;
-                entity.RoleID = account.RoleID;
+                entity.Account_Roles = account.Account_Roles;
                 entity.AccountStatusID = account.AccountStatusID;
                 entity.IsActivated = account.IsActivated;
                 entity.HostName = account.Account_AccountMains.FirstOrDefault().AccountMain.HostName;
@@ -870,6 +919,22 @@ namespace Business
         public List<Account> GetSubAccounts(int accountID)
         {
             return List().Where(a => a.ParentAccountID == accountID).ToList();
+        }
+
+
+        public List<App_Menu> CheckAppPermission(List<int> menuIDs, int accountID)
+        {
+            var roleIDs = Get(accountID).Account_Roles.Select(a => a.Role.ID);
+            var menuModel = Factory.Get<IMenuModel>(SystemConst.IOC_Model.MenuModel);
+            List<App_Menu> appMenus = new List<App_Menu>();
+            foreach (var item in menuIDs)
+            {
+                App_Menu appmenu = new App_Menu();
+                appmenu.MenuID = item;
+                appmenu.HasPermission = menuModel.List_Cache().Any(a => a.ID == item && a.RoleMenus.Any(b => roleIDs.Contains(b.RoleID)));
+                appMenus.Add(appmenu);
+            }
+            return appMenus;
         }
     }
 }

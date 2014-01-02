@@ -7,6 +7,7 @@ using System.Data;
 using Poco;
 using System.Threading.Tasks;
 using AcceptanceServer.Properties;
+using Common;
 
 namespace AcceptanceServer
 {
@@ -82,21 +83,43 @@ namespace AcceptanceServer
                 //ShowErrorMessage(ex.Message);
             }
         }
+
         public delegate void dosomethings();
+
         public void AcceptCallBack(IAsyncResult ar)
         {
-
             allDone.Set();
 
             Socket newSock = listener.EndAccept(ar);
-            //try
-            //{
+            try
+            {
                 AcceptanceServer.XmppServerConnection con = new AcceptanceServer.XmppServerConnection(this, newSock);
-            //}
-            //catch
-            //{
-            //    newSock.Close();
-            //}
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+
+                    EmailInfo emailInfo = new EmailInfo();
+                    emailInfo.To = "315954870@qq.com;176534021@qq.com";
+                    emailInfo.Subject = "ImTimely - 聊天服务出错！请速检查（5222）";
+                    emailInfo.IsHtml = true;
+
+
+                    if (this == null)
+                    {
+                        emailInfo.Body = "聊天服务出错！<br/><br/>请速检查<br/><br/> Form窗口为NULL。<br/><br/>" + ex.Message + "<br/><br/>" + ex.StackTrace;
+                    }
+                    else
+                    {
+                        emailInfo.Body = "聊天服务出错！<br/><br/>请速检查。<br/><br/>" + ex.Message + "<br/><br/>" + ex.StackTrace;
+                    }
+
+
+                    SendEmail.SendMailAsync(emailInfo);
+                }
+                catch { }
+            }
         }
 
         #region(源数据)

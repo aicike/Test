@@ -99,6 +99,7 @@ namespace Poco
             public const string RoleModel = "RoleModel";
             public const string Account_AccountMainModel = "Account_AccountMainModel";
             public const string AccountModel = "AccountModel";
+            public const string AccountRoleModel = "AccountRoleModel";
             public const string ActivateEmailModel = "ActivateEmailModel";
             public const string AutoMessage_AddModel = "AutoMessage_AddModel";
             public const string AutoMessage_KeywordModel = "AutoMessage_KeywordModel";
@@ -160,6 +161,15 @@ namespace Poco
             public const string CardInfoModel = "CardInfoModel";
             public const string CardPrefixModel = "CardPrefixModel";
             public const string VIPInfoExpenseDetailModel = "VIPInfoExpenseDetailModel";
+            public const string FeedbackModel = "FeedbackModel";
+            
+            public const string SurveyMainModel = "SurveyMainModel";
+            public const string SurveyTroubleModel = "SurveyTroubleModel";
+            public const string SurveyAnswerModel = "SurveyAnswerModel";
+            public const string SurveyOptionModel = "SurveyOptionModel";
+
+
+
             
         }
     }

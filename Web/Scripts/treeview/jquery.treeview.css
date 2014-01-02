@@ -1,73 +1,217 @@
-.treeview, .treeview ul { 
-	padding: 0;
-	margin: 0;
-	list-style: none;
+.treeview, .treeview ul
+{
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
 
-.treeview ul {
-	margin-top: 4px;
+.treeview ul
+{
+    margin-top: 4px;
 }
 
-.treeview .hitarea {
-	background: url(treeview-default.png) -64px -25px no-repeat;
-	height: 16px;
-	width: 16px;
-	margin-left: -16px;
-	float: left;
-	cursor: pointer;
+.treeview .hitarea
+{
+    background: url(treeview-default.png) -64px -25px no-repeat;
+    height: 16px;
+    width: 16px;
+    margin-left: -16px;
+    float: left;
+    cursor: pointer;
 }
 /* fix for IE6 */
-* html .hitarea {
-	display: inline;
-	float:none;
+* html .hitarea
+{
+    display: inline;
+    float: none;
 }
 
-.treeview li { 
-	margin: 0;
-	padding: 3px 0pt 3px 16px;
+.treeview li
+{
+    margin: 0;
+    padding: 3px 0pt 3px 16px;
 }
 
-.treeview a.selected {
-	background-color: #eee;
+.treeview a.selected
+{
+    background-color: #eee;
 }
 
-#treecontrol { margin: 1em 0; display: none; }
-
-.treeview .hover {  cursor: pointer; }
-
-.treeview li { background: url(treeview-default-line.gif) 0 0 no-repeat; }
-.treeview li.collapsable, .treeview li.expandable { background-position: 0 -176px; }
-
-.treeview .expandable-hitarea { background-position: -80px -3px; }
-
-.treeview li.last { background-position: 0 -1766px }
-.treeview li.lastCollapsable, .treeview li.lastExpandable { background-image: url(treeview-default.png); }  
-.treeview li.lastCollapsable { background-position: 0 -111px }
-.treeview li.lastExpandable { background-position: -32px -67px }
-
-.treeview div.lastCollapsable-hitarea, .treeview div.lastExpandable-hitarea { background-position: 0; }
-
-.treeview-red li { background-image: url(treeview-red-line.gif); }
-.treeview-red .hitarea, .treeview-red li.lastCollapsable, .treeview-red li.lastExpandable { background-image: url(treeview-red.gif); } 
-
-.treeview-black li { background-image: url(treeview-black-line.gif); }
-.treeview-black .hitarea, .treeview-black li.lastCollapsable, .treeview-black li.lastExpandable { background-image: url(treeview-black.gif); }  
-
-.treeview-gray li { background-image: url(treeview-gray-line.gif); }
-.treeview-gray .hitarea, .treeview-gray li.lastCollapsable, .treeview-gray li.lastExpandable { background-image: url(treeview-gray.gif); } 
-
-.treeview-famfamfam li { background-image: url(treeview-famfamfam-line.gif); }
-.treeview-famfamfam .hitarea, .treeview-famfamfam li.lastCollapsable, .treeview-famfamfam li.lastExpandable { background-image: url(treeview-famfamfam.gif); } 
-
-.treeview .placeholder {
-	background: url(ajax-loader.gif) 0 0 no-repeat;
-	height: 16px;
-	width: 16px;
-	display: block;
+#treecontrol
+{
+    margin: 1em 0;
+    display: none;
 }
 
-.filetree li { padding: 3px 0 2px 16px; }
-.filetree span.folder, .filetree span.file { padding: 1px 0 1px 16px; display: block; }
-.filetree span.folder { background: url(folder.gif) 0 0 no-repeat; }
-.filetree li.expandable span.folder { background: url(folder-closed.gif) 0 0 no-repeat; }
-.filetree span.file { background: url(file.gif) 0 0 no-repeat; }
+.treeview .hover
+{
+    cursor: pointer;
+}
+
+.treeview li
+{
+    background: url(treeview-default-line.gif) 0 0 no-repeat;
+}
+.treeview li.collapsable, .treeview li.expandable
+{
+    background-position: 0 -176px;
+}
+
+.treeview .expandable-hitarea
+{
+    background-position: -80px -3px;
+}
+
+.treeview li.last
+{
+    background-position: 0 -1766px;
+}
+.treeview li.lastCollapsable, .treeview li.lastExpandable
+{
+    background-image: url(treeview-default.png);
+}
+.treeview li.lastCollapsable
+{
+    background-position: 0 -111px;
+}
+.treeview li.lastExpandable
+{
+    background-position: -32px -67px;
+}
+
+.treeview div.lastCollapsable-hitarea, .treeview div.lastExpandable-hitarea
+{
+    background-position: 0;
+}
+
+.treeview-red li
+{
+    background-image: url(treeview-red-line.gif);
+}
+.treeview-red .hitarea, .treeview-red li.lastCollapsable, .treeview-red li.lastExpandable
+{
+    background-image: url(treeview-red.gif);
+}
+
+.treeview-black li
+{
+    background-image: url(treeview-black-line.gif);
+}
+.treeview-black .hitarea, .treeview-black li.lastCollapsable, .treeview-black li.lastExpandable
+{
+    background-image: url(treeview-black.gif);
+}
+
+.treeview-gray li
+{
+    background-image: url(treeview-gray-line.gif);
+}
+.treeview-gray .hitarea, .treeview-gray li.lastCollapsable, .treeview-gray li.lastExpandable
+{
+    background-image: url(treeview-gray.gif);
+}
+
+.treeview-famfamfam li
+{
+    background-image: url(treeview-famfamfam-line.gif);
+}
+.treeview-famfamfam .hitarea, .treeview-famfamfam li.lastCollapsable, .treeview-famfamfam li.lastExpandable
+{
+    background-image: url(treeview-famfamfam.gif);
+}
+
+.treeview .placeholder
+{
+    background: url(ajax-loader.gif) 0 0 no-repeat;
+    height: 16px;
+    width: 16px;
+    display: block;
+}
+
+.filetree li
+{
+    padding: 3px 0 2px 16px;
+}
+.filetree span.folder, .filetree span.file
+{
+    padding: 1px 0 1px 16px;
+    display: block;
+}
+.filetree span.folder
+{
+    background: url(folder.gif) 0 0 no-repeat;
+}
+.filetree li.expandable span.folder
+{
+    background: url(folder-closed.gif) 0 0 no-repeat;
+}
+.filetree span.file
+{
+    background: url(file.gif) 0 0 no-repeat;
+}
+
+
+#container
+{
+    position: relative;
+    width: 1100px;
+    margin: 0 auto 25px;
+    padding-bottom: 10px;
+}
+.grid
+{
+    width: 188px;
+    min-height: 100px;
+    padding: 0px;
+    background: #fff;
+    margin: 8px;
+    font-size: 12px;
+    float: left;
+    box-shadow: 0 1px 3px rgba(34,25,25,0.4);
+    -moz-box-shadow: 0 1px 3px rgba(34,25,25,0.4);
+    -webkit-box-shadow: 0 1px 3px rgba(34,25,25,0.4);
+    -webkit-transition: top 1s ease, left 1s ease;
+    -moz-transition: top 1s ease, left 1s ease;
+    -o-transition: top 1s ease, left 1s ease;
+    -ms-transition: top 1s ease, left 1s ease;
+}
+
+.grid > span
+{
+    display: block;
+    width: 100%;
+    background-color: #00aec8;
+    line-height: 36px;
+}
+
+.grid > span > input
+{
+    margin-left: 15px;
+}
+
+.grid > ul
+{
+    margin: 3px 15px 15px 15px;
+}
+
+.grid strong
+{
+    border-bottom: 1px solid #ccc;
+    margin: 10px 0;
+    display: block;
+    padding: 0 0 5px;
+    font-size: 17px;
+}
+/**Ò»Á÷ËØ²ÄÍøwww.16sucai.com**/
+.grid .meta
+{
+    text-align: right;
+    color: #777;
+    font-style: italic;
+}
+.grid .imgholder img
+{
+    max-width: 100%;
+    background: #ccc;
+    display: block;
+}

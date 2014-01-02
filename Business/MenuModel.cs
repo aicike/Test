@@ -30,11 +30,11 @@ namespace Business
         /// <param name="systemUserRoleID"></param>
         /// <param name="parentSystemUserMenuID"></param>
         /// <returns></returns>
-        public List<Menu> GetMenuByRoleID(int roleID, int? parentMenuID = null)
+        public List<Menu> GetMenuByRoleID(List<int> roleIDs, int? parentMenuID = null)
         {
             List<Menu> list = List_Cache();
             list = list.Where(a => a.RoleMenus.Any(b => b.SystemStatus == (int)EnumSystemStatus.Active &&
-               b.RoleID == roleID) && a.ParentMenuID == parentMenuID).OrderBy(a => a.Order).ToList();
+              roleIDs.Contains(b.RoleID)) && a.ParentMenuID == parentMenuID).OrderBy(a => a.Order).ToList();
             return list;
         }
 
@@ -52,19 +52,19 @@ namespace Business
             return list;
         }
 
-        public bool CheckHasPermissions(int roleID, string action, string controller, string area)
+        public bool CheckHasPermissions(List<int> roleID, string action, string controller, string area)
         {
             //判断有没有权限操作当前菜单(Contorller)
             IRoleMenuModel roleMenuModel = Factory.Get<IRoleMenuModel>(SystemConst.IOC_Model.RoleMenuModel);
-            var menu = roleMenuModel.List_Cache().Where(a => a.RoleID == roleID &&
+            var menu = roleMenuModel.List_Cache().Where(a => roleID.Contains(a.RoleID) &&
                                                        ((area != null && a.Menu.Area.Equals(area, StringComparison.CurrentCultureIgnoreCase)) || (area == null && a.Menu.Area == null)) &&
-                                                       a.Menu.Controller.Equals(controller, StringComparison.CurrentCultureIgnoreCase)).Select(a => a.Menu).FirstOrDefault();
+                                                       (a.Menu.Controller != null && a.Menu.Controller.Equals(controller, StringComparison.CurrentCultureIgnoreCase))).Select(a => a.Menu).FirstOrDefault();
 
             if (menu == null) { return false; }
 
             //判断有没有权限操作当前功能(Action)
             IRoleOptionModel roleOptionModel = Factory.Get<IRoleOptionModel>(SystemConst.IOC_Model.RoleOptionModel);
-            var result = roleOptionModel.List_Cache().Any(a => a.RoleID == roleID &&
+            var result = roleOptionModel.List_Cache().Any(a => roleID.Contains(a.RoleID) &&
                                                          a.MenuOption.MenuID == menu.ID &&
                                                          a.MenuOption.Action.Equals(action, StringComparison.CurrentCultureIgnoreCase));
             return result;

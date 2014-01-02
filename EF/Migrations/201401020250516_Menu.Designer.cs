@@ -5,13 +5,13 @@ namespace EF.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    public sealed partial class initial : IMigrationMetadata
+    public sealed partial class Menu : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(initial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Menu));
         
         string IMigrationMetadata.Id
         {
-            get { return "201312160603536_initial"; }
+            get { return "201401020250516_Menu"; }
         }
         
         string IMigrationMetadata.Source

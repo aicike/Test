@@ -15,6 +15,19 @@
         var stick = @ViewBag.stick
         var Cnt = 0;
         var UpImgUrl = '@Url.Action("UpImg", "AppAdvertorial", new { HostName = ViewBag.HostName })';
+         window.UEDITOR_HOME_URL = "/ueditor/";
+            //实例化编辑器
+            var options = {
+                initialFrameWidth: '100%',
+                initialFrameHeight: 300,
+                imageUrl: UEDITOR_HOME_URL + "net/imageUp_Advertorial.ashx",
+                imagePath: "",
+                imageManagerUrl: UEDITOR_HOME_URL + "net/imageManager_LibraryImageText.ashx",
+                imageManagerPath: "",
+                initialContent: ""
+            };
+
+             var ue;
         $(function () {
 
             
@@ -22,8 +35,9 @@
                 height: 30,
                 swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
                 uploader: UpImgUrl,
-                width: 64,
+                width: 70,
                 fileSizeLimit: '5MB',
+                buttonText: '选择图片',
                 multi: false,
                 fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
                 onUploadSuccess: function (file, data, response) {
@@ -85,19 +99,8 @@
             var imgpath = $("#MainImagPath").val();
             $("#imgHousType").attr("src", "http://"+imgpath);
 
-            window.UEDITOR_HOME_URL = "/ueditor/";
-            //实例化编辑器
-            var options = {
-                initialFrameWidth: '100%',
-                initialFrameHeight: 300,
-                imageUrl: UEDITOR_HOME_URL + "net/imageUp_Advertorial.ashx",
-                imagePath: "",
-                imageManagerUrl: UEDITOR_HOME_URL + "net/imageManager_LibraryImageText.ashx",
-                imageManagerPath: "",
-                initialContent: ""
-            };
+           
 
-            var ue = UE.getEditor('editor', options);
 
 
 
@@ -135,81 +138,81 @@
             };
 
 
-            $("#HousShowImagePathFile").live("change", function () { 
+//            $("#HousShowImagePathFile").live("change", function () { 
 
-                var fileCNT = (this.files[0].size / 1024).toFixed(2);
-                if (fileCNT > 5120) {
-                    JAlert({
-                        Message: "最大只能上传5MB大小的图片！",
-                        DialogType: "Ok",
-                        BtnOk: "确定"
-                    });
-
-
-                    var afile = $("#HousShowImagePathFile");
-
-                    afile.after(afile.clone().val(""));
-                    afile.remove();
-                    return;
-                }
-
-                var fileName = $("#HousShowImagePathFile").val();
-                $("#MainImagPath").val(fileName);
-                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
-                $("span[data-valmsg-for='MainImagPath']").empty().attr("class", "field-validation-valid");
-                switch (suffix) {
-                    case ".jpg":
-                    case ".jpeg":
-                    case ".png":
-                    case ".gif":
-                    case ".bmp":
-                        break;
-                    default:
-                        $("span[data-valmsg-for='MainImagPath']").text("支持下列图片格式：.jpg|.jpeg|.png|.gif|.bmp").attr("class", "field-validation-error");
-                        break;
-                }
-                var input = this;
-                if (input.files && input.files[0]) {
-                 ShowLayout_Later("请稍后", "请稍后，正在努力为您加载图片...");
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                     CloseLayout_Later();
-                        if (Cnt > 0) {
-                            jcrop_api.destroy();
-                            $('#x1').val("0");
-                            $('#y1').val("0");
-                            $('#w').val("0");
-                            $('#h').val("0");
-                            $('#tw').val("0");
-                            $('#th').val("0");
-                        }
-                        $("#imgSel").attr('src', e.target.result);
-                        $("#imgLogo").attr('src', e.target.result);
-                        $("#imgLogo2").attr('src', e.target.result);
+//                var fileCNT = (this.files[0].size / 1024).toFixed(2);
+//                if (fileCNT > 5120) {
+//                    JAlert({
+//                        Message: "最大只能上传5MB大小的图片！",
+//                        DialogType: "Ok",
+//                        BtnOk: "确定"
+//                    });
 
 
+//                    var afile = $("#HousShowImagePathFile");
 
-                        $('#imgSel').Jcrop({
-                            onChange: updatePreview,
-                            onSelect: updatePreview,
-                            aspectRatio: 2
-                        }, function () {
-                            // Use the API to get the real image size
-                            var bounds = this.getBounds();
-                            boundx = bounds[0];
-                            boundy = bounds[1];
-                            // Store the API in the jcrop_api variable
-                            jcrop_api = this;
-                        });
-                        Cnt = 1;
+//                    afile.after(afile.clone().val(""));
+//                    afile.remove();
+//                    return;
+//                }
+
+//                var fileName = $("#HousShowImagePathFile").val();
+//                $("#MainImagPath").val(fileName);
+//                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+//                $("span[data-valmsg-for='MainImagPath']").empty().attr("class", "field-validation-valid");
+//                switch (suffix) {
+//                    case ".jpg":
+//                    case ".jpeg":
+//                    case ".png":
+//                    case ".gif":
+//                    case ".bmp":
+//                        break;
+//                    default:
+//                        $("span[data-valmsg-for='MainImagPath']").text("支持下列图片格式：.jpg|.jpeg|.png|.gif|.bmp").attr("class", "field-validation-error");
+//                        break;
+//                }
+//                var input = this;
+//                if (input.files && input.files[0]) {
+//                 ShowLayout_Later("请稍后", "请稍后，正在努力为您加载图片...");
+//                    var reader = new FileReader();
+//                    reader.onload = function (e) {
+//                     CloseLayout_Later();
+//                        if (Cnt > 0) {
+//                            jcrop_api.destroy();
+//                            $('#x1').val("0");
+//                            $('#y1').val("0");
+//                            $('#w').val("0");
+//                            $('#h').val("0");
+//                            $('#tw').val("0");
+//                            $('#th').val("0");
+//                        }
+//                        $("#imgSel").attr('src', e.target.result);
+//                        $("#imgLogo").attr('src', e.target.result);
+//                        $("#imgLogo2").attr('src', e.target.result);
 
 
 
-                    };
-                    reader.readAsDataURL(input.files[0]);
-                }
-                return false;
-            });
+//                        $('#imgSel').Jcrop({
+//                            onChange: updatePreview,
+//                            onSelect: updatePreview,
+//                            aspectRatio: 2
+//                        }, function () {
+//                            // Use the API to get the real image size
+//                            var bounds = this.getBounds();
+//                            boundx = bounds[0];
+//                            boundy = bounds[1];
+//                            // Store the API in the jcrop_api variable
+//                            jcrop_api = this;
+//                        });
+//                        Cnt = 1;
+
+
+
+//                    };
+//                    reader.readAsDataURL(input.files[0]);
+//                }
+//                return false;
+//            });
 
 
 
@@ -225,17 +228,13 @@
 
             
             $("#btnSubmit").click(function () {
-               var pathFile= $('#HousShowImagePathFile').val();
-                if(pathFile!=undefined&&pathFile!="")
-                {
-            
+                 if (Cnt > 0) {
                    if ($("#w").val() == "0") {
                         JAlert({
                             Message: "请选择App列表展示区域！",
                             DialogType: "Ok",
                             BtnOk: "确定"
                         });
-                        alert("asdf");
                         return false;
                     }
                 }
@@ -248,17 +247,56 @@
                     return false;
                 }
 
-                if (ue.getContent().length == 0) {
-                    JAlert({
-                        Message: "正文不能为空！",
-                        DialogType: "Ok",
-                        BtnOk: "确定"
-                    });
-                    return false;
+               
+                var atype = $("#AType").val();
+                //复文本
+                if (atype == 0) {
+                    if (ue.getContent().length == 0) {
+                        JAlert({
+                            Message: "正文不能为空！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return false;
+                    }
+                }
+                //url
+                else {
+                    var urldz = $("#ContentURL").val();
+                    if (urldz == "" || urldz == undefined) {
+                        JAlert({
+                            Message: "Url地址不能为空！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return false;
+                    }
                 }
 
 
             });
+
+            var atype ='@Model.EnumAdverTorialType'
+            $("#AType").val(atype);
+            
+            //复文本
+            if (atype == 0) {
+                $("#zw").show();
+                $("#dz").hide();
+                
+                ue = UE.getEditor('editor', options);
+//                UE.getEditor('editor').setShow();//显示编辑器
+
+            }
+            //url
+            else {
+                $("#zw").hide();
+                $("#dz").show();
+//                UE.getEditor('editor').setHide();//隐藏编辑器
+            }
+
+           
+            
 
 
 
@@ -269,8 +307,9 @@
         var iscansub = 0;
         function chickStick(ID) {
             if ($("#stick").val() == 1) {
+                var ID= $("#ID").val()
                 var Url = '@Url.Action("chickUpdStick", "AppAdvertorial")';
-                $.post(Url, { ID: ID }, function (result) {
+                $.post(Url, { ID:ID }, function (result) {
 
                     if (result == "No") {
                         JAlert({
@@ -296,6 +335,25 @@
             }
         });
 
+
+         function ClickType()
+        {
+            var atype = $("#AType").val();
+            //复文本
+            if (atype == 0) {
+                $("#zw").show();
+                $("#dz").hide()
+                
+                  ue = UE.getEditor('editor', options);
+
+            }
+            //url
+            else {
+                $("#zw").hide();
+                $("#dz").show();
+                
+            }
+        }
       
     </script>
     <style type="text/css">
@@ -317,7 +375,9 @@
     <ul class="ulList">
         <li>@Html.ActionLink("个人信息", "Index", "Set", new { HostName = ViewBag.HostName }, null, true)</li>
         <li>@Html.ActionLink("基础设置", "Index", "BasisSet", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("调查问卷", "IndexMain", "SurveyMain", new { HostName = ViewBag.HostName }, null, true)</li>
         <li class="select">@Html.ActionLink("App动态软文", "Index", "AppAdvertorial", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("App销售端软文", "Index", "AppAdvertorialAccount", new { HostName = ViewBag.HostName }, null, true)</li>
         <li>@Html.ActionLink("App等待画面", "Index", "AppWaitImg", new { HostName = ViewBag.HostName }, null, true)</li>
         <li>@Html.ActionLink("关键词自动回复", "Index", "KeywordMessage", new { HostName = ViewBag.HostName }, null, true)</li>
         <li>@Html.ActionLink("安装App自动回复", "Index", "InstallAppReply", new { HostName = ViewBag.HostName }, null, true)</li>
@@ -424,11 +484,33 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 软文类型
+                    </td>
+                    <td class="tdField">
+                        <select id="AType" onchange="ClickType()" name="AType" style="width: 100px">
+                            <option value="0">复文本</option>
+                            <option value="1">Url地址</option>
+                        </select>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr id="zw">
                     <td class="tdTitle" valign="top">
                         <span class="Identification">*</span> 正文
                     </td>
                     <td colspan="2" class="tdField">
                         <script type="text/plain" id="editor" height="300px" name="Content">@Html.Raw(Model.Content)</script>
+                    </td>
+                </tr>
+                <tr id="dz">
+                    <td class="tdTitle" valign="top">
+                        <span class="Identification">*</span> Url地址
+                    </td>
+                    <td colspan="2" class="tdField">
+                        <input type="text" id="ContentURL" name="ContentURL" value="@Model.ContentURL"/>
+                        (格式：http://imtimely.com)
                     </td>
                 </tr>
             </table>

@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Poco
 {
+    [Serializable]
     public class Account_Role : IBaseEntity
     {
         public int ID { get; set; }

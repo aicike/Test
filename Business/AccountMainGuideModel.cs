@@ -6,6 +6,7 @@ using System.Data;
 using Injection;
 using Interface;
 using Poco;
+using Poco.Enum;
 
 namespace Business
 {
@@ -117,7 +118,7 @@ namespace Business
             //}
             //是否设置App软文
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var AppAdvertorial = AppAdvertorialModel.GetList(AccountMainID);
+            var AppAdvertorial = AppAdvertorialModel.GetList(AccountMainID, (int)EnumAdvertorialUType.UserEnd);
             if (AppAdvertorial != null)
             {
                 if (AppAdvertorial.Count() > 0)

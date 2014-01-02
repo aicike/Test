@@ -9,9 +9,9 @@ namespace Interface
 {
     public interface IAccount_AccountMainModel : IBaseModel<Account_AccountMain>
     {
-        Result Add(Account_AccountMain account_accountMain, HttpPostedFileBase HeadImagePathFile);
-        Result Add(Account_AccountMain account_accountMain, HttpPostedFileBase HeadImagePathFile, int w, int h, int x1, int y1, int tw, int th);
-        Result Add(Account_AccountMain account_accountMain,int w, int h, int x1, int y1, int tw, int th);
+        Result Add(Account_AccountMain account_accountMain, List<int> roleID, HttpPostedFileBase HeadImagePathFile);
+        Result Add(Account_AccountMain account_accountMain, List<int> roleID, HttpPostedFileBase HeadImagePathFile, int w, int h, int x1, int y1, int tw, int th);
+        Result Add(Account_AccountMain account_accountMain, List<int> roleID, int w, int h, int x1, int y1, int tw, int th);
 
 
 

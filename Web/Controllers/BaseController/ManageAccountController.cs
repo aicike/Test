@@ -62,7 +62,7 @@ namespace Controllers
             if (isCheckPermissions)
             {
                 var menuModel = Factory.Get<IMenuModel>(SystemConst.IOC_Model.MenuModel);
-                menuModel.CheckHasPermissions(LoginAccount.RoleID, action, controller, area).NotAuthorizedPage();
+                menuModel.CheckHasPermissions(LoginAccount.RoleIDs, action, controller, area).NotAuthorizedPage();
             }
 
             //上一次请求信息

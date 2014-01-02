@@ -45,7 +45,7 @@ namespace System.Web.Mvc.Html
             if (loginAccount != null)
             {
                 var menuModel = Factory.Get<IMenuModel>(SystemConst.IOC_Model.MenuModel);
-                return menuModel.CheckHasPermissions(loginAccount.RoleID, action, controller, area);
+                return menuModel.CheckHasPermissions(loginAccount.RoleIDs, action, controller, area);
             }
             return false;
         }

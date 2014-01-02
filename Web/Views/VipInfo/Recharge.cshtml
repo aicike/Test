@@ -19,7 +19,7 @@
         });
 
         function CheckID() {
-            var vid = $("#UserID").val();
+            var vid = $("#CardID").val();
             var money = $("#Balance").val();
             if (vid == "" || vid == undefined) {
                 JAlert({
@@ -89,9 +89,7 @@
                         $("#Uname").text(result.UserName);
                         $("#Uphone").text(result.UserPhone);
                         $("#CardID").val(result.CardID);
-                        $("#UserID").val(result.UserID);
-
-
+                        
 
                     }
                 }, "json");
@@ -154,8 +152,8 @@
                     </td>
                     <td class="tdField">
                         <label id="Uname"> </label>
+                        
                         <input id="CardID" type="hidden" name="CardID" />
-                        <input id="UserID" type="hidden" name="UserID" />
                     </td>
                 </tr>
                 <tr>

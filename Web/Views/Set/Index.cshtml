@@ -31,8 +31,9 @@
                 height: 30,
                 swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
                 uploader: UpImgUrl,
-                width: 64,
+                width: 70,
                 fileSizeLimit: '5MB',
+                buttonText :'选择图片',
                 multi: false,
                 fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
                 onUploadSuccess: function (file, data, response) {
@@ -265,7 +266,9 @@
     <ul class="ulList">
         <li class="select">@Html.ActionLink("个人信息", "Index", "Set", new { HostName = ViewBag.HostName }, null, true)</li>
         <li>@Html.ActionLink("基础设置", "Index", "BasisSet", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("调查问卷", "IndexMain", "SurveyMain", new { HostName = ViewBag.HostName }, null, true)</li>
         <li>@Html.ActionLink("App动态软文", "Index", "AppAdvertorial", new { HostName = ViewBag.HostName }, null, true)</li>
+        <li>@Html.ActionLink("App销售端软文", "Index", "AppAdvertorialAccount", new { HostName = ViewBag.HostName }, null, true)</li>
         <li>@Html.ActionLink("App等待画面", "Index", "AppWaitImg", new { HostName = ViewBag.HostName }, null, true)</li>
         <li>@Html.ActionLink("关键词自动回复", "Index", "KeywordMessage", new { HostName = ViewBag.HostName }, null, true)</li>
         <li>@Html.ActionLink("安装App自动回复", "Index", "InstallAppReply", new { HostName = ViewBag.HostName }, null, true)</li>
@@ -354,7 +357,7 @@
                     <td class="tdTitle">
                         名称
                     </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.ID)@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.IsActivated)@Html.HiddenFor(a => a.RoleID)
+                    <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.ID)@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.IsActivated)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Name)
                         <div style="display: none">@Html.ValidationSummary()</div>

@@ -11,6 +11,7 @@ using Common;
 using Business;
 using System.IO;
 using System.Drawing;
+using Poco.Enum;
 
 namespace Web.Controllers
 {
@@ -24,7 +25,7 @@ namespace Web.Controllers
             ViewBag.HostName = LoginAccount.HostName;
 
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 15);
+            var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd).ToPagedList(id ?? 1, 15);
 
 
             string WebTitleRemark = SystemConst.WebTitleRemark;
@@ -45,17 +46,26 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Add(AppAdvertorial appAdver, int w, int h, int x1, int y1, int tw, int th)
+        public ActionResult Add(AppAdvertorial appAdver, int AType, int w, int h, int x1, int y1, int tw, int th)
         {
             if (w <= 0)
             {
                 return JavaScript(AlertJS_NoTag(new Dialog("请在图片上选择展示区域")));
             }
+            if (AType == (int)EnumAdverTorialType.txt)
+            {
+                appAdver.ContentURL = "http://";
+            }
+            else{
+                appAdver.Content = "";
+            }
+            appAdver.EnumAdverTorialType = AType;
             appAdver.AccountMainID = LoginAccount.CurrentAccountMainID;
             appAdver.Sort = 0;
             appAdver.IssueDate = DateTime.Now;
+            appAdver.EnumAdvertorialUType= (int)EnumAdvertorialUType.UserEnd;
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            Result result = AppAdvertorialModel.AddAppAdvertorial(appAdver,w,h,x1,y1,tw,th);
+            Result result = AppAdvertorialModel.AddAppAdvertorial(appAdver, w, h, x1, y1, tw, th);
           
 
             return RedirectToAction("Index", "AppAdvertorial");
@@ -77,7 +87,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(AppAdvertorial appadver, int w, int h, int x1, int y1, int tw, int th)
+        public ActionResult Edit(AppAdvertorial appadver, int AType, int w, int h, int x1, int y1, int tw, int th)
         {
             //if (HousShowImagePathFile != null)
             //{
@@ -96,7 +106,16 @@ namespace Web.Controllers
                     return JavaScript(AlertJS_NoTag(new Dialog("请在图片上选择展示区域")));
                 }
             }
-
+            if (AType == (int)EnumAdverTorialType.txt)
+            {
+                appadver.ContentURL = "http://";
+            }
+            else
+            {
+                appadver.Content = "";
+            }
+            appadver.EnumAdverTorialType = AType;
+            appadver.EnumAdvertorialUType = (int)EnumAdvertorialUType.UserEnd;
             Result result = AppAdvertorialModel.EditAppAdvertorial(appadver, w, h, x1, y1, tw, th);
             if (result.HasError)
             {
@@ -108,7 +127,7 @@ namespace Web.Controllers
         public ActionResult Delete(int id)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var result = AppAdvertorialModel.DelAppAdvertorial(id);
+            var result = AppAdvertorialModel.DelAppAdvertorial(id, (int)EnumAdvertorialUType.UserEnd);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));
@@ -123,7 +142,7 @@ namespace Web.Controllers
         public string chickStick(int ID)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var AppAdvertorial = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID);
+            var AppAdvertorial = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd);
             if (AppAdvertorial.Where(a => a.stick == 1).Count() >= 5)
             {
                 return "No";
@@ -134,13 +153,14 @@ namespace Web.Controllers
             }
             
         }
+       
         //校验修改是否可以置顶
         [HttpPost]
         [AllowCheckPermissions(false)]
         public string chickUpdStick(int ID)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var AppAdvertorial = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID);
+            var AppAdvertorial = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd);
             if (AppAdvertorial.Where(a => a.stick == 1&&a.ID!=ID).Count() >= 5)
             {
                 return "No";
@@ -159,7 +179,7 @@ namespace Web.Controllers
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
 
-            AppAdvertorialModel.EditAppAdvertorialStick(AdvertorialID, isok,LoginAccount.CurrentAccountMainID,Sort);
+            AppAdvertorialModel.EditAppAdvertorialStick(AdvertorialID, isok, LoginAccount.CurrentAccountMainID, Sort, (int)EnumAdvertorialUType.UserEnd);
 
             return RedirectToAction("Index", "AppAdvertorial", new { HostName = LoginAccount.HostName });
         }
@@ -171,7 +191,7 @@ namespace Web.Controllers
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
 
-            AppAdvertorialModel.EditAppAdvertorialSort(AdvertorialID, LoginAccount.CurrentAccountMainID, Sort, Type);
+            AppAdvertorialModel.EditAppAdvertorialSort(AdvertorialID, LoginAccount.CurrentAccountMainID, Sort, Type, (int)EnumAdvertorialUType.UserEnd);
 
             return RedirectToAction("Index", "AppAdvertorial", new { HostName = LoginAccount.HostName });
         }
@@ -181,7 +201,7 @@ namespace Web.Controllers
         public ActionResult Preview()
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID);
+            var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd);
             ViewBag.TitleImg = list.Where(a => a.stick == 1).ToPagedList(1, 5);
             ViewBag.ListImg = list.Where(a => a.stick == 0).ToPagedList(1, 5);
 
@@ -218,6 +238,7 @@ namespace Web.Controllers
                 return "false";
             }
         }
+
 
 
     }

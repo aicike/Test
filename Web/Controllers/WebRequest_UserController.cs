@@ -8,6 +8,8 @@ using Interface;
 using Poco;
 using Poco.WebAPI_Poco;
 using Common;
+using Poco.Enum;
+using Business;
 
 namespace Web.Controllers
 {
@@ -139,7 +141,7 @@ namespace Web.Controllers
                 HeadImagePath = a.HeadImagePath,
                 Email = a.Email,
                 Phone = a.Phone,
-                Role = a.Role.Name
+                Role = "销售代表"/*a.Role.Name*/
             }).ToList();
             foreach (var item in accountList)
             {
@@ -225,15 +227,31 @@ namespace Web.Controllers
             }
             var ulim = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
             var userLoginInfo = ulim.Get(user.UserLoginInfoID);
+            CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
             switch (field)
             {
                 case "name":
                     userLoginInfo.Name = value;
                     break;
                 case "phone":
+                    var isOk = model.CheckIsUnique("UserLoginInfo", "Phone", value, userLoginInfo.ID);
+                    if (isOk == false)
+                    {
+                        result.Error = "该电话已被其他账号使用。";
+                        result.HasError = true;
+                        return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+                    }
+
                     userLoginInfo.Phone = value;
                     break;
                 case "email":
+                    var EmailisOk = model.CheckIsUnique("UserLoginInfo", "Email", value, userLoginInfo.ID);
+                    if (EmailisOk == false)
+                    {
+                        result.Error = "该邮箱已被其他账号使用。";
+                        result.HasError = true;
+                        return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+                    }
                     userLoginInfo.Email = value;
                     break;
                 case "pwd":
@@ -333,7 +351,7 @@ namespace Web.Controllers
                 entity.UserName = vipinfo.User.UserLoginInfo.Name;
                 entity.UserPhone = vipinfo.User.UserLoginInfo.Phone;
                 entity.CreateDate = vipinfo.CreateDate.ToString("yyyy-MM-dd");
-                entity.CardNumber = vipinfo.CardInfo.CardPrefix + "." + vipinfo.CardInfo.CardNum;
+                entity.CardNumber = vipinfo.CardInfo.CardPrefix.PrefixName + "." + vipinfo.CardInfo.CardNum;
                 result.Entity = entity;
 
             }
@@ -364,10 +382,11 @@ namespace Web.Controllers
             IVIPInfoExpenseDetailModel model = Factory.Get<IVIPInfoExpenseDetailModel>(SystemConst.IOC_Model.VIPInfoExpenseDetailModel);
             var list = model.GetByUserID(userID).ToList().Select(a => new App_VIPInfoExpenseDetail()
             {
-                ID=a.ID,
-                ExpenseDate=a.ExpenseDate.ToString("yyyy-MM-dd hh:mm:ss"),
-                ExpensePrice=a.ExpensePrice,
-                Balance=a.Balance
+                ID = a.ID,
+                ExpenseDate = a.ExpenseDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                ExpensePrice = a.ExpensePrice,
+                ExpenseType = a.EnumVIPOperate == (int)EnumVIPOperate.Consume ? "消费" : "充值"
+
             });
             return Newtonsoft.Json.JsonConvert.SerializeObject(list);
         }
@@ -392,7 +411,7 @@ namespace Web.Controllers
             {
                 string CardNum = cardStr[1];
                 string Prefix = cardStr[0];
-                int AccountMainID =int.Parse(cardStr[2]);
+                int AccountMainID = int.Parse(cardStr[2]);
 
                 var CardModel = Factory.Get<ICardInfoModel>(SystemConst.IOC_Model.CardInfoModel);
                 var vipModel = Factory.Get<IVipInfoModel>(SystemConst.IOC_Model.VipInfoModel);
@@ -418,7 +437,7 @@ namespace Web.Controllers
                         {
                             App_VIPInfo b_vip = new App_VIPInfo();
                             b_vip.ID = vipinfo.ID;
-                            b_vip.CardNumber = cardinfo.CardPrefix + "." + cardinfo.CardNum;
+                            b_vip.CardNumber = cardinfo.CardPrefix.PrefixName + "." + cardinfo.CardNum;
                             b_vip.Balance = cardinfo.Balance;
                             b_vip.UserID = vipinfo.UserID ?? 0;
                             b_vip.UserName = vipinfo.User.UserLoginInfo.Name;
@@ -450,10 +469,11 @@ namespace Web.Controllers
         /// <summary>
         /// 卡片消费
         /// </summary>
-        /// <param name="CardNums">卡好  前缀.号码.amid</param>
+        /// <param name="CardNums">卡号  前缀.号码.amid</param>
         /// <param name="Money">消费金额</param>
+        /// <param name="AccountID">当前销售人ID</param>
         /// <returns></returns>
-        public string CardConsumption( string CardNums, double Money)
+        public string CardConsumption(string CardNums, double Money, int AccountID)
         {
             Result result = new Result();
             var CardModel = Factory.Get<ICardInfoModel>(SystemConst.IOC_Model.CardInfoModel);
@@ -473,7 +493,7 @@ namespace Web.Controllers
             {
                 string CardNum = cardStr[1];
                 string Prefix = cardStr[0];
-                int AccountMainID =int.Parse(cardStr[2]);
+                int AccountMainID = int.Parse(cardStr[2]);
 
 
                 var cardinfo = CardModel.GetCardInfoBy(CardNum.Trim(), Prefix.Trim(), AccountMainID);
@@ -511,7 +531,7 @@ namespace Web.Controllers
                                 //b_vip.UserPhone = vipinfo.User.UserLoginInfo.Phone;
                                 //b_vip.CardID = cardinfo.ID;
 
-                                var res = CardModel.Consumption(Convert.ToDecimal(Money), cardinfo.ID, AccountMainID, vipinfo.UserID ?? 0, vipinfo.ID, (cardinfo.Balance - Convert.ToDecimal(Money)));
+                                var res = CardModel.Consumption(Convert.ToDecimal(Money), cardinfo.ID, AccountMainID, AccountID);
                                 if (res.HasError)
                                 {
                                     result.HasError = true;
@@ -522,7 +542,7 @@ namespace Web.Controllers
                                     App_VIPInfo appvip = new App_VIPInfo();
                                     appvip.Balance = cardinfo.Balance - Convert.ToDecimal(Money);
                                     appvip.UserID = vipinfo.UserID ?? 0;
-                                    appvip.CardNumber = cardinfo.CardPrefix + "." + cardinfo.CardNum;
+                                    appvip.CardNumber = cardinfo.CardPrefix.PrefixName + "." + cardinfo.CardNum;
                                     appvip.CreateDate = vipinfo.CreateDate.ToString("yyyy-MM-dd hh:mm");
                                     appvip.score = vipinfo.score;
                                     appvip.Status = cardinfo.Status == 0 ? "冻结" : "正常";
@@ -549,6 +569,93 @@ namespace Web.Controllers
         }
 
 
+        /// <summary>
+        /// 根据会员卡号回去用户信息
+        /// </summary>
+        /// <param name="CardNums"></param>
+        /// <returns></returns>
+        public string GetUserInfoByCardNums(string CardNums)
+        {
+            string cards = DESEncrypt.Decrypt(CardNums);
+            Result result = new Result();
+            string[] cardStr = cards.Split('.');
+            if (cardStr.Length != 3)
+            {
+                result.HasError = true;
+                result.Error = "该卡号无效！";
+            }
+            else
+            {
+                string CardNum = cardStr[1];
+                string Prefix = cardStr[0];
+                int AccountMainID = int.Parse(cardStr[2]);
 
+                var CardModel = Factory.Get<ICardInfoModel>(SystemConst.IOC_Model.CardInfoModel);
+                var vipModel = Factory.Get<IVipInfoModel>(SystemConst.IOC_Model.VipInfoModel);
+
+                var cardinfo = CardModel.GetCardInfoBy(CardNum.Trim(), Prefix.Trim(), AccountMainID);
+                if (cardinfo == null)
+                {
+                    result.HasError = true;
+                    result.Error = "该卡号无效！";
+                }
+                else
+                {
+                    var vipinfo = vipModel.GetInfoBYCardID(cardinfo.ID, AccountMainID);
+                    if (vipinfo != null)
+                    {
+                        string hostUrl = SystemConst.WebUrlIP;
+                        var UserID = vipinfo.UserID ?? 0;
+                        var UserModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+                        var user = UserModel.Get(UserID);
+                        App_User au = new App_User();
+                        au.Name = user.UserLoginInfo.Name;
+                        au.Phone = user.UserLoginInfo.Phone;
+                        if (user.SEX.HasValue)
+                        {
+                            if (user.SEX == 0)
+                            {
+                                au.SEX = "女";
+                            }
+                            else if (user.SEX == 1)
+                            {
+                                au.SEX = "男";
+                            }
+                        }
+                        else
+                        {
+                            au.SEX = "未填写";
+                        }
+                        au.Age = user.Age;
+                        au.Address = user.Address;
+                        au.IDCard = user.IDCard;
+                        au.Email = user.UserLoginInfo.Email;
+                        au.ID = user.ID;
+                        au.HeadImagePath = hostUrl + Url.Content(user.UserLoginInfo.HeadImagePath ?? "~/Images/default_avatar.png");
+                        result.Entity = au;
+                    }
+                    else
+                    {
+                        result.HasError = true;
+                        result.Error = "该卡还未绑定用户！";
+                    }
+
+                }
+            }
+
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+        /// <summary>
+        /// 字符串加密
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public string GetStrEncryption(string str)
+        {
+            string cards = DESEncrypt.Encrypt(str);
+            return cards;
+        }
     }
 }

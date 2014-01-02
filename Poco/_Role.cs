@@ -41,8 +41,6 @@ namespace Poco
 
         public virtual ICollection<Role> SubRoles { get; set; }
 
-        public virtual ICollection<Account> Accounts { get; set; }
-
         public virtual ICollection<RoleMenu> RoleMenus { get; set; }
 
         public virtual ICollection<RoleOption> RoleOptions { get; set; }

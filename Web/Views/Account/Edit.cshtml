@@ -3,6 +3,7 @@
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
     ViewBag.Menu = Poco.SystemConst.Menu.Account;
     var roleList = ViewBag.RoleList as List<Poco.Role>;
+    var roleids = ViewData["SelRoles"] as List<int>;
 }
 @section head{
     <script src="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.js")" type="text/javascript"></script>
@@ -65,8 +66,9 @@
                 height: 30,
                 swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
                 uploader: UpImgUrl,
-                width: 64,
+                width: 70,
                 fileSizeLimit: '5MB',
+                buttonText: '选择图片',
                 multi: false,
                 fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
                 onUploadSuccess: function (file, data, response) {
@@ -282,6 +284,20 @@
                         BtnOk: "确定"
                     });
                 }
+                var roleidlength = $(".checkbox_roleid:checked").length;
+                if (roleidlength == 0) {
+                    JAlert({
+                        Message: "请至少选择一项角色！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return false;
+                }
+                var roleid = "";
+                $(".checkbox_roleid:checked").each(function (i, n) {
+                    roleid += $(n).attr("value") + ",";
+                });
+                $("#roleIDs").val(roleid);
                 if(isTrue && isTruePhone)
                 {
                     return true;
@@ -453,15 +469,6 @@
                 </tr>
                 <tr>
                     <td>
-                        <span class="Identification">*</span> 邮箱
-                    </td>
-                    <td>@Html.TextBoxFor(a => a.Email, new { val = Model.ID })
-                    </td>
-                    <td>@Html.ValidationMessageFor(a => a.Email)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
                         <span class="Identification">*</span> 电话
                     </td>
                     <td>@Html.TextBoxFor(a => a.Phone)
@@ -473,10 +480,31 @@
                     <td>
                         <span class="Identification">*</span> 角色
                     </td>
-                    <td>@Html.DropDownListFor(a => a.RoleID, ViewData["Roles"] as List<SelectListItem>, new { })
+                    <td>
+                        @foreach (var item in ViewData["Roles"] as SelectList)
+                        {
+                            if (roleids.Contains(Convert.ToInt32(item.Value)))
+                            { 
+                            <input class="checkbox_roleid" type="checkbox" id="cb_role_@item.Value" value="@item.Value" checked="checked">
+                            }
+                            else
+                            { 
+                            <input class="checkbox_roleid" type="checkbox" id="cb_role_@item.Value" value="@item.Value">
+                            }
+                            <label for="cb_role_@item.Value" style="margin-right:10px">@item.Text</label>
+                        }
+                        <input type="hidden" name="roleIDs" id="roleIDs" />
                     </td>
                     <td id="tdRoleValidation">
-                        @Html.ValidationMessageFor(a => a.RoleID)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        邮箱
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.Email, new { val = Model.ID })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Email)
                     </td>
                 </tr>
                 <tr>
@@ -515,18 +543,18 @@
             <li>
                 <div class="ulUserTitle">@item.Name</div>
                 <div class="ulUserList">
-                    @foreach (var user in item.Accounts)
+                    @foreach (var user in item.Account_Roles)
                     {
-                        if (user.ID != Model.ID)
+                        if (user.Account.ID != Model.ID)
                         {
-                            if (Model.ParentAccountID.HasValue && Model.ParentAccountID.Value == user.ID)
+                            if (Model.ParentAccountID.HasValue && Model.ParentAccountID.Value == user.Account.ID)
                             { 
-                        <input type="radio" id="cb_@user.ID" value="@user.ID" name="parentAccount" nv="@user.Name" checked="checked" />
+                        <input type="radio" id="cb_@user.Account.ID" value="@user.Account.ID" name="parentAccount" nv="@user.Account.Name" checked="checked" />
                             }
                             else
                             { 
-                        <input type="radio" id="cb_@user.ID" value="@user.ID" name="parentAccount" nv="@user.Name" />
-                            }<label for="cb_@user.ID">@user.Name</label>
+                        <input type="radio" id="cb_@user.Account.ID" value="@user.Account.ID" name="parentAccount" nv="@user.Account.Name" />
+                            }<label for="cb_@user.Account.ID">@user.Account.Name</label>
                         }
                     }
                 </div>

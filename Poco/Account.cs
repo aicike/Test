@@ -51,16 +51,9 @@ namespace Poco
         public string HeadImagePath { get; set; }
 
         [Display(Name = "邮箱")]
-        [Required(ErrorMessage = "请输入邮箱")]
         [StringLength(50, ErrorMessage = "长度小于50")]
         [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "请输入有效的邮箱")]
-        [RemotePlus("CheckIsUniqueAccountEmail", "Ajax", "", "Default", ErrorMessage = "邮箱已存在")]
         public string Email { get; set; }
-
-        [Display(Name = "角色")]
-        [RegularExpression(@"\d+", ErrorMessage = "请选择角色")]
-        public int RoleID { get; set; }
-        public virtual Role Role { get; set; }
 
         /// <summary>
         /// 账号类型，启用禁用
@@ -82,13 +75,6 @@ namespace Poco
         public int? ParentAccountID { get; set; }
 
         public virtual Account ParentAccount { get; set; }
-
-
-
-
-
-
-
 
         /// <summary>
         /// 业务字段，不会在数据库中生成该字段
@@ -114,6 +100,11 @@ namespace Poco
         /// 业务字段，不会在数据库中生成该字段
         /// </summary>
         public string LogoThumbnailPath { get; set; }
+
+        /// <summary>
+        /// 业务字段，不会在数据库中生成该字段
+        /// </summary>
+        public List<int> RoleIDs { get; set; }
 
         public virtual ICollection<ActivateEmail> ActivateEmails { get; set; }
 
@@ -145,6 +136,7 @@ namespace Poco
 
         public virtual ICollection<TaskAccount> TaskAccounts { get; set; }
 
+        public virtual ICollection<SurveyMain> SurveyMain { get; set; }
         public virtual ICollection<Account_Role> Account_Roles { get; set; }
     }
 }

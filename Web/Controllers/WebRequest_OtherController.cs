@@ -145,7 +145,7 @@ namespace Web.Controllers
         public string GetAdvertorialList(int AMID, int ID, int ListCnt)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var list = AppAdvertorialModel.GetList(AMID);
+            var list = AppAdvertorialModel.GetList(AMID, (int)EnumAdvertorialUType.UserEnd);
             PagedList<AppAdvertorial> RtitleImg = null;
             PagedList<AppAdvertorial> RListImg = null;
             if (ID == 0)
@@ -201,7 +201,7 @@ namespace Web.Controllers
         public string GetAdvertorialInfo(int AMID, int ID)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var list = AppAdvertorialModel.GetList(AMID);
+            var list = AppAdvertorialModel.GetList(AMID, (int)EnumAdvertorialUType.UserEnd);
             var Info = list.Where(a => a.ID == ID).FirstOrDefault();
             _B_Advertorial ADVERTORIAL = new _B_Advertorial();
             ADVERTORIAL.I = Info.ID;
@@ -212,6 +212,89 @@ namespace Web.Controllers
 
             return Newtonsoft.Json.JsonConvert.SerializeObject(ADVERTORIAL);
         }
+
+
+
+        /// <summary>
+        ///  销售端获取软文显示列表
+        /// </summary>
+        /// <param name="AccountID">售楼部ID</param>
+        /// <param name="ID">显示开始ID 第一次打开传0</param>
+        /// <param name="ListCnt">返回列表的条数</param>
+        /// <returns></returns>
+        public string GetAdvertorialListForAccount(int AMID, int ID, int ListCnt)
+        {
+            var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
+            var list = AppAdvertorialModel.GetList(AMID, (int)EnumAdvertorialUType.AccountEnd);
+            PagedList<AppAdvertorial> RtitleImg = null;
+            PagedList<AppAdvertorial> RListImg = null;
+            if (ID == 0)
+            {
+                RtitleImg = list.Where(a => a.stick == 1).ToPagedList(1, 5);
+                RListImg = list.Where(a => a.stick == 0).ToPagedList(1, ListCnt);
+            }
+            else
+            {
+                RListImg = list.Where(a => a.stick == 0 && a.ID < ID).ToPagedList(1, ListCnt);
+            }
+
+
+
+            List<_B_Advertorial> TitleShow = new List<_B_Advertorial>();
+            if (RtitleImg != null)
+            {
+                foreach (var item in RtitleImg)
+                {
+                    _B_Advertorial ADVERTORIAL = new _B_Advertorial();
+                    ADVERTORIAL.I = item.ID;
+                    ADVERTORIAL.T = item.Title;
+                    ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
+                    TitleShow.Add(ADVERTORIAL);
+                }
+            }
+            List<_B_Advertorial> ListShow = new List<_B_Advertorial>();
+            if (RListImg != null)
+            {
+                foreach (var item in RListImg)
+                {
+                    _B_Advertorial ADVERTORIAL = new _B_Advertorial();
+                    ADVERTORIAL.I = item.ID;
+                    ADVERTORIAL.T = item.Title;
+                    ADVERTORIAL.P = item.Depict;
+                    ADVERTORIAL.D = item.IssueDate.ToString("yyyy-MM-dd");
+                    ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.MinImagePath ?? "");
+                    ListShow.Add(ADVERTORIAL);
+                }
+            }
+
+            var jsonStr = new { TitleImg = TitleShow, List = ListShow };
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(jsonStr);
+        }
+
+        /// <summary>
+        /// 销售端获取软文详细信息
+        /// </summary>
+        /// <param name="AccountID">售楼部ID</param>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public string GetAdvertorialInfoForAccount(int AMID, int ID)
+        {
+            var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
+            var list = AppAdvertorialModel.GetList(AMID, (int)EnumAdvertorialUType.AccountEnd);
+            var Info = list.Where(a => a.ID == ID).FirstOrDefault();
+            _B_Advertorial ADVERTORIAL = new _B_Advertorial();
+            ADVERTORIAL.I = Info.ID;
+            ADVERTORIAL.T = Info.Title;
+            ADVERTORIAL.D = Info.IssueDate.ToString("yyyy-MM-dd");
+            ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(Info.MainImagPath ?? "");
+            ADVERTORIAL.C = Info.Content;
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(ADVERTORIAL);
+        }
+
+
+
 
         /// <summary>
         /// 获取等待界面图片
@@ -256,6 +339,32 @@ namespace Web.Controllers
             var osType = (EnumClientSystemType)type;
             var versionInfo = accountMainModel.CheckAppSellVersion(osType, amid, version);
             return Newtonsoft.Json.JsonConvert.SerializeObject(versionInfo);
+        }
+
+        /// <summary>
+        /// 检查是否有相应的App权限
+        /// </summary>
+        /// <param name="menus">菜单对应的MenuID</param>
+        /// <param name="userType">用户类型 1销售，2用户</param>
+        /// /// <param name="userID">用户ID</param>
+        /// <returns></returns>
+        public string CheckAppPermission(string menuIDs, int userType, int userID)
+        {
+            Result result = new Result();
+            if (!string.IsNullOrEmpty(menuIDs))
+            {
+                var ids = menuIDs.ConvertToIntArray(',');
+                var ut = (EnumClientUserType)userType;//当前用户身份的类型
+                switch (ut)
+                {
+                    case EnumClientUserType.Account:
+                        var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
+                        var appmenus = accountModel.CheckAppPermission(ids.ToList(), userID);
+                        result.Entity = appmenus;
+                        break;
+                }
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
     }
 }

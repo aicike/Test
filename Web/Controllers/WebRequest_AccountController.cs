@@ -9,6 +9,7 @@ using Poco;
 using Poco.WebAPI_Poco;
 using Poco.Enum;
 using Common;
+using Business;
 
 namespace Web.Controllers
 {
@@ -93,15 +94,34 @@ namespace Web.Controllers
                 result.Error = "请求错误，账号不存在或不可用。";
                 return Newtonsoft.Json.JsonConvert.SerializeObject(result);
             }
+            CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
             switch (field)
             {
                 case "name":
                     account.Name = value;
                     break;
                 case "phone":
+
+                    var isOk = model.CheckIsUnique("Account", "Phone", value, aid);
+                    if (isOk == false)
+                    {
+                        result.Error = "该电话已被其他账号使用。";
+                        result.HasError = true;
+                        return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+                    }
+
+
                     account.Phone = value;
                     break;
                 case "email":
+
+                    var EmailisOk = model.CheckIsUnique("Account", "Email", value, aid);
+                    if (EmailisOk == false)
+                    {
+                        result.Error = "该电话已被其他账号使用。";
+                        result.HasError = true;
+                        return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+                    }
                     account.Email = value;
                     break;
                 case "pwd":
