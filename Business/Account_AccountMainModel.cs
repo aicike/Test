@@ -13,7 +13,7 @@ namespace Business
     public class Account_AccountMainModel : BaseModel<Account_AccountMain>, IAccount_AccountMainModel
     {
         [Transaction]
-        public Result Add(Account_AccountMain account_accountMain, System.Web.HttpPostedFileBase HeadImagePathFile)
+        public Result Add(Account_AccountMain account_accountMain, List<int> roleID, System.Web.HttpPostedFileBase HeadImagePathFile)
         {
             Result result = new Result();
             Account account = new Account();
@@ -24,7 +24,6 @@ namespace Business
             account.Phone = account_accountMain.Account.Phone;
             account.HeadImagePath = account_accountMain.Account.HeadImagePath;
             account.Email = account_accountMain.Account.Email;
-            account.RoleID = account_accountMain.Account.RoleID;
             account.AccountStatusID = account_accountMain.Account.AccountStatusID;
             account.IsActivated = account_accountMain.Account.IsActivated;
             if (account_accountMain.Account.ParentAccountID.HasValue && account_accountMain.Account.ParentAccountID.Value > 0)
@@ -32,7 +31,7 @@ namespace Business
                 account.ParentAccountID = account_accountMain.Account.ParentAccountID;
             }
             var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-            result = accountModel.Add(account, account_accountMain.AccountMainID, HeadImagePathFile);
+            result = accountModel.Add(account, account_accountMain.AccountMainID, roleID, HeadImagePathFile);
             if (result.HasError == false)
             {
                 Account_AccountMain entity = new Account_AccountMain();
@@ -56,7 +55,7 @@ namespace Business
             {
 
                 var accountIDs = List().Where(a => a.AccountMainID == accountMainID
-                    && (a.Account.Role.Token.Equals(SystemConst.Business.AccountAdmin) || a.Account.Role.ID == 1)
+                    && (a.Account.Account_Roles.Any(b => b.Role.Token.Equals(SystemConst.Business.AccountAdmin)) || a.Account.Account_Roles.Any(b => b.Role.ID == 1))
                     && a.Account.SystemStatus == (int)EnumSystemStatus.Active
                     && a.Account.AccountStatusID == accountStatusID
                     && a.Account.ID != accountID).Select(a => a.AccountID);
@@ -69,7 +68,7 @@ namespace Business
                     return false;
                 }
             }
-            return List().Any(a => a.AccountMainID == accountMainID && (a.Account.Role.Token.Equals(SystemConst.Business.AccountAdmin) || a.Account.Role.ID == 1) && a.Account.SystemStatus == (int)EnumSystemStatus.Active && a.Account.AccountStatusID == accountStatusID);
+            return List().Any(a => a.AccountMainID == accountMainID && (a.Account.Account_Roles.Any(b => b.Role.Token.Equals(SystemConst.Business.AccountAdmin)) || a.Account.Account_Roles.Any(b => b.Role.ID == 1)) && a.Account.SystemStatus == (int)EnumSystemStatus.Active && a.Account.AccountStatusID == accountStatusID);
         }
 
         public List<Account> GetAccountListByAccountMainID(int accountMainID)
@@ -79,13 +78,12 @@ namespace Business
                 a.Account.SystemStatus == (int)EnumSystemStatus.Active &&
                 a.Account.AccountStatus.Token.Equals(accountStatus) &&
                 a.AccountMain.AccountStatus.Token.Equals(accountStatus) &&
-                a.Account.Role.IsCanFindByUser.HasValue &&
-                a.Account.Role.IsCanFindByUser.Value)
+                a.Account.Account_Roles.Any(b => b.Role.IsCanFindByUser.Value == true))
                 .Select(a => a.Account).ToList();
         }
 
         [Transaction]
-        public Result Add(Account_AccountMain account_accountMain, System.Web.HttpPostedFileBase HeadImagePathFile, int w, int h, int x1, int y1, int tw, int th)
+        public Result Add(Account_AccountMain account_accountMain, List<int> roleID, System.Web.HttpPostedFileBase HeadImagePathFile, int w, int h, int x1, int y1, int tw, int th)
         {
             Result result = new Result();
             Account account = new Account();
@@ -96,7 +94,6 @@ namespace Business
             account.Phone = account_accountMain.Account.Phone;
             account.HeadImagePath = account_accountMain.Account.HeadImagePath;
             account.Email = account_accountMain.Account.Email;
-            account.RoleID = account_accountMain.Account.RoleID;
             account.AccountStatusID = account_accountMain.Account.AccountStatusID;
             account.IsActivated = account_accountMain.Account.IsActivated;
             if (account_accountMain.Account.ParentAccountID.HasValue && account_accountMain.Account.ParentAccountID.Value > 0)
@@ -104,7 +101,7 @@ namespace Business
                 account.ParentAccountID = account_accountMain.Account.ParentAccountID;
             }
             var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-            result = accountModel.Add(account, account_accountMain.AccountMainID, HeadImagePathFile, x1, y1, w, h, tw, th);
+            result = accountModel.Add(account, account_accountMain.AccountMainID, roleID, HeadImagePathFile, x1, y1, w, h, tw, th);
             if (result.HasError == false)
             {
                 Account_AccountMain entity = new Account_AccountMain();
@@ -122,7 +119,7 @@ namespace Business
 
 
         [Transaction]
-        public Result Add(Account_AccountMain account_accountMain, int w, int h, int x1, int y1, int tw, int th)
+        public Result Add(Account_AccountMain account_accountMain, List<int> roleID, int w, int h, int x1, int y1, int tw, int th)
         {
             Result result = new Result();
             Account account = new Account();
@@ -133,7 +130,6 @@ namespace Business
             account.Phone = account_accountMain.Account.Phone;
             account.HeadImagePath = account_accountMain.Account.HeadImagePath;
             account.Email = account_accountMain.Account.Email;
-            account.RoleID = account_accountMain.Account.RoleID;
             account.AccountStatusID = account_accountMain.Account.AccountStatusID;
             account.IsActivated = account_accountMain.Account.IsActivated;
             if (account_accountMain.Account.ParentAccountID.HasValue && account_accountMain.Account.ParentAccountID.Value > 0)
@@ -141,7 +137,7 @@ namespace Business
                 account.ParentAccountID = account_accountMain.Account.ParentAccountID;
             }
             var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-            result = accountModel.Add(account, account_accountMain.AccountMainID, x1, y1, w, h, tw, th);
+            result = accountModel.Add(account, account_accountMain.AccountMainID,roleID, x1, y1, w, h, tw, th);
             if (result.HasError == false)
             {
                 Account_AccountMain entity = new Account_AccountMain();

@@ -23,6 +23,9 @@ namespace Web.Controllers
 
         public ActionResult Index()
         {
+            //System.Uri uri = new System.Uri("http://baidu.com?id=1&name=2");
+            //System.UriBuilder b = new UriBuilder();
+            //UriComponents.
             return View();
         }
 

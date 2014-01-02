@@ -4,7 +4,7 @@
     ViewBag.Menu = Poco.SystemConst.Menu.AccountMainManage;
 }
 @section head{
-  <script src="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.js")" type="text/javascript"></script>
     <link href="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.css")" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         var isTrue = true;
@@ -194,11 +194,6 @@
             });
 
 
-
-
-
-
-
             $("#btnSubmit").click(function () {
                 if (!isTrue) {
                     JAlert({
@@ -214,6 +209,20 @@
                         BtnOk: "确定"
                     });
                 }
+                var roleidlength=  $(".checkbox_roleid:checked").length;
+                    if (roleidlength==0) {
+                    JAlert({
+                        Message: "请至少选择一项角色！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return false;
+                }
+                 var roleid="";
+               $(".checkbox_roleid:checked").each(function(i,n){
+                    roleid+=$(n).attr("value")+",";
+                });
+                $("#roleIDs").val(roleid);
                 if(isTrue && isTruePhone)
                 {
                     return true;
@@ -224,24 +233,9 @@
                 }
             });
 
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
         });
     </script>
-      <style type="text/css">
+    <style type="text/css">
         .middle-out
         {
             width: 320px;
@@ -312,7 +306,6 @@
         <fieldset>
             <legend>账号信息</legend>
             <table>
-               
                 <tr>
                     <td class="tdTitle">
                         名称
@@ -332,7 +325,6 @@
                     <td>@Html.ValidationMessageFor(a => a.Account.Email)
                     </td>
                 </tr>
-         
                 <tr>
                     <td>
                         电话
@@ -346,10 +338,14 @@
                     <td>
                         角色
                     </td>
-                    <td>@Html.DropDownListFor(a => a.Account.RoleID, ViewData["Roles"] as List<SelectListItem>, new { })
+                    <td>
+                        @foreach (var item in ViewData["Roles"] as SelectList)
+                        {
+                            <input class="checkbox_roleid" type="checkbox" id="cb_role_@item.Value" value="@item.Value"><label for="cb_role_@item.Value" style="margin-right:10px">@item.Text</label>
+                        }
+                        <input type="hidden" name="roleIDs" id="roleIDs" />
                     </td>
                     <td id="tdRoleValidation">
-                        @Html.ValidationMessageFor(a => a.Account.RoleID)
                     </td>
                 </tr>
             </table>

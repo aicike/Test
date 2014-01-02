@@ -344,5 +344,31 @@ namespace Web.Controllers
             var versionInfo = accountMainModel.CheckAppSellVersion(osType, amid, version);
             return Newtonsoft.Json.JsonConvert.SerializeObject(versionInfo);
         }
+
+        /// <summary>
+        /// 检查是否有相应的App权限
+        /// </summary>
+        /// <param name="menus">菜单对应的MenuID</param>
+        /// <param name="userType">用户类型 1销售，2用户</param>
+        /// /// <param name="userID">用户ID</param>
+        /// <returns></returns>
+        public string CheckAppPermission(string menuIDs, int userType, int userID)
+        {
+            Result result = new Result();
+            if (!string.IsNullOrEmpty(menuIDs))
+            {
+                var ids = menuIDs.ConvertToIntArray(',');
+                var ut = (EnumClientUserType)userType;//当前用户身份的类型
+                switch (ut)
+                {
+                    case EnumClientUserType.Account:
+                        var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
+                        var appmenus = accountModel.CheckAppPermission(ids.ToList(), userID);
+                        result.Entity = appmenus;
+                        break;
+                }
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
     }
 }

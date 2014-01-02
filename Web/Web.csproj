@@ -275,6 +275,7 @@
     <Content Include="Images\Unread.png" />
     <Content Include="Images\m1.png" />
     <Content Include="Images\up.png" />
+    <Content Include="Scripts\blocksit.js" />
     <Content Include="Scripts\Carousel\carousel.css" />
     <Content Include="Scripts\Carousel\carousel.js" />
     <Content Include="Scripts\Carousel\jquery.flexslider.js" />
@@ -932,17 +933,14 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>30062</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://192.168.1.138/</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://192.168.1.138/</IISAppRootUrl>
+          <IISUrl>http://192.168.1.166/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://192.168.1.166</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

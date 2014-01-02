@@ -300,6 +300,12 @@ namespace Business
             appuser.Phone = userLoginInfo.Phone == null ? "" : userLoginInfo.Phone;
             appuser.Email = userLoginInfo.Email == null ? "" : userLoginInfo.Email;
             appuser.NameNote = user.Name == null ? "" : user.Name;
+            appuser.Age = 0;
+            appuser.Address = "";
+            appuser.GN = "";
+            appuser.IDCard = "";
+            appuser.Pwd = "";
+            appuser.SEX = "";
             string headImg = null;
             if (string.IsNullOrEmpty(userLoginInfo.HeadImagePath) == false)
             {
@@ -382,6 +388,12 @@ namespace Business
             appuser.Phone = userLoginInfo.Phone == null ? "" : userLoginInfo.Phone;
             appuser.Email = userLoginInfo.Email == null ? "" : userLoginInfo.Email;
             appuser.NameNote = user.Name == null ? "" : user.Name;
+            appuser.Age = 0;
+            appuser.Address = "";
+            appuser.GN = "";
+            appuser.IDCard = "";
+            appuser.Pwd = "";
+            appuser.SEX= "";
             string headImg = null;
             if (string.IsNullOrEmpty(userLoginInfo.HeadImagePath) == false)
             {

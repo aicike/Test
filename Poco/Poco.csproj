@@ -56,6 +56,7 @@
     <Compile Include="AccountMain.cs" />
     <Compile Include="AccountMainHouseInfo.cs" />
     <Compile Include="AccountMainHouseInfoDetail.cs" />
+    <Compile Include="Account_Role.cs" />
     <Compile Include="AppAdvertorial.cs" />
     <Compile Include="AppWaitImg.cs" />
     <Compile Include="AutoMessage_User.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="UnreadCnt.cs" />
     <Compile Include="VIPInfo.cs" />
     <Compile Include="VIPInfoExpenseDetail.cs" />
+    <Compile Include="WebAPI_Poco\App_Menu.cs" />
     <Compile Include="WebAPI_Poco\App_Order.cs" />
     <Compile Include="Enum\EnumBuildingType.cs" />
     <Compile Include="Enum\EnumConversationType.cs" />

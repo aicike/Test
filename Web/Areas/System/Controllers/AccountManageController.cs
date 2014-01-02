@@ -15,7 +15,7 @@ namespace Web.Areas.System.Controllers
 {
     public class AccountManageController : ManageSystemUserController
     {
-        public ActionResult Index(int? id,int accountMainId, int? roleID)
+        public ActionResult Index(int? id, int accountMainId, int? roleID)
         {
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             accountMainModel.CheckHasPermissions(LoginSystemUser.ID, accountMainId).NotAuthorizedPage();
@@ -55,16 +55,13 @@ namespace Web.Areas.System.Controllers
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             var roles = roleModel.GetRoleListAll(accountMainId);
             var selectListRoles = new SelectList(roles, "ID", "Name");
-            List<SelectListItem> newRolesList = new List<SelectListItem>();
-            newRolesList.Add(new SelectListItem { Text = "请选择", Value = "select", Selected = true });
-            newRolesList.AddRange(selectListRoles);
-            ViewData["Roles"] = newRolesList;
+            ViewData["Roles"] = selectListRoles;
             ViewBag.AccountMainID = accountMainId;
             return View();
         }
 
         [HttpPost]
-        public ActionResult AddAccount(Account_AccountMain account_accountMain, HttpPostedFileBase HeadImagePathFile, int w, int h, int x1, int y1, int tw, int th)
+        public ActionResult AddAccount(Account_AccountMain account_accountMain, string roleIDs, HttpPostedFileBase HeadImagePathFile, int w, int h, int x1, int y1, int tw, int th)
         {
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             accountMainModel.CheckHasPermissions(LoginSystemUser.ID, account_accountMain.AccountMainID).NotAuthorizedPage();
@@ -73,7 +70,9 @@ namespace Web.Areas.System.Controllers
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             int sysRoleID = roleModel.GetRoleIscandelete(account_accountMain.AccountMainID);
 
-            if (account_accountMain.Account.RoleID == sysRoleID)
+            List<int> roleIDList = roleIDs.ConvertToIntArray(',').ToList();
+
+            if (roleIDList.Contains(sysRoleID))
             {
                 if (account_accountMainModel.CheckIsExistAccountAdmin(account_accountMain.AccountMainID, null))
                 {
@@ -84,7 +83,7 @@ namespace Web.Areas.System.Controllers
             account_accountMain.Account.LoginPwd = cm.CreateRandom("", 6);
 
             IAccount_AccountMainModel model = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
-            var result = model.Add(account_accountMain, HeadImagePathFile, w, h, x1, y1, tw, th);
+            var result = model.Add(account_accountMain, roleIDList, HeadImagePathFile, w, h, x1, y1, tw, th);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);
@@ -124,16 +123,14 @@ namespace Web.Areas.System.Controllers
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             var roles = roleModel.GetRoleListAll(accountMainID);
             var selectListRoles = new SelectList(roles, "ID", "Name");
-            List<SelectListItem> newRolesList = new List<SelectListItem>();
-            newRolesList.Add(new SelectListItem { Text = "请选择", Value = "select", Selected = true });
-            newRolesList.AddRange(selectListRoles);
-            ViewData["Roles"] = newRolesList;
+            ViewData["Roles"] = selectListRoles;
+            ViewData["SelRoles"] = entity.Account_Roles.Select(a => a.RoleID).ToList();
             ViewBag.AccountMainID = accountMainID;
             return View(entity);
         }
 
         [HttpPost]
-        public ActionResult EditAccount(Poco.Account account, int accountMainId, HttpPostedFileBase HeadImagePathFile, int w, int h, int x1, int y1, int tw, int th)
+        public ActionResult EditAccount(Poco.Account account, int accountMainId,string roleIDs, HttpPostedFileBase HeadImagePathFile, int w, int h, int x1, int y1, int tw, int th)
         {
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             accountMainModel.CheckHasPermissions(LoginSystemUser.ID, accountMainId).NotAuthorizedPage();
@@ -141,7 +138,9 @@ namespace Web.Areas.System.Controllers
             //获取项目管理员角色ID
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             int sysRoleID = roleModel.GetRoleIscandelete(accountMainId);
-            if (account.RoleID == sysRoleID)
+
+            List<int> roleIDList = roleIDs.ConvertToIntArray(',').ToList();
+            if (roleIDList.Contains(sysRoleID))
             {
                 var account_accountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
                 if (account_accountMainModel.CheckIsExistAccountAdmin(accountMainId, account.ID))
@@ -150,11 +149,10 @@ namespace Web.Areas.System.Controllers
                 }
             }
 
-
             account.LoginPwdPage = "aaaaaa";
             account.LoginPwdPageCompare = "aaaaaa";
             IAccountModel model = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-            var result = model.Edit(account, accountMainId, HeadImagePathFile, x1, y1, w, h, tw, th);
+            var result = model.Edit(account, accountMainId, roleIDList, HeadImagePathFile, x1, y1, w, h, tw, th);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);

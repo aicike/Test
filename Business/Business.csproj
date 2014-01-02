@@ -78,6 +78,7 @@
     <Compile Include="AccountMainHouseTypeModel.cs" />
     <Compile Include="AccountMainModel.cs" />
     <Compile Include="AccountModel.cs" />
+    <Compile Include="AccountRoleModel.cs" />
     <Compile Include="Account_UserModel.cs" />
     <Compile Include="AppAdvertorialModel.cs" />
     <Compile Include="AppWaitImgModel.cs" />

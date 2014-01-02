@@ -99,6 +99,7 @@ namespace Poco
             public const string RoleModel = "RoleModel";
             public const string Account_AccountMainModel = "Account_AccountMainModel";
             public const string AccountModel = "AccountModel";
+            public const string AccountRoleModel = "AccountRoleModel";
             public const string ActivateEmailModel = "ActivateEmailModel";
             public const string AutoMessage_AddModel = "AutoMessage_AddModel";
             public const string AutoMessage_KeywordModel = "AutoMessage_KeywordModel";

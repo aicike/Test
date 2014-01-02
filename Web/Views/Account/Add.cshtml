@@ -272,6 +272,22 @@
                         BtnOk: "确定"
                     });
                 }
+                var roleidlength = $(".checkbox_roleid:checked").length;
+                if (roleidlength == 0) {
+                    JAlert({
+                        Message: "请至少选择一项角色！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return false;
+                }
+                var roleid = "";
+                $(".checkbox_roleid:checked").each(function (i, n) {
+                    roleid += $(n).attr("value") + ",";
+                });
+                $("#roleIDs").val(roleid);
+
+
                 if (isTrue && isTruePhone) {
 
                     return true;
@@ -438,10 +454,14 @@
                     <td>
                         <span class="Identification">*</span> 角色
                     </td>
-                    <td>@Html.DropDownListFor(a => a.Account.RoleID, ViewData["Roles"] as List<SelectListItem>, new { })
+                    <td>
+                        @foreach (var item in ViewData["Roles"] as SelectList)
+                        {
+                            <input class="checkbox_roleid" type="checkbox" id="cb_role_@item.Value" value="@item.Value"><label for="cb_role_@item.Value" style="margin-right:10px">@item.Text</label>
+                        }
+                        <input type="hidden" name="roleIDs" id="roleIDs" />
                     </td>
                     <td id="tdRoleValidation">
-                        @Html.ValidationMessageFor(a => a.Account.RoleID)
                     </td>
                 </tr>
                 <tr>
@@ -486,9 +506,9 @@
             <li>
                 <div class="ulUserTitle">@item.Name</div>
                 <div class="ulUserList">
-                    @foreach (var user in item.Accounts)
+                    @foreach (var user in item.Account_Roles)
                     {
-                        <input type="radio" id="cb_@user.ID" value="@user.ID" name="parentAccount" nv="@user.Name" /><label for="cb_@user.ID">@user.Name</label>
+                        <input type="radio" id="cb_@user.ID" value="@user.ID" name="parentAccount" nv="@user.Account.Name" /><label for="cb_@user.ID">@user.Account.Name</label>
                     }
                 </div>
             </li>

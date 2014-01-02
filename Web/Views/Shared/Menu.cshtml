@@ -3,7 +3,7 @@
     List<Poco.Menu> menuList = new List<Poco.Menu>();
     if (account != null)
     {
-        menuList = Injection.Factory.Get<Interface.IMenuModel>(Poco.SystemConst.IOC_Model.MenuModel).GetMenuByRoleID(account.RoleID);
+        menuList = Injection.Factory.Get<Interface.IMenuModel>(Poco.SystemConst.IOC_Model.MenuModel).GetMenuByRoleID(account.RoleIDs);
     }
 }
 <div style="width: 960px; margin: 0px auto 0px auto; height: 40px">
@@ -13,12 +13,16 @@
         <ul class="menu">
             @foreach (var item in menuList)
             {
-                if (ViewBag.Menu == item.Controller)
-                { 
-                    <li class="select">@Html.ActionLink(item.Name, item.Action, item.Controller, new { Area = item.Area }, null)</li>   
-                } else 
-                { 
-                    <li>@Html.ActionLink(item.Name, item.Action, item.Controller, new { Area = item.Area }, null)</li>   
+                if (item.IsAppMenu == false)
+                {
+                    if (ViewBag.Menu == item.Controller)
+                    { 
+                <li class="select">@Html.ActionLink(item.Name, item.Action, item.Controller, new { Area = item.Area }, null)</li>   
+                    }
+                    else
+                    { 
+                <li>@Html.ActionLink(item.Name, item.Action, item.Controller, new { Area = item.Area }, null)</li>   
+                    }
                 }
             }
         </ul>

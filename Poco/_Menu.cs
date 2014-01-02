@@ -25,13 +25,11 @@ namespace Poco
         public string Area { get; set; }
 
         [Display(Name = "Controller")]
-        [Required]
         [StringLength(50, ErrorMessage = "长度小于50")]
         [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Controller { get; set; }
 
         [Display(Name = "Action")]
-        [Required]
         [StringLength(50, ErrorMessage = "长度小于50")]
         [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Action { get; set; }
@@ -39,6 +37,8 @@ namespace Poco
         public int Order { get; set; }
 
         public int? ParentMenuID { get; set; }
+
+        public bool IsAppMenu { get; set; }
 
         public virtual Menu ParentMenu { get; set; }
 

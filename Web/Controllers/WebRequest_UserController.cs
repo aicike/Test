@@ -141,7 +141,7 @@ namespace Web.Controllers
                 HeadImagePath = a.HeadImagePath,
                 Email = a.Email,
                 Phone = a.Phone,
-                Role = a.Role.Name
+                Role = "销售代表"/*a.Role.Name*/
             }).ToList();
             foreach (var item in accountList)
             {
