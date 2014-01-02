@@ -30,5 +30,12 @@ namespace Interface
         /// <returns></returns>
         _B_SurveyScore GetTroubleFraction(int TroubleID);
 
+
+        /// <summary>
+        /// 根据调查ID 获取总分
+        /// </summary>
+        /// <param name="SMID"></param>
+        /// <returns></returns>
+        int GetSurveySum(int SMID);
     }
 }

@@ -31,7 +31,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<_B_SurveyMain> SelList(int AccountMainID)
         {
-            string sql = string.Format(@" select a.* ,(select count(*) from SurveyAnswer where SurveyTroubleID = (select top 1 ID from SurveyTrouble where SurveyMainid = a.ID ))  as  Counts from 
+            string sql = string.Format(@" select a.* ,(select count(*) from  (select usercode from SurveyAnswer where SurveyTroubleID = (select top 1 ID from SurveyTrouble where SurveyMainid = a.ID ) group by usercode)  as  Counts)as  Counts from 
                                          (select ID,SurveyTitle,CreateDate,Status,EnumSurveyMainType from dbo.SurveyMain where accountmainid={0}) a order by ID desc", AccountMainID);
 
 

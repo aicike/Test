@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Poco;
 using Interface;
+using Injection;
 
 namespace Business
 {
@@ -30,10 +31,21 @@ namespace Business
         public _B_SurveyScore GetSurveyFraction(int SMID)
         {
             _B_SurveyScore bss = new _B_SurveyScore();
+            //总分
+            try
+            {
+                var FullMarks = List().Where(a => a.SurveyTrouble.SurveyMainID == SMID).GroupBy(a => a.SurveyTroubleID).Select(a => a.Max(b => b.Fraction)).Sum();
+                bss.FullMarks = FullMarks;
+            }
+            catch
+            {
+                bss.FullMarks = 0;
+            }
 
-
-
-
+            //平均分
+            var AnswerModel = Factory.Get<ISurveyAnswerModel>(SystemConst.IOC_Model.SurveyAnswerModel);
+            var Average = AnswerModel.GetAverageBySMID(SMID);
+            bss.Average = Average;
             return bss;
         }
 
@@ -45,11 +57,41 @@ namespace Business
         public _B_SurveyScore GetTroubleFraction(int TroubleID)
         {
             _B_SurveyScore bss = new _B_SurveyScore();
-
-
+            //总分
+            try
+            {
+                var FullMarks = List().Where(a => a.SurveyTroubleID == TroubleID).GroupBy(a => a.SurveyTroubleID).Select(a => a.Max(b => b.Fraction)).Sum();
+                bss.FullMarks = FullMarks;
+            }
+            catch
+            {
+                bss.FullMarks = 0;
+            }
+            //平均分
+            var AnswerModel = Factory.Get<ISurveyAnswerModel>(SystemConst.IOC_Model.SurveyAnswerModel);
+            var Average = AnswerModel.GetAverageByTID(TroubleID);
+            bss.Average = Average;
 
 
             return bss;
+        }
+
+        /// <summary>
+        /// 根据调查ID 获取总分
+        /// </summary>
+        /// <param name="SMID"></param>
+        /// <returns></returns>
+        public int GetSurveySum(int SMID)
+        {
+            try
+            {
+                var FullMarks = List().Where(a => a.SurveyTrouble.SurveyMainID == SMID).GroupBy(a => a.SurveyTroubleID).Select(a => a.Max(b => b.Fraction)).Sum();
+                return FullMarks;
+            }
+            catch {
+                return 0;
+            }
+           
         }
     }
 }

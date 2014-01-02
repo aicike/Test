@@ -168,6 +168,7 @@ namespace Web.Controllers
                     _B_Advertorial ADVERTORIAL = new _B_Advertorial();
                     ADVERTORIAL.I = item.ID;
                     ADVERTORIAL.T = item.Title;
+                    ADVERTORIAL.P = item.Depict;
                     ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
                     TitleShow.Add(ADVERTORIAL);
                 }
@@ -183,6 +184,7 @@ namespace Web.Controllers
                     ADVERTORIAL.P = item.Depict;
                     ADVERTORIAL.D = item.IssueDate.ToString("yyyy-MM-dd");
                     ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.MinImagePath ?? "");
+                    ADVERTORIAL.F = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
                     ListShow.Add(ADVERTORIAL);
                 }
             }
@@ -248,6 +250,7 @@ namespace Web.Controllers
                     _B_Advertorial ADVERTORIAL = new _B_Advertorial();
                     ADVERTORIAL.I = item.ID;
                     ADVERTORIAL.T = item.Title;
+                    ADVERTORIAL.P = item.Depict;
                     ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
                     TitleShow.Add(ADVERTORIAL);
                 }
@@ -263,6 +266,7 @@ namespace Web.Controllers
                     ADVERTORIAL.P = item.Depict;
                     ADVERTORIAL.D = item.IssueDate.ToString("yyyy-MM-dd");
                     ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.MinImagePath ?? "");
+                    ADVERTORIAL.F = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
                     ListShow.Add(ADVERTORIAL);
                 }
             }

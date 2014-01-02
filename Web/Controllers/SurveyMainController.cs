@@ -15,7 +15,7 @@ namespace Web.Controllers
     {
 
         #region -------------调查问卷-------------------------------------------------------------------------------------------
-        
+
         //
         // GET: /SurveyMain/
         /// <summary>
@@ -159,13 +159,13 @@ namespace Web.Controllers
         }
 
 
-        
+
         #endregion
 
 
         #region -------------问题录入-------------------------------------------------------------------------------------------
-        
-        
+
+
         /// <summary>
         /// 查询调查列表
         /// </summary>
@@ -212,7 +212,7 @@ namespace Web.Controllers
             var AnswerModel = Factory.Get<ISurveyAnswerModel>(SystemConst.IOC_Model.SurveyAnswerModel);
             if (AnswerModel.GetListBySMID(SMID, LoginAccount.CurrentAccountMainID).Count() > 0)
             {
-                return JavaScript("window.location.href='" + Url.Action("IndexTrouble", "SurveyMain", new { HostName = LoginAccount.HostName, SMID = SMID, tishi = 1 }) + "'");
+                return RedirectToAction("IndexTrouble", "SurveyMain", new { HostName = LoginAccount.HostName, SMID = SMID, tishi = 1});
             }
 
             //基本信息
@@ -383,7 +383,7 @@ namespace Web.Controllers
 
 
         #region -------------报表 其他列表-------------------------------------------------------------------------------------------
-       
+
 
         /// <summary>
         /// 查询调查列表统计
@@ -395,37 +395,104 @@ namespace Web.Controllers
         {
             //主表
             var MainModel = Factory.Get<ISurveyMainModel>(SystemConst.IOC_Model.SurveyMainModel);
-            var main = MainModel.GetSurveyMainByID(id,LoginAccount.CurrentAccountMainID);
+            var main = MainModel.GetSurveyMainByID(id, LoginAccount.CurrentAccountMainID);
+            //选项表
+            var OptionModel = Factory.Get<ISurveyOptionModel>(SystemConst.IOC_Model.SurveyOptionModel);
+            var _b_score = OptionModel.GetSurveyFraction(main.ID);
+            //满分
+            ViewBag.FullMarks = _b_score.FullMarks;
+            //平均分
+            ViewBag.Average = _b_score.Average;
 
-
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "调查问卷 - 调查问卷统计", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
 
             return View(main);
         }
 
         /// <summary>
-        /// 回答详细列表
+        /// 回答用户列表
         /// </summary>
         /// <param name="id"></param>
         /// <param name="SMID"></param>
         /// <returns></returns>
         [AllowCheckPermissions(false)]
-        public ActionResult SurveyUserList(int ?id ,int SMID)
+        public ActionResult SurveyUserList(int? id, int SMID)
         {
-            return View();
+            var AnswerModel = Factory.Get<ISurveyAnswerModel>(SystemConst.IOC_Model.SurveyAnswerModel);
+            var Answer = AnswerModel.GetAnswerUserList(SMID, LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 25);
+            ViewBag.SMID = SMID;
+            return View(Answer);
         }
 
+        /// <summary>
+        /// 用户回答详细页
+        /// </summary>
+        /// <param name="SMID"></param>
+        /// <param name="Ucode"></param>
+        /// <returns></returns>
+        [AllowCheckPermissions(false)]
+        public ActionResult AnswerInfo(int SMID, string Ucode)
+        {
+            //主表
+            var MainModel = Factory.Get<ISurveyMainModel>(SystemConst.IOC_Model.SurveyMainModel);
+            var main = MainModel.GetSurveyMainByID(SMID, LoginAccount.CurrentAccountMainID);
+            //回答表
+            var AnswerModel = Factory.Get<ISurveyAnswerModel>(SystemConst.IOC_Model.SurveyAnswerModel);
+            ViewBag.Answer = AnswerModel.GetAnswerInfoByUserCode(Ucode);
+            //选项表
+            var OptionModel = Factory.Get<ISurveyOptionModel>(SystemConst.IOC_Model.SurveyOptionModel);
+            //满分
+            ViewBag.FullMarks = OptionModel.GetSurveySum(main.ID);
+            //评分
+            ViewBag.Average = AnswerModel.GetAnswerUserScore(Ucode);
+
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "调查问卷 - 调查问卷信息", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
+            return View(main);
+        }
 
         /// <summary>
         /// 生成软文 ajax
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="client">客户端 1用户端 2销售端</param>
+        /// <param name="client">客户端 EnumAdvertorialUType</param>
         /// <returns>OK 成功 NO失败</returns>
         [AllowCheckPermissions(false)]
         public string SetAppAdverTorial(int id, int client)
         {
+            AppAdvertorial appRW = new AppAdvertorial();
+            Result result = new Result();
+            var AdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
+            //主表
+            var MainModel = Factory.Get<ISurveyMainModel>(SystemConst.IOC_Model.SurveyMainModel);
+            var main = MainModel.GetSurveyMainByID(id, LoginAccount.CurrentAccountMainID);
+            appRW.Content = "";
+            appRW.ContentURL = "http://" + SystemConst.WebUrl + "/Default/Questionnaire?surveyMainID=" + id;
+            appRW.AccountMainID = LoginAccount.CurrentAccountMainID;
+            appRW.AppShowImagePath = "~/Images/Survey.png";
+            appRW.MainImagPath = "~/Images/Survey.png";
+            appRW.MinImagePath = "~/Images/Survey.png";
+            appRW.Depict = main.SurveyRemarks;
+            appRW.EnumAdverTorialType = 1;
+            appRW.EnumAdvertorialUType = client;
+            appRW.IssueDate = DateTime.Now;
+            appRW.Sort = 0;
+            appRW.stick = 0;
+            appRW.SystemStatus = 0;
+            appRW.Title = main.SurveyTitle;
 
-            return "OK";
+            result = AdvertorialModel.Add(appRW);
+            if (result.HasError == true)
+            {
+                return "No";
+            }
+            else
+            {
+                return "OK";
+            }
         }
 
         #endregion

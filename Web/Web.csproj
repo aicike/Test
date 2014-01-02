@@ -270,6 +270,7 @@
     <Content Include="Images\sliders\thumbs\slider-1-4-thumb.jpg" />
     <Content Include="Images\sliders\thumbs\slider-1-5-thumb.jpg" />
     <Content Include="Images\Start.png" />
+    <Content Include="Images\Survey.png" />
     <Content Include="Images\table.jpg" />
     <Content Include="Images\Unread.png" />
     <Content Include="Images\m1.png" />
@@ -912,6 +913,7 @@
     <Content Include="Views\SurveyMain\ShowOption.cshtml" />
     <Content Include="Views\SurveyMain\SurveyUserList.cshtml" />
     <Content Include="Views\Default\Questionnaire.cshtml" />
+    <Content Include="Views\SurveyMain\AnswerInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

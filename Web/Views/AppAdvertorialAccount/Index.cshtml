@@ -165,18 +165,35 @@
                     </td>
                 }
                 else
-                { 
-                    <td>
-                        <a href="@item.ContentURL" target="_blank">
-                            <img style="width: 150px;  cursor:pointer; border:0 "   src="@Url.Content(item.AppShowImagePath ?? "")" /></a>
-                    </td>
-                    <td style="font-size: 14px" class="operation">
-                        <a  href="@item.ContentURL"  target="_blank">
-                            <label name="labCbFirst" title="@item.Depict"  style=" cursor:pointer">
-                                @item.Title
-                            </label>
-                        </a>
-                    </td>
+                {
+                    if (item.ContentURL.Contains("/Default/Questionnaire"))
+                    {
+                        <td>
+                            <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id = item.ContentURL.Substring(item.ContentURL.LastIndexOf('=') + 1) })" target="_blank">
+                                <img style="width: 150px;  cursor:pointer; border:0 "   src="@Url.Content(item.AppShowImagePath ?? "")" /></a>
+                        </td>
+                        <td style="font-size: 14px" class="operation">
+                            <a  href="@Url.Action("TroubleStatistics", "SurveyMain", new { id = item.ContentURL.Substring(item.ContentURL.LastIndexOf('=') + 1) })"  target="_blank">
+                                <label name="labCbFirst" title="@item.Depict"  style=" cursor:pointer">
+                                    @item.Title
+                                </label>
+                            </a>
+                        </td>
+                    }
+                    else
+                    { 
+                        <td>
+                            <a href="@item.ContentURL" target="_blank">
+                                <img style="width: 150px;  cursor:pointer; border:0 "   src="@Url.Content(item.AppShowImagePath ?? "")" /></a>
+                        </td>
+                        <td style="font-size: 14px" class="operation">
+                            <a  href="@item.ContentURL"  target="_blank">
+                                <label name="labCbFirst" title="@item.Depict"  style=" cursor:pointer">
+                                    @item.Title
+                                </label>
+                            </a>
+                        </td>
+                    }
                 }
                 <td style="font-size: 12px; color: #696969">
                     @item.IssueDate.ToString("yyyy-MM-dd")
@@ -194,7 +211,7 @@
                     else
                     { 
                         @:无
-                                                                                 }
+                                                                                                     }
                 </td>
                 <td class="operation">
                     @Html.ActionLink("修改", "Edit", "AppAdvertorialAccount", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:10px" }, true)
