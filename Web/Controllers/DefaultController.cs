@@ -123,6 +123,25 @@ namespace Web.Controllers
             }
             else
             {
+               
+                //用户端软文附加下载地址
+                ViewBag.Utype = advertorial.EnumAdvertorialUType;
+                if (advertorial.EnumAdvertorialUType == (int)EnumAdvertorialUType.UserEnd)
+                {
+                    var AccountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
+                    var AccountModel = AccountMainModel.Get(advertorial.AccountMainID);
+                    ViewBag.AMID = advertorial.AccountMainID;
+                    ViewBag.AMName = AccountModel.Name;
+                    if (!string.IsNullOrEmpty(AccountModel.AndroidDownloadPath))
+                    {
+                        ViewBag.AndroidURL = "http://" + SystemConst.WebUrl + Url.Content(AccountModel.AndroidDownloadPath ?? "");
+                    }
+                    if (!string.IsNullOrEmpty(AccountModel.IOSDownloadPath))
+                    {
+                        ViewBag.IOSURL = AccountModel.IOSDownloadPath;
+                    }
+                    
+                }
                 return View(advertorial);
             }
         }
