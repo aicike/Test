@@ -48,6 +48,8 @@
     <Compile Include="IAccountMainHouseTypeModel.cs" />
     <Compile Include="IAccountMainModel.cs" />
     <Compile Include="IAccountModel.cs" />
+    <Compile Include="IActivityInfoModel.cs" />
+    <Compile Include="IActivityInfoParticipatorModel.cs" />
     <Compile Include="IAppAdvertorialModel.cs" />
     <Compile Include="IAppWaitImgModel.cs" />
     <Compile Include="IAutoMessage_UserModel.cs" />

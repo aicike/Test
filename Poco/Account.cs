@@ -138,5 +138,6 @@ namespace Poco
 
         public virtual ICollection<SurveyMain> SurveyMain { get; set; }
         public virtual ICollection<Account_Role> Account_Roles { get; set; }
+        public virtual ICollection<ActivityInfo> ActivityInfos { get; set; }
     }
 }

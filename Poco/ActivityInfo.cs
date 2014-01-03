@@ -6,14 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Poco
 {
-    /// <summary>
-    /// 调查主表
-    /// </summary>
-    public class SurveyMain : IBaseEntity
+    public class ActivityInfo:IBaseEntity
     {
-        /// <summary>
-        /// ID
-        /// </summary>
         public int ID { get; set; }
 
         public int SystemStatus { get; set; }
@@ -27,18 +21,18 @@ namespace Poco
         /// <summary>
         /// 调查标题
         /// </summary>
-        [Display(Name = "调查标题")]
-        [Required(ErrorMessage = "请输入调查标题")]
+        [Display(Name = "活动标题")]
+        [Required(ErrorMessage = "请输入活动标题")]
         [StringLength(50, ErrorMessage = "长度小于50")]
-        public string SurveyTitle { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// 调查备注或描述
         /// </summary>
-        [Display(Name = "调查备注或描述")]
-        [Required(ErrorMessage = "请输入调查备注或描述")]
+        [Display(Name = "活动备注或描述")]
+        [Required(ErrorMessage = "请输入活动备注或描述")]
         [StringLength(500, ErrorMessage = "长度小于500")]
-        public string SurveyRemarks { get; set; }
+        public string Remarks { get; set; }
 
         /// <summary>
         /// 创建人
@@ -59,14 +53,6 @@ namespace Poco
         [Display(Name = "状态")]
         public int Status { get; set; }
 
-        /// <summary>
-        /// 调查类型
-        /// </summary>
-        [Display(Name = "调查类型")]
-        public int EnumSurveyMainType { get; set; }
-
-        public virtual ICollection<SurveyTrouble> SurveyTrouble { get; set; }
-
-
+        public virtual ICollection<ActivityInfoParticipator> ActivityInfoParticipators { get; set; }
     }
 }

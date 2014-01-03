@@ -167,6 +167,8 @@ namespace Poco
             public const string SurveyTroubleModel = "SurveyTroubleModel";
             public const string SurveyAnswerModel = "SurveyAnswerModel";
             public const string SurveyOptionModel = "SurveyOptionModel";
+            public const string ActivityInfoModel = "ActivityInfoModel";
+            public const string ActivityInfoParticipatorModel = "ActivityInfoParticipatorModel";
 
 
 
