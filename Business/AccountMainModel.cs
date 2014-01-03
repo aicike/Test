@@ -112,13 +112,13 @@ namespace Business
                     if (AndroidPathFile != null)
                     {
                         var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
-                        var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, AndroidPathFile.FileName);
+                        var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, AndroidPathFile.FileName.GetFileName());
                         if (Directory.Exists(androidPath) == false)
                         {
                             Directory.CreateDirectory(androidPath);
                         }
                         var Downpath = string.Format("~/Download/{0}", accountMain.ID);
-                        var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidPathFile.FileName);
+                        var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidPathFile.FileName.GetFileName());
                         AndroidPathFile.SaveAs(androidPathDown);
                         accountMain.AndroidDownloadPath = Downpath2;
                     }
@@ -126,13 +126,13 @@ namespace Business
                     if (AndroidSellPathFile != null)
                     {
                         var androidSellPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
-                        var androidSellPathDown = string.Format("{0}/{1}_{2}", androidSellPath, token, AndroidSellPathFile.FileName);
+                        var androidSellPathDown = string.Format("{0}/{1}_{2}", androidSellPath, token, AndroidSellPathFile.FileName.GetFileName());
                         if (Directory.Exists(androidSellPath) == false)
                         {
                             Directory.CreateDirectory(androidSellPath);
                         }
                         var Downpath = string.Format("~/Download/{0}", accountMain.ID);
-                        var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidSellPathFile.FileName);
+                        var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidSellPathFile.FileName.GetFileName());
                         AndroidSellPathFile.SaveAs(androidSellPathDown);
                         accountMain.AndroidSellDownloadPath = Downpath2;
                     }
@@ -263,13 +263,13 @@ namespace Business
                         File.Delete(androidAbsolutePath);
                     }
                     var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
-                    var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, AndroidPathFile.FileName);
+                    var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, AndroidPathFile.FileName.GetFileName());
                     if (Directory.Exists(androidPath) == false)
                     {
                         Directory.CreateDirectory(androidPath);
                     }
                     var Downpath = string.Format("~/Download/{0}", accountMain.ID);
-                    var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidPathFile.FileName);
+                    var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidPathFile.FileName.GetFileName());
 
                     AndroidPathFile.SaveAs(androidPathDown);
                     accountMain.AndroidDownloadPath = Downpath2;
@@ -285,13 +285,13 @@ namespace Business
                         File.Delete(androidAbsolutePath);
                     }
                     var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
-                    var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, AndroidSellPathFile.FileName);
+                    var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, AndroidSellPathFile.FileName.GetFileName());
                     if (Directory.Exists(androidPath) == false)
                     {
                         Directory.CreateDirectory(androidPath);
                     }
                     var Downpath = string.Format("~/Download/{0}", accountMain.ID);
-                    var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidSellPathFile.FileName);
+                    var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidSellPathFile.FileName.GetFileName());
 
                     AndroidSellPathFile.SaveAs(androidPathDown);
                     accountMain.AndroidSellDownloadPath = Downpath2;
@@ -373,13 +373,13 @@ namespace Business
                         File.Delete(androidAbsolutePath);
                     }
                     var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
-                    var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, AndroidPathFile.FileName);
+                    var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, AndroidPathFile.FileName.GetFileName());
                     if (Directory.Exists(androidPath) == false)
                     {
                         Directory.CreateDirectory(androidPath);
                     }
                     var Downpath = string.Format("~/Download/{0}", accountMain.ID);
-                    var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidPathFile.FileName);
+                    var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidPathFile.FileName.GetFileName());
 
                     AndroidPathFile.SaveAs(androidPathDown);
                     accountMain.AndroidDownloadPath = Downpath2;
@@ -395,13 +395,13 @@ namespace Business
                         File.Delete(androidAbsolutePath);
                     }
                     var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
-                    var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, AndroidSellPathFile.FileName);
+                    var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, AndroidSellPathFile.FileName.GetFileName());
                     if (Directory.Exists(androidPath) == false)
                     {
                         Directory.CreateDirectory(androidPath);
                     }
                     var Downpath = string.Format("~/Download/{0}", accountMain.ID);
-                    var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidSellPathFile.FileName);
+                    var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidSellPathFile.FileName.GetFileName());
 
                     AndroidSellPathFile.SaveAs(androidPathDown);
                     accountMain.AndroidSellDownloadPath = Downpath2;
@@ -420,7 +420,6 @@ namespace Business
             }
             return result;
         }
-
 
 
         [Transaction]

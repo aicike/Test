@@ -168,37 +168,37 @@
                 else
                 {
 
-                    if (item.ContentURL.Contains("/Default/Questionnaire"))
+                    if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey)
                     {
                     <td>
-                            <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id = item.ContentURL.Substring(item.ContentURL.LastIndexOf('=') + 1) })" target="_blank">
-                                <img style="width: 150px; border:0
+                        <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id = item.ContentURL.Substring(item.ContentURL.LastIndexOf('=') + 1) })" target="_blank">
+                            <img style="width: 150px; border:0
                             ;cursor:pointer " src="@Url.Content(item.AppShowImagePath ?? "")" /></a>
-                        </td>
-                        <td style="font-size: 14px" class="operation">
-                            <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id = item.ContentURL.Substring(item.ContentURL.LastIndexOf('=') + 1) })" target="_blank">
-                                <label
+                    </td>
+                    <td style="font-size: 14px" class="operation">
+                        <label
                             name="labCbFirst" title="@item.Depict" style=" cursor:pointer">
-                                    @item.Title
-                                </label>
+                            <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id = item.ContentURL.Substring(item.ContentURL.LastIndexOf('=') + 1) })" target="_blank">
+                                @item.Title
                             </a>
-                        </td>
+                        </label>
+                    </td>
                     }
                     else
                     { 
-                        <td>
-                            <a href="@item.ContentURL" target="_blank">
-                                <img style="width: 150px; border:0
+                    <td>
+                        <a href="@item.ContentURL" target="_blank">
+                            <img style="width: 150px; border:0
                             ;cursor:pointer " src="@Url.Content(item.AppShowImagePath ?? "")" /></a>
-                        </td>
-                        <td style="font-size: 14px" class="operation">
-                            <a href="@item.ContentURL" target="_blank">
-                                <label
+                    </td>
+                    <td style="font-size: 14px" class="operation">
+                        <a href="@item.ContentURL" target="_blank">
+                            <label
                             name="labCbFirst" title="@item.Depict" style=" cursor:pointer">
-                                    @item.Title
-                                </label>
-                            </a>
-                        </td>
+                                @item.Title
+                            </label>
+                        </a>
+                    </td>
                     }
 
                 }
@@ -218,7 +218,7 @@
                     else
                     { 
                         @:无
-                                                                                 }
+                                                                                                                         }
                 </td>
                 <td class="operation">
                     @Html.ActionLink("修改", "Edit", "AppAdvertorial", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:10px" }, true)

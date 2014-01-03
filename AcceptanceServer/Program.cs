@@ -5,6 +5,8 @@ using System.Windows.Forms;
 using System.Text;
 using System.IO;
 using AcceptanceServer.DataBllOperate;
+using System.Data.Entity;
+using EF;
 
 namespace AcceptanceServer
 {
@@ -16,9 +18,11 @@ namespace AcceptanceServer
         [STAThread]
         static void Main()
         {
+            
 
             try
             {
+                Database.SetInitializer<Context>(null);
                 //设置应用程序处理异常方式：ThreadException处理
                 Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
                 //处理UI线程异常

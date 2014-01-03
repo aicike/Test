@@ -149,5 +149,23 @@ namespace System
                 return path.Substring(path.LastIndexOf('.'));
             }
         }
+
+        /// <summary>
+        /// 获取文件名称
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns>.xxx</returns>
+        public static string GetFileName(this string path)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                return "";
+            }
+            else
+            {
+                return path.Substring(path.LastIndexOf("\\")+1);
+            }
+        }
+
     }
 }

@@ -56,17 +56,19 @@ namespace Web.Controllers
             {
                 appAdver.ContentURL = "http://";
             }
-            else{
+            else
+            {
                 appAdver.Content = "";
+                appAdver.EnumAdverURLType = (int)EnumAdverURLType.Ordinary;
             }
             appAdver.EnumAdverTorialType = AType;
             appAdver.AccountMainID = LoginAccount.CurrentAccountMainID;
             appAdver.Sort = 0;
             appAdver.IssueDate = DateTime.Now;
-            appAdver.EnumAdvertorialUType= (int)EnumAdvertorialUType.UserEnd;
+            appAdver.EnumAdvertorialUType = (int)EnumAdvertorialUType.UserEnd;
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             Result result = AppAdvertorialModel.AddAppAdvertorial(appAdver, w, h, x1, y1, tw, th);
-          
+
 
             return RedirectToAction("Index", "AppAdvertorial");
         }
@@ -74,7 +76,7 @@ namespace Web.Controllers
         public ActionResult Edit(int id)
         {
             ViewBag.HostName = LoginAccount.HostName;
-          
+
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-App动态软文-添加项目", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
@@ -109,10 +111,19 @@ namespace Web.Controllers
             if (AType == (int)EnumAdverTorialType.txt)
             {
                 appadver.ContentURL = "http://";
+                appadver.EnumAdverURLType = null;
             }
             else
             {
                 appadver.Content = "";
+                if (appadver.EnumAdverURLType.HasValue)
+                {
+
+                }
+                else
+                {
+                    appadver.EnumAdverURLType = (int)EnumAdverURLType.Ordinary;
+                }
             }
             appadver.EnumAdverTorialType = AType;
             appadver.EnumAdvertorialUType = (int)EnumAdvertorialUType.UserEnd;
@@ -151,9 +162,9 @@ namespace Web.Controllers
             {
                 return "Yes";
             }
-            
+
         }
-       
+
         //校验修改是否可以置顶
         [HttpPost]
         [AllowCheckPermissions(false)]
@@ -161,7 +172,7 @@ namespace Web.Controllers
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             var AppAdvertorial = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd);
-            if (AppAdvertorial.Where(a => a.stick == 1&&a.ID!=ID).Count() >= 5)
+            if (AppAdvertorial.Where(a => a.stick == 1 && a.ID != ID).Count() >= 5)
             {
                 return "No";
             }
@@ -175,7 +186,7 @@ namespace Web.Controllers
         //置顶 isok =1 置顶 0 取消置顶
         [AllowCheckPermissions(false)]
         [HttpPost]
-        public ActionResult Stick(int AdvertorialID,int isok,int Sort)
+        public ActionResult Stick(int AdvertorialID, int isok, int Sort)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
 
@@ -187,7 +198,7 @@ namespace Web.Controllers
         //排序
         [AllowCheckPermissions(false)]
         [HttpPost]
-        public ActionResult Sort(int AdvertorialID,int Sort,int Type)
+        public ActionResult Sort(int AdvertorialID, int Sort, int Type)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
 

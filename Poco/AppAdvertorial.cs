@@ -59,5 +59,8 @@ namespace Poco
         [Display(Name = "软文类型")]
         public int EnumAdverTorialType { get; set; }
 
+        [Display(Name = "软文URL类型")]
+        public int? EnumAdverURLType { get; set; }
+
     }
 }

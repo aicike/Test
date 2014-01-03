@@ -67,6 +67,7 @@
     <Compile Include="ConversationDetailed.cs" />
     <Compile Include="Enum\EnumAdverTorialType.cs" />
     <Compile Include="Enum\EnumAdvertorialUType.cs" />
+    <Compile Include="Enum\EnumAdverURLType.cs" />
     <Compile Include="Enum\EnumReportForm.cs" />
     <Compile Include="Enum\EnumSurveyMainType.cs" />
     <Compile Include="Enum\EnumTaskStatus.cs" />
