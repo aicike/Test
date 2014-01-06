@@ -71,7 +71,28 @@ namespace Controllers
             {
                 ViewBag.RawUrl = filterContext.RequestContext.HttpContext.Request.UrlReferrer.AbsoluteUri;
             }
+
+            GetMenu3(controller, action);
             base.OnActionExecuting(filterContext);
+        }
+
+        /// <summary>
+        /// 获取3级菜单
+        /// </summary>
+        public virtual void GetMenu3(string controller, string action)
+        {
+            if (string.IsNullOrEmpty(controller) == false && string.IsNullOrEmpty(action) == false)
+            {
+                var menuModel = Injection.Factory.Get<Interface.IMenuModel>(Poco.SystemConst.IOC_Model.MenuModel);
+                var menu = menuModel.List_Cache().Where(a => a.Controller != null && a.Controller.Equals(controller, StringComparison.CurrentCultureIgnoreCase) 
+                    &&a.Action != null && a.Action.Equals(action, StringComparison.CurrentCultureIgnoreCase)
+                    &&a.Level==3).FirstOrDefault();
+                if (menu != null)
+                {
+                    var menuList = menuModel.GetMenuByRoleID(LoginAccount.RoleIDs, menu.ParentMenuID);
+                    ViewBag.Menu3List = menuList;
+                }
+            }
         }
     }
 }

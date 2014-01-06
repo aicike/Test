@@ -40,6 +40,8 @@ namespace Poco
 
         public bool IsAppMenu { get; set; }
 
+        public int Level { get; set; }
+
         public virtual Menu ParentMenu { get; set; }
 
         public virtual ICollection<Menu> Menus { get; set; }

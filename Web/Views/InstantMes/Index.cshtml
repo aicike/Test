@@ -1,7 +1,8 @@
 ﻿@{
     
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
-    ViewBag.Menu = Poco.SystemConst.Menu.UserManage;
+    ViewBag.Menu2 = Poco.SystemConst.Menu.UserManage;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.InstantMes;
     var groupList = ViewBag.GroupList as List<Poco.Group>;
 }
 @section head{
@@ -28,24 +29,11 @@
 
         }
 
-
         setInterval(SendMes, "10000");
 
 
     </script>
     <style>
-        .TabTitle
-        {
-            width: 100%;
-            font-size: 13px;
-            border-bottom: 1px solid #E7E7E7;
-            border-top: 1px solid #E7E7E7;
-        }
-        
-        .TabTitle th
-        {
-            height: 20px;
-        }
         .TabList
         {
             width: 100%;
@@ -66,26 +54,9 @@
 }
 @model PagedList<Poco.UnreadMessage>
 <div class="title">
-    用户管理
+    @Html.Partial("Menu3")
 </div>
 <div class="bodyLeft">
-    <ul class="ulList" id="ulGroup">
-        <li class="select"><a href="@Url.Action("Index", "InstantMes", new { HostName = ViewBag.HostName })">
-            销售消息 </a></li>
-        <li>@Html.ActionLink("销售与客户管理", "Index", "SalesMessage", new { HostName = ViewBag.HostName }, null, true)
-        </li>
-        <li style="height: 10px; background-color: #F4F4F4; border-bottom: 1px solid #E7E7E7;
-            border-top: 1px solid #E7E7E7"></li>
-        @foreach (var item in groupList)
-        {
-            
-            <li><a href="@Url.Action("Index", "UserManage", new { HostName = ViewBag.HostName, groupID = item.ID })">
-                @item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())
-            </a></li>
-        }
-    </ul>
-</div>
-<div class="bodyRight" style="padding: 14px 0px 0px 0px; width: 758px; background-color: #f1f1f1">
     <div class="option">
         <div id="Ts" onclick="javascript:window.top.location.reload()" style="display: none;
             height: 25px; width: 98%; margin: auto auto; line-height: 25px; font-size: 12px;
@@ -94,21 +65,7 @@
             <span id="sendCount">1</span>条新消息 , 点击查看
         </div>
     </div>
-    <div class="pages" style="font-size: 12px; margin: 10px 10px 10px auto">
-        @Html.Pager(Model, new PagerOptions
-   {
-       PageIndexParameterName = "ID",
-       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
-       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
-       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
-       CssClass = "manage_pages pages",
-       SeparatorHtml = "&nbsp;",
-       AutoHide = false,
-       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
-       ShowFirstLast = false
-   })
-    </div>
-    <table class="TabTitle" cellpadding="0" cellspacing="0">
+    <table class="TabTitle tableList" cellpadding="0" cellspacing="0">
         <tr>
             <th align="left" style="padding-left: 12px">
                 消息
@@ -192,7 +149,7 @@
                         else if (item.E == (int)Poco.Enum.EnumMessageType.Video)
                         { 
                             @:[视频]
-                                                }
+                                                                        }
                     </div>
                 </td>
             </tr>
@@ -217,6 +174,14 @@
        ShowFirstLast = false
    })
     </div>
+</div>
+<div class="bodyRight">
+    <ul class="ulList" id="ulGroup">
+        <li class="select"><a href="@Url.Action("Index", "InstantMes", new { HostName = ViewBag.HostName })">
+            销售消息 </a></li>
+        <li>@Html.ActionLink("销售与客户管理", "Index", "SalesMessage", new { HostName = ViewBag.HostName }, null, true)
+        </li>
+    </ul>
 </div>
 <div style="clear: both">
 </div>

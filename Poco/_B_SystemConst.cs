@@ -81,6 +81,7 @@ namespace Poco
             public const string Character = "Character";
             public const string VipInfo = "VipInfo";
             public const string CardInfo = "CardInfo";
+            public const string InstantMes = "InstantMes";
             
         }
 

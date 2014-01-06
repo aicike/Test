@@ -6,26 +6,44 @@
         menuList = Injection.Factory.Get<Interface.IMenuModel>(Poco.SystemConst.IOC_Model.MenuModel).GetMenuByRoleID(account.RoleIDs);
     }
 }
-<div style="width: 960px; margin: 0px auto 0px auto; height: 40px">
-    @{
-        if (account != null)
+@{
+    if (account != null)
+    {
+    <ul class="menu">
+        @foreach (var item in menuList)
         {
-        <ul class="menu">
-            @foreach (var item in menuList)
+            if (item.IsAppMenu == false)
             {
-                if (item.IsAppMenu == false)
-                {
-                    if (ViewBag.Menu == item.Controller)
-                    { 
-                <li class="select">@Html.ActionLink(item.Name, item.Action, item.Controller, new { Area = item.Area }, null)</li>   
+            <li><a class="menu1">@item.Name</a>
+                <ul class="submenu" id="submenu_@item.ID">
+                    @{var menu2s = item.Menus.OrderBy(a => a.Order);}
+                    @foreach (var menu2 in menu2s)
+                    {
+                        if (ViewBag.Menu2 == menu2.Controller)
+                        { 
+                        <li class="select">
+                            @Html.ActionLink(menu2.Name, menu2.Action, menu2.Controller, new { Area = menu2.Area }, null)
+                            <script>$(function () {$('#submenu_@item.ID').show();});</script>
+                        </li>
+                        }
+                        else
+                        { 
+                        <li>
+                            @Html.ActionLink(menu2.Name, menu2.Action, menu2.Controller, new { Area = menu2.Area }, null)
+                        </li>
+                        }
                     }
-                    else
-                    { 
-                <li>@Html.ActionLink(item.Name, item.Action, item.Controller, new { Area = item.Area }, null)</li>   
-                    }
-                }
+                </ul>
+            </li>
             }
-        </ul>
         }
+    </ul>
     }
-</div>
+}
+<script>
+    $(function () {
+        $(".menu1").click(function () {
+            $(this).next(".submenu").slideToggle('fast');
+        });
+    });
+</script>
