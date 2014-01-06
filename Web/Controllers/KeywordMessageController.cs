@@ -22,8 +22,8 @@ namespace Web.Controllers
             sb.Append("<ul id='browser'>");
             foreach (var item in list)
             {
-                sb.AppendFormat("<li><div class='keyLiTitle'>({0})&nbsp;&nbsp;<label>{1}</label>&nbsp;&nbsp;<a class='btnAddSub' fullRuleNo='{0}' ruleNo='{4}' parentID='{2}'>[添加子项]</a>&nbsp;<a class='btnEdit' keyID='{2}' fullRuleNo='{0}' ruleNo='{4}' parentID='{2}'>[修改]</a>&nbsp;<a onclick='return deleteItem({2})'>[删除]</a></div>{3}</li>",
-                    item.FullRuleNo, item.RuleName.Show(10, "..."), item.ID, GetHtml(item.AutoMessage_KeywordsKeyword), item.RuleNo);
+                sb.AppendFormat("<li><div class='keyLiTitle'>({0})&nbsp;<label>{1}</label>&nbsp;&nbsp;<a class='btnAddSub' fullRuleNo='{0}' ruleNo='{4}' parentID='{2}'>[添加子项]</a>&nbsp;<a class='btnEdit' keyID='{2}' fullRuleNo='{0}' ruleNo='{4}' parentID='{2}'>[修改]</a>&nbsp;<a class='btnDel'  onclick='return deleteItem({2})'>[删除]</a></div>{3}</li>",
+                    item.FullRuleNo, item.RuleName.Show(8, "..."), item.ID, GetHtml(item.AutoMessage_KeywordsKeyword), item.RuleNo);
             }
             sb.Append("</ul>");
             ViewBag.Tree = sb.ToString();
@@ -54,8 +54,8 @@ namespace Web.Controllers
             sb.Append("<ul>");
             foreach (var item in entitys)
             {
-                sb.AppendFormat("<li><div class='keyLiTitle'>({0})&nbsp;&nbsp;<label>{1}</label>&nbsp;&nbsp;<a class='btnAddSub' fullRuleNo='{0}' ruleNo='{4}' parentID='{2}'>[添加子项]</a>&nbsp;<a class='btnEdit' keyID='{2}' fullRuleNo='{0}' ruleNo='{4}' parentID='{2}'>[修改]</a>&nbsp;<a onclick='return deleteItem({2})'>[删除]</a></div>{3}</li>",
-                    item.FullRuleNo, item.RuleName.Show(10, "..."), item.ID, GetHtml(item.AutoMessage_KeywordsKeyword), item.RuleNo);
+                sb.AppendFormat("<li><div class='keyLiTitle'>({0})&nbsp;<label>{1}</label>&nbsp;&nbsp;<a class='btnAddSub' fullRuleNo='{0}' ruleNo='{4}' parentID='{2}'>[添加子项]</a>&nbsp;<a class='btnEdit' keyID='{2}' fullRuleNo='{0}' ruleNo='{4}' parentID='{2}'>[修改]</a>&nbsp;<a class='btnDel' onclick='return deleteItem({2})'>[删除]</a></div>{3}</li>",
+                    item.FullRuleNo, item.RuleName.Show(8, "..."), item.ID, GetHtml(item.AutoMessage_KeywordsKeyword), item.RuleNo);
             }
             sb.Append("</ul>");
             return sb.ToString();

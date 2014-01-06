@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
-    ViewBag.Menu = Poco.SystemConst.Menu.Set;
+    ViewBag.Menu2 = Poco.SystemConst.Menu.SurveyMain;
 }
 @section head{
     <script>
@@ -55,19 +55,8 @@
 @model PagedList<Poco.SurveyTrouble>
 <div class="title">
     调查问题列表</div>
-<div class="bodyLeft">
-    <ul class="ulList">
-        <li>@Html.ActionLink("个人信息", "Index", "Set", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li>@Html.ActionLink("基础设置", "Index", "BasisSet", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li class="select">@Html.ActionLink("调查问卷", "IndexMain", "SurveyMain", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li>@Html.ActionLink("App动态软文", "Index", "AppAdvertorial", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li>@Html.ActionLink("App销售端软文", "Index", "AppAdvertorialAccount", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li>@Html.ActionLink("App等待画面", "Index", "AppWaitImg", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li>@Html.ActionLink("关键词自动回复", "Index", "KeywordMessage", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li>@Html.ActionLink("安装App自动回复", "Index", "InstallAppReply", new { HostName = ViewBag.HostName }, null, true)</li>
-    </ul>
-</div>
-<div class="bodyRight">
+
+<div class="body">
     <fieldset style="font-size: 14px">
         <legend>@ViewBag.ShowTitle</legend>
         <div class="option">
@@ -78,7 +67,7 @@
                 <th style="width: 60px;">
                     题号
                 </th>
-                <th style="width: 300px">
+                <th style="width: 340px">
                     题目/问题名称
                 </th>
                 <th style="width: 135px;">
@@ -95,7 +84,7 @@
                         @item.TroubleNumber
                     </td>
                     <td class="operation">
-                        <div style="width: 300px; word-break: keep-all; white-space: nowrap; overflow: hidden;
+                        <div style="width: 340px; word-break: keep-all; white-space: nowrap; overflow: hidden;
                             text-overflow: ellipsis;">
                             <label name="labCbFirst" title="查看详细信息">
                                 <a onclick="ShowInfo(@item.ID)">@item.TroubleName</a>

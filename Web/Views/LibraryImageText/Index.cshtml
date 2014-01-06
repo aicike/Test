@@ -2,7 +2,8 @@
     
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
     var libraryType = ViewBag.LibraryType as List<Poco.LibraryType>;
-    ViewBag.Menu = Poco.SystemConst.Menu.LibraryImage;
+    ViewBag.Menu2 = Poco.SystemConst.Menu.LibraryImage;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.LibraryImageText;
 }
 @section head{
     <script type="text/javascript">
@@ -42,25 +43,10 @@
 }
 @model PagedList<Poco.LibraryImageText>
 <div class="title">
-    素材管理</div>
-<div class="bodyLeft">
-    <ul class="ulList" id="ulGroup">
-        @foreach (var item in libraryType)
-        {
-            if (item.ID == (int)Poco.Enum.EnumMessageType.ImageText)
-            { 
-            <li class="select"><a href="@Url.Action("Index", item.Token, new { HostName = ViewBag.HostName })">@item.Name&nbsp;(@item.Count)</a>
-            </li>
-            }
-            else
-            {  
-            <li><a href="@Url.Action("Index", item.Token, new { HostName = ViewBag.HostName })">@item.Name&nbsp;(@item.Count)</a>
-            </li>
-            }
-        }
-    </ul>
+    @Html.Partial("Menu3")
 </div>
-<div class="bodyRight">
+
+<div class="body">
     <div class="option">
         @Html.ActionLink("单图文消息", "Add", "LibraryImageText", new
    {

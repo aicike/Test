@@ -1,7 +1,8 @@
 ﻿@{
   
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
-    ViewBag.Menu = Poco.SystemConst.Menu.LibraryImage;
+    ViewBag.Menu2 = Poco.SystemConst.Menu.LibraryImage;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.LibraryImageText;
 }
 @section head{
     <link href="@Url.Content("~/Scripts/uploadify/uploadify.css")" rel="stylesheet" type="text/css" />
@@ -11,7 +12,7 @@
     <style>
         .divPreview
         {
-            width: 320px;
+            width: 250px;
             padding: 10px; /*margin-bottom: 26px;*/
             border: 1px solid #E7E7E7;
             background-color: #fff;
@@ -25,7 +26,7 @@
         }
         .divEdit
         {
-            width: 525px;
+            width: 465px;
             padding: 10px; /*margin-bottom: 26px;*/
             border: 1px solid #E7E7E7;
             background-color: #F4F4F4;
@@ -35,14 +36,14 @@
             border-radius: 5px;
             -webkit-border-radius: 5px;
             -moz-border-radius: 5px;
-            margin-left: 25px;
+            margin-left: 10px;
             float: left;
         }
         
         .item_img_maintext
         {
             position: absolute;
-            left: 130px;
+            left: 100px;
             top: 72px;
             z-index: 0;
         }
@@ -200,17 +201,18 @@
 }
 @model Poco.LibraryImageText
 <div class="title">
-    单图文消息</div>
+
+</div>
 <div class="body">
     <div class="divPreview">
-        <div id="itemMain_title" style="width: 300px; word-break: break-all; word-wrap: break-word;">
+        <div id="itemMain_title" style="width: 250px; word-break: break-all; word-wrap: break-word;">
             标题</div>
         <div style="height: 160px; position: relative; border: 1px solid #E7E7E7; margin-top: 10px;">
             <span class="item_img_maintext">封面图片</span>
-            <img id="imgCoverPreview" style="width: 298px; max-height: 160px; margin: auto 0px;
+            <img id="imgCoverPreview" style="width: 248px; max-height: 160px; margin: auto 0px;
                 z-index: 1; position: absolute;" />
         </div>
-        <div id="itemMain_summary" style="margin-top: 15px; margin-bottom: 10px; width: 300px;
+        <div id="itemMain_summary" style="margin-top: 15px; margin-bottom: 10px; width: 250px;
             word-wrap: break-word;">
             摘要
         </div>

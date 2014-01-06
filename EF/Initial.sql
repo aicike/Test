@@ -219,30 +219,30 @@ INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (28, 0, N'素材管理', NULL, N'LibraryImage', N'Index', 2, 8,0,2)
 -----------3级-------------
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (29, 0, N'用户管理', NULL, N'UserManage', N'Index', 1, 9,0,3)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (30, 0, N'销售与用户', NULL, N'InstantMes', N'Index', 2, 9,0,3)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (30, 0, N'销售消息', NULL, N'InstantMes', N'Index', 2, 9,0,3)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (31, 0, N'销售与用户管理', NULL, N'SalesMessage', N'Index', 3, 9,0,3)
 --
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (31, 0, N'新建消息', NULL, N'Message', N'Index', 1, 10,0,3)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (32, 0, N'已发送', NULL, N'Message', N'History', 2, 10,0,3)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (32, 0, N'新建消息', NULL, N'Message', N'Index', 1, 10,0,3)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (33, 0, N'已发送', NULL, N'Message', N'History', 2, 10,0,3)
 --
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (33, 0, N'会员信息', NULL, N'VipInfo', N'Index', 1, 11,0,3)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (34, 0, N'卡片管理', NULL, N'CardInfo', N'Index', 2, 11,0,3)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (34, 0, N'会员信息', NULL, N'VipInfo', N'Index', 1, 11,0,3)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (35, 0, N'卡片管理', NULL, N'CardInfo', N'Index', 2, 11,0,3)
 --
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (35, 0, N'单元管理', NULL, N'HouseInfo', N'Index', 1, 19,0,3)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (36, 0, N'户型管理', NULL, N'HouseType', N'Index', 2, 19,0,3)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (36, 0, N'单元管理', NULL, N'HouseInfo', N'Index', 1, 19,0,3)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (37, 0, N'户型管理', NULL, N'HouseType', N'Index', 2, 19,0,3)
 --
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (37, 0, N'图片素材', NULL, N'LibraryImage', N'Index', 1, 28,0,3)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (38, 0, N'语音素材', NULL, N'LibraryVoice', N'Index', 2, 28,0,3)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (39, 0, N'视频素材', NULL, N'LibraryVideo', N'Index', 3, 28,0,3)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (40, 0, N'图文素材', NULL, N'LibraryImageText', N'Index', 4, 28,0,3)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (38, 0, N'图片素材', NULL, N'LibraryImage', N'Index', 1, 28,0,3)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (39, 0, N'语音素材', NULL, N'LibraryVoice', N'Index', 2, 28,0,3)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (40, 0, N'视频素材', NULL, N'LibraryVideo', N'Index', 3, 28,0,3)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (41, 0, N'图文素材', NULL, N'LibraryImageText', N'Index', 4, 28,0,3)
 ----------4级--------------
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (41, 0, N'房屋管理', NULL, N'HouseInfoDetail', N'Index', 1, 35,0,3)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (42, 0, N'房屋管理', NULL, N'HouseInfoDetail', N'Index', 1, 36,0,3)
 --
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (42, 0, N'聊天窗口', NULL, N'SingleChat', N'Index', 1, 29,0,4)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (43, 0, N'即时消息', NULL, N'InstantMes', N'Index', 1, 30,0,4)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (44, 0, N'销售与客户管理', NULL, N'SalesMessage', N'Index', 2, 30,0,4)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (43, 0, N'聊天窗口', NULL, N'SingleChat', N'Index', 1, 29,0,4)
+
 -----------App菜单----------无需在web端上显示
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (45, 0, N'App权限', NULL, NULL, NULL, 9, NULL,1,1)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (46, 0, N'会员管理', NULL, NULL, NULL, 1, 45,1,1)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (44, 0, N'App权限', NULL, NULL, NULL, 9, NULL,1,1)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (45, 0, N'会员管理', NULL, NULL, NULL, 1, 44,1,1)
 SET IDENTITY_INSERT [dbo].[Menu] OFF
 
 -----------------------------[MenuOption]--------------------------
