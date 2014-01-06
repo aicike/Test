@@ -6,7 +6,8 @@
     var defaultGroupID = (int)ViewBag.DefaultGroupID;
     var hostName = ViewBag.HostName;
     var loginAccountID = (int)ViewBag.LoginAccountID;
-    ViewBag.Menu = Poco.SystemConst.Menu.UserManage;
+    ViewBag.Menu2 = Poco.SystemConst.Menu.UserManage;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.UserManage;
 }
 @section head{
     <script type="text/javascript">
@@ -160,51 +161,12 @@
 }
 @model PagedList<Poco.User>
 <div class="title">
-    用户管理</div>
-<div class="bodyLeft">
-    <ul class="ulList" id="ulGroup">
-        <li><a href="@Url.Action("Index", "InstantMes", new { HostName = ViewBag.HostName })">
-            销售消息 </a></li>
-        <li>@Html.ActionLink("销售与客户管理", "Index", "SalesMessage", new { HostName = ViewBag.HostName }, null, true)
-        </li>
-        <li style="height: 10px; background-color: #F4F4F4; border-bottom: 1px solid #E7E7E7;
-            border-top: 1px solid #E7E7E7"></li>
-        @foreach (var item in groupList)
-        {
-            if (item.ID == groupID)
-            { 
-            <li class="select"><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())</a>
-                @if (item.IsCanDelete)
-                {
-                    <span class="span_option"><span class="span_edit" value="@item.GroupName" gID="@item.ID">
-                        编辑</span><span class="span_delete" gID="@item.ID">删除</span></span>
-                }
-            </li>
-            }
-            else
-            {  
-            <li><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())</a>
-                @if (item.IsCanDelete)
-                {
-                    <span class="span_option"><span class="span_edit" value="@item.GroupName" gID="@item.ID">
-                        编辑</span><span class="span_delete" gID="@item.ID">删除</span></span>
-                }
-            </li>
-            }
-        }
-    </ul>
-    <div id="divAddGroup" style="height: 35px; border-top: none; padding-left: 15px;
-        cursor: pointer; display: none">
-        <input id="txtGroup" type="text" style="height: 24px; margin-top: 2px; width: 165px" />
-    </div>
-    <div id="btnAddGroup" style="height: 35px; line-height: 35px; border-top: 1px solid #E7E7E7;
-        border-bottom: 1px solid #E7E7E7; padding-left: 15px; cursor: pointer">
-        新建分组</div>
+    @Html.Partial("Menu3")
 </div>
-<div class="bodyRight">
+<div class="bodyLeft">
     <div class="option">
     </div>
-    <table class="tableList" style="line-height: 25px" cellpadding="0" cellspacing="0">
+    <table class="tableList cellpadding="0" cellspacing="0">
         <tr>
             <th style="width: 90px;">
                 头像
@@ -246,7 +208,7 @@
                             @if (string.IsNullOrEmpty(item.Name) == false)
                             {
                                 @:(@item.Name)
-                                                    }
+                                                                                                            }
                         </a>
                     </label>
                 </td>
@@ -301,6 +263,40 @@
        ShowFirstLast = false
    })
     </div>
+</div>
+<div class="bodyRight">
+    <ul class="ulList" id="ulGroup">
+        @foreach (var item in groupList)
+        {
+            if (item.ID == groupID)
+            { 
+            <li class="select"><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())</a>
+                @if (item.IsCanDelete)
+                {
+                    <span class="span_option"><span class="span_edit" value="@item.GroupName" gID="@item.ID">
+                        编辑</span><span class="span_delete" gID="@item.ID">删除</span></span>
+                }
+            </li>
+            }
+            else
+            {  
+            <li><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())</a>
+                @if (item.IsCanDelete)
+                {
+                    <span class="span_option"><span class="span_edit" value="@item.GroupName" gID="@item.ID">
+                        编辑</span><span class="span_delete" gID="@item.ID">删除</span></span>
+                }
+            </li>
+            }
+        }
+    </ul>
+    <div id="divAddGroup" style="height: 35px; border-top: none; padding-left: 15px;
+        cursor: pointer; display: none">
+        <input id="txtGroup" type="text" style="height: 24px; margin-top: 2px; width: 165px" />
+    </div>
+    <div id="btnAddGroup" style="height: 35px; line-height: 35px; border-top: 1px solid #E7E7E7;
+        border-bottom: 1px solid #E7E7E7; padding-left: 15px; cursor: pointer">
+        新建分组</div>
 </div>
 <div style="clear: both">
 </div>

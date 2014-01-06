@@ -916,6 +916,7 @@
     <Content Include="Views\Default\Questionnaire.cshtml" />
     <Content Include="Views\SurveyMain\AnswerInfo.cshtml" />
     <Content Include="Views\Default\ActivityInfo.cshtml" />
+    <Content Include="Views\Shared\Menu3.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

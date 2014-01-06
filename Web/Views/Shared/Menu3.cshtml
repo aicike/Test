@@ -1,0 +1,21 @@
+﻿@{
+    var menus = ViewBag.Menu3List as List<Poco.Menu>;    
+}
+@{
+    <ul id="tabs">
+        @if (menus != null)
+        {
+            foreach (var item in menus)
+            {
+                if (ViewBag.Menu3 == item.Controller)
+                {
+            <li id="current">@Html.ActionLink(item.Name, item.Action, item.Controller, new { Area = item.Area }, null)</li>                    
+                }
+                else
+                {
+            <li>@Html.ActionLink(item.Name, item.Action, item.Controller, new { Area = item.Area }, null)</li>
+                }
+            }
+        }
+    </ul>
+}

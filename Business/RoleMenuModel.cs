@@ -50,7 +50,7 @@ namespace Business
             string deleteOptionListSQL = "DELETE dbo.RoleOption WHERE RoleID=" + roleID;
             commonModel.SqlExecute(deleteOptionListSQL);
             //绑定新功能
-            if (menuIDs != null && menuOptionIDs.Length > 0)
+            if (menuOptionIDs!=null&&menuIDs != null && menuOptionIDs.Length > 0)
             {
                 StringBuilder addOptionListStringBuilder = new StringBuilder("INSERT dbo.RoleOption ( SystemStatus ,RoleID , MenuOptionID ) ");
                 foreach (var item in menuOptionIDs)
@@ -64,8 +64,6 @@ namespace Business
             CacheModel.ClearCache(SystemConst.Cache.Menu);
             CacheModel.ClearCache(SystemConst.Cache.RoleMenu);
             CacheModel.ClearCache(SystemConst.Cache.RoleOption);
-
-
             menuModel.ReSetCache();
             ReSetCache();
             roleOptionModel.ReSetCache();

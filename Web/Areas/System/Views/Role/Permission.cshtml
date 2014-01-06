@@ -96,21 +96,18 @@
                                     }
                                     <label for="menu_@subMenu.ID">@subMenu.Name</label></span>
                                     <ul>
-                                        @{
-                                    var subMenuOptions = subMenu.MenuOptions.Where(a => a.SystemStatus == 0);
-                                        }
-                                        @foreach (var option in subMenuOptions)
+                                        @foreach (var menu3 in subMenu.Menus.Where(a => a.SystemStatus == 0))
                                         {
                                             <li><span style="font-size: 14px;">
-                                                @if (currentRoleOptionList.Contains(option.ID))
+                                                @if (currentRoleOptionList.Contains(menu3.ID))
                                                 {
-                                                    <input type="checkbox" id="option_@option.ID" name="checkboxOption" value="@option.ID" checked="checked"/>
+                                                    <input type="checkbox" id="menu_@menu3.ID" name="checkboxMenu" value="@menu3.ID" checked="checked"/>
                                                 }
                                                 else
                                                 { 
-                                                    <input type="checkbox" id="option_@option.ID" name="checkboxOption" value="@option.ID"/>
+                                                    <input type="checkbox" id="menu_@menu3.ID" name="checkboxMenu" value="@menu3.ID"/>
                                                 }
-                                                <label for="option_@option.ID">@option.Name</label> </li>
+                                                <label for="menu_@menu3.ID">@menu3.Name</label> </li>
                                         }
                                     </ul>
                                 </li>

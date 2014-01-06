@@ -62,12 +62,12 @@ namespace Business
 
             if (menu == null) { return false; }
 
-            //判断有没有权限操作当前功能(Action)
-            IRoleOptionModel roleOptionModel = Factory.Get<IRoleOptionModel>(SystemConst.IOC_Model.RoleOptionModel);
-            var result = roleOptionModel.List_Cache().Any(a => roleID.Contains(a.RoleID) &&
-                                                         a.MenuOption.MenuID == menu.ID &&
-                                                         a.MenuOption.Action.Equals(action, StringComparison.CurrentCultureIgnoreCase));
-            return result;
+            ////判断有没有权限操作当前功能(Action)
+            //IRoleOptionModel roleOptionModel = Factory.Get<IRoleOptionModel>(SystemConst.IOC_Model.RoleOptionModel);
+            //var result = roleOptionModel.List_Cache().Any(a => roleID.Contains(a.RoleID) &&
+            //                                             a.MenuOption.MenuID == menu.ID &&
+            //                                             a.MenuOption.Action.Equals(action, StringComparison.CurrentCultureIgnoreCase));
+            return true;
         }
 
 
