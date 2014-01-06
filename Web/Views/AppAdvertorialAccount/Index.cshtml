@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
-    ViewBag.Menu = Poco.SystemConst.Menu.Set;
+    ViewBag.Menu2 = Poco.SystemConst.Menu.AppAdvertorialAccount;
 }
 @model PagedList<Poco.AppAdvertorial>
 @section head{
@@ -100,20 +100,9 @@
     </script>
 }
 <div class="title">
-    设置</div>
-<div class="bodyLeft">
-    <ul class="ulList">
-        <li>@Html.ActionLink("个人信息", "Index", "Set", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li>@Html.ActionLink("基础设置", "Index", "BasisSet", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li>@Html.ActionLink("调查问卷", "IndexMain", "SurveyMain", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li>@Html.ActionLink("App动态软文", "Index", "AppAdvertorial", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li class="select">@Html.ActionLink("App销售端软文", "Index", "AppAdvertorialAccount", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li>@Html.ActionLink("App等待画面", "Index", "AppWaitImg", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li>@Html.ActionLink("关键词自动回复", "Index", "KeywordMessage", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li>@Html.ActionLink("安装App自动回复", "Index", "InstallAppReply", new { HostName = ViewBag.HostName }, null, true)</li>
-    </ul>
-</div>
-<div class="bodyRight">
+    销售端资讯</div>
+
+<div class="body">
     <div class="option">
         @Html.ActionLink("添加", "Add", "AppAdvertorialAccount", new { HostName = ViewBag.HostName }, null, true)
         <input type="button" id="btnYL" class="button" style="margin-left: 10px; height: 30px"
@@ -166,33 +155,33 @@
                 }
                 else
                 {
-                    if (item.ContentURL.Contains("/Default/Questionnaire"))
+                    if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey)
                     {
-                        <td>
-                            <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id = item.ContentURL.Substring(item.ContentURL.LastIndexOf('=') + 1) })" target="_blank">
-                                <img style="width: 150px;  cursor:pointer; border:0 "   src="@Url.Content(item.AppShowImagePath ?? "")" /></a>
-                        </td>
-                        <td style="font-size: 14px" class="operation">
+                    <td>
+                        <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id = item.ContentURL.Substring(item.ContentURL.LastIndexOf('=') + 1) })" target="_blank">
+                            <img style="width: 150px;  cursor:pointer; border:0 "   src="@Url.Content(item.AppShowImagePath ?? "")" /></a>
+                    </td>
+                    <td style="font-size: 14px" class="operation">
+                        <label name="labCbFirst" title="@item.Depict"  style=" cursor:pointer">
                             <a  href="@Url.Action("TroubleStatistics", "SurveyMain", new { id = item.ContentURL.Substring(item.ContentURL.LastIndexOf('=') + 1) })"  target="_blank">
-                                <label name="labCbFirst" title="@item.Depict"  style=" cursor:pointer">
-                                    @item.Title
-                                </label>
+                                @item.Title
                             </a>
-                        </td>
+                        </label>
+                    </td>
                     }
                     else
                     { 
-                        <td>
-                            <a href="@item.ContentURL" target="_blank">
-                                <img style="width: 150px;  cursor:pointer; border:0 "   src="@Url.Content(item.AppShowImagePath ?? "")" /></a>
-                        </td>
-                        <td style="font-size: 14px" class="operation">
-                            <a  href="@item.ContentURL"  target="_blank">
-                                <label name="labCbFirst" title="@item.Depict"  style=" cursor:pointer">
-                                    @item.Title
-                                </label>
-                            </a>
-                        </td>
+                    <td>
+                        <a href="@item.ContentURL" target="_blank">
+                            <img style="width: 150px;  cursor:pointer; border:0 "   src="@Url.Content(item.AppShowImagePath ?? "")" /></a>
+                    </td>
+                    <td style="font-size: 14px" class="operation">
+                        <a  href="@item.ContentURL"  target="_blank">
+                            <label name="labCbFirst" title="@item.Depict"  style=" cursor:pointer">
+                                @item.Title
+                            </label>
+                        </a>
+                    </td>
                     }
                 }
                 <td style="font-size: 12px; color: #696969">
@@ -211,7 +200,7 @@
                     else
                     { 
                         @:无
-                                                                                                     }
+                                                                                                                         }
                 </td>
                 <td class="operation">
                     @Html.ActionLink("修改", "Edit", "AppAdvertorialAccount", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:10px" }, true)

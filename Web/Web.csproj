@@ -915,6 +915,7 @@
     <Content Include="Views\SurveyMain\SurveyUserList.cshtml" />
     <Content Include="Views\Default\Questionnaire.cshtml" />
     <Content Include="Views\SurveyMain\AnswerInfo.cshtml" />
+    <Content Include="Views\Default\ActivityInfo.cshtml" />
     <Content Include="Views\Shared\Menu3.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -939,6 +940,8 @@
           <DevelopmentServerPort>30062</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://192.168.1.166/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://192.168.1.166/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>True</UseCustomServer>
           <CustomServerUrl>http://192.168.1.166</CustomServerUrl>

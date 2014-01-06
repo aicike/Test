@@ -2,7 +2,8 @@
 
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
     var libraryType = ViewBag.LibraryType as List<Poco.LibraryType>;
-    ViewBag.Menu = Poco.SystemConst.Menu.LibraryImage;
+    ViewBag.Menu2 = Poco.SystemConst.Menu.LibraryImage;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.LibraryVoice;
 }
 @section head{
     <link href="@Url.Content("~/Scripts/uploadify/uploadify.css")" rel="stylesheet" type="text/css" />
@@ -125,25 +126,9 @@
 }
 @model PagedList<Poco.LibraryVoice>
 <div class="title">
-    素材管理</div>
-<div class="bodyLeft">
-    <ul class="ulList" id="ulGroup">
-        @foreach (var item in libraryType)
-        {
-            if (item.ID == (int)Poco.Enum.EnumMessageType.Voice)
-            { 
-            <li class="select"><a href="@Url.Action("Index", item.Token, new { HostName = ViewBag.HostName })">@item.Name&nbsp;(@item.Count)</a>
-            </li>
-            }
-            else
-            {  
-            <li><a href="@Url.Action("Index", item.Token, new { HostName = ViewBag.HostName })">@item.Name&nbsp;(@item.Count)</a>
-            </li>
-            }
-        }
-    </ul>
-</div>
-<div class="bodyRight">
+    @Html.Partial("Menu3")
+ </div>
+<div class="body">
     <div class="option">
         @if (MVCExpandMethod.CheckHasPermissions(this.ViewContext, "Upload", "LibraryVoice"))
         { 

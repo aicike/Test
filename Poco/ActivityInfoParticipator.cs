@@ -17,7 +17,7 @@ namespace Poco
         public virtual ActivityInfo ActivityInfo { get; set; }
 
         [Display(Name = "用户类型")]
-        public int? EnumClientUserTypeID { get; set; }
+        public int? EnumAdvertorialUType { get; set; }
 
         [Display(Name = "用户ID")]
         public int? UserID { get; set; }

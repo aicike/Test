@@ -59,6 +59,7 @@ namespace Web.Controllers
             else
             {
                 appAdver.Content = "";
+                appAdver.EnumAdverURLType = (int)EnumAdverURLType.Ordinary;
             }
             appAdver.EnumAdverTorialType = AType;
             appAdver.AccountMainID = LoginAccount.CurrentAccountMainID;
@@ -110,10 +111,19 @@ namespace Web.Controllers
             if (AType == (int)EnumAdverTorialType.txt)
             {
                 appadver.ContentURL = "http://";
+                appadver.EnumAdverURLType = null;
             }
             else
             {
                 appadver.Content = "";
+                if (appadver.EnumAdverURLType.HasValue)
+                {
+
+                }
+                else
+                {
+                    appadver.EnumAdverURLType = (int)EnumAdverURLType.Ordinary;
+                }
             }
             appadver.EnumAdverTorialType = AType;
             appadver.EnumAdvertorialUType = (int)EnumAdvertorialUType.AccountEnd;

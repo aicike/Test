@@ -55,7 +55,8 @@ namespace Poco
             public const string LoginAccount = "LoginAccount";
         }
 
-        public class Menu {
+        public class Menu
+        {
             private Menu() { }
 
             //平台
@@ -70,6 +71,9 @@ namespace Poco
             public const string UserManage = "UserManage";
             public const string Message = "Message";
             public const string LibraryImage = "LibraryImage";
+            public const string LibraryVoice = "LibraryVoice";
+            public const string LibraryVideo = "LibraryVideo";
+            public const string LibraryImageText = "LibraryImageText";
             public const string Account = "Account";
             public const string HousesMange = "HousesMange";
             public const string Set = "Set";
@@ -86,11 +90,21 @@ namespace Poco
             public const string HouseInfo = "HouseInfo";
             public const string HouseType = "HouseType";
             public const string HouseInfoDetail = "HouseInfoDetail";
-            
+            public const string AppWaitImg = "AppWaitImg";
+            public const string KeywordMessage = "KeywordMessage";
+            public const string BasisSet = "BasisSet";
+            public const string SurveyMain = "SurveyMain";
+            public const string AppAdvertorialAccount = "AppAdvertorialAccount";
+            public const string AppAdvertorial = "AppAdvertorial";
 
             //Action
             public const string History = "History";
             public const string Index = "Index";
+            public const string AppAdvertorialAccount = "AppAdvertorialAccount";
+            public const string AppAdvertorial = "AppAdvertorial";
+
+
+
         }
 
         public class IOC_Model
@@ -171,7 +185,7 @@ namespace Poco
             public const string CardPrefixModel = "CardPrefixModel";
             public const string VIPInfoExpenseDetailModel = "VIPInfoExpenseDetailModel";
             public const string FeedbackModel = "FeedbackModel";
-            
+
             public const string SurveyMainModel = "SurveyMainModel";
             public const string SurveyTroubleModel = "SurveyTroubleModel";
             public const string SurveyAnswerModel = "SurveyAnswerModel";
@@ -181,7 +195,7 @@ namespace Poco
 
 
 
-            
+
         }
     }
 }

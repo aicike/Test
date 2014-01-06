@@ -123,6 +123,25 @@ namespace Web.Controllers
             }
             else
             {
+
+                //用户端软文附加下载地址
+                ViewBag.Utype = advertorial.EnumAdvertorialUType;
+                if (advertorial.EnumAdvertorialUType == (int)EnumAdvertorialUType.UserEnd)
+                {
+                    var AccountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
+                    var AccountModel = AccountMainModel.Get(advertorial.AccountMainID);
+                    ViewBag.AMID = advertorial.AccountMainID;
+                    ViewBag.AMName = AccountModel.Name;
+                    if (!string.IsNullOrEmpty(AccountModel.AndroidDownloadPath))
+                    {
+                        ViewBag.AndroidURL = "http://" + SystemConst.WebUrl + Url.Content(AccountModel.AndroidDownloadPath ?? "");
+                    }
+                    if (!string.IsNullOrEmpty(AccountModel.IOSDownloadPath))
+                    {
+                        ViewBag.IOSURL = AccountModel.IOSDownloadPath;
+                    }
+
+                }
                 return View(advertorial);
             }
         }
@@ -221,6 +240,7 @@ namespace Web.Controllers
             }
         }
 
+        //------------------jquery mobile界面-------------------------------------------------
 
         /// <summary>
         /// 问题反馈
@@ -335,6 +355,88 @@ namespace Web.Controllers
             return RedirectToAction("Questionnaire", "Default", new { surveyMainID = surveyMainID, isok = 1 });
         }
 
+
+        /// <summary>
+        /// 活动展示界面
+        /// </summary>
+        /// <param name="ActivityID"></param>
+        /// <param name="imtimely_userid"></param>
+        /// <param name="imtimely_Apptype"></param>
+        /// <param name="?"></param>
+        /// <param name="isok"></param>
+        /// <returns></returns>
+        public ActionResult ActivityInfo(int ActivityID, int? imtimely_userid, int? imtimely_Apptype, int? isok)
+        {
+            ViewBag.ActivityID = ActivityID;
+            var ActivityModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
+            var Activity = ActivityModel.Get(ActivityID);
+            
+            if (isok.HasValue)
+            {
+                // 1 提交成功 2提交失败
+                ViewBag.isok = isok;
+            }
+            if (imtimely_userid.HasValue)
+            {
+                ViewBag.UID = imtimely_userid;
+
+                //判断是否报过名
+                var IActivityInfoParticipatorModelModel = Factory.Get<IActivityInfoParticipatorModel>(SystemConst.IOC_Model.ActivityInfoParticipatorModel);
+                Result result = IActivityInfoParticipatorModelModel.GetUserIsSignUP(imtimely_userid.Value,imtimely_Apptype.Value);
+                if (result.HasError)
+                {
+                    ViewBag.isSignUP = "true";
+                }
+                else {
+                    ViewBag.isSignUP = "false";
+                }
+
+            }
+            if (imtimely_Apptype.HasValue)
+            {
+                // 0用户端，1销售端
+                ViewBag.Utype = imtimely_Apptype;
+            }
+
+            //下载APP
+            var AccountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
+            var AccountModel = AccountMainModel.Get(Activity.AccountMainID);
+            ViewBag.AMID = Activity.AccountMainID;
+            ViewBag.AMName = AccountModel.Name;
+            if (!string.IsNullOrEmpty(AccountModel.AndroidDownloadPath))
+            {
+                ViewBag.AndroidURL = "http://" + SystemConst.WebUrl + Url.Content(AccountModel.AndroidDownloadPath ?? "");
+            }
+            if (!string.IsNullOrEmpty(AccountModel.IOSDownloadPath))
+            {
+                ViewBag.IOSURL = AccountModel.IOSDownloadPath;
+            }
+
+
+            return View(Activity);
+        }
+
+        [HttpPost]
+        public ActionResult AddActivityInfo(int ActivityID, int? UID, int? Utype)
+        {
+
+            ActivityInfoParticipator aip = new ActivityInfoParticipator();
+            aip.ActivityInfoID = ActivityID;
+            aip.JoinDateTime = DateTime.Now;
+            aip.Name = Request.Form["userName"];
+            aip.Phone = Request.Form["userPhone"];
+            if (UID.HasValue)
+            {
+                aip.UserID = UID.Value;
+            }
+            if (Utype.HasValue)
+            {
+                aip.EnumAdvertorialUType = Utype.Value;
+            }
+            var IActivityInfoParticipatorModelModel = Factory.Get<IActivityInfoParticipatorModel>(SystemConst.IOC_Model.ActivityInfoParticipatorModel);
+            IActivityInfoParticipatorModelModel.Add(aip);
+            return RedirectToAction("ActivityInfo", "Default", new { ActivityID = ActivityID, isok = 1 });
+        }
 
     }
 }

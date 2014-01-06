@@ -145,7 +145,7 @@
                         }
                         @if (Model.EnumSurveyMainType == (int)Poco.Enum.EnumSurveyMainType.Rate)
                         {
-                            <span style="font-size: 12px; color: #6c6c6c">| (满分:@(ViewBag.FullMarks)分 平均分:@(ViewBag.Average)分)</span>
+                            <span style="font-size: 12px; color: #6c6c6c">| (满分:<span style="color:Red">@(ViewBag.FullMarks)</span>分 平均分:<span style="color:Red">@(ViewBag.Average)</span>分)</span>
                         }
                     </td>
                 </tr>

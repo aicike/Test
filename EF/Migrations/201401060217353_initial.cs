@@ -1024,6 +1024,7 @@ namespace EF.Migrations
                         EnumAdvertorialUType = c.Int(nullable: false),
                         ContentURL = c.String(),
                         EnumAdverTorialType = c.Int(nullable: false),
+                        EnumAdverURLType = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
@@ -1351,7 +1352,7 @@ namespace EF.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         SystemStatus = c.Int(nullable: false),
                         ActivityInfoID = c.Int(nullable: false),
-                        EnumClientUserTypeID = c.Int(),
+                        EnumAdvertorialUType = c.Int(),
                         UserID = c.Int(),
                         Phone = c.String(nullable: false, maxLength: 15),
                         Name = c.String(maxLength: 30),
@@ -1410,6 +1411,8 @@ namespace EF.Migrations
                         Sql(commandText);
                 }
             }
+
+
         }
         
         public override void Down()

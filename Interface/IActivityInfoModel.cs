@@ -8,5 +8,6 @@ namespace Interface
 {
     public interface IActivityInfoModel : IBaseModel<ActivityInfo>
     {
+       
     }
 }

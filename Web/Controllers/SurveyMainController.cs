@@ -471,6 +471,7 @@ namespace Web.Controllers
             var main = MainModel.GetSurveyMainByID(id, LoginAccount.CurrentAccountMainID);
             appRW.Content = "";
             appRW.ContentURL = "http://" + SystemConst.WebUrl + "/Default/Questionnaire?surveyMainID=" + id;
+            appRW.EnumAdverURLType = (int)EnumAdverURLType.Survey;
             appRW.AccountMainID = LoginAccount.CurrentAccountMainID;
             appRW.AppShowImagePath = "~/Images/Survey.png";
             appRW.MainImagPath = "~/Images/Survey.png";

@@ -26,3 +26,6 @@ WebConfig中UpLodeFile节点值+“所属售楼部ID”+“.Message/”
 	视频+“/Video”
 	语音+“/Voice”
 	头像+“/HeadImage”
+
+----6.jquery mobile 主题编辑器
+http://themeroller.jquerymobile.com/

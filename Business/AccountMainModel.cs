@@ -422,7 +422,6 @@ namespace Business
         }
 
 
-
         [Transaction]
         public Result Edit_ByAccountMain(AccountMain accountMain)
         {
