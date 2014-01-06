@@ -65,6 +65,7 @@ a img
     min-height: 700px;
     background-color: #FdFdFd;
     border: 1px solid #E7E7E7;
+    float:left;
 }
 .menu
 {

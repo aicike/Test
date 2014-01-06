@@ -227,10 +227,13 @@ INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action
 
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu]) VALUES (35, 0, N'App销售端软文', NULL, N'AppAdvertorialAccount', N'Index', 5, 11,0)
 
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu]) VALUES (36, 0, N'调查问卷管理', NULL, N'SurveyMain', N'IndexMain', 7, 11,0)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu]) VALUES (36, 0, N'活动和调查', NULL, N'SurveyMain', N'IndexMain', 8, NULL,0)
 
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu]) VALUES (37, 0, N'App权限', NULL, NULL, NULL, 8, NULL,1)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu]) VALUES (37, 0, N'App权限', NULL, NULL, NULL, 9, NULL,1)
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu]) VALUES (38, 0, N'会员管理', NULL, NULL, NULL, 1, 37,1)
+
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu]) VALUES (39, 0, N'调查问卷管理', NULL, N'SurveyMain', N'IndexMain', 1, 36,0)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu]) VALUES (40, 0, N'活动管理', NULL, N'SurveyMain', N'IndexMain', 2, 36,0)
 SET IDENTITY_INSERT [dbo].[Menu] OFF
 
 -----------------------------[MenuOption]--------------------------
