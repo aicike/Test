@@ -1,20 +1,15 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
-    ViewBag.Menu = Poco.SystemConst.Menu.VipInfo;
+    ViewBag.Menu2 = Poco.SystemConst.Menu.VipInfo;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.VipInfo;
 }
 @model PagedList<Poco.VIPInfo>
 @section head{
-    
     <script>
         $(function () {
             $("#cardNum").val('@ViewBag.cardNum');
             $("#phoneNum").val('@ViewBag.phoneNum');
-        
         });
-    
-    
-
-
     
         //显示二维码
         function ShowMessage(Prefix,cardnums) {
@@ -42,32 +37,15 @@
                         }
                     }
                 });
-  
-
         }
-
-
-
-
-
-
-
-
     </script>
-
-
-
 }
 <div class="title">
-    会员管理</div>
-<div class="bodyLeft">
-    <ul class="ulList">
-        <li class="select">@Html.ActionLink("会员管理", "Index", "VipInfo", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li>@Html.ActionLink("卡片管理", "Index", "CardInfo", new { HostName = ViewBag.HostName }, null, true)</li>
-    </ul>
+    @Html.Partial("Menu3")
 </div>
-<div class="bodyRight" style="font-size: 14px">
-    <div class="option">@Html.ActionLink("添加", "Add", "VipInfo", new { HostName = ViewBag.HostName, id = ViewBag.HID }, null, true)   @Html.ActionLink("充值", "Recharge", "VipInfo", new { HostName = ViewBag.HostName, id = ViewBag.HID }, null, true)</div>
+<div class="body">
+    <div class="option">@Html.ActionLink("添加", "Add", "VipInfo", new { HostName = ViewBag.HostName, id = ViewBag.HID }, null, true)
+        @Html.ActionLink("充值", "Recharge", "VipInfo", new { HostName = ViewBag.HostName, id = ViewBag.HID }, null, true)</div>
     @using (Html.BeginForm("Index", "VipInfo", new { HostName = ViewBag.HostName }, FormMethod.Get, new { enctype = "multipart/form-data" }))
     {
         <table>
@@ -115,15 +93,19 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.User.UserLoginInfo.Name</td>
-                <td>@item.CardInfo.CardPrefix.PrefixName</td>
-                <td class="operation"><a onclick="ShowMessage('@item.CardInfo.CardPrefix.PrefixName','@item.CardInfo.CardNum')">@item.CardInfo.CardNum</a></td>
-                <td>@item.User.UserLoginInfo.Phone</td>
-                <td>@item.CardInfo.Balance</td>
-                  <td class="operation">
-
+                <td>@item.User.UserLoginInfo.Name
+                </td>
+                <td>@item.CardInfo.CardPrefix.PrefixName
+                </td>
+                <td class="operation">
+                    <a onclick="ShowMessage('@item.CardInfo.CardPrefix.PrefixName','@item.CardInfo.CardNum')">@item.CardInfo.CardNum</a>
+                </td>
+                <td>@item.User.UserLoginInfo.Phone
+                </td>
+                <td>@item.CardInfo.Balance
+                </td>
+                <td class="operation">
                     @Html.ActionLink("修改", "Edit", "VipInfo", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "" }, true)
-                 
                 </td>
             </tr>
         }
@@ -143,20 +125,14 @@
    })
     </div>
 </div>
-
-
 <div id="dialogShowMessage" title="" style="display: none">
     <table cellpadding="0" cellspacing="0" border="0" width="100%">
         <tr id="trImgText">
             <td>
-              <img id="codeImg" src="" width="250" height="250" />
+                <img id="codeImg" src="" width="250" height="250" />
             </td>
         </tr>
     </table>
 </div>
-
-
 <div style="clear: both">
 </div>
-
-

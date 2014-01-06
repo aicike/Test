@@ -1,11 +1,11 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
-    ViewBag.Menu = Poco.SystemConst.Menu.HousesMange;
+    ViewBag.Menu2 = Poco.SystemConst.Menu.HousesMange;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.HouseInfo;
 }
 
 @model PagedList<Poco.AccountMainHouseInfo>
-<div class="title">
-   @ViewBag.HostTitle->单元管理</div>
+<div class="title"></div>
 
     <div class="body">
     <div class="option">@Html.ActionLink("添加", "Add", "HouseInfo", new { HostName = ViewBag.HostName, id = ViewBag.HID }, null, true)</div>

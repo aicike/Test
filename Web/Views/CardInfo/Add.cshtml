@@ -1,8 +1,7 @@
 ﻿@{
-    ViewBag.Menu = Poco.SystemConst.Menu.VipInfo;
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
-
-
+    ViewBag.Menu2 = Poco.SystemConst.Menu.VipInfo;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.CardInfo;
     var frefix = ViewBag.Frefix as List<Poco.CardPrefix>;
 }
 @section head{
@@ -33,13 +32,7 @@
 <div class="title">
     添加卡片
 </div>
-<div class="bodyLeft">
-    <ul class="ulList">
-        <li>@Html.ActionLink("会员管理", "Index", "VipInfo", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li class="select">@Html.ActionLink("卡片管理", "Index", "CardInfo", new { HostName = ViewBag.HostName }, null, true)</li>
-    </ul>
-</div>
-<div class="bodyRight" style="font-size: 14px">
+<div class="body">
     @using (Ajax.BeginForm("Add", "CardInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
         <fieldset>

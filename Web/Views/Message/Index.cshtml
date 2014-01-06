@@ -2,7 +2,9 @@
 
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
     var groupList = ViewBag.GroupList as List<Poco.Group>;
-    ViewBag.Menu = Poco.SystemConst.Menu.Message;
+    ViewBag.Menu2 = Poco.SystemConst.Menu.Message;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.Message;
+    ViewBag.Menu3Action = Poco.SystemConst.Menu.Index;
 }
 @section head{
     <script type="text/javascript">
@@ -326,16 +328,18 @@
         {
             min-height: 220px;
         }
+       /* .ui-widget-content
+        {
+            border: none !important;
+            background:none;
+            }*/
     </style>
 }
 <div class="title">
-    消息管理</div>
-<div class="bodyLeft">
-    <ul class="ulList">
-        <li class="select">@Html.ActionLink("新建消息", "Index", "Message", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li>@Html.ActionLink("已发送", "History", "Message", new { HostName = ViewBag.HostName }, null, true)</li>
+    @Html.Partial("Menu3")
 </div>
-<div class="bodyRight">
+
+<div class="body">
     <div class="option">
         发送对象：<select id="selectUser">
             <option value="all">全部用户</option>
@@ -343,7 +347,7 @@
         </select>
     </div>
     <div class="tableList" id="tabs">
-        <ul>
+        <ul style="padding:0px;">
             <li><a href="#tabs-1">文字</a></li>
             <li><a class="btnLibrary" type="LibraryImage" href="#tabs-2">图片</a></li>
             <li><a class="btnLibrary" type="LibraryVoice" href="#tabs-3">语音</a></li>
@@ -356,14 +360,6 @@
                 还可以输入500字</div>
             <div style="clear: both">
             </div>
-        </div>
-        <div class="tab" id="tabs-2">
-        </div>
-        <div class="tab" id="tabs-3">
-        </div>
-        <div class="tab" id="tabs-4">
-        </div>
-        <div class="tab" id="tabs-5">
         </div>
     </div>
     <input type="button" value="发送消息" id="btnSend" class="button" />

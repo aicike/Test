@@ -99,7 +99,7 @@
                                         @foreach (var menu3 in subMenu.Menus.Where(a => a.SystemStatus == 0))
                                         {
                                             <li><span style="font-size: 14px;">
-                                                @if (currentRoleOptionList.Contains(menu3.ID))
+                                                @if (currentRoleMenuList.Contains(menu3.ID))
                                                 {
                                                     <input type="checkbox" id="menu_@menu3.ID" name="checkboxMenu" value="@menu3.ID" checked="checked"/>
                                                 }
@@ -107,7 +107,22 @@
                                                 { 
                                                     <input type="checkbox" id="menu_@menu3.ID" name="checkboxMenu" value="@menu3.ID"/>
                                                 }
-                                                <label for="menu_@menu3.ID">@menu3.Name</label> </li>
+                                                <label for="menu_@menu3.ID">@menu3.Name</label>
+                                                <ul>
+                                                    @foreach (var menu4 in menu3.Menus.Where(a => a.SystemStatus == 0))
+                                                    { 
+                                                        <li><span style="font-size: 14px;">
+                                                            @if (currentRoleMenuList.Contains(menu4.ID))
+                                                            {
+                                                                <input type="checkbox" id="menu_@menu4.ID" name="checkboxMenu" value="@menu4.ID" checked="checked"/>
+                                                            }
+                                                            else
+                                                            { 
+                                                                <input type="checkbox" id="menu_@menu4.ID" name="checkboxMenu" value="@menu4.ID"/>
+                                                            }
+                                                            <label for="menu_@menu4.ID">@menu4.Name</label> </li>
+                                                    }
+                                                </ul></li>
                                         }
                                     </ul>
                                 </li>

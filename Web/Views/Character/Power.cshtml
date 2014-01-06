@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
-    ViewBag.Menu = Poco.SystemConst.Menu.Character;
+    ViewBag.Menu2 = Poco.SystemConst.Menu.Character;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.Character;
 }
 @section head{
     <link href="@Url.Content("~/Scripts/treeview/jquery.treeview.css")" rel="stylesheet" type="text/css" />
@@ -97,21 +98,35 @@
                                     }
                                     <label for="menu_@subMenu.ID">@subMenu.Name</label></span>
                                     <ul>
-                                        @{
-                                    var subMenuOptions = subMenu.MenuOptions.Where(a => a.SystemStatus == 0 && AdminOptionList.Contains(a.ID));
-                                        }
-                                        @foreach (var option in subMenuOptions)
-                                        {
+                                        @foreach (var menu3 in subMenu.Menus.Where(a => a.SystemStatus == 0))
+                                        { 
                                             <li><span style="font-size: 14px;">
-                                                @if (currentRoleOptionList.Contains(option.ID))
+                                                @if (currentRoleMenuList.Contains(menu3.ID))
                                                 {
-                                                    <input type="checkbox" id="option_@option.ID" name="checkboxOption" value="@option.ID" checked="checked"/>
+                                                    <input type="checkbox" id="menu_@menu3.ID" name="checkboxMenu" value="@menu3.ID" checked="checked"/>
                                                 }
                                                 else
                                                 { 
-                                                    <input type="checkbox" id="option_@option.ID" name="checkboxOption" value="@option.ID"/>
+                                                    <input type="checkbox" id="menu_@menu3.ID" name="checkboxMenu" value="@menu3.ID"/>
                                                 }
-                                                <label for="option_@option.ID">@option.Name</label></li>
+                                                <label for="menu_@menu3.ID">@menu3.Name</label>
+                                                   <ul>
+                                                    @foreach (var menu4 in menu3.Menus.Where(a => a.SystemStatus == 0))
+                                                    { 
+                                                        <li><span style="font-size: 14px;">
+                                                            @if (currentRoleMenuList.Contains(menu4.ID))
+                                                            {
+                                                                <input type="checkbox" id="menu_@menu4.ID" name="checkboxMenu" value="@menu4.ID" checked="checked"/>
+                                                            }
+                                                            else
+                                                            { 
+                                                                <input type="checkbox" id="menu_@menu4.ID" name="checkboxMenu" value="@menu4.ID"/>
+                                                            }
+                                                            <label for="menu_@menu4.ID">@menu4.Name</label> </li>
+                                                    }
+                                                </ul>
+                                                
+                                                </li>
                                         }
                                     </ul>
                                 </li>

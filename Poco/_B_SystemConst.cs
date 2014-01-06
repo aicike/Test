@@ -82,7 +82,15 @@ namespace Poco
             public const string VipInfo = "VipInfo";
             public const string CardInfo = "CardInfo";
             public const string InstantMes = "InstantMes";
+            public const string Holiday = "Holiday";
+            public const string HouseInfo = "HouseInfo";
+            public const string HouseType = "HouseType";
+            public const string HouseInfoDetail = "HouseInfoDetail";
             
+
+            //Action
+            public const string History = "History";
+            public const string Index = "Index";
         }
 
         public class IOC_Model

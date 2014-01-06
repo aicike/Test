@@ -9,7 +9,21 @@
             {
                 if (ViewBag.Menu3 == item.Controller)
                 {
+                    if (ViewBag.Menu3Action != null)
+                    {
+                        if (ViewBag.Menu3Action == item.Action)
+                        { 
             <li id="current">@Html.ActionLink(item.Name, item.Action, item.Controller, new { Area = item.Area }, null)</li>                    
+                        }
+                        else
+                        { 
+            <li>@Html.ActionLink(item.Name, item.Action, item.Controller, new { Area = item.Area }, null)</li>        
+                        }
+                    }
+                    else
+                    {
+            <li id="current">@Html.ActionLink(item.Name, item.Action, item.Controller, new { Area = item.Area }, null)</li>   
+                    }
                 }
                 else
                 {

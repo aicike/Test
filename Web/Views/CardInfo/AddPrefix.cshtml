@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Menu = Poco.SystemConst.Menu.VipInfo;
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.VipInfo;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.CardInfo;
 }
 @section head{
     <script type="text/javascript">
@@ -27,13 +29,7 @@
 @model IQueryable<Poco.CardPrefix>
 <div class="title">
     前缀录入</div>
-<div class="bodyLeft">
-    <ul class="ulList">
-        <li>@Html.ActionLink("会员管理", "Index", "VipInfo", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li class="select">@Html.ActionLink("卡片管理", "Index", "CardInfo", new { HostName = ViewBag.HostName }, null, true)</li>
-    </ul>
-</div>
-<div class="bodyRight" style="font-size: 14px">
+<div class="body">
     <div class="option">
         @using (Ajax.BeginForm("AddPrefix", "CardInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
         {

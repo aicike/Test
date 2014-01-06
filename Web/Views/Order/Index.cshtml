@@ -1,11 +1,8 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
-    ViewBag.Menu = Poco.SystemConst.Menu.Order;
     var status = ViewData["Stutas"] as List<SelectListItem>;
-    
-    
-    
-    
+    ViewBag.Menu2 = Poco.SystemConst.Menu.Order;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.Order;
 }
 @functions{
     public Poco.OrderMIntermediate GetMintermediate(int OrderID)
@@ -52,7 +49,7 @@
 
 
         function LookInfo(ID) {
-            
+
             var YZUrl = '@Url.Action("OrderInfo", "Order", new { Area = "", HostName = "" })' + "?id=" + ID;
 
             $("#iframeshow").attr("src", YZUrl);
@@ -62,7 +59,7 @@
                 width: 590,
                 modal: true,
                 draggable: false,
-                close:function(event,ui){
+                close: function (event, ui) {
                     $("#iframeshow").attr("src", "");
                 },
                 buttons: {
@@ -113,13 +110,11 @@
 }
 @model PagedList<Poco.Order>
 <div class="title">
-    订单管理</div>
-
-
+    @Html.Partial("Menu3")</div>
 <div class="body">
     @using (Html.BeginForm("Index", "Order", new { HostName = ViewBag.HostName }, FormMethod.Get, new { enctype = "multipart/form-data" }))
     {
-        <table>
+        <table style="width:100%">
             <tr>
                 <td>
                     时间段：
@@ -138,6 +133,9 @@
                 <td>
                     <input type="text" id="orderNum" name="orderNum" />
                 </td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
                 <td>
                     手机号码：
                 </td>
@@ -162,7 +160,7 @@
         </table>
                
     }
-    <div class="pages" style="margin-bottom: 15px">
+    <div class="pages" style="margin-bottom: 5px;margin-top:10px;">
         @Html.Pager(Model, new PagerOptions
    {
        PageIndexParameterName = "ID",
@@ -213,14 +211,12 @@
             var minters = GetMintermediate(item.ID);
             var orderdetail = GetOrderDetail(item.ID);
             <tr>
-                <td style="height: 30px; padding-left: 15px; background-color: #E8F2FF; border-right:0px" colspan="6"
-                    align="left">
+                <td style="height: 30px; padding-left: 15px; background-color: #E8F2FF; border-right: 0px"
+                    colspan="6" align="left">
                     订单编号：@item.OrderNum &nbsp;&nbsp;&nbsp;&nbsp; 下单日期：@item.OrderDate.ToString("yyyy-MM-dd hh:mm")&nbsp;&nbsp;&nbsp;&nbsp;
-                    
-                   
                     联系电话：@item.OrderUserInfo.RPhone
                 </td>
-                <td class="operation" style=" background-color: #E8F2FF" >
+                <td class="operation" style="background-color: #E8F2FF">
                     <a onclick="LookInfo(@item.ID)">查看详细</a>
                 </td>
             </tr>
@@ -244,8 +240,9 @@
                                 </td>
                                 <td valign="top" align="left" style="font-size: 12px; border-right: 0px; word-wrap: break-word;
                                     padding-left: 10px; word-break: break-all" width="210px;" class="operation">
-                                    <a>@item2.ProductName</a><br /><br />
-                                    <span style="color: #808080; ">@item2.Specification</span>
+                                    <a>@item2.ProductName</a><br />
+                                    <br />
+                                    <span style="color: #808080;">@item2.Specification</span>
                                 </td>
                                 <td width="90px" style="border-right: 0px">
                                     @item2.Price
@@ -327,12 +324,10 @@
        ShowFirstLast = false
    })
     </div>
-
 </div>
-
 <div id="showOrderInfo" title="订单详细" style="display: none; overflow: hidden">
-    <iframe id="iframeshow" src="" style="width:570px; height: 540px; border: none;
+    <iframe id="iframeshow" src="" style="width: 570px; height: 540px; border: none;
         overflow: hidden"></iframe>
 </div>
-
-<div style=" clear:both"></div>
+<div style="clear: both">
+</div>
