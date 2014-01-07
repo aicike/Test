@@ -84,13 +84,20 @@ namespace Controllers
             if (string.IsNullOrEmpty(controller) == false && string.IsNullOrEmpty(action) == false)
             {
                 var menuModel = Injection.Factory.Get<Interface.IMenuModel>(Poco.SystemConst.IOC_Model.MenuModel);
-                var menu = menuModel.List_Cache().Where(a => a.Controller != null && a.Controller.Equals(controller, StringComparison.CurrentCultureIgnoreCase) 
-                    &&a.Action != null && a.Action.Equals(action, StringComparison.CurrentCultureIgnoreCase)
-                    &&a.Level==3).FirstOrDefault();
+                var menu = menuModel.List_Cache().Where(a => a.Controller != null && a.Controller.Equals(controller, StringComparison.CurrentCultureIgnoreCase)
+                    && a.Action != null && a.Action.Equals(action, StringComparison.CurrentCultureIgnoreCase)
+                    && a.Level == 3).FirstOrDefault();
                 if (menu != null)
                 {
                     var menuList = menuModel.GetMenuByRoleID(LoginAccount.RoleIDs, menu.ParentMenuID);
                     ViewBag.Menu3List = menuList;
+                }
+                var menuOptionModel = Injection.Factory.Get<Interface.IMenuOptionModel>(Poco.SystemConst.IOC_Model.MenuOptionModel);
+                var option = menuOptionModel.List_Cache().Where(a => a.Menu.Controller != null && a.Menu.Controller.Equals(controller, StringComparison.CurrentCultureIgnoreCase)
+                && a.Action != null && a.Action.Equals(action, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+                if (option != null)
+                {
+                    ViewBag.Menu3ActionPath = string.Format("{0} > {1}", option.Menu.Name, option.Name); ;
                 }
             }
         }

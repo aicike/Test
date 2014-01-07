@@ -7,7 +7,7 @@
 }
 @model Poco.OrderMType
 <div class="title">
-    修改订单类型
+    @Html.Partial("Menu3")
 </div>
 <div class="body">
     @using (Ajax.BeginForm("Edit", "OrderMType", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))

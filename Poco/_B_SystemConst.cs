@@ -36,6 +36,7 @@ namespace Poco
             public const string Menu = "Menu";
             public const string RoleMenu = "RoleMenu";
             public const string RoleOption = "RoleOption";
+            public const string MenuOption = "MenuOption";
             public const string LookupOption = "LookupOption";
         }
 
@@ -96,6 +97,7 @@ namespace Poco
             public const string SurveyMain = "SurveyMain";
             public const string AppAdvertorialAccount = "AppAdvertorialAccount";
             public const string AppAdvertorial = "AppAdvertorial";
+            public const string SalesMessage = "SalesMessage";
 
             //Action
             public const string History = "History";

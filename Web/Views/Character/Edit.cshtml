@@ -7,8 +7,7 @@
 @section head{
 }
 @model Poco.Role
-<div class="title">
-    修改角色</div>
+<div class="title">@Html.Partial("Menu3")</div>
 <div class="body">
     @using (Ajax.BeginForm("Edit", "Character", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
     {

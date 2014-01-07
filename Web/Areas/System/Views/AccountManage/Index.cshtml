@@ -13,21 +13,6 @@
 <div class="title">
     售楼部账户管理&nbsp;(@accountMain.Name)</div>
 <div class="bodyLeft">
-    <ul class="ulList">
-        @foreach (var item in roleList)
-        {
-            if (item.ID == roleID)
-            { 
-            <li class="select"><a href="@Url.Action("Index", "AccountManage", new { Area = "System", accountMainId = accountMain.ID, roleID = item.ID, index = 0 })">@item.Name&nbsp;(@item.Account_Roles.Count())</a></li>
-            }
-            else
-            {  
-            <li><a href="@Url.Action("Index", "AccountManage", new { Area = "System", accountMainId = accountMain.ID, roleID = item.ID, index = 0 })">@item.Name&nbsp;(@item.Account_Roles.Count())</a></li>
-            }
-        }
-    </ul>
-</div>
-<div class="bodyRight">
     <div class="option">@Html.ActionLink("添加", "AddAccount", "AccountManage", new { Area = "System", accountMainId = accountMain.ID }, null, true)</div>
     <table class="tableList" cellpadding="0" cellspacing="0">
         <tr>
@@ -108,7 +93,7 @@
                 <td class="operation">
                     @Html.ActionLink("修改", "EditAccount", "AccountManage", new { Area = "System", accountMainID = accountMain.ID, accountID = item.ID }, null)
                     @Ajax.ActionLink("删除", "DeleteAccount", "AccountManage", new { Area = "System", id = item.ID, accountMainId = accountMain.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("DeleteAccount", "AccountManage", new { Area = "System", id = item.ID, accountMainId = accountMain.ID }) + "',null)" })
-                     @Ajax.ActionLink("重置密码", "ResetPwd", "AccountManage", new { HostName = ViewBag.HostName, id = item.ID, mail = item.Email }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定要重置密码?','" + Url.Action("ResetPwd", "AccountManage", new { HostName = ViewBag.HostName, id = item.ID, mail = item.Email }) + "',null)" })
+                    @Ajax.ActionLink("重置密码", "ResetPwd", "AccountManage", new { HostName = ViewBag.HostName, id = item.ID, mail = item.Email }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定要重置密码?','" + Url.Action("ResetPwd", "AccountManage", new { HostName = ViewBag.HostName, id = item.ID, mail = item.Email }) + "',null)" })
                 </td>
             </tr>
         }
@@ -131,6 +116,21 @@
        ShowFirstLast = false
    })
     </div>
+</div>
+<div class="bodyRight">
+    <ul class="ulList">
+        @foreach (var item in roleList)
+        {
+            if (item.ID == roleID)
+            { 
+            <li class="select"><a href="@Url.Action("Index", "AccountManage", new { Area = "System", accountMainId = accountMain.ID, roleID = item.ID, index = 0 })">@item.Name&nbsp;(@item.Account_Roles.Count())</a></li>
+            }
+            else
+            {  
+            <li><a href="@Url.Action("Index", "AccountManage", new { Area = "System", accountMainId = accountMain.ID, roleID = item.ID, index = 0 })">@item.Name&nbsp;(@item.Account_Roles.Count())</a></li>
+            }
+        }
+    </ul>
 </div>
 <div style="clear: both">
 </div>

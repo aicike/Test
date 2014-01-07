@@ -43,7 +43,7 @@
     </script>
 }
 <div class="title">
-    
+    @Html.Partial("Menu3")
 </div>
 <div class="body">
     @using (Ajax.BeginForm("Add", "VipInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))

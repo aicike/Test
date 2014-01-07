@@ -195,7 +195,7 @@
 }
 @model PagedList<Poco.Message>
 <div class="title">
-    "@ViewBag.AccountName" 与  "@ViewBag.UserName" 的聊天记录</div>
+    "@ViewBag.AccountName" 与 "@ViewBag.UserName" 的聊天记录</div>
 <div class="body">
     <div id="div_data" style="padding: 0px 0px 25px 0px;">
         @foreach (var item in Model)
@@ -210,7 +210,7 @@
                         }
                         else
                         { 
-                            <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
+                        <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
                             
                         }
                     }
@@ -218,11 +218,11 @@
                     {
                         if (!string.IsNullOrEmpty(item.FromUser.UserLoginInfo.HeadImagePath))
                         { 
-                            <img id="imgUHead" style="max-width: 50px; max-height: 50px;" src="@Url.Content(item.FromUser.UserLoginInfo.HeadImagePath ?? "")" />
+                        <img id="imgUHead" style="max-width: 50px; max-height: 50px;" src="@Url.Content(item.FromUser.UserLoginInfo.HeadImagePath ?? "")" />
                         }
                         else
                         { 
-                            <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
+                        <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
                             
                         }
                     }
@@ -242,7 +242,7 @@
                             else
                             { 
                             @item.FromUser.Name @:(@item.FromUser.UserLoginInfo.Name)
-                                                                                            }
+                                                                                                                    }
                         }
                     </div>
                     <div style="margin-top: 10px; width: 510px; word-wrap: break-word; word-break: normal;">
@@ -335,7 +335,6 @@
         </div>
     </div>
 </div>
-
 <div id="dialogShowMessage" title="" style="display: none">
     <table cellpadding="0" cellspacing="0" border="0" width="100%">
         <tr id="trImg" align="center" style="">
@@ -350,13 +349,13 @@
         </tr>
         <tr id="trVideo">
             <td>
-                <video width="550px"  id="playerVideo" src="" controls="controls"></video>
+                <video width="550px" id="playerVideo" src="" controls="controls"></video>
             </td>
         </tr>
         <tr id="trImgText">
             <td>
                 <iframe id="iframeShowImgText" src="#" style="width: 540px; height: 530px; border: none;
-                    overflow:auto"></iframe>
+                    overflow: auto"></iframe>
             </td>
         </tr>
     </table>

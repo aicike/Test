@@ -28,7 +28,7 @@
 }
 @model IQueryable<Poco.CardPrefix>
 <div class="title">
-    前缀录入</div>
+    @Html.Partial("Menu3")</div>
 <div class="body">
     <div class="option">
         @using (Ajax.BeginForm("AddPrefix", "CardInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))

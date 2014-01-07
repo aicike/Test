@@ -7,7 +7,7 @@
 }
 @model Poco.User
 <div class="title">
-    用户管理</div>
+    @Html.Partial("Menu3")</div>
 <div class="bodyLeft">
     <ul class="ulList" id="ulGroup">
         <li><a href="@Url.Action("Index", "InstantMes", new { HostName = ViewBag.HostName })">

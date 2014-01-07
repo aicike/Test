@@ -101,7 +101,7 @@
 }
 @model Poco.CardInfo
 <div class="title">
-    会员充值
+    @Html.Partial("Menu3")
 </div>
 <div class="body">
     @using (Ajax.BeginForm("Recharge", "VipInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))

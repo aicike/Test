@@ -66,6 +66,35 @@ a img
     background-color: #FdFdFd;
     border: 1px solid #E7E7E7;
 }
+.systemmenu
+{
+    margin: 0 auto;
+    padding: 0;
+    display: inline;
+}
+.systemmenu li
+{
+    width: 100px;
+    float: left;
+    list-style-type: none;
+    display: block;
+    line-height: 40px;
+    font-size: 15px;
+    height: 40px;
+    color: White;
+}
+.systemmenu li a
+{
+    display: block;
+    cursor: pointer;
+    text-align: center;
+}
+.systemmenu li.select a
+{
+    background-color: #00869A;
+}
+
+
 .menu
 {
     margin: 0 auto;
@@ -137,7 +166,7 @@ a img
 }
 .body
 {
-    padding: 15px 20px;
+    padding: 8px 12px;
     line-height: 16px;
     font-size: 14px;
 }

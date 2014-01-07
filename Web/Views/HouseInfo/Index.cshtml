@@ -5,7 +5,8 @@
 }
 
 @model PagedList<Poco.AccountMainHouseInfo>
-<div class="title"></div>
+<div class="title">
+    @Html.Partial("SitePath")</div>
 
     <div class="body">
     <div class="option">@Html.ActionLink("添加", "Add", "HouseInfo", new { HostName = ViewBag.HostName, id = ViewBag.HID }, null, true)</div>

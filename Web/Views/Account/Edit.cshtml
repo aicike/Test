@@ -379,7 +379,7 @@
 }
 @model Poco.Account
 <div class="title">
-    修改账号</div>
+    @Html.Partial("Menu3")</div>
 <div class="body">
     @using (Html.BeginForm("Edit", "Account", new { HostName = @ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {

@@ -16,7 +16,7 @@
 }
 @model Poco.SurveyMain
 <div class="title">
-    创建调查问卷</div>
+    @Html.Partial("Menu3")</div>
 
 <div class="body">
     @using (Ajax.BeginForm("AddMain", "SurveyMain", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "BandSubmitClick()" }))

@@ -3,34 +3,28 @@
     ViewBag.Menu2 = Poco.SystemConst.Menu.HousesMange;
     ViewBag.Menu3 = Poco.SystemConst.Menu.HouseInfo;
 }
-
 @section head{
     <script type="text/javascript">
 
-    var isCommit = true;//验证只能连续点击一次添加按钮
-    
-    function BandSubmitClick() {
-       
-        if (!isCommit) {
-            return false;
+        var isCommit = true; //验证只能连续点击一次添加按钮
+
+        function BandSubmitClick() {
+
+            if (!isCommit) {
+                return false;
+            }
+            isCommit = false;
         }
-        isCommit = false;
-    }
-
-
-
     </script>
- }
-
+}
 @model Poco.AccountMainHouseInfo
 <div class="title">
-     @ViewBag.HostTitle->添加单元
+    @Html.Partial("SitePath")
 </div>
-
 <div class="body">
- @using (Ajax.BeginForm("Add", "HouseInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "BandSubmitClick()" }))
- {
-    <fieldset>
+    @using (Ajax.BeginForm("Add", "HouseInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "BandSubmitClick()" }))
+    {
+        <fieldset>
             <legend>基本信息</legend>
             <table class="tableForm">
                 <tr>
@@ -69,7 +63,6 @@
                     <td>@Html.ValidationMessageFor(a => a.NumberOfTheElevator)
                     </td>
                 </tr>
-                
                 <tr>
                     <td class="tdTitle">
                         <span class="Identification">*</span> 户数
@@ -80,11 +73,11 @@
                     </td>
                 </tr>
             </table>
-    </fieldset>
+        </fieldset>
      
      
-      <div class="action">
-            <input type="submit" id="btnSubmit"  class="button" value="保存" style=" margin-right:20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
-       </div>
- }
+        <div class="action">
+            <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }
 </div>

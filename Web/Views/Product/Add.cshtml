@@ -109,7 +109,7 @@
 }
 @model Poco.Product
 <div class="title">
-    添加产品
+    @Html.Partial("Menu3")
 </div>
 <div class="body">
     @using (Html.BeginForm("Add", "Product", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data"}))
