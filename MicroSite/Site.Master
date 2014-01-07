@@ -29,13 +29,13 @@
                 <ul>
                     <li><a href="Home.aspx" data-icon="grid">首页</a></li>
                     <li><a href="Shop.aspx" data-icon="star">商城</a></li>
-                    <li><a href="Center.aspx" data-icon="gear">个人中心</a></li>
+                    <li><a href="Center.aspx?ui-page=testpage" data-icon="gear">个人中心</a></li>
                     <li><a href="#" data-icon="arrow-l">购物车</a></li>
                 </ul>
             </div>
         </div>
         <!-- /container -->
-        <div role="main" class="ui-content">
+        <div role="main" class="ui-content" id="testpage">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>
