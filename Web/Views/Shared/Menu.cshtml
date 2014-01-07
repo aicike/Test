@@ -14,7 +14,10 @@
         {
             if (item.IsAppMenu == false)
             {
-            <li><a class="menu1">@item.Name</a>
+            <li><a class="menu1">
+                    @item.Name
+                    <img style=" float:right; width:14px ;margin-right:10px; margin-top:14px" t_val="0" src="@Url.Content("/images/zhankai_2.png")" />
+                </a>
                 <ul class="submenu" id="submenu_@item.ID">
                     @{var menu2s = item.Menus.OrderBy(a => a.Order);}
                     @foreach (var menu2 in menu2s)
@@ -23,7 +26,15 @@
                         { 
                         <li class="select">
                             @Html.ActionLink(menu2.Name, menu2.Action, menu2.Controller, new { Area = menu2.Area }, null)
-                            <script>$(function () {$('#submenu_@item.ID').show();});</script>
+                            <script>
+                                $(function () {
+                                    $('#submenu_@item.ID').prev("a").find("img").attr("src", '@Url.Content("/images/shouqi_2.png")');
+                                    $('#submenu_@item.ID').prev("a").find("img").attr("t_val", "1");
+                                    $('#submenu_@item.ID').show();
+
+                                });
+                            
+                            </script>
                         </li>
                         }
                         else
@@ -44,6 +55,18 @@
     $(function () {
         $(".menu1").click(function () {
             $(this).next(".submenu").slideToggle('fast');
+            var iszk = $(this).find("img").attr("t_val"); //0合并 1展开
+            if (iszk == 0) {
+                $(this).find("img").attr("src", '@Url.Content("/images/shouqi_2.png")');
+                $(this).find("img").attr("t_val", "1");
+            } else {
+                $(this).find("img").attr("src", '@Url.Content("/images/zhankai_2.png")');
+                $(this).find("img").attr("t_val", "0");
+            }
         });
+
+        $(".menu").attr("style", "min-height:" + $(".main").height() + "px");
     });
+
+
 </script>

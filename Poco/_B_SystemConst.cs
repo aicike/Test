@@ -98,7 +98,8 @@ namespace Poco
             public const string AppAdvertorialAccount = "AppAdvertorialAccount";
             public const string AppAdvertorial = "AppAdvertorial";
             public const string SalesMessage = "SalesMessage";
-
+            public const string ActivityInfo = "ActivityInfo";
+            
             //Action
             public const string History = "History";
             public const string Index = "Index";

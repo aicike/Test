@@ -29,7 +29,7 @@ namespace Web.Controllers
 
 
             string WebTitleRemark = SystemConst.WebTitleRemark;
-            string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-App动态软文", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-销售端资讯", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
             return View(list);
         }
@@ -39,7 +39,7 @@ namespace Web.Controllers
             ViewBag.HostName = LoginAccount.HostName;
 
             string WebTitleRemark = SystemConst.WebTitleRemark;
-            string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-App动态软文-添加项目", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-销售端资讯-添加项目", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
             return View();
         }
@@ -78,7 +78,7 @@ namespace Web.Controllers
             ViewBag.HostName = LoginAccount.HostName;
 
             string WebTitleRemark = SystemConst.WebTitleRemark;
-            string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-App动态软文-添加项目", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-销售端资讯-修改项目", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
 
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);

@@ -80,7 +80,17 @@
         </div>*@
         <div style="float: right; margin-top: 35px;">
             @if (account != null)
-            { 
+            {   
+                @*<a href="@Url.Action("index","Set")">
+                    @if (string.IsNullOrEmpty(account.HeadImagePath))
+                    { 
+                        <img src="@Url.Content("/Images/default_Avatar.png")" title="账号信息" style=" border:0px; width:56px"/>
+                    }
+                    else
+                    { 
+                        <img src="@Url.Content(account.HeadImagePath)" title="账号信息"  style=" border:0px; width:56px"/>
+                    }
+                </a>*@
                 <a id="btnLogOut" type="user">退出</a>
             }
         </div>

@@ -15,5 +15,13 @@ namespace Interface
         /// <param name="UserType"></param>
         /// <returns></returns>
         Result GetUserIsSignUP(int UserID, int UserType);
+
+        /// <summary>
+        /// 根据活动ID获取表面人信息
+        /// </summary>
+        /// <param name="ActivityID"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        IQueryable<ActivityInfoParticipator> GetAIPList(int ActivityID, int AMID);
     }
 }

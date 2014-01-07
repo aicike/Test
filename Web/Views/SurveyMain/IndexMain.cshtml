@@ -104,6 +104,7 @@
                         BtnOk: "确定"
                     });
                 }
+                $("#dialogShowRW").dialog("close");
             });
         }
 
@@ -184,8 +185,8 @@
                     }
                 </td>
                 <td class="operation">
-                    <label name="labCbFirst" title="生成软文">
-                        <a onclick="ShowAddress(@item.ID,'@item.SurveyTitle')">生成软文</a>
+                    <label name="labCbFirst" title="生成咨询">
+                        <a onclick="ShowAddress(@item.ID,'@item.SurveyTitle')">生成咨询</a>
                     </label>
                 </td>
                 <td class="operation">
