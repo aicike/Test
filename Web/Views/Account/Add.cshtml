@@ -368,7 +368,7 @@
 }
 @model Poco.Account_AccountMain
 <div class="title">
-    添加账号</div>
+    @Html.Partial("Menu3")</div>
 <div class="body">
     @using (Html.BeginForm("Add", "Account", new { HostName = @ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {

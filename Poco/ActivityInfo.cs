@@ -19,7 +19,7 @@ namespace Poco
         public virtual AccountMain AccountMain { get; set; }
 
         /// <summary>
-        /// 调查标题
+        /// 活动标题
         /// </summary>
         [Display(Name = "活动标题")]
         [Required(ErrorMessage = "请输入活动标题")]
@@ -27,11 +27,10 @@ namespace Poco
         public string Title { get; set; }
 
         /// <summary>
-        /// 调查备注或描述
+        /// 活动备注或描述
         /// </summary>
         [Display(Name = "活动备注或描述")]
         [Required(ErrorMessage = "请输入活动备注或描述")]
-        [StringLength(500, ErrorMessage = "长度小于500")]
         public string Remarks { get; set; }
 
         /// <summary>

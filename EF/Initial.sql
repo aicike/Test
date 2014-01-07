@@ -209,7 +209,7 @@ INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (20, 0, N'用户端资讯', NULL, N'AppAdvertorial', N'Index', 1,6,0,2)
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (21, 0, N'销售端资讯', NULL, N'AppAdvertorialAccount', N'Index', 2,6,0,2)
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (22, 0, N'调查问卷', NULL, N'SurveyMain', N'IndexMain', 3, 6,0,2)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (23, 0, N'活动', NULL, N'SurveyMain', N'IndexMain', 4, 6,0,2)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (23, 0, N'活动', NULL, N'ActivityInfo', N'Index', 4, 6,0,2)
 --
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (24, 0, N'售楼部信息', NULL, N'BasisSet', N'Index', 1, 7,0,2)
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (25, 0, N'关键词自动回复', NULL, N'KeywordMessage', N'Index', 2, 7,0,2)

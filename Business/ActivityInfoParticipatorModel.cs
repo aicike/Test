@@ -26,5 +26,17 @@ namespace Business
             }
             return result;
         }
+
+        /// <summary>
+        /// 根据活动ID获取表面人信息
+        /// </summary>
+        /// <param name="ActivityID"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public IQueryable<ActivityInfoParticipator> GetAIPList(int ActivityID, int AMID)
+        {
+            var list = List().Where(a => a.ActivityInfo.AccountMainID == AMID && a.ActivityInfoID == ActivityID);
+            return list;
+        }
     }
 }

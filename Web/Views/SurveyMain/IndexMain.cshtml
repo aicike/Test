@@ -104,6 +104,7 @@
                         BtnOk: "确定"
                     });
                 }
+                $("#dialogShowRW").dialog("close");
             });
         }
 
@@ -113,7 +114,8 @@
 }
 @model PagedList<Poco._B_SurveyMain>
 <div class="title">
-    调查问卷</div>
+    @Html.Partial("Menu3")
+</div>
 
 <div class="body">
     @*<fieldset style="font-size: 14px">
@@ -184,8 +186,8 @@
                     }
                 </td>
                 <td class="operation">
-                    <label name="labCbFirst" title="生成软文">
-                        <a onclick="ShowAddress(@item.ID,'@item.SurveyTitle')">生成软文</a>
+                    <label name="labCbFirst" title="生成咨询">
+                        <a onclick="ShowAddress(@item.ID,'@item.SurveyTitle')">生成咨询</a>
                     </label>
                 </td>
                 <td class="operation">

@@ -170,7 +170,7 @@ namespace Business
         public Result DelAppAdvertorial(int ID, int AdverTorialType)
         {
             var appadivertorial = base.Get(ID);
-            if (appadivertorial.MinImagePath.Substring(appadivertorial.MinImagePath.LastIndexOf('/')) != "/Survey.png")
+            if (appadivertorial.MinImagePath.Substring(appadivertorial.MinImagePath.LastIndexOf('/')) != "/Survey.png" && appadivertorial.MinImagePath.Substring(appadivertorial.MinImagePath.LastIndexOf('/')) != "/ActivityInfo.png")
             {
                 string path = HttpContext.Current.Server.MapPath(appadivertorial.MinImagePath);
                 if (File.Exists(path))
@@ -246,7 +246,7 @@ namespace Business
                     //缩略图mini
                     Tool.SuperGetPicThumbnail(imageshowPath, imageminiPath, 70, 120, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
 
-                    if (appadvertorials.MinImagePath.Substring(appadvertorials.MinImagePath.LastIndexOf('/')) != "/Survey.png")
+                    if (appadvertorials.MinImagePath.Substring(appadvertorials.MinImagePath.LastIndexOf('/')) != "/Survey.png" && appadvertorials.MinImagePath.Substring(appadvertorials.MinImagePath.LastIndexOf('/')) != "/ActivityInfo.png")
                     {
 
                         string path2 = HttpContext.Current.Server.MapPath(appadvertorials.MinImagePath);
@@ -334,7 +334,7 @@ namespace Business
                     //缩略图mini
                     Tool.SuperGetPicThumbnail(imageshowPath, imageminiPath, 70, 120, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
 
-                    if (appadvertorials.MinImagePath.Substring(appadvertorials.MinImagePath.LastIndexOf('/')) != "/Survey.png")
+                    if (appadvertorials.MinImagePath.Substring(appadvertorials.MinImagePath.LastIndexOf('/')) != "/Survey.png" && appadvertorials.MinImagePath.Substring(appadvertorials.MinImagePath.LastIndexOf('/')) != "/ActivityInfo.png")
                     {
 
                         string path2 = HttpContext.Current.Server.MapPath(appadvertorials.MinImagePath);

@@ -67,7 +67,7 @@
         {
             background-color: #ffffff;
             border: 1px solid #aaaaab;
-            padding: 15px 10px 15px 10px;
+            padding: 5px 10px 5px 10px;
             line-height: 30px;
             font-size: 14px;
             margin-bottom: 20px;
@@ -110,7 +110,7 @@
                 @Model.CreateDate
             </div>
             <div class="divRemarks">
-                @Html.Raw(Model.Remarks).
+                @Html.Raw(Model.Remarks)
             </div>
             @if (Model.Status == 1)
             { 
