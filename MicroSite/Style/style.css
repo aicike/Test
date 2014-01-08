@@ -1,16 +1,41 @@
-﻿
+﻿/*首页样式*/
+.listItem1:first-child
+{
+    margin-left: 0px;
+    float: left;
+}
+.listItem1
+{
+    width: 150px;
+    border: 1px solid black;
+    height: 150px;
+    float: right;
+    margin-left: 15px;
+}
+.listItem2:first-child
+{
+    margin-top: 0px;
+}
+
+.listItem2
+{
+    width: 100%;
+    border: 1px solid black;
+    height: 125px;
+    margin-top: 15px;
+}
+/*瀑布样式*/
 .BlocksIt
 {
-    position:relative;
-    }
+    position: relative;
+}
 
 .grid
 {
-    width: 188px;
     min-height: 100px;
     padding: 0px;
     background: #fff;
-    margin: 8px;
+    margin: 0px;
     font-size: 12px;
     float: left;
     box-shadow: 0 1px 3px rgba(34,25,25,0.4);

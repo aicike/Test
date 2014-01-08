@@ -7,12 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace MicroSite
 {
-    public partial class Site : System.Web.UI.MasterPage
+    public partial class WebForm1 : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           // Request.QueryString
-           // ViewState["menu"] = "123123";
+
         }
     }
 }

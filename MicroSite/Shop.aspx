@@ -6,14 +6,15 @@
         $(function () {
             $('.BlocksIt').BlocksIt({
                 numOfCol: 3,
-                offsetX: 15,
-                offsetY: 15
+                offsetX: 5,
+                offsetY: 5
             });
         });
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     商场
+
     <div class="BlocksIt">
         <div class="grid">
             分类1<br />
