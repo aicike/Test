@@ -53,6 +53,7 @@
   <ItemGroup>
     <Content Include="Center.aspx" />
     <Content Include="Home.aspx" />
+    <Content Include="Image\366585.jpg" />
     <Content Include="Image\test.jpg" />
     <Content Include="NewDetail.aspx" />
     <Content Include="News.aspx" />
@@ -141,14 +142,15 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>29805</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://192.168.1.138:8080</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://192.168.1.138:8080</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>True</UseCustomServer>
+          <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>http://192.168.1.166:8080/home.aspx</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
