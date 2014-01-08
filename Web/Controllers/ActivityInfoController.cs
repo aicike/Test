@@ -157,7 +157,7 @@ namespace Web.Controllers
             appRW.AppShowImagePath = "~/Images/ActivityInfo.png";
             appRW.MainImagPath = "~/Images/ActivityInfo.png";
             appRW.MinImagePath = "~/Images/ActivityInfo.png";
-            appRW.Depict = "描述";
+            appRW.Depict = main.Title;
             appRW.EnumAdverTorialType = (int)EnumAdverTorialType.url;
             appRW.EnumAdvertorialUType = client;
             appRW.IssueDate = DateTime.Now;

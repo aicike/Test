@@ -13,8 +13,8 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    商场
-    <div class="BlocksIt">
+  
+    <div class="BlocksIt" >
         <div class="grid">
             分类1<br />
         </div>
