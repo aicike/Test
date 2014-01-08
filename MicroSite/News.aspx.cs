@@ -7,12 +7,10 @@ using System.Web.UI.WebControls;
 
 namespace MicroSite
 {
-    public partial class Site : System.Web.UI.MasterPage
+    public partial class News : BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           // Request.QueryString
-           // ViewState["menu"] = "123123";
         }
     }
 }
