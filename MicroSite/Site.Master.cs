@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Poco;
 
 namespace MicroSite
 {
@@ -11,8 +12,8 @@ namespace MicroSite
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           // Request.QueryString
-           // ViewState["menu"] = "123123";
+            var menu = Session[SystemConst.Session.MicroSiteMenu] == null ? EnumMenu.Home : (EnumMenu)Convert.ToInt32(Session[SystemConst.Session.MicroSiteMenu]);
+            ViewState["menu"] = menu;
         }
     }
 }

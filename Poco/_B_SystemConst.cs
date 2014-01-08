@@ -56,6 +56,8 @@ namespace Poco
             public const string LoginAccount = "LoginAccount";
 
             public const string LoginUser = "LoginUser";
+
+            public const string MicroSiteMenu = "MicroSiteMenu";
         }
 
         public class Menu

@@ -11,6 +11,7 @@ namespace MicroSite
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            BaseMenu = EnumMenu.Home;
         }
     }
 }

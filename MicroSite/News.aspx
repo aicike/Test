@@ -2,12 +2,10 @@
     CodeBehind="News.aspx.cs" Inherits="MicroSite.News" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
-ui-btn-active
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <ul data-role="listview" data-inset="true">
-        <li><a href="#">
+    <ul data-role="listview" data-inset="false">
+        <li><a href="NewDetail.aspx">
             <img src="Image/test.jpg">
             <h2>
                 Broken Bells</h2>

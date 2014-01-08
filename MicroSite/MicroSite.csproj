@@ -54,6 +54,7 @@
     <Content Include="Center.aspx" />
     <Content Include="Home.aspx" />
     <Content Include="Image\test.jpg" />
+    <Content Include="NewDetail.aspx" />
     <Content Include="News.aspx" />
     <Content Include="Shop.aspx" />
     <Content Include="Style\style.css" />
@@ -83,6 +84,13 @@
     </Compile>
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NewDetail.aspx.cs">
+      <DependentUpon>NewDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NewDetail.aspx.designer.cs">
+      <DependentUpon>NewDetail.aspx</DependentUpon>
     </Compile>
     <Compile Include="News.aspx.cs">
       <DependentUpon>News.aspx</DependentUpon>
