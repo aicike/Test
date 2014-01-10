@@ -326,6 +326,8 @@
     <Content Include="Scripts\nivoSlider\style.css" />
     <Content Include="Scripts\ReportJS\Report.css" />
     <Content Include="Scripts\ReportJS\Report.js" />
+    <Content Include="Scripts\royalslider\royalslider.css" />
+    <Content Include="Scripts\royalslider\royalslider.min.js" />
     <Content Include="Scripts\tytabs.js" />
     <Content Include="Scripts\JSONLoader.js" />
     <Content Include="Scripts\Highcharts\adapters\mootools-adapter.js" />
@@ -363,6 +365,8 @@
     <Content Include="Scripts\ToolTip\jquery.tipTip.minified.js" />
     <Content Include="Scripts\ToolTip\tipTip.css" />
     <Content Include="Scripts\uploadify\uploadify-cancel.png" />
+    <Content Include="Scripts\waterfall\jquery.infinitescroll.js" />
+    <Content Include="Scripts\waterfall\jquery.masonry.js" />
     <Content Include="ueditor\net\Uploader.cs">
       <SubType>Code</SubType>
     </Content>
