@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <script src="http://192.168.1.166/Scripts/jquery-1.8.3.min.js" type="text/javascript"></script>
+    <link href="NewFolder1/royalslider.css" rel="stylesheet" type="text/css" />
+    <script src="NewFolder1/royalslider.min.js" type="text/javascript"></script>
+
+    <script>
+
+        jQuery(document).ready(function ($) {
+            var si = $('#royalSlider').royalSlider({
+                addActiveClass: true,
+                arrowsNav: false,
+                controlNavigation: 'none',
+                autoScaleSlider: true,
+                autoScaleSliderWidth: 960,
+                autoScaleSliderHeight: 500,
+                loop: false,
+                fadeinLoadedSlide: false,
+                globalCaption: true,
+                keyboardNavEnabled: true,
+                globalCaptionInside: true,
+
+                visibleNearby: {
+                    enabled: true,
+                    centerArea: 0.5,
+                    center: true,
+                    breakpoint: 100,
+                    breakpointCenterArea: 0.5,
+                    navigateByCenterClick: true
+                }
+            });
+
+
+
+
+        });
+
+
+
+
+    </script>
+    <style>
+         body
+         {
+              margin:0px;
+             }
+        .visibleNearby
+        {
+            width: 100%;
+            background: #141414;
+            color: #FFF;
+            padding-top: 10px;
+            padding-bottom:10px;
+        }
+        .visibleNearby .rsGCaption
+        {
+            font-size: 16px;
+            line-height: 18px;
+            padding: 12px 0 16px;
+            background: #141414;
+            width: 100%;
+            position: static;
+            float: left;
+            left: auto;
+            bottom: auto;
+            text-align: center;
+        }
+        .visibleNearby .rsGCaption span
+        {
+            display: block;
+            clear: both;
+            color: #bbb;
+            font-size: 14px;
+            line-height: 22px;
+        }
+        
+        
+        /* Scaling transforms */
+        .visibleNearby .rsSlide img
+        {
+            opacity: 0.45;
+            -webkit-transition: all 0.3s ease-out;
+            -moz-transition: all 0.3s ease-out;
+            transition: all 0.3s ease-out;
+            -webkit-transform: scale(0.9);
+            -moz-transform: scale(0.9);
+            -ms-transform: scale(0.9);
+            -o-transform: scale(0.9);
+            transform: scale(0.9);
+          
+        }
+        .visibleNearby .rsActiveSlide img
+        {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            -moz-transform: scale(1);
+            -ms-transform: scale(1);
+            -o-transform: scale(1);
+            transform: scale(1);
+        }
+        
+    
+    </style>
+</head>
+<body>
+    <div id="royalSlider" class="visibleNearby" style="background-color: #000">
+        <!-- simple image slide -->
+
+
+        <img src="Image/366585.jpg" />
+        <img src="Image/gotop.png" />
+        <img src="Image/AppDefault.png" />
+        <img src="Image/366585.jpg" />
+        <img src="Image/gotop.png" />
+        <img src="Image/AppDefault.png" />
+        <!-- lazy loaded image slide -->
+        <!--<a class="rsImg" href="image.jpg">image desc</a>-->
+       
+
+
+    </div>
+</body>
+</html>

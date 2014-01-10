@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace MicroSite
 {
-    public partial class Shop : BasePage
+    public partial class ProductInfo : BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
