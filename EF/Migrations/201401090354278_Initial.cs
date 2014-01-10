@@ -1334,7 +1334,7 @@ namespace EF.Migrations
                         SystemStatus = c.Int(nullable: false),
                         AccountMainID = c.Int(nullable: false),
                         Title = c.String(nullable: false, maxLength: 50),
-                        Remarks = c.String(nullable: false, maxLength: 500),
+                        Remarks = c.String(nullable: false),
                         AccountID = c.Int(nullable: false),
                         CreateDate = c.DateTime(nullable: false),
                         Status = c.Int(nullable: false),
@@ -1397,7 +1397,6 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
-
 
 
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\EF");

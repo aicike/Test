@@ -5,26 +5,18 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <ul data-role="listview" data-inset="false">
-        <li><a href="NewDetail.aspx">
-            <img src="Image/test.jpg">
-            <h2>
-                Broken Bells</h2>
-            <p>
-                Broken Bells</p>
-        </a></li>
-        <li><a href="#">
-            <img src="Image/test.jpg">
-            <h2>
-                Warning</h2>
-            <p>
-                Hot Chip</p>
-        </a></li>
-        <li><a href="#">
-            <img src="Image/test.jpg">
-            <h2>
-                Wolfgang Amadeus Phoenix</h2>
-            <p>
-                Phoenix</p>
-        </a></li>
+        <asp:Repeater runat="server" ID="repeaterNews">
+            <ItemTemplate>
+                <li><a href="NewDetail.aspx" style="padding-left: 119px;">
+                    <%--<div style="float:left;height:80px;overflow: hidden;width:108px;position: absolute;left: 1px;top: 0;">--%>
+                    <img src="<%#Eval("S")%>" style="max-height: 80px;height:80px; width: 109px;max-width:109px;">
+                    <%--</div>--%>
+                    <h2>
+                        <%#Eval("T")%></h2>
+                    <p>
+                        <%#Eval("P")%></p>
+                </a></li>
+            </ItemTemplate>
+        </asp:Repeater>
     </ul>
 </asp:Content>

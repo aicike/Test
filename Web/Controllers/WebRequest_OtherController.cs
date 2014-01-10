@@ -157,9 +157,6 @@ namespace Web.Controllers
             {
                 RListImg = list.Where(a => a.stick == 0 && a.ID < ID).ToPagedList(1, ListCnt);
             }
-
-
-
             List<_B_Advertorial> TitleShow = new List<_B_Advertorial>();
             if (RtitleImg != null)
             {

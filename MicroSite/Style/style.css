@@ -8,10 +8,46 @@
 .listItem2
 {
     width: 100%;
-    border: 1px solid black;
     height: 125px;
     margin-top: 15px;
 }
+.listItem2 > div
+{
+    float: left;
+}
+.listItem_text
+{
+    width: 40%;
+    background-color: #66CDAA;
+    height: 100%;
+    text-align: center;
+    display: table;
+}
+.listItem_text div
+{
+    width: 80%;
+    vertical-align: middle;
+    display: table-cell;
+}
+.listItem_img
+{
+    width: 60%;
+    overflow: hidden;
+}
+.listItem_img img
+{
+    width: 100%;
+    height: 100%;
+}
+/*文字样式*/
+.font_title
+{
+    text-shadow: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 14px;
+}
+
 /*瀑布样式*/
 .BlocksIt
 {

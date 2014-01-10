@@ -58,6 +58,8 @@ namespace Poco
             public const string LoginUser = "LoginUser";
 
             public const string MicroSiteMenu = "MicroSiteMenu";
+
+            public const string CurrentAccountMainID = "CurrentAccountMainID";
         }
 
         public class Menu

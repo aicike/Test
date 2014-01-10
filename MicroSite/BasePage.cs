@@ -12,10 +12,20 @@ namespace MicroSite
         {
             get
             {
-                var account = Session[SystemConst.Session.LoginUser] as User;
-                return account;
+                var user = Session[SystemConst.Session.LoginUser] as User;
+                return user;
             }
             set { Session[SystemConst.Session.LoginUser] = value; }
+        }
+
+        protected int CurrentAccountMainID
+        {
+            get
+            {
+                var accountMainID = Session[SystemConst.Session.CurrentAccountMainID] == null ? 0 : Convert.ToInt32(Session[SystemConst.Session.CurrentAccountMainID]);
+                return accountMainID;
+            }
+            set { Session[SystemConst.Session.CurrentAccountMainID] = value; }
         }
 
         protected EnumMenu BaseMenu
