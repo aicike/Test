@@ -45,13 +45,13 @@
                     <li><a href="Home.aspx" data-icon="grid" class="menu1">户型介绍</a></li>
                     <li><a href="Shop.aspx" data-icon="star" data-ajax="false" class="menu2">商城</a></li>
                     <li><a href="Center.aspx" data-icon="gear" class="menu3">个人中心</a></li>
-                    <li><a href="NewFolder1/demo.html" data-icon="arrow-l" id="menu4">购物车</a></li>
+                    <li><a href="#" data-icon="arrow-l" id="menu4">购物车</a></li>
                 </ul>
             </div>
         </div>
         <!-- /container -->
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
         <div data-role="footer" data-position="fixed" data-theme="b">
             底部
         </div>
