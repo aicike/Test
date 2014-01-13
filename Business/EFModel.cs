@@ -14,7 +14,7 @@ namespace Business
 {
     public class EFModel
     {
-        public Context Context;
+        public BaseContext Context;
 
         public T Get<T>(int id) where T : class, IBaseEntity
         {
@@ -50,7 +50,7 @@ namespace Business
 
             //方法2
             Context.Set<T>().Attach(entity);
-            Context.Entry(entity).State = EntityState.Modified;
+            Context.Entry(entity).State = System.Data.Entity.EntityState.Modified;
             return SaveChanges();
         }
 
@@ -63,7 +63,7 @@ namespace Business
             }
             Context.Configuration.ValidateOnSaveEnabled = false;
             entity.SystemStatus = (int)EnumSystemStatus.Delete;
-            Context.Entry(entity).State = EntityState.Modified;
+            Context.Entry(entity).State = System.Data.Entity.EntityState.Modified;
 
             return SaveChanges();
         }
@@ -75,7 +75,7 @@ namespace Business
             {
                 return new Result("未找到数据");
             }
-            Context.Entry(entity).State = EntityState.Deleted;
+            Context.Entry(entity).State = System.Data.Entity.EntityState.Deleted;
             return SaveChanges();
         }
 

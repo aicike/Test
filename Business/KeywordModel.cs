@@ -20,9 +20,8 @@ namespace Business
                 foreach (var item in keywords)
                 {
                     item.SystemStatus = (int)EnumSystemStatus.Active;
-                    Context.Keyword.Add(item);
+                    base.Add(item);
                 }
-                Context.SaveChanges();
             }
             catch (Exception ex)
             {

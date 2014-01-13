@@ -109,7 +109,7 @@ namespace Web.Controllers
 
         public void SendMessage()
         {
-          
+
             if (Connection != null)
             {
 
@@ -138,7 +138,7 @@ namespace Web.Controllers
             }
         }
 
-        static XmppClientConnection Connection ;
+        static XmppClientConnection Connection;
 
         //登陆XMPP
         public void TreedCon()
@@ -189,7 +189,7 @@ namespace Web.Controllers
             {
                 ViewBag.userid = imtimely_userid;
             }
-            else if(imtimely_accountid.HasValue)
+            else if (imtimely_accountid.HasValue)
             {
                 ViewBag.accountid = imtimely_accountid;
             }
@@ -199,6 +199,11 @@ namespace Web.Controllers
         public ActionResult JqueryMobileDomeAdd()
         {
             string s = Request.Form["imtimely_userid"];
+            return View();
+        }
+
+        public ActionResult TestHtml()
+        {
             return View();
         }
 

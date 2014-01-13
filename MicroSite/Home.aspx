@@ -14,7 +14,7 @@
                 </a>
             </div>
             <div class="ui-block-b">
-                <a href="News.aspx">
+                <a href="/News/News.aspx">
                     <div class="ui-body ui-body-d listItem1" style="margin-left: 10px;">
                         活动资讯</div>
                 </a>

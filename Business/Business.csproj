@@ -34,8 +34,9 @@
     <Reference Include="agsXMPP, Version=0.9.0.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL">
       <HintPath>..\packages\agsXMPP\agsXMPP.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="GetuiServerApiSDK">
       <HintPath>..\packages\Getui\GetuiServerApiSDK.dll</HintPath>
@@ -150,6 +151,10 @@
       <Project>{1D926C61-B1CC-48BC-93AA-3F52D05B8FD0}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EFPoco\EFPoco.csproj">
+      <Project>{389D5177-A475-41D1-9961-577DDED3170B}</Project>
+      <Name>EFPoco</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EF\EF.csproj">
       <Project>{4B93EF90-8EC8-462A-91B5-B537EAD5C3C0}</Project>
       <Name>EF</Name>
@@ -161,6 +166,10 @@
     <ProjectReference Include="..\Interface\Interface.csproj">
       <Project>{524B3A46-76B0-41CE-AD35-2B1BEEB19968}</Project>
       <Name>Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MicroSite_EF\MicroSite_EF.csproj">
+      <Project>{6888BF32-4568-42DE-BE1E-CE55EF83FF16}</Project>
+      <Name>MicroSite_EF</Name>
     </ProjectReference>
     <ProjectReference Include="..\Poco\Poco.csproj">
       <Project>{DDFA1F60-3A1E-42BD-AD5C-64E5F5CCDEEE}</Project>

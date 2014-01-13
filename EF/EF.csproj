@@ -31,12 +31,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net40\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,13 +65,11 @@
     <Compile Include="Mapping\AppUpdateMap.cs" />
     <Compile Include="Mapping\OrderUserInfoMap.cs" />
     <Compile Include="Mapping\TaskMap.cs" />
-    <Compile Include="Migrations\201401090354278_Initial.cs" />
-    <Compile Include="Migrations\201401090354278_Initial.Designer.cs">
-      <DependentUpon>201401090354278_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201401110331492_Initial.cs" />
+    <Compile Include="Migrations\201401110331492_Initial.Designer.cs">
+      <DependentUpon>201401110331492_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +77,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EFPoco\EFPoco.csproj">
+      <Project>{389D5177-A475-41D1-9961-577DDED3170B}</Project>
+      <Name>EFPoco</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Poco\Poco.csproj">
       <Project>{DDFA1F60-3A1E-42BD-AD5C-64E5F5CCDEEE}</Project>
       <Name>Poco</Name>
@@ -85,8 +91,8 @@
     <Content Include="InitialProvince.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201401090354278_Initial.resx">
-      <DependentUpon>201401090354278_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201401110331492_Initial.resx">
+      <DependentUpon>201401110331492_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

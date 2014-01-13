@@ -39,6 +39,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\agsXMPP\agsXMPP.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="EzValidation.Core">
       <HintPath>..\packages\EzValidation.1.0.2\lib\EzValidation.Core.dll</HintPath>
     </Reference>
@@ -47,6 +50,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.JScript" />
     <Reference Include="Spring.Core, Version=1.3.2.40943, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
       <HintPath>..\packages\spring\Spring.Core.dll</HintPath>
     </Reference>
@@ -72,9 +76,6 @@
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -213,6 +214,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\HtmlExtensions.cs" />
+    <Compile Include="Models\JsonpResult.cs" />
     <Compile Include="Models\MVCExpandMethod.cs" />
     <Compile Include="Models\NoClientCache.cs" />
     <Compile Include="Models\SessionSharedHttpModule.cs" />
@@ -618,6 +620,10 @@
       <Project>{1D926C61-B1CC-48BC-93AA-3F52D05B8FD0}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EFPoco\EFPoco.csproj">
+      <Project>{389D5177-A475-41D1-9961-577DDED3170B}</Project>
+      <Name>EFPoco</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EF\EF.csproj">
       <Project>{4B93EF90-8EC8-462A-91B5-B537EAD5C3C0}</Project>
       <Name>EF</Name>
@@ -938,6 +944,7 @@
     <Content Include="Views\ActivityInfo\Add.cshtml" />
     <Content Include="Views\ActivityInfo\Edit.cshtml" />
     <Content Include="Views\ActivityInfo\ShowRegistration.cshtml" />
+    <Content Include="Views\Test\TestHtml.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

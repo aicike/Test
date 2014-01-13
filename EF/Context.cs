@@ -9,7 +9,7 @@ using EF.Mapping;
 
 namespace EF
 {
-    public class Context : DbContext
+    public class Context : BaseContext
     {
         public DbSet<Account> Account { get; set; }
         public DbSet<AccountMain> AccountMain { get; set; }

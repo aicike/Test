@@ -168,7 +168,6 @@
     </style>
     <script type="text/javascript">
         function item_masonry() {
-
             var Wwidth = $(".demo").width() * 0.5
             var Iwidth = $(".item").width();
             var Rwidth = parseInt((Wwidth - Iwidth)) * 1.9;
@@ -179,7 +178,6 @@
                     gutterWidth: Rwidth
                 });
             });
-
             $('.infinite_scroll').masonry({
                 itemSelector: '.masonry_brick',
                 columnWidth: 0,

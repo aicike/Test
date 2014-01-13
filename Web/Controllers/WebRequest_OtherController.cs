@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc.Html;
 using System.Web.Mvc;
 using Poco;
 using Injection;
 using Interface;
 using Poco.WebAPI_Poco;
 using Poco.Enum;
+using Web.Models;
 
 namespace Web.Controllers
 {
@@ -142,6 +144,7 @@ namespace Web.Controllers
         /// <param name="ID">显示开始ID 第一次打开传0</param>
         /// <param name="ListCnt">返回列表的条数</param>
         /// <returns></returns>
+        [AllowAnonymous]
         public string GetAdvertorialList(int AMID, int ID, int ListCnt)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
@@ -189,6 +192,62 @@ namespace Web.Controllers
             var jsonStr = new { TitleImg = TitleShow, List = ListShow };
 
             return Newtonsoft.Json.JsonConvert.SerializeObject(jsonStr);
+        }
+
+        /// <summary>
+        /// 获取软文显示列表
+        /// </summary>
+        /// <param name="AccountID">售楼部ID</param>
+        /// <param name="ID">显示开始ID 第一次打开传0</param>
+        /// <param name="ListCnt">返回列表的条数</param>
+        /// <returns></returns>
+        public JsonpResult  GetAdvertorialList_Jsonp(int AMID, int ID, int ListCnt)
+        {
+            var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
+            var list = AppAdvertorialModel.GetList(AMID, (int)EnumAdvertorialUType.UserEnd);
+            PagedList<AppAdvertorial> RtitleImg = null;
+            PagedList<AppAdvertorial> RListImg = null;
+            if (ID == 0)
+            {
+                RtitleImg = list.Where(a => a.stick == 1).ToPagedList(1, 5);
+                RListImg = list.Where(a => a.stick == 0).ToPagedList(1, ListCnt);
+            }
+            else
+            {
+                RListImg = list.Where(a => a.stick == 0 && a.ID < ID).ToPagedList(1, ListCnt);
+            }
+            List<_B_Advertorial> TitleShow = new List<_B_Advertorial>();
+            if (RtitleImg != null)
+            {
+                foreach (var item in RtitleImg)
+                {
+                    _B_Advertorial ADVERTORIAL = new _B_Advertorial();
+                    ADVERTORIAL.I = item.ID;
+                    ADVERTORIAL.T = item.Title;
+                    ADVERTORIAL.P = item.Depict;
+                    ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
+                    TitleShow.Add(ADVERTORIAL);
+                }
+            }
+            List<_B_Advertorial> ListShow = new List<_B_Advertorial>();
+            if (RListImg != null)
+            {
+                foreach (var item in RListImg)
+                {
+                    _B_Advertorial ADVERTORIAL = new _B_Advertorial();
+                    ADVERTORIAL.I = item.ID;
+                    ADVERTORIAL.T = item.Title;
+                    ADVERTORIAL.P = item.Depict;
+                    ADVERTORIAL.D = item.IssueDate.ToString("yyyy-MM-dd");
+                    ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.MinImagePath ?? "");
+                    ADVERTORIAL.F = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
+                    ListShow.Add(ADVERTORIAL);
+                }
+            }
+
+            var jsonStr = new { TitleImg = TitleShow, List = ListShow };
+
+            return this.Jsonp(jsonStr);
         }
 
         /// <summary>

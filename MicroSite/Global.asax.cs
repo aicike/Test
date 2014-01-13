@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Data.Entity;
-using EF;
 
 namespace MicroSite
 {
@@ -14,7 +13,7 @@ namespace MicroSite
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            Database.SetInitializer<Context>(null);
+            //Database.SetInitializer<BaseContext>(null);
         }
 
         protected void Session_Start(object sender, EventArgs e)
@@ -34,7 +33,7 @@ namespace MicroSite
 
         protected void Application_Error(object sender, EventArgs e)
         {
-
+            var Errory= Server.GetLastError();
         }
 
         protected void Session_End(object sender, EventArgs e)

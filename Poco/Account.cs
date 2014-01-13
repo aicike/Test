@@ -106,6 +106,11 @@ namespace Poco
         /// </summary>
         public List<int> RoleIDs { get; set; }
 
+        /// <summary>
+        /// 业务字段，不会在数据库中生成该字段
+        /// </summary>
+        public bool IsSuperAdmin{ get; set; }
+
         public virtual ICollection<ActivateEmail> ActivateEmails { get; set; }
 
         public virtual ICollection<Group> Groups { get; set; }
