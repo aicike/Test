@@ -1,0 +1,67 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.OrderMType;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.OrderMType;
+}
+@section head{
+}
+@model PagedList<Poco.OrderMType>
+<div class="title">
+    @Html.Partial("Menu3")</div>
+<div class="body">
+    <div class="option">@Html.ActionLink("添加", "Add", "OrderMType", new { HostName = ViewBag.HostName }, null, true)</div>
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th>
+                名称
+            </th>
+            <th>
+                订购天数
+            </th>
+            <th>
+                每日配送瓶数
+            </th>
+            <th style="width: 150px;">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.DateCnt
+                </td>
+                <td>
+                    @item.Count
+                </td>
+                <td class="operation">
+                    @Html.ActionLink("修改", "Edit", "OrderMType", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:15px" }, true)
+                    @Ajax.ActionLink("删除", "Delete", "OrderMType", new { HostName = ViewBag.HostName, id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "OrderMType", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pages" style="margin-bottom: 15px">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
+<div style="clear: both">
+</div>

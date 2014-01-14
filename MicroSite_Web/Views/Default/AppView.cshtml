@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "AppView";
+    Layout = null;
+}
+@model Poco.LibraryImageText
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <style>
+        .title
+        {
+            font-weight: bolder;
+            font-size: 22px;
+        }
+        body
+        {
+            background-color: #e2e2db;
+        }
+        .image
+        {
+            
+        }
+        img{ max-width:100%;}
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="title">@Model.Title</div>
+        <div class="image">
+            <img src="@Poco.SystemConst.WebUrlIP@Url.Content(@Model.ImagePath ?? "")" alt="@Model.Title" width="100%" />
+        </div>
+        <div style="word-break:break-all;word-wrap:break-word;">
+            @Html.Raw(Model.Content)
+        </div>
+    </div>
+</body>
+</html>

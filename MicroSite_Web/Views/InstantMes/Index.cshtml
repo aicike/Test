@@ -1,0 +1,187 @@
+﻿@{
+    
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.UserManage;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.InstantMes;
+    var groupList = ViewBag.GroupList as List<Poco.Group>;
+}
+@section head{
+    <script>
+        var SendMessageUrl = '@Url.Action("SendMessage", "InstantMes")';
+        $(function () {
+            //鼠标移动改变背景色
+            $('.TabList').hover(function () {
+                $(this).addClass('TabOver');
+            }, function () {
+                $(this).removeClass('TabOver');
+            });
+
+        });
+
+
+        function SendMes() {
+            $.get(SendMessageUrl, function (data) {
+                if (data && data != "0") {
+                    $("#sendCount").html(data);
+                    $("#Ts").slideDown("slow");
+                }
+            });
+
+        }
+
+        setInterval(SendMes, "10000");
+
+
+    </script>
+    <style>
+        .TabList
+        {
+            width: 100%;
+            font-size: 13px;
+            border-bottom: 1px solid #E7E7E7;
+            padding-top: 15px;
+        }
+        .TabList td
+        {
+            line-height: 25px;
+        }
+        
+        .TabOver
+        {
+            background-color: #ddebf4;
+        }
+    </style>
+}
+@model PagedList<Poco.UnreadMessage>
+<div class="title">
+    @Html.Partial("Menu3")
+</div>
+<div class="bodyLeft">
+    <div class="option">
+        <div id="Ts" onclick="javascript:window.top.location.reload()" style="display: none;
+            height: 25px; width: 98%; margin: auto auto; line-height: 25px; font-size: 12px;
+            color: #743e04; text-align: center; background-color: #fff9e3; border: 1px solid #fadc80;
+            cursor: pointer">
+            <span id="sendCount">1</span>条新消息 , 点击查看
+        </div>
+    </div>
+    <table class="TabTitle tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th align="left" style="padding-left: 12px">
+                消息
+            </th>
+            <th width="150px">
+                时间
+            </th>
+            <th width="150px">
+                未读消息
+            </th>
+        </tr>
+    </table>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+        <table class="TabList" cellpadding="0" cellspacing="0">
+            <tr>
+                <td rowspan="2" align="center" valign="top" style="width: 70px">
+                    <a onclick="javascript:window.top.location.reload()" href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.I })"target="_blank">
+                        @if (!string.IsNullOrEmpty(item.P))
+                        { 
+                            <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content(item.P ?? "")" />
+                        }
+                        else
+                        { 
+                            <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
+                            
+                        }
+                    </a>
+                </td>
+                <td style="font-weight: bold">
+                    @if (item.N == item.B)
+                    {
+                        <a onclick="javascript:window.top.location.reload()" href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.I })" target="_blank">@item.N</a>
+                    }
+                    else
+                    {
+                        <a onclick="javascript:window.top.location.reload()" href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.I })"target="_blank">@item.B
+                            (@item.N)</a>
+                    }
+                </td>
+                <td width="150px" rowspan="2" align="center" style="font-size: 12px; color: #aaaaaa">
+                    @item.D
+                </td>
+                <td rowspan="2" width="150px" align="center" valign="top" style="padding-top: 15px">
+                    @if (item.C != 0)
+                    {
+                        <table cellpadding="0" cellspacing="0" align="center" style=" width:32px; height:32px; background:url('@Url.Content("~/Images/Unread.png")')">
+                            <tr>
+                                <td style="font-size: 14px; font-weight: bold; color: #fff" align="center">
+                                    @item.C
+                                </td>
+                            </tr>
+                        </table>
+                        
+                    }
+                    else
+                    { 
+                        
+                        <span style="font-size: 12px; color: #aaaaaa">无</span>
+                                
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-bottom: 20px">
+                    <div style="width: 360px; text-overflow: ellipsis; overflow: hidden;">
+                        @if (item.E == (int)Poco.Enum.EnumMessageType.Text)
+                        { 
+                            @item.CT
+                        }
+                        else if (item.E == (int)Poco.Enum.EnumMessageType.Image)
+                        { 
+                            @:[图片]
+                        }
+                        else if (item.E == (int)Poco.Enum.EnumMessageType.Voice)
+                        { 
+                            @:[语音]
+                        }
+                        else if (item.E == (int)Poco.Enum.EnumMessageType.Video)
+                        { 
+                            @:[视频]
+                                                                        }
+                    </div>
+                </td>
+            </tr>
+        </table>
+        }
+    }
+    <div class="pages" style="font-size: 12px; margin-top: 10px; margin-right: 10px">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
+<div class="bodyRight">
+    <ul class="ulList" id="ulGroup">
+        <li class="select"><a href="@Url.Action("Index", "InstantMes", new { HostName = ViewBag.HostName })">
+            销售消息 </a></li>
+        <li>@Html.ActionLink("销售与客户管理", "Index", "SalesMessage", new { HostName = ViewBag.HostName }, null, true)
+        </li>
+    </ul>
+</div>
+<div style="clear: both">
+</div>

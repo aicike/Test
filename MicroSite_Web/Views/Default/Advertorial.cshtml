@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Advertorial";
+    Layout = null;
+}
+@model Poco.AppAdvertorial
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <style>
+        .title
+        {
+            font-weight: bolder;
+            font-size: 1.25em;
+        }
+        .depict
+        {
+            font-size: 0.75em;
+            line-height:1.6em;
+            word-break: break-all;
+            word-wrap: break-word;
+            background-color: #ebebeb;
+            padding: 10px 10px 10px 10px;
+        }
+        .date
+        {
+            font-size: 0.75em;
+            
+            padding: 5px 0px 5px 0px;
+        }
+        .conter
+        {
+            font-size: 0.875em;
+            word-break: break-all;
+            word-wrap: break-word;
+            line-height:1.6em;
+        }
+        body
+        {
+            padding: 5px;
+        }
+        .image
+        {
+            padding: 10px 0px 5px 0px;
+        }
+        img
+        {
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="title">@Model.Title</div>
+        <div class="date">@Model.IssueDate.ToString("yyyy-MM-dd")</div>
+        <div class="depict">
+            备注：@Model.Depict</div>
+        <div class="image">
+            <img src="@Poco.SystemConst.WebUrlIP@Url.Content(@Model.MainImagPath ?? "")" alt="@Model.Title" width="100%" />
+        </div>
+        <div class="conter">
+            @Html.Raw(Model.Content)
+        </div>
+    </div>
+</body>
+</html>

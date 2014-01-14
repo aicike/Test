@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "销售端二维码 - Imtimely - 沟通零距离";
+    Layout = null;
+}
+@model Poco.AccountMain
+<head>
+    <meta name="viewport" content="width=640,maximum-scale=1,target-densitydpi=320,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+</head>
+<script src="@Url.Content("~/Scripts/jquery-1.8.3.min.js")" type="text/javascript"></script>
+<link href="@Url.Content("/Content/Style.css")" rel="stylesheet" type="text/css" />
+<style>
+    body
+    {
+        background-color: #f1f2f4;
+    }
+    .divMain
+    {
+        min-width:520px;
+         text-align:center;    
+    }
+    .divFont
+    {
+         font-size:22px;
+          color:#a4a4a4;
+          margin-top:50px;
+    }
+    .aIphone
+    {
+        top:200px;
+         position:relative;
+        margin-right:10px;
+    }
+    .aandroid
+    {
+         top:200px;
+         position:relative;
+         margin-left:10px;
+    }
+</style>
+
+<div id="TISI" style="padding-top: 50px" class="divMain">
+    <div>
+        <img src="/Images/Logo_144.png" width="144px" />
+    </div>
+    <div class="divFont">
+        <img src="/Images/logo.png" /> <br />
+        沟通零距离
+    </div>
+    <a id="iphone" class="aIphone" href="@Model.IOSSellDownloadPath">
+        <img src="/Images/iphone.png" />
+    </a> 
+    <a id="android" class="aandroid" href="@Model.AndroidSellDownloadPath">
+        <img src="/Images/android.png" />
+    </a>
+</div>
+
+<script>
+
+    (function () {
+        var IPHONEURL = "@Model.IOSSellDownloadPath";
+        var ANDROIDURL = "@Model.AndroidSellDownloadPath";
+        var page = {};
+        page.init = function () {
+            page.initView();
+            page.initEvent();
+        };
+        page.initView = function () {
+            var ua = window.navigator.userAgent.toLowerCase();
+            if (ua.indexOf('android') != -1) {
+                $('#iphone').hide();
+            } else if (ua.indexOf('iphone') != -1) {
+                $('#android').hide();
+            }
+        };
+
+        page.init();
+    })();
+
+</script>

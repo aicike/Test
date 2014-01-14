@@ -1,0 +1,93 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+    var result = ViewBag.Result as Poco.Result;
+    var ok = ViewBag.Ok as string;
+}
+@section head{
+    <style>
+        .success, .error
+        {
+            padding: 10px;
+            font-size: 16px;
+            text-align: center;
+            border:1px solid #ececec;
+        }
+        .success
+        {
+            background-color: #e4f7ff;
+            color: #699fb6;
+        }
+        .error
+        {
+            background-color: #fff1f2;
+            color: red;
+        }
+        .div_pwd
+        {
+            margin: 0px auto;
+            width: 300px;
+            margin-top: 50px;
+        }
+        .div_pwd div
+        {
+            margin: 10px 0px 10px 0px;
+        }
+    </style>
+    <script>
+        $(function () {
+            $("#btnOk").click(function () {
+                var p1 = $("#pwd1").val().trim();
+                var p2 = $("#pwd2").val().trim();
+                var errormsg = "";
+                if (p1.length < 6 || p1.length > 20) {
+                    errormsg = "请输入6位到20位字符设置密码。";
+                    return outError(errormsg);
+                }
+                if (p1 != p2) {
+                    errormsg = "两次密码不一致。";
+                    return outError(errormsg);
+                }
+            });
+        });
+        function outError(msg) {
+            $("#div_error").text(msg).show();
+            return false;
+        }
+    </script>
+}
+<div style="width: 960px; margin: 0px auto 0px auto; height: 800px;">
+    <h1 class="page-title">
+        修改密码<span class="line"></span></h1>
+    <div class="div_pwd">
+        @if (result != null && result.HasError)
+        {
+            <div class="error">
+                @result.Error</div>
+        }
+        else
+        {
+            if (ok == "true")
+            {
+            <div class="success">
+                密码修改成功！</div>
+            }
+            else
+            {
+                using (Html.BeginForm())
+                {
+            <div>
+                <input type="password" name="txtNewPwd" id="pwd1" placeholder="输入新密码" class="inputLogin" />
+            </div>
+            <div>
+                <input type="password" name="txtNewPwd2" id="pwd2" placeholder="再次输入新密码" class="inputLogin" />
+            </div>
+            <div>
+                <input type="submit" value="完成" class="button2" id="btnOk" />
+            </div>
+                }
+            }
+            <div class="error" id="div_error" style="display: none">
+            </div>
+        }
+    </div>
+</div>

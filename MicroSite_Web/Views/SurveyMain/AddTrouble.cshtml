@@ -1,0 +1,259 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.SurveyMain;
+}
+@section head{
+    <script>
+
+
+        function OptintModel() {
+            var it = new Object;
+            it.Option = "";
+            it.Fraction = 0;
+
+            return it;
+        }
+        var items = [];
+
+
+        $(function () {
+            //调查标题
+            var smid = "@ViewBag.SMID";
+            $("#SurveyMainID").val(smid);
+            //调查类型 1 普通 2评分
+            var MainType = "@ViewBag.MainType";
+            //题号
+            var tnumber = "@ViewBag.Tnumber";
+            $("#TroubleNumber").val(tnumber);
+            $("#labTN").text(tnumber);
+            
+
+
+            //添加选项(带分数)
+            $("#addOption_count").click(function () {
+
+                var DIVrow = '<div  name="div_option"><input name="option" type="text" />  分数：<input name="option_count" type="text" style="width: 70px" /> <a class="delOption">删除</a></div>';
+
+                $("#div_main").append($(DIVrow));
+            });
+
+            //添加选项
+            $("#addOption").click(function () {
+
+                var DIVrow = '<div name="div_option"><input name="option" type="text" />  <a class="delOption">删除</a></div>';
+
+                $("#div_main").append($(DIVrow));
+            });
+
+
+            //删除选项
+            $(".delOption").live("click", function () {
+
+                $(this).parent().remove();
+            });
+
+        });
+
+        var isCommit = true;
+        function BandSubmitClick() {
+            if (!isCommit) {
+                return false;
+            }
+            isCommit = false;
+        }
+
+
+        function checkType() {
+            var type = $("#EnumTroubleType").val();
+
+            if (type == 2) //文本
+            {
+                $("#trOption").hide();
+            }
+            else {
+                $("#trOption").show();
+            }
+        }
+
+        //提交
+        function OnUpCheck() {
+            //问题类型 0 单选 1多选 2文本
+            var type = $("#EnumTroubleType").val();
+            //调用类型 1 普通 2评分
+            var MainTyle = "@ViewBag.MainType";
+            var isOK = true;
+            
+            //问题类型 0 单选 1多选
+            if (type == 0 || type == 1) {
+                var RowName = $("div[name='div_option']");
+
+                if (RowName.length <= 0) {
+                    JAlert({
+                        Message: "请添加选项！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    isOK = false;
+                    return false;
+                }
+                items = [];
+                RowName.each(function (i, n) {
+                    var optionTitle = $(n).find("input[name='option']").val().trim();
+                    var optionCount = 0;
+                    if (optionTitle.length <= 0) {
+                        JAlert({
+                            Message: "请输入选项！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        isOK = false;
+                        return;
+                    }
+
+                    var Om = new OptintModel();
+                    Om.Option = optionTitle;
+                    if (MainTyle == 2) {
+                        optionCount = $(n).find("input[name='option_count']").val().trim();
+                        if (optionCount == undefined || optionCount.length <= 0) {
+                            JAlert({
+                                Message: "请输入分数！",
+                                DialogType: "Ok",
+                                BtnOk: "确定"
+                            });
+                            isOK = false;
+                            return;
+                        }
+                        if (isNaN(optionCount)) {
+                            JAlert({
+                                Message: "只能输入数字！",
+                                DialogType: "Ok",
+                                BtnOk: "确定"
+                            });
+                            isOK = false;
+                            return;
+                        }
+                        Om.Fraction = optionCount;
+                    }
+
+                    items.push(Om);
+                });
+
+            }
+            if (isOK == true) {
+                var value = JSON.stringify(items);
+                $("#Options").val(value);
+            }
+            return isOK;
+
+
+        }
+
+
+
+
+
+
+
+    </script>
+}
+@model Poco.SurveyTrouble
+<div class="title">
+    @Html.Partial("Menu3")</div>
+
+<div class="body">
+    @using (Ajax.BeginForm("AddTrouble", "SurveyMain", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {
+        <fieldset style="font-size: 14px">
+            <legend>@ViewBag.ShowTitle</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle" style="width: 150px">
+                        <span class="Identification">*</span> 题号
+                    </td>
+                    <td class="tdField" style="width: 400px"><label id="labTN" name="labTN" ></label>
+
+                         @Html.HiddenFor(a => a.TroubleNumber)
+                        @Html.HiddenFor(a => a.SurveyMainID)
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle" style="width: 150px">
+                        <span class="Identification">*</span> 调研问题
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.TroubleName)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.TroubleName)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle" style="width: 150px">
+                        <span class="Identification">*</span> 问题类型
+                    </td>
+                    <td class="tdField">
+                        @if (ViewBag.MainType == (int)Poco.Enum.EnumSurveyMainType.Normal)
+                        { 
+                            <select name="EnumTroubleType" id="EnumTroubleType" onchange="checkType()">
+                                <option value="0">单选</option>
+                                <option value="1">多选</option>
+                                <option value="2">文本</option>
+                            </select>
+                        }
+                        else if (ViewBag.MainType == (int)Poco.Enum.EnumSurveyMainType.Rate)
+                        { 
+                            <select name="EnumTroubleType" id="EnumTroubleType" onchange="checkType()">
+                                <option value="0">单选</option>
+                                <option value="2">文本</option>
+                            </select>
+                        }
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr id="trOption">
+                    <td class="tdTitle" valign="top" style="width: 150px">
+                        <span class="Identification">*</span> 选项
+                    </td>
+                    <td colspan="2" class="tdField">
+                        <input type="hidden" name="Options" id="Options" />
+                        @if (ViewBag.MainType == (int)Poco.Enum.EnumSurveyMainType.Normal)
+                        { 
+                            <div id="div_main" class="operation">
+                                <div name="div_option">
+                                    <input name="option" type="text" />
+                                    <a class="delOption">删除</a>
+                                </div>
+                            </div>
+
+                            <div class="operation">
+                                <a id="addOption">添加选项</a>
+                            </div>
+                        }
+                        else if (ViewBag.MainType == (int)Poco.Enum.EnumSurveyMainType.Rate)
+                        { 
+                            <div id="div_main" class="operation">
+                                <div name="div_option">
+                                    <input name="option" type="text" />
+                                    分数：<input name="option_count" type="text" style="width: 70px" />
+                                    <a class="delOption">删除</a>
+                                </div>
+                            </div>
+
+                            <div class="operation">
+                                <a id="addOption_count">添加选项</a>
+                            </div>
+                        }
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="submit" id="btnSubmit"  onclick="return OnUpCheck()" value="保存" class="button"
+                style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+       
+    }
+</div>
+<div style="clear: both">
+</div>

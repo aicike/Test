@@ -1,0 +1,294 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.AppAdvertorial;
+}
+@model PagedList<Poco.AppAdvertorial>
+@section head{
+    <script>
+
+
+        $(function () {
+
+
+            $("label[name=labCbFirst]").each(function () {
+                $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
+            });
+
+
+            $("#btnYL").click(function () {
+                var src = '@Url.Action("Preview", "AppAdvertorial")';
+                $("#iframeShow").attr("src", src);
+                $("#dialogShow").dialog({
+                    resizable: false,
+                    height: 570,
+                    width: 350,
+                    modal: true,
+                    draggable: false
+                });
+            });
+
+
+        });
+
+
+        function clickInfo(id) {
+            var src = '@Url.Action("Advertorial", "Default")';
+            $("#iframeShowInfo").attr("src", src + "/" + id);
+            $("#dialogShowInfo").dialog({
+                resizable: false,
+                height: 530,
+                width: 320,
+                modal: true,
+                draggable: false
+            });
+        }
+
+        function clickInfoUrl(src) {
+            $("#iframeShowInfo").attr("src", src);
+            $("#dialogShowInfo").dialog({
+                resizable: false,
+                height: 530,
+                width: 320,
+                modal: true,
+                draggable: false
+            });
+        }
+
+
+        function clickStick(ID, ckb, Sort) {
+            $("#AdvertorialID_stick").val(ID);
+            if (ckb.checked) {
+
+                var Url = '@Url.Action("chickStick", "AppAdvertorial")';
+                $.post(Url, { ID: ID }, function (result) {
+
+                    if (result == "No") {
+                        JAlert({
+                            Message: "修改失败 最多允许“5”篇软文置顶！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+
+                        ckb.checked = !ckb.checked;
+                        return;
+                    }
+                    else {
+                        $("#isok").val("1"); //置顶
+                        $("#Sort").val(Sort);
+                        $("#btnStick").click();
+                    }
+                });
+
+            }
+            else {
+                $("#isok").val("0"); //取消置顶
+                $("#Sort").val(Sort);
+                $("#btnStick").click();
+            }
+
+
+        }
+
+        function clickSort(ID, Sort, Type) {
+            $("#AdvertorialID_sort").val(ID);
+            $("#Sort_sort").val(Sort);
+            $("#Sort_stye").val(Type);
+            $("#btnSort").click();
+        }
+
+     
+
+    </script>
+}
+<div class="title">
+    @Html.Partial("Menu3")</div>
+
+<div class="body">
+    <div class="option">
+        @Html.ActionLink("添加", "Add", "AppAdvertorial", new { HostName = ViewBag.HostName }, null, true)
+        <input type="button" id="btnYL" class="button" style="margin-left: 10px; height: 30px"
+            value="App预览" />
+    </div>
+    <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
+        <tr>
+            <th style="width: 50px">
+                置顶
+            </th>
+            <th style="width: 170px">
+                展示图片
+            </th>
+            <th style="width: 230px; word-wrap: break-word; word-break: normal;">
+                软文标题
+            </th>
+            <th>
+                发布日期
+            </th>
+            <th>
+                咨询类型
+            </th>
+            <th style="width: 50px;">
+                排序
+            </th>
+            <th style="width: 90px;">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (item.stick == 1)
+                    {
+                        <input type="checkbox" onclick="clickStick(@item.ID,this,@item.Sort)" id="ckbzd" name="ckbzd" checked="checked" title="最多只能有5篇短文置顶" />
+                    }
+                    else
+                    {
+                        <input type="checkbox" onclick="clickStick(@item.ID,this,@item.Sort)" id="ckbzd" name="ckbzd"  title="最多只能有5篇短文置顶"  />
+                    }
+                </td>
+                @if (item.EnumAdverTorialType == (int)Poco.Enum.EnumAdverTorialType.txt)
+                { 
+                    <td>
+                        <img style="width: 150px;  cursor:pointer "  onclick="clickInfo(@item.ID)" src="@Url.Content(item.AppShowImagePath ?? "")" />
+                    </td>
+                    <td style="font-size: 14px" class="operation">
+                        <label name="labCbFirst" title="@item.Depict" onclick="clickInfo(@item.ID)" style=" cursor:pointer">
+                            <a>@item.Title</a>
+                        </label>
+                    </td>
+                }
+                else
+                {
+
+                    if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey)
+                    {
+                    <td>
+                        <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id = item.ContentURL.Substring(item.ContentURL.LastIndexOf('=') + 1) })" target="_blank">
+                            <img style="width: 150px; border:0
+                            ;cursor:pointer " src="@Url.Content(item.AppShowImagePath ?? "")" /></a>
+                    </td>
+                    <td style="font-size: 14px" class="operation">
+                        <label
+                            name="labCbFirst" title="@item.Depict" style=" cursor:pointer">
+                            <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id = item.ContentURL.Substring(item.ContentURL.LastIndexOf('=') + 1) })" target="_blank">
+                                @item.Title
+                            </a>
+                        </label>
+                    </td>
+                    }
+                    else if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Activities)
+                    {
+                    <td>
+                        <img style="width: 150px;  cursor:pointer "  onclick="clickInfoUrl('@item.ContentURL')" src="@Url.Content(item.AppShowImagePath ?? "")" />
+                    </td>
+                    <td style="font-size: 14px" class="operation">
+                        <label name="labCbFirst" title="@item.Depict" onclick="clickInfoUrl('@item.ContentURL')" style=" cursor:pointer">
+                            <a>@item.Title</a>
+                        </label>
+                    </td>
+                    }
+                    else
+                    { 
+                    <td>
+                        <a href="@item.ContentURL" target="_blank">
+                            <img style="width: 150px; border:0;cursor:pointer " src="@Url.Content(item.AppShowImagePath ?? "")" /></a>
+                    </td>
+                    <td style="font-size: 14px" class="operation">
+                        <a href="@item.ContentURL" target="_blank">
+                            <label  name="labCbFirst" title="@item.Depict" style=" cursor:pointer">
+                                @item.Title
+                            </label>
+                        </a>
+                    </td>
+                    }
+
+                }
+                <td style="font-size: 12px; color: #696969">
+                    @item.IssueDate.ToString("yyyy-MM-dd")
+                </td>
+                <td>
+                    @if (item.EnumAdverTorialType == (int)Poco.Enum.EnumAdverTorialType.txt)
+                    { 
+                        @:软文
+                    }
+                    else if (item.EnumAdverTorialType == (int)Poco.Enum.EnumAdverTorialType.url)
+                    {
+                        if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Activities)
+                        { 
+                        @:活动
+                        }
+                        else if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Ordinary)
+                        {
+                        @:URL链接
+                        }
+                        else if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey)
+                        {
+                        @:调查问卷
+                                            }
+                    }
+                </td>
+                <td>
+                    @if (item.stick == 1)
+                    { 
+                        <label name="labCbFirst" title="上移">
+                            <img onclick="clickSort(@item.ID,@item.Sort,1) " style=" cursor:pointer" src="@Url.Content("~/Images/up.png")"/>
+                        </label>
+                        <label name="labCbFirst" title="下移">
+                            <img onclick="clickSort(@item.ID,@item.Sort,0) " style=" cursor:pointer" src="@Url.Content("~/Images/down.png")"  />
+                        </label>
+                    }
+                    else
+                    { 
+                        @:无
+                                                                                                                                                                                                         }
+                </td>
+                <td class="operation">
+                    @Html.ActionLink("修改", "Edit", "AppAdvertorial", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:10px" }, true)
+                    @Ajax.ActionLink("删除", "Delete", "AppAdvertorial", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?！','" + Url.Action("Delete", "AppAdvertorial", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
+<div style="clear: both">
+</div>
+@using (Html.BeginForm("Stick", "AppAdvertorial", new { HostName = ViewBag.HostName }, FormMethod.Post))
+{
+    <input type="hidden" id="AdvertorialID_stick" name="AdvertorialID" />
+    <input type="hidden" id="isok" name="isok" />
+    <input type="hidden" id="Sort" name="Sort" />
+    <input type="submit" id="btnStick" style="visibility: hidden" />
+}
+@using (Html.BeginForm("Sort", "AppAdvertorial", new { HostName = ViewBag.HostName }, FormMethod.Post))
+{
+    <input type="hidden" id="AdvertorialID_sort" name="AdvertorialID" />
+    <input type="hidden" id="Sort_sort" name="Sort" />
+    <input type="hidden" id="Sort_stye" name="Type" />
+    <input type="submit" id="btnSort" style="visibility: hidden" />
+}
+<div id="dialogShow" title="App预览" style="display: none; padding: 0px">
+    <iframe id="iframeShow" src="#" style="width: 350px; height: 520px; border: none;
+        overflow: auto"></iframe>
+</div>
+<div id="dialogShowInfo" title="App详细预览" style="display: none; padding: 0px">
+    <iframe id="iframeShowInfo" src="#" style="width: 320px; height: 480px; border: none;
+        overflow: auto"></iframe>
+</div>

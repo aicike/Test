@@ -1,0 +1,53 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.OrderMType;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.OrderMType;
+}
+@section head{
+}
+@model Poco.OrderMType
+<div class="title">
+    @Html.Partial("Menu3")
+</div>
+<div class="body">
+    @using (Ajax.BeginForm("Edit", "OrderMType", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {
+        <fieldset>
+            <legend>基本信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 类型名称
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Name) @Html.HiddenFor(a => a.AccountMainID)@Html.HiddenFor(a => a.ID)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Name)
+                    </td>
+                </tr>
+                 <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 订购天数
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.DateCnt)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.DateCnt)
+                    </td>
+                </tr>
+                 <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 每日配送瓶数
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Count)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Count)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+     
+     
+        <div class="action">
+            <input type="submit" id="btnSubmit" value="保存" class="button" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }
+</div>

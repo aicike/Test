@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Menu = Poco.SystemConst.Menu.VipInfo;
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.VipInfo;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.CardInfo;
+}
+@section head{
+    <script type="text/javascript">
+
+        $(function () {
+            $("#Balance").val(0);
+        });
+
+          function checkPName() {
+            var PName = $("#PName").val();
+        
+
+            if (PName == "" || PName == undefined) {
+                JAlert({
+                    Message: "请输入名称！",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+                return false;
+            }
+
+    </script>
+}
+@model IQueryable<Poco.CardPrefix>
+<div class="title">
+    @Html.Partial("Menu3")</div>
+<div class="body">
+    <div class="option">
+        @using (Ajax.BeginForm("AddPrefix", "CardInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+        {
+            @:前缀名称：<input type="text" id="PName" name="PName"/>
+        <input type="submit" id="btnSubmit" value="保存" onclick="return checkPName()" class="button"
+            style="margin-right: 20px; margin-left: 10px" />
+            <input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        }
+    </div>
+    <table class="tableList" id="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th>
+                前缀
+            </th>
+            <th width="200px">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.PrefixName
+                </td>
+                <td class="operation">
+                    @Ajax.ActionLink("删除", "DeletePrefix", "CardInfo", new { HostName = ViewBag.HostName, id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("DeletePrefix", "CardInfo", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
+                </td>
+            </tr>
+        }
+    </table>
+</div>

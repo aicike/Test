@@ -1,0 +1,34 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section head{
+    @RenderSection("head", required: false)
+}
+@{
+    var loginSystemUser = Session[Poco.SystemConst.Session.LoginSystemUser] as Poco.SystemUser;
+}
+<div>
+    <div class="head">
+        <div style="width: 960px; margin: 0px auto 0px auto;">
+
+             <div class="logo" style="margin-top: 6px;">
+                
+              
+                <a href="@Url.Action("Index", "SystemUserHome")"><img alt="" src="@Url.Content("~/Images/logo.png")" /></a>
+              
+            </div>
+            <div style="float: right; margin-top: 40px;">
+                @if (loginSystemUser != null)
+                { 
+                    <a id="btnLogOut" type="sysUser">退出</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div style="background-color: #00aec8; height: 40px">
+        @Html.Partial("SystemUserMenu")
+    </div>
+</div>
+<div class="main">
+    @RenderBody()
+</div>

@@ -1,0 +1,76 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.SurveyMain;
+}
+@section head{
+    <script>
+        $(function () {
+
+
+            $("#Status").val("@Model.Status");
+            $("#EnumSurveyMainType").val("@Model.EnumSurveyMainType");
+            
+        });
+    
+    </script>
+}
+@model Poco.SurveyMain
+<div class="title">
+    @Html.Partial("Menu3")</div>
+
+<div class="body">
+    @using (Ajax.BeginForm("EditMain", "SurveyMain", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {
+        <fieldset style="font-size: 14px">
+            <legend>创建调查问卷</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle" style="width: 150px">
+                        <span class="Identification">*</span> 调查问卷标题
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.SurveyTitle, new { style = "width:302px" })
+                        @Html.HiddenFor(a => a.ID)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.SurveyTitle)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 调查问卷描述/备注
+                    </td>
+                    <td class="tdField">@Html.TextAreaFor(a => a.SurveyRemarks)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.SurveyRemarks)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 问卷类型
+                    </td>
+                    <td>
+                        <select id="EnumSurveyMainType" name="EnumSurveyMainType">
+                            <option value="1">普通调查</option>
+                            <option value="2">评分调查</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 状态
+                    </td>
+                    <td>
+                        <select id="Status" name="Status">
+                            <option value="0">开启</option>
+                            <option value="1">停用</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="submit" id="btnSubmit" value="保存" class="button" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }
+</div>
+<div style="clear: both">
+</div>

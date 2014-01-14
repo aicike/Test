@@ -1,0 +1,83 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.VipInfo;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.CardInfo;
+    var frefix = ViewBag.Frefix as List<Poco.CardPrefix>;
+}
+@section head{
+    <script type="text/javascript">
+
+        $(function () {
+            $("#Balance").val(0);
+        });
+
+
+        function checkfrefix() {
+            var sel = $("#selPrefix").val();
+            if (sel == "" || sel == undefined) {
+                JAlert({
+                    Message: "请先录入前缀！",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+    </script>
+}
+@model Poco.CardInfo
+<div class="title">
+    @Html.Partial("Menu3")
+</div>
+<div class="body">
+    @using (Ajax.BeginForm("Add", "CardInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {
+        <fieldset>
+            <legend>基本信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 前缀
+                    </td>
+                    <td class="tdField">
+                        <select id="selPrefix" name="selPrefix">
+                            @foreach (var item in frefix)
+                            {
+                                <option value="@item.ID">@item.PrefixName</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 卡号
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.CardNum)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.CardNum)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 初始金额
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Balance)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Balance)
+                    </td>
+                </tr>
+            </table>
+            <div class="action">
+                <input type="submit" id="btnSubmit" value="保存" onclick="return checkfrefix()" class="button"
+                    style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+            </div>
+        </fieldset>
+    }
+</div>
+<div style="clear: both">
+</div>

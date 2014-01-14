@@ -1,0 +1,243 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.SurveyMain;
+}
+@section head{
+    <script>
+
+        $(function () {
+
+            $("label[name=labCbFirst]").each(function () {
+                $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
+            });
+
+            // 1 不能添加 2不能删除
+            var ts = "@ViewBag.TS";
+            if (ts == 1) {
+                JAlert({
+                    Message: "调查已有人回答 不能添加调查！",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+            }
+            else if (ts == 2) {
+                JAlert({
+                    Message: "调查已有人回答 不能修改调查！！",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+            }
+
+        });
+
+
+//        //显示详细统计
+//        function ShowInfo(id) {
+//            var src = '@Url.Action("TroubleStatistics", "SurveyMain")';
+//            $("#iframeShowInfo").attr("src", src + "/" + id);
+//            $("#dialogShowInfo").dialog({
+//                resizable: false,
+//                height: 710,
+//                width: 760,
+//                modal: true,
+//                draggable: false,
+//                close: function (event, ui) {
+//                    $("#iframeShowInfo").attr("src", "");
+//                }
+//            });
+
+//        }
+
+        //生成软文
+        function ShowAddress(id, Name) {
+            $("#SMID_adver").val(id);
+            $("#dialogShowRW").dialog({
+                resizable: false,
+                height: 150,
+                width: 300,
+                modal: true,
+                draggable: false,
+                title: Name,
+                close: function (event, ui) {
+                    $("#SMID_adver").val("");
+                }
+            });
+
+
+        }
+
+        //显示调查详细
+        function ShowPInfo(id) {
+            var src = '@Url.Action("SurveyUserList", "SurveyMain")';
+            $("#iframeShowP").attr("src", src + "?SMID=" + id);
+            $("#dialogShowP").dialog({
+                resizable: false,
+                height: 710,
+                width: 760,
+                modal: true,
+                draggable: false,
+                close: function (event, ui) {
+                    $("#iframeShowP").attr("src", "");
+                }
+            });
+        }
+
+        //ajax 生成软文
+        function SetAppAdver(client)
+        {
+            //client  EnumAdvertorialUType
+            var id = $("#SMID_adver").val();
+            var Url = '@Url.Action("SetAppAdverTorial", "SurveyMain")';
+            $.post(Url, { id: id, client: client }, function (result) {
+
+                if (result == "OK") {
+                    JAlert({
+                        Message: "生成成功！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                }
+                else {
+                    JAlert({
+                        Message: "生成失败 请稍后再试！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                }
+                $("#dialogShowRW").dialog("close");
+            });
+        }
+
+        
+
+    </script>
+}
+@model PagedList<Poco._B_SurveyMain>
+<div class="title">
+    @Html.Partial("Menu3")</div>
+
+<div class="body">
+    @*<fieldset style="font-size: 14px">
+        <legend>调查问卷</legend>
+    </fieldset>*@
+    <div class="option">
+        @Html.ActionLink("添加调查问卷", "AddMain", "SurveyMain", new { HostName = ViewBag.HostName }, null, true)
+    </div>
+    <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
+        <tr>
+            <th style="width: 230px">
+                调查问卷名称
+            </th>
+            <th style="width: 70px">
+                回答人数
+            </th>
+            <th style="width: 135px;">
+                调查类型
+            </th>
+            <th style="width: 60px;">
+                状态
+            </th>
+            <th style="width: 70px;">
+                生成资讯
+            </th>
+            <th style="width: 150px;">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="operation">
+                    <div style="width: 230px; word-break: keep-all; white-space: nowrap; overflow: hidden;
+                        text-overflow: ellipsis;">
+                        <label name="labCbFirst" title="调查信息统计">
+                            <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id = item.ID })" target="_blank">@item.SurveyTitle</a>
+                        </label>
+                    </div>
+                </td>
+                <td class="operation">
+                    <label name="labCbFirst" title="查看详细">
+                        <a onclick="ShowPInfo(@item.ID)">@item.Counts<span>人</span></a>
+                    </label>
+                </td>
+                <td>
+                    @if (item.EnumSurveyMainType == (int)Poco.Enum.EnumSurveyMainType.Normal)
+                    { 
+                        @:普通调查
+                    }
+                    else if (item.EnumSurveyMainType == (int)Poco.Enum.EnumSurveyMainType.Rate)
+                    { 
+                        @:评分调查
+                    }
+                </td>
+                <td class="operation">
+                    @if (@item.Status == 0)
+                    {
+                        <label name="labCbFirst" title="点击关闭调查">
+                            @Ajax.ActionLink("开启", "SetMainStatus", "SurveyMain", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('“确定关闭调查?”！！！','" + Url.Action("SetMainStatus", "SurveyMain", new { HostName = ViewBag.HostName, id = item.ID, Status = item.Status }) + "',null)" }, false)
+                        </label>
+                    }
+                    else
+                    {
+                        <label name="labCbFirst" title="点击开启调查">
+                            @Ajax.ActionLink("停止", "SetMainStatus", "SurveyMain", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('“确定开启调查?”！！！','" + Url.Action("SetMainStatus", "SurveyMain", new { HostName = ViewBag.HostName, id = item.ID, Status = item.Status }) + "',null)" }, false)
+                        </label>
+                    }
+                </td>
+                <td class="operation">
+                    <label name="labCbFirst" title="生成咨询">
+                        <a onclick="ShowAddress(@item.ID,'@item.SurveyTitle')">生成咨询</a>
+                    </label>
+                </td>
+                <td class="operation">
+                    <label name="labCbFirst" title="题目列表/录入">
+                        @Html.ActionLink("题目列表", "IndexTrouble", "SurveyMain", new { HostName = ViewBag.HostName, SMID = item.ID }, new { style = "padding-right:5px" }, true)
+                    </label>
+                    @Html.ActionLink("修改", "EditMain", "SurveyMain", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:5px" }, true)
+                    @Ajax.ActionLink("删除", "DeleteMain", "SurveyMain", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('此操作会删除该问卷下的所有回答记录。<br/>“确定删除?”！！！','" + Url.Action("DeleteMain", "SurveyMain", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+            {
+                PageIndexParameterName = "ID",
+                CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+                NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+                NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+                CssClass = "manage_pages pages",
+                SeparatorHtml = "&nbsp;",
+                AutoHide = false,
+                /*LastPageText = "Last",
+                FirstPageText = "First",
+                PrevPageText = "Back",
+                NextPageText = "Next",*/
+                PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+                ShowFirstLast = false
+            })
+    </div>
+</div>
+<div style="clear: both">
+</div>
+<div id="dialogShowInfo" title="调查信息统计" style="display: none; padding: 0px;">
+    <iframe id="iframeShowInfo" src="#" style="width: 760px; height: 650px; border: none;
+        overflow: auto"></iframe>
+</div>
+<div id="dialogShowRW" title="生成软文" style="display: none; padding: 0px">
+    <table align="center" style="width: 95%; height: 90px" cellpadding="0" cellspacing="0">
+        <tr>
+            <td align="center">
+                <input type="hidden" id="SMID_adver" />
+                <input type="button" onclick="SetAppAdver(@((int)Poco.Enum.EnumAdvertorialUType.UserEnd))" id="btnSubmitU" value="生成用户端资讯" class="button" />
+            </td>
+            <td align="center">
+                <input type="button" onclick="SetAppAdver(@((int)Poco.Enum.EnumAdvertorialUType.AccountEnd))"  id="btnSubmitA" value="生成销售端资讯" class="button" />
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="dialogShowP" title="调查详细" style="display: none; padding: 0px">
+    <iframe id="iframeShowP" src="#" style="width: 760px; height: 650px; border: none;
+        overflow: auto"></iframe>
+</div>

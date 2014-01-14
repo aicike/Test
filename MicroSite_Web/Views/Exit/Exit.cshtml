@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Index2";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+<script>
+    $(function () {
+        if ($.browser.chrome) {
+            history.pushState(null, "Exit", "@ViewBag.ExitUrl");
+        }
+        location.href = "@ViewBag.ExitUrl";
+    });
+</script>
+<div class="main20">
+    正在退出...
+</div>

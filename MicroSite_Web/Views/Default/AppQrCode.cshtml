@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "二维码扫描 - Imtimely - 沟通零距离";
+    Layout = null;
+}
+<html>
+<!-- web端-->
+<head>
+<title>二维码扫描 - Imtimely - 沟通零距离</title>
+    <style>
+        .Title
+        {
+            font-weight: bold;
+            font-size: 4em;
+            text-align: center;
+            margin: 10px 0px 10px 0px;
+        }
+        .Center
+        {
+            padding: 10px;
+            border: 1px solid #ebebeb;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="Title" style=" padding:25px">
+        感谢您的使用
+    </div>
+    <div class="Center">
+        <table align="center" width="650px">
+            <tr align="center">
+                <td> <img width="250px" src="@Url.Action("CreateQrCodeAccount", "Default", new { AMID = ViewBag.AMID })" /></td>
+                <td> <img width="250px" src="@Url.Action("CreateQrCode", "Default", new { AMID = ViewBag.AMID })" /></td>
+            </tr>
+            <tr align="center" style=" color:#606060;">
+                <td> 销售端二维码</td>
+                <td> 用户端二维码</td>
+            </tr>
+        </table>
+        
+       
+    </div>
+</body>
+</html>

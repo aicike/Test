@@ -1,0 +1,45 @@
+﻿@{
+    var menus = ViewBag.Menu3List as List<Poco.Menu>;
+}
+@{
+    if ( menus != null)
+    {
+    <ul id="tabs">
+        @foreach (var item in menus)
+        {
+            if (ViewBag.Menu3 == item.Controller)
+            {
+                if (ViewBag.Menu3Action
+                    != null)
+                {
+                    if (ViewBag.Menu3Action == item.Action)
+                    {
+            <li id="current">@Html.ActionLink(item.Name, item.Action, item.Controller, new { Area = item.Area }, null)</li>
+                    }
+                    else
+                    {
+            <li>@Html.ActionLink(item.Name, item.Action, item.Controller, new { Area = item.Area }, null)</li>
+                    }
+                }
+                else
+                {
+            <li id="current">@Html.ActionLink(item.Name, item.Action, item.Controller, new { Area = item.Area }, null)</li>
+                }
+            }
+            else
+            {
+            <li>@Html.ActionLink(item.Name, item.Action, item.Controller, new { Area = item.Area }, null)</li>
+            }
+        }
+    </ul>
+    }
+    else
+    {
+        var path = ViewBag.Menu3ActionPath as string;
+        if (path != null)
+        { 
+    <div style="font-size: 15px; margin-left: 21px;">
+        @path</div>
+        }
+    }
+}

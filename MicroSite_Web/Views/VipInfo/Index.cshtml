@@ -1,0 +1,138 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.VipInfo;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.VipInfo;
+}
+@model PagedList<Poco.VIPInfo>
+@section head{
+    <script>
+        $(function () {
+            $("#cardNum").val('@ViewBag.cardNum');
+            $("#phoneNum").val('@ViewBag.phoneNum');
+        });
+    
+        //显示二维码
+        function ShowMessage(Prefix,cardnums) {
+                
+                var nubs = Prefix+"."+cardnums;
+
+                var src = "@Url.Action("QrCode", "VipInfo")"+"?cardNums="+nubs;
+                $("#codeImg").attr("src", src);
+
+                $("#dialogShowMessage").dialog({
+                    resizable: false,
+                    height: "370",
+                    width: "280",
+                    modal: true,
+                    title:"会员二维码",
+                    position:"center",
+                    draggable: false,
+                    beforeClose: function (event, ui) {
+                        $("#iframeShowImgText").attr("src", "");
+                    },
+                    buttons: {
+                        "关闭浏览": function () {
+                            $(this).dialog("close");
+                             $("#iframeShowImgText").attr("src", "");
+                        }
+                    }
+                });
+        }
+    </script>
+}
+<div class="title">
+    @Html.Partial("Menu3")
+</div>
+<div class="body">
+    <div class="option">@Html.ActionLink("添加", "Add", "VipInfo", new { HostName = ViewBag.HostName, id = ViewBag.HID }, null, true)
+        @Html.ActionLink("充值", "Recharge", "VipInfo", new { HostName = ViewBag.HostName, id = ViewBag.HID }, null, true)</div>
+    @using (Html.BeginForm("Index", "VipInfo", new { HostName = ViewBag.HostName }, FormMethod.Get, new { enctype = "multipart/form-data" }))
+    {
+        <table>
+            <tr>
+                <td>
+                    卡号：
+                </td>
+                <td>
+                    <input type="text" id="cardNum" name="cardNum" />
+                </td>
+                <td>
+                    手机号码：
+                </td>
+                <td>
+                    <input type="text" id="phoneNum" name="phoneNum" />
+                </td>
+                <td width="100px">
+                    <input type="submit" id="btnSubmit" value="查询" class="button" style="margin-left: 20px" />
+                </td>
+            </tr>
+        </table>
+               
+    }
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th>
+                会员名称
+            </th>
+            <th>
+                前缀
+            </th>
+            <th>
+                会员卡号
+            </th>
+            <th>
+                电话号码
+            </th>
+            <th>
+                余额
+            </th>
+            <th style="width: 120px;">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.User.UserLoginInfo.Name
+                </td>
+                <td>@item.CardInfo.CardPrefix.PrefixName
+                </td>
+                <td class="operation">
+                    <a onclick="ShowMessage('@item.CardInfo.CardPrefix.PrefixName','@item.CardInfo.CardNum')">@item.CardInfo.CardNum</a>
+                </td>
+                <td>@item.User.UserLoginInfo.Phone
+                </td>
+                <td>@item.CardInfo.Balance
+                </td>
+                <td class="operation">
+                    @Html.ActionLink("修改", "Edit", "VipInfo", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "" }, true)
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
+<div id="dialogShowMessage" title="" style="display: none">
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr id="trImgText">
+            <td>
+                <img id="codeImg" src="" width="250" height="250" />
+            </td>
+        </tr>
+    </table>
+</div>
+<div style="clear: both">
+</div>

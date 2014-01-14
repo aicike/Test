@@ -1,0 +1,142 @@
+﻿@{
+
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+    ViewBag.HomeSelect = "1";
+    System.Data.DataTable ShowDt = ViewBag.ShowPage as System.Data.DataTable;
+}
+@section head{
+ <link rel="stylesheet" href="@Url.Content("~/Scripts/nivoSlider/default/default.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("~/Scripts/nivoSlider/light/light.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("~/Scripts/nivoSlider/dark/dark.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("~/Scripts/nivoSlider/bar/bar.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("~/Scripts/nivoSlider/nivo-slider.css")" type="text/css" media="screen" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/nivoSlider/jquery.nivo.slider.js")"></script>
+
+    <script>
+
+
+        $(function () {
+            $("body").css("background-color", "#727171");
+            $("#logo").attr("style", "width:100%");
+            $(".logo").attr("style", "margin-left:10px");
+
+
+            $.fn.nivoSlider.defaults = {
+                effect: 'random', // 过渡效果
+                slices: 15, //effect为切片效果时的数量
+                boxCols: 8, //effect为格子效果时的列
+                boxRows: 4, //effect为格子效果时的行
+                animSpeed: 500, //动画速度
+                pauseTime: 10000, //图片切换速度
+                startSlide: 0, //从第几张开始
+                directionNav: true, //是否显示图片切换按钮(上/下页)
+                directionNavHide: true, //是否鼠标经过才显示
+                controlNav: false, // 显示序列导航
+                controlNavThumbs: false, // 显示图片导航
+                controlNavThumbsFromRel: true, // 使用img的rel属性作为缩略图地址
+                controlNavThumbsSearch: '.jpg', // 查找特定字符串(controlNavThumbs必须为true)
+                controlNavThumbsReplace: '_thumb.jpg', // 替换成这个字符(controlNavThumbs必须为true)
+                keyboardNav: true, // 键盘控制（左右箭头）PS:建议把代码中的keypress换成keydown,因为在Chrome下有兼容问题.
+                pauseOnHover: false, // 鼠标经过时暂停播放
+                manualAdvance: false, // 是否手动播放(false为自动播放幻灯片)
+                captionOpacity: 0.1, // 字幕透明度
+                prevText: 'Prev',
+                nextText: 'Next',
+                randomStart: true, //是否随机图片开始
+                beforeChange: function () { }, //动画开始前触发
+                afterChange: function () { }, //动画结束后触发
+                slideshowEnd: function () { }, // 本轮循环结束触发
+                lastSlide: function () { }, // 最后一张图片播放结束触发
+                afterLoad: function () { } // 加载完毕时触发
+            };
+
+            $('#slider').nivoSlider();
+
+            if ($.browser.msie) {
+                $(".nivo-nextNav").click();
+            }
+
+        });
+
+   
+
+    </script>
+}
+@model Poco.SystemUser
+
+<div id="wrapper" style="min-width: 1024px">
+    <div class="slider-wrapper theme-default">
+        <div id="slider" class="nivoSlider" style="margin-bottom: 0px;">
+            @if (ShowDt != null)
+            {
+                for (int i = 0; i < ShowDt.Rows.Count; i++)
+                {
+                    <img  src="@Url.Content(ShowDt.Rows[i]["path"].ToString())" data-thumb="@Url.Content(ShowDt.Rows[i]["path"].ToString())" title='' alt="" />
+                }
+            }
+        </div>
+    </div>
+</div>
+
+    <div style="margin: 0px auto 0px auto; position: absolute; top: 15%; right: 12%;
+    z-index: 100"">
+        <div class="homelogin">
+            @using (Ajax.BeginForm(new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "LandWaitFor('login','WaitImg',1)" }))
+            {   
+                
+                <div>
+                    @Html.TextBoxFor(a => a.Email, new { placeholder = "邮箱", @class = "inputLogin" })
+                    @Html.ValidationMessageFor(a => a.Email)
+                </div>
+                <div>
+                    @Html.PasswordFor(a => a.LoginPwdPage, new { placeholder = "密码", @class = "inputLogin" })
+                    @Html.ValidationMessageFor(a => a.LoginPwdPage)
+                </div>
+                <div>
+                    <input id="login" onclick="LandWaitFor('login','WaitImg',1)" type="submit" value="登录"
+                        class="button" style="font-size: 14px; padding: 5px 15px;" />
+                    <img id="WaitImg" src="../../Images/LandWaitFor.gif" style="display: none" />
+                </div>
+            }
+        </div>
+    </div>
+
+
+
+@*<div class="bodyBottom">
+    <div class="homeItem">
+        <div class="homeContent">
+            <div style="float: left; width: 490px; margin-top: 150px">
+                <div class="titleFont">
+                    客户沟通
+                </div>
+                <div class="titleFont">
+                    方便简单</div>
+                <div style="margin-top: 80px;" class="contentFont">
+                    语音消息，文字消息，图文信息，聊天从此不再枯燥。</div>
+            </div>
+            <div style="float: right; width: 409px; margin-top: 35px;">
+                <img src="@Url.Content("~/Images/m1.png")" style="max-height: 500px;" />
+            </div>
+            <div style="clear: both">
+            </div>
+        </div>
+    </div>
+    <div class="homeItem2">
+        <div class="homeContent">
+            <div style="float: left; width: 600px; margin-top: 50px">
+                <img src="@Url.Content("~/Images/table.jpg")" style="max-width: 600px;" />
+            </div>
+            <div style="float: right; width: 300px; margin-top: 150px; margin-left: 60px;">
+                <div class="titleFont">
+                    <div>
+                        数据分析</div>
+                </div>
+                <div style="margin-top: 80px;" class="contentFont">
+                    大数据量的数据统计，简单直观的报表展示。</div>
+            </div>
+            <div style="clear: both">
+            </div>
+        </div>
+    </div>
+</div>*@

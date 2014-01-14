@@ -1,0 +1,141 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.SurveyMain;
+}
+@section head{
+    <script>
+        $(function () {
+
+            $("label[name=labCbFirst]").each(function () {
+                $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
+            });
+
+            // 1 不能添加 2不能删除
+            var ts = "@ViewBag.TS";
+            if (ts == 1) {
+                JAlert({
+                    Message: "调查已有人回答 不能添加问题！",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+            }
+            else if (ts == 2) {
+                JAlert({
+                    Message: "调查已有人回答 不能修改问题！！",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+            }
+
+        });
+
+        //显示选项
+        function ShowInfo(id) {
+            var smid = "@ViewBag.SMID";
+            var src = '@Url.Action("ShowOption", "SurveyMain")';
+            $("#iframeShowInfo").attr("src", src + "/" + id+"?SMID="+smid);
+            $("#dialogShowInfo").dialog({
+                resizable: false,
+                height: 350,
+                width: 525,
+                modal: true,
+                draggable: false,
+                close: function (event, ui) {
+                    $("#iframeShowInfo").attr("src", "");
+                }
+            });
+
+        }
+
+
+
+
+    </script>
+}
+@model PagedList<Poco.SurveyTrouble>
+<div class="title">
+    @Html.Partial("Menu3")</div>
+
+<div class="body">
+    <fieldset style="font-size: 14px">
+        <legend>@ViewBag.ShowTitle</legend>
+        <div class="option">
+            @Html.ActionLink("问题选项录入", "AddTrouble", "SurveyMain", new { HostName = ViewBag.HostName, SMID = ViewBag.SMID }, null, true)
+        </div>
+        <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
+            <tr>
+                <th style="width: 60px;">
+                    题号
+                </th>
+                <th style="width: 340px">
+                    题目/问题名称
+                </th>
+                <th style="width: 135px;">
+                    类型
+                </th>
+                <th style="width: 150px;">
+                    操作
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.TroubleNumber
+                    </td>
+                    <td class="operation">
+                        <div style="width: 340px; word-break: keep-all; white-space: nowrap; overflow: hidden;
+                            text-overflow: ellipsis;">
+                            <label name="labCbFirst" title="查看详细信息">
+                                <a onclick="ShowInfo(@item.ID)">@item.TroubleName</a>
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        @if (item.EnumTroubleType == (int)Poco.Enum.EnumTroubleType.Check)
+                        { 
+                            @:多选
+                        }
+                        else if (item.EnumTroubleType == (int)Poco.Enum.EnumTroubleType.Radio)
+                        { 
+                            @:单选
+                        }
+                        else if (item.EnumTroubleType == (int)Poco.Enum.EnumTroubleType.Txt)
+                        { 
+                            @:文本
+                        }
+                    </td>
+                    <td class="operation">
+                        @Html.ActionLink("修改", "EditTrouble", "SurveyMain", new { HostName = ViewBag.HostName, id = item.ID, SMID = ViewBag.SMID }, new { style = "padding-right:5px" }, true)
+                        @Ajax.ActionLink("删除", "DeleteTrouble", "SurveyMain", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('此操作会删除该问题下的所有回答记录。<br/>“确定删除?”！！！','" + Url.Action("DeleteTrouble", "SurveyMain", new { HostName = ViewBag.HostName, Tid = item.ID, SMID = ViewBag.SMID }) + "',null)" }, true)
+                    </td>
+                </tr>
+            }
+        </table>
+        <div class="pages">
+            @Html.Pager(Model, new PagerOptions
+       {
+           PageIndexParameterName = "ID",
+           CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+           NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+           NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+           CssClass = "manage_pages pages",
+           SeparatorHtml = "&nbsp;",
+           AutoHide = false,
+           /*LastPageText = "Last",
+           FirstPageText = "First",
+           PrevPageText = "Back",
+           NextPageText = "Next",*/
+           PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+           ShowFirstLast = false
+       })
+        </div>
+        <input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+    </fieldset>
+</div>
+<div style="clear: both">
+</div>
+<div id="dialogShowInfo" title="问题选项" style="display: none; padding: 0px;">
+    <iframe id="iframeShowInfo" src="#" style="width: 525px; height: 300px; border: none;
+        overflow: auto"></iframe>
+</div>

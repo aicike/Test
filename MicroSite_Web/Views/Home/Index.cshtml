@@ -1,0 +1,74 @@
+﻿@{
+
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.Home;
+}
+@section head{
+    <script src="@Url.Content("~/Scripts/Highcharts/highcharts.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Highcharts/modules/exporting.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Scripts/ReportJS/Report.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/ReportJS/Report.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+   
+        $(function () {
+            var isAdmin = @ViewBag.AccountAdmin;
+            if(isAdmin==true)
+            {
+                $("#DialogGuide").dialog({
+                    resizable: false,
+                    height: 600,
+                    width: 829,
+                    modal: true,
+                    draggable: false
+                });
+            }
+
+        
+            $('#divShowReport').ReportPowerIndex({
+                accountmainid: @ViewBag.AMID,
+                accountid: @ViewBag.AccountID
+            });
+           
+
+        });
+          
+    </script>
+    <style>
+        .HYdiv
+        {
+            font-size: 18px;
+            font-family: @@黑体;
+            margin-bottom: 10px;
+            height: 30px;
+        }
+        .TZdiv
+        {
+            height: 80px;
+            border-radius: 10px;
+            border: 1px solid #cccccc;
+            padding: 10px;
+            margin: 20px auto;
+            line-height: 25px;
+        }
+    </style>
+}
+<div class="body">
+    <div id="divHY" class="HYdiv">
+        欢迎你 , @ViewBag.UNAme
+        <div id="divEr" style="float: right">
+            <a href="/Default/AppQrCode?amid=@ViewBag.AMID" target="_blank" title="点击进入扫描二维码">
+                <img src="@Url.Action("CreateQrCode", "Default", new { AMID = ViewBag.AMID })" width="45px" /></a>
+        </div>
+    </div>
+    <div id="divTZ" class="TZdiv">
+        <div>
+            @*<a href="@Url.Action("Index", "InstantMes")">你有 <span style="font-size: 14; font-weight: bold;
+                color: Red">@ViewBag.UnreadCnt</span> 条消息未读</a></div>*@
+            <div>
+                你目前共有 <span style="font-size: 14; font-weight: bold; color: Red">@ViewBag.UserCnt</span>
+                个用户</div>
+        </div>
+        <div id="divShowReport">
+        </div>
+    </div>
+</div>

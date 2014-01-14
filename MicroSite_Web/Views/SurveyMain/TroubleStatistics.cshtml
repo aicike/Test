@@ -1,0 +1,238 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+    var account = Session[Poco.SystemConst.Session.LoginAccount] as Poco.Account;
+}
+@section head{
+    <style>
+        body
+        {
+            background-color: #f6f6f6;
+            -webkit-print-color-adjust: exact;
+        }
+        .MainTab
+        {
+            background-color: #ffffff;
+            width: 760px;
+            margin-top: 25px;
+            @*border: 1px solid #dbdbdb;*@
+        }
+        
+        .TitleTab
+        {
+            width: 95%;
+            border-bottom: 1px solid #dbdbdb;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .TitleTab th
+        {
+            font-size: 22px;
+            line-height: 35px;
+        }
+        .TitleTab td
+        {
+            font-size: 14px;
+            color: #000;
+            line-height: 30px;
+            padding-top: 5px;
+            padding-bottom: 20px;
+        }
+        
+        
+        
+        .ListTab
+        {
+            width: 95%;
+            margin-top: 10px;
+            margin-bottom: 40px;
+
+        }
+        .ListTab th
+        {
+            font-size: 12px/20px;
+            font-weight: inherit;
+            line-height: 35px;
+            text-align: left;
+            margin-top:100px;
+        }
+        .ListTab td
+        {
+            font-size: 13px;
+            color: #000;
+            padding-top: 8px;
+            padding-right: 10px;
+            padding-bottom: 8px;
+        }
+        
+        
+        .divback
+        {
+            width: 150px; height: 15px; background-color: #e3e3e3; float: left; margin-top:3px; margin-left:15px
+        }
+        .divtop
+        {
+             height: 15px; background-color: #00aec8
+        }
+        .divFont
+        {
+            width:55px; float: left; color: #00aec8; margin-left: 10px; font-size: 12px;
+        }
+         .divPiao
+        {
+            width:80px; float: left; color: #6c6c6c; margin-left: 10px; font-size: 12px; text-align:right;
+        }
+        .tabDY
+        {
+            width: 760px;
+            height:50px;
+            margin-top: 10px;
+            background-color:#ffffff;
+            text-align:right;
+            padding:10px 10px 10px 10px 
+        }
+       
+    </style>
+    <style type="text/css" media="print">
+        .print
+        {
+            display: none;
+        }
+    </style>
+}
+@model Poco.SurveyMain
+@{
+    var OptionModel = Injection.Factory.Get<Interface.ISurveyOptionModel>(Poco.SystemConst.IOC_Model.SurveyOptionModel);
+    var AnswerModel = Injection.Factory.Get<Interface.ISurveyAnswerModel>(Poco.SystemConst.IOC_Model.SurveyAnswerModel);
+    var Trouble = Model.SurveyTrouble.OrderBy(a => a.TroubleNumber).ToList();    
+}
+<!-- Print handler -->
+<table align="center" class="tabDY print" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <input type="button" id="btnDY" value="打印" class="button" onclick="window.print();" />
+        </td>
+    </tr>
+</table>
+<!-- ./Print handler -->
+<!-- Main -->
+<table align="center" class="MainTab" cellpadding="0" cellspacing="0">
+    <tr>
+        <td style="">
+            <img style=" margin:10px 10px 10px 10px;  border:0" src="@Url.Content(account.LogoThumbnailPath)" />
+        </td>
+    </tr>
+    <tr>
+        <td style="height: 3px; background-color: #00aec8">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table align="center" class="TitleTab" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th align="left">
+                        @Model.SurveyTitle
+                    </th>
+                </tr>
+                <tr>
+                    <td align="left" style="padding-bottom: 5px">
+                        @if (Model.Status == 0)
+                        {
+                            <span style="font-size: 12px; color: Green">调查进行中 </span>
+                        }
+                        else
+                        {
+                            <span style="font-size: 12px; color: Red">调查已结束 </span>
+                        }
+                        @if (Model.EnumSurveyMainType == (int)Poco.Enum.EnumSurveyMainType.Rate)
+                        {
+                            <span style="font-size: 12px; color: #6c6c6c">| (满分:<span style="color:Red">@(ViewBag.FullMarks)</span>分 平均分:<span style="color:Red">@(ViewBag.Average)</span>分)</span>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        @Model.SurveyRemarks
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @foreach (var item in Trouble)
+            {
+                <table align="center" class="ListTab" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th style="width: 30px">
+                            @(item.TroubleNumber)、
+                        </th>
+                        <th colspan="2">
+                            @item.TroubleName
+                            @if (item.EnumTroubleType == (int)Poco.Enum.EnumTroubleType.Check)
+                            { 
+                                <span style="font-size: 14px; color: #00aec8">(多选)</span>
+                            }
+                            @if (Model.EnumSurveyMainType == (int)Poco.Enum.EnumSurveyMainType.Rate)
+                            {
+                                var score = OptionModel.GetTroubleFraction(item.ID);
+                                <span style="font-size: 12px; color: #6c6c6c">(满分:@(score.FullMarks)分&nbsp;&nbsp;平均分:@(score.Average)分)</span>
+                            }
+                        </th>
+                    </tr>
+                    @if (item.EnumTroubleType == (int)Poco.Enum.EnumTroubleType.Txt)
+                    {
+                        <tr>
+                            <td>
+                            </td>
+                            <td style="width: 300px">
+                                简答题
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var itemOption in item.SurveyOption)
+                        {
+                            var Percentage = AnswerModel.GetAveragePercentage(item.ID, itemOption.ID);
+                        <tr>
+                            <td>
+                            </td>
+                            <td style="width: 300px">
+                                @itemOption.Option
+                                @if (Model.EnumSurveyMainType == (int)Poco.Enum.EnumSurveyMainType.Rate)
+                                {
+                                    <span style="font-size: 12px; color: #6c6c6c">（@(itemOption.Fraction)分）</span>
+                                }
+                            </td>
+                            <td>
+                                <div>
+                                    <div class="divback">
+                                        <div class="divtop" style="width: @(Percentage)%;">
+                                            &nbsp;
+                                        </div>
+                                    </div>
+                                    <div class="divFont">
+                                        @(Percentage)%</div>
+                                    <div class="divPiao">
+                                        @(AnswerModel.GetAverageCntByOID(itemOption.ID))票</div>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    }
+                </table>
+            }
+        </td>
+    </tr>
+</table>
+<table align="center" class="tabDY print" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <input type="button" id="btnDY" value="打印" class="button" onclick="window.print();" />
+        </td>
+    </tr>
+</table>
+<!-- ./Main -->

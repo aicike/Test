@@ -1,0 +1,83 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.HousesMange;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.HouseInfoDetail;
+}
+
+
+@model PagedList<Poco.AccountMainHouseInfoDetail>
+<div class="title">
+    @Html.Partial("SitePath")</div>
+
+    <div class="body">
+    <div class="option">@Html.ActionLink("添加", "Add", "HouseInfoDetail", new { HostName = ViewBag.HostName, id = ViewBag.DID, Hid = ViewBag.HID }, null, true)</div>
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th >
+                楼层
+            </th>
+            <th >
+                房间号
+            </th>
+            <th>
+                户型
+            </th>
+            <th>
+                售出状态
+            </th>
+            <th>
+                详细信息
+            </th>
+            <th style="width: 200px;">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Layer
+                </td>
+                <td>
+                    @item.RoomNumber
+                </td>
+                <td>
+                    @item.AccountMainHouseType.HName
+                </td>
+                <td>
+                   @item.EnumSoldState.Value
+                </td>
+                
+                <td class="operation">
+                    @Html.ActionLink("查看", "Select", "HouseInfoDetail", new { HostName = ViewBag.HostName, id = item.ID, Did = ViewBag.DID , Hid = ViewBag.HID}, null, true)
+                </td>
+                <td class="operation">
+
+                    @Html.ActionLink("修改", "Edit", "HouseInfoDetail", new { HostName = ViewBag.HostName, id = item.ID, Did = ViewBag.DID, Hid = ViewBag.HID }, new { style = "padding-right:15px" }, true)
+                   
+                    @Ajax.ActionLink("删除", "Delete", "HouseInfoDetail", new { HostName = ViewBag.HostName, id = item.ID, Hid = ViewBag.HID, Did = ViewBag.DID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "HouseInfoDetail", new { HostName = ViewBag.HostName, id = item.ID, Hid = ViewBag.HID, Did = ViewBag.DID }) + "',null)" }, true)
+                    
+                </td>
+            </tr>
+        }
+    </table>
+    <input type="button" value="返回" class="button" onclick="location.href='@Url.Action("Index", "HouseInfo", new { HostName = ViewBag.HostName, houseId = ViewBag.HID })'" />
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>

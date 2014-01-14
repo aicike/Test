@@ -1,0 +1,77 @@
+﻿@{
+    var account = Session[Poco.SystemConst.Session.LoginAccount] as Poco.Account;
+    List<Poco.Menu> menuList = new List<Poco.Menu>();
+    if (account != null)
+    {
+        if (account.IsSuperAdmin)
+        {
+            menuList = Injection.Factory.Get<Interface.IMenuModel>(Poco.SystemConst.IOC_Model.MenuModel).GetMenuBySuperAdmin();
+        }
+        else
+        {
+            menuList = Injection.Factory.Get<Interface.IMenuModel>(Poco.SystemConst.IOC_Model.MenuModel).GetMenuByRoleID(account.RoleIDs);
+        }
+    }
+}
+@{
+    if (account != null)
+    {
+    <ul class="menu">
+        @foreach (var item in menuList)
+        {
+            if (item.IsAppMenu == false)
+            {
+            <li><a class="menu1">
+                @item.Name
+                <img style=" float:right; width:14px ;margin-right:10px; margin-top:14px" t_val="0" src="@Url.Content("/images/zhankai_2.png")" />
+            </a>
+                <ul class="submenu" id="submenu_@item.ID">
+                    @{var menu2s = item.Menus.OrderBy(a => a.Order);}
+                    @foreach (var menu2 in menu2s)
+                    {
+                        if (ViewBag.Menu2 == menu2.Controller)
+                        { 
+                        <li class="select">
+                            @Html.ActionLink(menu2.Name, menu2.Action, menu2.Controller, new { Area = menu2.Area }, null)
+                            <script>
+                                $(function () {
+                                    $('#submenu_@item.ID').prev("a").find("img").attr("src", '@Url.Content("/images/shouqi_2.png")');
+                                    $('#submenu_@item.ID').prev("a").find("img").attr("t_val", "1");
+                                    $('#submenu_@item.ID').show();
+                                });                            
+                            </script>
+                        </li>
+                        }
+                        else
+                        { 
+                        <li>
+                            @Html.ActionLink(menu2.Name, menu2.Action, menu2.Controller, new { Area = menu2.Area }, null)
+                        </li>
+                        }
+                    }
+                </ul>
+            </li>
+            }
+        }
+    </ul>
+    }
+}
+<script>
+    $(function () {
+        $(".menu1").click(function () {
+            $(this).next(".submenu").slideToggle('fast');
+            var iszk = $(this).find("img").attr("t_val"); //0合并 1展开
+            if (iszk == 0) {
+                $(this).find("img").attr("src", '@Url.Content("/images/shouqi_2.png")');
+                $(this).find("img").attr("t_val", "1");
+            } else {
+                $(this).find("img").attr("src", '@Url.Content("/images/zhankai_2.png")');
+                $(this).find("img").attr("t_val", "0");
+            }
+        });
+
+        $(".menu").attr("style", "min-height:" + $(".main").height() + "px");
+    });
+
+
+</script>

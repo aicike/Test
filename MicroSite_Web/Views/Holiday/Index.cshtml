@@ -1,0 +1,42 @@
+﻿@{
+
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.Holiday;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.Holiday;
+}
+@section head{
+}
+@model PagedList<Poco.Holiday>
+<div class="title">
+    @Html.Partial("Menu3")</div>
+<div class="body">
+    <div class="option">@Html.ActionLink("添加", "Add", "Holiday", new { HostName = ViewBag.HostName }, null, true)</div>
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th style="width: 250px;">
+                节假日期
+            </th>
+            <th style="width: 300px; word-wrap: break-word; word-break: normal;">
+                备注
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>    
+                    @item.HoliDayValue.ToString("yyyy-MM-dd")
+                </td>
+                <td>
+                    @item.Remark
+                </td>
+                <td class="operation">
+                    @Html.ActionLink("修改", "Edit", "Holiday", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:15px" }, true)
+                    @Ajax.ActionLink("删除", "Delete", "Holiday", new { HostName = ViewBag.HostName, id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "Holiday", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
+                </td>
+            </tr>
+        }
+    </table>
+</div>

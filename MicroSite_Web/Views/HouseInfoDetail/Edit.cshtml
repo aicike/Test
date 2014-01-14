@@ -1,0 +1,116 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.HousesMange;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.HouseInfoDetail;
+}
+
+
+@model Poco.AccountMainHouseInfoDetail
+<div class="title">
+    @Html.Partial("SitePath")
+</div>
+
+<div class="body">
+ @using (Ajax.BeginForm("Edit", "HouseInfoDetail", new { HostName = ViewBag.HostName, Did = ViewBag.DID , Hid = ViewBag.HID}, new AjaxOptions() { UpdateTargetId = "alert" }))
+ {
+    <fieldset>
+            <legend>基本信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 楼层
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Layer) @Html.HiddenFor(a => a.AccountMainHouseInfoID)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Layer)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 房间号
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.RoomNumber)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.RoomNumber)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 户型
+                    </td>
+                    <td class="tdField">
+                    @Html.DropDownListFor(a => a.AccountMainHouseTypeID, ViewData["HousesTypeS"] as List<SelectListItem>, new { })
+
+                    </td>
+                    <td>
+                    
+                    @Html.ValidationMessageFor(a => a.AccountMainHouseTypeID)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 售出状态
+                    </td>
+                    <td class="tdField">
+                     @Html.DropDownListFor(a => a.EnumSoldStateID, ViewData["HousesStatus"] as List<SelectListItem>, new { })
+                    </td>
+                    <td>
+                    
+                    @Html.ValidationMessageFor(a => a.EnumSoldStateID)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 单价
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Price)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Price)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 总价
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.TotalPrice)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.TotalPrice)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 建筑面积
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.BuildingArea)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.BuildingArea)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 实际面积
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.RealityArea)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.RealityArea)
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 公摊比例
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.GongTan)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.GongTan)
+                    </td>
+                </tr>
+            </table>
+    </fieldset>
+     
+     
+      <div class="action">
+            <input type="submit" id="btnSubmit"  class="button" value="保存" style=" margin-right:20px"  /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+       </div>
+ }
+</div>

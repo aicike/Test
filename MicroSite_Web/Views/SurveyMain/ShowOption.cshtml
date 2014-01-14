@@ -1,0 +1,102 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+    var Trouble = ViewBag.Trouble as Poco.SurveyTrouble;
+}
+@section head{
+    <style>
+        body
+        {
+            background-color: #f6f6f6;
+        }
+        .mainTab
+        {
+            width: 98%;
+            margin-top: 20px;
+            border: 1px solid #dbdbdb;
+            background-color: #ffffff;
+        }
+        
+        
+        
+        
+        .ListTab
+        {
+            width: 95%;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .ListTab th
+        {
+            font-size: 16px;
+            font-weight: inherit;
+            line-height: 25px;
+            text-align: left;
+        }
+        .ListTab td
+        {
+            font-size: 13px;
+            color: #6c6c6c;
+            padding-top: 7px;
+            padding-right: 10px;
+            padding-bottom: 7px;
+        }
+    </style>
+}
+@model IQueryable<Poco.SurveyOption>
+<table align="center" class="mainTab" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table align="center" class="ListTab" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th valign="top" style="width: 35px;" >
+                        @Trouble.TroubleNumber、
+                    </th>
+                    <th>
+                        @Trouble.TroubleName
+                    </th>
+                </tr>
+                @if (Trouble.EnumTroubleType == (int)Poco.Enum.EnumTroubleType.Check)
+                {
+                    foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="ckb" />@item.Option
+                        </td>
+                    </tr>
+                    }
+                }
+                else if (Trouble.EnumTroubleType == (int)Poco.Enum.EnumTroubleType.Radio)
+                {
+                    foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <input type="radio" name="ckb"  />@item.Option
+                            @if (ViewBag.MainType == 2)//调查类型 1普通 2评分
+                            {
+                                @:(@item.Fraction)分
+                            }
+                        </td>
+                    </tr>
+                    }
+                }
+                else if (Trouble.EnumTroubleType == (int)Poco.Enum.EnumTroubleType.Txt)
+                {
+                   
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <textarea id="txtarea" style=" width:90%; height:180px"></textarea>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </td>
+    </tr>
+</table>

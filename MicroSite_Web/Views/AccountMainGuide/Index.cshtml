@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = null;
+    System.Data.DataTable dt = ViewBag.Dt as System.Data.DataTable;
+}
+<link href="@Url.Content("~/Content/themes/base/jquery-ui-1.10.2.custom.min.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~//Content/Style.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery-1.8.3.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui-1.10.3.custom.min.js")" type="text/javascript"></script>
+<style type="text/css">
+    .TabMain
+    {
+        width: 100%;
+        line-height: 25px;
+        font-size:14px;
+        font-family:@@微软雅黑;
+    }
+    .TabMain td
+    {
+        height: 50px;
+        padding: 2px;
+    }
+    .DivList
+    {
+        border-radius: 10px;
+        padding: 3px;
+        border: 1px solid red;
+        width: 100%;
+        cursor: pointer;
+    }
+    .DivList:hover
+    {
+        border: 1px solid #00aec8;
+    }
+    
+    .DivListOK
+    {
+        border-radius: 10px;
+        padding: 3px;
+        border: 1px solid #f1f1f1;
+        width: 100%;
+    }
+    .DivListPZ
+    {
+        border-radius: 10px;
+        padding: 3px;
+        border: 1px solid #f1f1f1;
+        width: 100%;
+        cursor: pointer;
+    }
+</style>
+<script>
+    function OpUrl(url) { 
+
+        window.open(url);     
+    }
+</script>
+<div style="border: 1px solid #ebebeb; width: 97%; height: 480px; padding: 10px">
+    <table class="TabMain">
+        <tr>
+            <td>
+                您好,请安以下步骤完善平台！
+            </td>
+        </tr>
+        @foreach (System.Data.DataRow row in dt.Rows)
+        {
+            <tr>
+                <td>
+                    @if (row["Status"] == "1")
+                    {
+                        <div class="DivList" onclick="OpUrl('@row["Conntroller"]')">
+                            @Html.Raw(row["Title"])
+                            <div style="float: right; margin-right: 10px; color: Red">
+                                未完成</div>
+                        </div>
+                    }
+                    else if (row["Status"] == "2")
+                    {
+                        <div class="DivListOK">
+                            @Html.Raw(row["Title"])
+                            <div style="float: right; margin-right: 10px">
+                                已完成</div>
+                        </div>
+                    }
+                    else
+                    { 
+                        <div class="DivListPZ" onclick="OpUrl('@row["Conntroller"]')">
+                            @Html.Raw(row["Title"])
+                            <div style="float: right; margin-right: 10px;">
+                                配置</div>
+                        </div>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+</div>

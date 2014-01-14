@@ -1,0 +1,33 @@
+
+.carousel .leftButton,.carousel .rightButton {
+	cursor: pointer;
+}
+
+.carousel .leftButton {
+	float: left;
+}
+
+.carousel .rightButton {
+	float: right;
+}
+
+.carousel .scroll {
+	width: 500px;
+	overflow: auto;
+}
+
+.carousel .scroll ul {
+	width: 1000px;
+	overflow: hidden;
+}
+
+.carousel .scroll ul li {
+	float: left;
+	width: 100px;
+	cursor: pointer;
+	
+}
+
+.carousel .stage {
+	height: 100px;
+}

@@ -1,0 +1,99 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.VipInfo;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.VipInfo;
+    var frefix = ViewBag.Frefix as List<Poco.CardPrefix>;
+}
+@section head{
+    <script type="text/javascript">
+
+        function checkPhone() {
+            var phone = $("#phoneNum").val();
+            var CardNumber = $("#CardNumber").val();
+
+            var sel = $("#selPrefix").val();
+            if (sel == "" || sel == undefined) {
+                JAlert({
+                    Message: "请先录入前缀！",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+                return false;
+            }
+            if (CardNumber == "" || CardNumber == undefined) {
+                JAlert({
+                    Message: "卡号不能为空！",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+                return false;
+            }
+            if (phone == "" || phone == undefined) {
+                JAlert({
+                    Message: "电话不能为空！",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+                return false;
+            }
+
+            return true;
+
+        }
+    </script>
+}
+<div class="title">
+    @Html.Partial("Menu3")
+</div>
+<div class="body">
+    @using (Ajax.BeginForm("Add", "VipInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {
+        <fieldset>
+            <legend>基本信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 前缀
+                    </td>
+                    <td class="tdField">
+                         <select id="selPrefix" name="Prefix">
+                            @foreach (var item in frefix)
+                            {
+                                <option value="@item.ID">@item.PrefixName</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                    </td>
+                    </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 卡号
+                    </td>
+                    <td class="tdField">
+                        <input type="text" id="CardNumber" name="CardNumber" />
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 电话
+                    </td>
+                    <td class="tdField">
+                        <input type="text" id="phoneNum" name="phoneNum" />
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        
+        <div class="action">
+            <input type="submit" id="btnSubmit" value="保存" onclick="return checkPhone()" class="button"
+                style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }
+</div>
+<div style="clear: both">
+</div>

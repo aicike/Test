@@ -1,0 +1,112 @@
+﻿/*首页样式*/
+.listItem1
+{
+    text-align: center;
+    border: 1px solid black;
+    height: 120px;
+}
+.listItem2
+{
+    width: 100%;
+    height: 125px;
+    margin-top: 15px;
+}
+.listItem2 > div
+{
+    float: left;
+}
+.listItem_text
+{
+    width: 40%;
+    background-color: #66CDAA;
+    height: 100%;
+    text-align: center;
+    display: table;
+}
+.listItem_text div
+{
+    width: 80%;
+    vertical-align: middle;
+    display: table-cell;
+}
+.listItem_img
+{
+    width: 60%;
+    height: 100%;
+    overflow: hidden;
+}
+.listItem_img img
+{
+    width: 100%;
+}
+/*文字样式*/
+.font_title
+{
+    text-shadow: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/*瀑布样式*/
+.BlocksIt
+{
+    position: relative;
+}
+
+.grid
+{
+    min-height: 100px;
+    padding: 0px;
+    background: #fff;
+    margin: 0px;
+    font-size: 12px;
+    float: left;
+    box-shadow: 0 1px 3px rgba(34,25,25,0.4);
+    -moz-box-shadow: 0 1px 3px rgba(34,25,25,0.4);
+    -webkit-box-shadow: 0 1px 3px rgba(34,25,25,0.4);
+    -webkit-transition: top 1s ease, left 1s ease;
+    -moz-transition: top 1s ease, left 1s ease;
+    -o-transition: top 1s ease, left 1s ease;
+    -ms-transition: top 1s ease, left 1s ease;
+}
+
+.grid > span
+{
+    display: block;
+    width: 100%;
+    background-color: #00aec8;
+    line-height: 36px;
+}
+
+.grid > span > input
+{
+    margin-left: 15px;
+}
+
+.grid > ul
+{
+    margin: 3px 15px 15px 15px;
+}
+
+.grid strong
+{
+    border-bottom: 1px solid #ccc;
+    margin: 10px 0;
+    display: block;
+    padding: 0 0 5px;
+    font-size: 17px;
+}
+/**一流素材网www.16sucai.com**/
+.grid .meta
+{
+    text-align: right;
+    color: #777;
+    font-style: italic;
+}
+.grid .imgholder img
+{
+    max-width: 100%;
+    background: #ccc;
+    display: block;
+}

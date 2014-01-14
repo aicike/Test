@@ -121,7 +121,7 @@
     <Content Include="ProductInfo.aspx" />
     <Content Include="ProductList.aspx" />
     <Content Include="Shop.aspx" />
-    <Content Include="Style\style.css" />
+    <Content Include="Style\homeStyle.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -280,6 +280,10 @@
   <ItemGroup>
     <Content Include="weixin\Init.ashx" />
     <Content Include="Admin\Admin.Master" />
+    <Content Include="Admin\AppAdvertorial\Add.cshtml" />
+    <Content Include="Admin\AppAdvertorial\Edit.cshtml" />
+    <Content Include="Admin\AppAdvertorial\Index.cshtml" />
+    <Content Include="Admin\AppAdvertorial\Preview.cshtml" />
     <None Include="NewFolder1\images\pic\Thumbs.db" />
     <None Include="NewFolder1\images\Thumbs.db" />
   </ItemGroup>

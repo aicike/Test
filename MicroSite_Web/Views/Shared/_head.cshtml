@@ -1,0 +1,103 @@
+﻿@{
+    var account = Session[Poco.SystemConst.Session.LoginAccount] as Poco.Account;
+
+}
+<style>
+    .homeMenu
+    {
+        float: left;
+        margin-left: 20px;
+        color: #222;
+        text-align: center;
+        line-height: 71px;
+        font-size: 20px;
+    }
+    .homeMenuItem
+    {
+        width: 200px;
+        float: left;
+        height: 67.5px;
+        -webkit-border-radius: 1px;
+        -moz-border-radius: 1px;
+        border-radius: 1px;
+        cursor: pointer;
+    }
+    .homeMenuItem a
+    {
+        display: block;
+    }
+    .homeMenuItem:hover
+    {
+        background-color: #fbfbfb;
+    }
+    .hmselect
+    {
+        background-color: #fbfbfb;
+        border-bottom: 3.5px solid #00aec8;
+    }
+</style>
+<div class="head">
+    <div id="logo" style="width: 1002px; margin: 0px auto 0px auto;">
+        <div class="logo" style="margin-top: 6px;">
+                
+                @if (account!=null&&account.LogoPath != null && account.LogoPath.Length > 0)
+                { 
+                <a href="@Url.Action("Index", "Home")"><img src="@Url.Content(account.LogoThumbnailPath)" /></a>
+                }
+                else
+                { 
+                <a href="@Url.Action("Index", "Home")"><img alt="" src="@Url.Content("~/Images/logo.png")" /></a>
+                }
+        </div>
+        @*<div class="homeMenu">
+            @if (ViewBag.HomeSelect == "1")
+            { 
+                <div class="homeMenuItem hmselect">
+                    <a href="@Url.Action("Index", "Login")">首页</a>
+                </div>
+            }
+            else
+            {
+                <div class="homeMenuItem">
+                    <a href="@Url.Action("Index", "Login")">首页</a>
+                </div>
+            }
+            @if (ViewBag.HomeSelect == "2")
+            { 
+                <div class="homeMenuItem hmselect">
+                    <a href="@Url.Action("UserLogin", "Login")">公众平台</a>
+                </div>
+            }
+            else
+            { 
+                <div class="homeMenuItem">
+                    <a href="@Url.Action("UserLogin", "Login")">公众平台</a>
+                </div>
+            }
+            <div class="homeMenuItem">
+                帮助中心
+            </div>
+        </div>*@
+        <div style="float: right; margin-top: 35px;">
+            @if (account != null)
+            {   
+                @*<a href="@Url.Action("index","Set")">
+                    @if (string.IsNullOrEmpty(account.HeadImagePath))
+                    { 
+                        <img src="@Url.Content("/Images/default_Avatar.png")" title="账号信息" style=" border:0px; width:56px"/>
+                    }
+                    else
+                    { 
+                        <img src="@Url.Content(account.HeadImagePath)" title="账号信息"  style=" border:0px; width:56px"/>
+                    }
+                </a>*@
+                <a id="btnLogOut" type="user">退出</a>
+            }
+        </div>
+        <div style="clear: both;">
+        </div>
+        <div class="DivSendSuccess">
+            发送成功
+        </div>
+    </div>
+</div>
