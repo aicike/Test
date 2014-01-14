@@ -10,7 +10,8 @@
 
 .ReportShowDiv
 {
-    min-width: 910px;
+    max-width:786px;
+    min-width:786px;
     height: 320px; 
     margin: 0 auto;    
 }

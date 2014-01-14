@@ -2,7 +2,8 @@
     CodeBehind="ProductList.aspx.cs" Inherits="MicroSite.ProductList" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script src="http://192.168.1.138/Scripts/waterfall/jquery.infinitescroll.js" type="text/javascript"></script>
+    <script src="http://192.168.1.138/Scripts/waterfall/jquery.infinitescroll.min.js"
+        type="text/javascript"></script>
     <script src="http://192.168.1.138/Scripts/waterfall/jquery.masonry.js" type="text/javascript"></script>
     <style type="text/css">
         *
@@ -94,7 +95,7 @@
         /* infscr-loading */
         #infscr-loading
         {
-            bottom: -10px;
+            bottom: 10px;
             position: absolute;
             text-align: center;
             height: 20px;
@@ -161,8 +162,8 @@
         {
             font-size: 14px;
             font-weight: bold;
-            width: 100%;
-            margin: 10px 8px;
+            width: 98%;
+            margin: 10px 0px;
             text-align: center;
         }
     </style>
@@ -209,29 +210,26 @@
             });
 
             $('.item').fadeIn();
-
-            var sp = 1
+            var sp =1
             $(".infinite_scroll").infinitescroll({
                 navSelector: "#more",
                 nextSelector: "#more a",
                 itemSelector: ".item",
+                animate: false,
+                maxPage: 3,
                 loading: {
-                    img: "image/Loading.gif",
-                    msgText: '加载中',
-                    finishedMsg: '木有了',
+                    img: "Image/Loading.gif",
                     finished: function () {
                         sp++;
-                        if (sp >= 3) { //到第10页结束事件
-
-                            $("#more").remove();
+                        if (sp > 3) {
                             $("#infscr-loading").hide();
-                            $(window).unbind('.infscr');
-                            //没有更多了
                             $(".loadOK").show();
                         }
-
+                        
                     }
-                }, errorCallback: function () {
+                },
+                errorCallback: function () {
+                
                 }
 
             }, function (newElements) {
@@ -258,7 +256,7 @@
         <div class="titleDiv">
             水果 新鲜</div>
         <div class="item_list infinite_scroll">
-            <div class="item masonry_brick" onclick="OpenUrl(1)" >
+            <div class="item masonry_brick" onclick="OpenUrl(1)">
                 <div class="item_t">
                     <div class="imgDiv">
                         <a href="#">
@@ -304,11 +302,11 @@
             <!--item end-->
         </div>
         <div id="more">
-            <a href="NewFolder1/page/2.html"></a><a href="NewFolder1/page/3.html"></a>
+            <a href="ProductListItem.aspx?maid=a&page=1"></a>
         </div>
     </div>
     <div class="loadOK" style="display: none;">
-        全部加载完成。
+        全部加载完成
     </div>
     <div style="display: none;" id="gotopbtn" class="to_top">
         <a title="返回顶部" href="javascript:void(0);"></a>

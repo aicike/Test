@@ -256,6 +256,7 @@ namespace Web.Controllers
         /// <param name="AccountID">售楼部ID</param>
         /// <param name="ID"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         public string GetAdvertorialInfo(int AMID, int ID)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);

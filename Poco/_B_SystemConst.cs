@@ -174,6 +174,7 @@ namespace Poco
             public const string AppWaitImgModel = "AppWaitImgModel";
             public const string ClassifyModle = "ClassifyModel";
             public const string ProductModel = "ProductModel";
+            public const string ProductImgModel = "ProductImgModel";
             public const string OrderMTypeModel = "OrderMTypeModel";
             public const string OrderUserInfoModel = "OrderUserInfoModel";
             public const string OrderModel = "OrderModel";

@@ -36,7 +36,7 @@ namespace Web.Controllers
                     {
                         App_Product product = new App_Product();
                         product.ID = p.ID;
-                        product.imgFilePath = SystemConst.WebUrlIP + p.imgFilePath.Replace("~", "");
+                        //product.imgFilePath = SystemConst.WebUrlIP + p.imgFilePath.Replace("~", "");
                         product.Introduction = p.Introduction;
                         product.Specification = p.Specification;
                         product.Price = p.Price;
@@ -60,7 +60,7 @@ namespace Web.Controllers
             var p = productModel.Get(pid);
             App_Product product = new App_Product();
             product.ID = p.ID;
-            product.imgFilePath = SystemConst.WebUrlIP + p.imgFilePath.Replace("~", "");
+            //product.imgFilePath = SystemConst.WebUrlIP + p.imgFilePath.Replace("~", "");
             product.Introduction = p.Introduction;
             product.Specification = p.Specification;
             product.Price = p.Price;

@@ -6,8 +6,10 @@
 @section head{
     <link href="@Url.Content("~/Scripts/treeview/jquery.treeview.css")" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="@Url.Content("~/Scripts/treeview/jquery.treeview.js")"></script>
+    <link href="@Url.Content("~/Scripts/uploadify/uploadify.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/uploadify/jquery.uploadify.js")" type="text/javascript"></script>
     <script>
-        
+         var UpImgUrl = '@Url.Action("UpImg", "Ajax", new { HostName = ViewBag.HostName })';
         $(function () { 
             
              $("#browser").treeview({
@@ -19,6 +21,69 @@
             $("#AddUrl").attr("href","javascript://function(){}");
             $("#EditUrl").attr("href","javascript://function(){}");
             $("#DeleteUrl").attr("href","javascript://function(){}");
+
+
+
+
+              $("#file_upload1").uploadify({
+                height: 25,
+                swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
+                uploader: UpImgUrl,
+                width: 70,
+                fileSizeLimit: '5MB',
+                buttonText: '选择图片',
+                multi: false,
+                fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
+                onUploadSuccess: function (file, data, response) {
+
+                    if (data == "" || data == undefined || data == "false") {
+                        JAlert({
+                            Message: "上传失败请重新上传！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return;
+                    }
+
+                    $("#imgLogo1").attr('src', data);
+                
+                    $("#imgpath1").val(data);
+
+
+                }
+
+            });
+
+             $("#file_upload2").uploadify({
+                height: 25,
+                swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
+                uploader: UpImgUrl,
+                width: 70,
+                fileSizeLimit: '5MB',
+                buttonText: '选择图片',
+                multi: false,
+                fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
+                onUploadSuccess: function (file, data, response) {
+
+                    if (data == "" || data == undefined || data == "false") {
+                        JAlert({
+                            Message: "上传失败请重新上传！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return;
+                    }
+
+                    $("#imgLogo2").attr('src', data);
+                    $("#imgpath2").val(data);
+
+
+                }
+
+            });
+
+
+
         });
 
         function ckAdd()
@@ -112,7 +177,7 @@
             }
         }
 
-        function ckSet(id,level,Name,PID)
+        function ckSet(id,level,Name,PID,imgval,imgpath)
         {
             //添加
             $("#CPID").val(id);
@@ -122,18 +187,25 @@
             $("#CEditID").val(id);
             $("#EditCname").val(Name);
             $("#EditPID").val(PID);
+            $("#imgpath2").val(imgval);
+            $("#imgLogo2").attr("src",imgpath);
+
+
             var YZUrl = '@Url.Action("GetPname", "Classify", new { Area = "", HostName = "" })';
             $.post(YZUrl, { pid: PID }, function (result) {
-                
-                if (result == "此节点为顶级节点") {
+
+                if (result.Name == "此节点为顶级节点") {
           
                     $("#selPclass").attr("style","display:none");
                 }
                 else {
                     $("#selPclass").attr("style","display:");
                 }
-                $("#PName").text(result);
-            });
+
+                 
+                $("#PName").text(result.Name);
+                
+            },"Json");
 
 
 
@@ -209,7 +281,7 @@
             min-height: 570px;
             float: right;
             font-size: 14px;
-            padding:15px;
+            padding: 15px;
         }
         .tabList
         {
@@ -229,78 +301,112 @@
         <div id="setDiv" style="display: none">
             @using (Html.BeginForm("Add", "Classify", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                <table cellpadding="0" cellspacing="0" class="tabList">
-                    <tr>
-                        <td style="width: 100px">
-                            分类名称：
-                        </td>
-                        <td>
-                            <input id="CPID" name="PID" type="text" style="display: none" />
-                            <input id="CLevel" name="Level" type="text" style="display: none" />
-                            <input id="AddCname" name="AddCname" type="text" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <input type="submit" id="btnAdd" value="添加" class="button" style="display: none" />
-                            <div class="option">@Html.ActionLink("添加子类", "Add", "Classify", new { HostName = ViewBag.HostName }, new { onclick = "return ckAdd()", id = "AddUrl" }, true)</div>
-                        </td>
-                    </tr>
-                </table>
-       
+                <fieldset>
+                    <legend>添加分类</legend>
+                    <table cellpadding="0" cellspacing="0" class="tabList">
+                        <tr>
+                            <td style="width: 100px">
+                                分类名称：
+                            </td>
+                            <td>
+                                <input id="CPID" name="PID" type="text" style="display: none" />
+                                <input id="CLevel" name="Level" type="text" style="display: none" />
+                                <input id="AddCname" name="AddCname" type="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" style="width: 100px">
+                                图片：
+                            </td>
+                            <td>
+                                <img id="imgLogo1" style="max-width: 100px; max-height: 100px; margin: 2px; float: left" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input id="file_upload1" name="file_upload" type="file" multiple="false" />
+                                <input type="hidden" id="imgpath1" name="imgpath1" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="submit" id="btnAdd" value="添加" class="button" style="display: none" />
+                                <div class="option">@Html.ActionLink("添加子类", "Add", "Classify", new { HostName = ViewBag.HostName }, new { onclick = "return ckAdd()", id = "AddUrl" }, true)</div>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
            
             }
             <br />
-            @using (Html.BeginForm("Edit", "Classify", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-            
+            <fieldset>
+                <legend>更改分类</legend>
+                @using (Html.BeginForm("Edit", "Classify", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                
+                    <table cellpadding="0" cellspacing="0" class="tabList">
+                        <tr>
+                            <td style="width: 100px">
+                                当前类别名称：
+                            </td>
+                            <td>
+                                <input id="CEditID" name="CID" type="text" style="display: none" />
+                                <input id="EditCname" name="EditCname" type="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 100px">
+                                上级类别：
+                            </td>
+                            <td class="operation">
+                                <label id="PName">
+                                </label>
+                                <input id="EditPID" name="PID" type="text" style="display: none" />
+                                <a id="selPclass" onclick="SelParent()">选择..</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" style="width: 100px">
+                                图片：
+                            </td>
+                            <td>
+                                <img id="imgLogo2" style="max-width: 100px; max-height: 100px; margin: 2px; float: left" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input id="file_upload2" name="file_upload" type="file" multiple="false" />
+                                <input type="hidden" id="imgpath2" name="imgpath2" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="submit" id="btnEdit" value="修改" class="button" style="display: none" />
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </table>
+                
+          
+                }
+                @using (Ajax.BeginForm("Delete", "Classify", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+                {
+                    <input id="CDeleteID" name="CID" type="text" style="display: none" />
+                    <input type="submit" id="btnDelete" value="删除" class="button" style="display: none" />
+                }
+                <br />
                 <table cellpadding="0" cellspacing="0" class="tabList">
                     <tr>
-                        <td style="width: 100px">
-                            当前类别名称：
+                        <td>
+                            <div class="option">@Html.ActionLink("保存", "Edit", "Classify", new { HostName = ViewBag.HostName }, new { onclick = "ckEdit()", id = "EditUrl" }, true)</div>
                         </td>
                         <td>
-                            <input id="CEditID" name="CID" type="text" style="display: none" />
-                            <input id="EditCname" name="EditCname" type="text" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 100px">
-                            上级类别：
-                        </td>
-                        <td class="operation">
-                            <label id="PName">
-                            </label>
-                            <input id="EditPID" name="PID" type="text" style="display: none" />
-                            <a id="selPclass" onclick="SelParent()">选择..</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="submit" id="btnEdit" value="修改" class="button" style="display: none" />
-                        </td>
-                        <td>
+                            <div class="option">@Html.ActionLink("删除", "Delete", "Classify", new { HostName = ViewBag.HostName }, new { onclick = "ckDelete()", id = "DeleteUrl", style = "margin-left:20px" }, true)</div>
                         </td>
                     </tr>
                 </table>
-          
-            }
-            @using (Ajax.BeginForm("Delete", "Classify", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
-            {
-                <input id="CDeleteID" name="CID" type="text" style="display: none" />
-                <input type="submit" id="btnDelete" value="删除" class="button" style="display: none" />
-            }
-            <br />
-            <table cellpadding="0" cellspacing="0" class="tabList">
-                <tr>
-                    <td>
-                        <div class="option">@Html.ActionLink("保存", "Edit", "Classify", new { HostName = ViewBag.HostName }, new { onclick = "ckEdit()", id = "EditUrl" }, true)</div>
-                    </td>
-                    <td>
-                        <div class="option">@Html.ActionLink("删除", "Delete", "Classify", new { HostName = ViewBag.HostName }, new { onclick = "ckDelete()", id = "DeleteUrl", style = "margin-left:20px" }, true)</div>
-                    </td>
-                </tr>
-            </table>
+            </fieldset>
         </div>
     </div>
     <div class="lefClass operation">
