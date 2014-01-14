@@ -53,17 +53,17 @@ namespace Web.Controllers
 
         //
 
-        public ActionResult Add(int PID, int Level, string AddCname)
+        public ActionResult Add(int PID, int Level, string AddCname, string imgpath1)
         {
             var classModel = Factory.Get<IClassifyModel>(SystemConst.IOC_Model.ClassifyModle);
-            var cnt = classModel.AddClass(PID, Level, LoginAccount.CurrentAccountMainID, AddCname);
+            var cnt = classModel.AddClass(PID, Level, LoginAccount.CurrentAccountMainID, AddCname,imgpath1);
             return RedirectToAction("Index", "Classify", new { HostName = LoginAccount.HostName });
         }
 
-        public ActionResult Edit(int CID, string EditCname, int PID)
+        public ActionResult Edit(int CID, string EditCname, int PID, string imgpath2)
         {
             var classModel = Factory.Get<IClassifyModel>(SystemConst.IOC_Model.ClassifyModle);
-            var cnt = classModel.UpdClass(PID, CID, EditCname, LoginAccount.CurrentAccountMainID);
+            var cnt = classModel.UpdClass(PID, CID, EditCname, LoginAccount.CurrentAccountMainID, imgpath2);
 
             return RedirectToAction("Index", "Classify", new { HostName = LoginAccount.HostName });
         }
