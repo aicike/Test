@@ -142,6 +142,7 @@ namespace Web.Controllers
         /// <param name="ID">显示开始ID 第一次打开传0</param>
         /// <param name="ListCnt">返回列表的条数</param>
         /// <returns></returns>
+        [AllowAnonymous]
         public string GetAdvertorialList(int AMID, int ID, int ListCnt)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
@@ -197,6 +198,7 @@ namespace Web.Controllers
         /// <param name="AccountID">售楼部ID</param>
         /// <param name="ID"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         public string GetAdvertorialInfo(int AMID, int ID)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);

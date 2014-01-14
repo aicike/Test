@@ -12,14 +12,16 @@ namespace Interface
 
         IQueryable<Classify> GetLastClass(int ParentID, int AccountMainID,int NoID);
 
-        int AddClass(int PID, int Level, int AccountMainID, string Name);
+        int AddClass(int PID, int Level, int AccountMainID, string Name,string imgpath1);
 
         IQueryable<Classify> GetClassByPID(int PID);
 
-        int UpdClass(int PID, int ID, string Name, int AccountMainID);
+        int UpdClass(int PID, int ID, string Name, int AccountMainID, string imgpath2);
 
         bool GetIsMainNode(int ID);
 
         List<Classify> Get1levelClass(int accountMainID);
+
+        Result DelClassify(int ID, int AMID);
     }
 }

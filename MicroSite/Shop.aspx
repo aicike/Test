@@ -75,6 +75,7 @@
         {
             width: 100%;
             height: 135px;
+            background-color:#ffeedd;
             overflow: hidden;
         }
         .ShowImg

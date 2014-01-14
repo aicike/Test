@@ -14,6 +14,7 @@ namespace Web.Controllers
 {
     public class HomeController : ManageAccountController
     {
+        [AllowCheckPermissions(false)]
         public ActionResult Index()
         {
             ViewBag.AccountID = LoginAccount.ID;

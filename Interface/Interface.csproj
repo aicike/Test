@@ -72,6 +72,7 @@
     <Compile Include="IOrderModel.cs" />
     <Compile Include="IOrderMTypeModel.cs" />
     <Compile Include="IPendingMessagesModel.cs" />
+    <Compile Include="IProductImgModel.cs" />
     <Compile Include="IProductModel.cs" />
     <Compile Include="IProvinceModel.cs" />
     <Compile Include="IPushModel.cs" />

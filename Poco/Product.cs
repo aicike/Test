@@ -15,9 +15,7 @@ namespace Poco
         public int AccountMainID { get; set; }
         public virtual AccountMain AccountMain { get; set; }
 
-        [Display(Name = "图片")]
-        public string imgFilePath { get; set; }
-
+        
         [Display(Name = "品名")]
         [Required(ErrorMessage = "请输入品名")]
         [StringLength(30, ErrorMessage = "长度小于30")]
@@ -29,6 +27,10 @@ namespace Poco
         [Display(Name = "销售价格")]
         [Required(ErrorMessage = "请输入销售价格")]
         public double Price { get; set; }
+
+        [Display(Name = "运费")]
+        [Required(ErrorMessage = "请输入运费")]
+        public double Freight { get; set; }
 
         [Display(Name = "介绍")]
         public string Introduction { get; set; }
@@ -57,5 +59,6 @@ namespace Poco
 
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
 
+        public virtual ICollection<ProductImg> ProductImg { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace Business
             if (string.IsNullOrEmpty(accountmain.Lat))
             {
                 DataRow row = dt.NewRow();
-                row["Title"] = "第一步：在 <span style='font-weight:bold'>设置 </span>-><span style='font-weight:bold'> 基础设置 </span>中设置基础数据！";
+                row["Title"] = "第一步：在 <span style='font-weight:bold'>App设置 </span>-><span style='font-weight:bold'> 售楼部信息 </span>中设置基础数据！";
                 row["Conntroller"] = "BasisSet";
                 row["View"] = "Index";
                 row["Status"] = "1";
@@ -43,7 +43,7 @@ namespace Business
             else
             {
                 DataRow row = dt.NewRow();
-                row["Title"] = "第一步：在 <span style='font-weight:bold'>设置 </span>-><span style='font-weight:bold'> 基础设置 </span>中设置基础数据！";
+                row["Title"] = "第一步：在 <span style='font-weight:bold'>App设置 </span>-><span style='font-weight:bold'> 售楼部信息 </span>中设置基础数据！";
                 row["Conntroller"] = "";
                 row["View"] = "";
                 row["Status"] = "2";
@@ -55,7 +55,7 @@ namespace Business
             if (accountHouses.Count() > 0)
             {
                 DataRow row = dt.NewRow();
-                row["Title"] = "第二步：在 <span style='font-weight:bold'> 项目管理 </span>中录入项目信息！";
+                row["Title"] = "第二步：在  <span style='font-weight:bold'>项目 </span>-><span style='font-weight:bold'> 项目管理 </span>中录入项目信息！";
                 row["Conntroller"] = "";
                 row["View"] = "";
                 row["Status"] = "2";
@@ -64,7 +64,7 @@ namespace Business
             else
             {
                 DataRow row = dt.NewRow();
-                row["Title"] = "第二步：在 <span style='font-weight:bold'> 项目管理 </span>中录入项目信息！";
+                row["Title"] = "第二步：在 <span style='font-weight:bold'>项目 </span>-><span style='font-weight:bold'> 项目管理 </span>中录入项目信息！";
                 row["Conntroller"] = "HousesMange";
                 row["View"] = "Index";
                 row["Status"] = "1";
@@ -77,7 +77,7 @@ namespace Business
             if (autoMessagekey.Count() > 0)
             {
                 DataRow row = dt.NewRow();
-                row["Title"] = "第三步：在 <span style='font-weight:bold'>设置 </span>-><span style='font-weight:bold'> 关键词自动回复 </span>中录入自动答复规则！";
+                row["Title"] = "第三步：在 <span style='font-weight:bold'>App设置 </span>-><span style='font-weight:bold'> 关键词自动回复 </span>中录入自动答复规则！";
                 row["Conntroller"] = "";
                 row["View"] = "";
                 row["Status"] = "2";
@@ -86,7 +86,7 @@ namespace Business
             else
             {
                 DataRow row = dt.NewRow();
-                row["Title"] = "第三步：在 <span style='font-weight:bold'>设置 </span>-><span style='font-weight:bold'> 关键词自动回复 </span>中录入自动答复规则！";
+                row["Title"] = "第三步：在 <span style='font-weight:bold'>App设置 </span>-><span style='font-weight:bold'> 关键词自动回复 </span>中录入自动答复规则！";
                 row["Conntroller"] = "KeywordMessage";
                 row["View"] = "Index";
                 row["Status"] = "1";
@@ -124,7 +124,7 @@ namespace Business
                 if (AppAdvertorial.Count() > 0)
                 {
                     DataRow row = dt.NewRow();
-                    row["Title"] = "第四步：在 <span style='font-weight:bold'>设置 </span>-><span style='font-weight:bold'> App动态软文 </span>中录入App动态软文！";
+                    row["Title"] = "第四步：在 <span style='font-weight:bold'>调查 活动 咨询 </span>-><span style='font-weight:bold'> 用户端咨询 </span>中录入咨询！";
                     row["Conntroller"] = "";
                     row["View"] = "";
                     row["Status"] = "2";
@@ -133,7 +133,7 @@ namespace Business
                 else
                 {
                     DataRow row = dt.NewRow();
-                    row["Title"] = "第四步：在 <span style='font-weight:bold'>设置 </span>-><span style='font-weight:bold'> App动态软文 </span>中录入App动态软文！";
+                    row["Title"] = "第四步：在 <span style='font-weight:bold'>调查 活动 咨询 </span>-><span style='font-weight:bold'> 用户端咨询 </span>中录入咨询！";
                     row["Conntroller"] = "InstallAppReply";
                     row["View"] = "Index";
                     row["Status"] = "1";
@@ -150,7 +150,7 @@ namespace Business
             //添加账号
 
             DataRow row1 = dt.NewRow();
-            row1["Title"] = "第五步：在<span style='font-weight:bold'> 账号管理 </span>中添加账户！";
+            row1["Title"] = "第五步：在 <span style='font-weight:bold'>账号 </span>-><span style='font-weight:bold'>  账号管理 </span>中添加账户！";
             row1["Conntroller"] = "Account";
             row1["View"] = "Index";
             row1["Status"] = "3";
@@ -159,7 +159,7 @@ namespace Business
 
             //上传素材
             DataRow row2 = dt.NewRow();
-            row2["Title"] = "第五步：在<span style='font-weight:bold'> 素材管理 </span>中完善您的素材库！";
+            row2["Title"] = "第五步：在 <span style='font-weight:bold'>设置 </span>-><span style='font-weight:bold'> 素材管理 </span>中完善您的素材库！";
             row2["Conntroller"] = "LibraryImage";
             row2["View"] = "Index";
             row2["Status"] = "3";

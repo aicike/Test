@@ -138,15 +138,16 @@ $(function () {
             finished: function () {
                 sp++;
                 if (sp >= 3) { //到第10页结束事件
-                   
+
                     $("#more").remove();
                     $("#infscr-loading").hide();
                     $(window).unbind('.infscr');
                     //没有更多了
                 }
-               
+
             }
         }, errorCallback: function () {
+            alert("a");
         }
 
     }, function (newElements) {

@@ -167,7 +167,7 @@ namespace Business
                 orderDetail.OrderID = order.ID;
                 orderDetail.ProductID = productID;
                 orderDetail.ProductName = product.Name;
-                orderDetail.ProductImg = product.imgFilePath;
+                //orderDetail.ProductImg = product.imgFilePath;
                 orderDetail.ProductType = product.Classify.Name;
                 orderDetail.Specification = product.Specification;
                 orderDetail.Price = product.Price;

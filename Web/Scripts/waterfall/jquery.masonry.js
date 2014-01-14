@@ -2,8 +2,7 @@
  * jQuery Masonry v2.1.03
  * A dynamic layout plugin for jQuery
  * The flip-side of CSS Floats
- * http://masonry.desandro.com
- *
+
  * Licensed under the MIT license.
  * Copyright 2011 David DeSandro
  */
@@ -19,8 +18,6 @@
    * smartresize: debounced resize event for jQuery
    *
    * latest version and complete README available on Github:
-   * https://github.com/louisremi/jquery.smartresize.js
-   *
    * Copyright 2011 @louis_remi
    * Licensed under the MIT license.
    */
@@ -392,7 +389,6 @@
   // ======================= imagesLoaded Plugin ===============================
   /*!
    * jQuery imagesLoaded plugin v1.1.0
-   * http://github.com/desandro/imagesloaded
    *
    * MIT License. by Paul Irish et al.
    */
@@ -438,7 +434,6 @@
     $images.bind( 'load.imagesLoaded error.imagesLoaded',  imgLoaded ).each( function() {
       // cached images don't fire load sometimes, so we reset src.
       var src = this.src;
-      // webkit hack from http://groups.google.com/group/jquery-dev/browse_thread/thread/eee6ab7b2da50e1f
       // data uri bypasses webkit log warning (thx doug jones)
       this.src = blank;
       this.src = src;
@@ -459,9 +454,6 @@
   // =======================  Plugin bridge  ===============================
   // leverages data method to either create or return $.Mason constructor
   // A bit from jQuery UI
-  //   https://github.com/jquery/jquery-ui/blob/master/ui/jquery.ui.widget.js
-  // A bit from jcarousel 
-  //   https://github.com/jsor/jcarousel/blob/master/lib/jquery.jcarousel.js
 
   $.fn.masonry = function( options ) {
     if ( typeof options === 'string' ) {

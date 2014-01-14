@@ -22,7 +22,7 @@ namespace Web.Controllers
             string TreeStr = "";
             foreach (var item in classify)
             {
-                TreeStr += string.Format("<li><a id='{0}' onclick=\"ckSet({0},{3},'{4}',{5})\" >{1}</a>{2}</li>", item.ID, item.Name, GetLastClass(item.ID), item.Level, item.Name, item.ParentID);
+                TreeStr += string.Format("<li><a id='{0}' onclick=\"ckSet({0},{3},'{4}',{5},'{6}','{7}')\" >{1}</a>{2}</li>", item.ID, item.Name, GetLastClass(item.ID), item.Level, item.Name, item.ParentID, item.ImgPath, string.IsNullOrEmpty(item.ImgPath) ? "" : Url.Content(item.ImgPath));
             }
             ViewBag.TreeView = TreeStr;
             ViewBag.HostName = LoginAccount.HostName;
@@ -41,7 +41,7 @@ namespace Web.Controllers
             string TreeStr = "<ul>";
             foreach (var item in classify)
             {
-                TreeStr += string.Format("<li><a id='{0}' onclick=\"ckSet({0},{3},'{4}',{5})\" >{1}</a>{2}</li>", item.ID, item.Name, GetLastClass(item.ID), item.Level, item.Name, item.ParentID);
+                TreeStr += string.Format("<li><a id='{0}' onclick=\"ckSet({0},{3},'{4}',{5},'{6}','{7}')\" >{1}</a>{2}</li>", item.ID, item.Name, GetLastClass(item.ID), item.Level, item.Name, item.ParentID, item.ImgPath, string.IsNullOrEmpty(item.ImgPath) ? "" : Url.Content(item.ImgPath));
             }
             TreeStr += "</ul>";
             if (classify.Count() <= 0)
@@ -53,17 +53,17 @@ namespace Web.Controllers
 
         //
 
-        public ActionResult Add(int PID, int Level, string AddCname)
+        public ActionResult Add(int PID, int Level, string AddCname, string imgpath1)
         {
             var classModel = Factory.Get<IClassifyModel>(SystemConst.IOC_Model.ClassifyModle);
-            var cnt = classModel.AddClass(PID, Level, LoginAccount.CurrentAccountMainID, AddCname);
+            var cnt = classModel.AddClass(PID, Level, LoginAccount.CurrentAccountMainID, AddCname, imgpath1);
             return RedirectToAction("Index", "Classify", new { HostName = LoginAccount.HostName });
         }
 
-        public ActionResult Edit(int CID, string EditCname, int PID)
+        public ActionResult Edit(int CID, string EditCname, int PID, string imgpath2)
         {
             var classModel = Factory.Get<IClassifyModel>(SystemConst.IOC_Model.ClassifyModle);
-            var cnt = classModel.UpdClass(PID, CID, EditCname, LoginAccount.CurrentAccountMainID);
+            var cnt = classModel.UpdClass(PID, CID, EditCname, LoginAccount.CurrentAccountMainID, imgpath2);
 
             return RedirectToAction("Index", "Classify", new { HostName = LoginAccount.HostName });
         }
@@ -75,7 +75,7 @@ namespace Web.Controllers
             {
                 if (CkDelete(CID))
                 {
-                    Result result =classModel.CompleteDelete(CID);
+                    Result result = classModel.DelClassify(CID,LoginAccount.CurrentAccountMainID);
                     if (result.HasError)
                     {
                         return Alert(new Dialog("此节点 已被引用 不能删除"));
@@ -127,13 +127,17 @@ namespace Web.Controllers
         [AllowCheckPermissions(false)]
         public string GetPname(int pid)
         {
-            string str = "此节点为顶级节点";
+            string str = "";
+            Classify cf = new Classify();
+
+            cf.Name = "此节点为顶级节点";
             var classModel = Factory.Get<IClassifyModel>(SystemConst.IOC_Model.ClassifyModle);
             var classify = classModel.Get(pid);
             if (classify != null)
             {
-                str = classify.Name;
+                cf.Name = classify.Name;
             }
+            str = Newtonsoft.Json.JsonConvert.SerializeObject(cf);
             return str;
         }
 

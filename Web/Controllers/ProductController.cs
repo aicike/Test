@@ -35,7 +35,7 @@ namespace Web.Controllers
         public ActionResult Add()
         {
 
-            
+
             List<SelectListItem> newstatus = new List<SelectListItem>();
             newstatus.Add(new SelectListItem { Text = "正常", Value = ((int)Poco.Enum.EnumProductType.Normal).ToString(), Selected = true });
             newstatus.Add(new SelectListItem { Text = "下架", Value = ((int)Poco.Enum.EnumProductType.OffShelves).ToString() });
@@ -53,17 +53,41 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Add(Product product,HttpPostedFileBase HousTypeImagePathFile)
+        public ActionResult Add(Product product, string imgpath1, string imgpath2, string imgpath3, string imgpath4, string imgpath5)
         {
             product.LastSetDate = DateTime.Now.ToString("yyyy-MM-dd hhmmss");
             product.AccountMainID = LoginAccount.CurrentAccountMainID;
-            product.imgFilePath = "~/Images/nopicture_icon.png";
+            //product.imgFilePath = "~/Images/nopicture_icon.png";
 
             var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
-            var result = productModel.AddInfo(product, HousTypeImagePathFile);
+            var result = productModel.Add(product);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));
+            }
+            else
+            {
+                var productImgModel = Factory.Get<IProductImgModel>(SystemConst.IOC_Model.ProductImgModel);
+                List<string> imgpaths = new List<string>();
+                if (!string.IsNullOrEmpty(imgpath1))
+                {
+                    imgpaths.Add(imgpath1);
+                }
+                if (!string.IsNullOrEmpty(imgpath2))
+                {
+                    imgpaths.Add(imgpath2);
+                } if (!string.IsNullOrEmpty(imgpath3))
+                {
+                    imgpaths.Add(imgpath3);
+                } if (!string.IsNullOrEmpty(imgpath4))
+                {
+                    imgpaths.Add(imgpath4);
+                } if (!string.IsNullOrEmpty(imgpath5))
+                {
+                    imgpaths.Add(imgpath5);
+                }
+
+                productImgModel.AddImgInfo(product.ID, imgpaths, LoginAccount.CurrentAccountMainID);
             }
             return RedirectToAction("Index", "Product");
         }
@@ -91,15 +115,38 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(Product product, HttpPostedFileBase HousTypeImagePathFile)
+        public ActionResult Edit(Product product, string imgpath1, string imgpath2, string imgpath3, string imgpath4, string imgpath5)
         {
             product.LastSetDate = DateTime.Now.ToString("yyyy-MM-dd hhmmss");
 
             var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
-            var result = productModel.EditInfo(product, HousTypeImagePathFile);
+            var result = productModel.Edit(product);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));
+            }
+            else
+            {
+                var productImgModel = Factory.Get<IProductImgModel>(SystemConst.IOC_Model.ProductImgModel);
+                List<string> imgpaths = new List<string>();
+                if (!string.IsNullOrEmpty(imgpath1))
+                {
+                    imgpaths.Add(imgpath1);
+                }
+                if (!string.IsNullOrEmpty(imgpath2))
+                {
+                    imgpaths.Add(imgpath2);
+                } if (!string.IsNullOrEmpty(imgpath3))
+                {
+                    imgpaths.Add(imgpath3);
+                } if (!string.IsNullOrEmpty(imgpath4))
+                {
+                    imgpaths.Add(imgpath4);
+                } if (!string.IsNullOrEmpty(imgpath5))
+                {
+                    imgpaths.Add(imgpath5);
+                }
+                productImgModel.EditImgInfo(product.ID, imgpaths, LoginAccount.CurrentAccountMainID);
             }
             return RedirectToAction("Index", "Product");
         }
@@ -108,7 +155,7 @@ namespace Web.Controllers
         public ActionResult Delete(int id)
         {
             var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
-            var result = productModel.DeleteInfo(id,LoginAccount.CurrentAccountMainID);
+            var result = productModel.DeleteInfo(id, LoginAccount.CurrentAccountMainID);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));
