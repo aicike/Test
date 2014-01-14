@@ -9,14 +9,24 @@
         $(document).ready(function () {
             // Smart Wizard 	
             $('#wizard').smartWizard();
+            $('#wizard').smartWizard({ transitionEffect: 'slideleft', onLeaveStep: leaveAStepCallback, onFinish: onFinishCallback, enableFinishButton: true });
 
             function onFinishCallback() {
                 $('#wizard').smartWizard('showMessage', 'Finish Clicked');
+                if (validateAllSteps()) {
+                    $('form').submit();
+                }
+
             }
 
             $("#ProvinceID").Province({ value: 0 });
             $("#CityID").City("ProvinceID");
             $("#DistrictID").District("CityID");
+
+            function leaveAStepCallback(obj) {
+//                var step_num = obj.attr('rel');
+//                return validateSteps(step_num);
+            }
         });
     </script>
     <style>
