@@ -961,6 +961,7 @@
   <ItemGroup>
     <None Include="Scripts\nivoSlider\dark\.DS_Store" />
     <Content Include="Views\Guide\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutUser_NoMenu.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

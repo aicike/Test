@@ -8,15 +8,14 @@
     <script type="text/javascript">
         $(document).ready(function () {
             // Smart Wizard 	
-            $('#wizard').smartWizard();
-            $('#wizard').smartWizard({ transitionEffect: 'slideleft', onLeaveStep: leaveAStepCallback, onFinish: onFinishCallback, enableFinishButton: true });
+            //$('#wizard').smartWizard();
+            $('#wizard').smartWizard({ transitionEffect: 'slideleft', onLeaveStep: leaveAStepCallback, onFinish: onFinishCallback, enableFinishButton: true });
 
             function onFinishCallback() {
                 $('#wizard').smartWizard('showMessage', 'Finish Clicked');
-                if (validateAllSteps()) {
-                    $('form').submit();
-                }
-
+                //                if (validateAllSteps()) {
+                //                    $('form').submit();
+                //                }
             }
 
             $("#ProvinceID").Province({ value: 0 });
@@ -24,8 +23,12 @@
             $("#DistrictID").District("CityID");
 
             function leaveAStepCallback(obj) {
-//                var step_num = obj.attr('rel');
-//                return validateSteps(step_num);
+                var step_num = obj.attr('rel');
+                //                return validateSteps(step_num);
+                if (step_num == "1") {
+                    $("form").submit();
+                }
+                return false;
             }
         });
     </script>
@@ -33,6 +36,7 @@
         .step_table
         {
             width: 100%;
+            font-size:13px;
         }
         .step_table input
         {
@@ -43,14 +47,15 @@
             width: 85px;
             text-align: right;
             padding-right: 5px;
-            height:35px;
+            height: 35px;
         }
         .step_table_verify
         {
-            width: 200px;
+            width: 300px;
         }
     </style>
 }
+@model Poco.AccountMain
 <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin: 30px auto;">
     <tr>
         <td>
@@ -60,73 +65,68 @@
                     <li><a href="#step-1"><span class="stepNumber">1</span> <span class="stepDesc">步骤 1<br />
                         <small>配置基本信息</small> </span></a></li>
                     <li><a href="#step-2"><span class="stepNumber">2</span> <span class="stepDesc">步骤 2<br />
-                        <small>配置角色</small> </span></a></li>
-                    <li><a href="#step-3"><span class="stepNumber">3</span> <span class="stepDesc">步骤 3<br />
+                        <small>完成配置</small> </span></a></li>
+                    @*<li><a href="#step-3"><span class="stepNumber">3</span> <span class="stepDesc">步骤 3<br />
                         <small>添加账号</small></span></a></li>
                     <li><a href="#step-4"><span class="stepNumber">4</span> <span class="stepDesc">步骤 4<br />
-                        <small>完成配置</small> </span></a></li>
+                        <small>完成配置</small> </span></a></li>*@
                 </ul>
                 <div id="step-1">
                     <h2 class="StepTitle">
                         第一步，配置基本信息</h2>
-                    <table class="step_table">
-                        <tr>
-                            <td class="step_table_title">
-                                项目名称：
-                            </td>
-                            <td>
-                                <input data-val="true" data-val-length="长度小于50" data-val-length-max="50" data-val-regex="名称中含有非法字符。" data-val-regex-pattern="^((?!&lt;!).)*" data-val-required="请输入名称" id="step1_name" name="step1_name" type="text" value="">
-                            </td>
-                            <td class="step_table_verify">
-                                <span class="field-validation-valid" data-valmsg-for="step1_name" data-valmsg-replace="true"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="step_table_title">
-                                Logo：
-                            </td>
-                            <td>
-                                <input type="file" name="step1_logo" />
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="step_table_title">
-                                省份地区：
-                            </td>
-                            <td>
-                                <select id="ProvinceID" name="step1_province">
-                                </select>
-                                <select id="CityID" name="step1_province">
-                                </select>
-                                <select id="DistrictID" name="step1_province">
-                                </select>
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="step_table_title">
-                                地址：
-                            </td>
-                            <td>
-                                <input type="text" name="step1_Address" />
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="step_table_title">
-                                电话：
-                            </td>
-                            <td>
-                                <input type="text" name="step1_phone" />
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
-                    </table>
+                    @using (Ajax.BeginForm("SetAccountMain", "Guide", new { Area = "" }, new AjaxOptions() { UpdateTargetId = "alert" }))
+                    {
+                        <table class="step_table">
+                            <tr>
+                                <td class="step_table_title">
+                                    项目名称：
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(a => a.Name)
+                                </td>
+                                <td class="step_table_verify">
+                                    @Html.ValidationMessageFor(a => a.LogoImagePath)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="step_table_title">
+                                    省份地区：
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(a => a.ProvinceID)
+                                    @Html.DropDownListFor(a => a.CityID)
+                                    @Html.DropDownListFor(a => a.DistrictID)
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(a => a.ProvinceID) &nbsp;&nbsp;
+                                    @Html.ValidationMessageFor(a => a.CityID) &nbsp;&nbsp;
+                                    @Html.ValidationMessageFor(a => a.DistrictID)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="step_table_title">
+                                    地址：
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(a => a.SaleAddress)
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(a => a.SaleAddress)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="step_table_title">
+                                    电话：
+                                </td>
+                                <td>@Html.TextBoxFor(a => a.Phone)
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(a => a.Phone)
+                                </td>
+                            </tr>
+                        </table>
+                        <input type="submit" id="btnOk" style="visibility: hidden" />
+                    }
                 </div>
                 <div id="step-2">
                     <h2 class="StepTitle">
@@ -139,54 +139,6 @@
                         pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
                         deserunt mollit anim id est laborum.
                     </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                        deserunt mollit anim id est laborum.
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                        deserunt mollit anim id est laborum.
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                        deserunt mollit anim id est laborum.
-                    </p>
-                </div>
-                <div id="step-3">
-                    <h2 class="StepTitle">
-                        Step 3 Content</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                        deserunt mollit anim id est laborum.
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                        deserunt mollit anim id est laborum.
-                    </p>
-                </div>
-                <div id="step-4">
-                    <h2 class="StepTitle">
-                        Step 4 Content</h2>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
                         incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud

@@ -76,7 +76,6 @@
     <Compile Include="Migrations\Configuration.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
