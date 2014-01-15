@@ -160,6 +160,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\OrderMTypeController.cs" />
+    <Compile Include="Controllers\PanoramaController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SalesMessageController.cs" />
     <Compile Include="Controllers\SetController.cs" />
@@ -183,6 +184,13 @@
     <Compile Include="ueditor\net\Uploader_Advertorial.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Bridge2\negx.jpg" />
+    <Content Include="Bridge2\negy.jpg" />
+    <Content Include="Bridge2\negz.jpg" />
+    <Content Include="Bridge2\posx.jpg" />
+    <Content Include="Bridge2\posy.jpg" />
+    <Content Include="Bridge2\posz.jpg" />
+    <Content Include="Bridge2\readme.txt" />
     <Content Include="Config\IOC.xml" />
     <Content Include="Content\blue.css" />
     <Content Include="Content\homeStyle.css" />
@@ -223,6 +231,7 @@
     <Content Include="Content\themes\base\jquery-ui-1.10.2.custom.css" />
     <Content Include="Content\themes\base\jquery-ui-1.10.2.custom.min.css" />
     <Content Include="Content\userStyle.css" />
+    <Content Include="css3d_panorama.html" />
     <Content Include="error.html" />
     <Content Include="favicon.ico" />
     <Content Include="File\LoginPageShow\Client\361037.jpg" />
@@ -455,6 +464,13 @@
     <Content Include="Scripts\SmartWizard\smart_wizard_vertical.css" />
     <Content Include="Scripts\tabControl\tabControl.css" />
     <Content Include="Scripts\tabControl\tabControl.js" />
+    <Content Include="Scripts\threejs\three.min.js" />
+    <Content Include="Scripts\threejs\renderers\CSS2DRenderer.js" />
+    <Content Include="Scripts\threejs\renderers\CSS3DRenderer.js" />
+    <Content Include="Scripts\threejs\renderers\SoftwareRenderer.js" />
+    <Content Include="Scripts\threejs\renderers\SVGRenderer.js" />
+    <Content Include="Scripts\threejs\renderers\WebGLDeferredRenderer.js" />
+    <Content Include="Scripts\threejs\renderers\WebGLRenderer3.js" />
     <Content Include="Scripts\ToolTip\jquery.tipTip.js" />
     <Content Include="Scripts\ToolTip\jquery.tipTip.minified.js" />
     <Content Include="Scripts\ToolTip\tipTip.css" />
@@ -962,6 +978,7 @@
     <None Include="Scripts\nivoSlider\dark\.DS_Store" />
     <Content Include="Views\Guide\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutUser_NoMenu.cshtml" />
+    <Content Include="Views\Panorama\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -977,7 +994,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>15492</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
@@ -985,7 +1002,7 @@
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
           <IISAppRootUrl>http://192.168.1.138:8080</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
+          <UseCustomServer>True</UseCustomServer>
           <CustomServerUrl>http://192.168.1.166:8080</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>

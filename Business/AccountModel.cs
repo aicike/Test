@@ -936,5 +936,27 @@ namespace Business
             }
             return appMenus;
         }
+
+        [Transaction]
+        public Result MicroSite_Add(Account account, int accountMainID, int roleID)
+        {
+            account.HeadImagePath = ""; //SystemConst.Business.DefaultHeadImage;
+            account.AccountStatusID = LookupFactory.GetLookupOptionIdByToken(EnumAccountStatus.Enabled);
+            account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwd);
+            account.IsActivated = true;
+            var result = base.Add(account);
+            if (result.HasError == false)
+            {
+                var groupModel = Factory.Get<IGroupModel>(SystemConst.IOC_Model.GroupModel);
+                result = groupModel.AddDefaultGroup(account.ID, accountMainID);
+            }
+            //添加角色
+            if (result.HasError == false)
+            {
+                var accountRoleModel = Factory.Get<IAccountRoleModel>(SystemConst.IOC_Model.AccountRoleModel);
+                result = accountRoleModel.Add(new int []{roleID}.ToList(), account.ID);
+            }
+            return result;
+        }
     }
 }

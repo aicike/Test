@@ -146,7 +146,7 @@ namespace Poco
         /// <summary>
         /// 创建者
         /// </summary>
-        public int SystemUserID { get; set; }
+        public int? SystemUserID { get; set; }
         public virtual SystemUser SystemUser { get; set; }
 
         /// <summary>

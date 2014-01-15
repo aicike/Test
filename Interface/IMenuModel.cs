@@ -18,5 +18,7 @@ namespace Interface
         List<Menu> List_Cache();
         bool CheckHasPermissions(List<int> roleID, string action, string controller, string area);
         void ReSetCache();
+
+        List<Menu> MicroSite_GetAllMenuByRoleID();
     }
 }

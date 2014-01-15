@@ -115,9 +115,21 @@ namespace Web.Controllers
             string l_loginPwd = superAdminStr.Split('|')[1];
             if (l_loginName == phone_email && l_loginPwd == password)
             {
-                Session[SystemConst.Session.LoginAccount] = new Poco.Account() { IsSuperAdmin = true, HostName = "MicroSite" };
-                var url = Url.RouteUrl("User", new { action = "Index", controller = "Guide", HostName = "MicroSite" }, true);
-                return JavaScript("window.location.href='" + url + "'");
+                Session[SystemConst.Session.IsMicroSiteSuperAdmin] = "true";
+                var accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
+                var accountMain = accountMainModel.List().FirstOrDefault();
+                if (accountMain != null && accountMain.Account_AccountMains.Count > 0)
+                {
+                    return JavaScript("LandWaitFor('login','WaitImg',2);" + AlertJS_NoTag(new Dialog("该项目已配置了管理员账号，请使用管理员账号进行登录。")));
+                    //Session[SystemConst.Session.LoginAccount] = new Poco.Account() { IsSuperAdmin = true, HostName = SystemConst.MicroSiteHostName };
+                    //var url = Url.RouteUrl("User", new { action = "Index", controller = "Home", HostName = SystemConst.MicroSiteHostName }, true);
+                    //return JavaScript("window.location.href='" + url + "'");
+                }
+                else
+                {
+                    var url = Url.RouteUrl("User", new { action = "Index", controller = "Guide", HostName = SystemConst.MicroSiteHostName }, true);
+                    return JavaScript("window.location.href='" + url + "'");
+                }
             }
             else
             {
@@ -128,6 +140,11 @@ namespace Web.Controllers
                     return JavaScript("LandWaitFor('login','WaitImg',2);" + AlertJS_NoTag(new Dialog(result.Error)));
                 }
                 var account = Session[SystemConst.Session.LoginAccount] as Account;
+                
+                if (accountModel.Get(account.ID).Account_Roles.Any(a => a.Role.IsCanDelete == false))
+                {
+                    account.IsSuperAdmin = true;
+                }
                 var url = Url.RouteUrl("User", new { action = "Index", controller = "Home", HostName = account.HostName }, true);
                 return JavaScript("window.location.href='" + url + "'");
             }

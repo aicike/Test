@@ -166,6 +166,60 @@ namespace Business
         }
 
         [Transaction]
+        public Result MicroSite_Add(AccountMain accountMain)
+        {
+            accountMain.LogoImagePath = SystemConst.Business.DefaultLogo;
+            accountMain.LogoImageThumbnailPath = SystemConst.Business.DefaultLogo;
+            var result = base.Add(accountMain);
+            if (result.HasError == false)
+            {
+                try
+                {
+                    var path = HttpContext.Current.Server.MapPath(string.Format("~/File/{0}", accountMain.ID));//该开发商物理路径
+                    if (Directory.Exists(path) == false)
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    //3个文件目录
+                    var basePath = string.Format("{0}/{1}", path, "Base");//Base目录物理路径
+                    if (Directory.Exists(basePath) == false)
+                    {
+                        Directory.CreateDirectory(basePath);
+                    }
+                    var accountPath = string.Format("{0}/{1}", path, "Account");//Account目录物理路径
+                    if (Directory.Exists(accountPath) == false)
+                    {
+                        Directory.CreateDirectory(accountPath);
+                    }
+                    var fileLibraryPath = string.Format("{0}/{1}", path, "FileLibrary");//FileLibrary目录物理路径
+                    if (Directory.Exists(fileLibraryPath) == false)
+                    {
+                        Directory.CreateDirectory(fileLibraryPath);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            if (result.HasError == false)
+            {
+                try
+                {
+                    string sql = string.Format("INSERT INTO dbo.Role ( SystemStatus, NAME,IsCanDelete,Token,AccountMainID ) VALUES  ( 0,'管理员',0,'AccountAdmin',{0})"
+                               + " insert into classify(SystemStatus,AccountMainID,Name,ParentID,[Level],sort,Subordinate) values(0,{0},'{1}',0,0,0,0)", accountMain.ID, accountMain.Name);
+                    base.SqlExecute(sql);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            return result;
+        }
+
+
+        [Transaction]
         public Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, int loginSystemUserID = 0)
         {
             if (!CheckHasPermissions(loginSystemUserID, accountMain.ID))

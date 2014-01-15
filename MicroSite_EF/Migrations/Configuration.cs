@@ -10,7 +10,7 @@ namespace MicroSite_EF.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "MicroSite_EF.MSContext";
+            //ContextKey = "MicroSite_EF.MSContext";
         }
 
         protected override void Seed(MicroSite_EF.Context context)

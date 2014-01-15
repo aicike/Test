@@ -152,5 +152,23 @@ namespace Business
             }
             return result;
         }
+
+        [Transaction]
+        public Result MicroSite_Add(Account account, int accountMainID, int roleID)
+        {
+            Result result = new Result();
+            account.LoginPwd = account.LoginPwdPage;
+            account.IsActivated = true;
+            var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
+            result = accountModel.MicroSite_Add(account, accountMainID, roleID);
+            if (result.HasError == false)
+            {
+                Account_AccountMain entity = new Account_AccountMain();
+                entity.AccountMainID = accountMainID;
+                entity.AccountID = account.ID;
+                result = base.Add(entity);
+            }
+            return result;
+        }
     }
 }

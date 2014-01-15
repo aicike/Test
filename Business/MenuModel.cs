@@ -71,6 +71,12 @@ namespace Business
             return list;
         }
 
+        public List<Menu> MicroSite_GetAllMenuByRoleID()
+        {
+            List<Menu> list = List_Cache().OrderBy(a => a.Order).ToList();
+            return list;
+        }
+
         public bool CheckHasPermissions(List<int> roleID, string action, string controller, string area)
         {
             //判断有没有权限操作当前菜单(Contorller)

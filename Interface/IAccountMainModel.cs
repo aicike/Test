@@ -50,5 +50,7 @@ namespace Interface
         AppVersionInfo CheckAppVersion(EnumClientSystemType type, int amid, string version);
 
         AppVersionInfo CheckAppSellVersion(EnumClientSystemType type, int amid, string version);
+
+        Result MicroSite_Add(AccountMain accountMain);
     }
 }

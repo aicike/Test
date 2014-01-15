@@ -10,6 +10,7 @@ namespace Poco
         public static string WebUrl = System.Configuration.ConfigurationManager.AppSettings["WebUrl"];
         public static string WebUrlIP = System.Configuration.ConfigurationManager.AppSettings["WebUrlIP"];
         public static string WebTitleRemark = System.Configuration.ConfigurationManager.AppSettings["WebTitle"];
+        public static string MicroSiteHostName = System.Configuration.ConfigurationManager.AppSettings["HostName"];
 
         public class Business
         {
@@ -62,6 +63,8 @@ namespace Poco
             public const string MicroSiteMenu = "MicroSiteMenu";
 
             public const string CurrentAccountMainID = "MicroSiteCurrentAccountMainID";
+
+            public const string IsMicroSiteSuperAdmin = "IsMicroSiteSuperAdmin";
         }
 
         public class Menu

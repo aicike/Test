@@ -63,5 +63,7 @@ namespace Interface
         List<Account> GetSubAccounts(int accountID);
 
         List<App_Menu> CheckAppPermission(List<int> menuIDs, int accountID);
+
+        Result MicroSite_Add(Account account, int accountMainID, int roleID);
     }
 }

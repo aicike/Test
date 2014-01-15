@@ -26,13 +26,37 @@ namespace Controllers
             set { Session[SystemConst.Session.LoginAccount] = value; }
         }
 
+        protected bool IsMicroSiteSuperAdmin
+        {
+            get
+            {
+                var value = Session[SystemConst.Session.IsMicroSiteSuperAdmin] as string;
+                if (string.IsNullOrEmpty(value))
+                {
+                    return false;
+                }
+                else
+                {
+                    if (value.Equals("true"))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var controller = filterContext.RequestContext.RouteData.Values["controller"] as string;
             var action = filterContext.RequestContext.RouteData.Values["action"] as string;
             var area = filterContext.RouteData.DataTokens["area"] as string;
 
-            if ((LoginAccount == null)
+            if (IsMicroSiteSuperAdmin==false&&(LoginAccount == null)
                 //&& ((controller != null && (controller.Equals("Account", StringComparison.OrdinalIgnoreCase) == false && controller.Equals("Home", StringComparison.OrdinalIgnoreCase) == false && controller.Equals("Area", StringComparison.OrdinalIgnoreCase) == false))
                 //)
                 )
