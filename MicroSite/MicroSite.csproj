@@ -125,13 +125,6 @@
     <Content Include="ProductListItem.aspx" />
     <Content Include="Shop.aspx" />
     <Content Include="Style\homeStyle.css" />
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="WebForm1.aspx" />
   </ItemGroup>
   <ItemGroup>
@@ -309,9 +302,6 @@
           <DevelopmentServerPort>29805</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://192.168.1.138:8080</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>True</UseCustomServer>
-          <CustomServerUrl>http://192.168.1.166:8080/</CustomServerUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
           <IISAppRootUrl>http://192.168.1.138:8080/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
