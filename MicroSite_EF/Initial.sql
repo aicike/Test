@@ -65,9 +65,9 @@ INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controlle
 --
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (10, 0, N'产品管理', N'产品管理', NULL, N'Product', N'Index', 1,3,0,2)
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (11, 0, N'类别管理', N'类别管理', NULL, N'Classify', N'Index', 2, 3,0,2)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (12, 0, N'订单类型', N'订单类型', NULL, N'OrderMType', N'Index', 3, 3,0,2)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (13, 0, N'节假日管理', N'节假日管理', NULL, N'Holiday', N'Index', 4, 3,0,2)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (14, 0, N'订单管理', N'订单管理', NULL, N'Order', N'Index', 5, 3,0,2)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (12, 0, N'订单类型(订奶)', N'订单类型(订奶)', NULL, N'OrderMType', N'Index', 3, 3,0,2)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (13, 0, N'节假日管理(订奶)', N'节假日管理(订奶)', NULL, N'Holiday', N'Index', 4, 3,0,2)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (14, 0, N'订单管理(订奶)', N'订单管理(订奶)', NULL, N'Order', N'Index', 5, 3,0,2)
 --
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (15, 0, N'账号管理', N'账号管理', NULL, N'Account', N'Index', 1, 4,0,2)
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (16, 0, N'角色管理', N'角色管理', NULL, N'Character', N'Index', 2, 4,0,2)

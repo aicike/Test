@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Poco
 {
-    public class OrderUserInfo : IBaseEntity
+    public class UserDeliveryAddress : IBaseEntity
     {
         public int ID { get; set; }
 
@@ -37,23 +37,24 @@ namespace Poco
         /// <summary>
         /// 详细地址
         /// </summary>
+        [StringLength(300, ErrorMessage = "长度小于300")]
         public string Address { get; set; }
 
         /// <summary>
         /// 收货人姓名
         /// </summary>
+        [StringLength(10, ErrorMessage = "长度小于10")]
         public string Receiver { get; set; }
 
         /// <summary>
         /// 收货人电话
         /// </summary>
+        [RegularExpression(@"(1[3,5,8][0-9])\d{8}", ErrorMessage = "请输入正确的移动电话")]
         public string RPhone { get; set; }
 
         /// <summary>
         /// 固定电话
         /// </summary>
         public string TelePhone { get; set; }
-
-        public virtual ICollection<Order> Order { get; set; }
     }
 }

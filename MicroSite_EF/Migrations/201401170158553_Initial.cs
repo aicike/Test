@@ -259,6 +259,7 @@ namespace MicroSite_EF.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         SystemStatus = c.Int(nullable: false),
                         Name = c.String(nullable: false, maxLength: 20),
+                        ShowName = c.String(nullable: false, maxLength: 20),
                         Area = c.String(maxLength: 50),
                         Controller = c.String(maxLength: 50),
                         Action = c.String(maxLength: 50),
@@ -789,6 +790,7 @@ namespace MicroSite_EF.Migrations
                         OrderUserID = c.Int(nullable: false),
                         OrderUserType = c.Int(nullable: false),
                         OrderDate = c.DateTime(nullable: false),
+                        Payment = c.DateTime(),
                         BeginDate = c.DateTime(nullable: false),
                         EndDate = c.DateTime(nullable: false),
                         OrderUserInfoID = c.Int(nullable: false),
@@ -1087,6 +1089,31 @@ namespace MicroSite_EF.Migrations
                 .Index(t => t.AccountMainID);
             
             CreateTable(
+                "dbo.UserDeliveryAddress",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        AccountMainID = c.Int(nullable: false),
+                        ProvinceID = c.Int(nullable: false),
+                        CityID = c.Int(nullable: false),
+                        DistrictID = c.Int(nullable: false),
+                        Address = c.String(maxLength: 300),
+                        Receiver = c.String(maxLength: 10),
+                        RPhone = c.String(),
+                        TelePhone = c.String(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
+                .ForeignKey("dbo.City", t => t.CityID)
+                .ForeignKey("dbo.District", t => t.DistrictID)
+                .ForeignKey("dbo.Province", t => t.ProvinceID)
+                .Index(t => t.AccountMainID)
+                .Index(t => t.CityID)
+                .Index(t => t.DistrictID)
+                .Index(t => t.ProvinceID);
+            
+            CreateTable(
                 "dbo.Lookup",
                 c => new
                     {
@@ -1120,6 +1147,10 @@ namespace MicroSite_EF.Migrations
             DropForeignKey("dbo.AccountMainHouseInfoDetail", "EnumSoldStateID", "dbo.LookupOption");
             DropForeignKey("dbo.AccountMainHouseInfo", "AccountMainHousessID", "dbo.AccountMainHouses");
             DropForeignKey("dbo.AccountMainHouseInfoDetail", "AccountMainHouses_ID", "dbo.AccountMainHouses");
+            DropForeignKey("dbo.UserDeliveryAddress", "ProvinceID", "dbo.Province");
+            DropForeignKey("dbo.UserDeliveryAddress", "DistrictID", "dbo.District");
+            DropForeignKey("dbo.UserDeliveryAddress", "CityID", "dbo.City");
+            DropForeignKey("dbo.UserDeliveryAddress", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.ReportFormPower", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.Panorama", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.OrderMType", "AccountMainID", "dbo.AccountMain");
@@ -1214,6 +1245,10 @@ namespace MicroSite_EF.Migrations
             DropIndex("dbo.AccountMainHouseInfoDetail", new[] { "EnumSoldStateID" });
             DropIndex("dbo.AccountMainHouseInfo", new[] { "AccountMainHousessID" });
             DropIndex("dbo.AccountMainHouseInfoDetail", new[] { "AccountMainHouses_ID" });
+            DropIndex("dbo.UserDeliveryAddress", new[] { "ProvinceID" });
+            DropIndex("dbo.UserDeliveryAddress", new[] { "DistrictID" });
+            DropIndex("dbo.UserDeliveryAddress", new[] { "CityID" });
+            DropIndex("dbo.UserDeliveryAddress", new[] { "AccountMainID" });
             DropIndex("dbo.ReportFormPower", new[] { "AccountMainID" });
             DropIndex("dbo.Panorama", new[] { "AccountMainID" });
             DropIndex("dbo.OrderMType", new[] { "AccountMainID" });
@@ -1303,6 +1338,7 @@ namespace MicroSite_EF.Migrations
             DropIndex("dbo.Account_AccountMain", new[] { "AccountID" });
             DropIndex("dbo.AccountMainHouseInfoDetail", new[] { "AccountMainHouseInfoID" });
             DropTable("dbo.Lookup");
+            DropTable("dbo.UserDeliveryAddress");
             DropTable("dbo.ReportFormPower");
             DropTable("dbo.Panorama");
             DropTable("dbo.OrderMType");

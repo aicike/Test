@@ -1021,6 +1021,7 @@
     <Content Include="Views\MicroSitePanorama\Index.cshtml" />
     <Content Include="Views\Panorama\Index.cshtml" />
     <Content Include="Views\Panorama\Add.cshtml" />
+    <Content Include="Views\MicroMall\OrderConfirmation.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

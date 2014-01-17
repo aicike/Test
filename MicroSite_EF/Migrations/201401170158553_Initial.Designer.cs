@@ -13,7 +13,7 @@ namespace MicroSite_EF.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201401170130170_Initial"; }
+            get { return "201401170158553_Initial"; }
         }
         
         string IMigrationMetadata.Source

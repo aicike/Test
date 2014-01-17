@@ -13,9 +13,7 @@
     <div class="option">@Html.ActionLink("添加", "Add", "Product", new { HostName = ViewBag.HostName }, null, true)</div>
     <table class="tableList" cellpadding="0" cellspacing="0">
         <tr>
-            <th style="width: 110px; ">
-                图片
-            </th>
+          
             <th style="width: 180px; word-wrap: break-word; word-break: normal;">
                 产品名称
             </th>
@@ -38,9 +36,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    <img src="@Url.Content(item.imgFilePath ?? "")" style=" max-width:98px" />
-                </td>
+                
                 <td>
                     @item.Name
                 </td>

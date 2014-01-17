@@ -34,6 +34,11 @@ namespace Poco.Enum
         /// <summary>
         /// 已发货
         /// </summary>
-        Shipped
+        Shipped,
+        /// <summary>
+        /// 待配送
+        /// </summary>
+        WaitDistribution
+
     }
 }
