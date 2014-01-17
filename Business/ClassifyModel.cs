@@ -154,5 +154,19 @@ namespace Business
             }
             return result;
         }
+
+        /// <summary>
+        /// 获取所有一级分类
+        /// </summary>
+        /// <param name="AccountMainID"></param>
+        /// <returns></returns>
+        public IQueryable<Classify> GetOneLevel(int AccountMainID)
+        {
+            int ParentID = List().Where(a => a.AccountMainID == AccountMainID && a.ParentID == 0).FirstOrDefault().ID;
+
+            var list = List().Where(a => a.ParentID == ParentID);
+
+            return list;
+        }
     }
 }

@@ -23,5 +23,12 @@ namespace Interface
         List<Classify> Get1levelClass(int accountMainID);
 
         Result DelClassify(int ID, int AMID);
+
+        /// <summary>
+        /// 获取所有一级分类
+        /// </summary>
+        /// <param name="AccountMainID"></param>
+        /// <returns></returns>
+        IQueryable<Classify> GetOneLevel(int AccountMainID);
     }
 }

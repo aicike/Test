@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Injection;
+using Interface;
+using Poco;
 
 namespace MicroSite_Web.Controllers
 {
@@ -10,10 +13,12 @@ namespace MicroSite_Web.Controllers
     {
         //
         // GET: /MicroMall/
-
+        //商品首页
         public ActionResult ShopIndex()
         {
-            return View();
+            var classifyModel = Factory.Get<IClassifyModel>(SystemConst.IOC_Model.ClassifyModle);
+            var classify = classifyModel.GetOneLevel(1);
+            return View(classify);
         }
 
 
@@ -42,6 +47,12 @@ namespace MicroSite_Web.Controllers
 
         //购物车
         public ActionResult ShoppingCart()
+        {
+            return View();
+        }
+
+        //订单确认界面
+        public ActionResult OrderConfirmation(string StrJson)
         {
             return View();
         }

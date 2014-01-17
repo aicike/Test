@@ -23,7 +23,7 @@
 
         }
 
-
+        var color= ["#66CDAA","#AB82FF","#5CACEE","#EEB422","#FF8247"];
 
        
     </script>
@@ -91,102 +91,30 @@
         }
     </style>
 }
-  <div data-role="content">
-        <div class="BlocksIt">
-            <div class="grid">
-                <table class="MainTab" cellpadding="0" cellspacing="0" onclick="OpenUrl(1)">
-                    <tr style="background-color: #66CDAA">
-                        <td style="width: 30%;">
-                            <div class="TitDIVLeft">
-                                新鲜水果
-                            </div>
-                            <div class="RemDIVLeft">
-                                好吃新鲜
-                            </div>
-                        </td>
-                        <td style="width: 70%;">
-                            <div class="ImgDIV">
-                                <img class="ShowImg" src="Image/366585.jpg" />
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="grid">
-                <table class="MainTab" cellpadding="0" cellspacing="0">
-                    <tr style="background-color: #AB82FF">
-                        <td style="width: 70%;">
-                            <div class="ImgDIV">
-                                <img class="ShowImg" src="Image/366585.jpg" />
-                            </div>
-                        </td>
-                        <td style="width: 30%;">
-                            <div class="TitDIVRight">
-                                新鲜畜类
-                            </div>
-                            <div class="RemDIVRight">
-                                好吃新鲜
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="grid">
-                <table class="MainTab" cellpadding="0" cellspacing="0">
-                    <tr style="background-color: #5CACEE">
-                        <td style="width: 30%;">
-                            <div class="TitDIVLeft">
-                                新鲜干果
-                            </div>
-                            <div class="RemDIVLeft">
-                                好吃新鲜
-                            </div>
-                        </td>
-                        <td style="width: 70%;">
-                            <div class="ImgDIV">
-                                <img class="ShowImg" src="Image/366585.jpg" />
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="grid">
-                <table class="MainTab" cellpadding="0" cellspacing="0">
-                    <tr style="background-color: #EEB422">
-                        <td style="width: 70%;">
-                            <div class="ImgDIV">
-                                <img class="ShowImg" src="Image/366585.jpg" />
-                            </div>
-                        </td>
-                        <td style="width: 30%;">
-                            <div class="TitDIVRight">
-                                新鲜海鲜
-                            </div>
-                            <div class="RemDIVRight">
-                                好吃新鲜
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="grid">
-                <table class="MainTab" cellpadding="0" cellspacing="0">
-                    <tr style="background-color: #FF8247">
-                        <td style="width: 30%;">
-                            <div class="TitDIVLeft">
-                                新鲜禽类
-                            </div>
-                            <div class="RemDIVLeft">
-                                好吃新鲜
-                            </div>
-                        </td>
-                        <td style="width: 70%;">
-                            <div class="ImgDIV">
-                                <img class="ShowImg" src="Image/366585.jpg" />
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+@model IQueryable<Poco.Classify>
+<div data-role="content">
+    <div class="BlocksIt">
+        
+        <div class="grid">
+            <table class="MainTab" cellpadding="0" cellspacing="0" onclick="OpenUrl(1)">
+                <tr style="background-color: #66CDAA">
+                    <td style="width: 30%;">
+                        <div class="TitDIVLeft">
+                            新鲜水果
+                        </div>
+                        <div class="RemDIVLeft">
+                            好吃新鲜
+                        </div>
+                    </td>
+                    <td style="width: 70%;">
+                        <div class="ImgDIV">
+                            <img class="ShowImg" src="Images/366585.jpg" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
+
+
     </div>
+</div>

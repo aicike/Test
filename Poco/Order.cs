@@ -36,13 +36,18 @@ namespace Poco
         public DateTime OrderDate { get; set; }
 
         /// <summary>
-        /// 送货开始日期
+        /// 付款日期
+        /// </summary>
+        public DateTime? Payment { get; set; }
+
+        /// <summary>
+        /// 送货开始日期（发货日期）
         /// </summary>
         public DateTime BeginDate { get; set; }
 
         
         /// <summary>
-        /// 送货截止日期
+        /// 送货截止日期（订单结束日期）
         /// </summary>
         public DateTime EndDate { get; set; }
 

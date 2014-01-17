@@ -223,5 +223,9 @@ namespace Poco
         public virtual ICollection<SurveyMain> SurveyMain { get; set; }
 
         public virtual ICollection<ActivityInfo> ActivityInfos { get; set; }
+
+
+        public virtual ICollection<UserDeliveryAddress> UserDeliveryAddress { get; set; }
+        
     }
 }

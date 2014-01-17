@@ -90,6 +90,7 @@
     <Compile Include="TaskAccount.cs" />
     <Compile Include="TaskDetail.cs" />
     <Compile Include="UnreadCnt.cs" />
+    <Compile Include="UserDeliveryAddress.cs" />
     <Compile Include="VIPInfo.cs" />
     <Compile Include="VIPInfoExpenseDetail.cs" />
     <Compile Include="WebAPI_Poco\App_Menu.cs" />
