@@ -29,8 +29,14 @@ namespace Common
         }
         public static T GetCache_Struct<T>(string CacheKey) where T : struct
         {
-            var obj = (T)GetCache(CacheKey);
-            return obj;
+            var obj=GetCache(CacheKey);
+            if (obj != null)
+            {
+                return (T)obj;
+            }
+            else {
+                return default(T);
+            }
         }
 
         /// <summary>

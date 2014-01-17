@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+
+    var TitleShow = ViewBag.TitleShow as List<Poco._B_Advertorial>;
+    var ListShow = ViewBag.ListShow as List<Poco._B_Advertorial>;
+    var lastID = Convert.ToInt32(ViewBag.LastID);
+    var accountMainID = MicroSite_Web.Controllers.UserBaseController.GetAccountMainID();
+}
+@section head{
+    <script type="text/javascript">
+        var lastID = @lastID;
+        var url='@Url.Action("GetPage", "MicroNew")';
+        $(function () {
+            $(window).scroll(function () {
+                if ($(document).scrollTop() <= 0) {
+                    //alert("滚动条已经到达顶部为0");
+                }
+                if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                    if (lastID != null&&lastID!="0") {
+                        $.get(url,{"AMID":@accountMainID,"ID":lastID,"ListCnt":10},function(result){
+                            if(result!=null){
+                                var html = "";
+                                $.each(result.List, function (i, n) {
+                                    html += '<li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-thumb ui-btn-up-c"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"><a href="/News/NewDetail.aspx" style="padding-left: 119px;" class="ui-link-inherit">' +
+                                    '<img src="' + n.S + '" style="max-height: 80px; height: 80px; width: 109px; max-width: 109px;" class="ui-li-thumb">' +
+                                    '<h2 class="ui-li-heading">' + n.T + '</h2><p class="ui-li-desc">' + n.P + '</p>' +
+                                '</a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>';
+                                });
+                                $("#ulMain").append(html);
+                                var length = result.List.length;
+                                if (length > 0) {
+                                    lastID = result.List[length - 1].I;
+                                }
+                            }
+                        },"json");
+                    }
+                }
+            });
+        });
+
+//        $.ajax({
+//                            url: resUrl,
+//                            data: {},
+//                            type: "GET",
+//                            dataType: "jsonp",
+//                            jsonpCallback: "localJsonpCallback"
+//                        });
+//        function localJsonpCallback(json) {
+//            if (json != null) {
+//                var html = "";
+//                $.each(json.List, function (i, n) {
+//                    html += '<li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-thumb ui-btn-up-c"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"><a href="/News/NewDetail.aspx" style="padding-left: 119px;" class="ui-link-inherit">' +
+//                    '<img src="' + n.S + '" style="max-height: 80px; height: 80px; width: 109px; max-width: 109px;" class="ui-li-thumb">' +
+//                    '<h2 class="ui-li-heading">' + n.T + '</h2><p class="ui-li-desc">' + n.P + '</p>' +
+//                '</a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>';
+//                });
+//                $("#ulMain").append(html);
+//                var length = json.List.length;
+//                if (length > 0) {
+//                    lastID = json.List[length - 1].I;
+//                }
+//                console.log(lastID);
+//            }
+//        }
+    </script>
+}
+<ul data-role="listview" data-inset="false" id="ulMain">
+    @foreach (var item in ListShow)
+    {
+        <li><a href="@Url.Action("View", "MicroNew", new {id=item.I })" style="padding-left: 119px;">
+            <img src="@Url.Content(item.S)" style="max-height: 80px; height: 80px; width: 109px; max-width: 109px;">
+            <h2>
+                @item.T</h2>
+            <p>
+                @item.P</p>
+        </a></li>
+    }
+</ul>

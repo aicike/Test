@@ -113,6 +113,7 @@
     <Compile Include="IOrderUserInfoModel.cs" />
     <Compile Include="ITaskModel.cs" />
     <Compile Include="IAccountRoleModel.cs" />
+    <Compile Include="IPanoramaModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Poco\Poco.csproj">

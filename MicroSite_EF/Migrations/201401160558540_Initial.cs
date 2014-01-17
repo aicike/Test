@@ -3,7 +3,7 @@ namespace MicroSite_EF.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class MicroSite : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -154,7 +154,7 @@ namespace MicroSite_EF.Migrations
                         AndroidSellVersion = c.String(),
                         RandomCode = c.String(nullable: false, maxLength: 50),
                         AppUpdateID = c.Int(),
-                        SystemUserID = c.Int(nullable: false),
+                        SystemUserID = c.Int(),
                         CreateTime = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
@@ -834,10 +834,10 @@ namespace MicroSite_EF.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         SystemStatus = c.Int(nullable: false),
                         AccountMainID = c.Int(nullable: false),
-                        imgFilePath = c.String(),
                         Name = c.String(nullable: false, maxLength: 30),
                         Specification = c.String(),
                         Price = c.Double(nullable: false),
+                        Freight = c.Double(nullable: false),
                         Introduction = c.String(),
                         LastSetDate = c.String(),
                         Status = c.Int(nullable: false),
@@ -864,6 +864,7 @@ namespace MicroSite_EF.Migrations
                         SystemStatus = c.Int(nullable: false),
                         AccountMainID = c.Int(nullable: false),
                         Name = c.String(nullable: false, maxLength: 20),
+                        ImgPath = c.String(),
                         ParentID = c.Int(nullable: false),
                         Level = c.Int(nullable: false),
                         Sort = c.Int(nullable: false),
@@ -872,6 +873,20 @@ namespace MicroSite_EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
+            
+            CreateTable(
+                "dbo.ProductImg",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        ProductID = c.Int(nullable: false),
+                        PImgOriginal = c.String(),
+                        PImgMini = c.String(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Product", t => t.ProductID)
+                .Index(t => t.ProductID);
             
             CreateTable(
                 "dbo.OrderMIntermediate",
@@ -1039,6 +1054,26 @@ namespace MicroSite_EF.Migrations
                 .Index(t => t.AccountMainID);
             
             CreateTable(
+                "dbo.Panorama",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        Name = c.String(nullable: false, maxLength: 30),
+                        FullImage = c.String(maxLength: 500),
+                        ImageRight = c.String(maxLength: 500),
+                        ImageLeft = c.String(maxLength: 500),
+                        ImageTop = c.String(maxLength: 500),
+                        ImageBottom = c.String(maxLength: 500),
+                        ImageBlack = c.String(maxLength: 500),
+                        ImageFront = c.String(maxLength: 500),
+                        AccountMainID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
+                .Index(t => t.AccountMainID);
+            
+            CreateTable(
                 "dbo.ReportFormPower",
                 c => new
                     {
@@ -1061,6 +1096,7 @@ namespace MicroSite_EF.Migrations
                         Value = c.String(nullable: false, maxLength: 50),
                     })
                 .PrimaryKey(t => t.ID);
+
 
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };
@@ -1085,6 +1121,7 @@ namespace MicroSite_EF.Migrations
             DropForeignKey("dbo.AccountMainHouseInfo", "AccountMainHousessID", "dbo.AccountMainHouses");
             DropForeignKey("dbo.AccountMainHouseInfoDetail", "AccountMainHouses_ID", "dbo.AccountMainHouses");
             DropForeignKey("dbo.ReportFormPower", "AccountMainID", "dbo.AccountMain");
+            DropForeignKey("dbo.Panorama", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.OrderMType", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.LibraryVoice", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.LibraryVideo", "AccountMainID", "dbo.AccountMain");
@@ -1100,6 +1137,7 @@ namespace MicroSite_EF.Migrations
             DropForeignKey("dbo.AccountMain", "ProvinceID", "dbo.Province");
             DropForeignKey("dbo.Order", "OrderUserInfoID", "dbo.OrderUserInfo");
             DropForeignKey("dbo.OrderMIntermediate", "OrderID", "dbo.Order");
+            DropForeignKey("dbo.ProductImg", "ProductID", "dbo.Product");
             DropForeignKey("dbo.OrderDetail", "ProductID", "dbo.Product");
             DropForeignKey("dbo.Product", "ClassifyID", "dbo.Classify");
             DropForeignKey("dbo.Classify", "AccountMainID", "dbo.AccountMain");
@@ -1177,6 +1215,7 @@ namespace MicroSite_EF.Migrations
             DropIndex("dbo.AccountMainHouseInfo", new[] { "AccountMainHousessID" });
             DropIndex("dbo.AccountMainHouseInfoDetail", new[] { "AccountMainHouses_ID" });
             DropIndex("dbo.ReportFormPower", new[] { "AccountMainID" });
+            DropIndex("dbo.Panorama", new[] { "AccountMainID" });
             DropIndex("dbo.OrderMType", new[] { "AccountMainID" });
             DropIndex("dbo.LibraryVoice", new[] { "AccountMainID" });
             DropIndex("dbo.LibraryVideo", new[] { "AccountMainID" });
@@ -1192,6 +1231,7 @@ namespace MicroSite_EF.Migrations
             DropIndex("dbo.AccountMain", new[] { "ProvinceID" });
             DropIndex("dbo.Order", new[] { "OrderUserInfoID" });
             DropIndex("dbo.OrderMIntermediate", new[] { "OrderID" });
+            DropIndex("dbo.ProductImg", new[] { "ProductID" });
             DropIndex("dbo.OrderDetail", new[] { "ProductID" });
             DropIndex("dbo.Product", new[] { "ClassifyID" });
             DropIndex("dbo.Classify", new[] { "AccountMainID" });
@@ -1264,6 +1304,7 @@ namespace MicroSite_EF.Migrations
             DropIndex("dbo.AccountMainHouseInfoDetail", new[] { "AccountMainHouseInfoID" });
             DropTable("dbo.Lookup");
             DropTable("dbo.ReportFormPower");
+            DropTable("dbo.Panorama");
             DropTable("dbo.OrderMType");
             DropTable("dbo.LibraryVoice");
             DropTable("dbo.LibraryVideo");
@@ -1275,6 +1316,7 @@ namespace MicroSite_EF.Migrations
             DropTable("dbo.ConversationDetailed");
             DropTable("dbo.Province");
             DropTable("dbo.OrderMIntermediate");
+            DropTable("dbo.ProductImg");
             DropTable("dbo.Classify");
             DropTable("dbo.Product");
             DropTable("dbo.OrderDetail");

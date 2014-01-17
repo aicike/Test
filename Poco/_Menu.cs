@@ -13,11 +13,17 @@ namespace Poco
 
         public int SystemStatus { get; set; }
 
-        [Display(Name = "名称")]
-        [Required(ErrorMessage = "请输入名称")]
+        [Display(Name = "描述")]
+        [Required(ErrorMessage = "请输入描述")]
         [StringLength(20, ErrorMessage = "长度小于20")]
         [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Name { get; set; }
+
+        [Display(Name = "显示名称")]
+        [Required(ErrorMessage = "请输入显示名称")]
+        [StringLength(20, ErrorMessage = "长度小于20")]
+        [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
+        public string ShowName { get; set; }
 
         [Display(Name = "Area")]
         [StringLength(50, ErrorMessage = "长度小于50")]

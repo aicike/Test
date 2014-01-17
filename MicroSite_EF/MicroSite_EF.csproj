@@ -66,17 +66,9 @@
     <Compile Include="Mapping\UserMap.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Migrations\201401130412201_MicroSite.cs" />
-    <Compile Include="Migrations\201401130412201_MicroSite.Designer.cs">
-      <DependentUpon>201401130412201_MicroSite.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401140816356_ttt.cs" />
-    <Compile Include="Migrations\201401140816356_ttt.Designer.cs">
-      <DependentUpon>201401140816356_ttt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401140846271_ttt2.cs" />
-    <Compile Include="Migrations\201401140846271_ttt2.Designer.cs">
-      <DependentUpon>201401140846271_ttt2.cs</DependentUpon>
+    <Compile Include="Migrations\201401170130170_Initial.cs" />
+    <Compile Include="Migrations\201401170130170_Initial.Designer.cs">
+      <DependentUpon>201401170130170_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context.cs">
@@ -103,14 +95,8 @@
     <Content Include="InitialProvince.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201401130412201_MicroSite.resx">
-      <DependentUpon>201401130412201_MicroSite.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401140816356_ttt.resx">
-      <DependentUpon>201401140816356_ttt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401140846271_ttt2.resx">
-      <DependentUpon>201401140846271_ttt2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201401170130170_Initial.resx">
+      <DependentUpon>201401170130170_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

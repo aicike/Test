@@ -142,6 +142,7 @@
     <Compile Include="Controllers\BaseController\BaseController.cs" />
     <Compile Include="Controllers\BaseController\ManageAccountController.cs" />
     <Compile Include="Controllers\BaseController\ManageSystemUserController.cs" />
+    <Compile Include="Controllers\BaseController\UserBaseController.cs" />
     <Compile Include="Controllers\BasisSetController.cs" />
     <Compile Include="Controllers\CardInfoController.cs" />
     <Compile Include="Controllers\CharacterController.cs" />
@@ -159,6 +160,8 @@
     <Compile Include="Controllers\InstantMesController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MicroMallController.cs" />
+    <Compile Include="Controllers\MicroNewController.cs" />
+    <Compile Include="Controllers\MicroSitePanorama.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\OrderMTypeController.cs" />
     <Compile Include="Controllers\PanoramaController.cs" />
@@ -1006,7 +1009,6 @@
     <None Include="Scripts\nivoSlider\dark\.DS_Store" />
     <Content Include="Views\Guide\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutUser_NoMenu.cshtml" />
-    <Content Include="Views\Panorama\Index.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Web.config" />
     <Content Include="Views\MicroMall\ShopIndex.cshtml" />
@@ -1014,6 +1016,11 @@
     <Content Include="Views\MicroMall\ProductListItem.cshtml" />
     <Content Include="Views\MicroMall\ProductInfo.cshtml" />
     <Content Include="Views\MicroMall\ShoppingCart.cshtml" />
+    <Content Include="Views\MicroNew\Index.cshtml" />
+    <Content Include="Views\MicroNew\View.cshtml" />
+    <Content Include="Views\MicroSitePanorama\Index.cshtml" />
+    <Content Include="Views\Panorama\Index.cshtml" />
+    <Content Include="Views\Panorama\Add.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

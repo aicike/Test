@@ -1,0 +1,285 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.Panorama;
+}
+@model Poco.Panorama
+@section head{
+    <link href="@Url.Content("~/Scripts/uploadify/uploadify.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/uploadify/jquery.uploadify.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        var UpImgUrl = '@Url.Action("UpImg", "Panorama", new { HostName = ViewBag.HostName })';
+        $(function () {
+            $("#file_upload").uploadify({
+                height: 30,
+                swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
+                uploader: UpImgUrl,
+                width: 70,
+                fileSizeLimit: '5MB',
+                buttonText: '选择图片',
+                multi: false,
+                fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
+                onUploadSuccess: function (file, data, response) {
+                    if (data == "" || data == undefined || data == "false") {
+                        JAlert({
+                            Message: "上传失败请重新上传！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return;
+                    }
+                    $("#FullImage").val(data);
+                    $("#imgFullImage").attr('src', data);
+                }
+            });
+            $("#file_upload_left").uploadify({
+                height: 30,
+                swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
+                uploader: UpImgUrl,
+                width: 70,
+                fileSizeLimit: '5MB',
+                buttonText: '选择图片',
+                multi: false,
+                fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
+                onUploadSuccess: function (file, data, response) {
+                    if (data == "" || data == undefined || data == "false") {
+                        JAlert({
+                            Message: "上传失败请重新上传！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return;
+                    }
+                    $("#ImageLeft").val(data);
+                    $("#imgLeftImage").attr('src', data);
+                }
+            });
+            $("#file_upload_right").uploadify({
+                height: 30,
+                swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
+                uploader: UpImgUrl,
+                width: 70,
+                fileSizeLimit: '5MB',
+                buttonText: '选择图片',
+                multi: false,
+                fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
+                onUploadSuccess: function (file, data, response) {
+                    if (data == "" || data == undefined || data == "false") {
+                        JAlert({
+                            Message: "上传失败请重新上传！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return;
+                    }
+                    $("#ImageRight").val(data);
+                    $("#imgRightImage").attr('src', data);
+                }
+            });
+            $("#file_upload_top").uploadify({
+                height: 30,
+                swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
+                uploader: UpImgUrl,
+                width: 70,
+                fileSizeLimit: '5MB',
+                buttonText: '选择图片',
+                multi: false,
+                fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
+                onUploadSuccess: function (file, data, response) {
+                    if (data == "" || data == undefined || data == "false") {
+                        JAlert({
+                            Message: "上传失败请重新上传！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return;
+                    }
+                    $("#ImageTop").val(data);
+                    $("#imgTopImage").attr('src', data);
+                }
+            });
+            $("#file_upload_bottom").uploadify({
+                height: 30,
+                swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
+                uploader: UpImgUrl,
+                width: 70,
+                fileSizeLimit: '5MB',
+                buttonText: '选择图片',
+                multi: false,
+                fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
+                onUploadSuccess: function (file, data, response) {
+                    if (data == "" || data == undefined || data == "false") {
+                        JAlert({
+                            Message: "上传失败请重新上传！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return;
+                    }
+                    $("#ImageBottom").val(data);
+                    $("#imgBottomImage").attr('src', data);
+                }
+            });
+            $("#file_upload_front").uploadify({
+                height: 30,
+                swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
+                uploader: UpImgUrl,
+                width: 70,
+                fileSizeLimit: '5MB',
+                buttonText: '选择图片',
+                multi: false,
+                fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
+                onUploadSuccess: function (file, data, response) {
+                    if (data == "" || data == undefined || data == "false") {
+                        JAlert({
+                            Message: "上传失败请重新上传！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return;
+                    }
+                    $("#ImageFront").val(data);
+                    $("#imgFrontImage").attr('src', data);
+                }
+            });
+            $("#file_upload_black").uploadify({
+                height: 30,
+                swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
+                uploader: UpImgUrl,
+                width: 70,
+                fileSizeLimit: '5MB',
+                buttonText: '选择图片',
+                multi: false,
+                fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
+                onUploadSuccess: function (file, data, response) {
+                    if (data == "" || data == undefined || data == "false") {
+                        JAlert({
+                            Message: "上传失败请重新上传！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return;
+                    }
+                    $("#ImageBlack").val(data);
+                    $("#imgBlackImage").attr('src', data);
+                }
+            });
+        });
+    </script>
+}
+<div class="title">
+    @Html.Partial("Menu3")
+</div>
+<div class="body">
+    @using (Html.BeginForm("Add", "Panorama", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <fieldset>
+            <legend>基本信息</legend>
+            <table class="tableForm" style="line-height: 27px; font-size: 14px">
+                <tr>
+                    <td class="tdTitle" style="">
+                        名称
+                    </td>
+                    <td style="width: 210px;">
+                        @Html.TextBoxFor(a => a.Name)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        预览图
+                    </td>
+                    <td>
+                        <img style="width: 204px; height: 204px;" id="imgFullImage" />
+                        @Html.HiddenFor(a => a.FullImage)
+                    </td>
+                    <td>
+                        <input id="file_upload" name="file_upload" type="file" multiple="false" /><br />@Html.ValidationMessageFor(a => a.FullImage)
+                    </td>
+                </tr>
+            </table>
+            <table class="tableForm">
+                <tr>
+                    <td rowspan="3" class="tdTitle">
+                        全景图
+                    </td>
+                    <td>
+                        <img style="width: 120px; height: 120px;" id="imgLeftImage" />
+                        @Html.HiddenFor(a => a.ImageLeft)
+                    </td>
+                    <td style="width: 150px; padding-left: 10px;">
+                        <br />
+                        图片（左）<br />
+                        <br />
+                        <input id="file_upload_left" type="file" multiple="false" /><br />@Html.ValidationMessageFor(a => a.ImageLeft)
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <img style="width: 120px; height: 120px;" id="imgRightImage" />
+                        @Html.HiddenFor(a => a.ImageRight)
+                    </td>
+                    <td style="width: 150px; padding-left: 10px;">
+                        <br />
+                        图片（右）<br />
+                        <br />
+                        <input id="file_upload_right" type="file" multiple="false" /><br />@Html.ValidationMessageFor(a => a.ImageRight)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img style="width: 120px; height: 120px;" id="imgTopImage" />
+                        @Html.HiddenFor(a => a.ImageTop)
+                    </td>
+                    <td style="width: 150px; padding-left: 10px;">
+                        <br />
+                        图片（上）<br />
+                        <br />
+                        <input id="file_upload_top" type="file" multiple="false" /><br />@Html.ValidationMessageFor(a => a.ImageTop)
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <img style="width: 120px; height: 120px;" id="imgBottomImage" />
+                        @Html.HiddenFor(a => a.ImageBottom)
+                    </td>
+                    <td style="width: 150px; padding-left: 10px;">
+                        <br />
+                        图片（下）<br />
+                        <br />
+                        <input id="file_upload_bottom" type="file" multiple="false" /><br />@Html.ValidationMessageFor(a => a.ImageBottom)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img style="width: 120px; height: 120px;" id="imgFrontImage" />
+                        @Html.HiddenFor(a => a.ImageFront)
+                    </td>
+                    <td style="width: 150px; padding-left: 10px;">
+                        <br />
+                        图片（前）<br />
+                        <br />
+                        <input id="file_upload_front" type="file" multiple="false" /><br />@Html.ValidationMessageFor(a => a.ImageFront)
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <img style="width: 120px; height: 120px;" id="imgBlackImage" />
+                        @Html.HiddenFor(a => a.ImageBlack)
+                    </td>
+                    <td style="width: 150px; padding-left: 10px;">
+                        <br />
+                        图片（后）<br />
+                        <br />
+                        <input id="file_upload_black" type="file" multiple="false" /><br />@Html.ValidationMessageFor(a => a.ImageBlack)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="submit" id="btnSubmit" class="button" value="保存" />
+        </div>
+    }
+</div>
+<div style="clear: both">
+</div>

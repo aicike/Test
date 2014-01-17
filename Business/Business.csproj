@@ -109,6 +109,7 @@
     <Compile Include="OrderMIntermediateModel.cs" />
     <Compile Include="OrderModel.cs" />
     <Compile Include="OrderMTypeModel.cs" />
+    <Compile Include="PanoramaModel.cs" />
     <Compile Include="PendingMessagesModel.cs" />
     <Compile Include="ProductImgModel.cs" />
     <Compile Include="ProductModel.cs" />
@@ -178,7 +179,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Config\IOC.xml" />
+    <EmbeddedResource Include="Config\IOC.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LibraryImageModel.cs" />

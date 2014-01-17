@@ -39,6 +39,7 @@ namespace Poco
             public const string RoleOption = "RoleOption";
             public const string MenuOption = "MenuOption";
             public const string LookupOption = "LookupOption";
+            public const string AccountMainID = "AccountMainID";
         }
 
         public class Notice
@@ -110,7 +111,8 @@ namespace Poco
             public const string AppAdvertorial = "AppAdvertorial";
             public const string SalesMessage = "SalesMessage";
             public const string ActivityInfo = "ActivityInfo";
-            
+            public const string Panorama = "Panorama";
+
             //Action
             public const string History = "History";
             public const string Index = "Index";
@@ -205,6 +207,7 @@ namespace Poco
             public const string SurveyOptionModel = "SurveyOptionModel";
             public const string ActivityInfoModel = "ActivityInfoModel";
             public const string ActivityInfoParticipatorModel = "ActivityInfoParticipatorModel";
+            public const string PanoramaModel = "PanoramaModel";
 
 
 

@@ -38,6 +38,7 @@
 .listItem_img img
 {
     width: 100%;
+    min-height:125px;
 }
 /*文字样式*/
 .font_title

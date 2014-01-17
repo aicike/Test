@@ -1,9 +1,56 @@
 ﻿@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.Panorama;
 }
 @section head{
-    <script src="@Url.Content("/Scripts/three.min.js")" type="text/javascript"></script>
 }
-<h2>
-    Index</h2>
+@model PagedList<Poco.Panorama>
+<div class="title">
+    @Html.Partial("Menu3")
+</div>
+<div class="body">
+    <div class="option">
+        @Html.ActionLink("添加", "Add", "Panorama", new { HostName = ViewBag.HostName }, null, true)
+    </div>
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th style="">
+                名称
+            </th>
+            <th style="width: 300px;">
+                操作
+            </th>
+        </tr>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td class="operation">
+                    @Html.ActionLink("修改", "Edit", "Panorama", new { HostName = ViewBag.HostName, id = item.ID }, new { }, true)
+                    @Ajax.ActionLink("删除", "Delete", "Panorama", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?！','" + Url.Action("Delete", "Panorama", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
+                </td>
+            </tr>
+            }
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
+<div style="clear: both">
+</div>
