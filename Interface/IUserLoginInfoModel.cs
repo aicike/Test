@@ -26,7 +26,9 @@ namespace Interface
         /// </summary>
         /// <param name="userLoginInfo"></param>
         /// <returns></returns>
-        Result Register2(App_UserLoginInfo userLoginInfo,int userLoginInfoID);
+        Result Register2(App_UserLoginInfo userLoginInfo, int userLoginInfoID);
+
+        Result MicroSite_Register(App_UserLoginInfo userLoginInfo);
 
         bool ExistEmail(string email, int? userLoginInfoID = null);
 
@@ -54,5 +56,6 @@ namespace Interface
         //根据电话号查询用户
         UserLoginInfo getUserByPhone(string phone);
 
+        Result MicroSite_Login(int amid, string loginName, string loginPwd);
     }
 }

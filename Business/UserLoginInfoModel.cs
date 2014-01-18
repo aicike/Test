@@ -169,6 +169,64 @@ namespace Business
             }
         }
 
+
+        [Transaction]
+        public Result MicroSite_Register(App_UserLoginInfo userLoginInfo)
+        {
+            lock (obj)
+            {
+                Result result = new Result();
+                bool isExist = false;
+
+                //检查邮箱是否通过，是否可以注册
+                if (!string.IsNullOrEmpty(userLoginInfo.Email))
+                {
+                    isExist = ExistEmail(userLoginInfo.Email);
+                    if (isExist)
+                    {
+                        result.Error = "该邮箱已存在,不能创建账号.";
+                        return result;
+                    }
+                }
+
+                //检查电话是否通过，是否可以注册
+                if (!string.IsNullOrEmpty(userLoginInfo.Phone))
+                {
+                    isExist = ExistPhone(userLoginInfo.Phone);
+                    if (isExist)
+                    {
+                        result.Error = "该电话已存在,不能创建账号.";
+                        return result;
+                    }
+                }
+                //没有账号，需要新建userLoginInfo信息
+                UserLoginInfo userlogin = new UserLoginInfo();
+                userlogin.LoginPwd = DESEncrypt.Encrypt(userLoginInfo.Pwd);
+                userlogin.LoginPwdPage = "000000";
+                userlogin.Name = userLoginInfo.Name;
+                userlogin.Phone = userLoginInfo.Phone;
+                userlogin.Email = userLoginInfo.Email;
+                result = base.Add(userlogin);
+                if (result.HasError)
+                {
+                    return result;
+                }
+                //添加用户User
+                User user = new User();
+                user.UserLoginInfoID = userlogin.ID;
+                user.Name = "";
+                user.AccountMainID = userLoginInfo.AccountMainID;
+                var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+                result = userModel.Add(user);
+                if (result.HasError)
+                {
+                    return result;
+                }
+                result.Entity = user;
+                return result;
+            }
+        }
+
         [Transaction]
         public Result Register2(App_UserLoginInfo userLoginInfo, int userLoginInfoID)
         {
@@ -292,7 +350,7 @@ namespace Business
 
                 var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
 
-                
+
             }
             App_User appuser = new App_User();
             appuser.ID = user.ID;
@@ -329,8 +387,8 @@ namespace Business
 
             User user = null;
             UserLoginInfo userLoginInfo = null;
-            if (string.IsNullOrEmpty(app_UserLoginInfo.Email) && (app_UserLoginInfo.Pwd == "pass123!"||string.IsNullOrEmpty(app_UserLoginInfo.Pwd)) ||
-                string.IsNullOrEmpty(app_UserLoginInfo.Phone) && (app_UserLoginInfo.Pwd == "pass123!"||string.IsNullOrEmpty(app_UserLoginInfo.Pwd)))
+            if (string.IsNullOrEmpty(app_UserLoginInfo.Email) && (app_UserLoginInfo.Pwd == "pass123!" || string.IsNullOrEmpty(app_UserLoginInfo.Pwd)) ||
+                string.IsNullOrEmpty(app_UserLoginInfo.Phone) && (app_UserLoginInfo.Pwd == "pass123!" || string.IsNullOrEmpty(app_UserLoginInfo.Pwd)))
             {
                 var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
                 var clientInfo = clientInfoModel.List().Where(a => a.ClientID == app_UserLoginInfo.ClientID).FirstOrDefault();
@@ -393,7 +451,7 @@ namespace Business
             appuser.GN = "";
             appuser.IDCard = "";
             appuser.Pwd = "";
-            appuser.SEX= "";
+            appuser.SEX = "";
             string headImg = null;
             if (string.IsNullOrEmpty(userLoginInfo.HeadImagePath) == false)
             {
@@ -603,6 +661,40 @@ namespace Business
         {
             var list = List().Where(a => a.Phone == phone).FirstOrDefault();
             return list;
+        }
+
+        /// <summary>
+        /// 微商城用户登录
+        /// </summary>
+        /// <param name="loginName"></param>
+        /// <param name="loginPwd"></param>
+        /// <returns></returns>
+        public Result MicroSite_Login(int amid, string loginName, string loginPwd)
+        {
+            Result result = new Result();
+            if (string.IsNullOrEmpty(loginName) || string.IsNullOrEmpty(loginPwd))
+            {
+                result.Error = "账号或密码错误。";
+                return result;
+            }
+            string pwd = Common.DESEncrypt.Encrypt(loginPwd);
+            var list = List().Where(a => a.Phone.Equals(loginName, StringComparison.CurrentCultureIgnoreCase) && a.LoginPwd.Equals(pwd, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+            if (list == null)
+            {
+                result.Error = "账号或密码错误。";
+                return result;
+            }
+            else
+            {
+                var user = list.Users.Where(a => a.AccountMainID == amid).FirstOrDefault();
+                if (user == null)
+                {
+                    result.Error = "账号或密码错误。";
+                    return result;
+                }
+                result.Entity = user;
+            }
+            return result;
         }
     }
 }

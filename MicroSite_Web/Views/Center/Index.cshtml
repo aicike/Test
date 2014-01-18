@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    var amid = ViewBag.AMID;
+}
+个人中心，正在开发中...
+<script language="javascript">
+    var url_login = '@Url.Action("Login", "Center", new { amid = amid })';
+    $(function () {
+        var userID = sessionStorage.getItem("userID");
+        if (userID != null) {
+
+        } else {
+            window.location.href = url_login;
+        }
+    });
+</script>

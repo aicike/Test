@@ -1,0 +1,119 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    var amid = ViewBag.AMID;
+}
+@section head{
+    <style>
+        .login_td > div
+        {
+            margin-top: 10px !important;
+        }
+    </style>
+}
+<div style="margin: 10px 10px 0px auto; text-align: center">
+    <table style="width: 100%">
+        <tr>
+            <td style="width: 70px; text-align: right">
+                <label>
+                    账号：</label>
+            </td>
+            <td colspan="2">
+                <input name="LoginName" id="txtLoginName" placeholder="电话" type="tel" tabindex="1">
+                <div data-role="popup" id="popupBasic">
+                    <p>
+                        This is a completely basic popup, no options set.</p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right">
+                <label>
+                    密码：</label>
+            </td>
+            <td colspan="2">
+                <input type="password" name="LoginPwd" id="txtLoginPwd" tabindex="2" />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right; vertical-align: middle" class="login_td">
+                <label for="slider-flip-m">
+                    自动登录：</label>
+            </td>
+            <td style="text-align: left" class="login_td">
+                <select name="slider-flip-m" id="slider-flip-m" data-role="slider" data-mini="true">
+                    <option value="off">否</option>
+                    <option value="on" selected="">是</option>
+                </select>
+            </td>
+            <td style="width: 100px;">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" value="注册" id="btnRegister" tabindex="4" data-inline="true">
+            </td>
+            <td colspan="2">
+                <input type="button" value="登录" id="btnSubmit" tabindex="3">
+            </td>
+        </tr>
+    </table>
+</div>
+<script language="javascript">
+    var url = '@Url.Action("Login", "Center", new { amid = amid })';
+    var url_index = '@Url.Action("Index", "Center", new { amid = amid })';
+    var url_reg = '@Url.Action("Register", "Center", new { amid = amid })';
+    $(function () {
+        //$('#my-form').on('submit', false);
+        $("#btnSubmit").click(function () {
+            //            //    $.mobile.ajaxEnabled = false;
+            var loginName = $("#txtLoginName").val().trim();
+            var loginPwd = $("#txtLoginPwd").val().trim();
+            var error = "";
+            var hasError = true;
+            if (loginName.length == 0) {
+                error = "请输入有效的账号。";
+                hasError = false;
+            }
+            if (hasError == false) {
+                showError(error);
+                return false;
+            }
+            if (loginPwd.length == 0) {
+                error = "请输入有效的密码。";
+                hasError = false;
+            }
+            if (hasError == false) {
+                showError(error);
+                return false;
+            }
+            $.post(url, { amid: @amid, LoginName: loginName, LoginPwd: loginPwd }, function (result) {
+                if (result.HasError) {
+                    showError(result.Error);
+                } else {
+                    sessionStorage.setItem("userID",result.Entity)
+                    window.location.href=url_index;
+                }
+            }, "json");
+        });
+
+        $("#btnRegister").click(function () {
+            window.location.href = url_reg;
+        });
+    })
+    function showError(error) {
+        $('<div>').simpledialog2({
+            mode: 'button',
+            headerText: '消息',
+            headerClose: false,
+            buttonPrompt: error,
+            buttons: {
+                '确定': {
+                    click: function () {
+                        
+                    }
+                }
+            }
+        })
+    }
+</script>

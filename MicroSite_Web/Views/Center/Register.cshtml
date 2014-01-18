@@ -1,0 +1,172 @@
+﻿@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    var amid = ViewBag.AMID;
+}
+<div style="margin: 10px 10px 0px auto; text-align: center">
+    <table style="width: 100%">
+        <tr>
+            <td style="width: 80px; text-align: right">
+                <span style="color: red;">*</span> 电话：
+            </td>
+            <td>
+                <input name="reg_phone" id="reg_phone" placeholder="电话" type="tel" tabindex="1" />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right">
+                邮箱：
+            </td>
+            <td>
+                <input type="text" name="reg_email" id="reg_email" tabindex="2" />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right">
+                <span style="color: red;">*</span> 昵称：
+            </td>
+            <td>
+                <input type="text" name="reg_name" id="reg_name" tabindex="3" />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right">
+                <span style="color: red;">*</span> 密码：
+            </td>
+            <td>
+                <input type="password" name="reg_pwd" id="reg_pwd" tabindex="4" />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right">
+                <span style="color: red;">*</span> <span style="font-size: 12px;">确认密码</span>
+            </td>
+            <td>
+                <input type="password" name="reg_confirmPwd" id="reg_confirmPwd" tabindex="5" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <input type="button" value="确定" id="reg_btnSubmit" tabindex="6" />
+            </td>
+        </tr>
+    </table>
+</div>
+<script language="javascript">
+    var url_index = '@Url.Action("Index", "Center", new { amid = amid })';
+    var url_reg = '@Url.Action("Register", "Center", new { amid = amid })';
+    $(function () {
+        $("#reg_btnSubmit").click(function () {
+            //            //    $.mobile.ajaxEnabled = false;
+            var phone = $("#reg_phone").val().trim();
+            var email = $("#reg_email").val().trim();
+            var name = $("#reg_name").val().trim();
+            var pwd = $("#reg_pwd").val().trim();
+            var pwd2 = $("#reg_confirmPwd").val().trim();
+            var error = "";
+            var hasError = true;
+            if (phone.length == 0) {
+                error = "请输入有效的电话。";
+                hasError = false;
+            } else {
+                var reg = /(1[3,5,8][0-9])\d{8}/;
+                if (reg.test(phone) == false) {
+                    error = "手机号码格式错误。";
+                    hasError = false;
+                }
+            }
+            if (hasError == false) {
+                showError(error);
+                return false;
+            }
+            if (email.length > 0) {
+                var reg = /\w+([-+.']\w+)*@@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+                if (reg.test(email) == false) {
+                    error = "邮箱格式错误。";
+                    hasError = false;
+                }
+            }
+            if (hasError == false) {
+                showError(error);
+                return false;
+            }
+            if (name.length == 0) {
+                error = "请输入昵称。";
+                hasError = false;
+            }
+            if (hasError == false) {
+                showError(error);
+                return false;
+            }
+            if (pwd.length == 0 || pwd2.length == 0) {
+                error = "请输入密码。";
+                hasError = false;
+            }
+            if (hasError == false) {
+                showError(error);
+                return false;
+            }
+            if (pwd != pwd2) {
+                error = "两次密码不一致。";
+                hasError = false;
+            }
+            if (hasError == false) {
+                showError(error);
+                return false;
+            }
+            $.post(url_reg, { amid: @amid, reg_phone: phone, reg_email: email, reg_name: name, reg_pwd: pwd, reg_confirmPwd: pwd2 }, function (result) {
+                if (result.HasError) { 
+                    showError(result.Error);
+                } else {
+                    sessionStorage.setItem("userID",result.Entity)
+                    showSucceed("恭喜您成功注册。",url_index);
+                }
+            }, "text");
+        });
+
+        $("#btnRegister").click(function () {
+            window.location.href = url_reg;
+        });
+    })
+    function showError(error) {
+        $('<div>').simpledialog2({
+            mode: 'button',
+            headerText: '消息',
+            headerClose: false,
+            buttonPrompt: error,
+            buttons: {
+                '确定': {
+                    click: function () {
+                        
+                    }
+                }
+            }
+        })
+    }
+    
+
+    function showSucceed(msg,href) {
+        $('<div>').simpledialog2({
+            mode: 'button',
+            headerText: '消息',
+            headerClose: false,
+            buttonPrompt: msg,
+            buttons: {
+                '进入个人中心': {
+                    click: function () {
+                        window.location.href=href;
+                    }
+                }
+                //'Cancel': {
+                //    click: function () {
+                //        $('#buttonoutput').text('Cancel');
+                //    },
+                //    icon: "delete",
+                //    theme: "c"
+                //}
+            }
+        })
+    }
+</script>

@@ -145,6 +145,7 @@
     <Compile Include="Controllers\BaseController\UserBaseController.cs" />
     <Compile Include="Controllers\BasisSetController.cs" />
     <Compile Include="Controllers\CardInfoController.cs" />
+    <Compile Include="Controllers\CenterController.cs" />
     <Compile Include="Controllers\CharacterController.cs" />
     <Compile Include="Controllers\ClassifyController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
@@ -403,6 +404,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jqueryMobileDialog\jquery.mobile.simpledialog.min.css" />
+    <Content Include="Scripts\jqueryMobileDialog\jquery.mobile.simpledialog2.min.js" />
     <Content Include="Scripts\JqueryMobile\images\ajax-loader.gif" />
     <Content Include="Scripts\JqueryMobile\images\icons-18-black.png" />
     <Content Include="Scripts\JqueryMobile\images\icons-18-white.png" />
@@ -474,6 +477,7 @@
     <Content Include="Scripts\MediaElement\mediaelementplayer.min.js" />
     <Content Include="Scripts\MediaElement\mejs-skins.css" />
     <Content Include="Scripts\MediaElement\silverlightmediaelement.xap" />
+    <Content Include="Scripts\microsite.js" />
     <Content Include="Scripts\mobiscroll\css\mobiscroll.custom-2.6.2.min.css" />
     <Content Include="Scripts\mobiscroll\css\wp_icons.png" />
     <Content Include="Scripts\mobiscroll\css\wp_icons_light.png" />
@@ -1022,6 +1026,9 @@
     <Content Include="Views\Panorama\Index.cshtml" />
     <Content Include="Views\Panorama\Add.cshtml" />
     <Content Include="Views\MicroMall\OrderConfirmation.cshtml" />
+    <Content Include="Views\Center\Login.cshtml" />
+    <Content Include="Views\Center\Register.cshtml" />
+    <Content Include="Views\Center\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

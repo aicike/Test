@@ -12,7 +12,7 @@ namespace MicroSite_Web.Controllers
 {
     public class MicroNewController : UserBaseController
     {
-        public ActionResult Index(int AMID,int ID, int ListCnt)
+        public ActionResult Index(int AMID, int ID, int ListCnt)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             var list = AppAdvertorialModel.GetList(AMID, (int)EnumAdvertorialUType.UserEnd);
@@ -57,7 +57,14 @@ namespace MicroSite_Web.Controllers
             }
             ViewBag.TitleShow = TitleShow;
             ViewBag.ListShow = ListShow;
-            ViewBag.LastID = ListShow.LastOrDefault().I;
+            if (ListShow.Count > 0)
+            {
+                ViewBag.LastID = ListShow.LastOrDefault().I;
+            }
+            else
+            {
+                ViewBag.LastID = 0;
+            }
             return View();
         }
 
@@ -108,7 +115,8 @@ namespace MicroSite_Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(jsonStr);
         }
 
-        public ActionResult View(int id) {
+        public ActionResult View(int id)
+        {
             ViewBag.ID = id;
             return View();
         }

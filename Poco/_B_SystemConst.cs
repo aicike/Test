@@ -12,6 +12,11 @@ namespace Poco
         public static string WebTitleRemark = System.Configuration.ConfigurationManager.AppSettings["WebTitle"];
         public static string MicroSiteHostName = System.Configuration.ConfigurationManager.AppSettings["HostName"];
 
+        /// <summary>
+        /// 微网站是否集成web项目
+        /// </summary>
+        public static bool IsIntegrationWebProject = System.Configuration.ConfigurationManager.AppSettings["IsIntegrationWebProject"] == "true" ? true : false;
+
         public class Business
         {
             private Business() { }
