@@ -4,6 +4,8 @@
 }
 @section head{
     <script type="text/javascript">
+         var color= ["#66CDAA","#AB82FF","#5CACEE","#EEB422","#FF8247"];
+         var colorIndex=0;
         $(function () {
             $('.BlocksIt').BlocksIt({
                 numOfCol: 1,
@@ -12,18 +14,29 @@
 
             });
 
+            //控制颜色
+            $(".MainTab").each(function(){
+                $(this).attr("style","background-color:"+color[colorIndex]);
+                colorIndex=colorIndex+1;
+                if(colorIndex>4)
+                {
+                colorIndex=0;
+                }
+            });
+
 
         });
 
 
         function OpenUrl(ID) {
-            var Url = "@Url.Action("ProductList", "MicroMall")";
-            var Href = Url+"?TypeID=" + ID;
+            var Url = "@Url.Action("ProductList", "MicroMall",new{AccountMainID = ViewBag.AMID})";
+            var Href = Url+"&TypeID=" + ID;
             window.location.href = Href;
 
         }
 
-        var color= ["#66CDAA","#AB82FF","#5CACEE","#EEB422","#FF8247"];
+       
+
 
        
     </script>
@@ -91,30 +104,55 @@
         }
     </style>
 }
-@model IQueryable<Poco.Classify>
+@model List<Poco.Classify>
 <div data-role="content">
     <div class="BlocksIt">
-        
-        <div class="grid">
-            <table class="MainTab" cellpadding="0" cellspacing="0" onclick="OpenUrl(1)">
-                <tr style="background-color: #66CDAA">
-                    <td style="width: 30%;">
-                        <div class="TitDIVLeft">
-                            新鲜水果
-                        </div>
-                        <div class="RemDIVLeft">
-                            好吃新鲜
-                        </div>
-                    </td>
-                    <td style="width: 70%;">
-                        <div class="ImgDIV">
-                            <img class="ShowImg" src="Images/366585.jpg" />
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            <div class="grid">
+                <table  class="MainTab" cellpadding="0" cellspacing="0" onclick="OpenUrl(@Model[i].ID)">
+                    <tr>
+                        <td style="width: 30%;">
+                            <div class="TitDIVLeft">
+                                @Model[i].Name
+                            </div>
+                            <div class="RemDIVLeft">
+                            @Model[i].Depict
+                            </div>
+                        </td>
+                        <td style="width: 70%;">
+                            <div class="ImgDIV">
+                                <img class="ShowImg" src="@Url.Content(Model[i].ImgPath)" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            i++;
+            if (i < Model.Count())
+            { 
+            <div class="grid">
+                <table class="MainTab" cellpadding="0" cellspacing="0" onclick="OpenUrl(@Model[i].ID)">
+                    <tr>
+                        <td style="width: 70%;">
+                            <div class="ImgDIV">
+                                <img class="ShowImg" src="@Url.Content(Model[i].ImgPath)" />
+                            </div>
+                        </td>
+                        <td style="width: 30%;">
+                            <div class="TitDIVLeft">
+                                @Model[i].Name
+                            </div>
+                            <div class="RemDIVLeft">
+                            @Model[i].Depict
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            }
 
-
+        }
     </div>
 </div>

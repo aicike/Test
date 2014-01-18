@@ -18,5 +18,20 @@ namespace Interface
 
         Result DeleteInfo(int id,int AccountMainID);
 
+        /// <summary>
+        /// 根据分类ID 获取包含其子分类的所有产品
+        /// </summary>
+        /// <param name="TypeID"></param>
+        /// <param name="AccountMainID"></param>
+        /// <returns></returns>
+        IQueryable<Product> GetListByTypeID(int TypeID,int AccountMainID);
+
+        /// <summary>
+        /// 获取产品信息
+        /// </summary>
+        /// <param name="PID"></param>
+        /// <param name="AccountMainID"></param>
+        /// <returns></returns>
+        Product GetProduct(int PID, int AccountMainID);
     }
 }

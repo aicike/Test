@@ -3,8 +3,7 @@
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
 }
 @section head{
-
-  <script src="@Url.Content("~/Scripts/waterfall/jquery.infinitescroll.min.js")"
+    <script src="@Url.Content("~/Scripts/waterfall/jquery.infinitescroll.min.js")"
         type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/waterfall/jquery.masonry.js")" type="text/javascript"></script>
     <style type="text/css">
@@ -63,7 +62,7 @@
         }
         .item
         {
-            cursor:pointer;
+            cursor: pointer;
             width: 48%;
             min-height: 150px;
             background: #fff;
@@ -219,12 +218,12 @@
                 nextSelector: "#more a",
                 itemSelector: ".item",
                 animate: false,
-                maxPage: 3,
+                maxPage: @ViewBag.pageCount,
                 loading: {
                     img: "/Images/Loading.gif",
                     finished: function () {
                         sp++;
-                        if (sp > 3) {
+                        if (sp > @ViewBag.pageCount) {
                             $("#infscr-loading").hide();
                             $(".loadOK").show();
                         }
@@ -243,87 +242,77 @@
                 return;
             });
 
+
         });
 
 
 
         function OpenUrl(ID) {
-            var Url = "@Url.Action("ProductInfo", "MicroMall")";
-            var href = Url+"?PID=" + ID;
+            var Url = "@Url.Action("ProductInfo", "MicroMall",new{AccountMainID = ViewBag.AMID})";
+            var href = Url+"&PID=" + ID;
             window.location.href = href;
 
         }
     </script>
-
-
 }
- <div class="demo clearfix">
-        <div class="titleDiv">
-            水果 新鲜</div>
-        <div class="item_list infinite_scroll">
-            <div class="item masonry_brick" onclick="OpenUrl(1)">
+@model PagedList<Poco.Product>
+<div class="demo clearfix">
+    <div class="titleDiv">
+        @ViewBag.CName </div>
+    <div class="item_list infinite_scroll">
+        @foreach (var item in Model)
+        {
+            <div class="item masonry_brick" onclick="OpenUrl(@item.ID)">
                 <div class="item_t">
                     <div class="imgDiv">
                         <a href="#">
-                            <img class="imgs" src="" />
+                        @if (item.ProductImg.FirstOrDefault() != null)
+                        {
+                            if (string.IsNullOrEmpty(item.ProductImg.FirstOrDefault().PImgOriginal))
+                            { 
+                            <img class="imgs" src="@Url.Content("~/Images/nopicture.png")" />
+                            }
+                            else
+                            { 
+                                 <img class="imgs" src="@Url.Content(item.ProductImg.FirstOrDefault().PImgOriginal)" />
+                            }
+                        }
+                        else
+                        { 
+                            <img class="imgs" src="@Url.Content("~/Images/nopicture.png")" />
+                        }
+                        
                         </a>
                     </div>
                     <div class="title">
-                        <span>鼠标滑过动画航特效鼠标滑过动画标滑过动画航特效鼠标滑过动航特效鼠标滑过动画</span>
+                        <span>@item.Name</span>
                     </div>
                     <div class="bottom">
-                        ￥17.12
+                        ￥@item.Price
                     </div>
                 </div>
             </div>
             <!--item end-->
-            <div class="item masonry_brick">
-                <div class="item_t">
-                    <div class="imgDiv">
-                        <a href="#">
-                            <img class="imgs" src="" /></a>
-                    </div>
-                    <div class="title">
-                        <span>作动画导航特效</span></div>
-                    <div class="bottom">
-                        ￥17.12
-                    </div>
-                </div>
-            </div>
-            <!--item end-->
-            <div class="item masonry_brick">
-                <div class="item_t">
-                    <div class="imgDiv">
-                        <a href="#">
-                            <img class="imgs" src="" /></a>
-                    </div>
-                    <div class="title">
-                        <span>用div+css制作一个CSS3的简约图标导航菜单</span></div>
-                    <div class="bottom">
-                        ￥17.12
-                    </div>
-                </div>
-            </div>
-            <!--item end-->
-        </div>
-        <div id="more">
-            <a href="ProductListItem?page=1"></a>
-        </div>
+        }
     </div>
-    <div class="loadOK" style="display: none;">
-        全部加载完成
+    <div id="more">
+        <a href="ProductListItem?TypeID=@ViewBag.TypeID&AccountMainID=@ViewBag.AMID&page=1"></a>
     </div>
-    <div style="display: none;" id="gotopbtn" class="to_top">
-        <a title="返回顶部" href="javascript:void(0);"></a>
-    </div>
-    <script type="text/javascript">
-        $(function () {
+</div>
+<div class="loadOK" style="display: none;">
+    全部加载完成
+</div>
+<div style="display: none;" id="gotopbtn" class="to_top">
+    <a title="返回顶部" href="javascript:void(0);"></a>
+</div>
+<script type="text/javascript">
+    $(function () {
 
-            $(window).scroll(function () {
-                $(window).scrollTop() > 1000 ? $("#gotopbtn").css('display', '').click(function () {
-                    $(window).scrollTop(0);
-                }) : $("#gotopbtn").css('display', 'none');
-            });
-
+        $(window).scroll(function () {
+            $(window).scrollTop() > 1000 ? $("#gotopbtn").css('display', '').click(function () {
+                $(window).scrollTop(0);
+            }) : $("#gotopbtn").css('display', 'none');
         });
-    </script>
+
+    });
+</script>

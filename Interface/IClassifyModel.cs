@@ -12,11 +12,13 @@ namespace Interface
 
         IQueryable<Classify> GetLastClass(int ParentID, int AccountMainID,int NoID);
 
-        int AddClass(int PID, int Level, int AccountMainID, string Name,string imgpath1);
+        //添加分类
+        Result AddClass(Classify classify);
 
         IQueryable<Classify> GetClassByPID(int PID);
 
-        int UpdClass(int PID, int ID, string Name, int AccountMainID, string imgpath2);
+        //修改分类
+        Result UpdClass(Classify classify);
 
         bool GetIsMainNode(int ID);
 
@@ -30,5 +32,12 @@ namespace Interface
         /// <param name="AccountMainID"></param>
         /// <returns></returns>
         IQueryable<Classify> GetOneLevel(int AccountMainID);
+
+        /// <summary>
+        /// 根据ID获取该类别下的所有子ID(递归)
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        string GetTypeSUBID(int ID, int AccountMainID);
     }
 }

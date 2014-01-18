@@ -3,41 +3,38 @@
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
 }
 @section head{
-
-
-
 }
-
- <div class="item masonry_brick">
+@model PagedList<Poco.Product>
+@foreach (var item in Model)
+{
+    <div class="item masonry_brick" onclick="OpenUrl(@item.ID)">
         <div class="item_t">
             <div class="imgDiv">
                 <a href="#">
-                    <img class="imgs"  src="" />
-               
-                 </a>
+                    @if (item.ProductImg.FirstOrDefault() != null)
+                    {
+                        if (string.IsNullOrEmpty(item.ProductImg.FirstOrDefault().PImgOriginal))
+                        { 
+                        <img class="imgs" src="@Url.Content("~/Images/nopicture.png")" />
+                        }
+                        else
+                        { 
+                        <img class="imgs" src="@Url.Content(item.ProductImg.FirstOrDefault().PImgOriginal)" />
+                        }
+                    }
+                    else
+                    { 
+                        <img class="imgs" src="@Url.Content("~/Images/nopicture.png")" />
+                    }
+                </a>
             </div>
             <div class="title">
-                <span>用div+css制作一个CSS3的简约图标导航菜单</span></div>
+                <span>@item.Name</span>
+            </div>
             <div class="bottom">
-                ￥17.12
+                ￥@item.Price
             </div>
         </div>
     </div>
     <!--item end-->
-
-     <div class="item masonry_brick">
-        <div class="item_t">
-            <div class="imgDiv">
-                <a href="#">
-                    <img class="imgs"  src="" />
-               
-                 </a>
-            </div>
-            <div class="title">
-                <span>用div+css制作一个CSS3的简约图标导航菜单</span></div>
-            <div class="bottom">
-                ￥17.12
-            </div>
-        </div>
-    </div>
-    <!--item end-->
+}

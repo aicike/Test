@@ -29,6 +29,13 @@ namespace Poco
         [StringLength(20, ErrorMessage = "长度小于20")]
         public string Name { get; set; }
 
+        /// <summary>
+        /// 类别描述
+        /// </summary>
+        [Display(Name = "类别描述")]
+        [StringLength(20, ErrorMessage = "长度小于20")]
+        public string Depict { get; set; }
+
 
         /// <summary>
         /// 类别图片
@@ -37,7 +44,7 @@ namespace Poco
         public string ImgPath { get; set; }
 
         /// <summary>
-        /// 上级ID 0为一级分类
+        /// 上级ID 0为顶级分类
         /// </summary>
         public int ParentID { get; set; }
 

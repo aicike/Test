@@ -146,6 +146,7 @@
     <Compile Include="WebAPI_Poco\App_Voice.cs" />
     <Compile Include="WebAPI_Poco\App_Video.cs" />
     <Compile Include="_B_Advertorial.cs" />
+    <Compile Include="_B_Classify.cs" />
     <Compile Include="_B_Option.cs" />
     <Compile Include="_B_SurveyMain.cs" />
     <Compile Include="_B_SurveyScore.cs" />

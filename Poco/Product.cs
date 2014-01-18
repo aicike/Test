@@ -18,7 +18,7 @@ namespace Poco
         
         [Display(Name = "品名")]
         [Required(ErrorMessage = "请输入品名")]
-        [StringLength(30, ErrorMessage = "长度小于30")]
+        [StringLength(100, ErrorMessage = "长度小于100")]
         public string Name { get; set; }
 
         [Display(Name = "规格")]

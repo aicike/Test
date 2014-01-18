@@ -93,5 +93,8 @@ namespace Poco
         public virtual ICollection<VIPInfo> VIPInfo { get; set; }
 
         public virtual ICollection<VIPInfoExpenseDetail> VIPInfoExpenseDetails { get; set; }
+
+        public virtual ICollection<UserDeliveryAddress> UserDeliveryAddress { get; set; }
+        
     }
 }
