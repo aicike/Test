@@ -280,6 +280,7 @@
     <Content Include="Images\logo2.jpg" />
     <Content Include="Images\Logo_144.png" />
     <Content Include="Images\m1.png" />
+    <Content Include="Images\nopicture.png" />
     <Content Include="Images\nopicture_icon.png" />
     <Content Include="Images\orderedList0.png" />
     <Content Include="Images\orderedList1.png" />
@@ -544,7 +545,7 @@
     <Content Include="Scripts\uploadify\uploadify-cancel.png" />
     <Content Include="Scripts\uploadify\uploadify.css" />
     <Content Include="Scripts\uploadify\uploadify.swf" />
-    <Content Include="Scripts\waterfall\jquery.infinitescroll.js" />
+    <Content Include="Scripts\waterfall\jquery.infinitescroll.min.js" />
     <Content Include="Scripts\waterfall\jquery.masonry.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="ueditor\dialogs\image\image.css" />
@@ -1049,11 +1050,9 @@
           <DevelopmentServerPort>15492</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://192.168.1.138:8080</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://192.168.1.138:8080</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>True</UseCustomServer>
-          <CustomServerUrl>http://192.168.1.166:8080</CustomServerUrl>
+          <CustomServerUrl>http://192.168.1.138:8080</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

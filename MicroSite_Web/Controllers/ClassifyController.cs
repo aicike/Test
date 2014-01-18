@@ -22,7 +22,7 @@ namespace Web.Controllers
             string TreeStr = "";
             foreach (var item in classify)
             {
-                TreeStr += string.Format("<li><a id='{0}' onclick=\"ckSet({0},{3},'{4}',{5})\" >{1}</a>{2}</li>", item.ID, item.Name, GetLastClass(item.ID), item.Level, item.Name, item.ParentID);
+                TreeStr += string.Format("<li><a id='{0}' onclick=\"ckSet({0},{3})\" >{1}</a>{2}</li>", item.ID, item.Name, GetLastClass(item.ID), item.ParentID);
             }
             ViewBag.TreeView = TreeStr;
             ViewBag.HostName = LoginAccount.HostName;
@@ -41,7 +41,7 @@ namespace Web.Controllers
             string TreeStr = "<ul>";
             foreach (var item in classify)
             {
-                TreeStr += string.Format("<li><a id='{0}' onclick=\"ckSet({0},{3},'{4}',{5})\" >{1}</a>{2}</li>", item.ID, item.Name, GetLastClass(item.ID), item.Level, item.Name, item.ParentID);
+                TreeStr += string.Format("<li><a id='{0}' onclick=\"ckSet({0},{3})\" >{1}</a>{2}</li>", item.ID, item.Name, GetLastClass(item.ID), item.ParentID);
             }
             TreeStr += "</ul>";
             if (classify.Count() <= 0)
@@ -53,17 +53,37 @@ namespace Web.Controllers
 
         //
 
-        public ActionResult Add(int PID, int Level, string AddCname, string imgpath1)
+        public ActionResult Add(int PID, string AddCname, string AddDepict, string imgpath1)
         {
             var classModel = Factory.Get<IClassifyModel>(SystemConst.IOC_Model.ClassifyModle);
-            var cnt = classModel.AddClass(PID, Level, LoginAccount.CurrentAccountMainID, AddCname,imgpath1);
+            Classify cl = new Classify();
+            cl.ParentID = PID;
+            cl.AccountMainID = LoginAccount.CurrentAccountMainID;
+            cl.Level = 0;
+            cl.Name = AddCname;
+            cl.Depict = AddDepict;
+            cl.ImgPath = imgpath1;
+            cl.Sort = 0;
+            cl.Subordinate = "0";
+
+            var cnt = classModel.AddClass(cl);
             return RedirectToAction("Index", "Classify", new { HostName = LoginAccount.HostName });
         }
 
-        public ActionResult Edit(int CID, string EditCname, int PID, string imgpath2)
+        public ActionResult Edit(int CID, string EditCname, string EditDepict, int PID, string imgpath2)
         {
             var classModel = Factory.Get<IClassifyModel>(SystemConst.IOC_Model.ClassifyModle);
-            var cnt = classModel.UpdClass(PID, CID, EditCname, LoginAccount.CurrentAccountMainID, imgpath2);
+            Classify cl = new Classify();
+            cl.ID = CID;
+            cl.ParentID = PID;
+            cl.AccountMainID = LoginAccount.CurrentAccountMainID;
+            cl.Level = 0;
+            cl.Name = EditCname;
+            cl.Depict = EditDepict;
+            cl.ImgPath = imgpath2;
+            cl.Sort = 0;
+            cl.Subordinate = "0";
+            var cnt = classModel.UpdClass(cl);
 
             return RedirectToAction("Index", "Classify", new { HostName = LoginAccount.HostName });
         }
@@ -75,7 +95,7 @@ namespace Web.Controllers
             {
                 if (CkDelete(CID))
                 {
-                    Result result =classModel.CompleteDelete(CID);
+                    Result result = classModel.CompleteDelete(CID);
                     if (result.HasError)
                     {
                         return Alert(new Dialog("此节点 已被引用 不能删除"));
@@ -122,19 +142,44 @@ namespace Web.Controllers
         }
 
 
-
+        /// <summary>
+        /// AJAX 获取选中分类信息
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowCheckPermissions(false)]
-        public string GetPname(int pid)
+        public string GetPname(int ID, int pid)
         {
-            string str = "此节点为顶级节点";
+            _B_Classify bcf = new _B_Classify();
             var classModel = Factory.Get<IClassifyModel>(SystemConst.IOC_Model.ClassifyModle);
-            var classify = classModel.Get(pid);
-            if (classify != null)
+
+            if (pid == 0)
             {
-                str = classify.Name;
+                bcf.ParentName = "此节点为顶级节点";
             }
-            return str;
+            else
+            {
+                var Pclassify = classModel.Get(pid);
+                bcf.ParentName = Pclassify.Name;
+            }
+            var classify = classModel.Get(ID);
+            bcf.ParentID = pid;
+            bcf.ID = ID;
+            bcf.Name = classify.Name;
+            bcf.Sort = classify.Sort;
+            bcf.Depict = classify.Depict;
+            if (string.IsNullOrEmpty(classify.ImgPath))
+            {
+                bcf.ImgFIlePath = Url.Content("~/Images/nopicture.png");
+                bcf.ImgPath = "";
+            }
+            else
+            {
+                bcf.ImgFIlePath = Url.Content(classify.ImgPath);
+                bcf.ImgPath = classify.ImgPath;
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(bcf);
         }
 
         [HttpPost]

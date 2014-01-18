@@ -53,20 +53,42 @@ namespace Web.Controllers
 
         //
 
-        public ActionResult Add(int PID, int Level, string AddCname, string imgpath1)
+
+        public ActionResult Add(int PID, int Level, string AddCname, string AddDepict, string imgpath1)
         {
             var classModel = Factory.Get<IClassifyModel>(SystemConst.IOC_Model.ClassifyModle);
-            var cnt = classModel.AddClass(PID, Level, LoginAccount.CurrentAccountMainID, AddCname, imgpath1);
+            Classify cl = new Classify();
+            cl.ParentID = PID;
+            cl.AccountMainID = LoginAccount.CurrentAccountMainID;
+            cl.Level = 0;
+            cl.Name = AddCname;
+            cl.Depict = AddDepict;
+            cl.ImgPath = imgpath1;
+            cl.Sort = 0;
+            cl.Subordinate = "0";
+
+            var cnt = classModel.AddClass(cl);
             return RedirectToAction("Index", "Classify", new { HostName = LoginAccount.HostName });
         }
 
-        public ActionResult Edit(int CID, string EditCname, int PID, string imgpath2)
+        public ActionResult Edit(int CID, string EditCname, string EditDepict, int PID, string imgpath2)
         {
             var classModel = Factory.Get<IClassifyModel>(SystemConst.IOC_Model.ClassifyModle);
-            var cnt = classModel.UpdClass(PID, CID, EditCname, LoginAccount.CurrentAccountMainID, imgpath2);
+            Classify cl = new Classify();
+            cl.ID = CID;
+            cl.ParentID = PID;
+            cl.AccountMainID = LoginAccount.CurrentAccountMainID;
+            cl.Level = 0;
+            cl.Name = EditCname;
+            cl.Depict = EditDepict;
+            cl.ImgPath = imgpath2;
+            cl.Sort = 0;
+            cl.Subordinate = "0";
+            var cnt = classModel.UpdClass(cl);
 
             return RedirectToAction("Index", "Classify", new { HostName = LoginAccount.HostName });
         }
+
 
         public ActionResult Delete(int CID)
         {

@@ -97,10 +97,25 @@
             transform: scale(1);
         }
         
-        .spanSize >span>span
+        .spanSize > span > span
         {
-            font-size:13px;
-            }
+            font-size: 13px;
+        }
+        
+        .divIntroduction
+        {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #7B7B7B;
+        }
+        .divIntroduction img
+        {
+            max-width:100%
+        }
+        .divIntroduction p
+        {
+            margin:0px;
+        }
     </style>
     <script>
         $(function () {
@@ -143,22 +158,37 @@
         });
     </script>
 }
+@model Poco.Product
 <form runat="server">
 <div id="royalSlider" class="visibleNearby" style="background-color: #3C3C3C">
     <!-- simple image slide -->
-    <img src="~/Images/item_line.png" />
+    @if (Model.ProductImg.FirstOrDefault() != null)
+    {
+        foreach (var item in Model.ProductImg)
+        {
+            if (!string.IsNullOrEmpty(item.PImgOriginal))
+            { 
+        <img class="imgs" src="@Url.Content(item.PImgOriginal)" />
+            }
+        }
+
+    }
+    else
+    { 
+        <img class="imgs" src="@Url.Content("~/Images/nopicture.png")" />
+    }
     <!-- lazy loaded image slide -->
     <!--<a class="rsImg" href="image.jpg">image desc</a>-->
 </div>
 <div style="width: 95%; margin: 25px auto;">
     <div style="line-height: 25px">
-        MIUI/小米 2S(MI2S)小米2S(32G)小米手机官网正品2s手机 标准版
+        @Model.Name
     </div>
     <div style="margin-top: 10px;">
-        价格：<span style="color: Red; font-weight: bold">￥177.00</span>
+        价格：<span style="color: Red; font-weight: bold">￥@Model.Price</span>
     </div>
     <div style="margin-top: 5px; font-size: 12px; color: #8E8E8E">
-        运费：快递￥177.00
+        运费：快递￥@Model.Price
     </div>
     <div style="margin: 15px 0px; height: 3px; width: 100%; background: url(@Url.Content("~/Images/item_line.png")) repeat-x;">
     </div>
@@ -193,11 +223,11 @@
                     <div class="ui-corner-all" id="popupDialog" style="width: 300px" data-role="popup"
                         data-overlay-theme="a" data-theme="c" data-dismissible="false">
                         <div class="ui-corner-bottom ui-content" data-role="content" data-theme="a">
-                            <div style="min-height: 50px; text-align: center; margin-top:20px">
+                            <div style="min-height: 50px; text-align: center; margin-top: 20px">
                                 已成功加入购物车
                             </div>
-                            <a href="#" data-role="button" class="spanSize" style="width: 44%; font-weight: normal;" data-rel="back"
-                                data-theme="a" data-inline="true" data-corners="false">再逛逛</a> 
+                            <a href="#" data-role="button" class="spanSize" style="width: 44%; font-weight: normal;"
+                                data-rel="back" data-theme="a" data-inline="true" data-corners="false">再逛逛</a>
                             <a href="@Url.Action("ShoppingCart", "MicroMall")" class="spanSize" style="width: 44%;
                                 font-weight: normal;" data-role="button" data-transition="flow" data-theme="a"
                                     data-inline="true" data-corners="false">去购物车结算</a>
@@ -217,8 +247,8 @@
     <div style="">
         商品详情
     </div>
-    <div style="margin-top: 5px; font-size: 14px; color: #7B7B7B; line-height: 20px">
-        商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情
+    <div class="divIntroduction">
+        @Html.Raw(Model.Introduction)
     </div>
 </div>
 </form>

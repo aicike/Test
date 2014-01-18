@@ -66,9 +66,9 @@
     <Compile Include="Mapping\UserMap.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Migrations\201401170158553_Initial.cs" />
-    <Compile Include="Migrations\201401170158553_Initial.Designer.cs">
-      <DependentUpon>201401170158553_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201401180858456_Initial.cs" />
+    <Compile Include="Migrations\201401180858456_Initial.Designer.cs">
+      <DependentUpon>201401180858456_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context.cs">
@@ -95,8 +95,8 @@
     <Content Include="InitialProvince.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201401170158553_Initial.resx">
-      <DependentUpon>201401170158553_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201401180858456_Initial.resx">
+      <DependentUpon>201401180858456_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -15,6 +15,8 @@ namespace Poco
         public int AccountMainID { get; set; }
         public virtual AccountMain AccountMain { get; set; }
 
+        public int UserID { get; set; }
+        public virtual User User { get; set; }
 
         /// <summary>
         /// 省份

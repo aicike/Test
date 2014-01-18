@@ -86,10 +86,12 @@
 
         });
 
-        function ckAdd()
+          function ckAdd()
         {
             
             var name = $("#AddCname").val();
+            var Depict = $("#AddDepict").val();
+
             if(name!=""&&name!=undefined)
             {
                 if($.trim(name)=="")
@@ -99,10 +101,16 @@
                             DialogType: "Ok",
                             BtnOk: "确定"
                       }); 
+                      return false;
                 }
-                else
+                else if($.trim(name).length>20)
                 {
-                    $("#btnAdd").click();
+                      JAlert({
+                            Message: "分类名称只能输入20个字符",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                      }); 
+                      return false;
                 }
             }
             else
@@ -112,36 +120,77 @@
                         DialogType: "Ok",
                         BtnOk: "确定"
                   }); 
+                  return false;
+            }
+            if(Depict!=""&&Depict!=undefined)
+            {
+                 if($.trim(Depict).length>20)
+                {
+                      JAlert({
+                            Message: "分类描述/备注只能输入20个字符",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                      }); 
+                      return false;
+                }
+               
             }
            
+            $("#btnAdd").click();
+              
         }
         function ckEdit()
         {
+
             var name = $("#EditCname").val();
-            
+            var Depict = $("#EditDepict").val();
+
             if(name!=""&&name!=undefined)
             {
                 if($.trim(name)=="")
                 {
-                    JAlert({
-                            Message: "分类名称不能为空",
+                     JAlert({
+                            Message: "请输入分类名称",
                             DialogType: "Ok",
                             BtnOk: "确定"
-                     }); 
+                      }); 
+                      return false;
                 }
-                else
+                else if($.trim(name).length>20)
                 {
-                    $("#btnEdit").click();
+                      JAlert({
+                            Message: "分类名称只能输入20个字符",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                      }); 
+                      return false;
                 }
             }
             else
             {
-                JAlert({
-                        Message: "分类名称不能为空",
+                  JAlert({
+                        Message: "请输入分类名称",
                         DialogType: "Ok",
                         BtnOk: "确定"
-                 }); 
-             }   
+                  }); 
+                  return false;
+            }
+            if(Depict!=""&&Depict!=undefined)
+            {
+                 if($.trim(Depict).length>20)
+                {
+                      JAlert({
+                            Message: "分类描述/备注只能输入20个字符",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                      }); 
+                      return false;
+                }
+               
+            }
+
+
+             $("#btnEdit").click();
             
         }
         function ckDelete()
@@ -314,6 +363,14 @@
                                 <input id="AddCname" name="AddCname" type="text" />
                             </td>
                         </tr>
+                          <tr>
+                            <td style="width: 100px">
+                                描述/备注：
+                            </td>
+                            <td>
+                                <input id="AddDepict" name="AddDepict" type="text" />
+                            </td>
+                        </tr>
                         <tr>
                             <td rowspan="2" style="width: 100px">
                                 图片：
@@ -352,6 +409,14 @@
                             <td>
                                 <input id="CEditID" name="CID" type="text" style="display: none" />
                                 <input id="EditCname" name="EditCname" type="text" />
+                            </td>
+                        </tr>
+                          <tr>
+                            <td style="width: 100px">
+                                描述/备注：
+                            </td>
+                            <td>
+                                <input id="EditDepict" name="EditDepict" type="text" />
                             </td>
                         </tr>
                         <tr>

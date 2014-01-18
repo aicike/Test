@@ -20,6 +20,18 @@ namespace Business
             return ProductList;
         }
 
+        /// <summary>
+        /// 获取产品信息
+        /// </summary>
+        /// <param name="PID"></param>
+        /// <param name="AccountMainID"></param>
+        /// <returns></returns>
+        public Product GetProduct(int PID, int AccountMainID)
+        {
+            var product = List().Where(a=>a.ID==PID&a.AccountMainID==AccountMainID).FirstOrDefault();
+            return product;
+        }
+
         [Transaction]
         public Result AddInfo(Product product, System.Web.HttpPostedFileBase HousTypeImagePathFile)
         {
@@ -115,6 +127,30 @@ namespace Business
                
             }
             return result;
+        }
+
+
+        /// <summary>
+        /// 根据分类ID 获取包含其子分类的所有产品
+        /// </summary>
+        /// <param name="TypeID"></param>
+        /// <param name="AccountMainID"></param>
+        /// <returns></returns>
+        public IQueryable<Product> GetListByTypeID(int TypeID, int AccountMainID)
+        {
+            var classifyModel = Factory.Get<IClassifyModel>(SystemConst.IOC_Model.ClassifyModle);
+            string TypeIDS = TypeID+","+classifyModel.GetTypeSUBID(TypeID, AccountMainID);
+            if(TypeIDS!="")
+            {
+
+                int []types = TypeIDS.ConvertToIntArray(',');
+                var list = List().Where(a => types.Contains(a.ClassifyID));
+                return list;
+            }
+            else
+            {
+               return null;
+            }
         }
     }
 }

@@ -44,15 +44,16 @@
 </head>
 <body>
     <div data-role="page" class="myPage">
-        <div data-role="header" data-position="fixed" data-tap-toggle="false" class="ui-header ui-header-fixed ui-bar-b">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false" class="ui-header ui-header-fixed ui-bar-c">
             <div data-role="navbar">
                 <ul>
-                    <li><a href="@Url.Action("Index", "Default")" data-icon="grid" class="menu0">首页</a></li>
-                    <li><a href="/Home.aspx" data-icon="grid" class="menu1">户型介绍</a></li>
-                    <li><a href="/Shop.aspx" data-icon="star" data-ajax="false" class="menu2">商城</a></li>
-                    <li><a href="@Url.Action("Index", "Center", new { amid = MicroSite_Web.Controllers.UserBaseController.GetAccountMainID()})" data-icon="gear" class="menu3"data-ajax="false">
+                    <li><a href="@Url.Action("Index","Default")" class="menu0">首页</a></li>
+                    @*<li><a href="/Home.aspx" data-icon="grid" class="menu1">户型介绍</a></li>*@
+                    <li><a href="@Url.Action("ShopIndex", "MicroMall", new { AccountMainID = MicroSite_Web.Controllers.UserBaseController.GetAccountMainID() })"  data-ajax="false" class="menu2">商城</a></li>
+                    @*<li><a href="Url.Action("Index", "Center", new { amid = MicroSite_Web.Controllers.UserBaseController.GetAccountMainID()})"  class="menu3">个人中心</a></li>
                         个人中心</a></li>
-                    <li><a href="#" data-icon="arrow-l" id="menu4">购物车</a></li>
+                    <li><a href="#" data-icon="arrow-l" id="menu4">购物车</a></li>*@
+                    <li><a href="/Center.aspx" class="menu3">关于我们</a></li>
                 </ul>
             </div>
         </div>
@@ -60,8 +61,8 @@
         @RenderBody()
         <div id="alert">
         </div>
-        <div data-role="footer"  data-theme="b">
-            底部
+        <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="c">
+           
         </div>
     </div>
 </body>
