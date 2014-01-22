@@ -64,7 +64,6 @@
         {
             cursor: pointer;
             width: 48%;
-            min-height: 150px;
             background: #fff;
             overflow: hidden;
             margin: 10px 0 0 0;
@@ -143,9 +142,8 @@
         }
         .imgs
         {
-            max-width: 100%;
-            min-width: 100%;
-            min-height:50px;
+            width: 100%;
+            min-height: 50px;
         }
         .titleDiv
         {
@@ -191,25 +189,23 @@
 
         $(function () {
 
-            function item_callback() {
+            function item_callback(){ 
+		
+		        $('.item').mouseover(function(){
+			        $(this).css('box-shadow', '0 1px 5px rgba(35,25,25,0.5)');
+			        $('.btns',this).show();
+		        }).mouseout(function(){
+			        $(this).css('box-shadow', '0 1px 3px rgba(34,25,25,0.2)');
+			        $('.btns',this).hide();		 	
+		        });
+		        item_masonry();	
 
-                $('.item').mouseover(function () {
-                    $(this).css('box-shadow', '0 1px 5px rgba(35,25,25,0.5)');
-                    $('.btns', this).show();
-                }).mouseout(function () {
-                    $(this).css('box-shadow', '0 1px 3px rgba(34,25,25,0.2)');
-                    $('.btns', this).hide();
-                });
+	        }
 
-               
-
-            }
-
-            item_callback();
-
+             item_callback() ;
+        
             $(window).resize(function () {
-                item_masonry();
-
+                item_callback() ;
             });
 
             $('.item').fadeIn();
@@ -227,8 +223,8 @@
                         if (sp > @ViewBag.pageCount) {
                             $("#infscr-loading").hide();
                             $(".loadOK").show();
+                            
                         }
-
                     }
                 },
                 errorCallback: function () {
@@ -243,15 +239,20 @@
                 return;
             });
 
-             item_masonry();
+              item_callback() ;
 
              $(window).resize();
+
+             $(window).bind("scroll", function(){ 
+                $(window).resize();
+            }); 
+           
         });
 
 
 
         function OpenUrl(ID) {
-            var Url = "@Url.Action("ProductInfo", "MicroMall",new{AMID = ViewBag.AMID})";
+            var Url = "@Url.Action("ProductInfo", "MicroMall", new { AMID = ViewBag.AMID })";
             var href = Url+"&PID=" + ID;
             window.location.href = href;
 
@@ -261,7 +262,8 @@
 @model PagedList<Poco.Product>
 <div class="demo clearfix">
     <div class="titleDiv">
-        @ViewBag.CName </div>
+        @ViewBag.CName
+    </div>
     <div class="item_list infinite_scroll">
         @foreach (var item in Model)
         {
@@ -269,22 +271,21 @@
                 <div class="item_t">
                     <div class="imgDiv">
                         <a href="#">
-                        @if (item.ProductImg.FirstOrDefault() != null)
-                        {
-                            if (string.IsNullOrEmpty(item.ProductImg.FirstOrDefault().PImgOriginal))
-                            { 
-                            <img class="imgs" src="@Url.Content("~/Images/nopicture.png")" />
+                            @if (item.ProductImg.FirstOrDefault() != null)
+                            {
+                                if (string.IsNullOrEmpty(item.ProductImg.FirstOrDefault().PImgOriginal))
+                                { 
+                                <img class="imgs" src="@Url.Content("~/Images/nopicture.png")" />
+                                }
+                                else
+                                { 
+                                <img class="imgs" src="@Url.Content(item.ProductImg.FirstOrDefault().PImgOriginal)" />
+                                }
                             }
                             else
                             { 
-                                 <img class="imgs" src="@Url.Content(item.ProductImg.FirstOrDefault().PImgOriginal)" />
+                                <img class="imgs" src="@Url.Content("~/Images/nopicture.png")" />
                             }
-                        }
-                        else
-                        { 
-                            <img class="imgs" src="@Url.Content("~/Images/nopicture.png")" />
-                        }
-                        
                         </a>
                     </div>
                     <div class="title">
