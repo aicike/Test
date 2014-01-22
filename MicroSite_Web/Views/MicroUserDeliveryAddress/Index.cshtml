@@ -2,40 +2,65 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
 }
-<div style="padding: 10px;">
-    <a href="@Url.Action("Add", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID, userID = ViewBag.UserID })" data-ajax="false" data-role="button" data-corners="false">新增收货地址</a>
-    <div style="background-color: White; border: 1px solid #ccc; font-size: 14px;margin-top:10px;">
-        <div style="padding: 5px 15px 5px 15px;">
-            <p style="margin: 5px 0px">
-                武双琦（13474137783）</p>
-            <p style="margin: 5px 0px">
-                陕西西安市新城区动漫产业园4号楼</p>
-        </div>
-        <div style="border-top: 1px solid #ccc;">
-            <div style="float: left; width: 49%; text-align: center; padding-top: 8px; padding-bottom: 8px;
-                border-right: 1px solid #ccc;">
-                修改</div>
-            <div style="float: left; width: 50%; text-align: center; padding-top: 8px; padding-bottom: 8px">
-                删除</div>
-            <div style="clear: both">
+@model List<Poco.UserDeliveryAddress>
+<div style="padding: 18px;">
+    <a href="@Url.Action("Add", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID, userID = ViewBag.UserID })" data-ajax="false" data-role="button" data-corners="false">
+        新增收货地址</a>
+    @foreach (var item in Model)
+    {
+        <div style="background-color: White; border: 1px solid #ccc; font-size: 15px; margin-top: 10px;">
+            <div style="padding: 8px 18px 8px 18px;">
+                <p style="margin: 5px 0px">
+                    @item.Receiver（@item.RPhone）</p>
+                <p style="margin: 5px 0px">
+                    @item.Address</p>
+            </div>
+            <div style="border-top: 1px solid #ccc;">
+                <div style="float: left; width: 49%; text-align: center; padding-top: 8px; padding-bottom: 8px;
+                    border-right: 1px solid #ccc; color: #7D7D7D">
+                    <a href="@Url.Action("Edit", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID, userID = ViewBag.UserID, udaID = item.ID })" data-ajax="false" >
+                        修改</a></div>
+                <div style="float: left; width: 50%; text-align: center; padding-top: 8px; padding-bottom: 8px;
+                    color: #7D7D7D">
+                    <a href="#popupDialog" data-rel="popup" data-position-to="window" data-inline="true"
+                        data-transition="pop" data-icon="delete" data-theme="b">删除</a>
+                    <div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="c" data-dismissible="false"
+                        style="max-width: 400px;" class="ui-corner-all">
+                        <div data-role="header" data-theme="a" class="ui-corner-top">
+                            <h1>
+                                消息</h1>
+                        </div>
+                        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+                            <h3 class="ui-title">
+                                确定删除收货地址吗？</h3>
+                            <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">取消</a>
+                            <a href="#" data-role="button" data-inline="true" data-rel="back" data-transition="flow"
+                                data-theme="b" class="address_delete" adid="@item.ID">删除</a>
+                        </div>
+                    </div>
+                </div>
+                <div style="clear: both">
+                </div>
             </div>
         </div>
-    </div>
-    <div style="background-color: White; border: 1px solid #ccc; font-size: 14px;margin-top:10px;">
-        <div style="padding: 5px 15px 5px 15px;">
-            <p style="margin: 5px 0px">
-                武双琦（13474137783）</p>
-            <p style="margin: 5px 0px">
-                陕西西安市新城区动漫产业园4号楼</p>
-        </div>
-        <div style="border-top: 1px solid #ccc;">
-            <div style="float: left; width: 49%; text-align: center; padding-top: 8px; padding-bottom: 8px;
-                border-right: 1px solid #ccc;">
-                修改</div>
-            <div style="float: left; width: 50%; text-align: center; padding-top: 8px; padding-bottom: 8px">
-                删除</div>
-            <div style="clear: both">
-            </div>
-        </div>
-    </div>
+    }
 </div>
+<script language="javascript">
+    var address_del_url = '@Html.Raw(Url.Action("Delete", "MicroUserDeliveryAddress"))';
+    var index_url = '@Html.Raw(Url.Action("Index", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID, userID = ViewBag.UserID }))';
+    $(function () {
+        $(".address_delete").click(function () {
+            var id=$(this).attr("adid");
+            $.post(address_del_url, {amid:@ViewBag.AMID,userID: @ViewBag.UserID,udaID:id}, function (result) {
+                if(result.HasError){
+                    showMsg(result.Error);
+                }else{
+                    showMsg("删除成功。",function(){
+                        window.location.href=index_url;
+                    });
+                }
+            }, "json");
+        });
+    });
+        
+</script>

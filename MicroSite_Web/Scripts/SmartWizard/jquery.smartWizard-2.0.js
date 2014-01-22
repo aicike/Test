@@ -1,4 +1,4 @@
-/*
+Ôªø/*
  * SmartWizard 2.0 plugin
  * jQuery Wizard control Plugin
  * by Dipu 
@@ -335,9 +335,9 @@
           includeFinishButton: true, // whether to show a Finish button
           enableFinishButton: false, // make finish button enabled always
           errorSteps:[],    // Array Steps with errors
-          labelNext:'œ¬“ª≤Ω',
-          labelPrevious:'…œ“ª≤Ω',
-          labelFinish:'ÕÍ≥…',          
+          labelNext:'‰∏ã‰∏ÄÊ≠•',
+          labelPrevious:'‰∏ä‰∏ÄÊ≠•',
+          labelFinish:'ÂÆåÊàê',          
           onLeaveStep: null, // triggers when leaving a step
           onShowStep: null,  // triggers when showing a step
           onFinish: null  // triggers when Finish button is clicked

@@ -9,7 +9,7 @@
             data.BtnOkClick += " window.location='/" + data.Controller + '/' + data.Action + "';";
         }
         jqueryAlert += (data.BtnOk ? data.BtnOk : "OK") + ":function () {" + (data.BtnOkClick ? data.BtnOkClick : "$(this).dialog('close');") + "}}";
-      //  jqueryAlert += (data.BtnOk ? data.BtnOk : "OK") + ":function () {" + (data.BtnOkClick ? data.BtnOkClick : "alert($(this).dialog());") + "}}";
+        //  jqueryAlert += (data.BtnOk ? data.BtnOk : "OK") + ":function () {" + (data.BtnOkClick ? data.BtnOkClick : "alert($(this).dialog());") + "}}";
     } else {
         jqueryAlert += (data.BtnOk ? data.BtnOk : "OK") + ":function () {" + (data.BtnOkClick ? data.BtnOkClick : "$(this).dialog('close');") + "},";
         jqueryAlert += data.BtnCancel + ":function () {" + data.BtnCancelClick + "}}";
@@ -44,14 +44,14 @@ function AppDelete(msg, url, fun) {
 
 /*省份，城市，地区级联插件*/
 (function ($) {
-    $.fn.Province = function (options,func) {
+    $.fn.Province = function (options, func) {
         var defaults = {
             value: 0
         };
         var options = $.extend(defaults, options);
         var thisSelect = $(this);
-        if(func!=undefined){
-            thisSelect.change(function(){
+        if (func != undefined) {
+            thisSelect.change(function () {
                 func($(this).val());
             });
         }
@@ -72,15 +72,15 @@ function AppDelete(msg, url, fun) {
 })(jQuery);
 
 (function ($) {
-    $.fn.City = function (options,func) {
+    $.fn.City = function (options, func) {
         var defaults = {
             parent: "ProvinceID",
             value: 0
         };
         var options = $.extend(defaults, options);
         var thisSelect = $(this);
-        if(func!=undefined){
-            thisSelect.change(function(){
+        if (func != undefined) {
+            thisSelect.change(function () {
                 func($(this).val());
             });
         }
@@ -107,21 +107,22 @@ function AppDelete(msg, url, fun) {
 })(jQuery);
 
 (function ($) {
-    $.fn.District = function (options,func) {
+    $.fn.District = function (options, func) {
         var defaults = {
             parent: "CityID",
             value: 0
         };
         var options = $.extend(defaults, options);
         var thisSelect = $(this);
-        if(func!=undefined){
-            thisSelect.change(function(){
+        if (func != undefined) {
+            thisSelect.change(function () {
                 func($(this).val());
             });
         }
         thisSelect.empty();
         thisSelect.append($("<option value='0'>选择区</option>"));
         $("#" + options.parent).bind("change", function () {
+            console.log(thisSelect);
             var c = $(this).val();
             thisSelect.empty();
             thisSelect.append($("<option value='0'>选择区</option>"));
@@ -142,7 +143,7 @@ function AppDelete(msg, url, fun) {
 
 
 //BtnID 按钮ID,GIfID图片空间ID ,Status:1显示 2隐藏
-function LandWaitFor(BtnID,GifID, Status) {
+function LandWaitFor(BtnID, GifID, Status) {
     if (Status == 1) {
         $("#" + BtnID).hide();
         $("#" + GifID).show();
@@ -151,4 +152,21 @@ function LandWaitFor(BtnID,GifID, Status) {
         $("#" + BtnID).show();
         $("#" + GifID).hide();
     }
+}
+function showMsg(error, fun) {
+    $('<div>').simpledialog2({
+        mode: 'button',
+        headerText: '消息',
+        headerClose: false,
+        buttonPrompt: error,
+        buttons: {
+            '确定': {
+                click: function () {
+                    if (fun != undefined) {
+                        fun();
+                    }
+                }
+            }
+        }
+    });
 }

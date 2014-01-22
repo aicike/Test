@@ -1,8 +1,11 @@
 ﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
-    var accountMainID= MicroSite_Web.Controllers.UserBaseController.GetAccountMainID();
+    var accountMainID = MicroSite_Web.Controllers.UserBaseController.GetAccountMainID();
 }
+<script>
+    window.location.href = "@Url.Action("ShopIndex", "MicroMall", new { AMID = MicroSite_Web.Controllers.UserBaseController.GetAccountMainID() })";
+</script>
 <div data-role="content">
     <div class="ui-grid-a">
         <div class="ui-block-a">

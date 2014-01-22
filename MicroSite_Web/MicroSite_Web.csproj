@@ -1038,6 +1038,7 @@
     <Content Include="Views\Center\Index.cshtml" />
     <Content Include="Views\MicroUserDeliveryAddress\Index.cshtml" />
     <Content Include="Views\MicroUserDeliveryAddress\Add.cshtml" />
+    <Content Include="Views\MicroUserDeliveryAddress\Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -37,5 +37,23 @@ namespace MicroSite_Web.Controllers
             var result = model.Add(uda);
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
+
+        [HttpGet]
+        public ActionResult Edit(int amid, int userID, int udaID)
+        {
+            var model = Factory.Get<IUserDeliveryAddressModel>(SystemConst.IOC_Model.UserDeliveryAddressModel);
+            var obj = model.Get(amid, userID, udaID);
+            ViewBag.AMID = amid;
+            ViewBag.UserID = userID;
+            return View(obj);
+        }
+
+        [HttpPost]
+        public string Delete(int amid, int userID, int udaID)
+        {
+            var model = Factory.Get<IUserDeliveryAddressModel>(SystemConst.IOC_Model.UserDeliveryAddressModel);
+            var result = model.Delete(amid, userID, udaID);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
     }
 }

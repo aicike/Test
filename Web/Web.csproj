@@ -967,7 +967,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>30062</DevelopmentServerPort>
+          <DevelopmentServerPort>23961</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://192.168.1.138/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
