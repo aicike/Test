@@ -35,104 +35,400 @@
             border-top: 0px;
             padding: 2px 8px;
         }
+        
+        /*--------暂不支持货到付款-----------*/
+        .Nodelivery
+        {
+            float: right;
+            color: #FFA042;
+        }
+        .Pimg
+        {
+            width: 70px;
+            height: 70px;
+            overflow: hidden;
+            float: left;
+        }
+        .Pname
+        {
+            padding-left: 80px;
+            font-size: 13px;
+        }
+        .price
+        {
+            padding-left: 80px;
+            font-size: 13px;
+            padding-top: 8px;
+        }
+        .onePrice
+        {
+            color: Red;
+            font-weight: bold;
+        }
+        .tdDelete
+        {
+            background-color: #ebebeb;
+            font-size: 14px;
+            text-align: right;
+            height: 50px;
+        }
+        .zf div
+        {
+            width: 100%;
+        }
     </style>
     <script>
+
+        function OptintModel() {
+            var it = new Object;
+            it.PID = "";
+            it.PName = "";
+            it.PPrive = 0;
+            it.PFreight = 0;
+            it.PImage = "";
+            it.Pcount = 0;
+            return it;
+        }
+        var items = [];
+
         $(function () {
 
-            $('input').iCheck({
+            $('#ckbAll').iCheck({
+                checkboxClass: 'icheckbox_square-red',
+                radioClass: 'iradio_square-red',
+                increaseArea: '20%' // optional
+            });
+            $('.ckb').iCheck({
                 checkboxClass: 'icheckbox_square-red',
                 radioClass: 'iradio_square-red',
                 increaseArea: '20%' // optional
             });
 
-            $("#txtNumber").keyup(function () {
+            $(".txtNumber").keyup(function () {
                 var tmptxt = $(this).val();
                 $(this).val(tmptxt.replace(/\D|^0/g, ''));
+                if ($(this).val() == "" || $(this).val() == undefined) {
+                    $(this).val(0);
+                }
+                var zj = $("#zj").text();
+                var YJ = $(this).parent().next().find("span").text();
+                var DJ = $(this).next().val();
+                var XJ = parseInt(DJ) * parseInt($(this).val());
+                zj = parseInt(zj) - parseInt(YJ) + parseInt(XJ);
+                var ID = $(this).attr("id").split('_')[1];
+                $(this).parent().next().find("span").text(XJ);
+
+                if ($("#ckb_" + ID).attr("checked") == "checked") {
+                    $("#zj").text(zj);
+                }
+                //设置local
+                var jsonStr = "";
+                jsonStr = localStorage.ImtimelyCartShop;
+
+                if (jsonStr != undefined && jsonStr != "" && jsonStr != "[]") {
+                    items = eval(jsonStr);
+               
+                    for (var i in items) {
+                   
+                        if (items[i].PID == ID) {
+                            items[i].Pcount=$(this).val();
+                            break;
+                        }
+                    }
+                    jsonStr = JSON.stringify(items);
+                   
+                }
+
+                localStorage.ImtimelyCartShop = jsonStr; // 设置storage
+
+
+
             }).bind("paste", function () {
                 var tmptxt = $(this).val();
                 $(this).val(tmptxt.replace(/\D|^0/g, ''));
+                if ($(this).val() == "" || $(this).val() == undefined) {
+                    $(this).val(0);
+                }
+                var zj = $("#zj").text();
+                var YJ = $(this).parent().next().find("span").text();
+                var DJ = $(this).next().val();
+                var XJ = parseInt(DJ) * parseInt($(this).val());
+                zj = parseInt(zj) - parseInt(YJ) + parseInt(XJ);
+                var ID = $(this).attr("id").split('_')[1];
+                $(this).parent().next().find("span").text(XJ);
+
+                if ($("#ckb_" + ID).attr("checked") == "checked") {
+                    $("#zj").text(zj);
+                }
+
+                 //设置local
+                var jsonStr = "";
+                jsonStr = localStorage.ImtimelyCartShop;
+
+                if (jsonStr != undefined && jsonStr != "" && jsonStr != "[]") {
+                    items = eval(jsonStr);
+               
+                    for (var i in items) {
+                   
+                        if (items[i].PID == ID) {
+                            items[i].Pcount=$(this).val();
+                            break;
+                        }
+                    }
+                    jsonStr = JSON.stringify(items);
+                   
+                }
+
+                localStorage.ImtimelyCartShop = jsonStr; // 设置storage
+
             }).css("ime-mode", "disabled");
-        })
+
+
+
+            //复选框事件
+
+            $('#ckbAll').on('ifClicked', function (event) {
+                //全不选
+                if ($(this).attr("checked") == "checked") {
+                    $('.ckb').iCheck('uncheck');
+                    $("#GoJS").addClass("ui-disabled");
+                }
+                //全选
+                else {
+                    $('.ckb').iCheck('check');
+                    $("#GoJS").removeClass("ui-disabled");
+                }
+
+
+            });
+
+            //复选 单独选项
+            $('.ckb').on('ifChanged', function (event) {
+                var zj = $("#zj").text();
+                var id = $(this).val();
+                var number = $("#num_" + id).val();
+                var DJ = $("#Price_" + id).val();
+                var price = parseInt(number) * parseInt(DJ);
+
+                //选中
+                if ($(this).attr("checked") == "checked") {
+                    $("#GoJS").removeClass("ui-disabled");
+                    if ($('.checked').length == $('.ckb').length - 1) {
+                        $('#ckbAll').iCheck('check');
+                    }
+                    $("#zj").text(parseInt(zj) + parseInt(price))
+
+
+                }
+                //取消选择
+                else {
+
+                    $('#ckbAll').iCheck('uncheck');
+
+                    if ($('.checked').length == 1) {
+                        $("#GoJS").addClass("ui-disabled");
+                    }
+                    $("#zj").text(parseInt(zj) - parseInt(price))
+                }
+
+            });
+
+
+
+
+
+        });
+
+        function OpenUrl(ID) {
+            var Url = "@Url.Action("ProductInfo", "MicroMall", new { AMID = ViewBag.AMID })";
+            var href = Url+"&PID=" + ID;
+            window.location.href = href;
+
+        }
+
+        function GetCart() {
+
+            var jsonStr = "";
+            jsonStr = localStorage.ImtimelyCartShop;
+            if (jsonStr != undefined && jsonStr != "" && jsonStr != "[]") {
+                items = eval(jsonStr);
+                var prices = 0;
+                for (var i in items) {
+                    var htmlSTR = '<table id="tab_' + items[i].PID + '" align="center" class="MainTab" cellpadding="0" cellspacing="0">'
+                                + '    <tr>'
+                                + '       <td style="height: 30px">'
+                                + '            <div style="float: left">'
+                                + '                <input type="checkbox" id="ckb_' + items[i].PID + '" value="' + items[i].PID + '" class="ckb"  checked="checked" data-role="none">'
+                                + '            </div>'
+                                + '            <div class="Nodelivery">'
+                                + '                暂不支持货到付款</div>'
+                                + '            <div style="clear: both">'
+                                + '            </div>'
+                                + '        </td>'
+                                + '    </tr>'
+                                + '    <tr>'
+                                + '        <td style="padding: 8px 8px">'
+                                + '            <div class="Pimg">'
+                                + '                <img onClick="OpenUrl(' + items[i].PID + ')" src="' + items[i].PImage + '" style="min-width: 100%; min-height: 70px; max-height: 70px; border-radius: 5px;cursor:pointer" />'
+                                + '            </div>'
+                                + '            <div class="Pname">'
+                                + '                 <span style="cursor:pointer" onClick="OpenUrl(' + items[i].PID + ')" data-role="none">'+items[i].PName+'</span>'
+                                + '            </div>'
+                                + '            <div class="price">'
+                                + '                单价：<span class="onePrice">￥' + items[i].PPrive + '</span>'
+                                + '            </div>'
+                                + '            <div style="clear: both"> </div>'
+                                + '        </td>'
+                                + '    </tr>'
+                                + '    <tr>'
+                                + '        <td class="tdDelete">'
+                                + '           <table align="right" cellpadding="0" cellspacing="0">'
+                                + '                <tr>'
+                                + '                    <td style="padding:2px 5px">'
+                                + '                        <a href="#popupDialog_' + items[i].PID + '" data-position-to="window" data-transition="pop" data-rel="popup">'
+                                + '                            <img style=" width:16px; " src="/Images/Dustbin.png" />'
+                                + '                        </a>'
+                                + '                        <div class="ui-corner-all" id="popupDialog_' + items[i].PID + '" style="width: 300px" data-role="popup"  data-overlay-theme="a" data-theme="c" data-dismissible="false">'
+                                + '                            <div class="ui-corner-bottom ui-content" data-role="content" data-theme="a">'
+                                + '                                <div style="min-height: 50px; text-align: center; margin-top: 20px">'
+                                + '                                    你确定删除吗？'
+                                + '                                </div>'
+                                + '                                <a href="#"  data-role="button" class="spanSize" style="width: 44%; font-weight: normal;"  data-rel="back" data-theme="a" data-inline="true" data-corners="false">取消</a>'
+                                + '                                 <a href="#" onclick="DeleteCart(' + items[i].PID + ')"  data-role="button" class="spanSize" style="width: 44%; font-weight: normal;"  data-rel="back" data-theme="a" data-inline="true" data-corners="false">删除</a>'
+                                + '                            </div>'
+                                + '                        </div>'
+                                + '                    </td>'
+                                + '                    <td style="padding:2px 5px">'
+                                + '                        数量:'
+                                + '                        <input id="num_' + items[i].PID + '" class="txtNumber" type="tel" value="' + items[i].Pcount + '" data-role="none" style="width: 30px" />'
+                                + '                        <input  id="Price_' + items[i].PID + '" type="hidden" value="' + items[i].PPrive + '"/> '
+                                + '                    </td>'
+                                + '                    <td align="left" style="padding:2px 5px">'
+                                + '                        共计:￥<span class="onePrice">' + parseInt(items[i].Pcount) * parseInt(items[i].PPrive) + '</span>'
+                                + '                    </td>'
+                                + '                </tr>'
+                                + '            </table>'
+                                + '        </td>'
+                                + '    </tr>'
+                                + '</table>';
+                    $("#ProductInfo").append(htmlSTR);
+
+                    prices = prices + parseInt(items[i].Pcount) * parseInt(items[i].PPrive)
+                }
+
+                $("#zj").text(prices);
+            }
+            else {
+                $("#isMain").hide();
+                $("#isnull").show();
+            }
+
+
+
+        }
+
+        function DeleteCart(ID) {
+
+
+            var jsonStr = "";
+            jsonStr = localStorage.ImtimelyCartShop;
+
+            if (jsonStr != undefined && jsonStr != "" && jsonStr != "[]") {
+                items = eval(jsonStr);
+                //循环判断是否有重复商品
+                for (var i in items) {
+                    //有重复数据只增加数量
+                    if (items[i].PID == ID) {
+                        var prices = parseInt(items[i].Pcount) * parseInt(items[i].PPrive)
+                        $("#zj").text(parseInt($("#zj").text()) - parseInt(prices));
+                        
+                        $("#tab_" + ID).remove();
+                        items.splice(i, 1);
+                        
+                       
+                        break;
+                    }
+                }
+                jsonStr = JSON.stringify(items);
+                if (jsonStr == undefined || jsonStr == "" || jsonStr == "[]") {
+                    $("#isMain").hide();
+                    $("#isnull").show();
+                }
+
+            }
+
+            localStorage.ImtimelyCartShop = jsonStr; // 设置storage
+
+        }
+
+        function GoCheckOut()
+        {
+            var IDS = [];
+            $('.ckb').each(function (){
+                if($(this).attr("checked")=="checked")
+                {
+                    IDS.push($(this).attr("id").split('_')[1]);
+                }
+            });
+
+            var jsonStr = "";
+            jsonStr = localStorage.ImtimelyCartShop;
+            if (jsonStr != undefined && jsonStr != "" && jsonStr != "[]") {
+                 items = eval(jsonStr);
+                 var jsonStrZJ = "";
+                 var JZitems = [];
+                 for (var i in items) {
+                    for (var j in IDS) {
+                         if (items[i].PID == IDS[j]) {
+                            var Cart = new OptintModel();
+                            Cart.PID = items[i].PID;
+                            Cart.PName = items[i].PName;
+                            Cart.PPrive = items[i].PPrive;
+                            Cart.PFreight = items[i].PFreight;
+                            Cart.PImage = items[i].PImage;
+                            Cart.Pcount = items[i].Pcount;
+                            JZitems.push(Cart);
+                            break;
+                        }
+                    }
+                   
+                }
+                jsonStrZJ = JSON.stringify(JZitems);
+                sessionStorage.ImtimelyShopZJ = jsonStrZJ; // 设置storage
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
     </script>
 }
 <div id="isMain" data-role="content" style="display: ">
-    <table align="center" class="MainTab" cellpadding="0" cellspacing="0">
-        <tr>
-            <td style="height: 30px">
-                <div style="float: left">
-                    <input type="checkbox" id="CKB" name="ckb" checked="checked" data-role='none'>
-                </div>
-                <div style="float: right; color: #FFA042">
-                    暂不支持货到付款</div>
-                <div style="clear: both">
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td style="padding: 8px 8px">
-                <div style="width: 70px; height: 70px; overflow: hidden; float: left">
-                    <img src="../../Images/AppDefault.png" style="min-width: 100%; min-height: 70px;
-                        max-height: 70px; border-radius: 5px;" />
-                </div>
-                <div style="padding-left: 80px; font-size: 13px">
-                    最佳答案: 天天忽悠兄。话说，这个指定。必须是全路径。不能简写？
-                </div>
-                <div style="padding-left: 80px; font-size: 13px; padding-top:8px;">
-                    单价：<span style="color: Red; font-weight:bold">￥76</span>
-                </div>
-                <div style="clear: both">
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td style="background-color: #ebebeb; font-size: 14px; text-align: right; height: 50px">
-                <table align="right" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td>
-                            <a href="#"></a><a href="#popupDialog" data-position-to="window" data-transition="pop"
-                                data-rel="popup">
-                                <img style=" width:16px; " src="@Url.Content("~/Images/Dustbin.png")" /></a>
-                            <div class="ui-corner-all" id="popupDialog" style="width: 300px" data-role="popup"
-                                data-overlay-theme="a" data-theme="c" data-dismissible="false">
-                                <div class="ui-corner-bottom ui-content" data-role="content" data-theme="a">
-                                    <div style="min-height: 50px; text-align: center; margin-top: 20px">
-                                        你确定删除吗？
-                                    </div>
-                                    <a href="#" data-role="button" class="spanSize" style="width: 44%; font-weight: normal;"
-                                        data-rel="back" data-theme="a" data-inline="true" data-corners="false">取消</a>
-                                    <a href="@Url.Action("ShoppingCart", "MicroMall")" class="spanSize" style="width: 44%;
-                                font-weight: normal;" data-role="button" data-transition="flow" data-theme="a"
-                                    data-inline="true" data-corners="false">删除</a>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            数量：
-                            <input id="txtNumber" type="tel" value="1" data-role='none' style="width: 40px" />
-                        </td>
-                        <td>
-                            共计： <span style="color: Red; font-weight:bold">￥76</span>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+    <div id="ProductInfo">
+    </div>
     <table align="center" class="MainTab" cellpadding="0" cellspacing="0" style="font-size: 14px">
         <tr>
             <td style="height: 30px">
-                <table align="center" style="width: 100%">
-                    <tr>
-                        <td style="width: 49%;">
-                            <a href="#" data-role="button" data-corners="false" data-theme="c">在线支付</a>
-                        </td>
-                        <td>
-                        </td>
-                        <td style="width: 49%;">
-                            <a href="#" data-role="button" data-corners="false" data-theme="c">货到付款</a>
-                        </td>
-                    </tr>
-                </table>
+                <fieldset class="zf" data-role="controlgroup" data-type="horizontal">
+                    <table align="center" style="width: 100%">
+                        <tr>
+                            <td style="width: 50%;">
+                                <input name="radio-choice-h-2" id="radio-choice-h-2b" type="radio" value="off" checked="checked">
+                                <label for="radio-choice-h-2b">
+                                    在线支付</label>
+                            </td>
+                            <td style="width: 50%;">
+                                <input name="radio-choice-h-2" id="radio-choice-h-2c" type="radio" value="other"
+                                    disabled="disabled">
+                                <label for="radio-choice-h-2c">
+                                    货到付款</label>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
             </td>
         </tr>
         <tr>
@@ -144,10 +440,11 @@
                             全选
                         </td>
                         <td>
-                            总价： <span style="color: Red">￥76</span>
+                            总价： <span id="zj" style="color: Red">￥76</span>
                         </td>
                         <td>
-                            <a href="@Url.Action("OrderConfirmation", "MicroMall")" data-role="button" data-corners="false" data-theme="b">去结算</a>
+                            <a id="GoJS" onclick="return GoCheckOut()" href="@Url.Action("OrderConfirmation", "MicroMall", new { AMID = ViewBag.AMID })" data-role="button" data-corners="false" data-ajax="false" data-theme="b">
+                                去结算</a>
                         </td>
                     </tr>
                 </table>
@@ -155,18 +452,18 @@
         </tr>
     </table>
 </div>
-
-<div id="isnull" data-role="content" style="display:none ">
-
-    <div style="text-align: center; width: 100%;margin-top: 15%;">
+<div id="isnull" data-role="content" style="display: none">
+    <div style="text-align: center; width: 100%; margin-top: 15%;">
         <img src="@Url.Content("~/Images/ShoppingCart.png")" style=" max-width:300px; width:25%" />
     </div>
-    <div style="text-align: center; font-size: 22px; ">
+    <div style="text-align: center; font-size: 22px;">
         你的购物车里什么都没有
     </div>
     <div style="text-align: center; width: 100%">
-      
         <a href="@Url.Action("ShopIndex", "MicroMall")" class="Atype" style="width:100px; margin: 10px auto;" data-theme="d" data-role="button"
             data-corners="false">去逛逛</a>
     </div>
 </div>
+<script>
+    GetCart();
+</script>

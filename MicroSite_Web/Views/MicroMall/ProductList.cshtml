@@ -145,6 +145,7 @@
         {
             max-width: 100%;
             min-width: 100%;
+            min-height:50px;
         }
         .titleDiv
         {
@@ -200,7 +201,7 @@
                     $('.btns', this).hide();
                 });
 
-                item_masonry();
+               
 
             }
 
@@ -242,13 +243,15 @@
                 return;
             });
 
+             item_masonry();
 
+             $(window).resize();
         });
 
 
 
         function OpenUrl(ID) {
-            var Url = "@Url.Action("ProductInfo", "MicroMall",new{AccountMainID = ViewBag.AMID})";
+            var Url = "@Url.Action("ProductInfo", "MicroMall",new{AMID = ViewBag.AMID})";
             var href = Url+"&PID=" + ID;
             window.location.href = href;
 
@@ -296,7 +299,7 @@
         }
     </div>
     <div id="more">
-        <a href="ProductListItem?TypeID=@ViewBag.TypeID&AccountMainID=@ViewBag.AMID&page=1"></a>
+        <a href="ProductListItem?TypeID=@ViewBag.TypeID&AMID=@ViewBag.AMID&page=1"></a>
     </div>
 </div>
 <div class="loadOK" style="display: none;">

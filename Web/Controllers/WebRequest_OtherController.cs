@@ -427,5 +427,18 @@ namespace Web.Controllers
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
+
+
+        /// <summary>
+        /// 获取图片素材
+        /// </summary>
+        /// <param name="amid">AccountMainID</param>
+        public string LINSHI()
+        {
+            return "False";
+        }
+
+
+
     }
 }
