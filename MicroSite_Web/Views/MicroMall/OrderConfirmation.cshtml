@@ -30,6 +30,55 @@
             border-top: 0px;
         }
     </style>
+    <script>
+        function OptintModel() {
+            var it = new Object;
+            it.PID = "";
+            it.PName = "";
+            it.PPrive = 0;
+            it.PFreight = 0;
+            it.PImage = "";
+            it.Pcount = 0;
+            return it;
+        }
+        var items = [];
+        $(function () {
+
+        });
+
+        function GetSessionStor() {
+            var jsonStrZJ = "";
+            jsonStrZJ = sessionStorage.ImtimelyShopZJ;
+            if (jsonStrZJ != undefined && jsonStrZJ != "" && jsonStrZJ != "[]") {
+                items = eval(jsonStrZJ);
+                var prices = 0;
+                for (var i in items) {
+                    var htmlStr = ' <tr>'
+                                + '    <td style="padding: 8px 8px">'
+                                + '        <div style="width: 70px; height: 70px; overflow: hidden; float: left">'
+                                + '            <img src="' + items[i].PImage + '" style="min-width: 100%; min-height: 70px;'
+                                + '                max-height: 70px; border-radius: 5px;" />'
+                                + '        </div>'
+                                + '        <div style="padding-left: 80px; font-size: 13px">'
+                                + items[i].PName
+                                + '        </div>'
+                                + '        <div style="padding-left: 80px; padding-top: 8px; font-size: 13px;">'
+                                + '            <span style="color: #6C6C6C; font-size: 12px;">数量：' + items[i].Pcount + ' 单价：</span><span style="color: Red;'
+                                + '                font-weight: bold; font-size: 13px;">￥' + items[i].PPrive + '</span>'
+                                + '        </div>'
+                                + '    </td>'
+                                + '</tr>';
+                    $("#SessionInfo").after(htmlStr);
+                    prices = prices + parseInt(items[i].Pcount) * parseInt(items[i].PPrive);
+                }
+                $("#amount").text(prices);
+
+            }
+            else {
+                $("#isMain").hide();
+            }
+        }
+    </script>
 }
 <div id="isMain" data-role="content" style="display: ">
     <table align="center" class="MainTab" cellpadding="0" cellspacing="0">
@@ -47,7 +96,7 @@
         <tr>
             <td style="">
                 <div style="padding: 8px 8px; border: 1px solid #dbdbdb; border-radius: 5px;">
-                    快递：￥30.00元
+                    快递：￥00.00元
                 </div>
             </td>
         </tr>
@@ -56,67 +105,25 @@
         <tr>
             <td style="">
                 <div style="padding: 8px 8px; border: 1px solid #dbdbdb; border-radius: 5px;">
-                    财付通
+                    支付宝
                 </div>
             </td>
         </tr>
     </table>
     <table align="center" class="MainTab" cellpadding="0" cellspacing="0">
-        <tr>
+        <tr id="SessionInfo">
             <td style="">
                 商品详情
             </td>
         </tr>
         <tr>
-            <td style="padding: 8px 8px">
-                <div style="width: 70px; height: 70px; overflow: hidden; float: left">
-                    <img src="../../Images/AppDefault.png" style="min-width: 100%; min-height: 70px;
-                        max-height: 70px; border-radius: 5px;" />
-                </div>
-                <div style="padding-left: 80px; font-size: 13px">
-                    最佳答案: 天天忽悠兄。话说，这个指定。必须是全路径。不能简写？
-                </div>
-                <div style="padding-left: 80px; padding-top: 8px; font-size: 13px;">
-                    <span style="color: #dbdbdb; font-size: 12px;">数量：1 单价：</span><span style="color: Red;
-                        font-weight: bold; font-size: 13px;">￥76</span>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td style="padding: 8px 8px">
-                <div style="width: 70px; height: 70px; overflow: hidden; float: left">
-                    <img src="../../Images/AppDefault.png" style="min-width: 100%; min-height: 70px;
-                        max-height: 70px; border-radius: 5px;" />
-                </div>
-                <div style="padding-left: 80px; font-size: 13px">
-                    最佳答案: 天天忽悠兄。话说，这个指定。必须是全路径。不能简写？
-                </div>
-                <div style="padding-left: 80px; padding-top: 8px; font-size: 13px;">
-                    <span style="color: #dbdbdb; font-size: 12px;">数量：1 单价：</span><span style="color: Red;
-                        font-weight: bold; font-size: 13px;">￥76</span>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td style="padding: 8px 8px">
-                <div style="width: 70px; height: 70px; overflow: hidden; float: left">
-                    <img src="../../Images/AppDefault.png" style="min-width: 100%; min-height: 70px;
-                        max-height: 70px; border-radius: 5px;" />
-                </div>
-                <div style="padding-left: 80px; font-size: 13px">
-                    最佳答案: 天天忽悠兄。话说，这个指定。必须是全路径。不能简写？
-                </div>
-                <div style="padding-left: 80px; padding-top: 8px;">
-                    <span style="color: #dbdbdb; font-size: 12px;">数量：1 单价：</span><span style="color: Red;
-                        font-weight: bold; font-size: 13px;">￥76</span>
-                </div>
-            </td>
-        </tr>
-        <tr>
             <td style="font-size: 14px; text-align: right; height: 35px">
-                应付金额： <span style="color: Red; font-weight: bold">￥106</span>
+                应付金额：￥<span id="amount" style="color: Red; font-weight: bold">0</span>
             </td>
         </tr>
     </table>
     <a href="#" data-role="button" data-corners="false" data-theme="e">提交订单</a>
 </div>
+<script>
+    GetSessionStor();
+</script>

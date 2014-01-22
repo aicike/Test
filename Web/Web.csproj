@@ -328,6 +328,8 @@
     <Content Include="Scripts\nivoSlider\style.css" />
     <Content Include="Scripts\ReportJS\Report.css" />
     <Content Include="Scripts\ReportJS\Report.js" />
+    <Content Include="Scripts\royalslider\grab.png" />
+    <Content Include="Scripts\royalslider\grabbing.png" />
     <Content Include="Scripts\royalslider\royalslider.css" />
     <Content Include="Scripts\royalslider\royalslider.min.js" />
     <Content Include="Scripts\tytabs.js" />
