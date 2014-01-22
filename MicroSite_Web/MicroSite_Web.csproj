@@ -201,6 +201,7 @@
     <Content Include="Bridge2\posz.jpg" />
     <Content Include="Bridge2\readme.txt" />
     <Content Include="Config\IOC.xml" />
+    <Content Include="Content\blocksit.css" />
     <Content Include="Content\blue.css" />
     <Content Include="Content\homeStyle.css" />
     <Content Include="Content\Icon\glyphicons.png" />
@@ -266,12 +267,14 @@
     <Content Include="Images\BG_2.jpg" />
     <Content Include="Images\BG_3.jpg" />
     <Content Include="Images\bullet.png" />
+    <Content Include="Images\carp.png" />
     <Content Include="Images\checkbox.gif" />
     <Content Include="Images\checkbox.png" />
     <Content Include="Images\default_Avatar.png" />
     <Content Include="Images\down.png" />
     <Content Include="Images\Dustbin.png" />
     <Content Include="Images\gotop.png" />
+    <Content Include="Images\head.png" />
     <Content Include="Images\heroAccent.png" />
     <Content Include="Images\ImgSH.gif" />
     <Content Include="Images\ImgSH2.gif" />
@@ -1039,6 +1042,8 @@
     <Content Include="Views\MicroUserDeliveryAddress\Index.cshtml" />
     <Content Include="Views\MicroUserDeliveryAddress\Add.cshtml" />
     <Content Include="Views\MicroUserDeliveryAddress\Edit.cshtml" />
+    <Content Include="Views\MicroMall\ProductListZ.cshtml" />
+    <Content Include="Views\MicroMall\ProductListItemZ.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

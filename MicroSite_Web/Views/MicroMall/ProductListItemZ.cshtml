@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "ProductListItemZ";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+@section head{
+}
+@model PagedList<Poco.Product>
+@foreach (var item in Model)
+{
+    <div class="grid2">
+        <div class="imgholder">
+            @if (item.ProductImg.FirstOrDefault() != null)
+            {
+                if (string.IsNullOrEmpty(item.ProductImg.FirstOrDefault().PImgOriginal))
+                { 
+                <img style=" border:1px solid #deedde" src="@Url.Content("~/Images/nopicture.png")" />
+                }
+                else
+                { 
+                <img style=" border:1px solid #deedde"  src="@Url.Content(item.ProductImg.FirstOrDefault().PImgOriginal)" />
+                }
+            }
+            else
+            { 
+                <img style=" border:1px solid #deedde"   src="@Url.Content("~/Images/nopicture.png")" />
+            }
+        </div>
+        <div class="title">
+            <span>@item.Name</span>
+        </div>
+        <div class="bottom">
+            ￥@item.Price
+        </div>
+    </div>
+    <!--item end-->
+}

@@ -1,0 +1,85 @@
+
+#container
+{
+    position: relative;
+    width: 100%;
+    margin: 0 auto 25px;
+    padding-bottom: 10px;
+}
+#more
+{
+    display: block;
+    margin: 10px auto 20px;
+}
+
+/* infscr-loading */
+#infscr-loading
+{
+    bottom: 10px;
+    position: absolute;
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+    z-index: 100;
+    width: 100%;
+   
+}
+
+
+.loadOK
+{
+    font-size: 14px;
+    font-weight: bold;
+    width: 98%;
+    margin: 10px 0px;
+    text-align: center;
+}
+.title
+{
+    padding: 8px 0;
+    line-height: 15px;
+    color: #6C6C6C;
+    width: 100%;
+}
+.bottom
+{
+    margin-top: 5px;
+    position: relative;
+    bottom: 8px;
+    color: #00BB00;
+    font-size: 12px;
+}
+
+.grid2
+{
+    width: 188px;
+    min-height: 100px;
+    padding: 5px;
+    background: #fff;
+    margin: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    float: left;
+    box-shadow: 0 1px 3px rgba(34,25,25,0.4);
+    -moz-box-shadow: 0 1px 3px rgba(34,25,25,0.4);
+    -webkit-box-shadow: 0 1px 3px rgba(34,25,25,0.4);
+    -webkit-transition: top 1s ease, left 1s ease;
+    -moz-transition: top 1s ease, left 1s ease;
+    -o-transition: top 1s ease, left 1s ease;
+    -ms-transition: top 1s ease, left 1s ease;
+}
+
+.grid2 .meta
+{
+    text-align: right;
+    color: #777;
+    font-style: italic;
+}
+.grid2 .imgholder img
+{
+    width: 98%;
+    background: #ccc;
+    display: block;
+    margin: 0px auto;
+}
+

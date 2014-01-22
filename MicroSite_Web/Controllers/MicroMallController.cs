@@ -77,5 +77,36 @@ namespace MicroSite_Web.Controllers
             ViewBag.AMID = AMID;
             return View();
         }
+
+
+        /// <summary>
+        /// 产品列表
+        /// </summary>
+        /// <param name="TypeID"></param>
+        /// <returns></returns>
+        public ActionResult ProductListZ(int TypeID, int AMID)
+        {
+            ViewBag.TypeID = TypeID;
+            var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
+            var products = productModel.GetListByTypeID(TypeID, AMID);
+            ViewBag.pageCount = products.ToPagedList(1, 6).TotalPageCount;
+
+            var classifyModel = Factory.Get<IClassifyModel>(SystemConst.IOC_Model.ClassifyModle);
+            var classify = classifyModel.Get(TypeID);
+            ViewBag.CName = classify.Name;
+
+            ViewBag.AMID = AMID;
+
+            return View(products.ToPagedList(1, 6));
+        }
+
+        //产品列表分页
+        public ActionResult ProductListItemZ(int page, int TypeID, int AMID)
+        {
+            var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
+            var products = productModel.GetListByTypeID(TypeID, AMID).ToPagedList(page, 6);
+            ViewBag.AMID = AMID;
+            return View(products);
+        }
     }
 }

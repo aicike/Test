@@ -460,8 +460,8 @@
         你的购物车里什么都没有
     </div>
     <div style="text-align: center; width: 100%">
-        <a href="@Url.Action("ShopIndex", "MicroMall")" class="Atype" style="width:100px; margin: 10px auto;" data-theme="d" data-role="button"
-            data-corners="false">去逛逛</a>
+        <a href="@Url.Action("ShopIndex", "MicroMall", new { AMID = ViewBag.AMID })" class="Atype" style="width:100px; margin: 10px auto;" data-theme="d" data-role="button"
+            data-corners="false"  data-ajax="false">去逛逛</a>
     </div>
 </div>
 <script>
