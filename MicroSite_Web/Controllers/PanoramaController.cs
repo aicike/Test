@@ -35,12 +35,13 @@ namespace MicroSite_Web.Controllers
         public ActionResult Add(Panorama panorama)
         {
             var panoramaModel = Factory.Get<IPanoramaModel>(SystemConst.IOC_Model.PanoramaModel);
+            panorama.AccountMainID = LoginAccount.CurrentAccountMainID;
             var result = panoramaModel.Add(panorama);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));
             }
-            return JavaScript("window.location.href='" + Url.Action("Index", "Panorama", new { HostName=LoginAccount.HostName }) + "'");
+            return JavaScript("window.location.href='" + Url.Action("Index", "Panorama", new { HostName = LoginAccount.HostName }) + "'");
         }
 
         [HttpGet]
@@ -93,9 +94,16 @@ namespace MicroSite_Web.Controllers
                 int r = Request.Files[0].InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
                 Stream tream = new MemoryStream(buffer);
                 Image img = Image.FromStream(tream);
-
-                Tool.SuperGetPicThumbnail(img, mapePath, 70, 1280, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
-
+                var fileSize = dataLengthToRead * 1.0 / 1024 / 1024;
+                if (fileSize <= 2)
+                {
+                    //小于2M，不压缩
+                    img.Save(mapePath);
+                }
+                else
+                {
+                    Tool.SuperGetPicThumbnail(img, mapePath, 2000, 2000, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+                }
                 return Url.Content(ImagePath);
 
             }

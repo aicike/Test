@@ -80,10 +80,7 @@ namespace Web.Controllers
         {
             var AdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             var advertorial = AdvertorialModel.Get(id);
-
             return View(advertorial);
-
-
         }
 
 

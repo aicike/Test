@@ -88,6 +88,7 @@
     <Compile Include="ISystemUserRoleModel.cs" />
     <Compile Include="ISystemUserRole_SystemUserMenuModel.cs" />
     <Compile Include="ITemporayInstantMesModel.cs" />
+    <Compile Include="IUserDeliveryAddressModel.cs" />
     <Compile Include="IUserLoginInfoModel.cs" />
     <Compile Include="IUserModel.cs" />
     <Compile Include="IVIPInfoExpenseDetailModel.cs" />

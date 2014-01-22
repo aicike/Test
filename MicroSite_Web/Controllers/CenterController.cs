@@ -22,7 +22,7 @@ namespace MicroSite_Web.Controllers
             //}
             //else
             //{
-                return View();
+            return View();
             //}
         }
 
@@ -38,9 +38,16 @@ namespace MicroSite_Web.Controllers
         {
             var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
             var result = userLoginInfoModel.MicroSite_Login(amid, LoginName, LoginPwd);
-            var user= result.Entity as User;
-            result.Entity = user.ID;
-            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            if (result.HasError)
+            {
+                return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            }
+            else
+            {
+                var user = result.Entity as User;
+                result.Entity = user.ID;
+                return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            }
         }
 
         //[HttpPost]

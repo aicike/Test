@@ -57,6 +57,7 @@ namespace Poco
         /// <summary>
         /// 固定电话
         /// </summary>
+        [StringLength(20, ErrorMessage = "长度小于20")]
         public string TelePhone { get; set; }
     }
 }

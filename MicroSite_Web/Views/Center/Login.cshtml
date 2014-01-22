@@ -42,8 +42,8 @@
             </td>
             <td style="text-align: left" class="login_td">
                 <select name="slider-flip-m" id="slider-flip-m" data-role="slider" data-mini="true">
-                    <option value="off">否</option>
-                    <option value="on" selected="">是</option>
+                    <option value="0">否</option>
+                    <option value="1" selected="">是</option>
                 </select>
             </td>
             <td style="width: 100px;">
@@ -91,7 +91,12 @@
                 if (result.HasError) {
                     showError(result.Error);
                 } else {
-                    sessionStorage.setItem("userID",result.Entity)
+                    var isAutoLogin= $("#slider-flip-m").val();
+                    if(isAutoLogin=="1"){
+                        localStorage.IsAutoLogin=1;
+                        localStorage.UserID=result.Entity;
+                    }
+                    sessionStorage.setItem("userID",result.Entity);
                     window.location.href=url_index;
                 }
             }, "json");
@@ -114,6 +119,6 @@
                     }
                 }
             }
-        })
+        });
     }
 </script>

@@ -3,15 +3,41 @@
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
     var amid = ViewBag.AMID;
 }
-个人中心，正在开发中...
 <script language="javascript">
     var url_login = '@Url.Action("Login", "Center", new { amid = amid })';
-    $(function () {
+
+    var isAutoLogin = localStorage.IsAutoLogin;
+    if (isAutoLogin != null) {
+        var userID = localStorage.UserID;
+        sessionStorage.setItem("userID", userID);
+    } else {
         var userID = sessionStorage.getItem("userID");
         if (userID != null) {
 
         } else {
             window.location.href = url_login;
         }
+    }
+</script>
+<div style="height: 60px; padding: 0px 10px 15px 10px">
+    <p>
+        您好</p>
+    <a style="margin-top:-10px;" data-role="button" data-mini="true" data-inline="true" href="@Url.Action("Index", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID })" id="center_address" data-ajax="false">
+        更改收货地址</a>
+</div>
+<div data-role="navbar" style="">
+    <ul>
+        <li style="width: 33%"><a href="@Url.Action("Index", "Default")">待支付</a></li>
+        <li style="width: 34%"><a href="/Center.aspx">待收货</a></li>
+        <li style="float: right; width: 33%"><a href="/Center.aspx">已完成</a></li>
+    </ul>
+</div>
+<div style="height: 400px;">
+</div>
+<script language="javascript">
+    $(function () {
+        var href = $("#center_address").attr("href");
+        href += "&userID=" + localStorage.UserID;
+        $("#center_address").attr("href", href);
     });
 </script>

@@ -335,9 +335,9 @@
           includeFinishButton: true, // whether to show a Finish button
           enableFinishButton: false, // make finish button enabled always
           errorSteps:[],    // Array Steps with errors
-          labelNext:'Next',
-          labelPrevious:'Previous',
-          labelFinish:'Finish',          
+          labelNext:'下一步',
+          labelPrevious:'上一步',
+          labelFinish:'完成',          
           onLeaveStep: null, // triggers when leaving a step
           onShowStep: null,  // triggers when showing a step
           onFinish: null  // triggers when Finish button is clicked

@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+<div style="padding: 10px;">
+    <a href="@Url.Action("Add", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID, userID = ViewBag.UserID })" data-ajax="false" data-role="button" data-corners="false">新增收货地址</a>
+    <div style="background-color: White; border: 1px solid #ccc; font-size: 14px;margin-top:10px;">
+        <div style="padding: 5px 15px 5px 15px;">
+            <p style="margin: 5px 0px">
+                武双琦（13474137783）</p>
+            <p style="margin: 5px 0px">
+                陕西西安市新城区动漫产业园4号楼</p>
+        </div>
+        <div style="border-top: 1px solid #ccc;">
+            <div style="float: left; width: 49%; text-align: center; padding-top: 8px; padding-bottom: 8px;
+                border-right: 1px solid #ccc;">
+                修改</div>
+            <div style="float: left; width: 50%; text-align: center; padding-top: 8px; padding-bottom: 8px">
+                删除</div>
+            <div style="clear: both">
+            </div>
+        </div>
+    </div>
+    <div style="background-color: White; border: 1px solid #ccc; font-size: 14px;margin-top:10px;">
+        <div style="padding: 5px 15px 5px 15px;">
+            <p style="margin: 5px 0px">
+                武双琦（13474137783）</p>
+            <p style="margin: 5px 0px">
+                陕西西安市新城区动漫产业园4号楼</p>
+        </div>
+        <div style="border-top: 1px solid #ccc;">
+            <div style="float: left; width: 49%; text-align: center; padding-top: 8px; padding-bottom: 8px;
+                border-right: 1px solid #ccc;">
+                修改</div>
+            <div style="float: left; width: 50%; text-align: center; padding-top: 8px; padding-bottom: 8px">
+                删除</div>
+            <div style="clear: both">
+            </div>
+        </div>
+    </div>
+</div>

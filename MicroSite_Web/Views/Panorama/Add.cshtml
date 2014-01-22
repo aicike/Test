@@ -163,6 +163,23 @@
                     $("#imgBlackImage").attr('src', data);
                 }
             });
+            $("#btnSubmit").click(function () {
+                var left = $("#ImageLeft").val().trim().length;
+                var right = $("#ImageRight").val().trim().length;
+                var top = $("#ImageTop").val().trim().length;
+                var bottom = $("#ImageBottom").val().trim().length;
+                var front = $("#ImageFront").val().trim().length;
+                var black = $("#ImageBlack").val().trim().length;
+                if (left == 0 || right == 0 || top == 0 || bottom == 0 || front == 0 || black == 0) {
+                    JAlert({
+                        Message: "请上传6张全景图片。",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return false;
+                }
+                return true;
+            });
         });
     </script>
 }

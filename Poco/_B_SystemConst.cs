@@ -213,8 +213,9 @@ namespace Poco
             public const string ActivityInfoModel = "ActivityInfoModel";
             public const string ActivityInfoParticipatorModel = "ActivityInfoParticipatorModel";
             public const string PanoramaModel = "PanoramaModel";
+            public const string UserDeliveryAddressModel = "UserDeliveryAddressModel";
 
-
+            
 
 
         }

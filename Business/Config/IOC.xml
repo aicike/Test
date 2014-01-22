@@ -98,6 +98,7 @@
   <object id="ActivityInfoModel" type="Business.ActivityInfoModel" parent="EFModel" singleton="false"></object>
   <object id="ActivityInfoParticipatorModel" type="Business.ActivityInfoParticipatorModel" parent="EFModel" singleton="false"></object>
   <object id="PanoramaModel" type="Business.PanoramaModel" parent="EFModel" singleton="false"></object>
+  <object id="UserDeliveryAddressModel" type="Business.UserDeliveryAddressModel" parent="EFModel" singleton="false"></object>
   
 
   <!--<object id="UserModel" type="NightClubBooth.Business.UserModel" parent="EFModel" singleton="false">

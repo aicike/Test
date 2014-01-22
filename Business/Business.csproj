@@ -142,6 +142,7 @@
     <Compile Include="RoleOptionModel.cs" />
     <Compile Include="TaskModel.cs" />
     <Compile Include="TemporayInstantMesModel.cs" />
+    <Compile Include="UserDeliveryAddressModel.cs" />
     <Compile Include="UserModel.cs" />
     <Compile Include="UserLoginInfoModel.cs" />
     <Compile Include="OrderUserInfoModel.cs" />
