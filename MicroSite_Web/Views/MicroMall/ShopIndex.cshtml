@@ -29,7 +29,7 @@
 
 
         function OpenUrl(ID) {
-            var Url = "@Url.Action("ProductList", "MicroMall",new{AMID = ViewBag.AMID})";
+            var Url = "@Url.Action("ProductList", "MicroMall", new { AMID = ViewBag.AMID })";
             var Href = Url+"&TypeID=" + ID;
             window.location.href = Href;
 
@@ -105,7 +105,7 @@
     </style>
 }
 @model List<Poco.Classify>
-<div data-role="content" style=" padding-top:0px">
+<div data-role="content" style="padding-top: 0px">
     <div class="BlocksIt">
         @for (int i = 0; i < Model.Count(); i++)
         {
@@ -117,12 +117,19 @@
                                 @Model[i].Name
                             </div>
                             <div class="RemDIVLeft">
-                            @Model[i].Depict
+                                @Model[i].Depict
                             </div>
                         </td>
                         <td style="width: 70%;" align="right">
                             <div class="ImgDIV">
-                                <img class="ShowImg" src="@Url.Content(Model[i].ImgPath)" />
+                                @if (string.IsNullOrEmpty(Model[i].ImgPath))
+                                { 
+                                    <img class="ShowImg" src="@Url.Content("~/Images/nopicture.png")" />
+                                }
+                                else
+                                { 
+                                    <img class="ShowImg" src="@Url.Content(Model[i].ImgPath)" />
+                                }
                             </div>
                         </td>
                     </tr>
@@ -136,7 +143,14 @@
                     <tr>
                         <td style="width: 70%;">
                             <div class="ImgDIV">
-                                <img class="ShowImg" src="@Url.Content(Model[i].ImgPath)" />
+                                @if (string.IsNullOrEmpty(Model[i].ImgPath))
+                                { 
+                                    <img class="ShowImg" src="@Url.Content("~/Images/nopicture.png")" />
+                                }
+                                else
+                                { 
+                                    <img class="ShowImg" src="@Url.Content(Model[i].ImgPath)" />
+                                }
                             </div>
                         </td>
                         <td style="width: 30%;" align="right">
@@ -144,7 +158,7 @@
                                 @Model[i].Name
                             </div>
                             <div class="RemDIVRight">
-                            @Model[i].Depict
+                                @Model[i].Depict
                             </div>
                         </td>
                     </tr>

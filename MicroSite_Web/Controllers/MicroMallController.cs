@@ -72,9 +72,25 @@ namespace MicroSite_Web.Controllers
         }
 
         //订单确认界面
-        public ActionResult OrderConfirmation(int AMID)
+        public ActionResult OrderConfirmation(int AMID,int ?UserID ,int ?adsID)
         {
             ViewBag.AMID = AMID;
+            if (UserID.HasValue)
+            {
+                if (adsID.HasValue)
+                {
+
+                }
+                else
+                {
+
+                }
+            }
+            else
+            { 
+            
+            }
+            
             return View();
         }
 
