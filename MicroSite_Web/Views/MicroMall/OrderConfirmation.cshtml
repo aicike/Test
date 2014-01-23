@@ -43,6 +43,7 @@
         }
         var items = [];
         $(function () {
+           
             $("#address").click(function () {
            
                  var Url = "@Url.Action("Index", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID })";
@@ -52,7 +53,12 @@
                  var href = Url+"&userID=" + "1"+"&backUrl="+ThisUrl;
 
                  window.location.href = href;
+
+
             });
+
+           
+
         });
 
         function GetSessionStor() {
@@ -89,17 +95,30 @@
         }
     </script>
 }
+@model Poco.UserDeliveryAddress
 <div id="isMain" data-role="content" style="display: ">
     <table align="center" class="MainTab" cellpadding="0" cellspacing="0">
         <tr>
             <td>
-                <div id="address" style=" cursor:pointer">
-                    <div>
-                        收件人：GMY <span>18706747231</span>
+                @if (Model != null)
+                { 
+                    <div id="address" style="cursor: pointer; min-height: 50px">
+                        <div>
+                            收件人：@Model.Receiver<span style="color: #7B7B7B">@Model.RPhone</span>
+                        </div>
+                        <div style="line-height: 18px; margin-top: 8px">
+                            @(Model.Province.Name + Model.City.Name + Model.District.Name + Model.Address)
+                        </div>
                     </div>
-                    <div style="line-height: 18px; margin-top: 8px">
-                        地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址</div>
-                </div>
+                }
+                else
+                {
+                    <div id="address" style="cursor: pointer; min-height: 50px">
+                        <div style="text-align: center; font-size: 16px; padding-top: 15px; color: #FF7F00">
+                            点击添加新地址
+                        </div>
+                    </div>
+                }
             </td>
         </tr>
     </table>
@@ -133,8 +152,16 @@
             </td>
         </tr>
     </table>
-    <a href="#" data-role="button" data-corners="false" data-theme="e" data-ajax="false">
-        提交订单</a>
+    @if (Model != null)
+    { 
+        <a href="#" id="upOrder" data-role="button" data-corners="false" data-theme="e" data-ajax="false">
+            提交订单</a>
+    }
+    else
+    {
+        <a href="#" class="ui-disabled" id="upOrder" data-role="button" data-corners="false"
+            data-theme="e" data-ajax="false">提交订单</a>
+    }
 </div>
 <script>
     GetSessionStor();
