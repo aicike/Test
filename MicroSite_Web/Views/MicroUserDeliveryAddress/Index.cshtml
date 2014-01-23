@@ -48,6 +48,7 @@
 <script language="javascript">
     var address_del_url = '@Html.Raw(Url.Action("Delete", "MicroUserDeliveryAddress"))';
     var index_url = '@Html.Raw(Url.Action("Index", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID, userID = ViewBag.UserID }))';
+    var backUrl=GetQueryString("backUrl");
     $(function () {
         $(".address_delete").click(function () {
             var id=$(this).attr("adid");

@@ -7,7 +7,7 @@
     <table style="width: 100%">
         <tr>
             <td>
-                <input name="Receiver" id="address_name" placeholder="收货人姓名" tabindex="1" data-mini="true" />
+                <input name="Receiver" id="address_name" placeholder="收货人姓名" tabindex="1" data-mini="true" value="@Model.Receiver" />
             </td>
         </tr>
         <tr>
@@ -21,7 +21,8 @@
                 </div>
                 <div style="width: 32%; float: left; margin-left: 4px; display: none;" id="address_div_district">
                     <select name="DistrictID" id="address_DistrictID" data-mini="true" tabindex="4">
-                        @if (Model.District != null) { 
+                        @if (Model.District != null)
+                        { 
                             <option value="0">@Model.District.Name</option>
                         }
                         <option value="0">选择区</option>
@@ -31,13 +32,13 @@
         </tr>
         <tr>
             <td>
-                <input name="Address" id="address_ads" placeholder="详细地址" data-mini="true" tabindex="5" />
+                <input name="Address" id="address_ads" placeholder="详细地址" data-mini="true" tabindex="5" value="@Model.Address" />
             </td>
         </tr>
         <tr>
             <td>
                 <input name="RPhone" id="address_phone" placeholder="联系电话（移动电话）" data-mini="true"
-                    tabindex="6" type="tel" />
+                    tabindex="6" type="tel" value="@Model.RPhone"  />
             </td>
         </tr>
         <tr>
@@ -108,11 +109,12 @@
                     return false;
                 }
             };
-            $.post(edit_url, { amid: '@ViewBag.AMID',userID:'@ViewBag.UserID' , Receiver: address_name, ProvinceID: address_ProvinceID,CityID:address_CityID,DistrictID:address_DistrictID,Address:address_ads,RPhone:address_phone }, function (result) {
+            
+            $.post(edit_url, {ID:@Model.ID, AccountMainID: '@Model.AccountMainID',UserID:'@Model.UserID' , Receiver: address_name, ProvinceID: address_ProvinceID,CityID:address_CityID,DistrictID:address_DistrictID,Address:address_ads,RPhone:address_phone }, function (result) {
                 if (result.HasError) {
                     showError(result.Error);
                 } else {
-                    showError("添加成功。", function () {
+                    showError("修改成功。", function () {
                         window.location.href = index_url;
                     });
                 }

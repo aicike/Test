@@ -25,7 +25,7 @@ namespace Web
             routes.Add("User", new DomainRoute(
                "{HostName}." + SystemConst.WebUrl,     // Domain with parameters 
                "{controller}/{action}/{id}",    // URL with parameters 
-               new { controller = "Login", action = "Index", id = UrlParameter.Optional }  // Parameter defaults
+               new { controller = "Default", action = "Index", id = UrlParameter.Optional }  // Parameter defaults
             ));
 
             routes.MapRoute(

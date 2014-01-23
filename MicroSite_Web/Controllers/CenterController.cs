@@ -95,7 +95,7 @@ namespace MicroSite_Web.Controllers
         }
 
         [HttpPost]
-        public string Register(int amid, string reg_phone, string reg_email, string reg_name, string reg_pwd, string reg_confirmPwd)
+        public string Register(int amid, string reg_phone, string reg_name, string reg_pwd, string reg_confirmPwd)
         {
             if (reg_pwd != reg_confirmPwd)
             {
@@ -104,7 +104,6 @@ namespace MicroSite_Web.Controllers
 
             var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
             App_UserLoginInfo userLoginInfo = new App_UserLoginInfo();
-            userLoginInfo.Email = reg_email;
             userLoginInfo.Phone = reg_phone;
             userLoginInfo.Name = reg_name;
             userLoginInfo.Pwd = reg_pwd;

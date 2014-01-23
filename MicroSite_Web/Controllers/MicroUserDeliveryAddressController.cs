@@ -49,6 +49,14 @@ namespace MicroSite_Web.Controllers
         }
 
         [HttpPost]
+        public string Edit(UserDeliveryAddress uda)
+        {
+            var model = Factory.Get<IUserDeliveryAddressModel>(SystemConst.IOC_Model.UserDeliveryAddressModel);
+            var result = model.Edit(uda);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+        [HttpPost]
         public string Delete(int amid, int userID, int udaID)
         {
             var model = Factory.Get<IUserDeliveryAddressModel>(SystemConst.IOC_Model.UserDeliveryAddressModel);

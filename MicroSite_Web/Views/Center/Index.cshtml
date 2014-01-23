@@ -8,7 +8,7 @@
 
     var isAutoLogin = localStorage.IsAutoLogin;
     if (isAutoLogin != null) {
-        var userID = localStorage.UserID;
+        var userID = GetUserID(@amid);
         sessionStorage.setItem("userID", userID);
     } else {
         var userID = sessionStorage.getItem("userID");
@@ -37,7 +37,7 @@
 <script language="javascript">
     $(function () {
         var href = $("#center_address").attr("href");
-        href += "&userID=" + localStorage.UserID;
+        href += "&userID=" + GetUserID(@amid);
         $("#center_address").attr("href", href);
     });
 </script>

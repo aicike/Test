@@ -15,14 +15,6 @@
         </tr>
         <tr>
             <td style="text-align: right">
-                邮箱：
-            </td>
-            <td>
-                <input type="text" name="reg_email" id="reg_email" tabindex="2" />
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: right">
                 <span style="color: red;">*</span> 昵称：
             </td>
             <td>
@@ -61,7 +53,6 @@
         $("#reg_btnSubmit").click(function () {
             //            //    $.mobile.ajaxEnabled = false;
             var phone = $("#reg_phone").val().trim();
-            var email = $("#reg_email").val().trim();
             var name = $("#reg_name").val().trim();
             var pwd = $("#reg_pwd").val().trim();
             var pwd2 = $("#reg_confirmPwd").val().trim();
@@ -80,13 +71,6 @@
             if (hasError == false) {
                 showError(error);
                 return false;
-            }
-            if (email.length > 0) {
-                var reg = /\w+([-+.']\w+)*@@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
-                if (reg.test(email) == false) {
-                    error = "邮箱格式错误。";
-                    hasError = false;
-                }
             }
             if (hasError == false) {
                 showError(error);
@@ -116,7 +100,7 @@
                 showError(error);
                 return false;
             }
-            $.post(url_reg, { amid: @amid, reg_phone: phone, reg_email: email, reg_name: name, reg_pwd: pwd, reg_confirmPwd: pwd2 }, function (result) {
+            $.post(url_reg, { amid: @amid, reg_phone: phone, reg_name: name, reg_pwd: pwd, reg_confirmPwd: pwd2 }, function (result) {
                 if (result.HasError) { 
                     showError(result.Error);
                 } else {

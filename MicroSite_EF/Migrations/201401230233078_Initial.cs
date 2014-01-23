@@ -396,7 +396,7 @@ namespace MicroSite_EF.Migrations
                         Address = c.String(maxLength: 300),
                         Receiver = c.String(maxLength: 10),
                         RPhone = c.String(),
-                        TelePhone = c.String(),
+                        TelePhone = c.String(maxLength: 20),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
