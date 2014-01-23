@@ -72,26 +72,32 @@ namespace MicroSite_Web.Controllers
         }
 
         //订单确认界面
-        public ActionResult OrderConfirmation(int AMID,int ?UserID ,int ?adsID)
+        public ActionResult OrderConfirmation(int AMID, int? UserID, int? adsID)
         {
             ViewBag.AMID = AMID;
+            UserDeliveryAddress uda = new UserDeliveryAddress();
             if (UserID.HasValue)
             {
+                ViewBag.UserID = UserID.Value;
+                var AdsModel = Factory.Get<IUserDeliveryAddressModel>(SystemConst.IOC_Model.UserDeliveryAddressModel);
                 if (adsID.HasValue)
                 {
-
+                    //根据adsID 获取收货地址
+                    uda = AdsModel.Get(AMID,UserID.Value,adsID.Value);
                 }
                 else
                 {
-
+                    //根据UserID 获取第一个收货地址
+                    uda = AdsModel.GetListByUserID(UserID.Value, AMID).FirstOrDefault();
                 }
             }
             else
-            { 
-            
+            {
+                //需要登录
+                ViewBag.UserID = 0;
             }
-            
-            return View();
+
+            return View(uda);
         }
 
 
