@@ -174,7 +174,11 @@ function SetUserID(amid, userID) {
     localStorage.setItem("amid_" + amid + "_userid_", userID);
 }
 function GetUserID(amid) {
-    return localStorage.getItem("amid_" + amid + "_userid_");
+    var userID = localStorage.getItem("amid_" + amid + "_userid_");
+    if (userID == undefined || userID == null) {
+        userID = 0;
+    }
+    return userID;
 }
 function GetQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
