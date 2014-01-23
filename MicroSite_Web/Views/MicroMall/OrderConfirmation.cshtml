@@ -45,7 +45,8 @@
         $(function () {
             $("#address").click(function () {
            
-                 var Url = "@Url.Action("Index", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID })";
+                 //var Url = "@Url.Action("Index", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID })";
+                 var Url = "@Url.Action("Add", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID,userID=1 })";
 
                  var ThisUrl = "@Url.Action("OrderConfirmation", "MicroUserDeliveryAddress", new { AMID = ViewBag.AMID })";
     

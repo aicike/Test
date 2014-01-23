@@ -35,6 +35,7 @@ namespace MicroSite_Web.Controllers
             uda.AccountMainID = amid;
             uda.UserID = userID;
             var result = model.Add(uda);
+            result.Entity = uda.ID;
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 

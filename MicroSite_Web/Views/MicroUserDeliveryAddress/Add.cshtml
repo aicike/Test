@@ -20,7 +20,7 @@
                 </div>
                 <div style="width: 32%; float: left; margin-left: 4px; display: none;" id="address_div_district">
                     <select name="DistrictID" id="address_DistrictID" data-mini="true" tabindex="4">
-                    <option value="0">选择区</option>
+                        <option value="0">选择区</option>
                     </select>
                 </div>
             </td>
@@ -49,6 +49,7 @@
     var districtUrl = '@Url.Action("DistrictSelectList", "Ajax", new { Area = "" })';
     var add_url = '@Url.Action("Add", "MicroUserDeliveryAddress")';
     var index_url = '@Html.Raw(Url.Action("Index", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID, userID = ViewBag.UserID }))';
+     var backUrl=GetQueryString("backUrl");
     $(function () {
         $("#address_ProvinceID").Province({ value: 0 }, function (id) {
             if (id == 0) {
@@ -65,7 +66,8 @@
             }
         });
         $("#address_DistrictID").District({ parent: "address_CityID" });
-        $("#reg_btnSubmit").click(function () {
+        
+            $("#reg_btnSubmit").click(function () {
             var address_name = $("#address_name").val().trim();
             var address_ProvinceID = $("#address_ProvinceID").val();
             var address_CityID = $("#address_CityID").val();
@@ -104,6 +106,19 @@
                     return false;
                 }
             };
+            if(backUrl.length>0){
+                $.post(add_url, { amid: @ViewBag.AMID,userID:@ViewBag.UserID , Receiver: address_name, ProvinceID: address_ProvinceID,CityID:address_CityID,DistrictID:address_DistrictID,Address:address_ads,RPhone:address_phone }, function (result) {
+                    if (result.HasError) {
+                        showError(result.Error);
+                    } else {
+                        showError("添加成功。", function () {
+                        var adsID=result.Entity;
+                        var newUrl=backUrl+"&adsID="+adsID;
+                        window.location.href=newUrl;
+                        });
+                    }
+                }, "json");
+            }else{
             $.post(add_url, { amid: @ViewBag.AMID,userID:@ViewBag.UserID , Receiver: address_name, ProvinceID: address_ProvinceID,CityID:address_CityID,DistrictID:address_DistrictID,Address:address_ads,RPhone:address_phone }, function (result) {
                 if (result.HasError) {
                     showError(result.Error);
@@ -113,7 +128,9 @@
                     });
                 }
             }, "json");
+            }
         });
+        
     });
     function showError(error, fun) {
         $('<div>').simpledialog2({
