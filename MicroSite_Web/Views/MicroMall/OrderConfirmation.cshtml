@@ -43,7 +43,16 @@
         }
         var items = [];
         $(function () {
+            $("#address").click(function () {
+           
+                 var Url = "@Url.Action("Index", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID })";
 
+                 var ThisUrl = "@Url.Action("OrderConfirmation", "MicroUserDeliveryAddress", new { AMID = ViewBag.AMID })";
+    
+                 var href = Url+"&userID=" + "1"+"&backUrl="+ThisUrl;
+
+                 window.location.href = href;
+            });
         });
 
         function GetSessionStor() {
@@ -84,11 +93,13 @@
     <table align="center" class="MainTab" cellpadding="0" cellspacing="0">
         <tr>
             <td>
-                <div>
-                    收件人：GMY <span>18706747231</span>
+                <div id="address" style=" cursor:pointer">
+                    <div>
+                        收件人：GMY <span>18706747231</span>
+                    </div>
+                    <div style="line-height: 18px; margin-top: 8px">
+                        地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址</div>
                 </div>
-                <div style="line-height: 18px; margin-top: 8px">
-                    地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址</div>
             </td>
         </tr>
     </table>
@@ -122,7 +133,8 @@
             </td>
         </tr>
     </table>
-    <a href="#" data-role="button" data-corners="false" data-theme="e">提交订单</a>
+    <a href="#" data-role="button" data-corners="false" data-theme="e" data-ajax="false">
+        提交订单</a>
 </div>
 <script>
     GetSessionStor();
