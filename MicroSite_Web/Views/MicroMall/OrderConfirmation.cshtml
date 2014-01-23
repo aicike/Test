@@ -49,7 +49,7 @@
 
                  var ThisUrl = "@Url.Action("OrderConfirmation", "MicroUserDeliveryAddress", new { AMID = ViewBag.AMID })";
     
-                 var href = Url+"&userID=" + "1"+"&backUrl="+ThisUrl;
+                 var href = Url+"&userID=" + GetUserID(@ViewBag.AMID)+"&backUrl="+ThisUrl;
 
                  window.location.href = href;
             });

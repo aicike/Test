@@ -8,14 +8,15 @@
         新增收货地址</a>
     @foreach (var item in Model)
     {
-        <div style="background-color: White; border: 1px solid #ccc; font-size: 15px; margin-top: 10px;">
-            <div style="padding: 8px 18px 8px 18px;">
+        <div style="background-color: White; border: 1px solid #ccc; font-size: 15px; margin-top: 10px;"
+            class="address_item" adid="@item.ID">
+            <div style="padding: 8px 28px 8px 18px; position: relative" class="address_item_div">
                 <p style="margin: 5px 0px">
                     @item.Receiver（@item.RPhone）</p>
                 <p style="margin: 5px 0px">
                     @item.Address</p>
             </div>
-            <div style="border-top: 1px solid #ccc;">
+            <div style="border-top: 1px solid #ccc;" class="address_opt">
                 <div style="float: left; width: 49%; text-align: center; padding-top: 8px; padding-bottom: 8px;
                     border-right: 1px solid #ccc; color: #7D7D7D">
                     <a href="@Url.Action("Edit", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID, userID = ViewBag.UserID, udaID = item.ID })" data-ajax="false" >
@@ -62,6 +63,16 @@
                 }
             }, "json");
         });
+        if(backUrl.length>0){
+            $(".address_opt").hide();
+            $(".address_item").first().css("background-color","#FFFFE0");
+            $(".address_item").first().find(".address_item_div").append('<div style="position:absolute;right:15px;top:15px;"><img src="@Url.Content("/Images/check.png")" /></div>');
+            $(".address_item").click(function(){
+                var adsID=$(this).attr("adid");
+                var newUrl=backUrl+"&adsID="+adsID;
+                window.location.href=newUrl;
+            });
+        }
     });
         
 </script>
