@@ -85,6 +85,21 @@
             width: 100%;
         }
         
+        .item_b
+        {
+            padding: 10px 8px;
+        }
+        .item_b .items_likes em
+        {
+            line-height: 23px;
+            display: block;
+            float: left;
+            padding: 0px 6px;
+            color: #FF6699;
+            font-weight: 800;
+            border: 1px solid #ff6fa6;
+            border-radius: 3px;
+        }
         
         /* more */
         #more
@@ -96,7 +111,7 @@
         /* infscr-loading */
         #infscr-loading
         {
-            bottom: 10px;
+            bottom: -10px;
             position: absolute;
             text-align: center;
             height: 20px;
@@ -173,7 +188,7 @@
             var Wwidth = $(".demo").width() * 0.5
             var Iwidth = $(".item").width();
             var Rwidth = parseInt((Wwidth - Iwidth)) * 1.9;
-            $('.item imgDiv').load(function () {
+            $('.item img').load(function () {
                 $('.infinite_scroll').masonry({
                     itemSelector: '.masonry_brick',
                     columnWidth: 0,
@@ -190,7 +205,6 @@
         $(function () {
 
             function item_callback(){ 
-		
 		        $('.item').mouseover(function(){
 			        $(this).css('box-shadow', '0 1px 5px rgba(35,25,25,0.5)');
 			        $('.btns',this).show();
@@ -223,7 +237,7 @@
                         if (sp > @ViewBag.pageCount) {
                             $("#infscr-loading").hide();
                             $(".loadOK").show();
-                            
+                            $(window).unbind('.infscr');
                         }
                     }
                 },
@@ -239,13 +253,13 @@
                 return;
             });
 
-              item_callback() ;
+//              item_callback() ;
 
-             $(window).resize();
+//             $(window).resize();
 
-             $(window).bind("scroll", function(){ 
-                $(window).resize();
-            }); 
+//             $(window).bind("scroll", function(){ 
+//                $(window).resize();
+//            }); 
            
         });
 
