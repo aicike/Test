@@ -25,6 +25,9 @@
         rel="stylesheet" type="text/css" />
     <script src="@Url.Content("/Scripts/jqueryMobileDialog/jquery.mobile.simpledialog2.min.js")"
         type="text/javascript"></script>
+    <script type="text/javascript">
+        var _loginUrl = '@Url.Action("Login","Center",new {amid=MicroSite_Web.Controllers.UserBaseController.GetAccountMainID()})';
+    </script>
     <script src="@Url.Content("/Scripts/common.js")" type="text/javascript"></script>
     <script>
         $(document).on("pageinit", ".myPage", function () {

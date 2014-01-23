@@ -180,6 +180,17 @@ function GetUserID(amid) {
     }
     return userID;
 }
+function CheckIsLogin(amid) {
+    var userID = GetUserID(amid);
+    if (userID == 0) {
+        var rawUrl = window.location.href;
+        var newUrl = _loginUrl + "&backUrl=" + rawUrl;
+        window.location.href = newUrl;
+        return false;
+    }
+    return true;
+}
+
 function GetQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
     var r = window.location.search.substr(1).match(reg);

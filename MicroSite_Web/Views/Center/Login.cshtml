@@ -35,7 +35,7 @@
                 <input type="password" name="LoginPwd" id="txtLoginPwd" tabindex="2" />
             </td>
         </tr>
-        <tr>
+        @*<tr>
             <td style="text-align: right; vertical-align: middle" class="login_td">
                 <label for="slider-flip-m">
                     自动登录：</label>
@@ -48,7 +48,7 @@
             </td>
             <td style="width: 100px;">
             </td>
-        </tr>
+        </tr>*@
         <tr>
             <td>
                 <input type="button" value="注册" id="btnRegister" tabindex="4" data-inline="true">
@@ -63,10 +63,9 @@
     var url = '@Url.Action("Login", "Center", new { amid = amid })';
     var url_index = '@Url.Action("Index", "Center", new { amid = amid })';
     var url_reg = '@Url.Action("Register", "Center", new { amid = amid })';
+    var backUrl=GetQueryString("backUrl");
     $(function () {
-        //$('#my-form').on('submit', false);
         $("#btnSubmit").click(function () {
-            //            //    $.mobile.ajaxEnabled = false;
             var loginName = $("#txtLoginName").val().trim();
             var loginPwd = $("#txtLoginPwd").val().trim();
             var error = "";
@@ -91,13 +90,14 @@
                 if (result.HasError) {
                     showError(result.Error);
                 } else {
-                    var isAutoLogin= $("#slider-flip-m").val();
-                    if(isAutoLogin=="1"){
-                        localStorage.IsAutoLogin=1;
-                        var userID = SetUserID(@amid,result.Entity);
-                    }
+                    localStorage.IsAutoLogin=1;
+                    var userID = SetUserID(@amid,result.Entity);
                     sessionStorage.setItem("userID",result.Entity);
-                    window.location.href=url_index;
+                    if(backUrl.length>0){
+                        window.location.href=backUrl;
+                    }else{
+                        window.location.href=url_index;
+                    }
                 }
             }, "json");
         });

@@ -268,6 +268,7 @@
     <Content Include="Images\BG_3.jpg" />
     <Content Include="Images\bullet.png" />
     <Content Include="Images\carp.png" />
+    <Content Include="Images\check.png" />
     <Content Include="Images\checkbox.gif" />
     <Content Include="Images\checkbox.png" />
     <Content Include="Images\default_Avatar.png" />
@@ -1020,6 +1021,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Scripts\nivoSlider\dark\.DS_Store" />
     <Content Include="Views\Guide\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutUser_NoMenu.cshtml" />

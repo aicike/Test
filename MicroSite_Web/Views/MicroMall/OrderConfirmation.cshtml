@@ -43,16 +43,16 @@
         }
         var items = [];
         $(function () {
-            $("#address").click(function () {
+            $("#address").click(function (event) {
            
                  //var Url = "@Url.Action("Index", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID })";
-                 var Url = "@Url.Action("Add", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID,userID=1 })";
+                 var Url = "@Url.Action("Add", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID })";
 
                  var ThisUrl = "@Url.Action("OrderConfirmation", "MicroUserDeliveryAddress", new { AMID = ViewBag.AMID })";
-    
+                 if(CheckIsLogin(@ViewBag.AMID)){
                  var href = Url+"&userID=" + GetUserID(@ViewBag.AMID)+"&backUrl="+ThisUrl;
-
                  window.location.href = href;
+                 }
             });
         });
 
