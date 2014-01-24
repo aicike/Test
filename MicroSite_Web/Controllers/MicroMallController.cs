@@ -130,7 +130,7 @@ namespace MicroSite_Web.Controllers
 
         //提交订单
         [HttpPost]
-        public ActionResult ADDOrder(int AMID)
+        public ActionResult OrderConfirmation(int AMID)
         {
             try
             {
@@ -149,12 +149,13 @@ namespace MicroSite_Web.Controllers
 
                 if (result.HasError)
                 {
-                    return JavaScript("window.location.href='" + Url.Action("OrderConfirmation", "MicroMall", new { AMID = AMID, adsID = AID, IsError = 2 }) + "'");
+                    return RedirectToAction("OrderConfirmation", "MicroMall", new { AMID = AMID, adsID = AID, IsError = 2 });
                 }
                 else
                 {
                     //支付界面
                     return View();
+
                 }
 
             }
