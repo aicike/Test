@@ -106,7 +106,7 @@
                     return false;
                 }
             };
-            if(backUrl.length>0){
+            if(backUrl!=null&&backUrl.length>0){
                 $.post(add_url, { amid: @ViewBag.AMID,userID:@ViewBag.UserID , Receiver: address_name, ProvinceID: address_ProvinceID,CityID:address_CityID,DistrictID:address_DistrictID,Address:address_ads,RPhone:address_phone }, function (result) {
                     if (result.HasError) {
                         showError(result.Error);

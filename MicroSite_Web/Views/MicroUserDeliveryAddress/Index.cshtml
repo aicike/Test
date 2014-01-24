@@ -63,7 +63,7 @@
                 }
             }, "json");
         });
-        if(backUrl.length>0){
+        if(backUrl!=null&&backUrl.length>0){
             $(".address_opt").hide();
             $(".address_item").first().css("background-color","#FFFFE0");
             $(".address_item").first().find(".address_item_div").append('<div style="position:absolute;right:15px;top:15px;"><img src="@Url.Content("/Images/check.png")" /></div>');

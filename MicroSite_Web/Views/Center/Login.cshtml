@@ -93,7 +93,7 @@
                     localStorage.IsAutoLogin=1;
                     var userID = SetUserID(@amid,result.Entity);
                     sessionStorage.setItem("userID",result.Entity);
-                    if(backUrl.length>0){
+                    if(backUrl!=null&&backUrl.length>0){
                         window.location.href=backUrl;
                     }else{
                         window.location.href=url_index;
