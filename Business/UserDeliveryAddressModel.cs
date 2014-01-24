@@ -23,7 +23,7 @@ namespace Business
                 result.Error = "参数错误，无法操作。";
             }
             result = Delete(udaID);
-            return result;
+            return result;            
         }
 
         public UserDeliveryAddress Get(int amid, int userID, int udaID)

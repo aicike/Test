@@ -262,6 +262,7 @@
     <Content Include="Images\android.png" />
     <Content Include="Images\AppDefault.png" />
     <Content Include="Images\AppLogo.png" />
+    <Content Include="Images\arrowgrey02-right.png" />
     <Content Include="Images\banner.jpg" />
     <Content Include="Images\BG_1.jpg" />
     <Content Include="Images\BG_2.jpg" />
@@ -1068,7 +1069,7 @@
           <IISUrl>http://192.168.1.138:8080</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>True</UseCustomServer>
-          <CustomServerUrl>http://192.168.1.166:8080</CustomServerUrl>
+          <CustomServerUrl>http://192.168.1.138:8080</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
