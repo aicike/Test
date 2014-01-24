@@ -164,11 +164,11 @@ namespace MicroSite_Web.Controllers
                 string AID = Request.Form["AID"];
                 if (AID != null)
                 {
-                    return JavaScript("window.location.href='" + Url.Action("OrderConfirmation", "MicroMall", new { AMID = AMID, adsID = AID, IsError = 1 }) + "'");
+                    return RedirectToAction("OrderConfirmation", "MicroMall", new { AMID = AMID, adsID = AID, IsError = 1 });
                 }
                 else
                 {
-                    return JavaScript("window.location.href='" + Url.Action("OrderConfirmation", "MicroMall", new { AMID = AMID, IsError = 1 }) + "'");
+                    return RedirectToAction("OrderConfirmation", "MicroMall", new { AMID = AMID, IsError = 1 });
                 }
 
             }

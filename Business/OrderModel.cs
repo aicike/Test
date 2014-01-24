@@ -369,7 +369,7 @@ namespace Business
 
                     }
                     //获取订单编号
-                    string orderNumSql = "SELECT dbo.SetSerialNumber('Micro',5," + AMID + ")";
+                    string orderNumSql = "SELECT dbo.SetSerialNumber('M',5," + AMID + ")";
                     CommonModel commonModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
                     string orderNum = commonModel.SqlQuery<string>(orderNumSql).FirstOrDefault();
                     if (string.IsNullOrEmpty(orderNum) || orderNum.Length == 0)

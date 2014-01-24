@@ -83,6 +83,17 @@
            
 
 
+                var IsError = @ViewBag.Error;
+                //IsError 1:操作失败 2：提交订单失败
+                if(IsError==1)
+                {
+                    showMsg("操作失败");
+                }
+                else if(IsError==2)
+                {
+                    showMsg("提交订单失败");
+                }
+
             });
 
         }        
