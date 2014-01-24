@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Injection;
 using Interface;
 using Poco;
+using Business;
 
 namespace MicroSite_Web.Controllers
 {
@@ -72,33 +73,60 @@ namespace MicroSite_Web.Controllers
         }
 
         //订单确认界面
-        public ActionResult OrderConfirmation(int AMID, int? UserID, int? adsID)
+        public ActionResult OrderConfirmation(int AMID, int? adsID)
         {
             ViewBag.AMID = AMID;
-            UserDeliveryAddress uda = new UserDeliveryAddress();
-            if (UserID.HasValue)
+            if (adsID.HasValue)
             {
-                ViewBag.UserID = UserID.Value;
-                var AdsModel = Factory.Get<IUserDeliveryAddressModel>(SystemConst.IOC_Model.UserDeliveryAddressModel);
-                if (adsID.HasValue)
-                {
-                    //根据adsID 获取收货地址
-                    uda = AdsModel.Get(AMID,UserID.Value,adsID.Value);
-                }
-                else
-                {
-                    //根据UserID 获取第一个收货地址
-                    uda = AdsModel.GetListByUserID(UserID.Value, AMID).FirstOrDefault();
-                }
+                ViewBag.adsID = adsID.Value;
             }
             else
             {
-                //需要登录
-                ViewBag.UserID = 0;
+                ViewBag.adsID = 0;
             }
 
-            return View(uda);
+            return View();
         }
+
+        //获取收货地址 AJAX
+        [HttpPost]
+        public string GetAdsInfo(int adsID, int AMID, int UserID)
+        {
+            UserDeliveryAddressModel AdsModel = Factory.Get<IUserDeliveryAddressModel>(SystemConst.IOC_Model.UserDeliveryAddressModel) as UserDeliveryAddressModel;
+            UserDeliveryAddress DBUda = null;
+            UserDeliveryAddress uda = new UserDeliveryAddress();
+            if (adsID!=0)
+            {
+                //根据adsID 获取收货地址
+                DBUda = AdsModel.Get(AMID, UserID, adsID);
+            }
+            else
+            {
+                //根据UserID 获取第一个收货地址
+                DBUda = AdsModel.GetListByUserID(UserID, AMID).FirstOrDefault();
+            }
+            if (DBUda != null)
+            {
+                uda.Receiver = DBUda.Receiver;
+                uda.RPhone = DBUda.RPhone;
+                uda.ID = DBUda.ID;
+                uda.Address = DBUda.Province.Name + " " + DBUda.City.Name + " " + DBUda.District.Name + " " + DBUda.Address;
+                return Newtonsoft.Json.JsonConvert.SerializeObject(uda);
+            }
+            else
+            {
+                return null;
+            }
+           
+        }
+
+        //提交订单
+        [HttpPost]
+        public ActionResult ADDOrder(int AMID)
+        {
+            return View();
+        }
+
 
 
         /// <summary>
@@ -130,5 +158,8 @@ namespace MicroSite_Web.Controllers
             ViewBag.AMID = AMID;
             return View(products);
         }
+
+
+
     }
 }
