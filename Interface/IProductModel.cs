@@ -33,5 +33,14 @@ namespace Interface
         /// <param name="AccountMainID"></param>
         /// <returns></returns>
         Product GetProduct(int PID, int AccountMainID);
+
+        /// <summary>
+        /// 根据ID数组 获取产品信息
+        /// </summary>
+        /// <param name="IDS">产品id 数组</param>
+        /// <param name="AccountMainID"></param>
+        /// <returns></returns>
+        IQueryable<Product> GetProductListByIDs(int[] IDS, int AccountMainID);
+       
     }
 }

@@ -152,5 +152,17 @@ namespace Business
                return null;
             }
         }
+
+        /// <summary>
+        /// 根据ID 数组获取产品信息
+        /// </summary>
+        /// <param name="IDS">产品id 数组</param>
+        /// <param name="AccountMainID"></param>
+        /// <returns></returns>
+        public IQueryable<Product> GetProductListByIDs(int[] IDS, int AccountMainID)
+        {
+            var list = List().Where(a => IDS.Contains(a.ID) && a.AccountMainID == AccountMainID);
+            return list;
+        }
     }
 }

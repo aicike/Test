@@ -60,6 +60,8 @@
                         $("#AName").text(result.Receiver);
                         $("#APhone").text(result.RPhone);
                         $("#AAddress").text(result.Address );
+                   
+
 
                     }
                     else
@@ -73,6 +75,7 @@
                              var href = Url+"&userID=" + GetUserID(@ViewBag.AMID)+"&backUrl="+ThisUrl;
                              window.location.href = href;
                         });
+                        $("#addorder").attr("disabled","").button("disable");
                     }
 
                 },"json");
@@ -97,6 +100,7 @@
         var items = [];
          
       
+        //加载界面
         function GetSessionStor() {
             var jsonStrZJ = "";
             jsonStrZJ = sessionStorage.ImtimelyShopZJ;
@@ -129,62 +133,93 @@
                 $("#isMain").hide();
             }
         }
+
+        //提交
+        function AddSessionID()
+        {
+            var jsonStrZJ = "";
+            jsonStrZJ = sessionStorage.ImtimelyShopZJ;
+            if (jsonStrZJ != undefined && jsonStrZJ != "" && jsonStrZJ != "[]") {
+                items = eval(jsonStrZJ);
+                var pidsAndCnt ="";
+                var pids = "";
+                for (var i in items) {
+                    pidsAndCnt+=pidsAndCnt+items[i].PID+","+items[i].Pcount+"|";
+                    pids+=pids+items[i].PID+"|";
+                }
+                $("#HPIDSandCnt").val(pidsAndCnt);
+                $("#HPIDS").val(pids);
+                var UID = GetUserID(@ViewBag.AMID);
+                $("#HuserID").val(UID);
+            }
+        }
+
+
     </script>
 }
 <div id="isMain" data-role="content" style="display: ">
-    <table align="center" class="MainTab" cellpadding="0" cellspacing="0">
-        <tr>
-            <td>
-                <div id="address" style=" border-radius: 5px;padding: 8px 8px; border: 1px solid #dbdbdb;cursor: pointer; min-height: 40px; display: none; background-image: URL(/Images/arrowgrey02-right.png);
-                    background-position: right; background-repeat: no-repeat; background-attachment: inherit;">
-                    <div>
-                        <input type="hidden" id="AID" />
-                        收件人：<span id="AName"></span> <span style="color: #7B7B7B" id="APhone"></span>
+    @using (Html.BeginForm("ADDOrder", "MicroMall", new { AMID = ViewBag.AMID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <table align="center" class="MainTab" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>
+                    <div id="address" style="border-radius: 5px; padding: 8px 8px; border: 1px solid #dbdbdb;
+                        cursor: pointer; min-height: 40px; display: none; background-image: URL(/Images/arrowgrey02-right.png);
+                        background-position: right; background-repeat: no-repeat; background-attachment: inherit;">
+                        <div>
+                            <input type="hidden" id="AID" />
+                            收件人：<span id="AName"></span> <span style="color: #7B7B7B" id="APhone"></span>
+                        </div>
+                        <div style="line-height: 18px; margin-top: 8px; width: 80%">
+                            <span id="AAddress"></span>
+                        </div>
                     </div>
-                    <div style="line-height: 18px; margin-top: 8px; width: 80%">
-                        <span id="AAddress"></span>
+                    <div id="Noaddress" style="border-radius: 5px; padding: 8px 8px; border: 1px solid #dbdbdb;
+                        cursor: pointer; min-height: 50px; display: none">
+                        <div style="text-align: center; font-size: 16px; padding-top: 15px; color: #FF7F00">
+                            点击添加新地址
+                        </div>
                     </div>
-                </div>
-                <div id="Noaddress" style=" border-radius: 5px;padding: 8px 8px; border: 1px solid #dbdbdb;cursor: pointer; min-height: 50px; display: none">
-                    <div style="text-align: center; font-size: 16px; padding-top: 15px; color: #FF7F00">
-                        点击添加新地址
+                </td>
+            </tr>
+        </table>
+        <table align="center" class="MainTab" cellpadding="0" cellspacing="0">
+            <tr>
+                <td style="">
+                    <div style="padding: 8px 8px; border: 1px solid #dbdbdb; border-radius: 5px;">
+                        快递：￥00.00元
                     </div>
-                </div>
-            </td>
-        </tr>
-    </table>
-    <table align="center" class="MainTab" cellpadding="0" cellspacing="0">
-        <tr>
-            <td style="">
-                <div style="padding: 8px 8px; border: 1px solid #dbdbdb; border-radius: 5px;">
-                    快递：￥00.00元
-                </div>
-            </td>
-        </tr>
-    </table>
-    <table align="center" class="MainTab" cellpadding="0" cellspacing="0">
-        <tr>
-            <td style="">
-                <div style="padding: 8px 8px; border: 1px solid #dbdbdb; border-radius: 5px;">
-                    支付宝
-                </div>
-            </td>
-        </tr>
-    </table>
-    <table align="center" class="MainTab" cellpadding="0" cellspacing="0">
-        <tr id="SessionInfo">
-            <td style="">
-                商品详情
-            </td>
-        </tr>
-        <tr>
-            <td style="font-size: 14px; text-align: right; height: 35px">
-                应付金额：￥<span id="amount" style="color: Red; font-weight: bold">0</span>
-            </td>
-        </tr>
-    </table>
-    <a href="#" id="upOrder" data-role="button" data-corners="false" data-theme="e" data-ajax="false">
-        提交订单</a>
+                </td>
+            </tr>
+        </table>
+        <table align="center" class="MainTab" cellpadding="0" cellspacing="0">
+            <tr>
+                <td style="">
+                    <div style="padding: 8px 8px; border: 1px solid #dbdbdb; border-radius: 5px;">
+                        支付宝
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table align="center" class="MainTab" cellpadding="0" cellspacing="0">
+            <tr id="SessionInfo">
+                <td style="">
+                    商品详情
+                    <input type="hidden" id="HPIDSandCnt" /><input type="hidden" id="HPIDS" /><input
+                        type="hidden" id="HuserID" />
+                </td>
+            </tr>
+            <tr>
+                <td style="font-size: 14px; text-align: right; height: 35px">
+                    应付金额：￥<span id="amount" style="color: Red; font-weight: bold">0</span>
+                </td>
+            </tr>
+        </table>
+        
+     
+        <input id="addorder" onclick="AddSessionID()" type="submit" value="提交订单" data-corners="false"
+            data-theme="e" data-ajax="false">
+    }
 </div>
 <script>
     GetSessionStor();
