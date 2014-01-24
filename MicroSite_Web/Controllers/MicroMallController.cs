@@ -73,7 +73,7 @@ namespace MicroSite_Web.Controllers
         }
 
         //订单确认界面
-        public ActionResult OrderConfirmation(int AMID, int? adsID)
+        public ActionResult OrderConfirmation(int AMID, int? adsID, int? IsError)
         {
             ViewBag.AMID = AMID;
             if (adsID.HasValue)
@@ -84,7 +84,15 @@ namespace MicroSite_Web.Controllers
             {
                 ViewBag.adsID = 0;
             }
-
+            if (IsError.HasValue)
+            {
+                //IsError 1:操作失败 2：提交订单失败
+                ViewBag.Error = IsError;
+            }
+            else
+            {
+                ViewBag.Error = 0;
+            }
             return View();
         }
 
@@ -95,7 +103,7 @@ namespace MicroSite_Web.Controllers
             UserDeliveryAddressModel AdsModel = Factory.Get<IUserDeliveryAddressModel>(SystemConst.IOC_Model.UserDeliveryAddressModel) as UserDeliveryAddressModel;
             UserDeliveryAddress DBUda = null;
             UserDeliveryAddress uda = new UserDeliveryAddress();
-            if (adsID!=0)
+            if (adsID != 0)
             {
                 //根据adsID 获取收货地址
                 DBUda = AdsModel.Get(AMID, UserID, adsID);
@@ -117,47 +125,55 @@ namespace MicroSite_Web.Controllers
             {
                 return null;
             }
-           
+
         }
 
         //提交订单
         [HttpPost]
         public ActionResult ADDOrder(int AMID)
         {
-            return View();
+            try
+            {
+                var orderModel = Factory.Get<IOrderModel>(SystemConst.IOC_Model.OrderModel);
+                //商品ID
+                string HPIDS = Request.Form["HPIDS"];
+                //商品ID 对应的 数量
+                string HPIDSandCnt = Request.Form["HPIDSandCnt"];
+                //用户ID
+                int HuserID = int.Parse(Request.Form["HuserID"]);
+                //地址ID
+                int AID = int.Parse(Request.Form["AID"]);
+
+                //提交订单
+                Result result = orderModel.Micro_AddOrder(HPIDS, HPIDSandCnt, HuserID, AID, AMID);
+
+                if (result.HasError)
+                {
+                    return JavaScript("window.location.href='" + Url.Action("OrderConfirmation", "MicroMall", new { AMID = AMID, adsID = AID, IsError = 2 }) + "'");
+                }
+                else
+                {
+                    //支付界面
+                    return View();
+                }
+
+            }
+            catch
+            {
+                string AID = Request.Form["AID"];
+                if (AID != null)
+                {
+                    return JavaScript("window.location.href='" + Url.Action("OrderConfirmation", "MicroMall", new { AMID = AMID, adsID = AID, IsError = 1 }) + "'");
+                }
+                else
+                {
+                    return JavaScript("window.location.href='" + Url.Action("OrderConfirmation", "MicroMall", new { AMID = AMID, IsError = 1 }) + "'");
+                }
+
+            }
         }
 
 
-
-        /// <summary>
-        /// 产品列表
-        /// </summary>
-        /// <param name="TypeID"></param>
-        /// <returns></returns>
-        public ActionResult ProductListZ(int TypeID, int AMID)
-        {
-            ViewBag.TypeID = TypeID;
-            var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
-            var products = productModel.GetListByTypeID(TypeID, AMID);
-            ViewBag.pageCount = products.ToPagedList(1, 6).TotalPageCount;
-
-            var classifyModel = Factory.Get<IClassifyModel>(SystemConst.IOC_Model.ClassifyModle);
-            var classify = classifyModel.Get(TypeID);
-            ViewBag.CName = classify.Name;
-
-            ViewBag.AMID = AMID;
-
-            return View(products.ToPagedList(1, 6));
-        }
-
-        //产品列表分页
-        public ActionResult ProductListItemZ(int page, int TypeID, int AMID)
-        {
-            var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
-            var products = productModel.GetListByTypeID(TypeID, AMID).ToPagedList(page, 6);
-            ViewBag.AMID = AMID;
-            return View(products);
-        }
 
 
 

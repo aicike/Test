@@ -23,17 +23,13 @@ namespace Poco
         /// 产品ID
         /// </summary>
         public int ProductID { get; set; }
-        public virtual Product Product { get; set; }
 
         /// <summary>
         /// 产品名称
         /// </summary>
         public string ProductName { get; set; }
 
-        /// <summary>
-        /// 产品图片
-        /// </summary>
-        public string ProductImg { get; set; }
+ 
 
         /// <summary>
         /// 产品类型

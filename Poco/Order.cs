@@ -43,13 +43,13 @@ namespace Poco
         /// <summary>
         /// 送货开始日期（发货日期）
         /// </summary>
-        public DateTime BeginDate { get; set; }
+        public DateTime? BeginDate { get; set; }
 
         
         /// <summary>
         /// 送货截止日期（订单结束日期）
         /// </summary>
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         /// <summary>
         /// 订单人收货信息

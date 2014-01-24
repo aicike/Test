@@ -15,6 +15,8 @@ namespace Business
     {
         private readonly object obj = new object();
 
+        private readonly object Micro_obj = new object();
+
         public IQueryable<Order> GetByAccountMianID(int accountMainID)
         {
             return List().Where(a => a.AccountMainID == accountMainID);
@@ -30,11 +32,11 @@ namespace Business
             var list = List().Where(a => a.OrderUserID == accountID && a.OrderUserType == (int)EnumClientUserType.Account);
             if (orderStatusComplete)
             {
-                list=list.Where(a => a.status == (int)EnumOrderStatus.Complete || a.status == (int)EnumOrderStatus.Cancel);
+                list = list.Where(a => a.status == (int)EnumOrderStatus.Complete || a.status == (int)EnumOrderStatus.Cancel);
             }
             else
             {
-                list=list.Where(a => a.status != (int)EnumOrderStatus.Complete && a.status != (int)EnumOrderStatus.Cancel);
+                list = list.Where(a => a.status != (int)EnumOrderStatus.Complete && a.status != (int)EnumOrderStatus.Cancel);
             }
             return list;
         }
@@ -93,7 +95,7 @@ namespace Business
                     return result;
                 }
                 //计算订单编号
-                string orderNumSql = "SELECT dbo.SetSerialNumber('R',4,"+rorder.AccountMainID+")";
+                string orderNumSql = "SELECT dbo.SetSerialNumber('R',4," + rorder.AccountMainID + ")";
                 CommonModel commonModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
                 string orderNum = commonModel.SqlQuery<string>(orderNumSql).FirstOrDefault();
                 if (string.IsNullOrEmpty(orderNum) || orderNum.Length == 0)
@@ -134,7 +136,7 @@ namespace Business
                 order.OrderUserType = rorder.OrderUserType;
                 order.OrderDate = DateTime.Now;
                 order.BeginDate = rorder.BeginDate;
-                order.EndDate = commonModel.GetEndDate(rorder.BeginDate, orderMtype.DateCnt,rorder.AccountMainID,order.DeliveryType);
+                order.EndDate = commonModel.GetEndDate(rorder.BeginDate.Value, orderMtype.DateCnt, rorder.AccountMainID, order.DeliveryType);
                 order.OrderUserInfoID = orderUserInfo.ID;
                 order.Remark = rorder.Remark;
                 order.Price = totalPrice;
@@ -184,7 +186,7 @@ namespace Business
                     app_order.OrderID = order.ID;
                     app_order.OrderNum = order.OrderNum;
                     app_order.OrderStatus = GetOrderStatusName((EnumOrderStatus)order.status);
-                    app_order.EndDate = order.EndDate.ToString("yyyy-MM-dd");
+                    app_order.EndDate = order.EndDate.Value.ToString("yyyy-MM-dd");
                     app_order.TotalPrice = order.Price;
                     result.Entity = order;
                 }
@@ -242,7 +244,7 @@ namespace Business
         }
 
 
-        public Result SetOrderStatus(int id, int status) 
+        public Result SetOrderStatus(int id, int status)
         {
             Result result = new Result();
 
@@ -257,7 +259,122 @@ namespace Business
         }
 
 
+        /// <summary>
+        /// 微商城 提交订单
+        /// </summary>
+        /// <param name="HPIDS">产品ID（格式 9|10|1）</param>
+        /// <param name="HPIDSandCnt">产品ID 与数量（格式 9,2|10,1|1,3）</param>
+        /// <param name="HUserID">用户ID</param>
+        /// <param name="AID">收货地址ID</param>
+        /// <returns></returns>
+        [Transaction]
+        public Result Micro_AddOrder(string HPIDS, string HPIDSandCnt, int HUserID, int AID, int AMID)
+        {
+            Result result = new Result();
+            try
+            {
+                lock (Micro_obj)
+                {
+                    //获取收货地址
+                    var AdsModel = Factory.Get<IUserDeliveryAddressModel>(SystemConst.IOC_Model.UserDeliveryAddressModel);
+                    var DBUda = AdsModel.Get(AMID, HUserID, AID);
+                    OrderUserInfo ouInfo = new OrderUserInfo();
+                    ouInfo.AccountMainID = AMID;
+                    ouInfo.Address = DBUda.Address;
+                    ouInfo.CityID = DBUda.CityID;
+                    ouInfo.DistrictID = DBUda.DistrictID;
+                    ouInfo.ProvinceID = DBUda.ProvinceID;
+                    ouInfo.Receiver = DBUda.Receiver;
+                    ouInfo.RPhone = DBUda.RPhone;
+                    ouInfo.TelePhone = DBUda.TelePhone;
+                    //添加地址到订单收货地址表中
+                    var ouInfoModel = Factory.Get<IOrderUserInfoModel>(SystemConst.IOC_Model.OrderUserInfoModel);
+                    result = ouInfoModel.Add(ouInfo);
+                    if (result.HasError)
+                    {
+                        result.Error = "参数错误，请稍后重试！";
+                        return result;
+                    }
+                    //获取产品 
+                    var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
+                    HPIDS = HPIDS.TrimEnd('|');
+                    int[] Pstr = HPIDS.ConvertToIntArray('|');
+                    var productList = productModel.GetProductListByIDs(Pstr, AMID);
+                    //计算总价钱 与获取产品信息
+                    List<OrderDetail> ods = new List<OrderDetail>();
+                    double amount = 0;
+                    HPIDSandCnt = HPIDSandCnt.TrimEnd('|');
+                    string[] HPIDCnt = HPIDSandCnt.Split('|');
+                    foreach (var item in productList)
+                    {
+                        foreach (string K in HPIDCnt)
+                        {
+                            string[] cnts = K.Split(',');
+                            if (item.ID == int.Parse(cnts[0]))
+                            {
+                                //总价
+                                amount = amount + (item.Price * int.Parse(cnts[1]));
+                                OrderDetail od = new OrderDetail();
+                                od.AccountMainID = AMID;
+                                od.Count = int.Parse(cnts[1]);
+                                od.Price = item.Price;
+                                od.ProductID = item.ID;
+                                od.ProductName = item.Name;
+                                od.ProductType = item.Classify.Name;
+                                od.Specification = item.Specification;
+                                ods.Add(od);
+                                break;
+                            }
+                        }
 
+                    }
+                    //获取订单编号
+                    string orderNumSql = "SELECT dbo.SetSerialNumber('Micro',5," + AMID + ")";
+                    CommonModel commonModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+                    string orderNum = commonModel.SqlQuery<string>(orderNumSql).FirstOrDefault();
+                    if (string.IsNullOrEmpty(orderNum) || orderNum.Length == 0)
+                    {
+                        result.Error = "参数错误，请稍后重试！";
+                        return result;
+                    }
+                    //添加订单表数据
+                    Order order = new Order();
+                    order.AccountMainID = AMID;
+                    order.OrderNum = orderNum;
+                    order.OrderUserID = HUserID;
+                    order.OrderUserType = 2;//用户
+                    order.OrderDate = DateTime.Now;
+
+                    order.OrderUserInfoID = ouInfo.ID;
+                    order.Remark = "";
+                    order.Price = amount;
+                    order.status = (int)EnumOrderStatus.WaitPayMent;
+                    order.DeliveryType = (int)EnumDeliveryType.EveryDay;
+                    result = base.Add(order);
+                    if (result.HasError)
+                    {
+                        result.Error = "参数错误，请稍后重试！";
+                        return result;
+                    }
+                    //添加订单产品表数据
+                    var orderDetailModel = Factory.Get<IOrderDetailModel>(SystemConst.IOC_Model.OrderDetailModel);
+                    result = orderDetailModel.AddOrderDetail(ods, order.ID);
+                    if (result.HasError)
+                    {
+                        result.Error = "参数错误，请稍后重试！";
+                        return result;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                result.HasError = true;
+                result.Error = ex.Message;
+            }
+
+            return result;
+        }
 
     }
 }

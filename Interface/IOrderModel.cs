@@ -25,5 +25,18 @@ namespace Interface
 
 
         Result SetOrderStatus(int id, int status);
+
+
+        /// <summary>
+        /// 微商城 提交订单
+        /// </summary>
+        /// <param name="HPIDS">产品ID（格式 9|10|1）</param>
+        /// <param name="HPIDSandCnt">产品ID 与数量（格式 9,2|10,1|1,3）</param>
+        /// <param name="HUserID">用户ID</param>
+        /// <param name="AID">收货地址ID</param>
+        /// <returns></returns>
+        Result Micro_AddOrder(string HPIDS, string HPIDSandCnt, int HUserID, int AID, int AMID);
+
+
     }
 }
