@@ -257,9 +257,9 @@ namespace Business
 
             return result;
         }
-		
-		/// <summary>
-        /// 微商城，获取待收货订单列表
+
+        /// <summary>
+        /// 微商城，获取待支付订单列表
         /// </summary>
         /// <param name="amid"></param>
         /// <param name="userID"></param>
@@ -267,6 +267,35 @@ namespace Business
         public IQueryable<Order> MicroSite_GetByUserID_WaitPayMent(int amid, int userID)
         {
             return List().Where(a => a.AccountMainID == amid && a.OrderUserID == userID && a.OrderUserType == 2 && a.status == (int)EnumOrderStatus.WaitPayMent);
+        }
+
+
+        /// <summary>
+        /// 微商城，获取待收货订单列表
+        /// </summary>
+        /// <param name="amid"></param>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public IQueryable<Order> MicroSite_GetByUserID_Proceed(int amid, int userID)
+        {
+            return List().Where(a => a.AccountMainID == amid && a.OrderUserID == userID && a.OrderUserType == 2
+                && (a.status == (int)EnumOrderStatus.Proceed ||
+                a.status == (int)EnumOrderStatus.Shipped ||
+                a.status == (int)EnumOrderStatus.Payment));
+        }
+
+        /// <summary>
+        /// 微商城，获取已结束订单列表
+        /// </summary>
+        /// <param name="amid"></param>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public IQueryable<Order> MicroSite_GetByUserID_Complete(int amid, int userID)
+        {
+            return List().Where(a => a.AccountMainID == amid && a.OrderUserID == userID && a.OrderUserType == 2
+                && (
+                a.status == (int)EnumOrderStatus.Cancel ||
+                a.status == (int)EnumOrderStatus.Complete));
         }
 
         /// <summary>
