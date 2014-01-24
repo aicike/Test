@@ -66,13 +66,9 @@
     <Compile Include="Mapping\UserMap.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Migrations\201401230233078_Initial.cs" />
-    <Compile Include="Migrations\201401230233078_Initial.Designer.cs">
-      <DependentUpon>201401230233078_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401240710480_Update.cs" />
-    <Compile Include="Migrations\201401240710480_Update.Designer.cs">
-      <DependentUpon>201401240710480_Update.cs</DependentUpon>
+    <Compile Include="Migrations\201401240741276_addups.cs" />
+    <Compile Include="Migrations\201401240741276_addups.Designer.cs">
+      <DependentUpon>201401240741276_addups.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Context.cs">
@@ -99,11 +95,8 @@
     <Content Include="InitialProvince.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201401230233078_Initial.resx">
-      <DependentUpon>201401230233078_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401240710480_Update.resx">
-      <DependentUpon>201401240710480_Update.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201401240741276_addups.resx">
+      <DependentUpon>201401240741276_addups.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

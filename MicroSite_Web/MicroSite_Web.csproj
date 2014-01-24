@@ -1067,7 +1067,7 @@
           <IISUrl>http://192.168.1.138:8080</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>True</UseCustomServer>
-          <CustomServerUrl>http://192.168.1.166:8080</CustomServerUrl>
+          <CustomServerUrl>http://192.168.1.138:8080</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

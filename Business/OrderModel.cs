@@ -310,7 +310,7 @@ namespace Business
                     var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
                     HPIDS = HPIDS.TrimEnd('|');
                     int[] Pstr = HPIDS.ConvertToIntArray('|');
-                    var productList = productModel.GetProductListByIDs(Pstr, AMID);
+                    var productList = productModel.GetProductListByIDs(Pstr, AMID).ToList();
                     //计算总价钱 与获取产品信息
                     List<OrderDetail> ods = new List<OrderDetail>();
                     double amount = 0;

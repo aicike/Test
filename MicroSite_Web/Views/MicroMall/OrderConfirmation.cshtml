@@ -152,6 +152,7 @@
                 var UID = GetUserID(@ViewBag.AMID);
                 $("#HuserID").val(UID);
             }
+
         }
 
 
@@ -167,7 +168,7 @@
                         cursor: pointer; min-height: 40px; display: none; background-image: URL(/Images/arrowgrey02-right.png);
                         background-position: right; background-repeat: no-repeat; background-attachment: inherit;">
                         <div>
-                            <input type="hidden" id="AID" />
+                            <input type="hidden" id="AID" name="AID" />
                             收件人：<span id="AName"></span> <span style="color: #7B7B7B" id="APhone"></span>
                         </div>
                         <div style="line-height: 18px; margin-top: 8px; width: 80%">
@@ -205,8 +206,8 @@
             <tr id="SessionInfo">
                 <td style="">
                     商品详情
-                    <input type="hidden" id="HPIDSandCnt" /><input type="hidden" id="HPIDS" /><input
-                        type="hidden" id="HuserID" />
+                    <input type="hidden" id="HPIDSandCnt" name="HPIDSandCnt" /><input type="hidden" id="HPIDS" name="HPIDS" /><input
+                        type="hidden" id="HuserID" name="HuserID" />
                 </td>
             </tr>
             <tr>
