@@ -29,9 +29,9 @@
 <div data-role="tabs" id="tabs">
     <div data-role="navbar">
         <ul>
-            <li><a href="#one" data-ajax="false">待支付</a></li>
+            <li><a href="#one" data-ajax="false" id="center_order_1">待支付</a></li>
             <li><a href="#two" data-ajax="false">待收货</a></li>
-            <li><a href="ajax-content.html" data-ajax="false">已结束</a></li>
+            <li><a href="#three" data-ajax="false">已结束</a></li>
         </ul>
     </div>
     <div id="one" class="ui-body-d ui-content">
@@ -57,23 +57,22 @@
                                     break;
                                 }
                             }
-                            foreach (var od in item.OrderDetail) { }
                         </div>
                     }
                     else
                     { 
-                        <div style="float: left; width: 80px">
-                            <img style="width: 80px; height: 80px;border:1px solid #E7E7E7;float:left;margin-right:10px;" src="@Url.Content("~/Images/nopicture.png")" />
+                        <div style="float: left; width: 75px; margin-right: 10px;">
+                            <img style="width: 75px; height: 75px;border:1px solid #E7E7E7;float:left;" src="@Url.Content("~/Images/nopicture.png")" />
                         </div>
-                        <div style="float: left; width: 65%">
-                            加拉斯的减肥垃圾死地方了加拉斯蒂芬,四谛法阿斯顿发</div>
+                        <div style="float: left; width: 70%">
+                            @item.OrderDetail.FirstOrDefault().ProductName</div>
                     }
                     <div style="clear: both;">
                     </div>
                 </div>
                 <div style="padding: 9px 0px 0px 0px; font-size: 13px; color: #858585">
-                    <span style="float: left">代付款</span><span style="float: right">共计1件商品&nbsp;&nbsp;总价：<span
-                        style="color: #F2393E">￥150.00</span></span>
+                    <span style="float: left">代付款</span><span style="float: right">共计@(item.OrderDetail.Count)件商品&nbsp;&nbsp;&nbsp;总价：<span
+                        style="color: #F2393E;font-size:14px;">@item.Price.ToString("C")</span></span>
                     <div style="clear: both">
                     </div>
                 </div>
@@ -86,6 +85,15 @@
         }
     </div>
     <div id="two">
+        <ul data-role="listview" data-inset="true">
+            <li><a href="#">Acura</a></li>
+            <li><a href="#">Audi</a></li>
+            <li><a href="#">BMW</a></li>
+            <li><a href="#">Cadillac</a></li>
+            <li><a href="#">Ferrari</a></li>
+        </ul>
+    </div>
+    <div id="three">
         <ul data-role="listview" data-inset="true">
             <li><a href="#">Acura</a></li>
             <li><a href="#">Audi</a></li>
@@ -116,5 +124,6 @@
         var href = $("#center_address").attr("href");
         href += "&userID=" + GetUserID(@amid);
         $("#center_address").attr("href", href);
+        $("#center_order_1").click();
     });
 </script>
