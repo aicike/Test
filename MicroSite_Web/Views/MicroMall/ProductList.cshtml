@@ -182,6 +182,10 @@
             margin: 10px 0px;
             text-align: center;
         }
+        .ui-mobile .ui-page-active
+        {
+             overflow:hidden !important;
+        }
     </style>
     <script type="text/javascript">
         function item_masonry() {
@@ -278,6 +282,7 @@
     <div class="titleDiv">
         @ViewBag.CName
     </div>
+
     <div class="item_list infinite_scroll">
         @foreach (var item in Model)
         {
@@ -316,6 +321,7 @@
     <div id="more">
         <a href="ProductListItem?TypeID=@ViewBag.TypeID&AMID=@ViewBag.AMID&page=1"></a>
     </div>
+   
 </div>
 <div class="loadOK" style="display: none;">
     全部加载完成
