@@ -12,18 +12,26 @@ namespace MicroSite_Web.Controllers
 {
     public class CenterController : UserBaseController
     {
-        public ActionResult Index(int amid)
+        public ActionResult Index(int amid, int? userID, int? id)
         {
             ViewBag.AMID = amid;
-            //if (LoginUser == null)
-            //{
-            //    //没有登录
-            //    return RedirectToAction("Login", new { amid = amid });
-            //}
-            //else
-            //{
-            return View();
-            //}
+            if (userID.HasValue && userID.Value > 0)
+            {
+                var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+                var user = userModel.Get(userID.Value);
+                if (user == null)
+                {
+                    false.NotAuthorizedPage();
+                }
+                else
+                {
+                    ViewBag.UserName = user.UserLoginInfo.Name;
+                }
+            }
+            //获取订单
+            var orderModel = Factory.Get<IOrderModel>(SystemConst.IOC_Model.OrderModel);
+            var list = orderModel.MicroSite_GetByUserID_WaitPayMent(amid, userID.Value).ToPagedList(id ?? 1, 10); ;
+            return View(list);
         }
 
         [HttpGet]

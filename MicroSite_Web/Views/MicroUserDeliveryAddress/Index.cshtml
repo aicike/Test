@@ -4,7 +4,7 @@
 }
 @model List<Poco.UserDeliveryAddress>
 <div style="padding: 18px;">
-    <a href="@Url.Action("Add", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID, userID = ViewBag.UserID })" data-ajax="false" data-role="button" data-corners="false">
+    <a id="address_add" href="@Url.Action("Add", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID, userID = ViewBag.UserID })" data-ajax="false" data-role="button" data-corners="false">
         新增收货地址</a>
     @foreach (var item in Model)
     {
@@ -72,7 +72,10 @@
                 var newUrl=backUrl+"&adsID="+adsID;
                 window.location.href=newUrl;
             });
+            var addUrl= $("#address_add").attr("href")+"&backUrl="+backUrl;
+            $("#address_add").attr("href",addUrl);
         }
+        
     });
         
 </script>

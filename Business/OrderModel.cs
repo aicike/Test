@@ -30,11 +30,11 @@ namespace Business
             var list = List().Where(a => a.OrderUserID == accountID && a.OrderUserType == (int)EnumClientUserType.Account);
             if (orderStatusComplete)
             {
-                list=list.Where(a => a.status == (int)EnumOrderStatus.Complete || a.status == (int)EnumOrderStatus.Cancel);
+                list = list.Where(a => a.status == (int)EnumOrderStatus.Complete || a.status == (int)EnumOrderStatus.Cancel);
             }
             else
             {
-                list=list.Where(a => a.status != (int)EnumOrderStatus.Complete && a.status != (int)EnumOrderStatus.Cancel);
+                list = list.Where(a => a.status != (int)EnumOrderStatus.Complete && a.status != (int)EnumOrderStatus.Cancel);
             }
             return list;
         }
@@ -93,7 +93,7 @@ namespace Business
                     return result;
                 }
                 //计算订单编号
-                string orderNumSql = "SELECT dbo.SetSerialNumber('R',4,"+rorder.AccountMainID+")";
+                string orderNumSql = "SELECT dbo.SetSerialNumber('R',4," + rorder.AccountMainID + ")";
                 CommonModel commonModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
                 string orderNum = commonModel.SqlQuery<string>(orderNumSql).FirstOrDefault();
                 if (string.IsNullOrEmpty(orderNum) || orderNum.Length == 0)
@@ -134,7 +134,7 @@ namespace Business
                 order.OrderUserType = rorder.OrderUserType;
                 order.OrderDate = DateTime.Now;
                 order.BeginDate = rorder.BeginDate;
-                order.EndDate = commonModel.GetEndDate(rorder.BeginDate, orderMtype.DateCnt,rorder.AccountMainID,order.DeliveryType);
+                order.EndDate = commonModel.GetEndDate(rorder.BeginDate, orderMtype.DateCnt, rorder.AccountMainID, order.DeliveryType);
                 order.OrderUserInfoID = orderUserInfo.ID;
                 order.Remark = rorder.Remark;
                 order.Price = totalPrice;
@@ -242,7 +242,7 @@ namespace Business
         }
 
 
-        public Result SetOrderStatus(int id, int status) 
+        public Result SetOrderStatus(int id, int status)
         {
             Result result = new Result();
 
@@ -256,8 +256,15 @@ namespace Business
             return result;
         }
 
-
-
-
+        /// <summary>
+        /// 微商城，获取待收货订单列表
+        /// </summary>
+        /// <param name="amid"></param>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public IQueryable<Order> MicroSite_GetByUserID_WaitPayMent(int amid, int userID)
+        {
+            return List().Where(a => a.AccountMainID == amid && a.OrderUserID == userID && a.OrderUserType == 2 && a.status == (int)EnumOrderStatus.WaitPayMent);
+        }
     }
 }

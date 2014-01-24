@@ -41,7 +41,7 @@
                     自动登录：</label>
             </td>
             <td style="text-align: left" class="login_td">
-                <select name="slider-flip-m" id="slider-flip-m" data-role="slider" data-mini="true">
+                <select name="slider-flip-m" id="slider-flip-m" data-role="slider"  class="ui-mini">
                     <option value="0">否</option>
                     <option value="1" selected="">是</option>
                 </select>
@@ -51,10 +51,10 @@
         </tr>*@
         <tr>
             <td>
-                <input type="button" value="注册" id="btnRegister" tabindex="4" data-inline="true">
+                <input type="button" value="注册" id="btnRegister"  class="ui-mini" tabindex="4" data-inline="true">
             </td>
             <td colspan="2">
-                <input type="button" value="登录" id="btnSubmit" tabindex="3">
+                <input type="button" value="登录" id="btnSubmit"  class="ui-mini" tabindex="3">
             </td>
         </tr>
     </table>
@@ -96,7 +96,7 @@
                     if(backUrl!=null&&backUrl.length>0){
                         window.location.href=backUrl;
                     }else{
-                        window.location.href=url_index;
+                        window.location.href=url_index+"&userID="+result.Entity;
                     }
                 }
             }, "json");

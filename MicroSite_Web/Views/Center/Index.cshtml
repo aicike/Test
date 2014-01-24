@@ -3,6 +3,7 @@
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
     var amid = ViewBag.AMID;
 }
+@model PagedList<Poco.Order>
 <script language="javascript">
     var url_login = '@Url.Action("Login", "Center", new { amid = amid })';
 
@@ -21,18 +22,94 @@
 </script>
 <div style="height: 60px; padding: 0px 10px 15px 10px">
     <p>
-        您好</p>
+        欢迎您，@ViewBag.UserName</p>
     <a style="margin-top:-10px;" data-role="button" data-mini="true" data-inline="true" href="@Url.Action("Index", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID })" id="center_address" data-ajax="false">
         更改收货地址</a>
 </div>
-<div data-role="navbar" style="">
-    <ul>
-        <li style="width: 33%"><a href="@Url.Action("Index", "Default")">待支付</a></li>
-        <li style="width: 34%"><a href="/Center.aspx">待收货</a></li>
-        <li style="float: right; width: 33%"><a href="/Center.aspx">已完成</a></li>
-    </ul>
+<div data-role="tabs" id="tabs">
+    <div data-role="navbar">
+        <ul>
+            <li><a href="#one" data-ajax="false">待支付</a></li>
+            <li><a href="#two" data-ajax="false">待收货</a></li>
+            <li><a href="ajax-content.html" data-ajax="false">已结束</a></li>
+        </ul>
+    </div>
+    <div id="one" class="ui-body-d ui-content">
+        @foreach (var item in Model)
+        {
+            <div style="background-color: White; padding: 9px 10px 3px 10px; border: 1px solid #ccc;
+                font-size: 15px; margin-top: 10px;">
+                <div style="border-bottom: 1px solid #E7E7E7; padding: 0px 0px 5px 0px;">
+                    订单号：@item.OrderNum</div>
+                <div style="border-bottom: 1px solid #E7E7E7; padding: 11px 0px 6px 0px;">
+                    @if (item.OrderDetail.Count() > 1)
+                    {
+                        <div style="float: left;">
+                            @for (int i = 0; i < item.OrderDetail.Count; i++)
+                            {
+                                if (i < 2)
+                                {
+                                <img style="width: 75px; height: 75px;border:1px solid #E7E7E7;float:left;margin-right:10px;" src="@Url.Content("~/Images/nopicture.png")" />
+                                }
+                                else
+                                {
+                                <img style="width: 75px; height: 75px;border:1px solid #E7E7E7;float:left;" src="@Url.Content("~/Images/nopicture.png")" />
+                                    break;
+                                }
+                            }
+                            foreach (var od in item.OrderDetail) { }
+                        </div>
+                    }
+                    else
+                    { 
+                        <div style="float: left; width: 80px">
+                            <img style="width: 80px; height: 80px;border:1px solid #E7E7E7;float:left;margin-right:10px;" src="@Url.Content("~/Images/nopicture.png")" />
+                        </div>
+                        <div style="float: left; width: 65%">
+                            加拉斯的减肥垃圾死地方了加拉斯蒂芬,四谛法阿斯顿发</div>
+                    }
+                    <div style="clear: both;">
+                    </div>
+                </div>
+                <div style="padding: 9px 0px 0px 0px; font-size: 13px; color: #858585">
+                    <span style="float: left">代付款</span><span style="float: right">共计1件商品&nbsp;&nbsp;总价：<span
+                        style="color: #F2393E">￥150.00</span></span>
+                    <div style="clear: both">
+                    </div>
+                </div>
+                <div>
+                    <button data-mini="true" style="background-color: #F2393E; color: #fff; text-shadow: none;
+                        font-size: 14px;">
+                        付款</button>
+                </div>
+            </div>
+        }
+    </div>
+    <div id="two">
+        <ul data-role="listview" data-inset="true">
+            <li><a href="#">Acura</a></li>
+            <li><a href="#">Audi</a></li>
+            <li><a href="#">BMW</a></li>
+            <li><a href="#">Cadillac</a></li>
+            <li><a href="#">Ferrari</a></li>
+        </ul>
+    </div>
 </div>
-<div style="height: 400px;">
+<div style="float: right; margin-right: 20px;">
+    @Html.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "ID",
+    CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+    NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+    NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+    CssClass = "manage_pages pages",
+    SeparatorHtml = "&nbsp;",
+    AutoHide = false,
+    PageIndexOutOfRangeErrorMessage = "超出页面索引.",
+    ShowFirstLast = false
+})
+</div>
+<div style="clear: both">
 </div>
 <script language="javascript">
     $(function () {
