@@ -8,6 +8,8 @@ using Poco.Enum;
 using Injection.Transaction;
 using Injection;
 using Poco.WebAPI_Poco;
+using Common;
+using System.Web;
 
 namespace Business
 {
@@ -257,8 +259,8 @@ namespace Business
 
             return result;
         }
-		
-		/// <summary>
+
+        /// <summary>
         /// 微商城，获取待收货订单列表
         /// </summary>
         /// <param name="amid"></param>
@@ -316,6 +318,7 @@ namespace Business
                     double amount = 0;
                     HPIDSandCnt = HPIDSandCnt.TrimEnd('|');
                     string[] HPIDCnt = HPIDSandCnt.Split('|');
+                    CommonModel com = new CommonModel();
                     foreach (var item in productList)
                     {
                         foreach (string K in HPIDCnt)
@@ -333,6 +336,25 @@ namespace Business
                                 od.ProductName = item.Name;
                                 od.ProductType = item.Classify.Name;
                                 od.Specification = item.Specification;
+
+                                if (item.ProductImg.FirstOrDefault() != null)
+                                {
+                                    string Path = Tool.GetAMTemporaryPath(AMID);
+                                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                                    var LastName = token + com.CreateRandom("", 5) + item.ProductImg.FirstOrDefault().PImgMini.GetFileSuffix();
+                                    var YimgPath = HttpContext.Current.Server.MapPath(item.ProductImg.FirstOrDefault().PImgMini);
+                                    var ImagePath = Path + "/" + LastName;
+                                    var mapePath = HttpContext.Current.Server.MapPath(ImagePath);
+
+
+                                    Tool.SuperGetPicThumbnail(YimgPath, mapePath, 70, 100, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                                    od.ProductImg = ImagePath;
+                                }
+                                else
+                                {
+                                    od.ProductImg = "/Images/nopicture.png";
+                                }
+
                                 ods.Add(od);
                                 break;
                             }
@@ -385,6 +407,63 @@ namespace Business
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// 微商城 web端 获取全部订单列表
+        /// </summary>
+        /// <param name="accountMainID">AMID</param>
+        /// <param name="daybyday">时间段</param>
+        /// <param name="orderNum">订单号</param>
+        /// <param name="PhoneNum">电话号</param>
+        /// <param name="status">状态</param>
+        /// <param name="UserName">客户姓名</param>
+        /// <param name="Pname">产品名称</param>
+        /// <returns></returns>
+        public IQueryable<Order> Micro_GetList(int accountMainID, int daybyday, string orderNum, string PhoneNum, string status, string UserName, string Pname)
+        {
+            var list = List().Where(a => a.AccountMainID == accountMainID);
+            DateTime day = DateTime.Now;
+            if (status != "all")
+            {
+                int sta = int.Parse(status);
+                list = list.Where(a => a.status == sta);
+            }
+            switch (daybyday)
+            {
+                case 0:
+
+                    break;
+                case 7:
+                    day = DateTime.Now.AddDays(-8);
+                    list = list.Where(a => a.OrderDate > day);
+                    break;
+                case 30:
+                    day = DateTime.Now.AddDays(-31);
+                    list = list.Where(a => a.OrderDate > day);
+                    break;
+                case 365:
+                    day = DateTime.Now.AddDays(-366);
+                    list = list.Where(a => a.OrderDate > day);
+                    break;
+            }
+            if (!string.IsNullOrEmpty(orderNum))
+            {
+                list = list.Where(a => a.OrderNum.Contains(orderNum.Trim()));
+            }
+            if (!string.IsNullOrEmpty(PhoneNum))
+            {
+                list = list.Where(a => a.OrderUserInfo.RPhone.Contains(PhoneNum.Trim()));
+            }
+            if (!string.IsNullOrEmpty(UserName))
+            {
+                list = list.Where(a => a.OrderUserInfo.Receiver.Contains(UserName.Trim()));
+            }
+            if (!string.IsNullOrEmpty(Pname))
+            {
+                list = list.Where(a => a.OrderDetail.Any(b => b.ProductName.Contains(Pname.Trim())));
+            }
+            return list;
         }
 
     }

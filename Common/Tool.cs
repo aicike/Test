@@ -770,5 +770,19 @@ namespace Common
             return Path;
         }
 
+        /// <summary>
+        /// 获取售楼部临时文件夹位置
+        /// </summary>
+        /// <returns></returns>
+        public static string GetAMTemporaryPath(int AMID)
+        {
+            string Path = "/File/" + AMID + "/Temporary/" + DateTime.Now.ToString("yyyy-MM");
+            string TempPath = HttpContext.Current.Server.MapPath(Path);
+            if (Directory.Exists(TempPath) == false)
+            {
+                Directory.CreateDirectory(TempPath);
+            }
+            return Path;
+        }
     }
 }

@@ -29,7 +29,10 @@ namespace Poco
         /// </summary>
         public string ProductName { get; set; }
 
- 
+        /// <summary>
+        /// 产品图片
+        /// </summary>
+        public string ProductImg { get; set; }
 
         /// <summary>
         /// 产品类型

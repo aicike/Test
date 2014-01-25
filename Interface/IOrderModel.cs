@@ -25,7 +25,7 @@ namespace Interface
         
         Result SetOrderStatus(int id, int status);
 
- /// <summary>
+        /// <summary>
         /// 微商城，获取待收货订单列表
         /// </summary>
         /// <param name="amid"></param>
@@ -44,5 +44,18 @@ namespace Interface
         Result Micro_AddOrder(string HPIDS, string HPIDSandCnt, int HUserID, int AID, int AMID);
 
 
+
+        /// <summary>
+        /// 微商城 web端 获取全部订单列表
+        /// </summary>
+        /// <param name="accountMainID">AMID</param>
+        /// <param name="daybyday">时间段</param>
+        /// <param name="orderNum">订单号</param>
+        /// <param name="PhoneNum">电话号</param>
+        /// <param name="status">状态</param>
+        /// <param name="UserName">客户姓名</param>
+        /// <param name="Pname">产品名称</param>
+        /// <returns></returns>
+        IQueryable<Order> Micro_GetList(int accountMainID, int daybyday, string orderNum, string PhoneNum, string status, string UserName, string Pname);
     }
 }

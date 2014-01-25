@@ -29,10 +29,10 @@ namespace Business
             Result result = new Result();
             try
             {
-                StringBuilder stringBuilderSql = new StringBuilder("INSERT INTO dbo.OrderDetail( SystemStatus ,AccountMainID ,OrderID ,ProductID,ProductName,ProductType,[Price],[Count],Specification) ");
+                StringBuilder stringBuilderSql = new StringBuilder("INSERT INTO dbo.OrderDetail( SystemStatus ,AccountMainID ,OrderID ,ProductID,ProductName,ProductType,[Price],[Count],Specification,[ProductImg]) ");
                 foreach (var item in ods)
                 {
-                    stringBuilderSql.AppendFormat(" SELECT 0,{0},{1},{2},'{3}','{4}',{5},{6},'{7}' UNION ALL", item.AccountMainID, orderID, item.ProductID, item.ProductName, item.ProductType, item.Price, item.Count, item.Specification);
+                    stringBuilderSql.AppendFormat(" SELECT 0,{0},{1},{2},'{3}','{4}',{5},{6},'{7}','{8}' UNION ALL", item.AccountMainID, orderID, item.ProductID, item.ProductName, item.ProductType, item.Price, item.Count, item.Specification,item.ProductImg);
                 }
 
                 CommonModel commonModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;

@@ -7,13 +7,13 @@ namespace MicroSite_EF.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.0.2-21211")]
-    public sealed partial class addups : IMigrationMetadata
+    public sealed partial class adds : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addups));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(adds));
         
         string IMigrationMetadata.Id
         {
-            get { return "201401240741276_addups"; }
+            get { return "201401250838254_adds"; }
         }
         
         string IMigrationMetadata.Source

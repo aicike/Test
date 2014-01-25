@@ -165,6 +165,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MicroMallController.cs" />
     <Compile Include="Controllers\MicroNewController.cs" />
+    <Compile Include="Controllers\MicroOrderController.cs" />
     <Compile Include="Controllers\MicroSitePanorama.cs" />
     <Compile Include="Controllers\MicroUserDeliveryAddressController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -1045,6 +1046,7 @@
     <Content Include="Views\MicroUserDeliveryAddress\Index.cshtml" />
     <Content Include="Views\MicroUserDeliveryAddress\Add.cshtml" />
     <Content Include="Views\MicroUserDeliveryAddress\Edit.cshtml" />
+    <Content Include="Views\MicroOrder\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
