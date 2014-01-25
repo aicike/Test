@@ -1,6 +1,7 @@
 ﻿@{
-    ViewBag.Title = "ProductInfo";
+    ViewBag.Title = Model.Name;
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    var ip = Poco.SystemConst.WebUrlIP;
 }
 @section head{
     <link href="@Url.Content("~/Scripts/royalslider/royalslider.css")" rel="stylesheet"
@@ -355,19 +356,15 @@
                     <div id="popupDialog" style="max-width: 300px;" data-role="popup" data-theme="b"
                         data-overlay-theme="b" data-dismissible="false">
                         <div class="ui-corner-bottom ui-content" data-role="content" data-theme="b">
-                           
-                                <div class="ui-content" style="min-height: 50px; text-align: center; margin-top: 20px">
-                                    已成功加入购物车
-                                </div>
-                                <a href="#" data-role="button" class="spanSize" style=" font-weight: normal;"
-                                    data-rel="back" data-theme="b" data-inline="true" data-corners="false">再逛逛</a>
-                                <a href="@Url.Action("ShoppingCart", "MicroMall", new { AMID = ViewBag.AMID })" class="spanSize" style="
+                            <div class="ui-content" style="min-height: 50px; text-align: center; margin-top: 20px">
+                                已成功加入购物车
+                            </div>
+                            <a href="#" data-role="button" class="spanSize" style="font-weight: normal;" data-rel="back"
+                                data-theme="b" data-inline="true" data-corners="false">再逛逛</a> <a href="@Url.Action("ShoppingCart", "MicroMall", new { AMID = ViewBag.AMID })" class="spanSize" style="
                                 font-weight: normal;" data-role="button" data-transition="flow" data-theme="b"
                                     data-inline="true" data-corners="false" data-ajax="false">去购物车结算</a>
-                           
                         </div>
                     </div>
-                 
                 </td>
                 <td>
                 </td>
@@ -386,4 +383,12 @@
     <div class="divIntroduction">
         @Html.Raw(Model.Introduction)
     </div>
+    @if (Model.ProductImg.FirstOrDefault() != null&&string.IsNullOrEmpty(Model.ProductImg.FirstOrDefault().PImgMini)==false)
+    {
+        <input type="hidden" name="hidProductImage" value="@Url.Content(Model.ProductImg.FirstOrDefault().PImgMini)" />
+    }
+    else
+    {
+        <input type="hidden" id="hidProductImage" value="@ip@Url.Content("~/Images/nopicture.png")" />
+    }
 </div>
