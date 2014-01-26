@@ -2,6 +2,8 @@
     ViewBag.Title = "Permission";
     Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
     ViewBag.Menu = Poco.SystemConst.Menu.AccountMainManage;
+    var serviceList = ViewBag.ServiceList as List<Poco.Service>;
+    var serviceIDs = ViewBag.ServiceIDs as List<int>;
 }
 @section head{
     <link href="@Url.Content("~/Scripts/treeview/jquery.treeview.css")" rel="stylesheet" type="text/css" />
@@ -33,6 +35,38 @@
                 offsetX: 15,
                 offsetY: 15
             });
+
+            $(".cbService").change(function () {
+                var id = $(this).attr("sid");
+                var div = $("div[msid='" + id + "']");
+                if ($(this).attr("checked")) {
+                    div.find(".sp_title").css("background-color", "#00aec8");
+                    div.find(":checkbox").removeAttr("disabled");
+                    $(this).parent().css("background-color", "#00aec8");
+
+                } else {
+                    div.find(".sp_title").css("background-color", "#EE3B3B");
+                    div.find(":checkbox").attr("disabled", "disabled");
+                    $(this).parent().css("background-color", "#EE3B3B");
+                }
+            });
+
+            $.each($(".cbService:unchecked"), function (i, n) {
+                var sid = $(n).attr("sid");
+                $.each($(".grid"), function (j, m) {
+                    var gsid = $(m).attr("msid");
+                    if (sid == gsid) {
+                        $(this).find(":checkbox").attr("disabled", "disabled");
+                    }
+                });
+            });
+
+            $.each($(".cbService:checked"), function (i, n) {
+                var sid = $(n).attr("sid");
+                var div = $("div[msid='" + sid + "']");
+                div.find(".sp_title").css("background-color", "#00aec8");
+            });
+
         });
     </script>
 }
@@ -50,13 +84,35 @@
         <div style="margin-bottom: 10px;">
             <input type="submit" id="btnSubmit" value="保存" class="button" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
         </div>
+        <fieldset style="position: relative; margin-bottom: 20px;">
+            <legend>分配服务</legend>
+            @foreach (var item in serviceList)
+            {
+                if (serviceIDs != null && serviceIDs.Contains(item.ID))
+                { 
+                <div style="float: left; margin-right: 30px; color: White; background-color: #00aec8;
+                    padding: 15px 20px 15px 15px; font-size: 16px;">
+                    <input type="checkbox" name="cbService" id="cb_service_@item.ID" class="cbService" sid="@item.ID" checked="checked" value="@item.ID"/>
+                    &nbsp;<label for="cb_service_@item.ID">@item.Name</label></div>
+                }
+                else
+                {  
+                <div style="float: left; margin-right: 30px; color: White; background-color: #EE3B3B;
+                    padding: 15px 20px 15px 15px; font-size: 16px;">
+                    <input type="checkbox" name="cbService" id="cb_service_@item.ID" class="cbService" sid="@item.ID" value="@item.ID"/>
+                    &nbsp;<label for="cb_service_@item.ID">@item.Name</label></div>
+                }
+            }
+            <div style="clear: both">
+            </div>
+        </fieldset>
         <fieldset style="position: relative">
             <legend>分配权限</legend>
             <div id="browser" class="treeview_root">
                 @foreach (var menu in Model)
                 {
-                    <div id="li1" class="grid">
-                        <span style="font-size: 16px;">
+                    <div id="li1" class="grid" msid="@menu.ServiceID">
+                        <span style="font-size: 16px; background-color: #EE3B3B;" class="sp_title">
                             @if (currentRoleMenuList.Contains(menu.ID))
                             {
                                 <input type="checkbox" id="menu_@menu.ID" name="checkboxMenu" value="@menu.ID" checked="checked"/>

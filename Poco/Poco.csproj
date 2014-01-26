@@ -56,6 +56,7 @@
     <Compile Include="AccountMain.cs" />
     <Compile Include="AccountMainHouseInfo.cs" />
     <Compile Include="AccountMainHouseInfoDetail.cs" />
+    <Compile Include="AccountMain_Service.cs" />
     <Compile Include="Account_Role.cs" />
     <Compile Include="ActivityInfo.cs" />
     <Compile Include="ActivityInfoParticipator.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="ProductImg.cs" />
     <Compile Include="ReportBody.cs" />
     <Compile Include="ReportFormPower.cs" />
+    <Compile Include="_Service.cs" />
     <Compile Include="SMS.cs" />
     <Compile Include="MessageGroupChat.cs" />
     <Compile Include="SurveyAnswer.cs" />

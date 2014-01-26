@@ -165,6 +165,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MicroMallController.cs" />
     <Compile Include="Controllers\MicroNewController.cs" />
+    <Compile Include="Controllers\MicroOrderController.cs" />
     <Compile Include="Controllers\MicroSitePanorama.cs" />
     <Compile Include="Controllers\MicroUserDeliveryAddressController.cs" />
     <Compile Include="Controllers\OrderController.cs" />

@@ -69,28 +69,6 @@ INSERT INTO dbo.SystemUserRole ( [ID],SystemStatus, Name ) VALUES  ( 1,0,'超级
 --INSERT INTO dbo.SystemUserRole ( [ID],SystemStatus, NAME,ParentSystemUserRoleID ) VALUES  ( 2,0,'业务员',1)
 SET IDENTITY_INSERT [dbo].SystemUserRole OFF
 
------------------------------SystemUserRole_SystemUserMenu--------------------------
---SET IDENTITY_INSERT [dbo].[SystemUserRole_SystemUserMenu] ON
---INSERT [dbo].[SystemUserRole_SystemUserMenu] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuID]) VALUES (1, 0, 2, 1)
---INSERT [dbo].[SystemUserRole_SystemUserMenu] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuID]) VALUES (2, 0, 2, 2)
---INSERT [dbo].[SystemUserRole_SystemUserMenu] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuID]) VALUES (3, 0, 2, 6)
---SET IDENTITY_INSERT [dbo].[SystemUserRole_SystemUserMenu] OFF
-
------------------------------SystemUserRole_Option--------------------------
---SET IDENTITY_INSERT [dbo].[SystemUserRole_Option] ON
---INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (1, 0, 2, 1)
---INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (2, 0, 2, 2)
---INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (3, 0, 2, 3)
---INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (4, 0, 2, 4)
---INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (5, 0, 2, 5)
---INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (6, 0, 2, 6)
---INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (7, 0, 2, 22)
---INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (8, 0, 2, 23)
---INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (9, 0, 2, 24)
---INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (10, 0, 2, 25)
---INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (11, 0, 2, 26)
---INSERT [dbo].[SystemUserRole_Option] ([ID], [SystemStatus], [SystemUserRoleID], [SystemUserMenuOptionID]) VALUES (12, 0, 2, 27)
---SET IDENTITY_INSERT [dbo].[SystemUserRole_Option] OFF
 
 -----------------------------[Lookup]--------------------------
 SET IDENTITY_INSERT [dbo].[Lookup] ON
@@ -143,53 +121,29 @@ INSERT [dbo].[LookupOption] ([ID], [SystemStatus], [LookupID], [Token], [Value])
 INSERT [dbo].[LookupOption] ([ID], [SystemStatus], [LookupID], [Token], [Value]) VALUES (36, 0, 7, N'blank', N'毛坯')
 INSERT [dbo].[LookupOption] ([ID], [SystemStatus], [LookupID], [Token], [Value]) VALUES (37, 0, 7, N'paperback', N'简装')
 INSERT [dbo].[LookupOption] ([ID], [SystemStatus], [LookupID], [Token], [Value]) VALUES (38, 0, 7, N'hardcover', N'精装')
-
-
-
-
-
 SET IDENTITY_INSERT [dbo].[LookupOption] OFF
 
 -----------------------------[SystemUser]--------------------------
 INSERT [dbo].[SystemUser] ([SystemStatus], [Name], [Email], [LoginPwd], [Phone], [AccountStatusID],[SystemUserRoleID]) VALUES (0, N'武双琦', N'176534021@qq.com', N'8ZjHBEPwxeqwCrxssgd2cQ==', N'13474137783', 1,1)
---INSERT [dbo].[SystemUser] ([SystemStatus], [Name], [Email], [LoginPwd], [Phone], [AccountStatusID],[SystemUserRoleID]) VALUES (0, N'业务员1', N'd537@163.com', N'8ZjHBEPwxeqwCrxssgd2cQ==', N'13474137783', 1,2)
 
------------------------------[AccountMain]--------------------------
---SET IDENTITY_INSERT [dbo].[AccountMain] ON
---INSERT [dbo].[AccountMain] ([ID], [SystemStatus], [Name],[HostName], [ProvinceID], [CityID], [DistrictID], [Phone], [LogoImageThumbnailPath], [LogoImagePath], [AccountStatusID], [FileLimit],  [SystemUserID], [CreateTime],[SaleAddress]) VALUES (1, 0, N'天朗蓝湖树',N'TLLHS', 27, 288, 2513, N'13474137783', N'~/File/1/Base/20130712164726_80_logo.jpg', N'~/File/1/Base/20130712164726_logo.jpg', 1, 2, 1, CAST(0x0000A1F90114B090 AS DateTime),'科技路西口')
---SET IDENTITY_INSERT [dbo].[AccountMain] OFF
-
-
------------------------------[Account]--------------------------
---SET IDENTITY_INSERT [dbo].[Account] ON
---INSERT [dbo].[Account] ([ID], [SystemStatus], [Name], [LoginPwd], [Phone], [HeadImagePath], [Email], [RoleID], [AccountStatusID], [IsActivated]) VALUES (1, 0, N'王五', N'8ZjHBEPwxeqwCrxssgd2cQ==', N'1111', N'~/File/1/Account/20130712165054_80_QQ20130712095702.jpg', N'wangwu@163.com', 1, 1, 1)
---INSERT [dbo].[Account] ([ID], [SystemStatus], [Name], [LoginPwd], [Phone], [HeadImagePath], [Email], [RoleID], [AccountStatusID], [IsActivated]) VALUES (2, 0, N'张三', N'8ZjHBEPwxeqwCrxssgd2cQ==', N'1111', N'~/File/1/Account/20130712165054_80_QQ20130712095702.jpg', N'zhangsan@163.com', 3, 1, 1)
---INSERT [dbo].[Account] ([ID], [SystemStatus], [Name], [LoginPwd], [Phone], [HeadImagePath], [Email], [RoleID], [AccountStatusID], [IsActivated]) VALUES (3, 0, N'李四（销售经理）', N'8ZjHBEPwxeqwCrxssgd2cQ==', N'123456', N'~/File/1/Account/20130712165157_80_logo2.jpg', N'lisi@163.com', 2, 1, 1)
---SET IDENTITY_INSERT [dbo].[Account] OFF
-
------------------------------[Account_AccountMain]--------------------------
---SET IDENTITY_INSERT [dbo].[Account_AccountMain] ON
---INSERT [dbo].[Account_AccountMain] ([ID], [SystemStatus], [AccountID], [AccountMainID]) VALUES (1, 0, 1, 1)
---INSERT [dbo].[Account_AccountMain] ([ID], [SystemStatus], [AccountID], [AccountMainID]) VALUES (2, 0, 2, 1)
---INSERT [dbo].[Account_AccountMain] ([ID], [SystemStatus], [AccountID], [AccountMainID]) VALUES (3, 0, 3, 1)
---SET IDENTITY_INSERT [dbo].[Account_AccountMain] OFF
-
-------------------------------[Group]--------------------------------------------
---INSERT INTO dbo.[Group](SystemStatus ,GroupName ,AccountID ,AccountMainID ,IsDefaultGroup ,IsCanDelete)VALUES  ( 0 ,N'未分组' ,1 ,1 ,1 ,0)
---INSERT INTO dbo.[Group](SystemStatus ,GroupName ,AccountID ,AccountMainID ,IsDefaultGroup ,IsCanDelete)VALUES  ( 0 ,N'黑名单' ,1 ,1 ,0 ,0)
---INSERT INTO dbo.[Group](SystemStatus ,GroupName ,AccountID ,AccountMainID ,IsDefaultGroup ,IsCanDelete)VALUES  ( 0 ,N'未分组' ,2 ,1 ,1 ,0)
---INSERT INTO dbo.[Group](SystemStatus ,GroupName ,AccountID ,AccountMainID ,IsDefaultGroup ,IsCanDelete)VALUES  ( 0 ,N'黑名单' ,2 ,1 ,0 ,0)
+------------------------------[Service]-------------------------------------------
+SET IDENTITY_INSERT [dbo].[Service] ON
+INSERT INTO dbo.Service ( [ID],SystemStatus, Name ) VALUES  (1, 0, N'WEB基本服务')
+INSERT INTO dbo.Service ( [ID],SystemStatus, Name ) VALUES  (2, 0, N'售楼部服务')
+INSERT INTO dbo.Service ( [ID],SystemStatus, Name ) VALUES  (3, 0, N'微网站服务')
+INSERT INTO dbo.Service ( [ID],SystemStatus, Name ) VALUES  (4, 0, N'微信集成服务')
+SET IDENTITY_INSERT [dbo].[Service] OFF
 
 ------------------------------[Menu]--------------------------------------------
 SET IDENTITY_INSERT [dbo].[Menu] ON
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (1, 0, N'首页', N'首页', NULL, NULL, NULL, 1, NULL,1,1)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (2, 0, N'管理', N'管理', NULL, NULL, NULL, 2, NULL,0,1)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (3, 0, N'产品', N'产品', NULL, NULL, NULL, 3, NULL,0,1)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (4, 0, N'账号', N'账号', NULL, NULL, NULL, 4, NULL,0,1)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (5, 0, N'项目', N'项目', NULL, NULL, NULL, 5, NULL,0,1)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (6, 0, N'调查 活动 资讯', N'调查 活动 资讯', NULL, NULL, NULL, 6, NULL,0,1)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (7, 0, N'App设置', N'App设置', NULL, NULL, NULL, 7, NULL,0,1)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (8, 0, N'设置', N'设置', NULL, NULL,NULL, 8, NULL,0,1)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level],ServiceID) VALUES (1, 0, N'首页', N'首页', NULL, NULL, NULL, 1, NULL,1,1,1)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level],ServiceID) VALUES (2, 0, N'管理', N'管理', NULL, NULL, NULL, 2, NULL,0,1,2)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level],ServiceID) VALUES (3, 0, N'产品', N'产品', NULL, NULL, NULL, 3, NULL,0,1,3)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level],ServiceID) VALUES (4, 0, N'账号', N'账号', NULL, NULL, NULL, 4, NULL,0,1,1)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level],ServiceID) VALUES (5, 0, N'项目', N'项目', NULL, NULL, NULL, 5, NULL,0,1,2)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level],ServiceID) VALUES (6, 0, N'调查 活动 资讯', N'调查 活动 资讯', NULL, NULL, NULL, 6, NULL,0,1,1)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level],ServiceID) VALUES (7, 0, N'App设置', N'App设置', NULL, NULL, NULL, 7, NULL,0,1,2)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level],ServiceID) VALUES (8, 0, N'设置', N'设置', NULL, NULL,NULL, 8, NULL,0,1,1)
 --2级
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (9, 0, N'用户管理', N'用户管理', NULL, N'UserManage', N'Index', 1, 2,0,2)
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (10, 0, N'消息管理', N'消息管理', NULL, N'Message', N'Index', 2, 2,0,2)
@@ -241,8 +195,8 @@ INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controlle
 INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (43, 0, N'聊天窗口', N'聊天窗口', NULL, N'SingleChat', N'Index', 1, 29,0,4)
 
 -----------App菜单----------无需在web端上显示
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (44, 0, N'App权限', N'App权限', NULL, NULL, NULL, 9, NULL,1,1)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (45, 0, N'会员管理', N'会员管理', NULL, NULL, NULL, 1, 44,1,1)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level],ServiceID) VALUES (44, 0, N'App权限', N'App权限', NULL, NULL, NULL, 9, NULL,1,1,2)
+INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (45, 0, N'会员管理', N'会员管理', NULL, NULL, NULL, 1, 44,1,1)
 SET IDENTITY_INSERT [dbo].[Menu] OFF
 
 -----------------------------[MenuOption]--------------------------

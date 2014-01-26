@@ -1,9 +1,9 @@
 ﻿<objects xmlns="http://www.springframework.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.net http://www.springframework.net/xsd/spring-objects.xsd">
-  <!--<object id="dbcontext" type="ef.context,ef" scope="request" singleton="false">
-  </object>-->
-  <object id="DbContext" type="MicroSite_EF.Context,MicroSite_EF" scope="request" singleton="false">
+  <object id="DbContext" type="EF.Context,EF" scope="request" singleton="false">
   </object>
+  <!--<object id="DbContext" type="MicroSite_EF.Context,MicroSite_EF" scope="request" singleton="false">
+  </object>-->
   <object id="EFModel" type="Business.EFModel" singleton="false">
     <property name="Context" ref="DbContext"/>
   </object>
@@ -99,7 +99,8 @@
   <object id="ActivityInfoParticipatorModel" type="Business.ActivityInfoParticipatorModel" parent="EFModel" singleton="false"></object>
   <object id="PanoramaModel" type="Business.PanoramaModel" parent="EFModel" singleton="false"></object>
   <object id="UserDeliveryAddressModel" type="Business.UserDeliveryAddressModel" parent="EFModel" singleton="false"></object>
-  
+  <object id="ServiceModel" type="Business.ServiceModel" parent="EFModel" singleton="false"></object>
+  <object id="AccountMain_ServiceModel" type="Business.AccountMain_ServiceModel" parent="EFModel" singleton="false"></object>
 
   <!--<object id="UserModel" type="NightClubBooth.Business.UserModel" parent="EFModel" singleton="false">
     <property name="LookupOptionModel" ref="LookupOptionModel"/>

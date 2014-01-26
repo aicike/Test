@@ -178,7 +178,7 @@ namespace Web.Controllers
             try
             {
                 IRoleMenuModel roleMenuModel = Factory.Get<IRoleMenuModel>(SystemConst.IOC_Model.RoleMenuModel);
-                roleMenuModel.BindPermission(roleID, menuIDArray, optionIDArray);
+                roleMenuModel.BindPermission(0,roleID, menuIDArray, optionIDArray,null);
             }
             catch (Exception ex)
             {

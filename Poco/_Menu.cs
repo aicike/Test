@@ -50,6 +50,10 @@ namespace Poco
 
         public virtual Menu ParentMenu { get; set; }
 
+        public int? ServiceID { get; set; }
+
+        public virtual Service Service { get; set; }
+
         public virtual ICollection<Menu> Menus { get; set; }
 
         public virtual ICollection<MenuOption> MenuOptions { get; set; }

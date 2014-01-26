@@ -79,6 +79,7 @@
     <Compile Include="IPushMsgDetailModel.cs" />
     <Compile Include="IPushMsgModel.cs" />
     <Compile Include="IReportFormPowerModel.cs" />
+    <Compile Include="IServiceModel.cs" />
     <Compile Include="ISurveyAnswerModel.cs" />
     <Compile Include="ISurveyMainModel.cs" />
     <Compile Include="ISurveyOptionModel.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="ITaskModel.cs" />
     <Compile Include="IAccountRoleModel.cs" />
     <Compile Include="IPanoramaModel.cs" />
+    <Compile Include="IAccountMain_ServiceModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Poco\Poco.csproj">

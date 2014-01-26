@@ -78,6 +78,7 @@
     <Compile Include="AccountMainHousesModel.cs" />
     <Compile Include="AccountMainHouseTypeModel.cs" />
     <Compile Include="AccountMainModel.cs" />
+    <Compile Include="AccountMain_ServiceModel.cs" />
     <Compile Include="AccountModel.cs" />
     <Compile Include="AccountRoleModel.cs" />
     <Compile Include="Account_UserModel.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="QrCodeModel.cs" />
     <Compile Include="ReportFormPowerModel.cs" />
     <Compile Include="RoleModel.cs" />
+    <Compile Include="ServiceModel.cs" />
     <Compile Include="SMS_Model.cs" />
     <Compile Include="SurveyAnswerModel.cs" />
     <Compile Include="SurveyMainModel.cs" />

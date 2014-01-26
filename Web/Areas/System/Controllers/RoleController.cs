@@ -12,11 +12,11 @@ namespace Web.Areas.System.Controllers
 {
     public class RoleController : ManageSystemUserController
     {
-        public ActionResult Index(int AccountMainID,int? id)
+        public ActionResult Index(int AccountMainID, int? id)
         {
             ViewBag.AccountMainID = AccountMainID;
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
-            var list = roleModel.GetListByAMID(AccountMainID).ToPagedList(id??1 , 15);
+            var list = roleModel.GetListByAMID(AccountMainID).ToPagedList(id ?? 1, 15);
             return View(list);
         }
 
@@ -37,7 +37,7 @@ namespace Web.Areas.System.Controllers
             {
                 return Alert(new Dialog(result.Error));
             }
-            return JavaScript("window.location.href='" + Url.Action("Index", "Role", new { Area = "System",AccountMainID = role.AccountMainID }) + "'");
+            return JavaScript("window.location.href='" + Url.Action("Index", "Role", new { Area = "System", AccountMainID = role.AccountMainID }) + "'");
         }
 
         [HttpGet]
@@ -62,7 +62,7 @@ namespace Web.Areas.System.Controllers
         }
 
         [AllowCheckPermissions(false)]
-        public string IsCanFindByUser(int id, bool value,int AccountMainID)
+        public string IsCanFindByUser(int id, bool value, int AccountMainID)
         {
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             var result = roleModel.IsCanFindByUser(id, value);
@@ -73,7 +73,7 @@ namespace Web.Areas.System.Controllers
             return "window.location.href='" + Url.Action("Index", "Role", new { Area = "System", AccountMainID = AccountMainID }) + "'";
         }
 
-        public ActionResult Delete(int id,int AccountMainID)
+        public ActionResult Delete(int id, int AccountMainID)
         {
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             var result = roleModel.Delete(id);
@@ -86,6 +86,17 @@ namespace Web.Areas.System.Controllers
 
         public ActionResult Permission(int id, int AccountMainID)
         {
+            //获取服务
+            var serviceModel = Factory.Get<IServiceModel>(SystemConst.IOC_Model.ServiceModel);
+            var accountMain_serviceModel = Factory.Get<IAccountMain_ServiceModel>(SystemConst.IOC_Model.AccountMain_ServiceModel);
+            var serviceList = serviceModel.GetList();
+            ViewBag.ServiceList = serviceList;
+            var serviceIDs = accountMain_serviceModel.GetListByAccountMainID(AccountMainID).Select(a => a.ServiceID);//获取已绑定的服务
+            if (serviceIDs != null)
+            {
+                ViewBag.ServiceIDs = serviceIDs.ToList();
+            }
+
             ViewBag.AccountMainID = AccountMainID;
             IMenuModel menuModel = Factory.Get<IMenuModel>(SystemConst.IOC_Model.MenuModel);
             var menus = menuModel.List_Cache().Where(a => a.ParentMenuID.HasValue == false).OrderBy(a => a.Order).ToList();
@@ -110,6 +121,8 @@ namespace Web.Areas.System.Controllers
 
             var checkboxMenu = Request["checkboxMenu"];
             var checkboxOption = Request["checkboxOption"];
+            var checkboxService = Request["cbService"];
+
 
             int[] menuIDArray = null;
             if (!string.IsNullOrEmpty(checkboxMenu))
@@ -122,10 +135,11 @@ namespace Web.Areas.System.Controllers
             {
                 optionIDArray = checkboxOption.Split(',').ConvertToIntArray();
             }
+            var serviceIDs = checkboxService.ConvertToIntArray(',');
             try
             {
                 IRoleMenuModel roleMenuModel = Factory.Get<IRoleMenuModel>(SystemConst.IOC_Model.RoleMenuModel);
-                roleMenuModel.BindPermission(roleID, menuIDArray, optionIDArray);
+                roleMenuModel.BindPermission(AccountMainID, roleID, menuIDArray, optionIDArray, serviceIDs);
             }
             catch (Exception ex)
             {

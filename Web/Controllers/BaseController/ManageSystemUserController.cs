@@ -21,8 +21,6 @@ namespace Web.Controllers
             }
             set { Session[SystemConst.Session.LoginSystemUser] = value; }
         }
-        
-       
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {

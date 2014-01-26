@@ -216,6 +216,8 @@ namespace Poco
             public const string ActivityInfoParticipatorModel = "ActivityInfoParticipatorModel";
             public const string PanoramaModel = "PanoramaModel";
             public const string UserDeliveryAddressModel = "UserDeliveryAddressModel";
+            public const string ServiceModel = "ServiceModel";
+            public const string AccountMain_ServiceModel = "AccountMain_ServiceModel";
 
             
 

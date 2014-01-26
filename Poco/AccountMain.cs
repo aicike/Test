@@ -226,6 +226,8 @@ namespace Poco
 
         public virtual ICollection<Panorama> Panoramas { get; set; }
         public virtual ICollection<UserDeliveryAddress> UserDeliveryAddress { get; set; }
-        
+
+        public virtual ICollection<AccountMain_Service> AccountMain_Services { get; set; }
+
     }
 }

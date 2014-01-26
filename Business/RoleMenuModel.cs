@@ -26,11 +26,17 @@ namespace Business
         }
 
         [Transaction]
-        public void BindPermission(int roleID, int[] menuIDs, int[] menuOptionIDs)
+        public void BindPermission(int? accountMainID, int roleID, int[] menuIDs, int[] menuOptionIDs, int[] serviceIDs)
         {
             var roleOptionModel = Factory.Get<IRoleOptionModel>(SystemConst.IOC_Model.RoleOptionModel);
             IMenuModel menuModel = Factory.Get<IMenuModel>(SystemConst.IOC_Model.MenuModel);
             CommonModel commonModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+            if (accountMainID != null && accountMainID > 0 && accountMainID.HasValue)
+            {
+                var AccountMain_ServiceModel = Factory.Get<IAccountMain_ServiceModel>(SystemConst.IOC_Model.AccountMain_ServiceModel);
+                //添加相关服务功能
+                AccountMain_ServiceModel.Add(accountMainID.Value, serviceIDs);
+            }
             //删除原绑定的菜单
             string deleteMenuListSQL = "DELETE dbo.RoleMenu WHERE RoleID=" + roleID;
             commonModel.SqlExecute(deleteMenuListSQL);
@@ -50,7 +56,7 @@ namespace Business
             string deleteOptionListSQL = "DELETE dbo.RoleOption WHERE RoleID=" + roleID;
             commonModel.SqlExecute(deleteOptionListSQL);
             //绑定新功能
-            if (menuOptionIDs!=null&&menuIDs != null && menuOptionIDs.Length > 0)
+            if (menuOptionIDs != null && menuIDs != null && menuOptionIDs.Length > 0)
             {
                 StringBuilder addOptionListStringBuilder = new StringBuilder("INSERT dbo.RoleOption ( SystemStatus ,RoleID , MenuOptionID ) ");
                 foreach (var item in menuOptionIDs)
