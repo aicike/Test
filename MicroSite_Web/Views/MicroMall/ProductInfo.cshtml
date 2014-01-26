@@ -251,7 +251,10 @@
             var PFreight = $("#PFreight").val();
             var PImage = $("#PImage").val();
             var Pcount = $("#txtNumber").val();
-
+            if (Pcount <= 0) {
+                showMsg("请选择数量！");
+                return false;
+            }
             var JZitems = [];
             var Cart = new OptintModel();
             Cart.PID = PID;
@@ -353,23 +356,26 @@
                     <a href="#popupDialog" class="ui-btn-b" style="background-color: #FF8C00; text-shadow: 0 1px 0 #FF8C00;
                         color: #fff" data-role="button" data-position-to="window" data-transition="pop"
                         data-rel="popup" data-corners="false" onclick="JoinCart()">加入购物车</a>
-                    <div id="popupDialog" style="max-width: 300px;" data-role="popup" data-theme="b"
+                    <div id="popupDialog" style="width: 300px" data-role="popup" data-theme="b"
                         data-overlay-theme="b" data-dismissible="false">
                         <div class="ui-corner-bottom ui-content" data-role="content" data-theme="b">
-                            <div class="ui-content" style="min-height: 50px; text-align: center; margin-top: 20px">
-                                已成功加入购物车
-                            </div>
-                            <a href="#" data-role="button" class="spanSize" style="font-weight: normal;" data-rel="back"
-                                data-theme="b" data-inline="true" data-corners="false">再逛逛</a> <a href="@Url.Action("ShoppingCart", "MicroMall", new { AMID = ViewBag.AMID })" class="spanSize" style="
-                                font-weight: normal;" data-role="button" data-transition="flow" data-theme="b"
-                                    data-inline="true" data-corners="false" data-ajax="false">去购物车结算</a>
+                                <div class="ui-content" style="text-align: center; min-height:30px">
+                                    已成功加入购物车
+                                </div>
+                                <a href="#" data-role="button" class="spanSize" style=" font-weight: normal; width:32%"
+                                    data-rel="back" data-theme="b" data-inline="true" data-corners="false">再逛逛</a>
+                                <a href="@Url.Action("ShoppingCart", "MicroMall", new { AMID = ViewBag.AMID })" class="spanSize" style="
+                                font-weight: normal;; width:32%" data-role="button" data-transition="flow" data-theme="b"
+                                    data-inline="true" data-corners="false" data-ajax="false">去结算</a>
+                           
                         </div>
                     </div>
+                 
                 </td>
                 <td>
                 </td>
                 <td style="width: 49%;">
-                    <a onclick="instantly()" style=" background-color:#FF3030; text-shadow:0 1px 0 #FF3030 ; color:#fff" href="@Url.Action("OrderConfirmation", "MicroMall", new { AMID = ViewBag.AMID })" data-role="button" data-corners="false" data-ajax="false">
+                    <a onclick="return instantly()" style=" background-color:#FF3030; text-shadow:0 1px 0 #FF3030 ; color:#fff" href="@Url.Action("OrderConfirmation", "MicroMall", new { AMID = ViewBag.AMID })" data-role="button" data-corners="false" data-ajax="false">
                         立即购买</a>
                 </td>
             </tr>

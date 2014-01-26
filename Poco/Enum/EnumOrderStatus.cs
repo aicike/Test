@@ -16,7 +16,7 @@ namespace Poco.Enum
         /// </summary>
         Proceed,        
         /// <summary>
-        /// 取消
+        /// 取消 关闭交易
         /// </summary>
         Cancel,
         /// <summary>

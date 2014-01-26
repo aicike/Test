@@ -117,6 +117,8 @@ namespace Poco
             public const string SalesMessage = "SalesMessage";
             public const string ActivityInfo = "ActivityInfo";
             public const string Panorama = "Panorama";
+            public const string MicroOrder = "MicroOrder";
+            
 
             //Action
             public const string History = "History";
