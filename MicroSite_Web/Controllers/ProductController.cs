@@ -165,6 +165,21 @@ namespace Web.Controllers
         }
 
 
+        /// <summary>
+        /// 产品预览
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        [AllowCheckPermissions(false)]
+        public ActionResult SelectProduct(int ID)
+        {
+            var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
+            var product = productModel.GetPInfo(ID, LoginAccount.CurrentAccountMainID);
+
+            var productImgModel = Factory.Get<IProductImgModel>(SystemConst.IOC_Model.ProductImgModel);
+            ViewBag.ProductIMG = product.ProductImg.ToList();
+            return View(product);
+        }
 
     }
 }

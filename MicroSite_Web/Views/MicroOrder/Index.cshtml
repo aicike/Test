@@ -29,6 +29,31 @@
             $("#Pname").val('@ViewBag.Pname');
         });
 
+        function LookInfo(ID)
+        {
+
+            var YZUrl = '@Url.Action("OrderInfo", "MicroOrder")' + "?id=" + ID;
+            $("#iframeshow").attr("src", YZUrl);
+            $("#showOrderInfo").dialog({
+                resizable: false,
+                height: 650,
+                width: 590,
+                modal: true,
+                draggable: false,
+                close: function (event, ui) {
+                    $("#iframeshow").attr("src", "");
+                },
+                buttons: {
+                    "关闭": function () {
+                        $(this).dialog("close");
+                        $("#iframeshow").attr("src", "");
+                    }
+                }
+            });
+        }
+
+
+
     </script>
     <style>
         .ortabList
@@ -210,11 +235,16 @@
                            
                             <tr>
                                 <td valign="top" style="border-right: 0px" widht="80px">
-                                    <img src="@Url.Content(item2.ProductImg)" style="max-width: 60px" />
+                                 <label name="labCbFirst" title="查看详细">
+                                    <a href="@Url.Action("SelectProduct", "Product", new { ID = item2.ProductID })"  target="_blank"> <img src="@Url.Content(item2.ProductImg)" style="max-width: 60px; border:1px solid #deedde" /></a>
+                                    </label>
+                                   
                                 </td>
                                 <td valign="top" align="left" style="font-size: 12px; border-right: 0px; word-wrap: break-word;
                                     padding-left: 10px; word-break: break-all" width="200px;" class="operation">
-                                    <a>@item2.ProductName</a>
+                                   <label name="labCbFirst" title="查看详细">
+                                    <a href="@Url.Action("SelectProduct", "Product", new { ID = item2.ProductID })"  target="_blank">@item2.ProductName</a>
+                                    </label>
                                 </td>
                                 <td width="90px" style="border-right: 0px">
                                     @item2.Price.ToString("C")
@@ -273,4 +303,10 @@
        ShowFirstLast = false
    })
     </div>
+</div>
+<div id="showOrderInfo" title="订单详细" style="display: none; overflow: hidden">
+    <iframe id="iframeshow" src="" style="width: 570px; height: 540px; border: none;
+        overflow: hidden"></iframe>
+</div>
+<div style="clear: both">
 </div>

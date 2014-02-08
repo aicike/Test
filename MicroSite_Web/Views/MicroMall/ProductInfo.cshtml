@@ -202,6 +202,10 @@
                     if (items[i].PID == PID) {
 
                         items[i].Pcount = parseInt(items[i].Pcount) + parseInt(Pcount);
+                        items[i].PPrive = PPrive;
+                        items[i].PName = PName;
+                        items[i].PFreight = PFreight;
+                        items[i].PImage = PImage;
                         J = true;
                     }
                 }
@@ -320,7 +324,20 @@
         @Model.Name
     </div>
     <div style="margin-top: 10px;">
-        价格：<span style="color: Red; font-weight: bold">￥@Model.Price</span>
+        价格：
+        @if (Model.Status == (int)Poco.Enum.EnumProductType.Shortages)
+        {
+            <span style="color: #6E6E6E">(缺货)</span>
+        }
+        else if (Model.Status == (int)Poco.Enum.EnumProductType.OffShelves)
+        {
+            <span style="color: #6E6E6E">(已下架)</span>
+        }
+        else
+        {
+                           
+            <span style="color: Red; font-weight: bold">@Model.Price.ToString("C")</span>
+        }
     </div>
     <div style="margin-top: 5px; font-size: 12px; color: #8E8E8E">
         运费：快递￥@Model.Freight
@@ -352,32 +369,63 @@
     <div style="">
         <table align="center" style="width: 100%">
             <tr>
-                <td style="width: 49%;">
-                    <a href="#popupDialog" class="ui-btn-b" style="background-color: #FF8C00; text-shadow: 0 1px 0 #FF8C00;
-                        color: #fff" data-role="button" data-position-to="window" data-transition="pop"
-                        data-rel="popup" data-corners="false" onclick="JoinCart()">加入购物车</a>
-                    <div id="popupDialog" style="width: 300px" data-role="popup" data-theme="b"
-                        data-overlay-theme="b" data-dismissible="false">
-                        <div class="ui-corner-bottom ui-content" data-role="content" data-theme="b">
-                                <div class="ui-content" style="text-align: center; min-height:30px">
+                @if (Model.Status == (int)Poco.Enum.EnumProductType.Shortages)
+                {
+                    
+                    <td>
+                        <a href="#popupDialog" class="ui-btn-b" style="background-color: #FF8C00; text-shadow: 0 1px 0 #FF8C00;
+                            color: #fff" data-role="button" data-position-to="window" data-transition="pop"
+                            data-rel="popup" data-corners="false" onclick="JoinCart()">加入购物车</a>
+                        <div id="popupDialog" style="width: 300px" data-role="popup" data-theme="b" data-overlay-theme="b"
+                            data-dismissible="false">
+                            <div class="ui-corner-bottom ui-content" data-role="content" data-theme="b">
+                                <div class="ui-content" style="text-align: center; min-height: 30px">
                                     已成功加入购物车
                                 </div>
-                                <a href="#" data-role="button" class="spanSize" style=" font-weight: normal; width:32%"
+                                <a href="#" data-role="button" class="spanSize" style="font-weight: normal; width: 32%"
                                     data-rel="back" data-theme="b" data-inline="true" data-corners="false">再逛逛</a>
                                 <a href="@Url.Action("ShoppingCart", "MicroMall", new { AMID = ViewBag.AMID })" class="spanSize" style="
                                 font-weight: normal;; width:32%" data-role="button" data-transition="flow" data-theme="b"
                                     data-inline="true" data-corners="false" data-ajax="false">去结算</a>
-                           
+                            </div>
                         </div>
-                    </div>
-                 
-                </td>
-                <td>
-                </td>
-                <td style="width: 49%;">
-                    <a onclick="return instantly()" style=" background-color:#FF3030; text-shadow:0 1px 0 #FF3030 ; color:#fff" href="@Url.Action("OrderConfirmation", "MicroMall", new { AMID = ViewBag.AMID })" data-role="button" data-corners="false" data-ajax="false">
-                        立即购买</a>
-                </td>
+                    </td>
+                    
+                }
+                else if (Model.Status == (int)Poco.Enum.EnumProductType.OffShelves)
+                {
+                    <td>
+                        <a class="ui-disabled" href="#" data-role="button" data-corners="false" data-ajax="false">
+                            产品已下架</a>
+                    </td>
+                }
+                else
+                {
+                    <td style="width: 49%;">
+                        <a href="#popupDialog" class="ui-btn-b" style="background-color: #FF8C00; text-shadow: 0 1px 0 #FF8C00;
+                            color: #fff" data-role="button" data-position-to="window" data-transition="pop"
+                            data-rel="popup" data-corners="false" onclick="JoinCart()">加入购物车</a>
+                        <div id="popupDialog" style="width: 300px" data-role="popup" data-theme="b" data-overlay-theme="b"
+                            data-dismissible="false">
+                            <div class="ui-corner-bottom ui-content" data-role="content" data-theme="b">
+                                <div class="ui-content" style="text-align: center; min-height: 30px">
+                                    已成功加入购物车
+                                </div>
+                                <a href="#" data-role="button" class="spanSize" style="font-weight: normal; width: 32%"
+                                    data-rel="back" data-theme="b" data-inline="true" data-corners="false">再逛逛</a>
+                                <a href="@Url.Action("ShoppingCart", "MicroMall", new { AMID = ViewBag.AMID })" class="spanSize" style="
+                                font-weight: normal;; width:32%" data-role="button" data-transition="flow" data-theme="b"
+                                    data-inline="true" data-corners="false" data-ajax="false">去结算</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                    </td>
+                    <td style="width: 49%;">
+                        <a onclick="return instantly()" style=" background-color:#FF3030; text-shadow:0 1px 0 #FF3030 ; color:#fff" href="@Url.Action("OrderConfirmation", "MicroMall", new { AMID = ViewBag.AMID })" data-role="button" data-corners="false" data-ajax="false">
+                            立即购买</a>
+                    </td>
+                }
             </tr>
         </table>
     </div>
@@ -389,7 +437,7 @@
     <div class="divIntroduction">
         @Html.Raw(Model.Introduction)
     </div>
-    @if (Model.ProductImg.FirstOrDefault() != null&&string.IsNullOrEmpty(Model.ProductImg.FirstOrDefault().PImgMini)==false)
+    @if (Model.ProductImg.FirstOrDefault() != null && string.IsNullOrEmpty(Model.ProductImg.FirstOrDefault().PImgMini) == false)
     {
         <input type="hidden" name="hidProductImage" value="@Url.Content(Model.ProductImg.FirstOrDefault().PImgMini)" />
     }

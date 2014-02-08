@@ -430,12 +430,12 @@ namespace Web.Controllers
 
 
         /// <summary>
-        /// 获取图片素材
+        ///  
         /// </summary>
         /// <param name="amid">AccountMainID</param>
         public string LINSHI()
         {
-            return "False";
+            return "True";
         }
 
 

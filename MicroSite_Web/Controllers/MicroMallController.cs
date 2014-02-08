@@ -7,6 +7,7 @@ using Injection;
 using Interface;
 using Poco;
 using Business;
+using System.Data;
 
 namespace MicroSite_Web.Controllers
 {
@@ -71,6 +72,73 @@ namespace MicroSite_Web.Controllers
             ViewBag.AMID = AMID;
             return View();
         }
+
+        /// <summary>
+        /// 校验购物车中数据 AJAX
+        /// </summary>
+        /// <param name="IDPriceStrs">id,price|id,price</param>
+        /// <returns></returns>
+        [HttpPost]
+        public string CheckPriceOrstatus(string IDPriceStrs)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("PID"); //id
+            dt.Columns.Add("Status"); //状态 0：正常 1：价格变化 2：产品缺货 3：产品下架 4:商品不存在
+            dt.Columns.Add("ImgPath"); //图片路径
+            var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
+            string[] Pstrs = IDPriceStrs.Split('|');
+            foreach (string k in Pstrs)
+            {
+                if (!string.IsNullOrEmpty(k))
+                {
+                    DataRow row = dt.NewRow();
+                    string[] PIDandprice = k.Split(',');
+                    row["PID"] = PIDandprice[0];
+                    var product = productModel.Get(int.Parse(PIDandprice[0]));
+                    if (product == null)
+                    {
+                        row["Status"] = 4;
+                        row["ImgPath"] = Url.Content("~/Images/nopicture.png");
+                    }
+                    else
+                    {
+                        if (product.Status == (int)Poco.Enum.EnumProductType.OffShelves)
+                        {
+                            row["Status"] = 3;
+                        }
+                        else if (product.Status == (int)Poco.Enum.EnumProductType.Shortages)
+                        {
+                            row["Status"] = 2;
+                        }
+                        else
+                        {
+                            if (double.Parse(PIDandprice[1]) == product.Price)
+                            {
+                                row["Status"] = 0;
+                            }
+                            else
+                            {
+                                row["Status"] = 1;
+                            }
+                        }
+                        if (product.ProductImg.FirstOrDefault() != null)
+                        {
+                            row["ImgPath"] = Url.Content(product.ProductImg.FirstOrDefault().PImgMini);
+                        }
+                        else
+                        {
+                            row["ImgPath"] = Url.Content("~/Images/nopicture.png");
+                        }
+                       
+                    }
+                    dt.Rows.Add(row);
+                }
+            }
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(dt);
+        }
+
+
 
         //订单确认界面
         public ActionResult OrderConfirmation(int AMID, int? adsID, int? IsError)

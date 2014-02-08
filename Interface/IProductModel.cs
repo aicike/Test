@@ -19,6 +19,14 @@ namespace Interface
         Result DeleteInfo(int id,int AccountMainID);
 
         /// <summary>
+        /// 根据id 与 amid 获取产品信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="AccountMainID"></param>
+        /// <returns></returns>
+        Product GetPInfo(int id, int AccountMainID);
+
+        /// <summary>
         /// 根据分类ID 获取包含其子分类的所有产品
         /// </summary>
         /// <param name="TypeID"></param>

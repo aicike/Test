@@ -1,0 +1,122 @@
+﻿@{
+    ViewBag.Title = "产品预览";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+    var pimg = ViewBag.ProductIMG as List<Poco.ProductImg>;
+}
+@section head{
+    <link href="@Url.Content("~/Scripts/royalslider/royalslider.css")" rel="stylesheet"
+        type="text/css" />
+    <script src="@Url.Content("~/Scripts/royalslider/royalslider.min.js")" type="text/javascript"></script>
+    <style>
+        .mainDiv
+        {
+            max-width: 840px;
+            min-width: 520px;
+            margin: 0px auto;
+            background-color: #ffffff;
+        }
+        .divIntroduction
+        {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #7B7B7B;
+        }
+        .divIntroduction img
+        {
+            max-width: 100%;
+        }
+        .divIntroduction p
+        {
+            margin: 0px;
+        }
+    </style>
+    <script>
+        $(function () {
+            royal();
+
+        });
+
+
+
+        function royal() {
+            var si = $('#royalSlider').royalSlider({
+                addActiveClass: true,
+                arrowsNav: false,
+                controlNavigation: 'none',
+                autoScaleSlider: true,
+                autoScaleSliderWidth: 1024,
+                autoScaleSliderHeight: 640,
+                loop: false,
+                fadeinLoadedSlide: false,
+                globalCaption: true,
+                keyboardNavEnabled: true,
+                globalCaptionInside: true,
+
+                visibleNearby: {
+                    enabled: true,
+                    centerArea: 0.7,
+                    center: true,
+                    breakpoint: 100,
+                    breakpointCenterArea: 1,
+                    navigateByCenterClick: true
+                }
+            });
+
+        }
+    </script>
+}
+@model Poco.Product
+<div class="mainDiv">
+    <div id="royalSlider" class="visibleNearby" style="background-color: #5C5C5C">
+        <!-- simple image slide -->
+        @if (Model.ProductImg.FirstOrDefault() != null)
+        {
+            foreach (var item in Model.ProductImg)
+            {
+                if (!string.IsNullOrEmpty(item.PImgOriginal))
+                { 
+            <img class="imgs" src="@Url.Content(item.PImgOriginal)" />
+                }
+            }
+
+        }
+        else
+        { 
+            <img class="imgs" src="@Url.Content("~/Images/nopicture.png")" />
+        }
+        <!-- lazy loaded image slide -->
+        <!--<a class="rsImg" href="image.jpg">image desc</a>-->
+    </div>
+    <div style="line-height: 25px; padding-top: 20px">
+        @Model.Name
+    </div>
+    <div style="margin-top: 10px; font-size: 14px">
+        价格：<span style="color: Red; font-weight: bold">￥@Model.Price</span> &nbsp;&nbsp;&nbsp;状态：
+        @switch (Model.Status)
+        {
+            case (int)Poco.Enum.EnumProductType.Normal:
+                      
+            <span style="color: #87CEFF; font-weight: bold">正常</span>
+                break;
+            case (int)Poco.Enum.EnumProductType.OffShelves:
+                      
+            <span style="color: #000; font-weight: bold">下架</span>
+                break;
+            case (int)Poco.Enum.EnumProductType.Shortages:
+                    
+            <span style="color: Red; font-weight: bold">缺货</span>
+                break;
+        }
+    </div>
+    <div style="margin-top: 5px; font-size: 12px; color: #8E8E8E">
+        运费：快递￥@Model.Freight
+    </div>
+    <div style="margin: 15px 0px; height: 3px; width: 100%; background: url(@Url.Content("~/Images/item_line.png")) repeat-x;">
+    </div>
+    <div style="">
+        商品详情
+    </div>
+    <div class="divIntroduction">
+        @Html.Raw(Model.Introduction)
+    </div>
+</div>
