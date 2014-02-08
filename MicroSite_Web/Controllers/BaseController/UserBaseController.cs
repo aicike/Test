@@ -20,7 +20,7 @@ namespace MicroSite_Web.Controllers
             }
             set { Session[SystemConst.Session.LoginUser] = value; }
         }
-
+        
         public static int GetAccountMainID()
         {
             var accountMainID = CacheModel.GetCache_Struct<int>(SystemConst.Cache.AccountMainID);
@@ -31,7 +31,7 @@ namespace MicroSite_Web.Controllers
             var accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             if (SystemConst.IsIntegrationWebProject)
             {
-                throw new Exception("平台集成的微网站项目，AccountMainID还未实现获取代码，需要实现，请联系武双琦。");
+                throw new Exception("平台集成的微网站项目，为获取到amid。");
             }
             else
             {

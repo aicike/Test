@@ -18,15 +18,17 @@ namespace Web.Controllers
     {
         #region 前台
 
-        public ActionResult Index()
+        public ActionResult Index(int? amid)
         {
+            if (SystemConst.IsIntegrationWebProject)
+            {
+                amid.HasValue.NotAuthorizedPage();
+                ViewBag.AMID = amid;
+            }
             return View();
         }
 
         #endregion
-
-
-
 
         public ActionResult AppView(int id)
         {

@@ -1,6 +1,14 @@
 ﻿<!DOCTYPE html>
 @{
-    var amid = MicroSite_Web.Controllers.UserBaseController.GetAccountMainID();
+    int amid = 0;
+    if (Poco.SystemConst.IsIntegrationWebProject)
+    {
+        amid = ViewBag.AMID;
+    }
+    else
+    {
+        amid = MicroSite_Web.Controllers.UserBaseController.GetAccountMainID();
+    }
 }
 <html>
 <head>

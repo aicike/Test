@@ -1,10 +1,18 @@
 ﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
-    var accountMainID = MicroSite_Web.Controllers.UserBaseController.GetAccountMainID();
+    int accountMainID = 0;
+    if (Poco.SystemConst.IsIntegrationWebProject)
+    {
+        accountMainID = ViewBag.AMID;
+    }
+    else
+    {
+        accountMainID = MicroSite_Web.Controllers.UserBaseController.GetAccountMainID();
+    }
 }
 <script>
-    window.location.href = "@Url.Action("ShopIndex", "MicroMall", new { AMID = MicroSite_Web.Controllers.UserBaseController.GetAccountMainID() })";
+    window.location.href = "@Url.Action("ShopIndex", "MicroMall", new { AMID = accountMainID })";
 </script>
 <div data-role="content">
     <div class="ui-grid-a">
