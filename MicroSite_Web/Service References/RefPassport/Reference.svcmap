@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="09de5663-2113-4b70-843c-fb7af18ec1a0" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://imtimely.com/SSO/TokenService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="TokenService.disco" MetadataType="Disco" ID="6c3fa641-de10-4baf-8401-679b11a38eaf" SourceId="1" SourceUrl="http://imtimely.com/SSO/TokenService.svc?disco" />
+    <MetadataFile FileName="TokenService.xsd" MetadataType="Schema" ID="98e2d4f7-4872-4ad8-98ec-0eae5a8fbc24" SourceId="1" SourceUrl="http://imtimely.com/SSO/TokenService.svc?xsd=xsd0" />
+    <MetadataFile FileName="TokenService1.xsd" MetadataType="Schema" ID="f966c086-84a2-4c1c-97bc-54b881be2340" SourceId="1" SourceUrl="http://imtimely.com/SSO/TokenService.svc?xsd=xsd1" />
+    <MetadataFile FileName="TokenService.wsdl" MetadataType="Wsdl" ID="a53adf79-111a-49fd-a1df-9f0dce48c851" SourceId="1" SourceUrl="http://imtimely.com/SSO/TokenService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

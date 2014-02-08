@@ -112,6 +112,7 @@ namespace EF.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         SystemStatus = c.Int(nullable: false),
                         Name = c.String(nullable: false, maxLength: 100),
+                        IsIndependentSite = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -1491,6 +1492,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
+
 
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };

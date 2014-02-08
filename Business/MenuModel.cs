@@ -81,9 +81,6 @@ namespace Business
         {
             //判断有没有权限操作当前菜单(Contorller)
             IRoleMenuModel roleMenuModel = Factory.Get<IRoleMenuModel>(SystemConst.IOC_Model.RoleMenuModel);
-            var menuquery = roleMenuModel.List_Cache().Where(a => roleID.Contains(a.RoleID) &&
-                                                       ((area != null && a.Menu.Area.Equals(area, StringComparison.CurrentCultureIgnoreCase)) || (area == null && a.Menu.Area == null)) &&
-                                                       (a.Menu.Controller != null && a.Menu.Controller.Equals(controller, StringComparison.CurrentCultureIgnoreCase))).Select(a => a.Menu);
 
             var menu = roleMenuModel.List_Cache().Where(a => roleID.Contains(a.RoleID) &&
                                                        ((area != null && a.Menu.Area.Equals(area, StringComparison.CurrentCultureIgnoreCase)) || (area == null && a.Menu.Area == null)) &&

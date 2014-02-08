@@ -8,7 +8,6 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using EF;
 using System.Data.Entity;
-using MicroSite_EF;
 
 namespace Web
 {

@@ -128,10 +128,10 @@ INSERT [dbo].[SystemUser] ([SystemStatus], [Name], [Email], [LoginPwd], [Phone],
 
 ------------------------------[Service]-------------------------------------------
 SET IDENTITY_INSERT [dbo].[Service] ON
-INSERT INTO dbo.Service ( [ID],SystemStatus, Name ) VALUES  (1, 0, N'WEB基本服务')
-INSERT INTO dbo.Service ( [ID],SystemStatus, Name ) VALUES  (2, 0, N'售楼部服务')
-INSERT INTO dbo.Service ( [ID],SystemStatus, Name ) VALUES  (3, 0, N'微网站服务')
-INSERT INTO dbo.Service ( [ID],SystemStatus, Name ) VALUES  (4, 0, N'微信集成服务')
+INSERT INTO dbo.Service ( [ID],SystemStatus, NAME, IsIndependentSite) VALUES  (1, 0, N'WEB基本服务',0)
+INSERT INTO dbo.Service ( [ID],SystemStatus, Name, IsIndependentSite) VALUES  (2, 0, N'售楼部服务',0)
+INSERT INTO dbo.Service ( [ID],SystemStatus, NAME, IsIndependentSite) VALUES  (3, 0, N'微网站服务',1)
+INSERT INTO dbo.Service ( [ID],SystemStatus, NAME, IsIndependentSite) VALUES  (4, 0, N'微信集成服务',1)
 SET IDENTITY_INSERT [dbo].[Service] OFF
 
 ------------------------------[Menu]--------------------------------------------

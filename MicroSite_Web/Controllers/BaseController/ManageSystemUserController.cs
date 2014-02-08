@@ -23,7 +23,6 @@ namespace Web.Controllers
         }
         
        
-
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var controller = filterContext.RequestContext.RouteData.Values["controller"] as string;

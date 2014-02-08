@@ -98,9 +98,8 @@
 <div style="margin: 0px auto 0px auto; position: absolute; top: 15%; right: 12%;
     z-index: 100">
     <div class="homelogin">
-        @using (Ajax.BeginForm("UserLogin", "Login", new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "LandWaitFor('login','WaitImg',1)" }))
+        @using (Ajax.BeginForm("UserLogin", "Login", new { BackUrl=ViewBag.BackUrl }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "LandWaitFor('login','WaitImg',1)" }, null))
         { 
-            
             <div>
                 <input name="phone_email" id="phone_email" type="text" class="inputLogin" placeholder="电话或邮箱"
                     style="background-color: #faffbd" />

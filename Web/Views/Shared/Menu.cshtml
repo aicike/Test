@@ -15,9 +15,9 @@
             if (item.IsAppMenu == false)
             {
             <li><a class="menu1">
-                    @item.Name
-                    <img style=" float:right; width:14px ;margin-right:10px; margin-top:14px" t_val="0" src="@Url.Content("/images/zhankai_2.png")" />
-                </a>
+                @item.Name
+                <img style=" float:right; width:14px ;margin-right:10px; margin-top:14px" t_val="0" src="@Url.Content("/images/zhankai_2.png")" />
+            </a>
                 <ul class="submenu" id="submenu_@item.ID">
                     @{var menu2s = item.Menus.OrderBy(a => a.Order);}
                     @foreach (var menu2 in menu2s)
@@ -25,7 +25,18 @@
                         if (ViewBag.Menu2 == menu2.Controller)
                         { 
                         <li class="select">
-                            @Html.ActionLink(menu2.Name, menu2.Action, menu2.Controller, new { Area = menu2.Area }, null)
+                            @if (menu2.ParentMenu != null && menu2.ParentMenu.Service != null && menu2.ParentMenu.Service.IsIndependentSite)
+                            {
+                                <a href="http://microsite.imtimely.com@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                @menu2.Name
+                                </a>
+                            }
+                            else
+                            { 
+                                <a href="http://@(account.HostName).imtimely.com@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                @menu2.Name
+                                </a>
+                            }
                             <script>
                                 $(function () {
                                     $('#submenu_@item.ID').prev("a").find("img").attr("src", '@Url.Content("/images/shouqi_2.png")');
@@ -38,7 +49,18 @@
                         else
                         { 
                         <li>
-                            @Html.ActionLink(menu2.Name, menu2.Action, menu2.Controller, new { Area = menu2.Area }, null)
+                            @if (menu2.ParentMenu != null && menu2.ParentMenu.Service != null && menu2.ParentMenu.Service.IsIndependentSite)
+                            {
+                                <a href="http://microsite.imtimely.com@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                @menu2.Name
+                                </a>
+                            }
+                            else
+                            { 
+                                <a href="http://@(account.HostName).imtimely.com@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                @menu2.Name
+                                </a>
+                            }
                         </li>
                         }
                     }

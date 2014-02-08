@@ -20,6 +20,11 @@ namespace Poco
         [StringLength(100, ErrorMessage = "长度小于50")]
         public string Name { get; set; }
 
+        /// <summary>
+        /// 该服务是否是独立站点
+        /// </summary>
+        public bool IsIndependentSite { get; set; }
+
         public virtual ICollection<Menu> Menus { get; set; }
 
         public virtual ICollection<AccountMain_Service> AccountMain_Services { get; set; }

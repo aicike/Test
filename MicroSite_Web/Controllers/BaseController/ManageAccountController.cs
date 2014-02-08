@@ -11,6 +11,8 @@ using System.Web.UI;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using MicroSite_Web.RefPassport;
+using System.Text.RegularExpressions;
 
 namespace Controllers
 {
@@ -49,23 +51,60 @@ namespace Controllers
             }
         }
 
-
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var controller = filterContext.RequestContext.RouteData.Values["controller"] as string;
             var action = filterContext.RequestContext.RouteData.Values["action"] as string;
             var area = filterContext.RouteData.DataTokens["area"] as string;
 
-            if (IsMicroSiteSuperAdmin==false&&(LoginAccount == null)
+            if (IsMicroSiteSuperAdmin == false && (LoginAccount == null)
                 //&& ((controller != null && (controller.Equals("Account", StringComparison.OrdinalIgnoreCase) == false && controller.Equals("Home", StringComparison.OrdinalIgnoreCase) == false && controller.Equals("Area", StringComparison.OrdinalIgnoreCase) == false))
                 //)
                 )
             {
-                filterContext.Result = new RedirectToRouteResult("Default",
-                    new RouteValueDictionary{
-                        { "controller", "Login" },
-                        { "action", "Index" }
-                });
+                #region 单点登录分站验证
+                
+                //令牌验证结果
+                if (Request.QueryString["Token"] != null)
+                {
+                    if (Request.QueryString["Token"] != "$Token$")
+                    {
+                        //持有令牌
+                        string tokenValue = Request.QueryString["Token"];
+                        //调用WebService获取主站凭证
+                        TokenServiceClient tokenService = new TokenServiceClient();
+                        object o = tokenService.TokenGetCredence(tokenValue);
+                        if (o != null)
+                        {
+                            //令牌正确
+                            Session["Token"] = o;
+                            Response.Write("恭喜，令牌存在，您被授权访问该页面！");
+                        }
+                        else
+                        {
+                            //令牌错误
+                            Response.Redirect(this.replaceToken());
+                            //string url = Request.Url.AbsoluteUri;
+                            //filterContext.Result = new RedirectToRouteResult("Default", new RouteValueDictionary { { "controller", "Login" }, { "action", "Index" }, { "BackURL", url } });
+                        }
+                    }
+                    else
+                    {
+                        //未持有令牌
+                        Response.Redirect(this.replaceToken());
+                        //string url = Request.Url.AbsoluteUri;
+                        //filterContext.Result = new RedirectToRouteResult("Default", new RouteValueDictionary { { "controller", "Login" }, { "action", "Index" }, { "BackURL", url } });
+                    }
+                }
+                //未进行令牌验证，去主站验证
+                else
+                {
+                    Response.Redirect(this.getTokenURL());
+                    //filterContext.Result = new RedirectToRouteResult("Default", new RouteValueDictionary { { "controller", "Login" }, { "action", "Index" } });
+                }
+
+                #endregion
+
                 return;
             }
 
@@ -95,6 +134,35 @@ namespace Controllers
 
             GetMenu3(controller, action);
             base.OnActionExecuting(filterContext);
+        }
+
+        /// <summary>
+        /// 获取带令牌请求的URL
+        /// 在当前URL中附加上令牌请求参数
+        /// </summary>
+        /// <returns></returns>
+        private string getTokenURL()
+        {
+            string url = Request.Url.AbsoluteUri;
+            Regex reg = new Regex(@"^.*\?.+=.+$");
+            if (reg.IsMatch(url))
+                url += "&Token=$Token$";
+            else
+                url += "?Token=$Token$";
+
+            return "http://www.imtimely.com/SSOService?BackURL=" + Server.UrlEncode(url);
+        }
+
+        /// <summary>
+        /// 去掉URL中的令牌
+        /// 在当前URL中去掉令牌参数
+        /// </summary>
+        /// <returns></returns>
+        private string replaceToken()
+        {
+            string url = Request.Url.AbsoluteUri;
+            url = Regex.Replace(url, @"(\?|&)Token=.*", "", RegexOptions.IgnoreCase);
+            return "http://www.imtimely.com/Login?BackURL=" + Server.UrlEncode(url);
         }
 
         /// <summary>

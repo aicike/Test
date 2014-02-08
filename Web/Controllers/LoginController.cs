@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using agsXMPP.Xml.Dom;
 using System.IO;
 using System.Data;
+using Web.SSO;
 
 namespace Web.Controllers
 {
@@ -20,7 +21,7 @@ namespace Web.Controllers
     {
         #region 平台
 
-        public ActionResult Index()
+        public ActionResult Index(string BackUrl)
         {
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "首页", WebTitleRemark, "");
@@ -43,7 +44,7 @@ namespace Web.Controllers
                 dt.Rows.Add(row);
             }
             ViewBag.ShowPage = dt;
-
+            ViewBag.BackUrl = BackUrl;
             return View();
             //return RedirectToAction("SystemLogin");
         }
@@ -107,11 +108,13 @@ namespace Web.Controllers
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "登录", WebTitleRemark, "");
             ViewBag.Title = webTitle;
+
+            ViewBag.BackUrl = Request.QueryString["BackURL"];
             return View();
         }
 
         [HttpPost]
-        public ActionResult UserLogin(string phone_email,string password)
+        public ActionResult UserLogin(string phone_email, string password)
         {
             IAccountModel accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             var result = accountModel.Login(phone_email, password);
@@ -120,6 +123,28 @@ namespace Web.Controllers
                 return JavaScript("LandWaitFor('login','WaitImg',2);" + AlertJS_NoTag(new Dialog(result.Error)));
             }
             var account = Session[SystemConst.Session.LoginAccount] as Account;
+
+            #region 单点登录
+
+            //产生令牌
+            string tokenValue = Guid.NewGuid().ToString().ToUpper();
+            HttpCookie tokenCookie = new HttpCookie("Token");
+            tokenCookie.Values.Add("Value", tokenValue);
+            tokenCookie.Domain = "imtimely.com";
+            Response.AppendCookie(tokenCookie);
+
+            //产生主站凭证
+            object info = true;
+            CacheManager.TokenInsert(tokenValue, info, DateTime.Now.AddMinutes(double.Parse(System.Configuration.ConfigurationManager.AppSettings["timeout"])));
+
+            //跳转回分站
+            if (Request.QueryString["BackURL"] != null)
+            {
+                return JavaScript("window.location.href='" + Server.UrlDecode(Request.QueryString["BackURL"]) + "'");
+            }
+
+            #endregion
+
             var url = Url.RouteUrl("User", new { action = "Index", controller = "Home", HostName = account.HostName }, true);
             return JavaScript("window.location.href='" + url + "'");
         }
