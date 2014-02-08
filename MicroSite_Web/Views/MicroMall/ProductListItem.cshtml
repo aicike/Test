@@ -32,7 +32,18 @@
                 <span>@item.Name</span>
             </div>
             <div class="bottom">
-                ￥@item.Price
+                @if (item.Status == (int)Poco.Enum.EnumProductType.Shortages)
+                {
+                    <span style="color: #6E6E6E">(缺货)</span>
+                }
+                else if (item.Status == (int)Poco.Enum.EnumProductType.OffShelves)
+                {
+                     <span style="color: #6E6E6E">(已经下架)</span>
+                }
+                else
+                {
+                    @item.Price.ToString("C")
+                }
             </div>
         </div>
     </div>

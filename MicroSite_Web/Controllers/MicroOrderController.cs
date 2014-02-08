@@ -90,5 +90,28 @@ namespace MicroSite_Web.Controllers
             return View(order);
         }
 
+
+        /// <summary>
+        /// 查看详细
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [AllowCheckPermissions(false)]
+        public ActionResult OrderInfo(int id)
+        {
+            var orderModel = Factory.Get<IOrderModel>(SystemConst.IOC_Model.OrderModel);
+            var order = orderModel.Get(id);
+
+            ViewBag.orderdetail = GetOrderDetail(id).ToList();
+            return View(order);
+        }
+
+        //或去订单产品信息
+        public IQueryable<OrderDetail> GetOrderDetail(int OrderID)
+        {
+            var orderDetail = Factory.Get<IOrderDetailModel>(SystemConst.IOC_Model.OrderDetailModel);
+
+            return orderDetail.GetOrderDetailByOrderID(OrderID);
+        }
     }
 }

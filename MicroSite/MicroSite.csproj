@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{34C6117D-21B1-4498-89FA-47BD6C1C2393}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MicroSite</RootNamespace>
+    <AssemblyName>MicroSite</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core, Version=1.3.2.40943, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <HintPath>..\packages\spring\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Web">
+      <HintPath>..\packages\spring\Spring.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Home.aspx" />
+    <Content Include="Admin\Login.aspx" />
+    <Content Include="Center.aspx" />
+    <Content Include="Error.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="Home.aspx" />
+    <Content Include="HTMLPage1.htm" />
+    <Content Include="Image\12.jpg" />
+    <Content Include="Image\23.jpg" />
+    <Content Include="Image\366585.jpg" />
+    <Content Include="Image\AppDefault.png" />
+    <Content Include="Image\gotop.png" />
+    <Content Include="Image\item_line.png" />
+    <Content Include="Image\Loading.gif" />
+    <Content Include="Image\logo2.jpg" />
+    <Content Include="Image\test.jpg" />
+    <Content Include="News\NewDetail.aspx" />
+    <Content Include="NewFolder1\demo.html" />
+    <Content Include="NewFolder1\images\bodybg.jpg" />
+    <Content Include="NewFolder1\images\fav_icon_word_new_1220.png" />
+    <Content Include="NewFolder1\images\gotop.png" />
+    <Content Include="NewFolder1\images\masonry_loading_1.gif" />
+    <Content Include="NewFolder1\images\page.png" />
+    <Content Include="NewFolder1\images\pic\01.jpg" />
+    <Content Include="NewFolder1\images\pic\02.jpg" />
+    <Content Include="NewFolder1\images\pic\03.jpg" />
+    <Content Include="NewFolder1\images\pic\04.jpg" />
+    <Content Include="NewFolder1\images\pic\05.jpg" />
+    <Content Include="NewFolder1\images\pic\06.jpg" />
+    <Content Include="NewFolder1\images\pic\07.jpg" />
+    <Content Include="NewFolder1\images\pic\08.jpg" />
+    <Content Include="NewFolder1\images\pic\09.jpg" />
+    <Content Include="NewFolder1\images\pic\10.jpg" />
+    <Content Include="NewFolder1\images\pic\11.jpg" />
+    <Content Include="NewFolder1\images\pic\12.jpg" />
+    <Content Include="NewFolder1\images\pic\13.jpg" />
+    <Content Include="NewFolder1\images\pic\14.jpg" />
+    <Content Include="NewFolder1\images\pic\15.jpg" />
+    <Content Include="NewFolder1\images\pic\16.jpg" />
+    <Content Include="NewFolder1\images\pic\17.jpg" />
+    <Content Include="NewFolder1\royalslider.min.js" />
+    <Content Include="NewFolder1\js\jquery-1.4.2.min.js" />
+    <Content Include="NewFolder1\js\jquery.infinitescroll.js" />
+    <Content Include="NewFolder1\js\jquery.masonry.js" />
+    <Content Include="NewFolder1\page\10.html" />
+    <Content Include="NewFolder1\page\2.html" />
+    <Content Include="NewFolder1\page\3.html" />
+    <Content Include="NewFolder1\page\4.html" />
+    <Content Include="NewFolder1\page\5.html" />
+    <Content Include="NewFolder1\page\6.html" />
+    <Content Include="NewFolder1\page\7.html" />
+    <Content Include="NewFolder1\page\8.html" />
+    <Content Include="NewFolder1\page\9.html" />
+    <Content Include="NewFolder1\royalslider.css" />
+    <Content Include="News\News.aspx" />
+    <Content Include="News\NewsPage.aspx" />
+    <Content Include="ProductInfo.aspx" />
+    <Content Include="ProductList.aspx" />
+    <Content Include="ProductListItem.aspx" />
+    <Content Include="Shop.aspx" />
+    <Content Include="Style\homeStyle.css" />
+    <Content Include="WebForm1.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admin\Admin.Master.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Admin.Master.designer.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\BasePage_Admin.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Center.aspx.cs">
+      <DependentUpon>Center.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Center.aspx.designer.cs">
+      <DependentUpon>Center.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="News\NewDetail.aspx.cs">
+      <DependentUpon>NewDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="News\NewDetail.aspx.designer.cs">
+      <DependentUpon>NewDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="News\News.aspx.cs">
+      <DependentUpon>News.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="News\News.aspx.designer.cs">
+      <DependentUpon>News.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="News\NewsPage.aspx.cs">
+      <DependentUpon>NewsPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="News\NewsPage.aspx.designer.cs">
+      <DependentUpon>NewsPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProductInfo.aspx.cs">
+      <DependentUpon>ProductInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductInfo.aspx.designer.cs">
+      <DependentUpon>ProductInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProductList.aspx.cs">
+      <DependentUpon>ProductList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductList.aspx.designer.cs">
+      <DependentUpon>ProductList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProductListItem.aspx.cs">
+      <DependentUpon>ProductListItem.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductListItem.aspx.designer.cs">
+      <DependentUpon>ProductListItem.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shop.aspx.cs">
+      <DependentUpon>Shop.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Shop.aspx.designer.cs">
+      <DependentUpon>Shop.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Site.Master.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Master.designer.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\Init.ashx.cs">
+      <DependentUpon>Init.ashx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Site.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Business\Business.csproj">
+      <Project>{7E5029F0-6823-4253-A107-A9C4154E7FAD}</Project>
+      <Name>Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{1D926C61-B1CC-48BC-93AA-3F52D05B8FD0}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EFPoco\EFPoco.csproj">
+      <Project>{389D5177-A475-41D1-9961-577DDED3170B}</Project>
+      <Name>EFPoco</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Injection\Injection.csproj">
+      <Project>{54A9C2CC-9266-47D4-9F94-9D92B8370024}</Project>
+      <Name>Injection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Interface\Interface.csproj">
+      <Project>{524B3A46-76B0-41CE-AD35-2B1BEEB19968}</Project>
+      <Name>Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MicroSite_EF\MicroSite_EF.csproj">
+      <Project>{6888BF32-4568-42DE-BE1E-CE55EF83FF16}</Project>
+      <Name>MicroSite_EF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Poco\Poco.csproj">
+      <Project>{DDFA1F60-3A1E-42BD-AD5C-64E5F5CCDEEE}</Project>
+      <Name>Poco</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="weixin\Init.ashx" />
+    <Content Include="Admin\Admin.Master" />
+    <Content Include="Admin\AppAdvertorial\Add.cshtml" />
+    <Content Include="Admin\AppAdvertorial\Edit.cshtml" />
+    <Content Include="Admin\AppAdvertorial\Index.cshtml" />
+    <Content Include="Admin\AppAdvertorial\Preview.cshtml" />
+    <None Include="NewFolder1\images\pic\Thumbs.db" />
+    <None Include="NewFolder1\images\Thumbs.db" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>16128</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://192.168.1.138:8080</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://192.168.1.138:8080/</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>http://192.168.1.138:8080</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

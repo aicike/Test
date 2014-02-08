@@ -165,6 +165,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MicroMallController.cs" />
     <Compile Include="Controllers\MicroNewController.cs" />
+    <Compile Include="Controllers\MicroOrderController.cs" />
     <Compile Include="Controllers\MicroSitePanorama.cs" />
     <Compile Include="Controllers\MicroUserDeliveryAddressController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -365,6 +366,37 @@
     <Content Include="Scripts\Highcharts\themes\gray.js" />
     <Content Include="Scripts\Highcharts\themes\grid.js" />
     <Content Include="Scripts\Highcharts\themes\skies.js" />
+    <Content Include="Scripts\ICheck\flat\aero%402x.png" />
+    <Content Include="Scripts\ICheck\flat\aero.css" />
+    <Content Include="Scripts\ICheck\flat\aero.png" />
+    <Content Include="Scripts\ICheck\flat\blue%402x.png" />
+    <Content Include="Scripts\ICheck\flat\blue.css" />
+    <Content Include="Scripts\ICheck\flat\blue.png" />
+    <Content Include="Scripts\ICheck\flat\flat%402x.png" />
+    <Content Include="Scripts\ICheck\flat\flat.css" />
+    <Content Include="Scripts\ICheck\flat\flat.png" />
+    <Content Include="Scripts\ICheck\flat\green%402x.png" />
+    <Content Include="Scripts\ICheck\flat\green.css" />
+    <Content Include="Scripts\ICheck\flat\green.png" />
+    <Content Include="Scripts\ICheck\flat\grey%402x.png" />
+    <Content Include="Scripts\ICheck\flat\grey.css" />
+    <Content Include="Scripts\ICheck\flat\grey.png" />
+    <Content Include="Scripts\ICheck\flat\orange%402x.png" />
+    <Content Include="Scripts\ICheck\flat\orange.css" />
+    <Content Include="Scripts\ICheck\flat\orange.png" />
+    <Content Include="Scripts\ICheck\flat\pink%402x.png" />
+    <Content Include="Scripts\ICheck\flat\pink.css" />
+    <Content Include="Scripts\ICheck\flat\pink.png" />
+    <Content Include="Scripts\ICheck\flat\purple%402x.png" />
+    <Content Include="Scripts\ICheck\flat\purple.css" />
+    <Content Include="Scripts\ICheck\flat\purple.png" />
+    <Content Include="Scripts\ICheck\flat\red%402x.png" />
+    <Content Include="Scripts\ICheck\flat\red.css" />
+    <Content Include="Scripts\ICheck\flat\red.png" />
+    <Content Include="Scripts\ICheck\flat\yellow%402x.png" />
+    <Content Include="Scripts\ICheck\flat\yellow.css" />
+    <Content Include="Scripts\ICheck\flat\yellow.png" />
+    <Content Include="Scripts\ICheck\flat\_all.css" />
     <Content Include="Scripts\ICheck\icheck.js" />
     <Content Include="Scripts\ICheck\line\aero%402x.png" />
     <Content Include="Scripts\ICheck\line\aero.css" />
@@ -1047,6 +1079,9 @@
     <Content Include="Views\MicroUserDeliveryAddress\Index.cshtml" />
     <Content Include="Views\MicroUserDeliveryAddress\Add.cshtml" />
     <Content Include="Views\MicroUserDeliveryAddress\Edit.cshtml" />
+    <Content Include="Views\MicroOrder\Index.cshtml" />
+    <Content Include="Views\MicroOrder\OrderInfo.cshtml" />
+    <Content Include="Views\Product\SelectProduct.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -1069,7 +1104,7 @@
           <IISUrl>http://192.168.1.138:8080</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>True</UseCustomServer>
-          <CustomServerUrl>http://192.168.1.166:8080</CustomServerUrl>
+          <CustomServerUrl>http://192.168.1.138:8080</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

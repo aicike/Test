@@ -4,6 +4,14 @@
     ViewBag.Menu3 = Poco.SystemConst.Menu.Product;
 }
 @section head{
+
+<script>
+    $(function () {
+        $("label[name=labCbFirst]").each(function () {
+            $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
+        });
+    });
+</script>
 }
 @model PagedList<Poco.Product>
 <div class="title">
@@ -37,8 +45,10 @@
         {
             <tr>
                 
-                <td>
-                    @item.Name
+                <td  class="operation">
+                 <label name="labCbFirst" title="查看详细">
+                    <a href="@Url.Action("SelectProduct", "Product", new { ID = item.ID })"  target="_blank">@item.Name</a>
+                    </label>
                 </td>
                 <td>
                     @item.Specification

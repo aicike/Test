@@ -1,0 +1,195 @@
+﻿@{
+
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+    var orderdetail = ViewBag.orderdetail as List<Poco.OrderDetail>;
+}
+@section head{
+    <style>
+        .TbaList
+        {
+            width: 100%;
+        }
+        
+        .TbaList td
+        {
+            font-size: 12px;
+            height: 30px;
+            padding: 5px 5px 5px 5px;
+            border-bottom: 1px solid #aec7e5;
+        }
+        .TbaT
+        {
+            width: 100%;
+            border: 1px solid #aec7e5;
+        }
+        
+        .TbaT td
+        {
+            font-size: 14px;
+            padding-left: 10px;
+            height: 30px;
+        }
+        .TbaT span
+        {
+            font-weight: bold;
+        }
+        fieldset
+        {
+            border-width: 1px;
+        }
+        
+        .TabInfo
+        {
+            border-left: 1px solid #ebebeb;
+            border-bottom: 1px solid #ebebeb;
+        }
+        .TabInfo th
+        {
+            height: 35px;
+            font-weight: normal;
+            border-right: 1px solid #ebebeb;
+            border-top: 1px solid #ebebeb;
+            font-size: 14px;
+        }
+        .TabInfo td
+        {
+            height: 35px;
+            text-align: center;
+            border-right: 1px solid #ebebeb;
+            border-top: 1px solid #ebebeb;
+            padding-top: 5px;
+            font-size: 12px;
+        }
+    </style>
+}
+@model Poco.Order
+<table width="540px" cellpadding="0" cellspacing="0" style="background: #ffffff">
+    <tr>
+        <td style="background-color: #E8F2FF">
+            <table class="TbaT" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>
+                        订单编号：
+                    </td>
+                    <td align="left">
+                        @Model.OrderNum
+                    </td>
+                    <td>
+                        下单日期：
+                    </td>
+                    <td align="left">
+                        @Model.OrderDate.ToString("yyyy-MM-dd hh:ss")
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        订单状态：
+                    </td>
+                    <td align="left">
+                        @switch (Model.status)
+                        {
+                            case (int)Poco.Enum.EnumOrderStatus.Cancel:
+                            <span style="color: #808080">交易关闭</span>
+                                break;
+                            case (int)Poco.Enum.EnumOrderStatus.Complete:
+                            <span style="color: #066601">已完成</span>
+                                break;
+                            case (int)Poco.Enum.EnumOrderStatus.Payment:
+                            <span style="color: #00aec8">对方已付款</span>
+                                break;
+                            case (int)Poco.Enum.EnumOrderStatus.Shipped:
+                            <span style="color: #EEA11C">已发货</span>
+                                break;
+                            case (int)Poco.Enum.EnumOrderStatus.WaitPayMent:
+                            <span style="color: #000">等待付款</span>
+                                break;
+                        }
+                    </td>
+                    <td>
+                        总金额：
+                    </td>
+                    <td align="left">
+                        <span style="color: Red">@Model.Price.ToString("C")</span>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <br />
+            <fieldset style="border-color: #dddddd; background-color: #fbfbfb">
+                <legend>收货人信息</legend>
+                <table class="TbaList" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td width="85px">
+                            收货人姓名：
+                        </td>
+                        <td align="left">
+                            @Model.OrderUserInfo.Receiver
+                        </td>
+                        <td width="85px">
+                            收货人电话：
+                        </td>
+                        <td align="left">
+                            @Model.OrderUserInfo.RPhone
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="85px">
+                            收货人地址：
+                        </td>
+                        <td align="left" colspan="3">
+                            @Model.OrderUserInfo.Province.Name
+                            @Model.OrderUserInfo.City.Name
+                            @Model.OrderUserInfo.District.Name
+                            @Model.OrderUserInfo.Address
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+            <br />
+            <fieldset style="border-color: #f58b0f; background-color: #fff7eb">
+                <legend>配送信息</legend>
+            </fieldset>
+            <br />
+           
+                <table class="TabInfo" width="100%" cellpadding="0" cellspacing="0">
+                    <tr style="background-color: #fdfdfd">
+                        <th>
+                            商品图片
+                        </th>
+                        <th>
+                            商品名称
+                        </th>
+                        <th>
+                            商品单价
+                        </th>
+                        <th>
+                            商品数量
+                        </th>
+                    </tr>
+                    @foreach (var item2 in orderdetail)
+                    {
+                        
+                        <tr>
+                            <td valign="top" widht="80px">
+                                <img src="@Url.Content(item2.ProductImg)" style="max-width: 60px; border:1px solid #eddeed" />
+                            </td>
+                            <td align="left" valign="top" style=" text-align:left;word-wrap: break-word; padding-left: 10px; word-break: break-all"
+                                width="230px;" class="operation">
+                               @item2.ProductName
+                            </td>
+                            <td width="80px">
+                                 @item2.Price.ToString("C")
+                            </td>
+                            <td width="80px">
+                                 @item2.Count
+                            </td>
+                        </tr>
+                    }
+                </table>
+            
+        </td>
+    </tr>
+</table>

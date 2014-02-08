@@ -131,7 +131,7 @@ namespace Business
 
 
         /// <summary>
-        /// 根据分类ID 获取包含其子分类的所有产品
+        /// 根据分类ID 获取包含其子分类的所有产品(不包含 下架产品)
         /// </summary>
         /// <param name="TypeID"></param>
         /// <param name="AccountMainID"></param>
@@ -144,7 +144,7 @@ namespace Business
             {
 
                 int []types = TypeIDS.ConvertToIntArray(',');
-                var list = List().Where(a => types.Contains(a.ClassifyID));
+                var list = List().Where(a => types.Contains(a.ClassifyID) && a.Status != (int)Poco.Enum.EnumProductType.OffShelves);
                 return list;
             }
             else
@@ -163,6 +163,18 @@ namespace Business
         {
             var list = List().Where(a => IDS.Contains(a.ID) && a.AccountMainID == AccountMainID);
             return list;
+        }
+
+        /// <summary>
+        /// 根据id 与 amid 获取产品信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="AccountMainID"></param>
+        /// <returns></returns>
+        public Product GetPInfo(int id, int AccountMainID)
+        {
+            var product = List().Where(a => a.ID == id && a.AccountMainID == AccountMainID).FirstOrDefault();
+            return product;
         }
     }
 }

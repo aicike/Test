@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "ProductList";
+    ViewBag.Title = ViewBag.CName;
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
 }
 @section head{
@@ -184,7 +184,7 @@
         }
         .ui-mobile .ui-page-active
         {
-             overflow:hidden !important;
+            overflow: hidden !important;
         }
     </style>
     <script type="text/javascript">
@@ -282,7 +282,6 @@
     <div class="titleDiv">
         @ViewBag.CName
     </div>
-
     <div class="item_list infinite_scroll">
         @foreach (var item in Model)
         {
@@ -311,7 +310,18 @@
                         <span>@item.Name</span>
                     </div>
                     <div class="bottom">
-                        ￥@item.Price
+                        @if (item.Status == (int)Poco.Enum.EnumProductType.Shortages)
+                        {
+                            <span style="color: #6E6E6E">(缺货)</span>
+                        }
+                        else if (item.Status == (int)Poco.Enum.EnumProductType.OffShelves)
+                        {
+                            <span style="color: #6E6E6E">(已经下架)</span>
+                        }
+                        else
+                        {
+                            @item.Price.ToString("C")
+                        }
                     </div>
                 </div>
             </div>
@@ -321,7 +331,6 @@
     <div id="more">
         <a href="ProductListItem?TypeID=@ViewBag.TypeID&AMID=@ViewBag.AMID&page=1"></a>
     </div>
-   
 </div>
 <div class="loadOK" style="display: none;">
     全部加载完成

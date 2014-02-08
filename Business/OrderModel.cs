@@ -350,6 +350,11 @@ namespace Business
                     CommonModel com = new CommonModel();
                     foreach (var item in productList)
                     {
+                        if (item.Status != (int)EnumProductType.Normal)
+                        {
+                            result.Error = "订单中 产品状态已改变！";
+                            return result;
+                        }
                         foreach (string K in HPIDCnt)
                         {
                             string[] cnts = K.Split(',');
