@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using MicroSite_Web.RefPassport;
 using System.Text.RegularExpressions;
+using Common;
 
 namespace Controllers
 {
@@ -73,12 +74,12 @@ namespace Controllers
                         string tokenValue = Request.QueryString["Token"];
                         //调用WebService获取主站凭证
                         TokenServiceClient tokenService = new TokenServiceClient();
-                        object o = tokenService.TokenGetCredence(tokenValue);
+                        string o = tokenService.TokenGetCredence(tokenValue) as string;
                         if (o != null)
                         {
                             //令牌正确
-                            Session["Token"] = o;
-                            Response.Write("恭喜，令牌存在，您被授权访问该页面！");
+                            var account= Newtonsoft.Json.JsonConvert.DeserializeObject<Account>(o);
+                            LoginAccount = account;
                         }
                         else
                         {

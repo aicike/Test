@@ -14,6 +14,7 @@ using agsXMPP.Xml.Dom;
 using System.IO;
 using System.Data;
 using Web.SSO;
+using Common;
 
 namespace Web.Controllers
 {
@@ -134,7 +135,7 @@ namespace Web.Controllers
             Response.AppendCookie(tokenCookie);
 
             //产生主站凭证
-            object info = true;
+            object info =Newtonsoft.Json.JsonConvert.SerializeObject(account);
             CacheManager.TokenInsert(tokenValue, info, DateTime.Now.AddMinutes(double.Parse(System.Configuration.ConfigurationManager.AppSettings["timeout"])));
 
             //跳转回分站
