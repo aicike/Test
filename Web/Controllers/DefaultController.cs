@@ -394,6 +394,25 @@ namespace Web.Controllers
                 // 0用户端，1销售端
                 ViewBag.Utype = imtimely_Apptype;
             }
+            //判断报名是否结束
+            DateTime tdate = new DateTime();
+            if (tdate > Activity.EnrollEndDate)
+            {
+                ViewBag.IsJS = "true";
+            }
+            else
+            {
+                ViewBag.IsJS = "false";
+            }
+            //判断名额是否已满
+            if (Activity.ActivityInfoParticipators.Count() >= Activity.MaxCount)
+            {
+                ViewBag.IsMaxCnt = "true";
+            }
+            else
+            {
+                ViewBag.IsMaxCnt = "false";
+            }
 
             //下载APP
             var AccountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
@@ -411,6 +430,26 @@ namespace Web.Controllers
 
 
             return View(Activity);
+        }
+        /// <summary>
+        /// 校验是否报名
+        /// </summary>
+        /// <param name="AID"></param>
+        /// <param name="phone"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public string CheckISBM(int AID,string phone)
+        {
+            var IActivityInfoParticipatorModelModel = Factory.Get<IActivityInfoParticipatorModel>(SystemConst.IOC_Model.ActivityInfoParticipatorModel);
+            var result = IActivityInfoParticipatorModelModel.GetUserIsSignUP2(phone, AID);
+            if (result.HasError)
+            {
+                return "true";
+            }
+            else
+            {
+                return "false";
+            }
         }
 
         [HttpPost]

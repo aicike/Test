@@ -7,6 +7,16 @@
     <script src="@Url.Content("~/Scripts/uploadify/jquery.uploadify.js")" type="text/javascript"></script>
     <script src="@Url.Content("/ueditor/ueditor.config.js")" type="text/javascript"></script>
     <script src="@Url.Content("/ueditor/ueditor.all.js")" type="text/javascript"></script>
+
+    
+    <link href="@Url.Content("~/Scripts/timepicker/demos.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/timepicker/jquery-ui-timepicker-addon.css")" rel="stylesheet"
+        type="text/css" />
+    <script src="@Url.Content("~/Scripts/timepicker/jquery-ui-timepicker-addon.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/timepicker/jquery-ui-timepicker-zh-CN.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/timepicker/jquery.ui.datepicker-zh-CN.js.js")" type="text/javascript"></script>
+
+
     <script>
         $(function () {
 
@@ -25,7 +35,26 @@
             var ue = UE.getEditor('editor', options);
 
 
+            var myDate = new Date();
+            var date = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + myDate.getDate();
+            $("#EnrollEndDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                onSelect: function (selectedDate) {
+                    $("#ActivityStratDate").datepicker("option", "minDate", selectedDate);
+                }
+            });
 
+            $("#ActivityStratDate").datetimepicker({
+                timeFormat: "HH:mm",
+                dateFormat: "yy-mm-dd"
+            });
+
+            $("#EnrollEndDate").datepicker("option", "minDate", "+1");
+            $("#EnrollEndDate").val("@ViewBag.EndDate");
+
+            $("#ActivityStratDate").datepicker("option", "minDate",  $("#EnrollEndDate").val());
+            $("#ActivityStratDate").val("@ViewBag.StratDate");
 
             $("#btnSubmit").click(function () {
 
@@ -46,6 +75,13 @@
 
         });
     </script>
+
+    <style>
+    #ui-datepicker-div
+    {
+        z-index:100 !important;     
+    }
+    </style>
 }
 @model Poco.ActivityInfo
 <div class="title">
@@ -69,6 +105,26 @@
                     <td>@Html.ValidationMessageFor(a => a.Title)
                     </td>
                 </tr>
+                 <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 报名截止日期
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.EnrollEndDate, new { @readonly = "readonly" })
+                    </td>
+                     <td>@Html.ValidationMessageFor(a => a.EnrollEndDate)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 活动开始日期
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.ActivityStratDate, new { @readonly = "readonly" })
+                    </td>
+                     <td>@Html.ValidationMessageFor(a => a.ActivityStratDate)
+                    </td>
+                </tr>
                 <tr>
                     <td class="tdTitle">
                         <span class="Identification">*</span> 状态
@@ -78,6 +134,16 @@
                             <option value="0">开启</option>
                             <option value="1">停用</option>
                         </select>
+                    </td>
+                </tr>
+                <tr>
+                  <td class="tdTitle">
+                        <span class="Identification">*</span> 名额/最大报名人数
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.MaxCount)
+                    </td>
+                     <td>@Html.ValidationMessageFor(a => a.MaxCount)
                     </td>
                 </tr>
                 <tr>

@@ -47,6 +47,29 @@ namespace Poco
         public DateTime CreateDate { get; set; }
 
         /// <summary>
+        /// 报名结束日期
+        /// </summary>
+        [Display(Name = "报名结束日期")]
+        [Required(ErrorMessage = "请选择报名结束日期")]
+        public DateTime EnrollEndDate { get; set; }
+
+
+        /// <summary>
+        /// 报名结束日期
+        /// </summary>
+        [Display(Name = "活动开始日期")]
+        [Required(ErrorMessage = "请选择活动开始日期")]
+        public DateTime ActivityStratDate { get; set; }
+
+        /// <summary>
+        /// 最大报名人数
+        /// </summary>
+        [Display(Name = "最大报名人数")]
+        [Required(ErrorMessage = "请输入最大报名人数")]
+        public int MaxCount { get; set; }
+
+
+        /// <summary>
         /// 状态 0：开启 1：停用
         /// </summary>
         [Display(Name = "状态")]

@@ -339,6 +339,11 @@
     <Content Include="Scripts\royalslider\grabbing.png" />
     <Content Include="Scripts\royalslider\royalslider.css" />
     <Content Include="Scripts\royalslider\royalslider.min.js" />
+    <Content Include="Scripts\timepicker\demos.css" />
+    <Content Include="Scripts\timepicker\jquery-ui-timepicker-addon.css" />
+    <Content Include="Scripts\timepicker\jquery-ui-timepicker-addon.js" />
+    <Content Include="Scripts\timepicker\jquery-ui-timepicker-zh-CN.js" />
+    <Content Include="Scripts\timepicker\jquery.ui.datepicker-zh-CN.js.js" />
     <Content Include="Scripts\tytabs.js" />
     <Content Include="Scripts\JSONLoader.js" />
     <Content Include="Scripts\Highcharts\adapters\mootools-adapter.js" />
@@ -986,7 +991,7 @@
           <IISAppRootUrl>http://192.168.1.138/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>True</UseCustomServer>
-          <CustomServerUrl>http://192.168.1.166</CustomServerUrl>
+          <CustomServerUrl>http://192.168.1.138</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

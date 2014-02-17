@@ -26,6 +26,22 @@ namespace Business
             }
             return result;
         }
+        /// <summary>
+        /// 根据电话 活动ID 判断是否报过名
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <param name="AID"></param>
+        /// <returns></returns>
+        public Result GetUserIsSignUP2(string phone,int AID)
+        {
+            var acinfo = List().Where(a => a.ActivityInfoID == AID && a.Phone == phone);
+            Result result = new Result();
+            if (acinfo.Count() > 0)
+            {
+                result.HasError = true;
+            }
+            return result;
+        }
 
         /// <summary>
         /// 根据活动ID获取表面人信息

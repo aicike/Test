@@ -90,8 +90,14 @@
             <th style="width: 70px">
                 报名人数
             </th>
-            <th style="width: 135px;">
-                创建日期
+            <th style="width: 70px">
+                名额
+            </th>
+            <th style="width: 110px;">
+                报名截止日期
+            </th>
+            <th style="width: 110px;">
+                活动开始日期
             </th>
             <th style="width: 60px;">
                 状态
@@ -99,7 +105,7 @@
             <th style="width: 70px;">
                 生成资讯
             </th>
-            <th style="width: 150px;">
+            <th style="width: 80px;">
                 操作
             </th>
         </tr>
@@ -120,7 +126,13 @@
                     </label>
                 </td>
                 <td>
-                    @item.CreateDate.ToString("yyyy-MM-dd HH:mm")
+                     @item.MaxCount
+                </td>
+                <td>
+                    @item.EnrollEndDate.ToString("yyyy-MM-dd")
+                </td>
+                <td>
+                     @item.ActivityStratDate.ToString("yyyy-MM-dd")
                 </td>
                 <td class="operation">
                     @if (@item.Status == 0)
