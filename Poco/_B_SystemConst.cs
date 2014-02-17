@@ -66,6 +66,8 @@ namespace Poco
 
             public const string LoginAccount = "LoginAccount";
 
+            public const string LoginAccountOrganization = "LoginAccountOrganization";
+
             public const string LoginUser = "LoginUser";
 
             public const string MicroSiteLoginAccount = "MicroSiteLoginUser";
@@ -222,6 +224,7 @@ namespace Poco
             public const string UserDeliveryAddressModel = "UserDeliveryAddressModel";
             public const string ServiceModel = "ServiceModel";
             public const string AccountMain_ServiceModel = "AccountMain_ServiceModel";
+            public const string AccountMainOrganizationModel = "AccountMainOrganizationModel";
 
             
 

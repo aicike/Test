@@ -46,5 +46,7 @@ namespace Poco
         public virtual ICollection<ClientInfo> ClientInfoEnumAccountStatus { get; set; }
 
         public virtual ICollection<AccountMainHouseInfoDetail> AccountMainHouseInfoDetails { get; set; }
+
+        public virtual ICollection<AccountMainOrganization> AccountMainOrganizations { get; set; }
     }
 }

@@ -154,6 +154,12 @@ namespace Poco
         /// </summary>
         public DateTime CreateTime { get; set; }
 
+        /// <summary>
+        /// 集团
+        /// </summary>
+        public int? AccountMainOrganizationID { get; set; }
+
+        public virtual AccountMainOrganization AccountMainOrganization { get; set; }
 
 
         public virtual ICollection<LibraryText> LibraryTexts { get; set; }

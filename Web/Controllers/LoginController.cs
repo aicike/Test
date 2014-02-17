@@ -118,8 +118,52 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult UserLogin(string phone_email, string password)
         {
+            //判断web项目是独立部署还是云部署
+            bool IsIndependence = System.Configuration.ConfigurationManager.AppSettings["IsIndependence"] == "true" ? true : false;
+            if (IsIndependence)
+            {
+                //独立部署
+                var amom = Factory.Get<IAccountMainOrganizationModel>(SystemConst.IOC_Model.AccountMainOrganizationModel);
+
+                if (amom.List().Count() > 0)
+                {
+                    //已有账号
+                    Result r = amom.Login(phone_email, password);
+                    if (r.HasError == false)
+                    {
+                        var u = Url.RouteUrl("User", true, new RouteValueDictionary(new { action = "Index", controller = "Home", HostName = "www" }));
+                        return JavaScript("window.location.href='" + u + "'");
+                    }
+                }
+                else
+                {
+                    //没有账号，使用webconfig中账号
+                    string IndependenceAccount = System.Configuration.ConfigurationManager.AppSettings["IndependenceAccount"];
+                    Result r = new Result();
+                    var loginInfo = IndependenceAccount.Split(',');
+                    if (loginInfo.Length != 2)
+                    {
+                        r.Error = "账号配置出错，请联系平台管理员。";
+                    }
+                    if (phone_email.Equals(loginInfo[0], StringComparison.CurrentCultureIgnoreCase) == false || password.Equals(loginInfo[1]) == false)
+                    {
+                        r.Error = "用户名或密码错误。";
+                    }
+                    if (r.HasError)
+                    {
+                        return JavaScript("LandWaitFor('login','WaitImg',2);" + AlertJS_NoTag(new Dialog(r.Error)));
+                    }
+                    else
+                    {
+                        //var u = Url.RouteUrl("Default", true, new RouteValueDictionary(new { action = "Index", controller = "Guide" }));
+                        var u = Url.RouteUrl("User", true, new RouteValueDictionary(new { action = "Index", controller = "Home", HostName = "www" }));
+                        return JavaScript("window.location.href='" + u + "'");
+                    }
+                }
+            }
+            //云部署
             IAccountModel accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-            var result = accountModel.Login(phone_email, password);
+            Result result = accountModel.Login(phone_email, password);
             if (result.HasError)
             {
                 return JavaScript("LandWaitFor('login','WaitImg',2);" + AlertJS_NoTag(new Dialog(result.Error)));
@@ -136,7 +180,7 @@ namespace Web.Controllers
             Response.AppendCookie(tokenCookie);
 
             //产生主站凭证
-            object info =Newtonsoft.Json.JsonConvert.SerializeObject(account);
+            object info = Newtonsoft.Json.JsonConvert.SerializeObject(account);
             CacheManager.TokenInsert(tokenValue, info, DateTime.Now.AddMinutes(double.Parse(System.Configuration.ConfigurationManager.AppSettings["timeout"])));
 
             //跳转回分站

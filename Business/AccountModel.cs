@@ -828,9 +828,10 @@ namespace Business
                 result.Error = "用户名或密码错误。";
                 return result;
             }
+            string accountStatus = EnumAccountStatus.Disabled.ToString();
             var accountMain = account.Account_AccountMains.FirstOrDefault();
-            if (accountMain.AccountMain.AccountStatus.Token.Equals(EnumAccountStatus.Disabled.ToString(), StringComparison.CurrentCultureIgnoreCase)
-                || account.AccountStatus.Token.Equals(EnumAccountStatus.Disabled.ToString(), StringComparison.CurrentCultureIgnoreCase)
+            if (accountMain.AccountMain.AccountStatus.Token.Equals(accountStatus, StringComparison.CurrentCultureIgnoreCase)
+                || account.AccountStatus.Token.Equals(accountStatus, StringComparison.CurrentCultureIgnoreCase)
             || accountMain.SystemStatus == (int)EnumSystemStatus.Delete)
             {
                 result.Error = "账号不可用。";
@@ -868,9 +869,10 @@ namespace Business
                 result.Error = "用户名或密码错误";
                 return result;
             }
+            string accountStatus = EnumAccountStatus.Disabled.ToString();
             var accountMain = account.Account_AccountMains.FirstOrDefault();
-            if (accountMain.AccountMain.AccountStatus.Token.Equals(EnumAccountStatus.Disabled.ToString(), StringComparison.CurrentCultureIgnoreCase)
-                || account.AccountStatus.Token.Equals(EnumAccountStatus.Disabled.ToString(), StringComparison.CurrentCultureIgnoreCase)
+            if (accountMain.AccountMain.AccountStatus.Token.Equals(accountStatus, StringComparison.CurrentCultureIgnoreCase)
+                || account.AccountStatus.Token.Equals(accountStatus, StringComparison.CurrentCultureIgnoreCase)
             || accountMain.SystemStatus == (int)EnumSystemStatus.Delete)
             {
                 result.Error = "账号不可用。";

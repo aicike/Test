@@ -31,13 +31,23 @@ namespace Controllers
             set { Session[SystemConst.Session.LoginAccount] = value; }
         }
 
+        protected AccountMainOrganization LoginAccountOrganization
+        {
+            get
+            {
+                var AccountMainOrganization = Session[SystemConst.Session.LoginAccountOrganization] as AccountMainOrganization;
+                return AccountMainOrganization;
+            }
+            set { Session[SystemConst.Session.LoginAccountOrganization] = value; }
+        }
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var controller = filterContext.RequestContext.RouteData.Values["controller"] as string;
             var action = filterContext.RequestContext.RouteData.Values["action"] as string;
             var area = filterContext.RouteData.DataTokens["area"] as string;
 
-            if ((LoginAccount == null)
+            if ((LoginAccount == null && LoginAccountOrganization == null)
                 //&& ((controller != null && (controller.Equals("Account", StringComparison.OrdinalIgnoreCase) == false && controller.Equals("Home", StringComparison.OrdinalIgnoreCase) == false && controller.Equals("Area", StringComparison.OrdinalIgnoreCase) == false))
                 //)
                 )
@@ -129,7 +139,7 @@ namespace Controllers
             else
                 url += "?Token=$Token$";
 
-            return string.Format("http://{0}/SSOService?BackURL={1}", SystemConst.WebUrl,Server.UrlEncode(url));
+            return string.Format("http://{0}/SSOService?BackURL={1}", SystemConst.WebUrl, Server.UrlEncode(url));
         }
 
         /// <summary>
@@ -141,7 +151,7 @@ namespace Controllers
         {
             string url = Request.Url.AbsoluteUri;
             url = Regex.Replace(url, @"(\?|&)Token=.*", "", RegexOptions.IgnoreCase);
-            return string.Format("http://{0}/Login?BackURL={1}" ,SystemConst.WebUrl, Server.UrlEncode(url));
+            return string.Format("http://{0}/Login?BackURL={1}", SystemConst.WebUrl, Server.UrlEncode(url));
         }
 
         /// <summary>

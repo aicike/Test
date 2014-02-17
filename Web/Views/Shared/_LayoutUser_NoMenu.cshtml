@@ -1,0 +1,28 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section head{
+    @RenderSection("head", required: false)
+}
+@Html.Partial("_head")
+<div class="main">
+    <div style="width: 1000px; float: left">
+        @RenderBody()
+    </div>
+    <div style="clear: both">
+    </div>
+</div>
+<div id="Layout_Later" title="" style="display: none; background-color: #fafafa">
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 5px;">
+        <tr id="trImg" align="center" style="">
+            <td>
+                <img src="/Images/ImgSH2.gif" />
+            </td>
+        </tr>
+        <tr align="center">
+            <td>
+                <span style="color: #606060; font-weight: bold" id="Laypit_LaterText"></span>
+            </td>
+        </tr>
+    </table>
+</div>
