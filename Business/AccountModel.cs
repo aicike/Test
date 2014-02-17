@@ -866,25 +866,32 @@ namespace Business
             if (account == null)
             {
                 result.Error = "用户名或密码错误";
+                return result;
             }
-            else
+            var accountMain = account.Account_AccountMains.FirstOrDefault();
+            if (accountMain.AccountMain.AccountStatus.Token.Equals(EnumAccountStatus.Disabled.ToString(), StringComparison.CurrentCultureIgnoreCase)
+                || account.AccountStatus.Token.Equals(EnumAccountStatus.Disabled.ToString(), StringComparison.CurrentCultureIgnoreCase)
+            || accountMain.SystemStatus == (int)EnumSystemStatus.Delete)
             {
-                //todo:以后可能会出现一个销售账号管理多个售楼部，需要先选择售楼部才能登录系统，目前默认选择第一个售楼部。
-                Account entity = new Account();
-                entity.ID = account.ID;
-                entity.SystemStatus = account.SystemStatus;
-                entity.Name = account.Name;
-                entity.LoginPwd = account.LoginPwd;
-                entity.Phone = account.Phone;
-                entity.HeadImagePath = account.HeadImagePath;
-                entity.Email = account.Email;
-                entity.Account_Roles = account.Account_Roles;
-                entity.AccountStatusID = account.AccountStatusID;
-                entity.IsActivated = account.IsActivated;
-                entity.HostName = account.Account_AccountMains.FirstOrDefault().AccountMain.HostName;
-                entity.CurrentAccountMainID = account.Account_AccountMains.FirstOrDefault().AccountMain.ID;
-                result.Entity = entity;
+                result.Error = "账号不可用。";
+                return result;
             }
+            //todo:以后可能会出现一个销售账号管理多个售楼部，需要先选择售楼部才能登录系统，目前默认选择第一个售楼部。
+            Account entity = new Account();
+            entity.ID = account.ID;
+            entity.SystemStatus = account.SystemStatus;
+            entity.Name = account.Name;
+            entity.LoginPwd = account.LoginPwd;
+            entity.Phone = account.Phone;
+            entity.HeadImagePath = account.HeadImagePath;
+            entity.Email = account.Email;
+            entity.Account_Roles = account.Account_Roles;
+            entity.AccountStatusID = account.AccountStatusID;
+            entity.IsActivated = account.IsActivated;
+            entity.HostName = account.Account_AccountMains.FirstOrDefault().AccountMain.HostName;
+            entity.CurrentAccountMainID = account.Account_AccountMains.FirstOrDefault().AccountMain.ID;
+            result.Entity = entity;
+
             return result;
         }
 
@@ -954,7 +961,7 @@ namespace Business
             if (result.HasError == false)
             {
                 var accountRoleModel = Factory.Get<IAccountRoleModel>(SystemConst.IOC_Model.AccountRoleModel);
-                result = accountRoleModel.Add(new int []{roleID}.ToList(), account.ID);
+                result = accountRoleModel.Add(new int[] { roleID }.ToList(), account.ID);
             }
             return result;
         }

@@ -224,7 +224,6 @@
     <Compile Include="Models\MVCExpandMethod.cs" />
     <Compile Include="Models\NoClientCache.cs" />
     <Compile Include="Models\SessionSharedHttpModule.cs" />
-    <Compile Include="Models\UrlHelperExpand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SSO\ITokenService.cs" />
     <Compile Include="SSO\TokenService.svc.cs">
@@ -959,6 +958,7 @@
     <Content Include="Views\ActivityInfo\ShowRegistration.cshtml" />
     <Content Include="Views\Test\TestHtml.cshtml" />
     <Content Include="Views\SSO\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutUser2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

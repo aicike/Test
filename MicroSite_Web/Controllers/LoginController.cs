@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
 using System.Data;
+using System.Web.Routing;
 
 namespace Web.Controllers
 {
@@ -127,7 +128,10 @@ namespace Web.Controllers
                 }
                 else
                 {
-                    var url = Url.RouteUrl("User", new { action = "Index", controller = "Guide", HostName = SystemConst.MicroSiteHostName }, true);
+                    //var url = Url.RouteUrl("User", true, new { action = "Index", controller = "Guide", HostName = SystemConst.MicroSiteHostName });
+                    var url = Url.RouteUrl("User", true,new RouteValueDictionary(new { action = "Index", controller = "Guide", HostName = SystemConst.MicroSiteHostName }));
+
+                     
                     return JavaScript("window.location.href='" + url + "'");
                 }
             }
@@ -145,7 +149,8 @@ namespace Web.Controllers
                 {
                     account.IsSuperAdmin = true;
                 }
-                var url = Url.RouteUrl("User", new { action = "Index", controller = "Home", HostName = account.HostName }, true);
+                //var url = Url.RouteUrl("User", true, new { action = "Index", controller = "Home", HostName = account.HostName });
+                var url = Url.RouteUrl("User", true, new RouteValueDictionary(new { action = "Index", controller = "Home", HostName = account.HostName }));
                 return JavaScript("window.location.href='" + url + "'");
             }
         }

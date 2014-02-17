@@ -34,7 +34,7 @@ namespace Business
                 result.Error = "电话号码格式错误，无法发送短信。";
                 return result;
             }
-            string sms = string.Format("恭喜您成功开通Imtimely App,登录账号为您的手机号码，http://imtimely.com。");
+            string sms = string.Format("恭喜您成功开通Imtimely App,登录账号为您的手机号码，http://{0}。",SystemConst.WebUrl);
             result = SendSMS(userLoginInfo.Phone, sms);
             return result;
         }
@@ -60,7 +60,7 @@ namespace Business
                 return result;
             }
             var pwd= DESEncrypt.Decrypt(account.LoginPwd);
-            string sms = string.Format("恭喜您成功开通Imtimely App,登录账号为您的手机号码或邮箱，您的密码为{0}，web端登录地址 http://imtimely.com。", pwd);
+            string sms = string.Format("恭喜您成功开通Imtimely App,登录账号为您的手机号码或邮箱，您的密码为{0}，web端登录地址 http://{1}。", pwd, SystemConst.WebUrl);
             result = SendSMS(account.Phone, sms);
             return result;
         }
@@ -93,7 +93,7 @@ namespace Business
                 return result;
             }
             var pwd = DESEncrypt.Decrypt(account.LoginPwd);
-            string sms = string.Format("您的Imtimely密码重置成功,登录账号为您的手机号码或邮箱，您的密码为{0}，http://imtimely.com。", pwd);
+            string sms = string.Format("您的Imtimely密码重置成功,登录账号为您的手机号码或邮箱，您的密码为{0}，http://{1}。", pwd, SystemConst.WebUrl);
             result = SendSMS(account.Phone, sms);
             return result;
         }

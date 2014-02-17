@@ -129,7 +129,7 @@ namespace Controllers
             else
                 url += "?Token=$Token$";
 
-            return "http://www.imtimely.com/SSOService?BackURL=" + Server.UrlEncode(url);
+            return string.Format("http://{0}/SSOService?BackURL={1}", SystemConst.WebUrl,Server.UrlEncode(url));
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Controllers
         {
             string url = Request.Url.AbsoluteUri;
             url = Regex.Replace(url, @"(\?|&)Token=.*", "", RegexOptions.IgnoreCase);
-            return "http://www.imtimely.com/Login?BackURL=" + Server.UrlEncode(url);
+            return string.Format("http://{0}/Login?BackURL={1}" ,SystemConst.WebUrl, Server.UrlEncode(url));
         }
 
         /// <summary>

@@ -112,7 +112,7 @@ namespace Common
                                     smtpClient.EnableSsl = false;
 
                                 smtpClient.Credentials = new System.Net.NetworkCredential(emailAddress, emailPwd);
-                                smtpClient.Timeout = 10000;
+                                //smtpClient.Timeout = 10000;
                                 try
                                 {
                                     if (exceptionCount < 3)

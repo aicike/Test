@@ -16,6 +16,10 @@ namespace Poco
         /// 微网站是否集成web项目
         /// </summary>
         public static bool IsIntegrationWebProject = System.Configuration.ConfigurationManager.AppSettings["IsIntegrationWebProject"] == "true" ? true : false;
+        /// <summary>
+        /// 微网站集成的主网站项目地址
+        /// </summary>
+        public static string IntegrationWebUrl = System.Configuration.ConfigurationManager.AppSettings["IntegrationWebUrl"];
 
         public class Business
         {

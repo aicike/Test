@@ -15,6 +15,7 @@ using System.IO;
 using System.Data;
 using Web.SSO;
 using Common;
+using System.Web.Routing;
 
 namespace Web.Controllers
 {
@@ -131,7 +132,7 @@ namespace Web.Controllers
             string tokenValue = Guid.NewGuid().ToString().ToUpper();
             HttpCookie tokenCookie = new HttpCookie("Token");
             tokenCookie.Values.Add("Value", tokenValue);
-            tokenCookie.Domain = "imtimely.com";
+            tokenCookie.Domain = SystemConst.WebUrl;
             Response.AppendCookie(tokenCookie);
 
             //产生主站凭证
@@ -146,7 +147,8 @@ namespace Web.Controllers
 
             #endregion
 
-            var url = Url.RouteUrl("User", new { action = "Index", controller = "Home", HostName = account.HostName }, true);
+            //var url = Url.RouteUrl("User", true, new { action = "Index", controller = "Home", HostName = account.HostName });
+            var url = Url.RouteUrl("User", true, new RouteValueDictionary(new { action = "Index", controller = "Home", HostName = account.HostName }));
             return JavaScript("window.location.href='" + url + "'");
         }
 

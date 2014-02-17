@@ -321,6 +321,13 @@ namespace Business
                     result.Error = "账号或密码错误，登录失败。";
                     return result;
                 }
+                //该售楼部是否禁用
+                if (user.AccountMain.AccountStatus.Token.Equals(EnumAccountStatus.Disabled.ToString(), StringComparison.CurrentCultureIgnoreCase)
+                || user.AccountMain.SystemStatus == (int)EnumSystemStatus.Delete)
+                {
+                    result.Error = "账号不可用。";
+                    return result;
+                }
                 var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
                 userLoginInfo = userLoginInfoModel.Get(user.UserLoginInfoID);
                 if (userLoginInfo == null)
@@ -332,8 +339,6 @@ namespace Business
             else
             {
                 var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
-
-
                 userLoginInfo = userLoginInfoModel.List().Where(a => (a.Email.Equals(app_UserLoginInfo.Email, StringComparison.CurrentCultureIgnoreCase) == true && a.LoginPwd == pwd) ||
                     (a.Phone.Equals(app_UserLoginInfo.Phone, StringComparison.CurrentCultureIgnoreCase) == true && a.LoginPwd == pwd)).FirstOrDefault();
                 if (userLoginInfo == null)
@@ -347,10 +352,14 @@ namespace Business
                     result.Error = "账号或密码错误，登录失败。";
                     return result;
                 }
-
+                //该售楼部是否禁用
+                if (user.AccountMain.AccountStatus.Token.Equals(EnumAccountStatus.Disabled.ToString(), StringComparison.CurrentCultureIgnoreCase)
+                || user.AccountMain.SystemStatus == (int)EnumSystemStatus.Delete)
+                {
+                    result.Error = "账号不可用。";
+                    return result;
+                }
                 var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
-
-
             }
             App_User appuser = new App_User();
             appuser.ID = user.ID;
@@ -404,6 +413,13 @@ namespace Business
                     result.Error = "账号或密码错误，登录失败。";
                     return result;
                 }
+                //该售楼部是否禁用
+                if (user.AccountMain.AccountStatus.Token.Equals(EnumAccountStatus.Disabled.ToString(), StringComparison.CurrentCultureIgnoreCase)
+                || user.AccountMain.SystemStatus == (int)EnumSystemStatus.Delete)
+                {
+                    result.Error = "账号不可用。";
+                    return result;
+                }
                 var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
                 userLoginInfo = userLoginInfoModel.Get(user.UserLoginInfoID);
                 if (userLoginInfo == null)
@@ -430,7 +446,13 @@ namespace Business
                     result.Error = "账号或密码错误，登录失败。";
                     return result;
                 }
-
+                //该售楼部是否禁用
+                if (user.AccountMain.AccountStatus.Token.Equals(EnumAccountStatus.Disabled.ToString(), StringComparison.CurrentCultureIgnoreCase)
+                || user.AccountMain.SystemStatus == (int)EnumSystemStatus.Delete)
+                {
+                    result.Error = "账号不可用。";
+                    return result;
+                }
                 var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
 
                 var clientInfo = clientInfoModel.List().Where(a => a.EntityID == user.ID && a.ClientID == app_UserLoginInfo.ClientID).FirstOrDefault();
@@ -558,8 +580,9 @@ namespace Business
             emailInfo.To = email;
             emailInfo.Subject = "IMtimely - 找回密码";
             emailInfo.IsHtml = true;
+            emailInfo.UseSSL = true;
             emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您在{0}提交了邮箱找回密码请求，请点击&nbsp;<a href='{1}' target='_blank'>此处</a>&nbsp;修改密码。", time1, url) +
-                string.Format("为了保证您的帐号安全，该链接有效期为24小时，并且点击一次后失效！<br/><br/>IMtimely<br/><br/>{0}", time2);
+                string.Format("为了保证您的帐号安全，该链接有效期为24小时，并且点击一次后失效！<br/><br/>ImTimely<br/><br/>{0}", time2);
             try
             {
                 SendEmail.SendMailAsync(emailInfo);

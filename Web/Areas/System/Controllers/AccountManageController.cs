@@ -97,9 +97,10 @@ namespace Web.Areas.System.Controllers
                 emailInfo.To = account_accountMain.Account.Email;
                 emailInfo.Subject = "ImTimely - 账号注册成功";
                 emailInfo.IsHtml = true;
-                emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您的ImTimely账号已创建成功,<a href='http://{0}.ImTimely.com' target='_blank'>请点击此处</a>&nbsp;登录。", Accountmain.HostName) +
+                emailInfo.UseSSL = true;
+                emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您的ImTimely账号已创建成功,<a href='http://{0}.{1}' target='_blank'>请点击此处</a>&nbsp;登录。", Accountmain.HostName,SystemConst.WebUrl) +
                                  string.Format("登录名为您当前邮箱账号。<br/> 密码：{0}<br/>", account_accountMain.Account.LoginPwd) +
-                                 string.Format("<br/>为了保证您的帐号安全，请尽快更改你的密码！(登录后点击设置更改)<br/><br/>IMtimely<br/><br/>{0}", DateTime.Now.ToString("yyyy-MM-dd"));
+                                 string.Format("<br/>为了保证您的帐号安全，请尽快更改你的密码！(登录后点击设置更改)<br/><br/>ImTimely<br/><br/>{0}", DateTime.Now.ToString("yyyy-MM-dd"));
                 try
                 {
                     SendEmail.SendMailAsync(emailInfo);
@@ -217,7 +218,8 @@ namespace Web.Areas.System.Controllers
                 emailInfo.To = mail;
                 emailInfo.Subject = "ImTimely - 密码重置成功";
                 emailInfo.IsHtml = true;
-                emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您的ImTimely账号密码重置成功,<a href='http://{0}.ImTimely.com' target='_blank'>请点击此处</a>&nbsp;登录。", account.HostName) +
+                emailInfo.UseSSL = true;
+                emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您的ImTimely账号密码重置成功,<a href='http://{0}.{1}' target='_blank'>请点击此处</a>&nbsp;登录。", account.HostName, SystemConst.WebUrl) +
                                  string.Format("登录名为您当前邮箱账号。<br/> 密码：{0}<br/>", LoginPwd) +
                                  string.Format("<br/>为了保证您的帐号安全，请尽快更改你的密码！(登录后点击设置更改)<br/><br/>IMtimely<br/><br/>{0}", DateTime.Now.ToString("yyyy-MM-dd"));
                 try
