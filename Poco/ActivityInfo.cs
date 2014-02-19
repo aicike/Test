@@ -55,11 +55,11 @@ namespace Poco
 
 
         /// <summary>
-        /// 报名结束日期
+        /// 活动开始日期
         /// </summary>
         [Display(Name = "活动开始日期")]
         [Required(ErrorMessage = "请选择活动开始日期")]
-        public DateTime ActivityStratDate { get; set; }
+        public string ActivityStratDate { get; set; }
 
         /// <summary>
         /// 最大报名人数
