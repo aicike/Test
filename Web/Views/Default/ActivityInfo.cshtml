@@ -88,6 +88,12 @@
             font-size: 12px;
             color: #aaaaab;
         }
+         .divpcnt
+        {
+            padding: 10px 0px 10px 0px;
+            font-size: 12px;
+            color: #000;
+        }
         .divRemarks
         {
             background-color: #ffffff;
@@ -95,7 +101,7 @@
             padding: 5px 10px 5px 10px;
             line-height: 30px;
             font-size: 14px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         .Registration
         {
@@ -137,6 +143,10 @@
             <div class="divRemarks">
                 @Html.Raw(Model.Remarks)
             </div>
+            <div class="divpcnt">
+                已有 @Model.ActivityInfoParticipators.Count() 人报名
+            </div>
+
             @if (Model.Status == 1)
             { 
                 <a href="#" data-role="button" data-theme="b">报名已截止 感谢您的参与</a> 

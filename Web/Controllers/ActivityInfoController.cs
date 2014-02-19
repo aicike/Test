@@ -78,7 +78,7 @@ namespace Web.Controllers
             var activityInfoModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
             var actiovity = activityInfoModel.GetActivityByID(ActionId, LoginAccount.CurrentAccountMainID);
             ViewBag.EndDate = actiovity.EnrollEndDate.ToString("yyyy-MM-dd");
-            ViewBag.StratDate = actiovity.ActivityStratDate.ToString("yyyy-MM-dd HH:mm");
+            ViewBag.StratDate = actiovity.ActivityStratDate;
             return View(actiovity);
         }
         /// <summary>
