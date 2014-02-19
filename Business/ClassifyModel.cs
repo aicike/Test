@@ -89,20 +89,32 @@ namespace Business
                 var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                 var accountPath = "";
 
+                var lsImaFilePath = "";
+
                 //集成微网站
                 if (SystemConst.IsIntegrationWebProject)
                 {
                     accountPath = string.Format(SystemConst.IntegrationPathBase, classify.AccountMainID);
+
+                    if (classify.ImgPath.Contains("Temporary"))
+                    {
+                        lsImaFilePath = HttpContext.Current.Server.MapPath(classify.ImgPath);
+                    }
+                    else
+                    {
+                        lsImaFilePath = accountPath + classify.ImgPath.Substring(classify.ImgPath.LastIndexOf('/') + 1);
+                    }
                 }
                 //不是集成微网站
                 else
                 {
                     accountPath = HttpContext.Current.Server.MapPath(path);
+                     lsImaFilePath = HttpContext.Current.Server.MapPath(classify.ImgPath);
+
                 }
                 var imageName = string.Format("{0}_{1}", token, LastName);
                 var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
 
-                var lsImaFilePath = HttpContext.Current.Server.MapPath(classify.ImgPath);
 
                 Tool.SuperGetPicThumbnail(lsImaFilePath, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
                 classify.ImgPath = path + imageName;

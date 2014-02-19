@@ -285,7 +285,7 @@
         {
             if (!string.IsNullOrEmpty(item.PImgOriginal))
             { 
-        <img class="imgs" src="@Url.Content(item.PImgOriginal)" />
+        <img class="imgs" src="@Url.Content(item.PImgOriginal,true)" />
             }
         }
 
@@ -308,7 +308,7 @@
         if (!string.IsNullOrEmpty(Model.ProductImg.FirstOrDefault().PImgMini))
         { 
             
-        <input id="PImage" type="hidden"  value="@Url.Content(Model.ProductImg.FirstOrDefault().PImgMini)" />
+        <input id="PImage" type="hidden"  value="@Url.Content(Model.ProductImg.FirstOrDefault().PImgMini,true)" />
         }
         else
         { 

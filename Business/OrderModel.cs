@@ -376,9 +376,27 @@ namespace Business
                                     string Path = Tool.GetAMTemporaryPath(AMID);
                                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                                     var LastName = token + com.CreateRandom("", 5) + item.ProductImg.FirstOrDefault().PImgMini.GetFileSuffix();
-                                    var YimgPath = HttpContext.Current.Server.MapPath(item.ProductImg.FirstOrDefault().PImgMini);
+
+
+                                    var YimgPath = "";
                                     var ImagePath = Path + "/" + LastName;
-                                    var mapePath = HttpContext.Current.Server.MapPath(ImagePath);
+                                    var mapePath = "";
+                                    //集成微网站
+                                    if (SystemConst.IsIntegrationWebProject)
+                                    {
+                                        var accountPath = string.Format(SystemConst.IntegrationPathBase, AMID);
+                                        var itemImg =item.ProductImg.FirstOrDefault().PImgMini;
+                                        YimgPath = accountPath + itemImg.Substring(itemImg.LastIndexOf('/') + 1);
+                                        mapePath = string.Format(SystemConst.IntegrationOrderTemporary, AMID) + Path.Substring(Path.LastIndexOf('/')) + "/" + LastName;
+                                 
+                                    }
+                                    //不是集成微网站
+                                    else
+                                    {
+                                        YimgPath = HttpContext.Current.Server.MapPath(item.ProductImg.FirstOrDefault().PImgMini);
+                                        mapePath = HttpContext.Current.Server.MapPath(ImagePath);
+                                    }
+
 
 
                                     Tool.SuperGetPicThumbnail(YimgPath, mapePath, 70, 100, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);

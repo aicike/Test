@@ -48,17 +48,18 @@
                 <div style="border-bottom: 1px solid #E7E7E7; padding: 11px 0px 6px 0px;">
                     @if (item.OrderDetail.Count() > 1)
                     {
+                        var orderDetailList = item.OrderDetail.ToList();
                         <div style="float: left;">
-                            @for (int i = 0; i < item.OrderDetail.Count; i++)
+                            @for (int i = 0; i < orderDetailList.Count; i++)
                             {
                                 var j = i + 1;
                                 if (j % 3 != 0)
                                 {
-                                <img style="width: 75px; height: 75px;border:1px solid #E7E7E7;float:left;margin-right:10px;margin-bottom:7px" src="@Url.Content("~/Images/nopicture.png")" />
+                                <img style="width: 75px; height: 75px;border:1px solid #E7E7E7;float:left;margin-right:10px;margin-bottom:7px" src="@Url.Content(orderDetailList[i].ProductImg, true)" />
                                 }
                                 else
                                 {
-                                <img style="width: 75px; height: 75px;border:1px solid #E7E7E7;float:left;margin-bottom:7px" src="@Url.Content("~/Images/nopicture.png")" />
+                                <img style="width: 75px; height: 75px;border:1px solid #E7E7E7;float:left;margin-bottom:7px" src="@Url.Content(orderDetailList[i].ProductImg,true)" />
                                 }
                             }
                         </div>
@@ -66,7 +67,7 @@
                     else
                     { 
                         <div style="float: left; width: 75px; margin-right: 10px;">
-                            <img style="width: 75px; height: 75px;border:1px solid #E7E7E7;float:left;" src="@Url.Content("~/Images/nopicture.png")" />
+                            <img style="width: 75px; height: 75px;border:1px solid #E7E7E7;float:left;" src="@Url.Content(item.OrderDetail.FirstOrDefault().ProductImg, true)" />
                         </div>
                         <div style="float: left; width: 65%">
                             @item.OrderDetail.FirstOrDefault().ProductName</div>

@@ -3,7 +3,7 @@ namespace EF.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
@@ -78,7 +78,7 @@ namespace EF.Migrations
                         SystemUserID = c.Int(),
                         CreateTime = c.DateTime(nullable: false),
                         IsOrganization = c.Boolean(),
-                        ParrentAccountMainID = c.Int(),
+                        ParentAccountMainID = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.LookupOption", t => t.AccountStatusID)
@@ -86,13 +86,13 @@ namespace EF.Migrations
                 .ForeignKey("dbo.City", t => t.CityID)
                 .ForeignKey("dbo.District", t => t.DistrictID)
                 .ForeignKey("dbo.Province", t => t.ProvinceID)
-                .ForeignKey("dbo.AccountMain", t => t.ParrentAccountMainID)
+                .ForeignKey("dbo.AccountMain", t => t.ParentAccountMainID)
                 .Index(t => t.AccountStatusID)
                 .Index(t => t.SystemUserID)
                 .Index(t => t.CityID)
                 .Index(t => t.DistrictID)
                 .Index(t => t.ProvinceID)
-                .Index(t => t.ParrentAccountMainID);
+                .Index(t => t.ParentAccountMainID);
             
             CreateTable(
                 "dbo.AccountMain_Service",
@@ -1017,7 +1017,7 @@ namespace EF.Migrations
                         AccountID = c.Int(nullable: false),
                         CreateDate = c.DateTime(nullable: false),
                         EnrollEndDate = c.DateTime(nullable: false),
-                        ActivityStratDate = c.DateTime(nullable: false),
+                        ActivityStratDate = c.String(nullable: false),
                         MaxCount = c.Int(nullable: false),
                         Status = c.Int(nullable: false),
                     })
@@ -1064,10 +1064,26 @@ namespace EF.Migrations
                         ContentURL = c.String(),
                         EnumAdverTorialType = c.Int(nullable: false),
                         EnumAdverURLType = c.Int(),
+                        BrowseCnt = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
+            
+            CreateTable(
+                "dbo.AppAdvertorialOperation",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        AppAdvertorialID = c.Int(nullable: false),
+                        EnumAdvertorialUType = c.Int(nullable: false),
+                        UserID = c.Int(nullable: false),
+                        ForwardCnt = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AppAdvertorial", t => t.AppAdvertorialID)
+                .Index(t => t.AppAdvertorialID);
             
             CreateTable(
                 "dbo.AppUpdate",
@@ -1499,8 +1515,6 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
-
-
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };
             foreach (var file in ddlSqlFiles)
@@ -1554,11 +1568,12 @@ namespace EF.Migrations
             DropForeignKey("dbo.AutoMessage_Add", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.AppWaitImg", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.AppUpdate", "ID", "dbo.AccountMain");
+            DropForeignKey("dbo.AppAdvertorialOperation", "AppAdvertorialID", "dbo.AppAdvertorial");
             DropForeignKey("dbo.AppAdvertorial", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.ActivityInfoParticipator", "ActivityInfoID", "dbo.ActivityInfo");
             DropForeignKey("dbo.ActivityInfo", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.ActivityInfo", "AccountID", "dbo.Account");
-            DropForeignKey("dbo.AccountMain", "ParrentAccountMainID", "dbo.AccountMain");
+            DropForeignKey("dbo.AccountMain", "ParentAccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.AccountMainHouseType", "AccountMain_ID", "dbo.AccountMain");
             DropForeignKey("dbo.VIPInfo", "UserID", "dbo.User");
             DropForeignKey("dbo.VIPInfoExpenseDetail", "VIPInfoID", "dbo.VIPInfo");
@@ -1698,11 +1713,12 @@ namespace EF.Migrations
             DropIndex("dbo.AutoMessage_Add", new[] { "AccountMainID" });
             DropIndex("dbo.AppWaitImg", new[] { "AccountMainID" });
             DropIndex("dbo.AppUpdate", new[] { "ID" });
+            DropIndex("dbo.AppAdvertorialOperation", new[] { "AppAdvertorialID" });
             DropIndex("dbo.AppAdvertorial", new[] { "AccountMainID" });
             DropIndex("dbo.ActivityInfoParticipator", new[] { "ActivityInfoID" });
             DropIndex("dbo.ActivityInfo", new[] { "AccountMainID" });
             DropIndex("dbo.ActivityInfo", new[] { "AccountID" });
-            DropIndex("dbo.AccountMain", new[] { "ParrentAccountMainID" });
+            DropIndex("dbo.AccountMain", new[] { "ParentAccountMainID" });
             DropIndex("dbo.AccountMainHouseType", new[] { "AccountMain_ID" });
             DropIndex("dbo.VIPInfo", new[] { "UserID" });
             DropIndex("dbo.VIPInfoExpenseDetail", new[] { "VIPInfoID" });
@@ -1831,6 +1847,7 @@ namespace EF.Migrations
             DropTable("dbo.AutoMessage_Add");
             DropTable("dbo.AppWaitImg");
             DropTable("dbo.AppUpdate");
+            DropTable("dbo.AppAdvertorialOperation");
             DropTable("dbo.AppAdvertorial");
             DropTable("dbo.ActivityInfoParticipator");
             DropTable("dbo.ActivityInfo");
