@@ -54,6 +54,22 @@
             });
         }
 
+        function clickaddress(id) {
+
+            var Address = "@ViewBag.UrlAddress";
+            var url = "http://" + Address + "/default/News?id=" + id;
+
+
+            $("#urlAddress").text(url);
+            $("#dialogShowUrl").dialog({
+                resizable: false,
+                height: 120,
+                width: 320,
+                modal: true,
+                draggable: false
+            });
+        }
+
         function clickStick(ID, ckb, Sort) {
             $("#AdvertorialID_stick").val(ID);
             if (ckb.checked) {
@@ -113,7 +129,7 @@
             <th style="width: 50px">
                 置顶
             </th>
-            <th style="width: 170px">
+            <th style="width: 160px">
                 展示图片
             </th>
             <th style="width: 230px; word-wrap: break-word; word-break: normal;">
@@ -125,10 +141,13 @@
             <th>
                 咨询类型
             </th>
+            <th>
+                浏览次数
+            </th>
             <th style="width: 50px;">
                 排序
             </th>
-            <th style="width: 90px;">
+            <th style="width: 80px;">
                 操作
             </th>
         </tr>
@@ -223,6 +242,9 @@
                     }
                 </td>
                 <td>
+                    @item.BrowseCnt
+                </td>
+                <td>
                     @if (item.stick == 1)
                     { 
                         <label name="labCbFirst" title="上移">
@@ -240,6 +262,8 @@
                 <td class="operation">
                     @Html.ActionLink("修改", "Edit", "AppAdvertorialAccount", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:10px" }, true)
                     @Ajax.ActionLink("删除", "Delete", "AppAdvertorialAccount", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?！','" + Url.Action("Delete", "AppAdvertorialAccount", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
+                    <br />
+                    <a onclick="clickaddress('@item.ID')">查看地址</a>
                 </td>
             </tr>
         }
@@ -286,4 +310,11 @@
 <div id="dialogShowInfo" title="App详细预览" style="display: none; padding: 0px">
     <iframe id="iframeShowInfo" src="#" style="width: 320px; height: 480px; border: none;
         overflow: auto"></iframe>
+</div>
+<div id="dialogShowUrl" title="资讯地址" style="display: none; padding: 0px; text-align: center">
+    <div style="padding-top: 20px;">
+        <label name="labCbFirst" title="点击复制" onclick="copy()" style=" cursor:pointer">
+            <span id="urlAddress" style="font-weight: bold">11</span>
+        </label>
+    </div>
 </div>

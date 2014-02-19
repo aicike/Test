@@ -31,6 +31,9 @@ namespace Web.Controllers
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-用户端资讯", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
+            ViewBag.UrlAddress = SystemConst.WebUrl;
+
+
             return View(list);
         }
 
@@ -41,6 +44,7 @@ namespace Web.Controllers
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-用户端资讯-添加项目", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
+            
             return View();
         }
 
@@ -66,6 +70,7 @@ namespace Web.Controllers
             appAdver.Sort = 0;
             appAdver.IssueDate = DateTime.Now;
             appAdver.EnumAdvertorialUType = (int)EnumAdvertorialUType.UserEnd;
+            appAdver.BrowseCnt = 0;
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             Result result = AppAdvertorialModel.AddAppAdvertorial(appAdver, w, h, x1, y1, tw, th);
 

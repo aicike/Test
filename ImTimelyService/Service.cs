@@ -9,7 +9,11 @@ using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 using AcceptanceServer.DataOperate;
-using Business;
+using agsXMPP;
+using System.Threading;
+using agsXMPP.protocol.client;
+using Poco;
+using System.Configuration;
 
 namespace ImTimelyService
 {
@@ -19,6 +23,9 @@ namespace ImTimelyService
         {
             InitializeComponent();
         }
+        private static XmppClientConnection Connection;
+        private static string webXMPP_json = "imtimely_sms_web";
+        private static string appXMPP_json = "imtimely_sms_app";
 
         protected override void OnStart(string[] args)
         {
@@ -83,7 +90,6 @@ namespace ImTimelyService
                 {
                     ActivityDate = DateTime.Now.ToString("dd");
 
-
                 }
             }
 
@@ -93,26 +99,114 @@ namespace ImTimelyService
         //活动提前一天发送短信提醒 
         public void SendSMS()
         {
-            Task t = new Task(() =>
+            System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
             {
                 string sql = @"select a.id,a.Title, a.ActivityStratDate,b.Phone,b.name,c.Name as AName from ActivityInfo a, dbo.ActivityInfoParticipator b,accountMain c where a.id =b.ActivityInfoID and a.accountMainid = c.id
                                 and CONVERT(varchar(100), a.ActivityStratDate, 23)= CONVERT(varchar(100), (GetDate()+1), 23)";
                 DataSet ds = SqlHelper.ExecuteDataset(sql);
 
-                string content = "";
                 if (ds != null)
                 {
-                    foreach (DataRow row in ds.Tables[0].Rows)
-                    { 
-                           
-                    }
+                    SendSMS_Activity(ds);
                 }
-                SMS_Model sms = new SMS_Model();
-                sms.SendSMS_Activity(ds);
+               
             });
             t.Start();
 
         }
+
+
+         //处理活动提醒
+        public void SendSMS_Activity(DataSet ds)
+        {
+            LoginXMPP();
+            Thread.Sleep(1000);
+            string webUrl = ConfigurationManager.AppSettings["WebUrl"].ToString();
+            try
+            {
+                if (Connection != null)
+                {
+                    string content = "";
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        try
+                        {
+                            string dates = row["ActivityStratDate"].ToString();
+                            content = string.Format("您好，{0}先生/女士。您参与的活动\"{1}\" 与于明日{2}开始。地址：{3}/default/News?id={4}  【{5}】"
+                                                     , row["Phone"], row["Title"], dates.Substring(dates.LastIndexOf(' ')),webUrl,row["id"],row["AName"] );
+                            agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message();
+                            msg.Type = MessageType.chat;
+                            msg.From = new Jid(webXMPP_json, "localhost", "resource");
+                            msg.To = new Jid(appXMPP_json, "localhost", webXMPP_json);
+                            XMPP_Body_SMS body = new XMPP_Body_SMS();
+                            body.Content = content;
+                            body.Phone = row["Phone"].ToString();
+                            msg.AddChild(body);
+                            Connection.Send(msg);
+                        }
+                        catch { }
+                    }
+
+                    Presence p = new Presence();
+                    p.Type = PresenceType.unavailable;
+                    Connection.Send(p);
+
+                }
+                else
+                {
+                   //"SMS发送失败。";
+                }
+            }
+            catch (Exception ex)
+            {
+                //发送失败
+               
+            }
+        }
+
+
+
+
+        //登陆XMPP
+        private void LoginXMPP()
+        {
+            //连接xmpp
+            if (Connection == null)
+            {
+                System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
+                {
+                    Connection = new XmppClientConnection();
+                    //登陆方法
+                    Connection.OnLogin += new ObjectHandler((object sender) =>
+                    {
+                        Connection.Show = ShowType.chat;
+                        Connection.SendMyPresence();
+                    }
+                    );
+                    //Connection.OnMessage += new XmppClientConnection.MessageHandler(con_OnMessage);
+                    //出息消息
+                    Connection.Username = webXMPP_json;
+                    Connection.Server = "127.0.0.1";
+                    Connection.Port = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["XMPP_SMS"]);
+                    Connection.Resource = "web";
+                    Thread mythread = new Thread(() => { Connection.Open(); });
+                    mythread.Start();
+                    mythread.IsBackground = true;
+                });
+                t.Start();
+            }
+            else {
+                if (Connection.Status=="") {
+                    Thread mythread = new Thread(() => { Connection.Open(); });
+                    mythread.Start();
+                    mythread.IsBackground = true;
+                }
+            }
+        }
+    }
+
+
+
 
 
     }

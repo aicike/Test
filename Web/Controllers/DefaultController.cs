@@ -94,7 +94,21 @@ namespace Web.Controllers
         public ActionResult News(int id, int? imtimely_userid)
         {
             var AdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
+            var AdvertorialOperModel = Factory.Get<IAppAdvertorialOperationModel>(SystemConst.IOC_Model.AppAdvertorialOperationModel);
+            //更改浏览次数
+            AdvertorialModel.BrowseCntADD(id);
+            //查询数据
             var advertorial = AdvertorialModel.Get(id);
+            //添加数据到资讯操作表
+            if (imtimely_userid.HasValue)
+            {
+                AppAdvertorialOperation aao = new AppAdvertorialOperation();
+                aao.AppAdvertorialID = id;
+                aao.EnumAdvertorialUType = advertorial.EnumAdvertorialUType;
+                aao.ForwardCnt = 0;
+                aao.UserID = imtimely_userid.Value;
+                AdvertorialOperModel.AddOperation(aao);
+            }
             if (advertorial.EnumAdverTorialType == (int)EnumAdverTorialType.url)
             {
                 string url = advertorial.ContentURL;
@@ -367,7 +381,7 @@ namespace Web.Controllers
             ViewBag.ActivityID = ActivityID;
             var ActivityModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
             var Activity = ActivityModel.Get(ActivityID);
-            
+
             if (isok.HasValue)
             {
                 // 1 提交成功 2提交失败
@@ -379,12 +393,13 @@ namespace Web.Controllers
 
                 //判断是否报过名
                 var IActivityInfoParticipatorModelModel = Factory.Get<IActivityInfoParticipatorModel>(SystemConst.IOC_Model.ActivityInfoParticipatorModel);
-                Result result = IActivityInfoParticipatorModelModel.GetUserIsSignUP(imtimely_userid.Value,imtimely_Apptype.Value);
+                Result result = IActivityInfoParticipatorModelModel.GetUserIsSignUP(imtimely_userid.Value, imtimely_Apptype.Value);
                 if (result.HasError)
                 {
                     ViewBag.isSignUP = "true";
                 }
-                else {
+                else
+                {
                     ViewBag.isSignUP = "false";
                 }
 
@@ -438,7 +453,7 @@ namespace Web.Controllers
         /// <param name="phone"></param>
         /// <returns></returns>
         [HttpPost]
-        public string CheckISBM(int AID,string phone)
+        public string CheckISBM(int AID, string phone)
         {
             var IActivityInfoParticipatorModelModel = Factory.Get<IActivityInfoParticipatorModel>(SystemConst.IOC_Model.ActivityInfoParticipatorModel);
             var result = IActivityInfoParticipatorModelModel.GetUserIsSignUP2(phone, AID);

@@ -131,6 +131,7 @@ namespace Poco
             public const string AccountMain = "AccountMain";
             
 
+
             //Action
             public const string History = "History";
             public const string Index = "Index";
@@ -230,6 +231,7 @@ namespace Poco
             public const string ServiceModel = "ServiceModel";
             public const string AccountMain_ServiceModel = "AccountMain_ServiceModel";
 
+            public const string AppAdvertorialOperationModel = "AppAdvertorialOperationModel";
             
 
 

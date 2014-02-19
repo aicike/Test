@@ -137,56 +137,6 @@ namespace Business
             }
         }
 
-        //处理活动提醒
-        public Result SendSMS_Activity(DataSet ds)
-        {
-            LoginXMPP();
-            Thread.Sleep(1000);
-            try
-            {
-                Result result = new Result();
-                if (Connection != null)
-                {
-                    string content = "";
-                    foreach (DataRow row in ds.Tables[0].Rows)
-                    {
-                        try
-                        {
-                            string dates = row["ActivityStratDate"].ToString();
-                            content = string.Format("您好，{0}先生/女士。您参与的活动\"{1}\" 与于明日{2}开始。地址：http://imtimely.com/default/News?id={3}  【{4}】"
-                                                     , row["Phone"], row["Title"], dates.Substring(dates.LastIndexOf(' ')),row["id"] );
-                            agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message();
-                            msg.Type = MessageType.chat;
-                            msg.From = new Jid(webXMPP_json, "localhost", "resource");
-                            msg.To = new Jid(appXMPP_json, "localhost", webXMPP_json);
-                            XMPP_Body_SMS body = new XMPP_Body_SMS();
-                            body.Content = content;
-                            body.Phone = row["Phone"].ToString();
-                            msg.AddChild(body);
-                            Connection.Send(msg);
-                        }
-                        catch { }
-                    }
-
-                    Presence p = new Presence();
-                    p.Type = PresenceType.unavailable;
-                    Connection.Send(p);
-
-                }
-                else
-                {
-                    result.Error = "SMS发送失败。";
-                }
-                return result;
-            }
-            catch (Exception ex)
-            {
-                //发送失败
-                return new Result() { Error = "SMS发送失败" };
-            }
-        }
-
-
 
 
         //登陆XMPP

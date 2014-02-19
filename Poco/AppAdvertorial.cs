@@ -62,5 +62,11 @@ namespace Poco
         [Display(Name = "软文URL类型")]
         public int? EnumAdverURLType { get; set; }
 
+        [Display(Name = "浏览次数")]
+        public int BrowseCnt { get; set; }
+
+
+        public virtual ICollection<AppAdvertorialOperation> AppAdvertorialOperation { get; set; }
+
     }
 }
