@@ -33,8 +33,22 @@ namespace Business
                 CommonModel com = new CommonModel();
                 var LastName = com.CreateRandom("", 5) + classify.ImgPath.GetFileSuffix();
                 var path = string.Format(SystemConst.Business.PathBase, classify.AccountMainID);
-                var accountPath = HttpContext.Current.Server.MapPath(path);
+               
                 var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                var accountPath = "";
+
+                //集成微网站
+                if (SystemConst.IsIntegrationWebProject)
+                {
+                    accountPath = string.Format(SystemConst.IntegrationPathBase, classify.AccountMainID);
+                }
+                //不是集成微网站
+                else
+                {
+                    accountPath = HttpContext.Current.Server.MapPath(path);
+                }
+
+
                 var imageName = string.Format("{0}_{1}", token, LastName);
                 var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
 
@@ -72,8 +86,19 @@ namespace Business
                 CommonModel com = new CommonModel();
                 var LastName = com.CreateRandom("", 5) + classify.ImgPath.GetFileSuffix();
                 var path = string.Format(SystemConst.Business.PathBase, classify.AccountMainID);
-                var accountPath = HttpContext.Current.Server.MapPath(path);
                 var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                var accountPath = "";
+
+                //集成微网站
+                if (SystemConst.IsIntegrationWebProject)
+                {
+                    accountPath = string.Format(SystemConst.IntegrationPathBase, classify.AccountMainID);
+                }
+                //不是集成微网站
+                else
+                {
+                    accountPath = HttpContext.Current.Server.MapPath(path);
+                }
                 var imageName = string.Format("{0}_{1}", token, LastName);
                 var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
 
@@ -85,7 +110,18 @@ namespace Business
                 var classifyYSJ = base.Get(classify.ID);
                 if (!string.IsNullOrEmpty(classifyYSJ.ImgPath))
                 {
-                    var file = HttpContext.Current.Server.MapPath(classifyYSJ.ImgPath);
+                    var file = "";
+                    //集成微网站
+                    if (SystemConst.IsIntegrationWebProject)
+                    {
+                        file = string.Format(SystemConst.IntegrationPathBase, classifyYSJ.AccountMainID) + classifyYSJ.ImgPath.Substring(classifyYSJ.ImgPath.LastIndexOf('/')+1);
+                    }
+                    //不是集成微网站
+                    else
+                    {
+                        file = HttpContext.Current.Server.MapPath(classifyYSJ.ImgPath);
+
+                    }
                     if (File.Exists(file))
                     {
                         File.Delete(file);
@@ -134,7 +170,18 @@ namespace Business
                 var classify = base.Get(ID);
                 if (!string.IsNullOrEmpty(classify.ImgPath))
                 {
-                    var file = HttpContext.Current.Server.MapPath(classify.ImgPath);
+                    var file = "";
+                    //集成微网站
+                    if (SystemConst.IsIntegrationWebProject)
+                    {
+                        file = string.Format(SystemConst.IntegrationPathBase, AMID) + classify.ImgPath.Substring(classify.ImgPath.LastIndexOf('/')+1);
+                    }
+                    //不是集成微网站
+                    else
+                    {
+                        file = HttpContext.Current.Server.MapPath(classify.ImgPath);
+
+                    }
                     if (File.Exists(file))
                     {
                         File.Delete(file);

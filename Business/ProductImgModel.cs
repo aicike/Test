@@ -33,9 +33,20 @@ namespace Business
                 {
                     CommonModel com = new CommonModel();
                     var LastName = com.CreateRandom("", 5) + item.GetFileSuffix();
-                    var path = string.Format(SystemConst.Business.PathBase, AMID);
-                    var accountPath = HttpContext.Current.Server.MapPath(path);
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var path = string.Format(SystemConst.Business.PathBase, AMID);
+                    var accountPath = "";
+
+                    //集成微网站
+                    if (SystemConst.IsIntegrationWebProject)
+                    {
+                        accountPath = string.Format(SystemConst.IntegrationPathBase, AMID);
+                    }
+                    //不是集成微网站
+                    else
+                    {
+                        accountPath = HttpContext.Current.Server.MapPath(path);
+                    }
                     var imageName = string.Format("{0}_{1}", token, LastName);
                     var imageName2 = string.Format("{0}_M_{1}", token, LastName);
                     var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
@@ -80,8 +91,23 @@ namespace Business
                 var list = List().Where(a => a.Product.AccountMainID == AMID && a.ProductID == ProductID);
                 foreach (var item in list)
                 {
-                    var file = HttpContext.Current.Server.MapPath(item.PImgOriginal);
-                    var minifile = HttpContext.Current.Server.MapPath(item.PImgMini);
+                    var file = "";
+                    var minifile = "";
+
+                    //集成微网站
+                    if (SystemConst.IsIntegrationWebProject)
+                    {
+                        file = string.Format(SystemConst.IntegrationPathBase, AMID) + item.PImgOriginal.Substring(item.PImgOriginal.LastIndexOf('/') + 1);
+                        minifile = string.Format(SystemConst.IntegrationPathBase, AMID) + item.PImgMini.Substring(item.PImgMini.LastIndexOf('/') + 1);
+                    }
+                    //不是集成微网站
+                    else
+                    {
+                        file = HttpContext.Current.Server.MapPath(item.PImgOriginal);
+                        minifile = HttpContext.Current.Server.MapPath(item.PImgMini);
+
+                    }
+
                     if (File.Exists(file))
                     {
                         File.Delete(file);
@@ -120,9 +146,25 @@ namespace Business
                 {
                     CommonModel com = new CommonModel();
                     var LastName = com.CreateRandom("", 5) + item.GetFileSuffix();
-                    var path = string.Format(SystemConst.Business.PathBase, AMID);
-                    var accountPath = HttpContext.Current.Server.MapPath(path);
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var path = string.Format(SystemConst.Business.PathBase, AMID);
+
+                    var accountPath = "";
+
+                    //集成微网站
+                    if (SystemConst.IsIntegrationWebProject)
+                    {
+                        accountPath = string.Format(SystemConst.IntegrationPathBase, AMID);
+                    }
+                    //不是集成微网站
+                    else
+                    {
+                        accountPath = HttpContext.Current.Server.MapPath(path);
+                    }
+
+
+
+
                     var imageName = string.Format("{0}_{1}", token, LastName);
                     var imageName2 = string.Format("{0}_M_{1}", token, LastName);
                     var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
@@ -145,8 +187,23 @@ namespace Business
                 var list = List().Where(a => a.Product.AccountMainID == AMID && a.ProductID == ProductID);
                 foreach (var item in list)
                 {
-                    var file = HttpContext.Current.Server.MapPath(item.PImgOriginal);
-                    var minifile = HttpContext.Current.Server.MapPath(item.PImgMini);
+                    
+                    var file = "";
+                    var minifile = "";
+
+                    //集成微网站
+                    if (SystemConst.IsIntegrationWebProject)
+                    {
+                        file = string.Format(SystemConst.IntegrationPathBase, AMID) + item.PImgOriginal.Substring(item.PImgOriginal.LastIndexOf('/')+1);
+                        minifile = string.Format(SystemConst.IntegrationPathBase, AMID) + item.PImgMini.Substring(item.PImgMini.LastIndexOf('/') + 1);
+                    }
+                    //不是集成微网站
+                    else
+                    {
+                        file = HttpContext.Current.Server.MapPath(item.PImgOriginal);
+                        minifile = HttpContext.Current.Server.MapPath(item.PImgMini);
+
+                    }
                     if (File.Exists(file))
                     {
                         File.Delete(file);

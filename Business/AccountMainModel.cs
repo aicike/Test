@@ -17,6 +17,15 @@ namespace Business
 {
     public class AccountMainModel : BaseModel<AccountMain>, IAccountMainModel
     {
+        /// <summary>
+        /// 根据组织或集团账号，查找所有该集团下AccountMain
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<AccountMain> ListForOrganization(int organization_accountMainID)
+        {
+            return List().Where(a => a.ParentAccountMainID == organization_accountMainID);
+        }
+
         public IQueryable<AccountMain> List_Permission(int loginSystemUserID = 0)
         {
             if (loginSystemUserID != 0)
@@ -51,6 +60,9 @@ namespace Business
             return Get(id);
         }
 
+        /// <summary>
+        /// 平台添加方法
+        /// </summary>
         [Transaction]
         public Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile)
         {
@@ -165,6 +177,122 @@ namespace Business
             return result;
         }
 
+        /// <summary>
+        /// 组织或机构，自己添加项目方法
+        /// </summary>
+        [Transaction]
+        public Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile)
+        {
+            accountMain.CreateTime = DateTime.Now;
+            accountMain.LogoImagePath = SystemConst.Business.DefaultLogo;
+            accountMain.LogoImageThumbnailPath = SystemConst.Business.DefaultLogo;
+            accountMain.AccountStatusID = LookupFactory.GetLookupOptionIdByToken(EnumAccountStatus.Enabled);
+            CommonModel com = new CommonModel();
+            accountMain.RandomCode = com.CreateRandom("", 6);
+            var result = base.Add(accountMain);
+            if (result.HasError == false && LogoImagePath != null)
+            {
+                try
+                {
+                    var path = HttpContext.Current.Server.MapPath(string.Format("~/File/{0}", accountMain.ID));//该开发商物理路径
+                    if (Directory.Exists(path) == false)
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    //3个文件目录
+                    var basePath = string.Format("{0}/{1}", path, "Base");//Base目录物理路径
+                    if (Directory.Exists(basePath) == false)
+                    {
+                        Directory.CreateDirectory(basePath);
+                    }
+                    var accountPath = string.Format("{0}/{1}", path, "Account");//Account目录物理路径
+                    if (Directory.Exists(accountPath) == false)
+                    {
+                        Directory.CreateDirectory(accountPath);
+                    }
+                    var fileLibraryPath = string.Format("{0}/{1}", path, "FileLibrary");//FileLibrary目录物理路径
+                    if (Directory.Exists(fileLibraryPath) == false)
+                    {
+                        Directory.CreateDirectory(fileLibraryPath);
+                    }
+                    var LastName = com.CreateRandom("", 5) + LogoImagePath.FileName.GetFileSuffix();
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var height = 58;
+                    var imageName = string.Format("{0}_{1}", token, LastName);
+                    var imageThumbnailName = string.Format("{0}_{1}_{2}", token, height, LastName);
+                    var appimgName = string.Format("{0}_{1}_APP{2}", token, height, LastName);
+                    var imagePath = string.Format("{0}/{1}", basePath, imageName);
+                    var imageThumbnailPath = string.Format("{0}/{1}", basePath, imageThumbnailName);
+                    var appimgPath = string.Format("{0}/{1}", basePath, appimgName);
+                    LogoImagePath.SaveAs(imagePath);
+                    //缩略图
+                    bool IsOK = Tool.Thumbnail(imagePath, height, imageThumbnailPath);
+                    accountMain.LogoImagePath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
+                    if (IsOK)
+                    {
+                        accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageThumbnailName;
+                    }
+                    else
+                    {
+                        accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
+                    }
+
+                    if (AndroidPathFile != null)
+                    {
+                        var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
+                        var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, AndroidPathFile.FileName.GetFileName());
+                        if (Directory.Exists(androidPath) == false)
+                        {
+                            Directory.CreateDirectory(androidPath);
+                        }
+                        var Downpath = string.Format("~/Download/{0}", accountMain.ID);
+                        var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidPathFile.FileName.GetFileName());
+                        AndroidPathFile.SaveAs(androidPathDown);
+                        accountMain.AndroidDownloadPath = Downpath2;
+                    }
+
+                    if (AndroidSellPathFile != null)
+                    {
+                        var androidSellPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
+                        var androidSellPathDown = string.Format("{0}/{1}_{2}", androidSellPath, token, AndroidSellPathFile.FileName.GetFileName());
+                        if (Directory.Exists(androidSellPath) == false)
+                        {
+                            Directory.CreateDirectory(androidSellPath);
+                        }
+                        var Downpath = string.Format("~/Download/{0}", accountMain.ID);
+                        var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidSellPathFile.FileName.GetFileName());
+                        AndroidSellPathFile.SaveAs(androidSellPathDown);
+                        accountMain.AndroidSellDownloadPath = Downpath2;
+                    }
+
+                    if (AppLogoImageFile != null)
+                    {
+
+                        int dataLengthToRead = (int)AppLogoImageFile.InputStream.Length;//获取下载的文件总大小
+                        byte[] buffer = new byte[dataLengthToRead];
+
+
+                        int r = AppLogoImageFile.InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+                        Stream tream = new MemoryStream(buffer);
+                        Image img = Image.FromStream(tream);
+
+                        Tool.SuperGetPicThumbnail(img, appimgPath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                        accountMain.AppLogoImagePath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + appimgName;
+                    }
+                    result = Edit(accountMain);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+                string sql = string.Format("INSERT INTO dbo.Role ( SystemStatus, NAME,IsCanDelete,Token,AccountMainID ) VALUES  ( 0,'管理员',0,'AccountAdmin',{0})"
+                           + " insert into classify(SystemStatus,AccountMainID,Name,ParentID,[Level],sort,Subordinate) values(0,{0},'{1}',0,0,0,0)", accountMain.ID, accountMain.Name);
+                base.SqlExecute(sql);
+            }
+            return result;
+        }
+        
         [Transaction]
         public Result MicroSite_Add(AccountMain accountMain)
         {
@@ -217,7 +345,6 @@ namespace Business
             }
             return result;
         }
-
 
         [Transaction]
         public Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, int loginSystemUserID = 0)
@@ -475,7 +602,6 @@ namespace Business
             return result;
         }
 
-
         [Transaction]
         public Result Edit_ByAccountMain(AccountMain accountMain)
         {
@@ -543,15 +669,6 @@ namespace Business
             }
             return result;
         }
-
-
-
-
-
-
-
-
-
 
         [Transaction]
         public Result Delete_Permission(int id, int loginSystemUserID = 0)

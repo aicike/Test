@@ -31,15 +31,15 @@ namespace Controllers
             set { Session[SystemConst.Session.LoginAccount] = value; }
         }
 
-        protected AccountMainOrganization LoginAccountOrganization
-        {
-            get
-            {
-                var AccountMainOrganization = Session[SystemConst.Session.LoginAccountOrganization] as AccountMainOrganization;
-                return AccountMainOrganization;
-            }
-            set { Session[SystemConst.Session.LoginAccountOrganization] = value; }
-        }
+        //protected AccountMainOrganization LoginAccountOrganization
+        //{
+        //    get
+        //    {
+        //        var AccountMainOrganization = Session[SystemConst.Session.LoginAccountOrganization] as AccountMainOrganization;
+        //        return AccountMainOrganization;
+        //    }
+        //    set { Session[SystemConst.Session.LoginAccountOrganization] = value; }
+        //}
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -47,7 +47,7 @@ namespace Controllers
             var action = filterContext.RequestContext.RouteData.Values["action"] as string;
             var area = filterContext.RouteData.DataTokens["area"] as string;
 
-            if ((LoginAccount == null && LoginAccountOrganization == null)
+            if ((LoginAccount == null)
                 //&& ((controller != null && (controller.Equals("Account", StringComparison.OrdinalIgnoreCase) == false && controller.Equals("Home", StringComparison.OrdinalIgnoreCase) == false && controller.Equals("Area", StringComparison.OrdinalIgnoreCase) == false))
                 //)
                 )

@@ -52,5 +52,11 @@ namespace Interface
         AppVersionInfo CheckAppSellVersion(EnumClientSystemType type, int amid, string version);
 
         Result MicroSite_Add(AccountMain accountMain);
+
+        /// <summary>
+        /// 根据组织或集团账号，查找所有该集团下AccountMain
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<AccountMain> ListForOrganization(int organization_accountMainID);
     }
 }

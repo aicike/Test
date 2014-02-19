@@ -176,7 +176,9 @@
         //,wordImageFieldName:"upfile"                     //word转存表单名若此处修改，需要在后台对应文件修改对应参数
 
         //获取视频数据的地址
-        ,getMovieUrl:URL+"net/getMovie.ashx"                   //视频数据获取地址
+        , getMovieUrl: URL + "net/getMovie.ashx"                   //视频数据获取地址
+        , videoUrl: URL + "php/fileUp.php"               //附件上传提交地址
+        , videoPath: URL + "php/"                   //附件修正地址，同imagePath
 
         //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的从新定义
         

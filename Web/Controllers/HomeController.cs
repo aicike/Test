@@ -63,12 +63,18 @@ namespace Web.Controllers
 
 
             string WebTitleRemark = SystemConst.WebTitleRemark;
-            string webTitle = string.Format(SystemConst.Business.WebTitle, "首页" ,LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "首页", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
 
 
             ViewBag.AMID = LoginAccount.CurrentAccountMainID;
 
+            return View();
+        }
+
+        [AllowCheckPermissions(false)]
+        public ActionResult Manage()
+        {
             return View();
         }
     }

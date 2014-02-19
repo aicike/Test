@@ -26,7 +26,7 @@ namespace Poco
         public string Name { get; set; }
 
         [Display(Name = "二级域名或目录名称")]
-        [Required(ErrorMessage = "请输入")]
+        [Required(ErrorMessage = "二级域名不能为空")]
         [StringLength(50, ErrorMessage = "长度小于50")]
         [RegularExpression("^[a-zA-Z0-9]+$", ErrorMessage = "请输入有效字符(只能输入‘字母’或‘数字’)")]
         [RemotePlus("CheckIsUniqueAccountMain_HostName", "Ajax", "", "Default", ErrorMessage = "该名称已存在，请修改")]
@@ -154,13 +154,20 @@ namespace Poco
         /// </summary>
         public DateTime CreateTime { get; set; }
 
+        #region 组织角色
+
         /// <summary>
-        /// 集团
+        /// 是否组织
         /// </summary>
-        public int? AccountMainOrganizationID { get; set; }
+        public bool? IsOrganization { get; set; }
 
-        public virtual AccountMainOrganization AccountMainOrganization { get; set; }
+        public int? ParentAccountMainID { get; set; }
 
+        public virtual AccountMain ParentAccountMain { get; set; }
+
+        #endregion
+
+        public virtual ICollection<AccountMain> AccountMains { get; set; }
 
         public virtual ICollection<LibraryText> LibraryTexts { get; set; }
 

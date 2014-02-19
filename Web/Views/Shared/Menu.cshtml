@@ -1,14 +1,22 @@
 ﻿@{
     var account = Session[Poco.SystemConst.Session.LoginAccount] as Poco.Account;
+    //var accountMainOrganization = Session[Poco.SystemConst.Session.LoginAccountOrganization] as Poco.AccountMainOrganization;
     List<Poco.Menu> menuList = new List<Poco.Menu>();
+    var menuModel = Injection.Factory.Get<Interface.IMenuModel>(Poco.SystemConst.IOC_Model.MenuModel);
+    string HostName = null;
     if (account != null)
     {
-        menuList = Injection.Factory.Get<Interface.IMenuModel>(Poco.SystemConst.IOC_Model.MenuModel).GetMenuByRoleID(account.RoleIDs);
+        menuList = menuModel.GetMenuByRoleID(account.RoleIDs);
+        HostName = account.HostName;
     }
+    //if (accountMainOrganization != null)
+    //{
+
+    //    menuList = menuModel.GetMenuForOrganization();
+    //    HostName = "www";
+    //}
 }
 @{
-    if (account != null)
-    {
     <ul class="menu">
         @foreach (var item in menuList)
         {
@@ -28,13 +36,13 @@
                             @if (menu2.ParentMenu != null && menu2.ParentMenu.Service != null && menu2.ParentMenu.Service.IsIndependentSite)
                             {
                                 <a href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
-                                @menu2.Name
+                                    @menu2.Name
                                 </a>
                             }
                             else
                             { 
-                                <a href="http://@(account.HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
-                                @menu2.Name
+                                <a href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                    @menu2.Name
                                 </a>
                             }
                             <script>
@@ -52,13 +60,13 @@
                             @if (menu2.ParentMenu != null && menu2.ParentMenu.Service != null && menu2.ParentMenu.Service.IsIndependentSite)
                             {
                                 <a href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
-                                @menu2.Name
+                                    @menu2.Name
                                 </a>
                             }
                             else
                             { 
-                                <a href="http://@(account.HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
-                                @menu2.Name
+                                <a href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                    @menu2.Name
                                 </a>
                             }
                         </li>
@@ -69,7 +77,6 @@
             }
         }
     </ul>
-    }
 }
 <script>
     $(function () {

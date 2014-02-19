@@ -161,6 +161,7 @@
     <Compile Include="Areas\System\Controllers\SystemUserController.cs" />
     <Compile Include="Areas\System\SystemAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccountMainController.cs" />
     <Compile Include="Controllers\AccountMainGuideController.cs" />
     <Compile Include="Controllers\ActivityInfoController.cs" />
     <Compile Include="Controllers\AjaxController.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="Controllers\ClassifyController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ExitController.cs" />
+    <Compile Include="Controllers\GuideController.cs" />
     <Compile Include="Controllers\HolidayController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstallAppReplyController.cs" />
@@ -341,6 +343,9 @@
     <Content Include="Scripts\royalslider\grabbing.png" />
     <Content Include="Scripts\royalslider\royalslider.css" />
     <Content Include="Scripts\royalslider\royalslider.min.js" />
+    <Content Include="Scripts\SmartWizard\jquery.smartWizard-2.0.js" />
+    <Content Include="Scripts\SmartWizard\jquery.smartWizard-2.0.min.js" />
+    <Content Include="Scripts\SmartWizard\smart_wizard_vertical.css" />
     <Content Include="Scripts\tytabs.js" />
     <Content Include="Scripts\JSONLoader.js" />
     <Content Include="Scripts\Highcharts\adapters\mootools-adapter.js" />
@@ -959,6 +964,13 @@
     <Content Include="Views\Test\TestHtml.cshtml" />
     <Content Include="Views\SSO\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutUser2.cshtml" />
+    <Content Include="Views\Shared\_LayoutUser_NoMenu.cshtml" />
+    <Content Include="Views\Home\Manage.cshtml" />
+    <Content Include="Views\Guide\Index.cshtml">
+      <SubType>
+      </SubType>
+    </Content>
+    <Content Include="Views\AccountMain\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

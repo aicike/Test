@@ -1,6 +1,5 @@
 ﻿@{
     var account = Session[Poco.SystemConst.Session.LoginAccount] as Poco.Account;
-
 }
 <style>
     .homeMenu
@@ -42,7 +41,7 @@
                 
                 @if (account!=null&&account.LogoPath != null && account.LogoPath.Length > 0)
                 { 
-                <a href="@Url.Action("Index", "Home")"><img src="@Url.Content(account.LogoThumbnailPath)" /></a>
+                <a href="@Url.Action("Index", "Home")"><img src="@Url.Content(account.LogoThumbnailPath,"/Images/logo.png")" /></a>
                 }
                 else
                 { 

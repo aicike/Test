@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Poco;
 using System.Web.Routing;
+using System.IO;
 
 namespace System.Web.Mvc
 {
@@ -47,6 +48,23 @@ namespace System.Web.Mvc
                 url = Url.Content(contentPath);
             }
             return url;
+        }
+
+        /// <summary>
+        /// 检查物理文件是否存在，不存在则返回提供的文件
+        /// </summary>
+        /// <param name="Url"></param>
+        /// <param name="contentPath">需要检查的文件</param>
+        /// <param name="newFilePath">替换的文件</param>
+        /// <returns></returns>
+        public static string Content(this UrlHelper Url, string contentPath, string newFilePath)
+        {
+            string filePath = HttpContext.Current.Server.MapPath(contentPath);
+            if (File.Exists(filePath) == false)
+            {
+                return newFilePath;
+            }
+            return contentPath;
         }
     }
 }

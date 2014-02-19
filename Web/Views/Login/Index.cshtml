@@ -64,8 +64,8 @@
 
             // $(".nivo-controlNav").attr("style", "display:none");
             $("#login").click(function () {
-                var phone = $("phone_email").val().trim();
-                var pwd = $("password").val().trim();
+                var phone = $.trim($("#phone_email").val());
+                var pwd = $.trim($("#password").val());
                 if (phone.length > 0 && pwd.length > 0) {
                     return true;
                 }

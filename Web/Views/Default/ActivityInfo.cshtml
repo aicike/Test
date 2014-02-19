@@ -20,7 +20,6 @@
 
 
 
-
             //----------------提交后状态----
             var isok = '@ViewBag.isok';
             if (isok == 1) {
@@ -44,6 +43,32 @@
             }
             if (phone == undefined || phone == "") {
                 alert("电话不能为空");
+                return false;
+            }
+            var reg0 = /^(((1[0-9]{1}[0-9]{1}))+\d{8})$/;
+            var my = false;
+            if (reg0.test(phone)) my = true;
+            if (!my) {
+                alert("请输入正确的电话号码");
+                return false;
+            }
+
+            var PUrl = '@Url.Action("CheckISBM", "Default")';
+            var AID = '@ViewBag.ActivityID';
+
+            $.ajaxSetup({
+                async: false
+            });
+            var isture = false;
+            $.post(PUrl, { AID: AID, phone: phone }, function (result) {
+                if (result == "true") {
+                    isture = true;
+                    showMess.click();
+                    $('#userPhone').val("");
+                }
+
+            });
+            if (isture) {
                 return false;
             }
 
@@ -95,7 +120,7 @@
         }
         img
         {
-             max-width:100%;    
+            max-width: 100%;
         }
     </style>
 }
@@ -107,7 +132,7 @@
                 @Model.Title
             </div>
             <div class="divDate">
-                @Model.CreateDate
+                报名截止日期:@Model.EnrollEndDate.ToString("yyyy-MM-dd")
             </div>
             <div class="divRemarks">
                 @Html.Raw(Model.Remarks)
@@ -116,15 +141,23 @@
             { 
                 <a href="#" data-role="button" data-theme="b">报名已截止 感谢您的参与</a> 
             }
+            else if (ViewBag.IsJS == "true")
+            {
+                <a href="#" data-role="button" data-theme="b">报名已截止 感谢您的参与</a> 
+            }
             else
             {
                 if (ViewBag.isSignUP == "true")
                 {
-                    <a href="#" data-role="button" data-theme="b">您已经报过名啦</a> 
+                <a href="#" data-role="button" data-theme="b">您已经报过名啦</a> 
+                }
+                else if( ViewBag.IsMaxCnt = "true")
+                {
+                 <a href="#" data-role="button" data-theme="b">报名人额已满 感谢您的参与</a> 
                 }
                 else
                 {
-                    <a href="#shwoSubmit" data-rel="popup" data-position-to="window" data-role="button"
+                <a href="#shwoSubmit" data-rel="popup" data-position-to="window" data-role="button"
                     data-theme="b">我要报名</a> 
                 }
             }
@@ -143,6 +176,14 @@
                     </button>   
                     
                 }
+            </div>
+            <div>
+                <a id="showMess" href="#positionWindow" style="display: none" data-position-to="window"
+                    data-rel="popup" data-inline="true"></a>
+                <div class="ui-content" id="positionWindow" data-role="popup" data-theme="d" data-overlay-theme="a">
+                    <p>
+                        该号码已经报过名啦</p>
+                </div>
             </div>
             <a id="Adowload" href="#" style="text-decoration: none; margin-top: 15px; text-shadow: none">
                 <table align="center" class="APPDow" cellpadding="0" cellspacing="0">

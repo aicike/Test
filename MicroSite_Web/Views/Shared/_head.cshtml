@@ -42,7 +42,7 @@
                 
                 @if (account!=null&&account.LogoPath != null && account.LogoPath.Length > 0)
                 { 
-                <a href="@Url.Action("Index", "Home")"><img src="@Url.Content(account.LogoThumbnailPath,true)" /></a>
+                <a href="@Url.Action("Index", "Home")"><img src="@Url.Content(account.LogoThumbnailPath,"/Images/logo.png")" /></a>
                 }
                 else
                 { 

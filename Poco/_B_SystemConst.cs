@@ -11,6 +11,9 @@ namespace Poco
         public static string WebUrlIP = System.Configuration.ConfigurationManager.AppSettings["WebUrlIP"];
         public static string WebTitleRemark = System.Configuration.ConfigurationManager.AppSettings["WebTitle"];
         public static string MicroSiteHostName = System.Configuration.ConfigurationManager.AppSettings["HostName"];
+        public static string IntegrationPathBase = System.Configuration.ConfigurationManager.AppSettings["IntegrationBase"];
+        public static string IntegrationPathAccount = System.Configuration.ConfigurationManager.AppSettings["IntegrationAccount"];
+        public static string IntegrationPathFileLibrary = System.Configuration.ConfigurationManager.AppSettings["IntegrationLibrary"];
 
         /// <summary>
         /// 微网站是否集成web项目
@@ -37,6 +40,7 @@ namespace Poco
             public const string ThumbnailImage_Width = "1000";
             public const string TimeFomatFull = "yyyy-MM-dd HH:mm:ss";
             public const string WebTitle = "{0} {1} {2}";
+            
         }
 
         public class Cache
@@ -66,7 +70,7 @@ namespace Poco
 
             public const string LoginAccount = "LoginAccount";
 
-            public const string LoginAccountOrganization = "LoginAccountOrganization";
+            //public const string LoginAccountOrganization = "LoginAccountOrganization";
 
             public const string LoginUser = "LoginUser";
 
@@ -124,6 +128,7 @@ namespace Poco
             public const string ActivityInfo = "ActivityInfo";
             public const string Panorama = "Panorama";
             public const string MicroOrder = "MicroOrder";
+            public const string AccountMain = "AccountMain";
             
 
             //Action
@@ -224,7 +229,6 @@ namespace Poco
             public const string UserDeliveryAddressModel = "UserDeliveryAddressModel";
             public const string ServiceModel = "ServiceModel";
             public const string AccountMain_ServiceModel = "AccountMain_ServiceModel";
-            public const string AccountMainOrganizationModel = "AccountMainOrganizationModel";
 
             
 

@@ -23,5 +23,14 @@ namespace Interface
         /// <param name="AMID"></param>
         /// <returns></returns>
         IQueryable<ActivityInfoParticipator> GetAIPList(int ActivityID, int AMID);
+
+
+        /// <summary>
+        /// 根据电话 活动ID 判断是否报过名
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <param name="AID"></param>
+        /// <returns></returns>
+        Result GetUserIsSignUP2(string phone, int AID);
     }
 }

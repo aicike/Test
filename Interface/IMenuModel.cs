@@ -9,6 +9,7 @@ namespace Interface
     public interface IMenuModel : IBaseModel<Menu>
     {
         List<Menu> GetMenuByRoleID(List<int> roleIDs, int? parentMenuID = null);
+        List<Menu> GetMenuForOrganization();
         /// <summary>
         /// 超级管理员获取所有菜单
         /// </summary>

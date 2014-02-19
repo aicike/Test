@@ -1,0 +1,25 @@
+﻿@{
+
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.Home;
+}
+@section head{
+    <style>
+        .HYdiv
+        {
+            font-size: 18px;
+            font-family: @@黑体;
+            margin-bottom: 10px;
+            height: 30px;
+        }
+    </style>
+}
+<div class="body">
+    <div id="divHY" class="HYdiv">
+        欢迎你 , @ViewBag.UNAme
+    </div>
+    <div id="divTZ" class="TZdiv">
+    </div>
+    <div id="divShowReport">
+    </div>
+</div>

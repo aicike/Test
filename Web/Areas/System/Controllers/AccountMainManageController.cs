@@ -36,8 +36,6 @@ namespace Web.Areas.System.Controllers
                 throw new ApplicationException(result.Error);
             }
             return RedirectToAction("Index", "AccountMainManage");
-         
-
         }
 
         public ActionResult EditAccountMain(int id)

@@ -42,6 +42,18 @@ namespace Business
             return list;
         }
 
+        public List<Menu> GetMenuForOrganization()
+        {
+            List<Menu> list = List_Cache();
+            list = list.Where(a => a.RoleMenus.Any(b => b.SystemStatus == (int)EnumSystemStatus.Active &&
+              a.ID == 21)).OrderBy(a => a.Order).ToList();
+            foreach (var item in list)
+            {
+                item.Menus = item.Menus.Where(a => a.RoleMenus.Any(b => b.SystemStatus == (int)EnumSystemStatus.Active)).OrderBy(a => a.Order).ToList();
+            }
+            return list;
+        }
+
 
         /// <summary>
         /// 超级管理员获取所有菜单
@@ -102,5 +114,6 @@ namespace Business
             var list = base.List().ToList();
             CacheModel.SetCache(SystemConst.Cache.Menu, list);
         }
+
     }
 }

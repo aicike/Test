@@ -15,7 +15,17 @@ namespace System.Web.Mvc.Html
         {
             ModelMetadata metadata = ModelMetadata.FromLambdaExpression(expression, helper.ViewData);
             string name = ExpressionHelper.GetExpressionText(expression);
+            string shortName = null;
             string fullName = helper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
+            int index = fullName.IndexOf('.');
+            if (index >= 0)
+            {
+                shortName = fullName.Substring(index + 1);
+            }
+            else
+            {
+                shortName = fullName;
+            }
             if (String.IsNullOrEmpty(fullName))
             {
                 throw new ArgumentException("null");
@@ -28,7 +38,8 @@ namespace System.Web.Mvc.Html
             }
             tagBuilder.MergeAttribute("name", fullName, true);
 
-            var attrs = metadata.ContainerType.GetProperty(fullName).GetCustomAttributes(true);
+            //var attrs = metadata.ContainerType.GetProperty(fullName).GetCustomAttributes(true);
+            var attrs = metadata.ContainerType.GetProperty(shortName).GetCustomAttributes(true);
             foreach (var item in attrs)
             {
                 var attr = item as DropDownListAttribute;
