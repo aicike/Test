@@ -21,7 +21,7 @@
         $("#dialogAccount").dialog({
             resizable: false,
             height: 445,
-            width: 600,
+            width: 520,
             modal: true,
             draggable: false,
             beforeClose: function (event, ui) {
@@ -36,6 +36,7 @@
         $("#hiAccountID").val(accountID);
         $("#btnUPData").click();
     }
+ 
     
 </script>
 <style>
@@ -69,12 +70,13 @@
     body
     {
         background-color: #FdFdFd;
+        background-image:none
     }
 </style>
 @model PagedList<Poco.User>
 <div style="font-size: 14px">
     @ViewBag.AccountName -> @ViewBag.GroupName</div>
-<table class="tableList" width="100%" cellpadding="0" cellspacing="0">
+<table class="ListTab" width="100%" cellpadding="0" cellspacing="0">
     <tr>
         <th>
             头像
@@ -155,7 +157,7 @@
 <div id="dialogAccount" title="销售代表" style="display: none; padding-top: 15px">
     @foreach (var item in AccountList)
     {
-        <div style="text-align: center; width: 140px; height: 90px; float: left;">
+        <div style="text-align: center; width: 120px; height: 90px; float: left;">
             <div>
                 @if (!string.IsNullOrEmpty(item.HeadImagePath))
                 {

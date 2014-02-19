@@ -85,6 +85,7 @@
     <Compile Include="ActivityInfoModel.cs" />
     <Compile Include="ActivityInfoParticipatorModel.cs" />
     <Compile Include="AppAdvertorialModel.cs" />
+    <Compile Include="AppAdvertorialOperationModel.cs" />
     <Compile Include="AppWaitImgModel.cs" />
     <Compile Include="App_AutoMessageReplyContentModel.cs" />
     <Compile Include="AutoMessage_UserModel.cs" />

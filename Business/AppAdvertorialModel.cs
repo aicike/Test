@@ -378,7 +378,16 @@ namespace Business
         }
 
 
-
+        /// <summary>
+        /// 更改阅读次数
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public void BrowseCntADD(int id)
+        {
+            string sql = "update AppAdvertorial set BrowseCnt = (BrowseCnt+1) where id = " + id;
+            base.SqlExecute(sql);
+        }
 
 
         //修改置顶 isok 1 置顶 0 取消

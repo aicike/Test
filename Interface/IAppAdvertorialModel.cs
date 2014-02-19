@@ -24,5 +24,11 @@ namespace Interface
         int EditAppAdvertorialStick(int ID, int isok, int accoutMainID, int Sort, int AdverTorialType);
 
         int EditAppAdvertorialSort(int ID, int AccountMainID, int Sort, int type, int AdverTorialType);
+
+        /// <summary>
+        /// 更改阅读次数
+        /// </summary>
+        /// <param name="id"></param>
+        void BrowseCntADD(int id);
     }
 }

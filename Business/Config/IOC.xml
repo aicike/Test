@@ -80,6 +80,8 @@
   <object id="SurveyTroubleModel" type="Business.SurveyTroubleModel" parent="EFModel" singleton="false"></object>
   <object id="SurveyAnswerModel" type="Business.SurveyAnswerModel" parent="EFModel" singleton="false"></object>
   <object id="SurveyOptionModel" type="Business.SurveyOptionModel" parent="EFModel" singleton="false"></object>
+  <object id="AppAdvertorialOperationModel" type="Business.AppAdvertorialOperationModel" parent="EFModel" singleton="false"></object>
+  
   
   <object id="Push_IOS" type="Business.Push_IOS" singleton="false">
   </object>
