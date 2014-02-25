@@ -1,0 +1,144 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.AccountMain;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.AccountMain;
+}
+@section head{
+    <link href="@Url.Content("~/Scripts/treeview/jquery.treeview.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/treeview/jquery.treeview.js")"></script>
+    <script src="@Url.Content("~/Scripts/blocksit.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#browser").treeview({
+                toggle: function () {
+                    console.log("%s was toggled.", $(this).find(">span").text());
+                }
+            });
+            $(":checkbox").change(function () {
+                if ($(this).attr("checked") == "checked") {
+                    $(this).parent("span").nextAll("ul").find(":checkbox").attr("checked", true); //全选
+                    $(this).parent("span").parent("li").parent("ul").prevAll("span").find(":checkbox").attr("checked", true); //选中父级
+                } else {
+                    $(this).parent("span").nextAll("ul").find(":checkbox").attr("checked", false); //全不选
+                    //当没有子级选中时，取消选中父级
+                    var length = $(this).parent("span").parent("li").parent("ul").find(":checkbox:checked").length//同级别
+                    if (length == 0) {
+                        $(this).parent("span").parent("li").parent("ul").prevAll("span").find(":checkbox").attr("checked", false); //选中父级
+                    }
+                }
+            });
+            $('#browser').BlocksIt({
+                numOfCol: 3,
+                offsetX: 15,
+                offsetY: 15
+            });
+        });
+    </script>
+}
+@model List<Poco.Menu>
+@{
+    var currentRoleMenuList = ViewBag.CurrentRoleMenuList as List<int>;
+    var currentRoleOptionList = ViewBag.CurrentRoleOptionList as List<int>;
+
+    var AdminOptionList = ViewBag.AdminMenyOptionIDS as List<int>;
+    var AdminMenuList = ViewBag.AdminMenyIDS as List<int>;
+}
+<div class="title">@Html.Partial("Menu3")</div>
+<div class="body">
+    @using (Ajax.BeginForm("PowerRole", "AccountMain", new { AccountMainID = ViewBag.AccountMainID }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {
+        <input type="hidden" value="@ViewBag.Role.ID" name="hidRoleID"/>
+        <div style="margin-bottom: 10px;">
+            <input type="submit" id="btnSubmit" value="保存" class="button" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="返回" onclick="location.href='@Url.Action("Role", "AccountMain", new { AccountMainID = ViewBag.AccountMainID })'" class="button" />
+        </div>
+        <fieldset style="position: relative">
+            <legend>分配权限</legend>
+            <div id="browser">
+                @foreach (var menu in Model)
+                {
+                    <div id="li1" class="grid">
+                        <span style="font-size: 16px;">
+                            @if (currentRoleMenuList.Contains(menu.ID))
+                            {
+                                <input type="checkbox" id="menu_@menu.ID" name="checkboxMenu" value="@menu.ID" checked="checked"/>
+                            }
+                            else
+                            { 
+                                <input type="checkbox" id="menu_@menu.ID" name="checkboxMenu" value="@menu.ID"/>
+                            }
+                            <label for="menu_@menu.ID">@menu.Name</label></span>
+                        <ul id="ul1">
+                            @{
+                            var options = menu.MenuOptions.Where(a => a.SystemStatus == 0 && AdminOptionList.Contains(a.ID));
+                            }
+                            @foreach (var option in options)
+                            {
+                                <li><span style="font-size: 14px;">
+                                    @if (currentRoleOptionList.Contains(option.ID))
+                                    {
+                                        <input type="checkbox" id="option_@option.ID" name="checkboxOption" value="@option.ID" checked="checked"/>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="option_@option.ID" name="checkboxOption" value="@option.ID"/>
+                                    }
+                                    <label for="option_@option.ID">@option.Name</label> </li>
+                            }
+                            @foreach (var subMenu in menu.Menus.Where(a => a.SystemStatus == 0 && AdminMenuList.Contains(a.ID)))
+                            {
+                                <li><span style="font-size: 16px;">
+                                    @if (currentRoleMenuList.Contains(subMenu.ID))
+                                    {
+                                        <input type="checkbox" id="menu_@subMenu.ID" name="checkboxMenu" value="@subMenu.ID" checked="checked"/>
+                                    }
+                                    else
+                                    { 
+                                        <input type="checkbox" id="menu_@subMenu.ID" name="checkboxMenu" value="@subMenu.ID"/>
+                                    }
+                                    <label for="menu_@subMenu.ID">@subMenu.Name</label></span>
+                                    <ul>
+                                        @foreach (var menu3 in subMenu.Menus.Where(a => a.SystemStatus == 0))
+                                        { 
+                                            <li><span style="font-size: 14px;">
+                                                @if (currentRoleMenuList.Contains(menu3.ID))
+                                                {
+                                                    <input type="checkbox" id="menu_@menu3.ID" name="checkboxMenu" value="@menu3.ID" checked="checked"/>
+                                                }
+                                                else
+                                                { 
+                                                    <input type="checkbox" id="menu_@menu3.ID" name="checkboxMenu" value="@menu3.ID"/>
+                                                }
+                                                <label for="menu_@menu3.ID">@menu3.Name</label>
+                                                   <ul>
+                                                    @foreach (var menu4 in menu3.Menus.Where(a => a.SystemStatus == 0))
+                                                    { 
+                                                        <li><span style="font-size: 14px;">
+                                                            @if (currentRoleMenuList.Contains(menu4.ID))
+                                                            {
+                                                                <input type="checkbox" id="menu_@menu4.ID" name="checkboxMenu" value="@menu4.ID" checked="checked"/>
+                                                            }
+                                                            else
+                                                            { 
+                                                                <input type="checkbox" id="menu_@menu4.ID" name="checkboxMenu" value="@menu4.ID"/>
+                                                            }
+                                                            <label for="menu_@menu4.ID">@menu4.Name</label> </li>
+                                                    }
+                                                </ul>
+                                                
+                                                </li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+            </div>
+        </fieldset>
+        
+        
+        <div class="action">
+            <input type="submit" id="btnSubmit" value="保存" class="button" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="返回" onclick="location.href='@Url.Action("Role", "AccountMain", new { AccountMainID = ViewBag.AccountMainID })'" class="button" />
+        </div>
+    }
+</div>

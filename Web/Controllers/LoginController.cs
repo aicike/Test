@@ -119,37 +119,47 @@ namespace Web.Controllers
         public ActionResult UserLogin(string phone_email, string password)
         {
             IAccountModel accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-            //判断web项目是独立部署还是云部署
-            bool IsIndependence = System.Configuration.ConfigurationManager.AppSettings["IsIndependence"] == "true" ? true : false;
-            if (IsIndependence)
+            //第1步：判断web项目是独立部署还是云部署
+            if (SystemConst.IsIndependence)
             {
                 //独立部署
-                if (accountModel.List().Count() ==0)
+                //第2步：如果是独立部署，判断是否以集团为单位
+                if (SystemConst.IsOrganization)
                 {
-                    //没有账号，使用webconfig中账号
-                    string IndependenceAccount = System.Configuration.ConfigurationManager.AppSettings["IndependenceAccount"];
-                    Result r = new Result();
-                    var loginInfo = IndependenceAccount.Split('|');
-                    if (loginInfo.Length != 2)
+                    int count= accountModel.List().Count();
+                    if (count == 0)
                     {
-                        r.Error = "账号配置出错，请联系平台管理员。";
+                        //没有账号，使用webconfig中账号
+                        string IndependenceAccount = System.Configuration.ConfigurationManager.AppSettings["IndependenceAccount"];
+                        Result r = new Result();
+                        var loginInfo = IndependenceAccount.Split('|');
+                        if (loginInfo.Length != 2)
+                        {
+                            r.Error = "账号配置出错，请联系平台管理员。";
+                        }
+                        if (phone_email.Equals(loginInfo[0], StringComparison.CurrentCultureIgnoreCase) == false || password.Equals(loginInfo[1]) == false)
+                        {
+                            r.Error = "用户名或密码错误。";
+                        }
+                        if (r.HasError)
+                        {
+                            return JavaScript("LandWaitFor('login','WaitImg',2);" + AlertJS_NoTag(new Dialog(r.Error)));
+                        }
+                        else
+                        {
+                            var u = Url.RouteUrl("User", true, new RouteValueDictionary(new { action = "Index", controller = "Guide", HostName = "www" }));
+                            return JavaScript("window.location.href='" + u + "'");
+                        }
                     }
-                    if (phone_email.Equals(loginInfo[0], StringComparison.CurrentCultureIgnoreCase) == false || password.Equals(loginInfo[1]) == false)
-                    {
-                        r.Error = "用户名或密码错误。";
-                    }
-                    if (r.HasError)
-                    {
-                        return JavaScript("LandWaitFor('login','WaitImg',2);" + AlertJS_NoTag(new Dialog(r.Error)));
-                    }
-                    else
-                    {
-                        var u = Url.RouteUrl("User", true, new RouteValueDictionary(new { action = "Index", controller = "Guide", HostName = "www" }));
-                        return JavaScript("window.location.href='" + u + "'");
-                    }
+                }
+                else
+                {
+                    throw new Exception("独立部署，项目为单位，还未开发");
                 }
             }
             //云部署
+            //第3步：如果是云部署，判断是否以集团为单位
+            //todo:此处还未开发
             Result result = accountModel.Login(phone_email, password);
             if (result.HasError)
             {
@@ -173,12 +183,13 @@ namespace Web.Controllers
             //跳转回分站
             if (Request.QueryString["BackURL"] != null)
             {
-                return JavaScript("window.location.href='" + Server.UrlDecode(Request.QueryString["BackURL"]) + "'");
+                var u= Url.Action("Index", "SSOServiceRedirect", new {Token=tokenValue, BackURL = Server.UrlDecode(Request.QueryString["BackURL"]) });
+                //var u = Server.UrlDecode(Request.QueryString["BackURL"]);
+                return JavaScript("window.location.href='" + u + "'");
             }
 
             #endregion
 
-            //var url = Url.RouteUrl("User", true, new { action = "Index", controller = "Home", HostName = account.HostName });
             var url = Url.RouteUrl("User", true, new RouteValueDictionary(new { action = "Index", controller = "Home", HostName = account.HostName }));
             return JavaScript("window.location.href='" + url + "'");
         }

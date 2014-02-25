@@ -248,7 +248,6 @@ namespace Business
                     return result;
                 }
             }
-            account.HeadImagePath = ""; //SystemConst.Business.DefaultHeadImage;
             account.AccountStatusID = LookupFactory.GetLookupOptionIdByToken(EnumAccountStatus.Enabled);
             account.LoginPwd = DESEncrypt.Encrypt(account.LoginPwd);
             account.IsActivated = true;

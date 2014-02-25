@@ -71,7 +71,7 @@ namespace Web.Controllers
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             var result = roleModel.Get(id);
             result.IsCanDelete.NotAuthorizedPage();
-           
+
 
             ViewBag.HostName = LoginAccount.HostName;
 
@@ -96,7 +96,7 @@ namespace Web.Controllers
         public ActionResult Delete(int id)
         {
             IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
-            var result = roleModel.DelteByIDAndAMID(id,LoginAccount.CurrentAccountMainID);
+            var result = roleModel.DelteByIDAndAMID(id, LoginAccount.CurrentAccountMainID);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));
@@ -112,7 +112,7 @@ namespace Web.Controllers
         public ActionResult Power(int id)
         {
 
-            IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);   
+            IRoleModel roleModel = Factory.Get<IRoleModel>(SystemConst.IOC_Model.RoleModel);
             IMenuModel menuModel = Factory.Get<IMenuModel>(SystemConst.IOC_Model.MenuModel);
             IMenuOptionModel menuOptionModel = Factory.Get<IMenuOptionModel>(SystemConst.IOC_Model.MenuOptionModel);
             //当前角色
@@ -124,7 +124,7 @@ namespace Web.Controllers
 
             //管理员角色所操作的菜单
             var AdminRoleMenuList = menuModel.GetAllMenuByRoleID(AdminPID).Select(a => a.ID).ToList();
-            
+
 
             //管理员角色所操作的功能
             var AdminRoleOptionList = menuOptionModel.GetAllOptionByRoleID(AdminPID).Select(a => a.ID).ToList();
@@ -178,7 +178,7 @@ namespace Web.Controllers
             try
             {
                 IRoleMenuModel roleMenuModel = Factory.Get<IRoleMenuModel>(SystemConst.IOC_Model.RoleMenuModel);
-                roleMenuModel.BindPermission(0,roleID, menuIDArray, optionIDArray,null);
+                roleMenuModel.BindPermission(0, roleID, menuIDArray, optionIDArray, null);
             }
             catch (Exception ex)
             {

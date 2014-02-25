@@ -19,6 +19,6 @@ namespace MicroSite_Web.Controllers
                 backURL = backURL.Replace("$Token$", tokenCookie.Values["Value"].ToString());
             }
             return Redirect(backURL);
-        }
+        } 
     }
 }

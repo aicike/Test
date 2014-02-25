@@ -12,6 +12,8 @@ namespace Interface
 
         List<Role> GetRoleList(int? accountMainID);
 
+        List<Role> GetRoleAllList(int? accountMainID);
+
         List<Role> GetRoleListNoaID(int accountMainID, int AccountID);
 
         List<Role> GetRoleListAll(int? accountMainID);

@@ -60,11 +60,15 @@ namespace System.Web.Mvc
         public static string Content(this UrlHelper Url, string contentPath, string newFilePath)
         {
             string filePath = HttpContext.Current.Server.MapPath(contentPath);
+            string url = null;
             if (File.Exists(filePath) == false)
             {
-                return newFilePath;
+                url = Url.Content(newFilePath);
             }
-            return contentPath;
+            else {
+                url = Url.Content(contentPath);
+            }
+            return url;
         }
     }
 }

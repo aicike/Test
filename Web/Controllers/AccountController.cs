@@ -86,6 +86,8 @@ namespace Web.Controllers
             ViewData["Roles"] = selectListRoles;
             ViewBag.HostName = LoginAccount.HostName;
             ViewBag.AccountMainID = LoginAccount.CurrentAccountMainID;
+            int sysRoleID = roleModel.GetRoleIscandelete(LoginAccount.CurrentAccountMainID);
+            ViewBag.AdminRoleID = sysRoleID;
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "账号管理-添加账号", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
@@ -145,6 +147,8 @@ namespace Web.Controllers
             string webTitle = string.Format(SystemConst.Business.WebTitle, "账号管理-修改账号", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
             ViewBag.RoleList = roles;
+            int sysRoleID = roleModel.GetRoleIscandelete(LoginAccount.CurrentAccountMainID);
+            ViewBag.AdminRoleID = sysRoleID;
             return View(entity);
         }
 

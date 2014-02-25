@@ -217,6 +217,7 @@
     <Compile Include="Controllers\WebRequest_AccountController.cs" />
     <Compile Include="Controllers\WebRequest_AutoMessageController.cs" />
     <Compile Include="Controllers\WebRequest_MilkController.cs" />
+    <Compile Include="Controllers\SSOServiceRedirectController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -971,6 +972,15 @@
       </SubType>
     </Content>
     <Content Include="Views\AccountMain\Index.cshtml" />
+    <Content Include="Views\AccountMain\Add.cshtml" />
+    <Content Include="Views\AccountMain\Edit.cshtml" />
+    <Content Include="Views\AccountMain\Role.cshtml" />
+    <Content Include="Views\AccountMain\AddRole.cshtml" />
+    <Content Include="Views\AccountMain\EditRole.cshtml" />
+    <Content Include="Views\AccountMain\PowerRole.cshtml" />
+    <Content Include="Views\AccountMain\Account.cshtml" />
+    <Content Include="Views\AccountMain\AddAccount.cshtml" />
+    <Content Include="Views\AccountMain\EditAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

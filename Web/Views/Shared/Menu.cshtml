@@ -9,12 +9,33 @@
         menuList = menuModel.GetMenuByRoleID(account.RoleIDs);
         HostName = account.HostName;
     }
-    //if (accountMainOrganization != null)
-    //{
+    var accountMainModel = Injection.Factory.Get<Interface.IAccountMainModel>(Poco.SystemConst.IOC_Model.AccountMainModel);
+    if (account != null)
+    {
+        var accountMain = accountMainModel.Get(account.CurrentAccountMainID);
+        if (accountMain != null && accountMain.IsOrganization.HasValue && accountMain.IsOrganization.Value)
+        {
+            /*
+             * 集团权限
+             * ----------服务---------
+             * 1web基本服务，2售楼部服务 ,3微商城
+             * ----------菜单---------
+             * 1首页，
+             * 5项目，21项目管理
+             * 8设置，29账号信息
+             * -----------------------
+             */
 
-    //    menuList = menuModel.GetMenuForOrganization();
-    //    HostName = "www";
-    //}
+            string[] menuTokenArray = new string[] { "Token_Home", "Token_Project", "Token_Set", "Token_Project_M2", "Token_Account_I" };
+            int[] menuIDArray = menuModel.List().Where(a => menuTokenArray.Contains(a.Token)).Select(a => a.ID).ToArray();
+            var list = menuList.Where(a => menuIDArray.Contains(a.ID)).ToList();
+            foreach (var item in list)
+            {
+                item.Menus = item.Menus.Where(a => menuIDArray.Contains(a.ID)).ToList();
+            }
+            menuList = list;
+        }
+    }
 }
 @{
     <ul class="menu">

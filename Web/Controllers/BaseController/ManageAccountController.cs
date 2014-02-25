@@ -68,7 +68,8 @@ namespace Controllers
                         {
                             //令牌正确
                             Session["Token"] = o;
-                            Response.Write("恭喜，令牌存在，您被授权访问该页面！");
+                            var account = Newtonsoft.Json.JsonConvert.DeserializeObject<Account>(o.ToString());
+                            LoginAccount = account;
                         }
                         else
                         {

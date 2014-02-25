@@ -39,7 +39,7 @@ namespace Web.Areas.System.Controllers
             ViewBag.dicDT = dicDT;
 
             IReportFormPowerModel ReportModel = Factory.Get<IReportFormPowerModel>(SystemConst.IOC_Model.ReportFormPowerModel);
-            ViewBag.PowerIDs = ReportModel.GetReportByAMID(accountMainId).Select(a=>a.EunmReportID).ToList();
+            ViewBag.PowerIDs = ReportModel.GetReportByAMID(accountMainId).Select(a => a.EnumReportID).ToList();
 
             return View();
         }

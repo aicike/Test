@@ -13,6 +13,10 @@ namespace Poco
 
         public int SystemStatus { get; set; }
 
+        [Required(ErrorMessage = "Token")]
+        [StringLength(100, ErrorMessage = "长度小于100")]
+        public string Token { get; set; }
+
         [Display(Name = "描述")]
         [Required(ErrorMessage = "请输入描述")]
         [StringLength(20, ErrorMessage = "长度小于20")]

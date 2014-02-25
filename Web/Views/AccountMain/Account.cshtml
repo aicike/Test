@@ -1,0 +1,148 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.AccountMain;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.AccountMain;
+}
+@model PagedList<Poco.Account>
+@{
+    var accountMain = ViewBag.AccountMain as Poco.AccountMain;
+    var roleList = ViewBag.RoleList as List<Poco.Role>;
+    var accountAdminList = (ViewBag.AccountAdminList as List<Poco.Account>) ?? new List<Poco.Account>();
+    var roleID = (int)ViewBag.RoleID;
+}
+<div class="title">
+    @Html.Partial("SitePath")</div>
+<div class="bodyLeft">
+    <div class="option">@Html.ActionLink("添加", "AddAccount", "AccountMain", new { HostName = ViewBag.HostName, accountMainID = accountMain.ID }, new { @class = "button" }, true)</div>
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th style="width: 100px;">
+                头像
+            </th>
+            <th style="width: 100px;">
+                名称
+            </th>
+            <th style="width: 150px;">
+                电话
+            </th>
+            <th style="width: 100px;">
+                状态
+            </th>
+            <th style="width: 150px;">
+                操作
+            </th>
+        </tr>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @if (string.IsNullOrEmpty(item.HeadImagePath))
+                    {
+                        <img id="imgLogo" style="max-width:80px;max-height:80px;" src="@Url.Content("~/Images/default_Avatar.png")" />
+                    }
+                    else
+                    {                    
+                        <img id="imgLogo" style="max-width:80px;max-height:80px;" src="@Url.Content(@item.HeadImagePath ?? "")" />
+                    }
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Phone
+                </td>
+                <td class="operation">
+                    @if (@item.AccountStatus.Token == Poco.Enum.EnumAccountStatus.Disabled.ToString())
+                    {
+                        @Ajax.ActionLink(@item.AccountStatus.Value, "SetAccountStatus", "AccountMain", new
+                   {
+                       HostName = ViewBag.HostName,
+                       accountMainID = accountMain.ID,
+                       accountID = item.ID,
+                       status = Poco.Enum.EnumAccountStatus.Enabled.ToString()
+                   },
+                        new AjaxOptions()
+                        {
+                            UpdateTargetId = "alert",
+                            OnBegin = "return AppDelete('确定要启用?','" + Url.Action("SetAccountStatus", "AccountMain",
+                                new
+                                {
+                                    HostName = ViewBag.HostName,
+                                    accountMainID = accountMain.ID,
+                                    accountID = item.ID,
+                                    status = Poco.Enum.EnumAccountStatus.Enabled.ToString()
+                                }) + "',null)"
+                        })
+                    }
+                    else
+                    {
+                        @Ajax.ActionLink(@item.AccountStatus.Value, "SetAccountStatus", "AccountMain", new
+                   {
+                       HostName = ViewBag.HostName,
+                       accountMainID = accountMain.ID,
+                       accountID = item.ID,
+                       status = Poco.Enum.EnumAccountStatus.Disabled.ToString()
+                   },
+                        new AjaxOptions()
+                        {
+                            UpdateTargetId = "alert",
+                            OnBegin = "return AppDelete('确定要禁用?','" + Url.Action("SetAccountStatus", "AccountMain",
+                                new
+                                {
+                                    HostName = ViewBag.HostName,
+                                    accountMainID = accountMain.ID,
+                                    accountID = item.ID,
+                                    status = Poco.Enum.EnumAccountStatus.Disabled.ToString()
+                                }) + "',null)"
+                        })
+                    }
+                </td>
+                <td class="operation">
+                    @Html.ActionLink("修改", "EditAccount", "AccountMain", new { HostName = ViewBag.HostName, accountMainID = accountMain.ID, id = item.ID }, null)
+                    @Ajax.ActionLink("删除", "DeleteAccount", "AccountMain", new { HostName = ViewBag.HostName, accountMainID = accountMain.ID, id = item.ID, }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("DeleteAccount", "AccountMain", new { HostName = ViewBag.HostName, accountMainID = accountMain.ID, id = item.ID }) + "',null)" })
+                    @Ajax.ActionLink("重置密码", "ResetPwd", "AccountMain", new { HostName = ViewBag.HostName, accountMainID = accountMain.ID, id = item.ID, mail = item.Email }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定要重置密码?','" + Url.Action("ResetPwd", "AccountMain", new { HostName = ViewBag.HostName, accountMainID = accountMain.ID, id = item.ID, mail = item.Email }) + "',null)" })
+                </td>
+            </tr>
+            }
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
+<div class="bodyRight">
+    <ul class="ulList">
+        @foreach (var item in roleList)
+        {
+            if (item.ID == roleID)
+            {
+               
+            <li class="select"><a href="@Url.Action("Account", "AccountMain", new { HostName = ViewBag.HostName, accountMainID = accountMain.ID, roleID = item.ID, index = 0 })">@item.Name&nbsp;(@item.Account_Roles.Count())</a></li>
+                
+            }
+            else
+            {  
+            <li><a href="@Url.Action("Account", "AccountMain", new { HostName = ViewBag.HostName, accountMainID = accountMain.ID, roleID = item.ID, index = 0 })">@item.Name&nbsp;(@item.Account_Roles.Count())</a></li>
+            }
+        }
+    </ul>
+</div>
+<div style="clear: both">
+</div>

@@ -17,9 +17,25 @@ namespace Interface
 
         Result Delete_Permission(int id, int loginSystemUserID);
         
+        /// <summary>
+        /// 平台添加方法
+        /// </summary>
         Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile,HttpPostedFileBase AppLogoImageFile);
 
+        /// <summary>
+        /// 组织，集团自己添加方法
+        /// </summary>
+        Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile);
+
+        /// <summary>
+        /// 平台修改方法
+        /// </summary>
         Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, int loginSystemUserID = 0);
+
+        /// <summary>
+        /// 组织，集团自己修改方法
+        /// </summary>
+        Result Edit(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile);
 
         Result Edit_ByAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile);
 
@@ -33,7 +49,15 @@ namespace Interface
         /// <returns></returns>
         bool CheckPropertyRandomCode(int AccountMainID, string RandomCode);
 
+        /// <summary>
+        /// 平台修改方法
+        /// </summary>
         Result ChangeStatus_Permission(int accountMainID, EnumAccountStatus status, int loginSystemUserID);
+
+        /// <summary>
+        /// 组织，集团自己修改方法
+        /// </summary>
+        Result ChangeStatus(int accountMainID, EnumAccountStatus status);
 
         /// <summary>
         /// 严查是否有权限超过数据

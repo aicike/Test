@@ -1,10 +1,9 @@
 ﻿@{
-    
+  
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
-    ViewBag.Menu2 = Poco.SystemConst.Menu.Account;
-    ViewBag.Menu3 = Poco.SystemConst.Menu.Account;
+    ViewBag.Menu2 = Poco.SystemConst.Menu.AccountMain;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.AccountMain;
     var roleList = ViewBag.RoleList as List<Poco.Role>;
-    var roleids = ViewData["SelRoles"] as List<int>;
 }
 @section head{
     <script src="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.js")" type="text/javascript"></script>
@@ -12,55 +11,54 @@
     <link href="@Url.Content("~/Scripts/uploadify/uploadify.css")" rel="stylesheet" type="text/css" />
     <script src="@Url.Content("~/Scripts/uploadify/jquery.uploadify.js")" type="text/javascript"></script>
     <script type="text/javascript">
-        var isTruePhone = true;
-        var isTrue = true;
+        var isCommit = true; //验证只能连续点击一次添加按钮
         var Cnt = 0;
         var UpImgUrl = '@Url.Action("UpImg", "Ajax", new { HostName = ViewBag.HostName })';
         $(function () {
-              var jcrop_api, boundx, boundy;
-              function updatePreview(c)
-              {
-                    if (parseInt(c.w) > 0)
-                    {
-                      var rx = 120 / c.w;
-                      var ry = 120 / c.h;
+            var CheckIsExistAdminUrl = '@Url.Action("CheckIsExistAdmin", "AccountMain")';
 
-                      $('#imgLogo').css({
+            var jcrop_api, boundx, boundy;
+
+            function updatePreview(c) {
+                if (parseInt(c.w) > 0) {
+                    var rx = 120 / c.w;
+                    var ry = 120 / c.h;
+
+                    $('#imgLogo').css({
                         width: Math.round(rx * boundx) + 'px',
                         height: Math.round(ry * boundy) + 'px',
                         marginLeft: '-' + Math.round(rx * c.x) + 'px',
                         marginTop: '-' + Math.round(ry * c.y) + 'px'
-                      });
+                    });
 
-                      var rx2 = 80 / c.w;
-                      var ry2 = 80 / c.h;
-                      $('#imgLogo2').css({
+                    var rx2 = 80 / c.w;
+                    var ry2 = 80 / c.h;
+                    $('#imgLogo2').css({
                         width: Math.round(rx2 * boundx) + 'px',
                         height: Math.round(ry2 * boundy) + 'px',
                         marginLeft: '-' + Math.round(rx2 * c.x) + 'px',
                         marginTop: '-' + Math.round(ry2 * c.y) + 'px'
-                      });
+                    });
 
-                      var rx3 = 32 / c.w;
-                      var ry3 = 32 / c.h;
-                      $('#imgLogo3').css({
+                    var rx3 = 32 / c.w;
+                    var ry3 = 32 / c.h;
+                    $('#imgLogo3').css({
                         width: Math.round(rx3 * boundx) + 'px',
                         height: Math.round(ry3 * boundy) + 'px',
                         marginLeft: '-' + Math.round(rx3 * c.x) + 'px',
                         marginTop: '-' + Math.round(ry3 * c.y) + 'px'
-                      });
-                    }
-                    $('#x1').val(c.x);
-                    $('#y1').val(c.y);
-                    $('#w').val(c.w);
-                    $('#h').val(c.h);
-                     //获取当前显示图片高宽
-                    $('#tw').val($("#imgSel").width());
-                    $('#th').val($("#imgSel").height()); 
-              };
+                    });
+                }
+                $('#x1').val(c.x);
+                $('#y1').val(c.y);
+                $('#w').val(c.w);
+                $('#h').val(c.h);
+                //获取当前显示图片高宽
+                $('#tw').val($("#imgSel").width());
+                $('#th').val($("#imgSel").height());
+            };
 
-            var CheckIsExistAdminUrl = '@Url.Action("CheckIsExistAdmin", "AccountManage")';
-            
+
             $("#file_upload").uploadify({
                 height: 30,
                 swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
@@ -80,10 +78,7 @@
                         });
                         return;
                     }
-
-
-                     if(Cnt>0)
-                    {
+                    if (Cnt > 0) {
                         jcrop_api.destroy();
                         $('#x1').val("0");
                         $('#y1').val("0");
@@ -91,21 +86,20 @@
                         $('#h').val("0");
                         $('#tw').val("0");
                         $('#th').val("0");
-                    } 
-                    $("#imgSel").attr('src',data);
+                    }
+                    $("#imgSel").attr('src', data);
                     $("#imgLogo").attr('src', data);
                     $("#imgLogo2").attr('src', data);
                     $("#imgLogo3").attr('src', data);
 
+                    $("#Account_HeadImagePath").val(data);
 
-                    $("#HeadImagePath").val(data);
-                           
-                            
+
                     $('#imgSel').Jcrop({
-                        onChange:   updatePreview,
-                        onSelect:   updatePreview,
+                        onChange: updatePreview,
+                        onSelect: updatePreview,
                         aspectRatio: 1
-                        },function(){
+                    }, function () {
                         // Use the API to get the real image size
                         var bounds = this.getBounds();
                         boundx = bounds[0];
@@ -118,31 +112,13 @@
                 }
             });
 
-            var isAdmin=false;
-            $(".checkbox_roleid").change(function(){
-                isAdmin=false;
-                $(".checkbox_roleid:checked").each(function (i, n) {
-                    var tempID = $(n).attr("value");
-                    if (tempID == @ViewBag.AdminRoleID){
-                        $.get(CheckIsExistAdminUrl, {accountMainID:@ViewBag.AccountMainID,accountID:@Model.ID}, function (result) {
-                            if (result.length > 0) {
-                                isAdmin=true;
-                                eval(result);
-                            } else {
-
-                            }
-                        });
-                    }
-                });
-            });
-
             //唯一验证
-            $("#Email").blur(function () {
+            $("#Account_Email").blur(function () {
                 checkEmail();
             });
 
-             //唯一验证 电话
-            $("#Phone").blur(function () {
+            //唯一验证 电话
+            $("#Account_Phone").blur(function () {
                 checkPhone();
             });
 
@@ -154,6 +130,25 @@
                 }
             });
 
+            var isAdmin=false;
+            $(".checkbox_roleid").change(function(){
+                isAdmin=false;
+                $(".checkbox_roleid:checked").each(function (i, n) {
+                    var tempID = $(n).attr("value");
+                    if (tempID == @ViewBag.AdminRoleID){
+                        $.get(CheckIsExistAdminUrl, {accountMainID:@ViewBag.AccountMainID}, function (result) {
+                            if (result.length > 0) {
+                                isAdmin=true;
+                                eval(result);
+                            } else {
+
+                            }
+                        });
+                    }
+                });
+            });
+
+
             $("#btnSubmit").click(function () {
                 if (checkEmail() == false) {
                     return false;
@@ -161,6 +156,7 @@
                 if (checkPhone() == false) {
                     return false;
                 }
+
                 var roleidlength = $(".checkbox_roleid:checked").length;
                 if (roleidlength == 0) {
                     JAlert({
@@ -174,7 +170,7 @@
                 var hasError=false;
                 $(".checkbox_roleid:checked").each(function (i, n) {
                     var tempID = $(n).attr("value");
-                     if (tempID == @ViewBag.AdminRoleID&&isAdmin){
+                    if (tempID == @ViewBag.AdminRoleID&&isAdmin){
                         JAlert({
                                 Message: "只能有一个有效的管理员账号，请选择分配其他角色。",
                                 DialogType: "Ok",
@@ -208,7 +204,7 @@
                                 name = $(n).attr("nv");
                             });
                             if (uids.length > 0) {
-                                $("#ParentAccountID").val(uids);
+                                $("#Account_ParentAccountID").val(uids);
                                 $("#parentAccount").val(name);
                                 $(this).dialog("close");
                             } else {
@@ -225,14 +221,13 @@
 
             $("#btnClear").click(function () {
                 $("#parentAccount").val("");
-                $("#ParentAccountID").val("");
+                $("#Account_ParentAccountID").val("");
                 $(":radio").attr("checked", false)
             });
         });
 
-        
         function checkEmail() {
-            var values = $("#Email").val();
+            var values = $("#Account_Email").val();
             if (values != "" && values != undefined) {
                 var YZUrl = '@Url.Action("OnlyValidation", "Ajax", new { Area = "", HostName = "" })';
                 $.post(YZUrl, { tableName: "Account", field: "Email", value: values }, function (result) {
@@ -252,7 +247,7 @@
         }
 
         function checkPhone() {
-            var values = $("#Phone").val();
+            var values = $("#Account_Phone").val();
 
             if (values != "" && values != undefined) {
                 var YZUrl = '@Url.Action("OnlyValidation", "Ajax", new { Area = "", HostName = "" })';
@@ -271,6 +266,8 @@
                 });
             }
         }
+
+        
     </script>
     <style type="text/css">
         .middle-out
@@ -303,11 +300,11 @@
         }
     </style>
 }
-@model Poco.Account
+@model Poco.Account_AccountMain
 <div class="title">
     @Html.Partial("Menu3")</div>
 <div class="body">
-    @using (Html.BeginForm("Edit", "Account", new { HostName = @ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("AddAccount", "AccountMain", new { HostName = @ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         
         <fieldset style="border: 1px solid #E7E7E7;">
@@ -322,36 +319,18 @@
                         </div>
                     </td>
                     <td valign="top">
-                        @if (string.IsNullOrEmpty(Model.HeadImagePath))
-                        {
-                            <div style="width: 120px; height: 120px; overflow: hidden;">
-                                <img id="imgLogo" src="@Url.Content("~/Images/default_avatar.png")" style="width:120px; height:120px"/>
-                            </div>
-                            <span style="font-size: 12px; color: #979797">(120*120)</span>
-                            <div style="width: 80px; height: 80px; overflow: hidden; margin-top: 17px">
-                                <img id="imgLogo2" src="@Url.Content("~/Images/default_avatar.png")" style="width:80px; height:80px"/>
-                            </div>
-                            <span style="font-size: 12px; color: #979797">(80*80)</span>
-                            <div style="width: 32px; height: 32px; overflow: hidden; margin-top: 17px">
-                                <img id="imgLogo3" src="@Url.Content("~/Images/default_avatar.png")" style="width:32px; height:32px"/>
-                            </div>
-                            <span style="font-size: 12px; color: #979797">(32*32)</span>
-                        }
-                        else
-                        { 
-                            <div style="width: 120px; height: 120px; overflow: hidden;">
-                                <img id="imgLogo" src="@Url.Content(Model.HeadImagePath ?? "~/Images/default_avatar.png")" style="width:120px; height:120px"/>
-                            </div>
-                            <span style="font-size: 12px; color: #979797">(120*120)</span>
-                            <div style="width: 80px; height: 80px; overflow: hidden; margin-top: 17px">
-                                <img id="imgLogo2" src="@Url.Content(Model.HeadImagePath ?? "~/Images/default_avatar.png")" style="width:80px; height:80px"/>
-                            </div>
-                            <span style="font-size: 12px; color: #979797">(80*80)</span>
-                            <div style="width: 32px; height: 32px; overflow: hidden; margin-top: 17px">
-                                <img id="imgLogo3" src="@Url.Content(Model.HeadImagePath ?? "~/Images/default_avatar.png")" style="width:32px; height:32px"/>
-                            </div>
-                            <span style="font-size: 12px; color: #979797">(32*32)</span>
-                        }
+                        <div style="width: 120px; height: 120px; overflow: hidden;">
+                            <img id="imgLogo" src="@Url.Content("/Images/default_Avatar.png")" style="width:120px; height:120px"/>
+                        </div>
+                        <span style="font-size: 12px; color: #979797">(120*120)</span>
+                        <div style="width: 80px; height: 80px; overflow: hidden; margin-top: 17px">
+                            <img id="imgLogo2" src="@Url.Content("/Images/default_Avatar.png")" style="width:80px; height:80px"/>
+                        </div>
+                        <span style="font-size: 12px; color: #979797">(80*80)</span>
+                        <div style="width: 32px; height: 32px; overflow: hidden; margin-top: 17px">
+                            <img id="imgLogo3" src="@Url.Content("/Images/default_Avatar.png")" style="width:32px; height:32px"/>
+                        </div>
+                        <span style="font-size: 12px; color: #979797">(32*32)</span>
                         <div style="color: Red; font-size: 14px">
                             提示：请上传小于5MB的图片
                         </div>
@@ -360,8 +339,8 @@
                 <tr>
                     <td colspan="2">
                         <input id="file_upload" name="file_upload" type="file" multiple="false" />
-                        @Html.HiddenFor(a => a.HeadImagePath)
-                        @Html.ValidationMessageFor(a => a.HeadImagePath)
+                        @Html.HiddenFor(a => a.Account.HeadImagePath)
+                        @Html.ValidationMessageFor(a => a.Account.HeadImagePath)
                         <div style="display: none">
                             X1
                             <input type="text" size="4" id="x1" name="x1" value="0" />
@@ -388,9 +367,10 @@
                     <td class="tdTitle">
                         <span class="Identification">*</span> 名称
                     </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.ID)@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.IsActivated)@Html.HiddenFor(a => a.LoginPwd)@Html.HiddenFor(a => a.ParentAccountID)
+                    <td class="tdField">@Html.TextBoxFor(a => a.Account.Name)
+                        <input type="hidden" id="AccountMainID" name="AccountMainID" value="@ViewBag.AccountMainID" />
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.Name)
+                    <td>@Html.ValidationMessageFor(a => a.Account.Name)
                         <div style="display: none">@Html.ValidationSummary()</div>
                     </td>
                 </tr>
@@ -398,9 +378,9 @@
                     <td>
                         <span class="Identification">*</span> 电话
                     </td>
-                    <td>@Html.TextBoxFor(a => a.Phone)
+                    <td>@Html.TextBoxFor(a => a.Account.Phone)
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.Phone)
+                    <td>@Html.ValidationMessageFor(a => a.Account.Phone)
                     </td>
                 </tr>
                 <tr>
@@ -410,15 +390,7 @@
                     <td>
                         @foreach (var item in ViewData["Roles"] as SelectList)
                         {
-                            if (roleids.Contains(Convert.ToInt32(item.Value)))
-                            { 
-                            <input class="checkbox_roleid" type="checkbox" id="cb_role_@item.Value" value="@item.Value" checked="checked">
-                            }
-                            else
-                            { 
-                            <input class="checkbox_roleid" type="checkbox" id="cb_role_@item.Value" value="@item.Value">
-                            }
-                            <label for="cb_role_@item.Value" style="margin-right:10px">@item.Text</label>
+                            <input class="checkbox_roleid" type="checkbox" id="cb_role_@item.Value" value="@item.Value"><label for="cb_role_@item.Value" style="margin-right:10px">@item.Text</label>
                         }
                         <input type="hidden" name="roleIDs" id="roleIDs" />
                     </td>
@@ -429,9 +401,9 @@
                     <td>
                         邮箱
                     </td>
-                    <td>@Html.TextBoxFor(a => a.Email, new { val = Model.ID })
+                    <td>@Html.TextBoxFor(a => a.Account.Email)
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.Email)
+                    <td>@Html.ValidationMessageFor(a => a.Account.Email)
                     </td>
                 </tr>
                 <tr>
@@ -439,26 +411,23 @@
                         <span class="Identification"></span>上级账号
                     </td>
                     <td>
-                        @if (Model.ParentAccountID.HasValue)
-                        { 
-                            <input type="text" id="parentAccount" readonly="readonly" value="@Model.ParentAccount.Name" />
-                            <input type="hidden" id="ParentAccountID" name="ParentAccountID" value="@Model.ParentAccountID" />
-                        }
-                        else
-                        { 
-                            <input type="text" id="parentAccount" readonly="readonly" />
-                            <input type="hidden" id="ParentAccountID" name="ParentAccountID" value="0" />
-                        }
+                        <input type="text" id="parentAccount" readonly="readonly" />
+                        <input type="hidden" id="Account_ParentAccountID" name="Account.ParentAccountID"
+                            value="0" />
                     </td>
                     <td>
-                        @Html.ValidationMessageFor(a => a.ParentAccountID)
+                        @Html.ValidationMessageFor(a => a.Account.ParentAccountID)
                     </td>
                 </tr>
             </table>
         </fieldset>
         <div class="action">
-            <input type="submit" id="btnSubmit" value="保存" class="button" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
+            <input type="submit" id="btnSubmit" value="保存" class="button" style="margin-right: 20px" /><input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
         </div>
+        <script>
+
+           
+        </script>
     }</div>
 <div id="dialogUser" title="选择账号" style="display: none; z-index: 99999;">
     <ul class="ulUser">
@@ -472,17 +441,7 @@
                 <div class="ulUserList">
                     @foreach (var user in item.Account_Roles)
                     {
-                        if (user.Account.ID != Model.ID)
-                        {
-                            if (Model.ParentAccountID.HasValue && Model.ParentAccountID.Value == user.Account.ID)
-                            { 
-                        <input type="radio" id="cb_@user.Account.ID" value="@user.Account.ID" name="parentAccount" nv="@user.Account.Name" checked="checked" />
-                            }
-                            else
-                            { 
-                        <input type="radio" id="cb_@user.Account.ID" value="@user.Account.ID" name="parentAccount" nv="@user.Account.Name" />
-                            }<label for="cb_@user.Account.ID">@user.Account.Name</label>
-                        }
+                        <input type="radio" id="cb_@user.ID" value="@user.ID" name="parentAccount" nv="@user.Account.Name" /><label for="cb_@user.ID">@user.Account.Name</label>
                     }
                 </div>
             </li>

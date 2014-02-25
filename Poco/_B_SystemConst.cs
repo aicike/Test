@@ -24,6 +24,16 @@ namespace Poco
         /// </summary>
         public static string IntegrationWebUrl = System.Configuration.ConfigurationManager.AppSettings["IntegrationWebUrl"];
 
+        /// <summary>
+        /// 判断项目是否是独立部署（true），还是云部署（false），
+        /// </summary>
+        public static bool IsIndependence = System.Configuration.ConfigurationManager.AppSettings["IsIndependence"] == "true" ? true : false;
+
+        /// <summary>
+        /// 如果是独立部署，判断是否以集团为单位（true），还是以项目为单位（false）
+        /// </summary>
+        public static bool IsOrganization = System.Configuration.ConfigurationManager.AppSettings["IsOrganization"] == "true" ? true : false;
+
         public class Business
         {
             private Business() { }

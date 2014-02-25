@@ -26,7 +26,7 @@ namespace Business
             //绑定新菜单
             if (RIDs != null && RIDs.Length > 0)
             {
-                StringBuilder addMenuListStringBuilder = new StringBuilder("INSERT dbo.ReportFormPower ( SystemStatus ,AccountMainID , EunmReportID ) ");
+                StringBuilder addMenuListStringBuilder = new StringBuilder("INSERT dbo.ReportFormPower ( SystemStatus ,AccountMainID , EnumReportID ) ");
                 foreach (var item in RIDs)
                 {
                     addMenuListStringBuilder.Append(string.Format(" SELECT 0,{0},{1} UNION ALL", AMID, item));

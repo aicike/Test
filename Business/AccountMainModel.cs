@@ -346,6 +346,9 @@ namespace Business
             return result;
         }
 
+        /// <summary>
+        /// 平台添加方法
+        /// </summary>
         [Transaction]
         public Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, int loginSystemUserID = 0)
         {
@@ -484,10 +487,144 @@ namespace Business
             {
                 throw ex;
             }
-            if (result.HasError == false)
+            return result;
+        }
+
+        /// <summary>
+        /// 组织或机构，自己修改项目方法
+        /// </summary>
+        [Transaction]
+        public Result Edit(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile)
+        {
+            var result = base.Edit(accountMain);
+            if (result.HasError == false && AppLogoImageFile != null)
             {
-                //IAccountMainExpandInfoModel accountMainExpandInfoModel = Factory.Get<IAccountMainExpandInfoModel>(SystemConst.IOC_Model.AccountMainExpandInfoModel);
-                //result = accountMainExpandInfoModel.Edit(accountMain.AccountMainExpandInfo);
+
+                var AppLogoImageAbsolute = HttpContext.Current.Server.MapPath(accountMain.AppLogoImagePath);
+                if (File.Exists(AppLogoImageAbsolute))
+                {
+                    File.Delete(AppLogoImageAbsolute);
+                }
+                CommonModel com2 = new CommonModel();
+                var LastName = com2.CreateRandom("", 5) + AppLogoImageFile.FileName.GetFileSuffix();
+                var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                var path = HttpContext.Current.Server.MapPath(string.Format("~/File/{0}", accountMain.ID));
+                var basePath = string.Format("{0}/{1}", path, "Base");
+                var appimgName = string.Format("{0}_APP{1}", token, LastName);
+                var appimgPath = string.Format("{0}/{1}", basePath, appimgName);
+
+                int dataLengthToRead = (int)AppLogoImageFile.InputStream.Length;//获取下载的文件总大小
+                byte[] buffer = new byte[dataLengthToRead];
+
+
+                int r = AppLogoImageFile.InputStream.Read(buffer, 0, dataLengthToRead);//本次实际读取到字节的个数
+                Stream tream = new MemoryStream(buffer);
+                Image img = Image.FromStream(tream);
+
+                Tool.SuperGetPicThumbnail(img, appimgPath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                accountMain.AppLogoImagePath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + appimgName;
+                result = base.Edit(accountMain);
+            }
+            if (result.HasError == false && LogoImagePath != null)
+            {
+                try
+                {
+                    //删除原logo及缩略图
+                    var path = HttpContext.Current.Server.MapPath(string.Format("~/File/{0}", accountMain.ID));
+                    var basePath = string.Format("{0}/{1}", path, "Base");
+                    var logoImageAbsolutePath = HttpContext.Current.Server.MapPath(accountMain.LogoImagePath);
+                    if (File.Exists(logoImageAbsolutePath))
+                    {
+                        File.Delete(logoImageAbsolutePath);
+                    }
+                    var logoImageThumbnailPath = HttpContext.Current.Server.MapPath(accountMain.LogoImageThumbnailPath);
+                    if (File.Exists(logoImageThumbnailPath))
+                    {
+                        File.Delete(logoImageThumbnailPath);
+                    }
+                    CommonModel com = new CommonModel();
+                    var LastName = com.CreateRandom("", 5) + LogoImagePath.FileName.GetFileSuffix();
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var height = 58;
+                    var imageName = string.Format("{0}_{1}", token, LastName);
+                    var imageThumbnailName = string.Format("{0}_{1}_{2}", token, height, LastName);
+                    var appimgName = string.Format("{0}_{1}_APP{2}", token, height, LastName);
+                    var imagePath = string.Format("{0}/{1}", basePath, imageName);
+                    var imageThumbnailPath = string.Format("{0}/{1}", basePath, imageThumbnailName);
+                    var appimgPath = string.Format("{0}/{1}", basePath, appimgName);
+                    LogoImagePath.SaveAs(imagePath);
+                    //缩略图
+                    bool IsOK = Tool.Thumbnail(imagePath, height, imageThumbnailPath);
+                    accountMain.LogoImagePath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
+                    if (IsOK)
+                    {
+                        accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageThumbnailName;
+                    }
+                    else
+                    {
+                        accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
+                    }
+
+
+                    result = Edit(accountMain);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            try
+            {
+                if (result.HasError == false && AndroidPathFile != null)
+                {
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    //删除原路径
+                    var androidAbsolutePath = HttpContext.Current.Server.MapPath(accountMain.AndroidDownloadPath);
+                    if (File.Exists(androidAbsolutePath))
+                    {
+                        File.Delete(androidAbsolutePath);
+                    }
+                    var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
+                    var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, AndroidPathFile.FileName.GetFileName());
+                    if (Directory.Exists(androidPath) == false)
+                    {
+                        Directory.CreateDirectory(androidPath);
+                    }
+                    var Downpath = string.Format("~/Download/{0}", accountMain.ID);
+                    var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidPathFile.FileName.GetFileName());
+
+                    AndroidPathFile.SaveAs(androidPathDown);
+                    accountMain.AndroidDownloadPath = Downpath2;
+                }
+
+                if (result.HasError == false && AndroidSellPathFile != null)
+                {
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    //删除原路径
+                    var androidAbsolutePath = HttpContext.Current.Server.MapPath(accountMain.AndroidSellDownloadPath);
+                    if (File.Exists(androidAbsolutePath))
+                    {
+                        File.Delete(androidAbsolutePath);
+                    }
+                    var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
+                    var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, AndroidSellPathFile.FileName.GetFileName());
+                    if (Directory.Exists(androidPath) == false)
+                    {
+                        Directory.CreateDirectory(androidPath);
+                    }
+                    var Downpath = string.Format("~/Download/{0}", accountMain.ID);
+                    var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, AndroidSellPathFile.FileName.GetFileName());
+
+                    AndroidSellPathFile.SaveAs(androidPathDown);
+                    accountMain.AndroidSellDownloadPath = Downpath2;
+                }
+
+                result = Edit(accountMain);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
             return result;
         }
@@ -702,12 +839,25 @@ namespace Business
             return result;
         }
 
+        /// <summary>
+        /// 平台修改方法
+        /// </summary>
         public Result ChangeStatus_Permission(int accountMainID, EnumAccountStatus status, int loginSystemUserID = 0)
         {
             if (!CheckHasPermissions(loginSystemUserID, accountMainID))
             {
                 throw new ApplicationException(SystemConst.Notice.NotAuthorized);
             }
+            var entity = Get(accountMainID);
+            entity.AccountStatusID = LookupFactory.GetLookupOptionIdByToken(status);
+            return Edit(entity);
+        }
+
+        /// <summary>
+        /// 组织或机构，自己修改项目方法
+        /// </summary>
+        public Result ChangeStatus(int accountMainID, EnumAccountStatus status)
+        {
             var entity = Get(accountMainID);
             entity.AccountStatusID = LookupFactory.GetLookupOptionIdByToken(status);
             return Edit(entity);
@@ -885,5 +1035,7 @@ namespace Business
                 return false;
             }
         }
+
+
     }
 }

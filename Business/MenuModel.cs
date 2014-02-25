@@ -42,6 +42,25 @@ namespace Business
             return list;
         }
 
+        /// <summary>
+        /// 有级别限制(不用缓存)
+        /// </summary>
+        /// <param name="systemUserRoleID"></param>
+        /// <param name="parentSystemUserMenuID"></param>
+        /// <returns></returns>
+        public List<Menu> GetMenuByRoleID_NoCache(List<int> roleIDs, int? parentMenuID = null)
+        {
+            List<Menu> list = base.List().ToList();
+            list = list.Where(a => a.RoleMenus.Any(b => b.SystemStatus == (int)EnumSystemStatus.Active &&
+              roleIDs.Contains(b.RoleID)) && a.ParentMenuID == parentMenuID).OrderBy(a => a.Order).ToList();
+            foreach (var item in list)
+            {
+                item.Menus = item.Menus.Where(a => a.RoleMenus.Any(b => b.SystemStatus == (int)EnumSystemStatus.Active && roleIDs.Contains(b.RoleID))).OrderBy(a => a.Order).ToList();
+            }
+            return list;
+        }
+
+
         public List<Menu> GetMenuForOrganization()
         {
             List<Menu> list = List_Cache();
@@ -95,7 +114,7 @@ namespace Business
             IRoleMenuModel roleMenuModel = Factory.Get<IRoleMenuModel>(SystemConst.IOC_Model.RoleMenuModel);
 
             var menu = roleMenuModel.List_Cache().Where(a => roleID.Contains(a.RoleID) &&
-                                                       ((area != null && a.Menu.Area.Equals(area, StringComparison.CurrentCultureIgnoreCase)) || (area == null && a.Menu.Area == null)) &&
+                                                       ((area != null &&a.Menu.Area!=null&& a.Menu.Area.Equals(area, StringComparison.CurrentCultureIgnoreCase)) || (area == null && a.Menu.Area == null)) &&
                                                        (a.Menu.Controller != null && a.Menu.Controller.Equals(controller, StringComparison.CurrentCultureIgnoreCase))).Select(a => a.Menu).FirstOrDefault();
 
             if (menu == null) { return false; }

@@ -47,25 +47,35 @@ namespace Business
             return result;
         }
 
+        /// <summary>
+        /// ture 已存在管理员，false不存在管理员
+        /// </summary>
+        /// <param name="accountMainID"></param>
+        /// <param name="accountID"></param>
+        /// <returns></returns>
         public bool CheckIsExistAccountAdmin(int accountMainID, int? accountID = null)
         {
 
             int accountStatusID = LookupFactory.GetLookupOptionIdByToken(EnumAccountStatus.Enabled);
             if (accountID != null && accountID.HasValue)
             {
-
-                var accountIDs = List().Where(a => a.AccountMainID == accountMainID
-                    && (a.Account.Account_Roles.Any(b => b.Role.Token.Equals(SystemConst.Business.AccountAdmin)) || a.Account.Account_Roles.Any(b => b.Role.ID == 1))
-                    && a.Account.SystemStatus == (int)EnumSystemStatus.Active
-                    && a.Account.AccountStatusID == accountStatusID
-                    && a.Account.ID != accountID).Select(a => a.AccountID);
-                if (accountIDs.Count() > 0)
+                var accountRoleModel = Factory.Get<IAccountRoleModel>(SystemConst.IOC_Model.AccountRoleModel);
+                var isAdmin = accountRoleModel.List().Any(a => a.AccountID == accountID && a.Role.Token.Equals(SystemConst.Business.AccountAdmin));
+                if (isAdmin)
                 {
-                    return true;
-                }
-                else
-                {
-                    return false;
+                    var accountIDs = List().Where(a => a.AccountMainID == accountMainID
+                                                   && (a.Account.Account_Roles.Any(b => b.Role.Token.Equals(SystemConst.Business.AccountAdmin)) || a.Account.Account_Roles.Any(b => b.Role.ID == 1))
+                                                   && a.Account.SystemStatus == (int)EnumSystemStatus.Active
+                                                   && a.Account.AccountStatusID == accountStatusID
+                                                   && a.Account.ID != accountID).Select(a => a.AccountID).ToList();
+                    if (accountIDs.Count() > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
             return List().Any(a => a.AccountMainID == accountMainID && (a.Account.Account_Roles.Any(b => b.Role.Token.Equals(SystemConst.Business.AccountAdmin)) || a.Account.Account_Roles.Any(b => b.Role.ID == 1)) && a.Account.SystemStatus == (int)EnumSystemStatus.Active && a.Account.AccountStatusID == accountStatusID);
@@ -137,7 +147,7 @@ namespace Business
                 account.ParentAccountID = account_accountMain.Account.ParentAccountID;
             }
             var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-            result = accountModel.Add(account, account_accountMain.AccountMainID,roleID, x1, y1, w, h, tw, th);
+            result = accountModel.Add(account, account_accountMain.AccountMainID, roleID, x1, y1, w, h, tw, th);
             if (result.HasError == false)
             {
                 Account_AccountMain entity = new Account_AccountMain();

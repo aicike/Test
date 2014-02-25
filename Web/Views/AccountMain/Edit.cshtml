@@ -1,0 +1,293 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.AccountMain;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.AccountMain;
+}
+@section head{
+    <script type="text/javascript">
+        $(function () {
+            var pinyinUrl = '@Url.Action("GetHostName", "AccountMain", new { HostName = @ViewBag.HostName })';
+            $("#ProvinceID").Province({ value: '@Model.ProvinceID' });
+            $("#CityID").City({ parent: "ProvinceID", value: '@Model.CityID' });
+            $("#DistrictID").District({ parent: "CityID", value: '@Model.DistrictID' });
+
+            $("#btnUpload").click(function () {
+                $("#LogoImagePathFile").click();
+            });
+
+            $("#LogoImagePathFile").change(function () {
+                var fileName = $("#LogoImagePathFile").val();
+                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+                $("span[data-valmsg-for='LogoImagePath']").empty().attr("class", "field-validation-valid");
+                switch (suffix) {
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".gif":
+                    case ".bmp":
+                        break;
+                    default:
+                        $("span[data-valmsg-for='LogoImagePath']").text("支持下列图片格式：.jpg|.jpeg|.png|.gif|.bmp").attr("class", "field-validation-error");
+                        break;
+                }
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#imgLogo").attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+                return false;
+            });
+
+
+
+
+            $("#AppLogoImageFile").change(function () {
+                var fileName = $("#AppLogoImageFile").val();
+                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+                $("span[data-valmsg-for='AppLogoImagePath']").empty().attr("class", "field-validation-valid");
+                switch (suffix) {
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".gif":
+                    case ".bmp":
+                        break;
+                    default:
+                        $("span[data-valmsg-for='AppLogoImagePath']").text("支持下列图片格式：.jpg|.jpeg|.png|.gif|.bmp").attr("class", "field-validation-error");
+                        break;
+                }
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#imgAppLogo").attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+                return false;
+            });
+
+
+
+
+            $("#Name").focusout(function () {
+                if ($("#Name").length > 0) {
+                    $.ajax({
+                        type: "get",
+                        data: { value: $("#Name").val() },
+                        url: pinyinUrl,
+                        success: function (result) {
+                            $("#HostName").val(result);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+@model Poco.AccountMain
+<div class="title">
+    @Html.Partial("Menu3")</div>
+<div class="body">
+    @using (Html.BeginForm("Edit", "AccountMain", new { HostName = @ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <fieldset>
+            <legend>基本信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td width="200px">
+                        Logo：
+                    </td>
+                    <td>
+                        <img id="imgLogo" style="max-width:80px;max-height:80px; float: left" src="@Url.Content(Model.LogoImagePath ?? "")" />
+                        <input type="file" id="LogoImagePathFile" name="LogoImagePathFile" style="display: none" />
+                        &nbsp;&nbsp;<input type="button" class="button" value="上传" id="btnUpload" />
+                        @Html.TextBoxFor(a => a.LogoImagePath, new { style = "width:0px;visibility:hidden" })
+                        @Html.HiddenFor(a => a.LogoImageThumbnailPath)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.LogoImagePath)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        项目名称：
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Name)@Html.HiddenFor(a => a.AccountStatusID)@Html.HiddenFor(a => a.CreateTime)@Html.HiddenFor(a => a.SystemUserID)
+                        @Html.HiddenFor(a => a.SalePhone)
+                        @Html.HiddenFor(a => a.SaleMapAddress)
+                        @Html.HiddenFor(a => a.Lng)
+                        @Html.HiddenFor(a => a.Lat)
+                        @Html.HiddenFor(a => a.RandomCode)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        二级域名或目录名称：
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.HostName)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HostName)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        电话：
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.Phone)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Phone)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        省份：
+                    </td>
+                    <td>@Html.DropDownListFor(a => a.ProvinceID)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.ProvinceID)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        城市：
+                    </td>
+                    <td>@Html.DropDownListFor(a => a.CityID)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.CityID)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        地区：
+                    </td>
+                    <td>@Html.DropDownListFor(a => a.DistrictID)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.DistrictID)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        地址：
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.SaleAddress)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.SaleAddress)
+                    </td>
+                </tr>
+                <tr style="display: none">
+                    <td>
+                        IOS用户端下载地址：
+                        <br />
+                        例：http://www.xxx.com
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.IOSDownloadPath)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.IOSDownloadPath)
+                    </td>
+                </tr>
+                <tr style="display: none">
+                    <td>
+                        IOS用户端App版本号：
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.IOSVersion)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.IOSVersion)
+                    </td>
+                </tr>
+                <tr style="display: none">
+                    <td>
+                        IOS销售端下载地址：
+                        <br />
+                        例：http://www.xxx.com
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.IOSSellDownloadPath)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.IOSDownloadPath)
+                    </td>
+                </tr>
+                <tr style="display: none">
+                    <td>
+                        IOS销售端App版本号：
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.IOSSellVersion)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.IOSVersion)
+                    </td>
+                </tr>
+                <tr style="display: none">
+                    <td>
+                        Android用户端安装文件：
+                    </td>
+                    <td>
+                        @Model.AndroidDownloadPath
+                        @Html.HiddenFor(a => a.AndroidDownloadPath)
+                        <input type="file" id="AndroidPathFile" name="AndroidPathFile" />
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AndroidDownloadPath)
+                    </td>
+                </tr>
+                <tr style="display: none">
+                    <td>
+                        Android用户端版本号：
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.AndroidVersion)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AndroidVersion)
+                    </td>
+                </tr>
+                <tr style="display: none">
+                    <td>
+                        Android销售端安装文件：
+                    </td>
+                    <td>
+                        @Model.AndroidSellDownloadPath
+                        @Html.HiddenFor(a => a.AndroidSellDownloadPath)
+                        <input type="file" id="AndroidSellPathFile" name="AndroidSellPathFile" />
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AndroidSellDownloadPath)
+                    </td>
+                </tr>
+                <tr style="display: none">
+                    <td>
+                        Android销售端版本号：
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.AndroidSellVersion)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AndroidSellVersion)
+                    </td>
+                </tr>
+                <tr style="display: none">
+                    <td>
+                        APPLogo：
+                    </td>
+                    <td>
+                        @if (Model.AppLogoImagePath != null)
+                        {
+                            <img id="imgAppLogo" style="max-width: 80px; max-height: 80px; float: left"  src="@Url.Content(@Model.AppLogoImagePath ?? "")" />
+                        }
+                        else
+                        { 
+                            <img id="imgAppLogo" style="max-width: 80px; max-height: 80px; float: left" />
+                        }
+                        <input type="file" id="AppLogoImageFile" name="AppLogoImageFile" />
+                        @Html.TextBoxFor(a => a.AppLogoImagePath, new { style = "width:0px;visibility:hidden" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AppLogoImagePath)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            @Html.HiddenFor(a => a.FileLimit)
+            <input type="submit" id="btnSubmit" value="保存" class="button" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button"/>
+        </div>
+    }</div>

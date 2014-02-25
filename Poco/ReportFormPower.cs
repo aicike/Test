@@ -17,7 +17,7 @@ namespace Poco
         /// <summary>
         /// EnumReportForm  ID
         /// </summary>
-        public int EunmReportID { get; set; }
+        public int EnumReportID { get; set; }
 
     }
 }

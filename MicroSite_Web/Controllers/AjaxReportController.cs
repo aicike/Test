@@ -18,11 +18,12 @@ namespace Web.Controllers
         {
             //获取报表权限
             IReportFormPowerModel ReportModel = Factory.Get<IReportFormPowerModel>(SystemConst.IOC_Model.ReportFormPowerModel);
-            var ReportPower = ReportModel.GetReportByAMID(AccountMainID).OrderBy(a=>a.EunmReportID);
+            var ReportPower = ReportModel.GetReportByAMID(AccountMainID).OrderBy(a => a.EnumReportID);
             string ReportName = "";
             foreach (var item in ReportPower)
             {
-                switch (item.EunmReportID) {
+                switch (item.EnumReportID)
+                {
                     case (int)EnumReportForm.DayAddPeople:
                         ReportName += "DayAddPeople,";
                         break;

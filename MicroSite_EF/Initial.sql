@@ -51,44 +51,45 @@ INSERT [dbo].[LookupOption] ([ID], [SystemStatus], [LookupID], [Token], [Value])
 INSERT [dbo].[LookupOption] ([ID], [SystemStatus], [LookupID], [Token], [Value]) VALUES (38, 0, 7, N'hardcover', N'精装')
 SET IDENTITY_INSERT [dbo].[LookupOption] OFF
 ------------------------------[Menu]--------------------------------------------
+CREATE UNIQUE INDEX IX_Menu_Token ON Menu (Token)
 SET IDENTITY_INSERT [dbo].[Menu] ON
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (1, 0, N'首页', N'首页', NULL, NULL, NULL, 1, NULL,1,1)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (2, 0, N'管理', N'管理', NULL, NULL, NULL, 2, NULL,0,1)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (3, 0, N'产品', N'产品', NULL, NULL, NULL, 3, NULL,0,1)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (4, 0, N'账号', N'账号', NULL, NULL, NULL, 4, NULL,0,1)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (5, 0, N'项目', N'项目', NULL, NULL, NULL, 5, NULL,0,1)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (6, 0, N'调查 活动 资讯', N'调查 活动 资讯', NULL, NULL, NULL, 6, NULL,0,1)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (7, 0, N'设置', N'设置', NULL, NULL,NULL, 7, NULL,0,1)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (1,'Token_Home', 0, N'首页', N'首页', NULL, NULL, NULL, 1, NULL,1,1)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (2,'Token_Manage', 0, N'管理', N'管理', NULL, NULL, NULL, 2, NULL,0,1)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (3,'Token_Product', 0, N'产品', N'产品', NULL, NULL, NULL, 3, NULL,0,1)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (4,'Token_Account', 0, N'账号', N'账号', NULL, NULL, NULL, 4, NULL,0,1)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (5,'Token_Project', 0, N'项目', N'项目', NULL, NULL, NULL, 5, NULL,0,1)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (6,'Token_News', 0, N'调查 活动 资讯', N'调查 活动 资讯', NULL, NULL, NULL, 6, NULL,0,1)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (7,'Token_Set', 0, N'设置', N'设置', NULL, NULL,NULL, 7, NULL,0,1)
 --2级											
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (8, 0, N'用户管理', N'用户管理', NULL, N'UserManage', N'Index', 1, 2,0,2)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (9, 0, N'会员管理', N'会员管理', NULL, N'VipInfo', N'Index', 2, 2,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (8,'Token_User', 0, N'用户管理', N'用户管理', NULL, N'UserManage', N'Index', 1, 2,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (9,'Token_Member', 0, N'会员管理', N'会员管理', NULL, N'VipInfo', N'Index', 2, 2,0,2)
 --
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (10, 0, N'产品管理', N'产品管理', NULL, N'Product', N'Index', 1,3,0,2)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (11, 0, N'类别管理', N'类别管理', NULL, N'Classify', N'Index', 2, 3,0,2)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (12, 0, N'订单管理', N'订单管理(微商城)', NULL, N'MicroOrder', N'Index', 3, 3,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (10,'Token_Product_M', 0, N'产品管理', N'产品管理', NULL, N'Product', N'Index', 1,3,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (11,'Token_Product_T', 0, N'类别管理', N'类别管理', NULL, N'Classify', N'Index', 2, 3,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (12,'Token_Product_O1', 0, N'订单管理', N'订单管理(微商城)', NULL, N'MicroOrder', N'Index', 3, 3,0,2)
 --
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (13, 0, N'账号管理', N'账号管理', NULL, N'Account', N'Index', 1, 4,0,2)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (14, 0, N'角色管理', N'角色管理', NULL, N'Character', N'Index', 2, 4,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (13,'Token_Account_M', 0, N'账号管理', N'账号管理', NULL, N'Account', N'Index', 1, 4,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (14,'Token_Account_R', 0, N'角色管理', N'角色管理', NULL, N'Character', N'Index', 2, 4,0,2)
 --
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (15, 0, N'售楼部信息', N'售楼部信息', NULL, N'BasisSet', N'Index', 1,5,0,2)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (16, 0, N'项目管理', N'项目管理', NULL, N'HousesMange', N'Index', 2, 5,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (15,'Token_Project_I', 0, N'售楼部信息', N'售楼部信息', NULL, N'BasisSet', N'Index', 1,5,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (16,'Token_Project_M', 0, N'项目管理', N'项目管理', NULL, N'HousesMange', N'Index', 2, 5,0,2)
 --
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (17, 0, N'用户端资讯', N'用户端资讯', NULL, N'AppAdvertorial', N'Index', 1,6,0,2)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (18, 0, N'调查问卷', N'调查问卷', NULL, N'SurveyMain', N'IndexMain', 2, 6,0,2)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (19, 0, N'活动', N'活动', NULL, N'ActivityInfo', N'Index', 3, 6,0,2)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (20, 0, N'360度全景图', N'360度全景图', NULL, N'Panorama', N'Index', 4, 6,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (17,'Token_News_U', 0, N'用户端资讯', N'用户端资讯', NULL, N'AppAdvertorial', N'Index', 1,6,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (18,'Token_News_Su', 0, N'调查问卷', N'调查问卷', NULL, N'SurveyMain', N'IndexMain', 2, 6,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (19,'Token_News_A', 0, N'活动', N'活动', NULL, N'ActivityInfo', N'Index', 3, 6,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (20,'Token_News_3D', 0, N'360度全景图', N'360度全景图', NULL, N'Panorama', N'Index', 4, 6,0,2)
 --
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (21, 0, N'账号信息', N'账号信息', NULL, N'Set', N'Index', 1, 7,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (21,'Token_Account_I', 0, N'账号信息', N'账号信息', NULL, N'Set', N'Index', 1, 7,0,2)
 -----------3级-------------
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (22, 0, N'用户管理', N'用户管理', NULL, N'UserManage', N'Index', 1, 8,0,3)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (22,'Token_User_M', 0, N'用户管理', N'用户管理', NULL, N'UserManage', N'Index', 1, 8,0,3)
 --
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (23, 0, N'会员信息', N'会员信息', NULL, N'VipInfo', N'Index', 1, 9,0,3)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (24, 0, N'卡片管理', N'卡片管理', NULL, N'CardInfo', N'Index', 2, 9,0,3)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (23,'Token_Member_I', 0, N'会员信息', N'会员信息', NULL, N'VipInfo', N'Index', 1, 9,0,3)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (24,'Token_Member_C', 0, N'卡片管理', N'卡片管理', NULL, N'CardInfo', N'Index', 2, 9,0,3)
 --
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (25, 0, N'单元管理', N'单元管理', NULL, N'HouseInfo', N'Index', 1, 16,0,3)
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (26, 0, N'户型管理', N'户型管理', NULL, N'HouseType', N'Index', 2, 16,0,3)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (25,'Token_House_I', 0, N'单元管理', N'单元管理', NULL, N'HouseInfo', N'Index', 1, 16,0,3)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (26,'Token_House_T', 0, N'户型管理', N'户型管理', NULL, N'HouseType', N'Index', 2, 16,0,3)
 ----------4级--------------
-INSERT [dbo].[Menu] ([ID], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (27, 0, N'房屋管理', N'房屋管理', NULL, N'HouseInfoDetail', N'Index', 1, 26,0,3)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (27,'Token_House_M', 0, N'房屋管理', N'房屋管理', NULL, N'HouseInfoDetail', N'Index', 1, 26,0,3)
 --
 SET IDENTITY_INSERT [dbo].[Menu] OFF
 

@@ -16,6 +16,9 @@ namespace Business
             return List().Where(a => a.AccountMainID == AcountMainID && a.IsCanDelete == false).FirstOrDefault().ID;
         }
 
+        /// <summary>
+        /// 不获取管理员角色
+        /// </summary>
         public List<Role> GetRoleList(int? accountMainID)
         {
             List<Role> list = List().Where(a=> a.IsCanDelete&&a.AccountMainID==accountMainID).ToList();
@@ -25,11 +28,29 @@ namespace Business
                 {
                     item.Account_Roles = item.Account_Roles.Where(a => a.Account.Account_AccountMains.Any(b => b.AccountMainID == accountMainID.Value && b.SystemStatus == (int)EnumSystemStatus.Active)).ToList();
                 }
-
             }
             return list;
         }
 
+        /// <summary>
+        /// 获取管理员角色
+        /// </summary>
+        public List<Role> GetRoleAllList(int? accountMainID)
+        {
+            List<Role> list = List().Where(a => a.AccountMainID == accountMainID).ToList();
+            if (accountMainID != null && accountMainID.HasValue)
+            {
+                foreach (var item in list)
+                {
+                    item.Account_Roles = item.Account_Roles.Where(a => a.Account.Account_AccountMains.Any(b => b.AccountMainID == accountMainID.Value && b.SystemStatus == (int)EnumSystemStatus.Active)).ToList();
+                }
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 不等于AccountID
+        /// </summary>
         public List<Role> GetRoleListNoaID(int accountMainID, int AccountID)
         {
             List<Role> list = List().Where(a => a.IsCanDelete&&a.AccountMainID==accountMainID).ToList();

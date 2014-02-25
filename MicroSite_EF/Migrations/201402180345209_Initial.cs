@@ -1147,7 +1147,7 @@ namespace MicroSite_EF.Migrations
                         ID = c.Int(nullable: false, identity: true),
                         SystemStatus = c.Int(nullable: false),
                         AccountMainID = c.Int(nullable: false),
-                        EunmReportID = c.Int(nullable: false),
+                        EnumReportID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
