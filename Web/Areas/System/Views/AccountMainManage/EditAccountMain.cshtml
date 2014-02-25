@@ -102,7 +102,7 @@
                         Logo：
                     </td>
                     <td>
-                        <img id="imgLogo" style="max-width:80px;max-height:80px; float: left" src="@Url.Content(Model.LogoImagePath??"")" />
+                        <img id="imgLogo" style="max-width:80px;max-height:80px; float: left" src="@Url.Content(Model.LogoImagePath ?? "")" />
                         <input type="file" id="LogoImagePathFile" name="LogoImagePathFile" style="display: none" />
                         &nbsp;&nbsp;<input type="button" class="button" value="上传" id="btnUpload" />
                         @Html.TextBoxFor(a => a.LogoImagePath, new { style = "width:0px;visibility:hidden" })
@@ -188,9 +188,36 @@
                     <td>@Html.ValidationMessageFor(a => a.SaleAddress)
                     </td>
                 </tr>
-                 <tr>
+                <tr>
                     <td>
-                        IOS用户端下载地址： <br />
+                        APPLogo：
+                    </td>
+                    <td>
+                        @if (Model.AppLogoImagePath != null)
+                        {
+                            <img id="imgAppLogo" style="max-width: 80px; max-height: 80px; float: left"  src="@Url.Content(@Model.AppLogoImagePath ?? "")" />
+                        }
+                        else
+                        { 
+                            <img id="imgAppLogo" style="max-width: 80px; max-height: 80px; float: left" />
+                        }
+                        <input type="file" id="AppLogoImageFile" name="AppLogoImageFile" />
+                        @Html.TextBoxFor(a => a.AppLogoImagePath, new { style = "width:0px;visibility:hidden" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AppLogoImagePath)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        
+        <br />
+        <fieldset>
+            <legend>IOS用户端信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td  width="200px">
+                        IOS用户端下载地址：
+                        <br />
                         例：http://www.xxx.com
                     </td>
                     <td>@Html.TextBoxFor(a => a.IOSDownloadPath)
@@ -198,19 +225,38 @@
                     <td>@Html.ValidationMessageFor(a => a.IOSDownloadPath)
                     </td>
                 </tr>
-                 <tr>
+                  <tr>
+                    <td>
+                         IOS用户端证书：
+                    </td>
+                    <td>
+                        @Model.IOSClientCertificate
+                        @Html.HiddenFor(a => a.IOSClientCertificate)
+                        <input type="file" id="IOSClientCertificateFile" name="IOSClientCertificateFile" />
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
                     <td>
                         IOS用户端App版本号：
                     </td>
                     <td>
-                         @Html.TextBoxFor(a => a.IOSVersion)
+                        @Html.TextBoxFor(a => a.IOSVersion)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.IOSVersion)
                     </td>
                 </tr>
-                 <tr>
-                    <td>
-                        IOS销售端下载地址： <br />
+            </table>
+        </fieldset>
+        <br />
+        <fieldset>
+            <legend>IOS销售端信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td  width="200px">
+                        IOS销售端下载地址：
+                        <br />
                         例：http://www.xxx.com
                     </td>
                     <td>@Html.TextBoxFor(a => a.IOSSellDownloadPath)
@@ -220,16 +266,34 @@
                 </tr>
                  <tr>
                     <td>
-                        IOS销售端App版本号：
+                         IOS销售端证书：
                     </td>
                     <td>
-                         @Html.TextBoxFor(a => a.IOSSellVersion)
+                        @Model.IOSSalestCertificate
+                        @Html.HiddenFor(a => a.IOSSalestCertificate)
+                        <input type="file" id="IOSSalestCertificateFile" name="IOSSalestCertificateFile" />
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.IOSVersion)
+                    <td>
                     </td>
                 </tr>
                 <tr>
                     <td>
+                        IOS销售端App版本号：
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.IOSSellVersion)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.IOSVersion)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <br />
+        <fieldset>
+            <legend>Android用户端信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td  width="200px">
                         Android用户端安装文件：
                     </td>
                     <td>
@@ -250,8 +314,14 @@
                     <td>@Html.ValidationMessageFor(a => a.AndroidVersion)
                     </td>
                 </tr>
+            </table>
+        </fieldset>
+        <br />
+        <fieldset>
+            <legend>Android销售端信息</legend>
+            <table class="tableForm">
                 <tr>
-                    <td>
+                    <td  width="200px">
                         Android销售端安装文件：
                     </td>
                     <td>
@@ -270,24 +340,6 @@
                         @Html.TextBoxFor(a => a.AndroidSellVersion)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.AndroidSellVersion)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        APPLogo：
-                    </td>
-                    <td>
-                        @if (Model.AppLogoImagePath != null)
-                        {
-                            <img id="imgAppLogo" style="max-width: 80px; max-height: 80px; float: left"  src="@Url.Content(@Model.AppLogoImagePath??"")" />
-                        }
-                        else { 
-                         <img id="imgAppLogo" style="max-width: 80px; max-height: 80px; float: left" />
-                        }
-                        <input type="file" id="AppLogoImageFile" name="AppLogoImageFile" />
-                        @Html.TextBoxFor(a => a.AppLogoImagePath, new { style = "width:0px;visibility:hidden" })
-                    </td>
-                    <td>@Html.ValidationMessageFor(a => a.AppLogoImagePath)
                     </td>
                 </tr>
             </table>

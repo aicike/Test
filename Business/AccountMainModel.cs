@@ -64,7 +64,7 @@ namespace Business
         /// 平台添加方法
         /// </summary>
         [Transaction]
-        public Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile)
+        public Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, HttpPostedFileBase IOSClientCertificateFile, HttpPostedFileBase IOSSalestCertificateFile)
         {
             accountMain.SystemUserID = createUserID;
             accountMain.CreateTime = DateTime.Now;
@@ -163,6 +163,29 @@ namespace Business
                         Tool.SuperGetPicThumbnail(img, appimgPath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
                         accountMain.AppLogoImagePath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + appimgName;
                     }
+
+                    //IOS用户端证书
+                    if (IOSClientCertificateFile != null)
+                    {
+                        var Clienttoken = DateTime.Now.ToString("yyyyMMddHHmmss");
+                        var CertificateName = IOSClientCertificateFile.FileName.GetFileName();
+                        var androidSellPath = string.Format("{0}/{1}_{2}_{3}", basePath, Clienttoken, com.CreateRandom("", 5), CertificateName);
+
+                        IOSClientCertificateFile.SaveAs(androidSellPath);
+                        accountMain.IOSClientCertificate = string.Format(SystemConst.Business.PathBase, accountMain.ID) + CertificateName;
+                    }
+                    //IOS销售端证书
+                    if (IOSSalestCertificateFile != null)
+                    {
+                        var Salesttoken = DateTime.Now.ToString("yyyyMMddHHmmss");
+                        var CertificateName = IOSSalestCertificateFile.FileName.GetFileName();
+                        var androidSellPath = string.Format("{0}/{1}_{2}_{3}", basePath, Salesttoken, com.CreateRandom("", 5), CertificateName);
+
+                        IOSSalestCertificateFile.SaveAs(androidSellPath);
+                        accountMain.IOSSalestCertificate = string.Format(SystemConst.Business.PathBase, accountMain.ID) + CertificateName;
+                    }
+
+
                     result = Edit(accountMain);
                 }
                 catch (Exception ex)
@@ -292,7 +315,7 @@ namespace Business
             }
             return result;
         }
-        
+
         [Transaction]
         public Result MicroSite_Add(AccountMain accountMain)
         {
@@ -347,7 +370,7 @@ namespace Business
         }
 
         [Transaction]
-        public Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, int loginSystemUserID = 0)
+        public Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, HttpPostedFileBase IOSClientCertificateFile, HttpPostedFileBase IOSSalestCertificateFile, int loginSystemUserID = 0)
         {
             if (!CheckHasPermissions(loginSystemUserID, accountMain.ID))
             {
@@ -355,6 +378,7 @@ namespace Business
             }
 
             var result = base.Edit(accountMain);
+            CommonModel com = new CommonModel();
             if (result.HasError == false && AppLogoImageFile != null)
             {
 
@@ -363,8 +387,7 @@ namespace Business
                 {
                     File.Delete(AppLogoImageAbsolute);
                 }
-                CommonModel com2 = new CommonModel();
-                var LastName = com2.CreateRandom("", 5) + AppLogoImageFile.FileName.GetFileSuffix();
+                var LastName = com.CreateRandom("", 5) + AppLogoImageFile.FileName.GetFileSuffix();
                 var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                 var path = HttpContext.Current.Server.MapPath(string.Format("~/File/{0}", accountMain.ID));
                 var basePath = string.Format("{0}/{1}", path, "Base");
@@ -400,7 +423,7 @@ namespace Business
                     {
                         File.Delete(logoImageThumbnailPath);
                     }
-                    CommonModel com = new CommonModel();
+
                     var LastName = com.CreateRandom("", 5) + LogoImagePath.FileName.GetFileSuffix();
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                     var height = 58;
@@ -477,6 +500,53 @@ namespace Business
                     AndroidSellPathFile.SaveAs(androidPathDown);
                     accountMain.AndroidSellDownloadPath = Downpath2;
                 }
+
+
+
+                //IOS用户端证书
+                if (result.HasError == false && IOSClientCertificateFile != null)
+                {
+                    //删除原路径
+                    if (!string.IsNullOrEmpty(accountMain.IOSClientCertificate))
+                    {
+                        var YPath = HttpContext.Current.Server.MapPath(accountMain.IOSClientCertificate);
+                        if (File.Exists(YPath))
+                        {
+                            File.Delete(YPath);
+                        }
+                    }
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var CertificateName = IOSClientCertificateFile.FileName.GetFileName();
+                    var basePath = HttpContext.Current.Server.MapPath(string.Format(SystemConst.Business.PathBase, accountMain.ID));
+                    var androidSellPath = string.Format("{0}/{1}_{2}_{3}", basePath, token, com.CreateRandom("", 5), CertificateName);
+
+                    IOSClientCertificateFile.SaveAs(androidSellPath);
+                    accountMain.IOSClientCertificate = string.Format(SystemConst.Business.PathBase, accountMain.ID) + CertificateName;
+                }
+                //IOS销售端证书
+                if (result.HasError == false && IOSSalestCertificateFile != null)
+                {
+                    //删除原路径
+                    if (!string.IsNullOrEmpty(accountMain.IOSSalestCertificate))
+                    {
+                        var YPath = HttpContext.Current.Server.MapPath(accountMain.IOSSalestCertificate);
+                        if (File.Exists(YPath))
+                        {
+                            File.Delete(YPath);
+                        }
+                    }
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    var CertificateName = IOSSalestCertificateFile.FileName.GetFileName();
+                    var basePath = HttpContext.Current.Server.MapPath(string.Format(SystemConst.Business.PathBase, accountMain.ID));
+                    var androidSellPath = string.Format("{0}/{1}_{2}_{3}", basePath, token, com.CreateRandom("", 5), CertificateName);
+
+                    IOSSalestCertificateFile.SaveAs(androidSellPath);
+                    accountMain.IOSSalestCertificate = string.Format(SystemConst.Business.PathBase, accountMain.ID) + CertificateName;
+                }
+
+
+
+
 
                 result = Edit(accountMain);
             }

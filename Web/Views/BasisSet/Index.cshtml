@@ -243,6 +243,8 @@
                         @Html.HiddenFor(a => a.IOSVersion)
                         @Html.HiddenFor(a => a.AppLogoImagePath)
                         @Html.HiddenFor(a => a.RandomCode)
+                        @Html.HiddenFor(a => a.IOSClientCertificate)
+                        @Html.HiddenFor(a => a.IOSSalestCertificate)
                         <input type="file" style="display: none" id="AndroidPathFile" name="AndroidPathFile" />
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Name)

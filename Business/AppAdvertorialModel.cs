@@ -28,6 +28,19 @@ namespace Business
             return appadverlist;
         }
 
+        /// <summary>
+        /// 获取详细信息
+        /// </summary>
+        /// <param name="AID"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public AppAdvertorial GetInfo(int AID, int AMID)
+        {
+            var aao = List().Where(a => a.ID == AID && a.AccountMainID == AMID).FirstOrDefault();
+            return aao;
+        }
+
+
         [Transaction]
         public Result AddAppAdvertorial(AppAdvertorial appadvertorial, System.Web.HttpPostedFileBase HousShowImagePathFile, int w, int h, int x1, int y1, int tw, int th)
         {

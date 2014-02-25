@@ -12,8 +12,8 @@ using AcceptanceServer.DataOperate;
 using agsXMPP;
 using System.Threading;
 using agsXMPP.protocol.client;
-using Poco;
 using System.Configuration;
+using Poco;
 
 namespace ImTimelyService
 {
@@ -89,7 +89,7 @@ namespace ImTimelyService
                 if (ActivityDate != DateTime.Now.ToString("dd"))
                 {
                     ActivityDate = DateTime.Now.ToString("dd");
-
+                    SendSMS();
                 }
             }
 
@@ -102,21 +102,21 @@ namespace ImTimelyService
             System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
             {
                 string sql = @"select a.id,a.Title, a.ActivityStratDate,b.Phone,b.name,c.Name as AName from ActivityInfo a, dbo.ActivityInfoParticipator b,accountMain c where a.id =b.ActivityInfoID and a.accountMainid = c.id
-                                and CONVERT(varchar(100), a.ActivityStratDate, 23)= CONVERT(varchar(100), (GetDate()+1), 23)";
+                                and CONVERT(varchar(100), CONVERT(datetime, a.ActivityStratDate), 23)= CONVERT(varchar(100), (GetDate()+1), 23)";
                 DataSet ds = SqlHelper.ExecuteDataset(sql);
 
                 if (ds != null)
                 {
                     SendSMS_Activity(ds);
                 }
-               
+
             });
             t.Start();
 
         }
 
 
-         //处理活动提醒
+        //处理活动提醒
         public void SendSMS_Activity(DataSet ds)
         {
             LoginXMPP();
@@ -132,8 +132,8 @@ namespace ImTimelyService
                         try
                         {
                             string dates = row["ActivityStratDate"].ToString();
-                            content = string.Format("您好，{0}先生/女士。您参与的活动\"{1}\" 与于明日{2}开始。地址：{3}/default/News?id={4}  【{5}】"
-                                                     , row["Phone"], row["Title"], dates.Substring(dates.LastIndexOf(' ')),webUrl,row["id"],row["AName"] );
+                            content = string.Format("您好，{0}先生/女士。您参与的活动\"{1}\" 于明日{2}开始。详细地址：{3}/default/News?id={4}  【{5}】"
+                                                     , row["name"], row["Title"], dates.Substring(dates.LastIndexOf(' ')), webUrl, row["id"], row["AName"]);
                             agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message();
                             msg.Type = MessageType.chat;
                             msg.From = new Jid(webXMPP_json, "localhost", "resource");
@@ -154,13 +154,13 @@ namespace ImTimelyService
                 }
                 else
                 {
-                   //"SMS发送失败。";
+                    //"SMS发送失败。";
                 }
             }
             catch (Exception ex)
             {
                 //发送失败
-               
+
             }
         }
 
@@ -195,15 +195,17 @@ namespace ImTimelyService
                 });
                 t.Start();
             }
-            else {
-                if (Connection.Status=="") {
+            else
+            {
+                if (Connection.Status == "")
+                {
                     Thread mythread = new Thread(() => { Connection.Open(); });
                     mythread.Start();
                     mythread.IsBackground = true;
                 }
             }
         }
-    }
+
 
 
 

@@ -8,6 +8,7 @@ using Poco.Enum;
 using Injection;
 using Poco.WebAPI_Poco;
 using Injection.Transaction;
+using JdSoft.Apple.Apns.Notifications;
 
 namespace Business
 {
@@ -244,5 +245,58 @@ namespace Business
         {
             return url.Replace("~", "");
         }
+
+
+
+        /// <summary>
+        /// 推送服务方法应用
+        /// </summary>
+        /// <param name="strDeviceToken">手机UDID</param>
+        /// <param name="strContent">推送内容</param>
+        /// <param name="strCertificate">推送服务用证书名称</param>
+        public static void pushNotifications(string strDeviceToken, string strContent, string strCertificate)
+        {
+         
+            bool sandbox = true;
+            string testDeviceToken = strDeviceToken;
+            string p12File = strCertificate;
+            string p12FilePassword = "password";
+
+
+            string p12Filename = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, p12File);
+
+            NotificationService service = new NotificationService(sandbox, p12Filename, p12FilePassword, 1);
+
+            service.SendRetries = 5; //5 retries before generating notificationfailed event
+            service.ReconnectDelay = 5000; //5 seconds
+
+            //service.Error += new NotificationService.OnError(service_Error);
+            //service.NotificationTooLong += new NotificationService.OnNotificationTooLong(service_NotificationTooLong);
+            //service.BadDeviceToken += new NotificationService.OnBadDeviceToken(service_BadDeviceToken);
+            //service.NotificationFailed += new NotificationService.OnNotificationFailed(service_NotificationFailed);
+            //service.NotificationSuccess += new NotificationService.OnNotificationSuccess(service_NotificationSuccess);
+            //service.Connecting += new NotificationService.OnConnecting(service_Connecting);
+            //service.Connected += new NotificationService.OnConnected(service_Connected);
+            //service.Disconnected += new NotificationService.OnDisconnected(service_Disconnected);
+            Notification alertNotification = new Notification(testDeviceToken);
+
+            //通知内容
+            alertNotification.Payload.Alert.Body = strContent;
+
+            alertNotification.Payload.Sound = "default";
+            alertNotification.Payload.Badge = 1;
+
+            //队列的通知是否送达
+            if (service.QueueNotification(alertNotification))
+            { 
+                
+            }
+
+            service.Close();
+            service.Dispose();
+
+        }
+
+
     }
 }

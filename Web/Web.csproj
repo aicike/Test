@@ -971,6 +971,9 @@
       </SubType>
     </Content>
     <Content Include="Views\AccountMain\Index.cshtml" />
+    <Content Include="Views\AppAdvertorial\SelecInfo.cshtml" />
+    <Content Include="Views\AppAdvertorialAccount\SelecInfo.cshtml" />
+    <Content Include="Views\Default\ceshi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

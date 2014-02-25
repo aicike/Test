@@ -16,10 +16,10 @@ namespace Interface
         AccountMain Get_Permission(int id, int loginSystemUserID);
 
         Result Delete_Permission(int id, int loginSystemUserID);
-        
-        Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile,HttpPostedFileBase AppLogoImageFile);
 
-        Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, int loginSystemUserID = 0);
+        Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, HttpPostedFileBase IOSClientCertificateFile, HttpPostedFileBase IOSSalestCertificateFile);
+
+        Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, HttpPostedFileBase IOSClientCertificateFile, HttpPostedFileBase IOSSalestCertificateFile, int loginSystemUserID = 0);
 
         Result Edit_ByAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile);
 

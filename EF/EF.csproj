@@ -65,7 +65,9 @@
     <Compile Include="Mapping\AppUpdateMap.cs" />
     <Compile Include="Mapping\OrderUserInfoMap.cs" />
     <Compile Include="Mapping\TaskMap.cs" />
-    <Compile Include="Migrations\201402190408289_initial.cs" />
+    <Compile Include="Migrations\201402190408289_initial.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201402190408289_initial.Designer.cs">
       <DependentUpon>201402190408289_initial.cs</DependentUpon>
     </Compile>

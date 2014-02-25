@@ -11,6 +11,14 @@ namespace Interface
     {
         IQueryable<AppAdvertorial> GetList(int AccountMainID,int AdverTorialType);
 
+          /// <summary>
+        /// 获取详细信息
+        /// </summary>
+        /// <param name="AID"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        AppAdvertorial GetInfo(int AID, int AMID);
+
         Result AddAppAdvertorial(AppAdvertorial appadvertorial, HttpPostedFileBase HousShowImagePathFile, int w, int h, int x1, int y1, int tw, int th);
 
         Result AddAppAdvertorial(AppAdvertorial appadvertorial, int w, int h, int x1, int y1, int tw, int th);

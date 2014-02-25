@@ -106,6 +106,9 @@ namespace Web.Controllers
                 aao.AppAdvertorialID = id;
                 aao.EnumAdvertorialUType = advertorial.EnumAdvertorialUType;
                 aao.ForwardCnt = 0;
+                aao.ForwardFriendCnt = 0;
+                aao.ForwardWeiboCnt = 0;
+                aao.ForwardWeiXinCnt = 0;
                 aao.UserID = imtimely_userid.Value;
                 AdvertorialOperModel.AddOperation(aao);
             }
@@ -447,25 +450,29 @@ namespace Web.Controllers
             return View(Activity);
         }
         /// <summary>
-        /// 校验是否报名
+        /// 校验是否报名（电话）
         /// </summary>
         /// <param name="AID"></param>
         /// <param name="phone"></param>
-        /// <returns></returns>
+        /// <returns>1 电话存在 2 邮箱存在</returns>
         [HttpPost]
-        public string CheckISBM(int AID, string phone)
+        public string CheckISBM(int AID, string phone,string Email)
         {
             var IActivityInfoParticipatorModelModel = Factory.Get<IActivityInfoParticipatorModel>(SystemConst.IOC_Model.ActivityInfoParticipatorModel);
             var result = IActivityInfoParticipatorModelModel.GetUserIsSignUP2(phone, AID);
             if (result.HasError)
             {
-                return "true";
+                return "1";
             }
-            else
+            var result2 = IActivityInfoParticipatorModelModel.GetUserIsSignUP3(Email, AID);
+            if (result2.HasError)
             {
-                return "false";
+                return "2";
             }
+            return "False";
         }
+
+    
 
         [HttpPost]
         public ActionResult AddActivityInfo(int ActivityID, int? UID, int? Utype)
@@ -476,6 +483,7 @@ namespace Web.Controllers
             aip.JoinDateTime = DateTime.Now;
             aip.Name = Request.Form["userName"];
             aip.Phone = Request.Form["userPhone"];
+            aip.Email = Request.Form["userEmail"];
             if (UID.HasValue)
             {
                 aip.UserID = UID.Value;
@@ -487,6 +495,14 @@ namespace Web.Controllers
             var IActivityInfoParticipatorModelModel = Factory.Get<IActivityInfoParticipatorModel>(SystemConst.IOC_Model.ActivityInfoParticipatorModel);
             IActivityInfoParticipatorModelModel.Add(aip);
             return RedirectToAction("ActivityInfo", "Default", new { ActivityID = ActivityID, isok = 1 });
+        }
+
+
+
+
+        public ActionResult ceshi()
+        {
+            return View();
         }
 
     }

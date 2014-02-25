@@ -10,6 +10,7 @@ using Interface;
 using Poco.WebAPI_Poco;
 using Poco.Enum;
 using Web.Models;
+using Business;
 
 namespace Web.Controllers
 {
@@ -201,7 +202,7 @@ namespace Web.Controllers
         /// <param name="ID">显示开始ID 第一次打开传0</param>
         /// <param name="ListCnt">返回列表的条数</param>
         /// <returns></returns>
-        public JsonpResult  GetAdvertorialList_Jsonp(int AMID, int ID, int ListCnt)
+        public JsonpResult GetAdvertorialList_Jsonp(int AMID, int ID, int ListCnt)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             var list = AppAdvertorialModel.GetList(AMID, (int)EnumAdvertorialUType.UserEnd);
@@ -438,6 +439,34 @@ namespace Web.Controllers
             return "True";
         }
 
+        /// <summary>
+        /// 处理转发记录
+        /// </summary>
+        /// <param name="UserID">用户ID</param>
+        /// <param name="AdvertoriaID">资讯类型</param>
+        /// <param name="EnumSocialType">社交类型 枚举 0：微信 1：微信朋友圈  2新浪微博</param>
+        /// <returns></returns>
+        public void HandleForwardCnt(int UserID, int AdvertoriaID, int EnumSocialType)
+        {
+            string str = "update AppAdvertorialOperation set ForwardCnt = (ForwardCnt+1),{2}={3} where AppAdvertorialID = {0} and UserID = {1}";
+            string sql = "";
+            switch (EnumSocialType)
+            {
+                case (int)Poco.Enum.EnumSocialType.SinaWeibo:
+                    sql = string.Format(str, AdvertoriaID, UserID, "ForwardWeiboCnt", "(ForwardWeiboCnt+1)");
+                    break;
+                case (int)Poco.Enum.EnumSocialType.WeiXin:
+                    sql = string.Format(str, AdvertoriaID, UserID, "ForwardWeiXinCnt", "(ForwardWeiXinCnt+1)");
+                    break;
+                case (int)Poco.Enum.EnumSocialType.WeixinFriendCircle:
+                    sql = string.Format(str, AdvertoriaID, UserID, "ForwardFriendCnt", "(ForwardWeiXinCnt+1)");
+                    break;
+            }
+
+            var cmd = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+            cmd.SqlExecute(sql);
+
+        }
 
 
     }

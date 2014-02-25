@@ -70,6 +70,18 @@
             });
         }
 
+        function clickSelectInfo(id) {
+            var src = '@Url.Action("SelecInfo", "AppAdvertorialAccount")';
+            $("#iframeShowSelectInfo").attr("src", src + "?AID=" + id + "&AMID=" + "@ViewBag.AMID");
+            $("#dialogShowSelectInfo").dialog({
+                resizable: false,
+                height: 580,
+                width: 600,
+                modal: true,
+                draggable: false
+            });
+        }
+
         function clickStick(ID, ckb, Sort) {
             $("#AdvertorialID_stick").val(ID);
             if (ckb.checked) {
@@ -167,7 +179,7 @@
                 @if (item.EnumAdverTorialType == (int)Poco.Enum.EnumAdverTorialType.txt)
                 { 
                     <td>
-                        <img style="width: 150px;  cursor:pointer "  onclick="clickInfo(@item.ID)" src="@Url.Content(item.AppShowImagePath ?? "")" />
+                        <img style="width: 150px; margin-top:5px;  cursor:pointer "  onclick="clickInfo(@item.ID)" src="@Url.Content(item.AppShowImagePath ?? "")" />
                     </td>
                     <td style="font-size: 14px" class="operation">
                         <label name="labCbFirst" title="@item.Depict" onclick="clickInfo(@item.ID)" style=" cursor:pointer">
@@ -181,7 +193,7 @@
                     {
                     <td>
                         <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id = item.ContentURL.Substring(item.ContentURL.LastIndexOf('=') + 1) })" target="_blank">
-                            <img style="width: 150px;  cursor:pointer; border:0 "   src="@Url.Content(item.AppShowImagePath ?? "")" /></a>
+                            <img style="width: 150px;  margin-top:5px; cursor:pointer; border:0 "   src="@Url.Content(item.AppShowImagePath ?? "")" /></a>
                     </td>
                     <td style="font-size: 14px" class="operation">
                         <label name="labCbFirst" title="@item.Depict"  style=" cursor:pointer">
@@ -194,7 +206,7 @@
                     else if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Activities)
                     {
                     <td>
-                        <img style="width: 150px;  cursor:pointer "  onclick="clickInfoUrl('@item.ContentURL')" src="@Url.Content(item.AppShowImagePath ?? "")" />
+                        <img style="width: 150px;  margin-top:5px; cursor:pointer "  onclick="clickInfoUrl('@item.ContentURL')" src="@Url.Content(item.AppShowImagePath ?? "")" />
                     </td>
                     <td style="font-size: 14px" class="operation">
                         <label name="labCbFirst" title="@item.Depict" onclick="clickInfoUrl('@item.ContentURL')" style=" cursor:pointer">
@@ -206,7 +218,7 @@
                     { 
                     <td>
                         <a href="@item.ContentURL" target="_blank">
-                            <img style="width: 150px;  cursor:pointer; border:0 "   src="@Url.Content(item.AppShowImagePath ?? "")" /></a>
+                            <img style="width: 150px; margin-top:5px;  cursor:pointer; border:0 "   src="@Url.Content(item.AppShowImagePath ?? "")" /></a>
                     </td>
                     <td style="font-size: 14px" class="operation">
                         <a  href="@item.ContentURL"  target="_blank">
@@ -262,8 +274,8 @@
                 <td class="operation">
                     @Html.ActionLink("修改", "Edit", "AppAdvertorialAccount", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:10px" }, true)
                     @Ajax.ActionLink("删除", "Delete", "AppAdvertorialAccount", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?！','" + Url.Action("Delete", "AppAdvertorialAccount", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
-                    <br />
-                    <a onclick="clickaddress('@item.ID')">查看地址</a>
+                    <br /><a onclick="clickSelectInfo('@item.ID')" style=" width:56px">&nbsp;查看详细</a>
+                    <br /><a onclick="clickaddress('@item.ID')" style=" width:56px">查看地址  </a>
                 </td>
             </tr>
         }
@@ -317,4 +329,9 @@
             <span id="urlAddress" style="font-weight: bold">11</span>
         </label>
     </div>
+</div>
+
+<div id="dialogShowSelectInfo" title="资讯详细" style="display: none; padding: 0px">
+    <iframe id="iframeShowSelectInfo" src="#" style="width: 100%; height: 530px; border: none;
+        overflow: auto"></iframe>
 </div>

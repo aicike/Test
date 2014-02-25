@@ -72,7 +72,7 @@
                 return false;
             });
 
-            
+
 
 
 
@@ -91,6 +91,14 @@
             });
         });
     </script>
+    
+    <style>
+        legend
+        {
+             font-size:14px;
+              font-weight:bold;
+            }
+    </style>
 }
 @model Poco.AccountMain
 <div class="title">
@@ -173,7 +181,7 @@
                     <td>
                         素材库容量(G)：
                     </td>
-                    <td>@Html.TextBoxFor(a => a.FileLimit) 
+                    <td>@Html.TextBoxFor(a => a.FileLimit)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.FileLimit)
                     </td>
@@ -189,7 +197,26 @@
                 </tr>
                 <tr>
                     <td>
-                        IOS用户端下载地址： <br />
+                        APPLogo：
+                    </td>
+                    <td>
+                        <img id="imgAppLogo" style="max-width: 80px; max-height: 80px; float: left" />
+                        <input type="file" id="AppLogoImageFile" name="AppLogoImageFile" />
+                        @Html.TextBoxFor(a => a.AppLogoImagePath, new { style = "width:0px;visibility:hidden" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.AppLogoImagePath)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <br />
+        <fieldset>
+            <legend>IOS用户端信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td width="200px">
+                        IOS用户端下载地址：
+                        <br />
                         例：http://www.xxx.com
                     </td>
                     <td>@Html.TextBoxFor(a => a.IOSDownloadPath)
@@ -197,19 +224,37 @@
                     <td>@Html.ValidationMessageFor(a => a.IOSDownloadPath)
                     </td>
                 </tr>
-                 <tr>
+                <tr>
+                    <td>
+                        IOS用户端证书：
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.IOSClientCertificate, new { style = "display:none" })
+                        <input type="file" id="IOSClientCertificateFile" name="IOSClientCertificateFile" />
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
                     <td>
                         IOS用户端App版本号：
                     </td>
                     <td>
-                         @Html.TextBoxFor(a => a.IOSVersion)
+                        @Html.TextBoxFor(a => a.IOSVersion)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.IOSVersion)
                     </td>
                 </tr>
-                 <tr>
-                    <td>
-                        IOS销售端下载地址： <br />
+            </table>
+        </fieldset>
+        <br />
+        <fieldset>
+            <legend>IOS销售端信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td width="200px">
+                        IOS销售端下载地址：
+                        <br />
                         例：http://www.xxx.com
                     </td>
                     <td>@Html.TextBoxFor(a => a.IOSSellDownloadPath)
@@ -217,24 +262,40 @@
                     <td>@Html.ValidationMessageFor(a => a.IOSDownloadPath)
                     </td>
                 </tr>
-                 <tr>
+                <tr>
                     <td>
-                        IOS销售端App版本号：
+                        IOS销售端证书：
                     </td>
                     <td>
-                         @Html.TextBoxFor(a => a.IOSSellVersion)
+                        @Html.TextBoxFor(a => a.IOSSalestCertificate, new { style = "display:none" })
+                        <input type="file" id="IOSSalestCertificateFile" name="IOSSalestCertificateFile" />
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.IOSVersion)
+                    <td>
                     </td>
                 </tr>
                 <tr>
                     <td>
+                        IOS销售端App版本号：
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.IOSSellVersion)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.IOSVersion)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <br />
+        <fieldset>
+            <legend>Android用户端信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td width="200px">
                         Android用户端安装文件：
                     </td>
                     <td>
-                         @Html.TextBoxFor(a => a.AndroidDownloadPath, new { style="display:none"})
-                        <input type="file" id="AndroidPathFile" name="AndroidPathFile"  />
-                        
+                        @Html.TextBoxFor(a => a.AndroidDownloadPath, new { style = "display:none" })
+                        <input type="file" id="AndroidPathFile" name="AndroidPathFile" />
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.AndroidDownloadPath)
                     </td>
@@ -244,19 +305,24 @@
                         Android用户端版本号：
                     </td>
                     <td>
-                         @Html.TextBoxFor(a => a.AndroidVersion)
+                        @Html.TextBoxFor(a => a.AndroidVersion)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.AndroidVersion)
                     </td>
                 </tr>
+            </table>
+        </fieldset>
+        <br />
+        <fieldset>
+            <legend>Android销售端信息</legend>
+            <table class="tableForm">
                 <tr>
-                    <td>
+                    <td width="200px">
                         Android销售端安装文件：
                     </td>
                     <td>
-                         @Html.TextBoxFor(a => a.AndroidSellDownloadPath, new { style = "display:none" })
-                        <input type="file" id="AndroidSellPathFile" name="AndroidSellPathFile"  />
-                        
+                        @Html.TextBoxFor(a => a.AndroidSellDownloadPath, new { style = "display:none" })
+                        <input type="file" id="AndroidSellPathFile" name="AndroidSellPathFile" />
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.AndroidSellDownloadPath)
                     </td>
@@ -266,27 +332,15 @@
                         Android销售端版本号：
                     </td>
                     <td>
-                         @Html.TextBoxFor(a => a.AndroidSellVersion)
+                        @Html.TextBoxFor(a => a.AndroidSellVersion)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.AndroidSellVersion)
                     </td>
                 </tr>
-                 <tr>
-                    <td>
-                        APPLogo：
-                    </td>
-                    <td>
-                        <img id="imgAppLogo" style="max-width: 80px; max-height: 80px; float: left" />
-                        <input type="file" id="AppLogoImageFile" name="AppLogoImageFile"  />
-                        @Html.TextBoxFor(a => a.AppLogoImagePath, new { style = "width:0px;visibility:hidden" })
-
-                    </td>
-                    <td>@Html.ValidationMessageFor(a => a.AppLogoImagePath)
-                    </td>
-                </tr>
             </table>
         </fieldset>
+        
         <div class="action">
-            <input type="submit" id="btnSubmit" value="保存" class="button"  />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
+            <input type="submit" id="btnSubmit" value="保存" class="button" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
         </div>
     }</div>
