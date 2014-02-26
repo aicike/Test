@@ -473,9 +473,9 @@ namespace Web.Controllers
             appRW.ContentURL = "http://" + SystemConst.WebUrl + "/Default/Questionnaire?surveyMainID=" + id;
             appRW.EnumAdverURLType = (int)EnumAdverURLType.Survey;
             appRW.AccountMainID = LoginAccount.CurrentAccountMainID;
-            appRW.AppShowImagePath = "~/Images/Survey.png";
-            appRW.MainImagPath = "~/Images/Survey.png";
-            appRW.MinImagePath = "~/Images/Survey_MINI.png";
+            appRW.AppShowImagePath = "~/Images/Survey.jpg";
+            appRW.MainImagPath = "~/Images/Survey.jpg";
+            appRW.MinImagePath = "~/Images/Survey_MINI.jpg";
             appRW.Depict = main.SurveyRemarks;
             appRW.EnumAdverTorialType = 1;
             appRW.EnumAdvertorialUType = client;

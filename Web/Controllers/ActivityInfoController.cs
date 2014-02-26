@@ -155,9 +155,9 @@ namespace Web.Controllers
             appRW.ContentURL = "http://" + SystemConst.WebUrl + "/Default/ActivityInfo?ActivityID=" + id;
             appRW.EnumAdverURLType = (int)EnumAdverURLType.Activities;
             appRW.AccountMainID = LoginAccount.CurrentAccountMainID;
-            appRW.AppShowImagePath = "~/Images/ActivityInfo.png";
-            appRW.MainImagPath = "~/Images/ActivityInfo.png";
-            appRW.MinImagePath = "~/Images/ActivityInfo_MINI.png";
+            appRW.AppShowImagePath = "~/Images/ActivityInfo.jpg";
+            appRW.MainImagPath = "~/Images/ActivityInfo.jpg";
+            appRW.MinImagePath = "~/Images/ActivityInfo_MINI.jpg";
             appRW.Depict = main.Title;
             appRW.EnumAdverTorialType = (int)EnumAdverTorialType.url;
             appRW.EnumAdvertorialUType = client;

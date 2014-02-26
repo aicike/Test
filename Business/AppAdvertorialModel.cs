@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+using Injection;
 
 namespace Business
 {
@@ -154,7 +155,7 @@ namespace Business
                 }
 
                 //缩略图mini
-                Tool.SuperGetPicThumbnail(imageshowPath, imageminiPath, 70, 120, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+                Tool.SuperGetPicThumbnail(imageshowPath, imageminiPath, 70, 200, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
 
                 appadvertorial.MainImagPath = path + imageName;
                 appadvertorial.AppShowImagePath = path + imageshowName;
@@ -206,7 +207,8 @@ namespace Business
                 string sql = string.Format("update AppAdvertorial set Sort=(Sort-1) where AccountMainID = {0} and EnumAdvertorialUType={1} and stick=1 and sort>{2}", appadivertorial.AccountMainID, AdverTorialType, appadivertorial.Sort);
                 base.SqlExecute(sql);
             }
-
+            var AppAdvertorialOperation = Factory.Get<IAppAdvertorialOperationModel>(SystemConst.IOC_Model.AppAdvertorialOperationModel);
+            AppAdvertorialOperation.DelOperation(ID);
             return base.CompleteDelete(ID);
         }
 
@@ -345,7 +347,7 @@ namespace Business
                     }
 
                     //缩略图mini
-                    Tool.SuperGetPicThumbnail(imageshowPath, imageminiPath, 70, 120, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+                    Tool.SuperGetPicThumbnail(imageshowPath, imageminiPath, 70, 200, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
 
                     if (appadvertorials.MinImagePath.Substring(appadvertorials.MinImagePath.LastIndexOf('/')) != "/Survey.png" && appadvertorials.MinImagePath.Substring(appadvertorials.MinImagePath.LastIndexOf('/')) != "/ActivityInfo.png")
                     {
