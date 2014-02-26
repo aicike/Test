@@ -157,7 +157,7 @@ namespace Web.Controllers
             appRW.AccountMainID = LoginAccount.CurrentAccountMainID;
             appRW.AppShowImagePath = "~/Images/ActivityInfo.png";
             appRW.MainImagPath = "~/Images/ActivityInfo.png";
-            appRW.MinImagePath = "~/Images/ActivityInfo.png";
+            appRW.MinImagePath = "~/Images/ActivityInfo_MINI.png";
             appRW.Depict = main.Title;
             appRW.EnumAdverTorialType = (int)EnumAdverTorialType.url;
             appRW.EnumAdvertorialUType = client;

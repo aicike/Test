@@ -152,6 +152,7 @@
     <Compile Include="UserModel.cs" />
     <Compile Include="UserLoginInfoModel.cs" />
     <Compile Include="OrderUserInfoModel.cs" />
+    <Compile Include="UserTagModel.cs" />
     <Compile Include="VIPInfoExpenseDetailModel.cs" />
     <Compile Include="VipInfoModel.cs" />
   </ItemGroup>

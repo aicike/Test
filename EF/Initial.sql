@@ -593,6 +593,16 @@ INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  (
 ------------------------------[Account_User]---------------------------------
 --INSERT INTO dbo.Account_User( SystemStatus, AccountID, UserID,GroupID ) VALUES  ( 0,1,1,1)
 
+-------------------------------[UserTag]-----------------------------------
+INSERT INTO dbo.UserTag (ID,SystemStatus,TagName) VALUES (1,0,'新用户')
+INSERT INTO dbo.UserTag (ID,SystemStatus,TagName) VALUES (2,0,'确认户型')
+INSERT INTO dbo.UserTag (ID,SystemStatus,TagName) VALUES (3,0,'已预订')
+INSERT INTO dbo.UserTag (ID,SystemStatus,TagName) VALUES (4,0,'已成交')
+
+
+
+
+
 ------------------------------Other---------------------------------
 CREATE INDEX IX_HostName ON AccountMain (HostName)
 

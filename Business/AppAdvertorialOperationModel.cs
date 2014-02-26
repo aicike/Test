@@ -18,6 +18,11 @@ namespace Business
         public Result AddOperation(AppAdvertorialOperation aao)
         {
             Result result = new Result();
+            var opration = List().Where(a => a.AppAdvertorialID == aao.AppAdvertorialID && a.UserID == aao.UserID);
+            if (opration.Count() > 0)
+            {
+                return null;
+            }
             return base.Add(aao);
         }
 

@@ -413,8 +413,8 @@ namespace Web.Controllers
                 ViewBag.Utype = imtimely_Apptype;
             }
             //判断报名是否结束
-            DateTime tdate = new DateTime();
-            if (tdate > Activity.EnrollEndDate)
+            
+            if (DateTime.Now > Activity.EnrollEndDate)
             {
                 ViewBag.IsJS = "true";
             }

@@ -196,7 +196,7 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// 获取软文显示列表
+        /// 获取软文显示列表（微网站）
         /// </summary>
         /// <param name="AccountID">售楼部ID</param>
         /// <param name="ID">显示开始ID 第一次打开传0</param>

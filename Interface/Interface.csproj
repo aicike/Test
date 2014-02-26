@@ -93,6 +93,7 @@
     <Compile Include="IUserDeliveryAddressModel.cs" />
     <Compile Include="IUserLoginInfoModel.cs" />
     <Compile Include="IUserModel.cs" />
+    <Compile Include="IUserTagModel.cs" />
     <Compile Include="IVIPInfoExpenseDetailModel.cs" />
     <Compile Include="IVipInfoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
