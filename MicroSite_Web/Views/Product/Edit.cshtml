@@ -248,7 +248,7 @@
                             { 
                             <div>
                                 <div style="float: left; max-width: 110px; margin: 2px 2px">
-                                    <img id="imgLogo@(i + 1)" style="max-width: 100px; max-height: 100px; float: left"  src = "@(Poco.SystemConst.WebUrlIP + Url.Content(pimgList[i].PImgOriginal))"/>
+                                    <img id="imgLogo@(i + 1)" style="max-width: 100px; max-height: 100px; float: left"  src = "@Url.Content(pimgList[i].PImgOriginal,true)"/>
                                 </div>
                                 <div style="float: left; width: 110px">
                                     <input id="file_upload@(i + 1)" name="file_upload" type="file" multiple="false" />

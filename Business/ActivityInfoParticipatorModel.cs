@@ -44,6 +44,23 @@ namespace Business
         }
 
         /// <summary>
+        /// 根据Email 活动ID 判断是否报过名
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <param name="AID"></param>
+        /// <returns></returns>
+        public Result GetUserIsSignUP3(string Email, int AID)
+        {
+            var acinfo = List().Where(a => a.ActivityInfoID == AID && a.Email == Email);
+            Result result = new Result();
+            if (acinfo.Count() > 0)
+            {
+                result.HasError = true;
+            }
+            return result;
+        }
+
+        /// <summary>
         /// 根据活动ID获取表面人信息
         /// </summary>
         /// <param name="ActivityID"></param>

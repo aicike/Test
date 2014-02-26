@@ -1,0 +1,153 @@
+﻿@{
+    ViewBag.Title = "SelecInfo";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+    var aao = ViewBag.aao as Poco.AppAdvertorial;
+}
+@model PagedList<Poco._B_AdvertoriaOperation>
+@section head{
+    <style>
+        body
+        {
+            background-image: none;
+        }
+        
+        .divtitle
+        {
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .tablcnt
+        {
+            width: 100%;
+            border-bottom: 1px solid #dbdbdb;
+            border-left: 1px solid #dbdbdb;
+            line-height: 25px;
+            font-size: 14px;
+        }
+        .tablcnt td
+        {
+            border-top: 1px solid #dbdbdb;
+            border-right: 1px solid #dbdbdb;
+            padding: 5px 10px;
+        }
+        .divList
+        {
+            padding: 10px;
+            font-size: 14px;
+        }
+        
+        .tableList td
+        {
+            height: auto;
+        }
+    </style>
+    <script>
+        $(function () {
+
+            $("#type").val(@ViewBag.type);
+        });
+    </script>
+}
+<div class="divtitle">
+    @aao.Title
+</div>
+<table class="tablcnt" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            浏览总次数: @aao.BrowseCnt
+        </td>
+        <td>
+            转发总次数: @aao.AppAdvertorialOperation.Sum(a => a.ForwardCnt)
+        </td>
+    </tr>
+</table>
+@using (Html.BeginForm("SelecInfo", "AppAdvertorialAccount", new { HostName = ViewBag.HostName, AID = ViewBag.AID, AMID = ViewBag.AMID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="divList">
+        阅读状态：
+        <select id="type" name="type">
+            <option value="0">已读</option>
+            <option value="1">未读</option>
+        </select>
+        <input type="submit" id="btnSubmit" value="查看" class="button" style="margin-left: 20px;
+            height: 30px" />
+    </div>
+}
+<table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
+    <tr>
+        <th>
+            用户姓名
+        </th>
+        <th>
+            联系电话
+        </th>
+        <th>
+            转发总次数
+        </th>
+        <th>
+            新浪微博
+        </th>
+        <th>
+            微信
+        </th>
+        <th>
+            朋友圈
+        </th>
+        <th>
+            是否已读
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.name
+            </td>
+            <td>
+                @item.phone
+            </td>
+            <td>
+                @item.forwardcnt 次
+            </td>
+               <td>
+                @item.ForwardWeiboCnt 次
+            </td>
+            <td>
+                @item.ForwardWeiXinCnt 次
+            </td>
+            <td>
+                @item.ForwardFriendCnt 次
+            </td>
+            <td>
+                @if (ViewBag.type == 0)
+                {
+                    @:已读
+            }
+                else
+                {
+                    @:未读
+                            }
+            </td>
+        </tr>
+    }
+</table>
+<div class="pages" style="margin-bottom: 5px; margin-top: 10px;">
+    @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+</div>

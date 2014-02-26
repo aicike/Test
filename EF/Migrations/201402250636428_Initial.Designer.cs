@@ -13,7 +13,7 @@ namespace EF.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201402200731240_Initial"; }
+            get { return "201402250636428_Initial"; }
         }
         
         string IMigrationMetadata.Source

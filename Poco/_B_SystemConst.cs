@@ -14,6 +14,8 @@ namespace Poco
         public static string IntegrationPathBase = System.Configuration.ConfigurationManager.AppSettings["IntegrationBase"];
         public static string IntegrationPathAccount = System.Configuration.ConfigurationManager.AppSettings["IntegrationAccount"];
         public static string IntegrationPathFileLibrary = System.Configuration.ConfigurationManager.AppSettings["IntegrationLibrary"];
+        public static string IntegrationOrderTemporary = System.Configuration.ConfigurationManager.AppSettings["IntegrationOrderTemporary"];
+        
 
         /// <summary>
         /// 微网站是否集成web项目

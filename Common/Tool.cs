@@ -7,6 +7,7 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Web;
+using Poco;
 
 namespace Common
 {
@@ -297,7 +298,7 @@ namespace Common
 
                     }
                 }
-               
+
 
                 bmp = new Bitmap(thumbWidth, thumbHeight);
                 //从Bitmap创建一个System.Drawing.Graphics对象，用来绘制高质量的缩小图。
@@ -440,7 +441,7 @@ namespace Common
 
                     }
                 }
-               
+
 
                 bmp = new Bitmap(thumbWidth, thumbHeight);
                 //从Bitmap创建一个System.Drawing.Graphics对象，用来绘制高质量的缩小图。
@@ -666,7 +667,7 @@ namespace Common
                 int ToX1 = x1;
                 int ToY1 = y1;
 
-               
+
                 int YW = sourceBitmap.Width;
                 int YH = sourceBitmap.Height;
 
@@ -696,7 +697,7 @@ namespace Common
 
 
                 //resultBitmap.Save(SavePath, sourceBitmap.RawFormat);
-                
+
 
 
                 ImageFormat tFormat = image.RawFormat;
@@ -734,7 +735,7 @@ namespace Common
             }
             finally
             {
-              
+
                 if (ep != null)
                 {
                     ep.Dispose();
@@ -761,7 +762,7 @@ namespace Common
         /// <returns></returns>
         public static string GetTemporaryPath()
         {
-            string Path = "/File/Temporary/"+DateTime.Now.ToString("yyyy-MM-dd");
+            string Path = "/File/Temporary/" + DateTime.Now.ToString("yyyy-MM-dd");
             string TempPath = HttpContext.Current.Server.MapPath(Path);
             if (Directory.Exists(TempPath) == false)
             {
@@ -771,13 +772,24 @@ namespace Common
         }
 
         /// <summary>
-        /// 获取售楼部临时文件夹位置
+        /// 获取售楼部临时文件夹位置(提交的订单图片路径)
         /// </summary>
         /// <returns></returns>
         public static string GetAMTemporaryPath(int AMID)
         {
-            string Path = "/File/" + AMID + "/Temporary/" + DateTime.Now.ToString("yyyy-MM");
-            string TempPath = HttpContext.Current.Server.MapPath(Path);
+            string Path = Path = "/File/" + AMID + "/Temporary/" + DateTime.Now.ToString("yyyy-MM"); ;
+            string TempPath = "";
+            //集成微网站
+            if (SystemConst.IsIntegrationWebProject)
+            {
+                TempPath = string.Format(SystemConst.IntegrationOrderTemporary, AMID) + DateTime.Now.ToString("yyyy-MM");
+            }
+            //不是集成微网站
+            else
+            {
+                TempPath = HttpContext.Current.Server.MapPath(Path);
+
+            }
             if (Directory.Exists(TempPath) == false)
             {
                 Directory.CreateDirectory(TempPath);

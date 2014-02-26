@@ -163,6 +163,15 @@ namespace Poco
 
         public int? ParentAccountMainID { get; set; }
 
+        [Display(Name = "IOS 用户端证书")]
+        public string IOSClientCertificate { get; set; }
+
+        [Display(Name = "IOS 销售端证书")]
+        public string IOSSalestCertificate { get; set; }
+
+
+
+
         public virtual AccountMain ParentAccountMain { get; set; }
 
         #endregion

@@ -22,10 +22,17 @@ namespace Poco
         [Display(Name = "用户ID")]
         public int UserID { get; set; }
 
-        [Display(Name = "转发次数")]
+        [Display(Name = "转发总次数")]
         public int ForwardCnt { get; set; }
 
+        [Display(Name = "转发微信次数")]
+        public int ForwardWeiXinCnt { get; set; }
 
+        [Display(Name = "转发微博次数")]
+        public int ForwardWeiboCnt { get; set; }
+
+        [Display(Name = "转发朋友圈次数")]
+        public int ForwardFriendCnt { get; set; }
 
     }
 }

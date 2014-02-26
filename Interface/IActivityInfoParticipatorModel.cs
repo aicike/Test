@@ -32,5 +32,13 @@ namespace Interface
         /// <param name="AID"></param>
         /// <returns></returns>
         Result GetUserIsSignUP2(string phone, int AID);
+
+         /// <summary>
+        /// 根据Email 活动ID 判断是否报过名
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <param name="AID"></param>
+        /// <returns></returns>
+        Result GetUserIsSignUP3(string Email, int AID);
     }
 }

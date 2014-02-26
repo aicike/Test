@@ -79,6 +79,8 @@ namespace EF.Migrations
                         CreateTime = c.DateTime(nullable: false),
                         IsOrganization = c.Boolean(),
                         ParentAccountMainID = c.Int(),
+                        IOSClientCertificate = c.String(),
+                        IOSSalestCertificate = c.String(),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.LookupOption", t => t.AccountStatusID)
@@ -1039,6 +1041,7 @@ namespace EF.Migrations
                         UserID = c.Int(),
                         Phone = c.String(nullable: false, maxLength: 15),
                         Name = c.String(maxLength: 30),
+                        Email = c.String(maxLength: 30),
                         JoinDateTime = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
@@ -1081,6 +1084,9 @@ namespace EF.Migrations
                         EnumAdvertorialUType = c.Int(nullable: false),
                         UserID = c.Int(nullable: false),
                         ForwardCnt = c.Int(nullable: false),
+                        ForwardWeiXinCnt = c.Int(nullable: false),
+                        ForwardWeiboCnt = c.Int(nullable: false),
+                        ForwardFriendCnt = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AppAdvertorial", t => t.AppAdvertorialID)

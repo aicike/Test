@@ -108,9 +108,10 @@
                     SetUserID(@amid,result.Entity);
                     sessionStorage.setItem("userID",result.Entity);
                     url_index=url_index+"&userID="+result.Entity;
+                    localStorage.IsAutoLogin=1;
                     showSucceed("恭喜您成功注册。",url_index);
                 }
-            }, "text");
+            }, "json");
         });
 
         $("#btnRegister").click(function () {

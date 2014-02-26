@@ -16,11 +16,11 @@ namespace Interface
         AccountMain Get_Permission(int id, int loginSystemUserID);
 
         Result Delete_Permission(int id, int loginSystemUserID);
-        
+
         /// <summary>
         /// 平台添加方法
         /// </summary>
-        Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile,HttpPostedFileBase AppLogoImageFile);
+        Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, HttpPostedFileBase IOSClientCertificateFile, HttpPostedFileBase IOSSalestCertificateFile);
 
         /// <summary>
         /// 组织，集团自己添加方法
@@ -30,7 +30,7 @@ namespace Interface
         /// <summary>
         /// 平台修改方法
         /// </summary>
-        Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, int loginSystemUserID = 0);
+        Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, HttpPostedFileBase IOSClientCertificateFile, HttpPostedFileBase IOSSalestCertificateFile, int loginSystemUserID = 0);
 
         /// <summary>
         /// 组织，集团自己修改方法

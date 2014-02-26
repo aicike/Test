@@ -176,7 +176,7 @@ namespace Web.Controllers
             }
             else
             {
-                bcf.ImgFIlePath = Url.Content(classify.ImgPath);
+                bcf.ImgFIlePath = Url.Content(classify.ImgPath,true);
                 bcf.ImgPath = classify.ImgPath;
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(bcf);

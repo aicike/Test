@@ -31,6 +31,8 @@ namespace Web.Controllers
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-销售端资讯", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
+            ViewBag.UrlAddress = SystemConst.WebUrl;
+            ViewBag.AMID = LoginAccount.CurrentAccountMainID;
             return View(list);
         }
 
@@ -250,6 +252,29 @@ namespace Web.Controllers
             {
                 return "false";
             }
+        }
+
+        //查看详细信息
+
+        [AllowCheckPermissions(false)]
+        public ActionResult SelecInfo(int? id, int AID, int AMID, int? type)
+        {
+            var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
+            ViewBag.aao = AppAdvertorialModel.GetInfo(AID, AMID);
+
+            if (!type.HasValue)
+            {
+                type = 0;
+            }
+            //已读用户
+
+            var AppAdvertorialOperationModel = Factory.Get<IAppAdvertorialOperationModel>(SystemConst.IOC_Model.AppAdvertorialOperationModel);
+            var aaoperation = AppAdvertorialOperationModel.getAOlist_account(AID, type.Value).ToPagedList(id ?? 1, 15);
+
+            ViewBag.AID = AID;
+            ViewBag.AMID = AMID;
+            ViewBag.type = type.Value;
+            return View(aaoperation);
         }
 
 

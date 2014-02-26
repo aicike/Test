@@ -27,10 +27,10 @@ namespace Web.Areas.System.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePathFile, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile,HttpPostedFileBase AppLogoImageFile)
+        public ActionResult AddAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePathFile, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, HttpPostedFileBase IOSClientCertificateFile, HttpPostedFileBase IOSSalestCertificateFile)
         {
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
-            var result = accountMainModel.Add(accountMain, LogoImagePathFile, LoginSystemUser.ID, AndroidPathFile, AndroidSellPathFile, AppLogoImageFile);
+            var result = accountMainModel.Add(accountMain, LogoImagePathFile, LoginSystemUser.ID, AndroidPathFile, AndroidSellPathFile, AppLogoImageFile, IOSClientCertificateFile, IOSSalestCertificateFile);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);
@@ -46,10 +46,10 @@ namespace Web.Areas.System.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePathFile, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile)
+        public ActionResult EditAccountMain(AccountMain accountMain, HttpPostedFileBase LogoImagePathFile, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, HttpPostedFileBase IOSClientCertificateFile, HttpPostedFileBase IOSSalestCertificateFile)
         {
             IAccountMainModel accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
-            var result = accountMainModel.Edit_Permission(accountMain, LogoImagePathFile, AndroidPathFile, AndroidSellPathFile, AppLogoImageFile, LoginSystemUser.ID);
+            var result = accountMainModel.Edit_Permission(accountMain, LogoImagePathFile, AndroidPathFile, AndroidSellPathFile, AppLogoImageFile, IOSClientCertificateFile, IOSSalestCertificateFile, LoginSystemUser.ID);
             if (result.HasError)
             {
                 throw new ApplicationException(result.Error);

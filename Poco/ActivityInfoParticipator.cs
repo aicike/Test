@@ -31,6 +31,10 @@ namespace Poco
         [StringLength(30, ErrorMessage = "长度小于30")]
         public string Name { get; set; }
 
+        [Display(Name = "用户邮箱")]
+        [StringLength(30, ErrorMessage = "长度小于30")]
+        public string Email { get; set; }
+
         [Display(Name = "参与时间")]
         public DateTime JoinDateTime { get; set; }
     }

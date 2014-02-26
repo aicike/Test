@@ -61,6 +61,7 @@ namespace System.Web.Mvc
         {
             string filePath = HttpContext.Current.Server.MapPath(contentPath);
             string url = null;
+            contentPath=contentPath.Replace("~","");
             if (File.Exists(filePath) == false)
             {
                 url = Url.Content(newFilePath);

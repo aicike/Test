@@ -123,7 +123,7 @@ namespace MicroSite_Web.Controllers
                         }
                         if (product.ProductImg.FirstOrDefault() != null)
                         {
-                            row["ImgPath"] = Url.Content(product.ProductImg.FirstOrDefault().PImgMini);
+                            row["ImgPath"] = Url.Content(product.ProductImg.FirstOrDefault().PImgMini,true);
                         }
                         else
                         {
