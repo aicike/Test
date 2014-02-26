@@ -234,7 +234,7 @@ namespace Poco
             public const string AccountMain_ServiceModel = "AccountMain_ServiceModel";
 
             public const string AppAdvertorialOperationModel = "AppAdvertorialOperationModel";
-            
+            public const string UserTagModel = "UserTagModel";
 
 
         }

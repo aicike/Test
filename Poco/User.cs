@@ -61,6 +61,10 @@ namespace Poco
         [Display(Name = "创建日期")]
         public DateTime CreateDate { get; set; }
 
+
+        public int? UserTagID { get; set; }
+        public virtual UserTag UserTag { get; set; }
+
         /// <summary>
         /// 业务字段，不会再数据库中生成
         /// 当前被哪个AccountID操作
@@ -75,6 +79,8 @@ namespace Poco
         public int? Business_GroupID { get; set; }
 
         public int UserLoginInfoID { get; set; }
+
+
 
         public virtual UserLoginInfo UserLoginInfo { get; set; }
 

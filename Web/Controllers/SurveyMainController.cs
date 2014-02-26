@@ -475,7 +475,7 @@ namespace Web.Controllers
             appRW.AccountMainID = LoginAccount.CurrentAccountMainID;
             appRW.AppShowImagePath = "~/Images/Survey.png";
             appRW.MainImagPath = "~/Images/Survey.png";
-            appRW.MinImagePath = "~/Images/Survey.png";
+            appRW.MinImagePath = "~/Images/Survey_MINI.png";
             appRW.Depict = main.SurveyRemarks;
             appRW.EnumAdverTorialType = 1;
             appRW.EnumAdvertorialUType = client;

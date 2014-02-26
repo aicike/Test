@@ -26,15 +26,15 @@
                     头像:
                 </td>
                 <td>
-                   @if (string.IsNullOrEmpty(Model.UserLoginInfo.HeadImagePath) == false)
-                        { 
-                            <img style="max-width:80px;max-height:80px; float: left" src="@Url.Content(Model.UserLoginInfo.HeadImagePath)" />
-                        }
-                        else
-                        { 
-                            <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
+                    @if (string.IsNullOrEmpty(Model.UserLoginInfo.HeadImagePath) == false)
+                    { 
+                        <img style="max-width:80px;max-height:80px; float: left" src="@Url.Content(Model.UserLoginInfo.HeadImagePath)" />
+                    }
+                    else
+                    { 
+                        <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
                             
-                        }
+                    }
                 </td>
                 <td>
                 </td>
@@ -69,19 +69,35 @@
                 <td>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    用户标签:
+                </td>
+                <td>
+                    @if (Model.UserTagID.HasValue)
+                    { 
+                        @Model.UserTag.TagName
+                    }
+                    else
+                    { 
+                        @:新用户
+                    }
+                </td>
+                <td>
+                </td>
+            </tr>
         </table>
     </fieldset>
     <div class="action">
-       <input type="button" class="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
+        <input type="button" class="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
     </div>
 </div>
 <div class="bodyRight">
-<ul class="ulList" id="ulGroup">
-
+    <ul class="ulList" id="ulGroup">
         <li><a href="@Url.Action("Index", "InstantMes", new { HostName = ViewBag.HostName })">
             销售消息 </a></li>
         <li>@Html.ActionLink("销售与客户管理", "Index", "SalesMessage", new { HostName = ViewBag.HostName }, null, true)
-            </li>
+        </li>
         <li style="height: 10px; background-color: #f0f0f0; border-bottom: 1px solid #d3d3d3;
             border-top: 1px solid #d3d3d3"></li>
         @foreach (var item in groupList)
@@ -98,7 +114,6 @@
             }
         }
     </ul>
-    
 </div>
 <div style="clear: both">
 </div>

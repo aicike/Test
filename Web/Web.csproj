@@ -258,6 +258,7 @@
     <Content Include="File\LoginPageShow\System\7.jpg" />
     <Content Include="Images\404-2.png" />
     <Content Include="Images\ActivityInfo.png" />
+    <Content Include="Images\ActivityInfo_MINI.png" />
     <Content Include="Images\android.png" />
     <Content Include="Images\AppDefault.png" />
     <Content Include="Images\AppLogo.png" />
@@ -291,6 +292,7 @@
     <Content Include="Images\sliders\thumbs\slider-1-5-thumb.jpg" />
     <Content Include="Images\Start.png" />
     <Content Include="Images\Survey.png" />
+    <Content Include="Images\Survey_MINI.png" />
     <Content Include="Images\table.jpg" />
     <Content Include="Images\Unread.png" />
     <Content Include="Images\m1.png" />

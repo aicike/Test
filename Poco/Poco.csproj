@@ -84,6 +84,7 @@
     <Compile Include="ProductImg.cs" />
     <Compile Include="ReportBody.cs" />
     <Compile Include="ReportFormPower.cs" />
+    <Compile Include="UserTag.cs" />
     <Compile Include="_B_AdvertoriaOperation.cs" />
     <Compile Include="_Service.cs" />
     <Compile Include="SMS.cs" />

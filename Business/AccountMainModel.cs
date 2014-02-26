@@ -517,11 +517,12 @@ namespace Business
                     }
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                     var CertificateName = IOSClientCertificateFile.FileName.GetFileName();
+                    var fileName = string.Format("{0}_{1}_{2}", token, com.CreateRandom("", 5), CertificateName);
                     var basePath = HttpContext.Current.Server.MapPath(string.Format(SystemConst.Business.PathBase, accountMain.ID));
-                    var androidSellPath = string.Format("{0}/{1}_{2}_{3}", basePath, token, com.CreateRandom("", 5), CertificateName);
+                    var androidSellPath = string.Format("{0}/{1}", basePath, fileName);
 
                     IOSClientCertificateFile.SaveAs(androidSellPath);
-                    accountMain.IOSClientCertificate = string.Format(SystemConst.Business.PathBase, accountMain.ID) + CertificateName;
+                    accountMain.IOSClientCertificate = string.Format(SystemConst.Business.PathBase, accountMain.ID) + fileName;
                 }
                 //IOS销售端证书
                 if (result.HasError == false && IOSSalestCertificateFile != null)
@@ -537,11 +538,12 @@ namespace Business
                     }
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                     var CertificateName = IOSSalestCertificateFile.FileName.GetFileName();
+                    var fileName = string.Format("{0}_{1}_{2}", token, com.CreateRandom("", 5), CertificateName);
                     var basePath = HttpContext.Current.Server.MapPath(string.Format(SystemConst.Business.PathBase, accountMain.ID));
-                    var androidSellPath = string.Format("{0}/{1}_{2}_{3}", basePath, token, com.CreateRandom("", 5), CertificateName);
+                    var androidSellPath = string.Format("{0}/{1}_{2}_{3}", basePath, fileName);
 
                     IOSSalestCertificateFile.SaveAs(androidSellPath);
-                    accountMain.IOSSalestCertificate = string.Format(SystemConst.Business.PathBase, accountMain.ID) + CertificateName;
+                    accountMain.IOSSalestCertificate = string.Format(SystemConst.Business.PathBase, accountMain.ID) + fileName;
                 }
 
 

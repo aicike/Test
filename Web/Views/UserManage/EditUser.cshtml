@@ -2,8 +2,23 @@
     
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
     var groupList = ViewBag.GroupList as List<Poco.Group>;
+
+    var uasertag = ViewBag.UserTag as List<Poco.UserTag>;
     var hostName = ViewBag.HostName;
     ViewBag.Menu = Poco.SystemConst.Menu.UserManage;
+}
+@section head{
+    <script type="text/javascript">
+        $(function () {
+            var userTag = "@Model.UserTagID"
+            if (userTag == undefined || userTag == "") {
+                $("#UserTagID").val("1");
+            }
+            else {
+                $("#UserTagID").val(userTag);
+            }
+        });
+    </script>
 }
 @model Poco.User
 <div class="title">
@@ -13,7 +28,7 @@
         <li><a href="@Url.Action("Index", "InstantMes", new { HostName = ViewBag.HostName })">
             销售消息 </a></li>
         <li>@Html.ActionLink("销售与客户管理", "Index", "SalesMessage", new { HostName = ViewBag.HostName }, null, true)
-            </li>
+        </li>
         <li style="height: 10px; background-color: #f0f0f0; border-bottom: 1px solid #d3d3d3;
             border-top: 1px solid #d3d3d3"></li>
         @foreach (var item in groupList)
@@ -89,6 +104,21 @@
                     <td class="tdField">@Html.TextBoxFor(a => a.IdentityCard)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.IdentityCard)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        标签
+                    </td>
+                    <td class="tdField">
+                        <select name="UserTagID" id="UserTagID">
+                            @foreach (var item in uasertag)
+                            {
+                                <option value="@item.ID">@item.TagName</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
                     </td>
                 </tr>
             </table>

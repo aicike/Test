@@ -93,6 +93,9 @@ namespace Web.Controllers
             var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
             var user = userModel.Get(userID);
 
+            var usertagModel = Factory.Get<IUserTagModel>(SystemConst.IOC_Model.UserTagModel);
+            ViewBag.UserTag = usertagModel.List();
+
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "用户管理-修改用户信息", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;

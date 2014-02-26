@@ -43,6 +43,7 @@
   <object id="MenuOptionModel" type="Business.MenuOptionModel" parent="EFModel" singleton="false"></object>
   <object id="MenuModel" type="Business.MenuModel" parent="EFModel" singleton="false"></object>
   <object id="UserModel" type="Business.UserModel" parent="EFModel" singleton="false"></object>
+  <object id="UserTagModel" type="Business.UserTagModel" parent="EFModel" singleton="false"></object>
   <object id="Account_UserModel" type="Business.Account_UserModel" parent="EFModel" singleton="false"></object>
   <object id="AccountMainHousesModel" type="Business.AccountMainHousesModel" parent="EFModel" singleton="false"></object>
   <object id="AccountMainHouseInfoModel" type="Business.AccountMainHouseInfoModel" parent="EFModel" singleton="false"></object>
@@ -82,7 +83,7 @@
   <object id="SurveyOptionModel" type="Business.SurveyOptionModel" parent="EFModel" singleton="false"></object>
   <object id="AppAdvertorialOperationModel" type="Business.AppAdvertorialOperationModel" parent="EFModel" singleton="false"></object>
   
-  
+
   <object id="Push_IOS" type="Business.Push_IOS" singleton="false">
   </object>
   <object id="Push_Getui" type="Business.Push_Getui" singleton="false">
