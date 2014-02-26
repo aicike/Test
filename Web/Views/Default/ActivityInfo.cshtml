@@ -38,7 +38,7 @@
             var name = $('#userName').val();
             var phone = $('#userPhone').val();
             var email = $('#userEmail').val();
-            
+
             if (name == undefined || name == "") {
                 alert("姓名不能为空");
                 return false;
@@ -110,7 +110,7 @@
             font-size: 12px;
             color: #aaaaab;
         }
-         .divpcnt
+        .divpcnt
         {
             padding: 10px 0px 10px 0px;
             font-size: 12px;
@@ -162,54 +162,83 @@
             <div class="divDate">
                 报名截止日期:@Model.EnrollEndDate.ToString("yyyy-MM-dd")
             </div>
+            <div>
+                @if (Model.Status == 1)
+                { 
+                    <a href="#" data-role="button" data-theme="b">报名已截止 感谢您的参与</a> 
+                }
+                else if (ViewBag.IsJS == "true")
+                {
+                    <a href="#" data-role="button" data-theme="b">报名已截止 感谢您的参与</a> 
+                }
+                else
+                {
+                    if (ViewBag.isSignUP == "true")
+                    {
+                    <a href="#" data-role="button" data-theme="b">您已经报过名啦</a> 
+                    }
+                    else if (ViewBag.IsMaxCnt == "true")
+                    {
+                    <a href="#" data-role="button" data-theme="b">报名人额已满 感谢您的参与</a> 
+                    }
+                    else
+                    {
+                    <a href="#shwoSubmit" data-rel="popup" data-position-to="window" data-role="button"
+                        data-theme="b">我要报名</a> 
+                    }
+                }
+            </div>
+            <br />
             <div class="divRemarks">
                 @Html.Raw(Model.Remarks)
             </div>
             <div class="divpcnt">
                 已有 @Model.ActivityInfoParticipators.Count() 人报名
             </div>
-
-            @if (Model.Status == 1)
-            { 
-                <a href="#" data-role="button" data-theme="b">报名已截止 感谢您的参与</a> 
-            }
-            else if (ViewBag.IsJS == "true")
-            {
-                <a href="#" data-role="button" data-theme="b">报名已截止 感谢您的参与</a> 
-            }
-            else
-            {
-                if (ViewBag.isSignUP == "true")
-                {
-                <a href="#" data-role="button" data-theme="b">您已经报过名啦</a> 
+            <div>
+                @if (Model.Status == 1)
+                { 
+                    <a href="#" data-role="button" data-theme="b">报名已截止 感谢您的参与</a> 
                 }
-                else if( ViewBag.IsMaxCnt == "true")
+                else if (ViewBag.IsJS == "true")
                 {
-                 <a href="#" data-role="button" data-theme="b">报名人额已满 感谢您的参与</a> 
+                    <a href="#" data-role="button" data-theme="b">报名已截止 感谢您的参与</a> 
                 }
                 else
                 {
-                <a href="#shwoSubmit" data-rel="popup" data-position-to="window" data-role="button"
-                    data-theme="b">我要报名</a> 
+                    if (ViewBag.isSignUP == "true")
+                    {
+                    <a href="#" data-role="button" data-theme="b">您已经报过名啦</a> 
+                    }
+                    else if (ViewBag.IsMaxCnt == "true")
+                    {
+                    <a href="#" data-role="button" data-theme="b">报名人额已满 感谢您的参与</a> 
+                    }
+                    else
+                    {
+                    <a href="#shwoSubmit" data-rel="popup" data-position-to="window" data-role="button"
+                        data-theme="b">我要报名</a> 
+                    }
                 }
-            }
-            <div data-role="popup" id="shwoSubmit" data-overlay-theme="a" data-theme="b"  data-dismissible="false"> 
-             <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
-                @using (Html.BeginForm("AddActivityInfo", "Default", new { ActivityID = ViewBag.ActivityID }, FormMethod.Post, new { enctype = "multipart/form-data", style = "padding:10px 20px" }))
-                {
-                    <input id="UID" type="hidden" name="UID" value="@ViewBag.UID" />
-                    <input id="Utype" type="hidden" name="Utype" value="@ViewBag.Utype" />
-                    <div>
-                        请留下您的姓名与电话
-                    </div>  
-                    <input type="text" name="userName" id="userName" placeholder="姓名" />   
-                    <input type="tel" name="userPhone" id="userPhone" placeholder="电话号码" />  
-                    <input type="text" name="userEmail" id="userEmail" placeholder="邮箱地址" />    
-                    <button type="submit" data-theme="b" onclick="return checkUP()">
-                        提交
-                    </button>   
+                <div data-role="popup" id="shwoSubmit" data-overlay-theme="a" data-theme="b" data-dismissible="false">
+                    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete"
+                        data-iconpos="notext" class="ui-btn-right">Close</a>
+                    @using (Html.BeginForm("AddActivityInfo", "Default", new { ActivityID = ViewBag.ActivityID }, FormMethod.Post, new { enctype = "multipart/form-data", style = "padding:10px 20px" }))
+                    {
+                        <input id="UID" type="hidden" name="UID" value="@ViewBag.UID" />
+                        <input id="Utype" type="hidden" name="Utype" value="@ViewBag.Utype" />
+                        <div>
+                            请留下您的姓名与电话
+                        </div>  
+                        <input type="text" name="userName" id="userName" placeholder="姓名" />   
+                        <input type="tel" name="userPhone" id="userPhone" placeholder="电话号码" />  
+                        <input type="text" name="userEmail" id="userEmail" placeholder="邮箱地址" />    
+                        <button type="submit" data-theme="b" onclick="return checkUP()">
+                            提交
+                        </button>   
                     
-                }
+                    }
+                </div>
             </div>
             <div>
                 <a id="showMess" href="#positionWindow" style="display: none" data-position-to="window"
