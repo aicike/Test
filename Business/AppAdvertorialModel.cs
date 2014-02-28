@@ -12,6 +12,7 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 using Injection;
+using Poco.Enum;
 
 namespace Business
 {
@@ -184,24 +185,40 @@ namespace Business
         public Result DelAppAdvertorial(int ID, int AdverTorialType)
         {
             var appadivertorial = base.Get(ID);
-            if (appadivertorial.MinImagePath.Substring(appadivertorial.MinImagePath.LastIndexOf('/')) != "/Survey.png" && appadivertorial.MinImagePath.Substring(appadivertorial.MinImagePath.LastIndexOf('/')) != "/ActivityInfo.png")
+            if (appadivertorial.EnumAdverURLType.HasValue)
             {
-                string path = HttpContext.Current.Server.MapPath(appadivertorial.MinImagePath);
-                if (File.Exists(path))
+                var urltype = appadivertorial.EnumAdverURLType.Value;
+                if (urltype == (int)EnumAdverURLType.Activities)
                 {
-                    File.Delete(path);
+                    var activitiesModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
+                    activitiesModel.Update_GenerateType(appadivertorial.UrlID.Value, appadivertorial.EnumAdvertorialUType,0);
                 }
-                path = HttpContext.Current.Server.MapPath(appadivertorial.MainImagPath);
-                if (File.Exists(path))
+                else if (urltype == (int)EnumAdverURLType.Survey)
                 {
-                    File.Delete(path);
+                    var surveyModel = Factory.Get<ISurveyMainModel>(SystemConst.IOC_Model.SurveyMainModel);
+                    surveyModel.Update_GenerateType(appadivertorial.UrlID.Value, appadivertorial.EnumAdvertorialUType, 0);
                 }
-                path = HttpContext.Current.Server.MapPath(appadivertorial.AppShowImagePath);
-                if (File.Exists(path))
+
+                if (urltype != (int)EnumAdverURLType.Activities && urltype != (int)EnumAdverURLType.Survey)
                 {
-                    File.Delete(path);
+                    string path = HttpContext.Current.Server.MapPath(appadivertorial.MinImagePath);
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
+                    path = HttpContext.Current.Server.MapPath(appadivertorial.MainImagPath);
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
+                    path = HttpContext.Current.Server.MapPath(appadivertorial.AppShowImagePath);
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
                 }
             }
+
             if (appadivertorial.stick == 1)
             {
                 string sql = string.Format("update AppAdvertorial set Sort=(Sort-1) where AccountMainID = {0} and EnumAdvertorialUType={1} and stick=1 and sort>{2}", appadivertorial.AccountMainID, AdverTorialType, appadivertorial.Sort);
@@ -349,25 +366,29 @@ namespace Business
                     //缩略图mini
                     Tool.SuperGetPicThumbnail(imageshowPath, imageminiPath, 70, 200, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
 
-                    if (appadvertorials.MinImagePath.Substring(appadvertorials.MinImagePath.LastIndexOf('/')) != "/Survey.png" && appadvertorials.MinImagePath.Substring(appadvertorials.MinImagePath.LastIndexOf('/')) != "/ActivityInfo.png")
+                    if (appadvertorial.EnumAdverURLType.HasValue)
                     {
+                        var urltype = appadvertorial.EnumAdverURLType.Value;
+                        if (urltype != (int)EnumAdverURLType.Activities && urltype != (int)EnumAdverURLType.Survey)
+                        {
 
-                        string path2 = HttpContext.Current.Server.MapPath(appadvertorials.MinImagePath);
-                        if (File.Exists(path2))
-                        {
-                            File.Delete(path2);
-                        }
-                        path2 = HttpContext.Current.Server.MapPath(appadvertorials.MainImagPath);
-                        if (File.Exists(path2))
-                        {
-                            File.Delete(path2);
-                        }
-                        path2 = HttpContext.Current.Server.MapPath(appadvertorials.AppShowImagePath);
-                        if (File.Exists(path2))
-                        {
-                            File.Delete(path2);
-                        }
+                            string path2 = HttpContext.Current.Server.MapPath(appadvertorials.MinImagePath);
+                            if (File.Exists(path2))
+                            {
+                                File.Delete(path2);
+                            }
+                            path2 = HttpContext.Current.Server.MapPath(appadvertorials.MainImagPath);
+                            if (File.Exists(path2))
+                            {
+                                File.Delete(path2);
+                            }
+                            path2 = HttpContext.Current.Server.MapPath(appadvertorials.AppShowImagePath);
+                            if (File.Exists(path2))
+                            {
+                                File.Delete(path2);
+                            }
 
+                        }
                     }
                     appadvertorial.MainImagPath = path + imageName;
                     appadvertorial.AppShowImagePath = path + imageshowName;
@@ -455,5 +476,89 @@ namespace Business
             }
 
         }
+
+
+        /// <summary>
+        /// 更改活动 修改资讯信息
+        /// </summary>
+        /// <param name="activityInfo"></param>
+        /// <param name="imageUrl"> 默认图片地址</param>
+        /// <param name="minimageUrl">默认缩略图地址</param>
+        /// <returns></returns>
+        public Result Editadvert_ByActivityInfo(ActivityInfo activityInfo, string imageUrl, string minimageUrl)
+        {
+            Result result = new Result();
+            string MainImage = imageUrl;
+            string ShowImage = imageUrl;
+            string MinImage = minimageUrl;
+            if (!string.IsNullOrEmpty(activityInfo.MainImagPath))
+            {
+                MainImage = activityInfo.MainImagPath;
+            }
+            if (!string.IsNullOrEmpty(activityInfo.AppShowImagePath))
+            {
+                ShowImage = activityInfo.AppShowImagePath;
+            }
+            if (!string.IsNullOrEmpty(activityInfo.MinImagePath))
+            {
+                MinImage = activityInfo.MinImagePath;
+            }
+            string sql = string.Format("update AppAdvertorial set Title ='{0}',Depict='{1}',MainImagPath='{2}',AppShowImagePath='{3}',"
+                                       + "MinImagePath='{4}' where EnumAdverURLType = {5} and UrlID ={6}", activityInfo.Title, activityInfo.Remarks, MainImage, ShowImage, minimageUrl, (int)EnumAdverURLType.Activities, activityInfo.ID);
+
+            base.SqlExecute(sql);
+            return result;
+        }
+
+        /// <summary>
+        /// 更改调查 修改资讯信息
+        /// </summary>
+        /// <param name="surveymain"></param>
+        /// <param name="imageUrl"> 默认图片地址</param>
+        /// <param name="minimageUrl">默认缩略图地址</param>
+        /// <returns></returns>
+        public Result Editadvert_BySurveyMain(SurveyMain surveymain, string imageUrl, string minimageUrl)
+        {
+            Result result = new Result();
+            string MainImage = imageUrl;
+            string ShowImage = imageUrl;
+            string MinImage = minimageUrl;
+            if (!string.IsNullOrEmpty(surveymain.MainImagPath))
+            {
+                MainImage = surveymain.MainImagPath;
+            }
+            if (!string.IsNullOrEmpty(surveymain.AppShowImagePath))
+            {
+                ShowImage = surveymain.AppShowImagePath;
+            }
+            if (!string.IsNullOrEmpty(surveymain.MinImagePath))
+            {
+                MinImage = surveymain.MinImagePath;
+            }
+            string sql = string.Format("update AppAdvertorial set Title ='{0}',Depict='{1}',MainImagPath='{2}',AppShowImagePath='{3}',"
+                                       + "MinImagePath='{4}' where EnumAdverURLType = {5} and UrlID ={6}", surveymain.SurveyTitle, surveymain.SurveyRemarks, MainImage, ShowImage, minimageUrl, (int)EnumAdverURLType.Survey, surveymain.ID);
+            base.SqlExecute(sql);
+            return result;
+        }
+
+
+        /// <summary>
+        /// 删除活动与调查时 删除资讯
+        /// </summary>
+        /// <param name="EnumAdverURLType"></param>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public Result DelAppadvertorial_byUrlType(int EnumAdverURLType, int ID)
+        {
+            Result result = new Result();
+            string sql = string.Format("delete AppAdvertorial where EnumAdverURLType = {0} and UrlID={1}",EnumAdverURLType,ID);
+            int cnt  = base.SqlExecute(sql);
+            if (cnt <= 0)
+            {
+                result.HasError = true;
+            }
+            return result;
+        }
+
     }
 }

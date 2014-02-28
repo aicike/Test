@@ -62,13 +62,13 @@ namespace Web.Controllers
         /// <param name="surveymain"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddMain(SurveyMain surveymain)
+        public ActionResult AddMain(SurveyMain surveymain, int w, int h, int x1, int y1, int tw, int th)
         {
             surveymain.CreateDate = DateTime.Now;
             surveymain.AccountID = LoginAccount.ID;
             surveymain.AccountMainID = LoginAccount.CurrentAccountMainID;
             var MainModel = Factory.Get<ISurveyMainModel>(SystemConst.IOC_Model.SurveyMainModel);
-            var result = MainModel.Add(surveymain);
+            var result = MainModel.AddSurveyMain(surveymain, w, h, x1, y1, tw, th);
             if (result.HasError)
             {
                 return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
@@ -110,13 +110,13 @@ namespace Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult EditMain(SurveyMain surveymain)
+        public ActionResult EditMain(SurveyMain surveymain, int w, int h, int x1, int y1, int tw, int th)
         {
             surveymain.CreateDate = DateTime.Now;
             surveymain.AccountMainID = LoginAccount.CurrentAccountMainID;
             surveymain.AccountID = LoginAccount.ID;
             var MainModel = Factory.Get<ISurveyMainModel>(SystemConst.IOC_Model.SurveyMainModel);
-            var result = MainModel.Edit(surveymain);
+            var result = MainModel.EditSurveyMain(surveymain,w,h,x1,y1,tw,th);
             if (result.HasError)
             {
                 return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
@@ -473,9 +473,31 @@ namespace Web.Controllers
             appRW.ContentURL = "http://" + SystemConst.WebUrl + "/Default/Questionnaire?surveyMainID=" + id;
             appRW.EnumAdverURLType = (int)EnumAdverURLType.Survey;
             appRW.AccountMainID = LoginAccount.CurrentAccountMainID;
-            appRW.AppShowImagePath = "~/Images/Survey.jpg";
-            appRW.MainImagPath = "~/Images/Survey.jpg";
-            appRW.MinImagePath = "~/Images/Survey_MINI.jpg";
+
+            if (string.IsNullOrEmpty(main.AppShowImagePath))
+            {
+                appRW.AppShowImagePath = "~/Images/Survey.jpg";
+            }
+            else
+            {
+                appRW.AppShowImagePath = main.AppShowImagePath;
+            }
+            if (string.IsNullOrEmpty(main.MainImagPath))
+            {
+                appRW.MainImagPath = "~/Images/Survey.jpg";
+            }
+            else
+            {
+                appRW.MainImagPath = main.MainImagPath;
+            }
+            if (string.IsNullOrEmpty(main.MinImagePath))
+            {
+                appRW.MinImagePath = "~/Images/Survey_MINI.jpg";
+            }
+            else
+            {
+                appRW.MinImagePath = main.MinImagePath;
+            }
             appRW.Depict = main.SurveyRemarks;
             appRW.EnumAdverTorialType = 1;
             appRW.EnumAdvertorialUType = client;
@@ -484,6 +506,7 @@ namespace Web.Controllers
             appRW.stick = 0;
             appRW.SystemStatus = 0;
             appRW.Title = main.SurveyTitle;
+            appRW.UrlID = main.ID;
 
             result = AdvertorialModel.Add(appRW);
             if (result.HasError == true)
@@ -492,6 +515,7 @@ namespace Web.Controllers
             }
             else
             {
+                MainModel.Update_GenerateType(id, client, 1);
                 return "OK";
             }
         }
