@@ -594,11 +594,12 @@ INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  (
 --INSERT INTO dbo.Account_User( SystemStatus, AccountID, UserID,GroupID ) VALUES  ( 0,1,1,1)
 
 -------------------------------[UserTag]-----------------------------------
+SET IDENTITY_INSERT [dbo].[UserTag] ON
 INSERT INTO dbo.UserTag (ID,SystemStatus,TagName) VALUES (1,0,'新用户')
 INSERT INTO dbo.UserTag (ID,SystemStatus,TagName) VALUES (2,0,'确认户型')
 INSERT INTO dbo.UserTag (ID,SystemStatus,TagName) VALUES (3,0,'已预订')
 INSERT INTO dbo.UserTag (ID,SystemStatus,TagName) VALUES (4,0,'已成交')
-
+SET IDENTITY_INSERT [dbo].[UserTag] OFF
 
 
 

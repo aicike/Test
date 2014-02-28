@@ -17,7 +17,31 @@ namespace Business
             var obj = CacheModel.GetCache<List<Menu>>(SystemConst.Cache.Menu);
             if (obj != null)
             {
-                return obj;
+                List<Menu> newList = new List<Menu>(obj.ConvertAll<Menu>(a =>
+                {
+                    return new Menu
+                    {
+                        ID = a.ID,
+                        SystemStatus = a.SystemStatus,
+                        Token = a.Token,
+                        Name = a.Name,
+                        ShowName = a.ShowName,
+                        Area = a.Area,
+                        Controller = a.Controller,
+                        Action = a.Action,
+                        Order = a.Order,
+                        ParentMenuID = a.ParentMenuID,
+                        IsAppMenu = a.IsAppMenu,
+                        Level = a.Level,
+                        ParentMenu = a.ParentMenu,
+                        ServiceID = a.ServiceID,
+                        Service = a.Service,
+                        Menus = a.Menus,
+                        MenuOptions = a.MenuOptions,
+                        RoleMenus = a.RoleMenus
+                    };
+                }));
+                return newList;
             }
             var list = base.List().ToList();
             CacheModel.SetCache(SystemConst.Cache.Menu, list);
@@ -114,7 +138,7 @@ namespace Business
             IRoleMenuModel roleMenuModel = Factory.Get<IRoleMenuModel>(SystemConst.IOC_Model.RoleMenuModel);
 
             var menu = roleMenuModel.List_Cache().Where(a => roleID.Contains(a.RoleID) &&
-                                                       ((area != null &&a.Menu.Area!=null&& a.Menu.Area.Equals(area, StringComparison.CurrentCultureIgnoreCase)) || (area == null && a.Menu.Area == null)) &&
+                                                       ((area != null && a.Menu.Area != null && a.Menu.Area.Equals(area, StringComparison.CurrentCultureIgnoreCase)) || (area == null && a.Menu.Area == null)) &&
                                                        (a.Menu.Controller != null && a.Menu.Controller.Equals(controller, StringComparison.CurrentCultureIgnoreCase))).Select(a => a.Menu).FirstOrDefault();
 
             if (menu == null) { return false; }

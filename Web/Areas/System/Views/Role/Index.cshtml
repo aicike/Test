@@ -60,7 +60,7 @@
                     @Html.ActionLink("分配权限", "Permission", "Role", new { Area = "System", id = item.ID, AccountMainID = ViewBag.AccountMainID }, null, true)
                     @if (item.IsCanDelete)
                     { 
-                        @Ajax.ActionLink("删除", "Delete", "Role", new { Area = "System", id = item.ID, AccountMainID = ViewBag.AccountMainID}, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "Role", new { Area = "System", id = item.ID }) + "',null)" }, true)
+                        @Ajax.ActionLink("删除", "Delete", "Role", new { Area = "System", id = item.ID, AccountMainID = ViewBag.AccountMainID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "Role", new { Area = "System", id = item.ID, AccountMainID = ViewBag.AccountMainID }) + "',null)" }, true)
                     }
                 </td>
             </tr>

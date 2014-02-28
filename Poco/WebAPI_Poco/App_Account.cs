@@ -20,5 +20,7 @@ namespace Poco.WebAPI_Poco
         public string Phone { get; set; }
 
         public string Role { get; set; }
+
+        public int AccountMainID { get; set; }
     }
 }

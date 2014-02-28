@@ -3,7 +3,7 @@ namespace EF.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class Initail : DbMigration
     {
         public override void Up()
         {
@@ -551,15 +551,18 @@ namespace EF.Migrations
                         IdentityCard = c.String(maxLength: 30),
                         AccountMainID = c.Int(nullable: false),
                         CreateDate = c.DateTime(nullable: false),
+                        UserTagID = c.Int(),
                         UserLoginInfoID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .ForeignKey("dbo.LookupOption", t => t.AccountStatusID)
                 .ForeignKey("dbo.UserLoginInfo", t => t.UserLoginInfoID)
+                .ForeignKey("dbo.UserTag", t => t.UserTagID)
                 .Index(t => t.AccountMainID)
                 .Index(t => t.AccountStatusID)
-                .Index(t => t.UserLoginInfoID);
+                .Index(t => t.UserLoginInfoID)
+                .Index(t => t.UserTagID);
             
             CreateTable(
                 "dbo.Account_User",
@@ -930,6 +933,16 @@ namespace EF.Migrations
                         FindPwdCode = c.String(),
                         FindPwdTime = c.DateTime(),
                         FindPwdValidity = c.Boolean(),
+                    })
+                .PrimaryKey(t => t.ID);
+            
+            CreateTable(
+                "dbo.UserTag",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        SystemStatus = c.Int(nullable: false),
+                        TagName = c.String(),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -1593,6 +1606,7 @@ namespace EF.Migrations
             DropForeignKey("dbo.CardPrefix", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.CardInfo", "AccountMainID", "dbo.AccountMain");
             DropForeignKey("dbo.VIPInfo", "AccountMainID", "dbo.AccountMain");
+            DropForeignKey("dbo.User", "UserTagID", "dbo.UserTag");
             DropForeignKey("dbo.User", "UserLoginInfoID", "dbo.UserLoginInfo");
             DropForeignKey("dbo.UserDeliveryAddress", "UserID", "dbo.User");
             DropForeignKey("dbo.UserDeliveryAddress", "ProvinceID", "dbo.Province");
@@ -1738,6 +1752,7 @@ namespace EF.Migrations
             DropIndex("dbo.CardPrefix", new[] { "AccountMainID" });
             DropIndex("dbo.CardInfo", new[] { "AccountMainID" });
             DropIndex("dbo.VIPInfo", new[] { "AccountMainID" });
+            DropIndex("dbo.User", new[] { "UserTagID" });
             DropIndex("dbo.User", new[] { "UserLoginInfoID" });
             DropIndex("dbo.UserDeliveryAddress", new[] { "UserID" });
             DropIndex("dbo.UserDeliveryAddress", new[] { "ProvinceID" });
@@ -1864,6 +1879,7 @@ namespace EF.Migrations
             DropTable("dbo.CardPrefix");
             DropTable("dbo.CardInfo");
             DropTable("dbo.VIPInfo");
+            DropTable("dbo.UserTag");
             DropTable("dbo.UserLoginInfo");
             DropTable("dbo.Province");
             DropTable("dbo.OrderMIntermediate");

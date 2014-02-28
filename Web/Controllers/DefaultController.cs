@@ -234,9 +234,6 @@ namespace Web.Controllers
             return View(AccountModel);
         }
 
-
-
-
         /// <summary>
         /// 会员二维码
         /// </summary>
@@ -413,7 +410,7 @@ namespace Web.Controllers
                 ViewBag.Utype = imtimely_Apptype;
             }
             //判断报名是否结束
-            
+
             if (DateTime.Now > Activity.EnrollEndDate)
             {
                 ViewBag.IsJS = "true";
@@ -456,7 +453,7 @@ namespace Web.Controllers
         /// <param name="phone"></param>
         /// <returns>1 电话存在 2 邮箱存在</returns>
         [HttpPost]
-        public string CheckISBM(int AID, string phone,string Email)
+        public string CheckISBM(int AID, string phone, string Email)
         {
             var IActivityInfoParticipatorModelModel = Factory.Get<IActivityInfoParticipatorModel>(SystemConst.IOC_Model.ActivityInfoParticipatorModel);
             var result = IActivityInfoParticipatorModelModel.GetUserIsSignUP2(phone, AID);
@@ -472,7 +469,7 @@ namespace Web.Controllers
             return "False";
         }
 
-    
+
 
         [HttpPost]
         public ActionResult AddActivityInfo(int ActivityID, int? UID, int? Utype)

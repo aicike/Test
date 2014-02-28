@@ -18,7 +18,7 @@ namespace Web.Controllers
         /// <summary>
         /// 售楼部App登录
         /// </summary>
-        public string AccountLogin(int accountMainID, string email, string pwd)
+        public string AccountLogin(string email, string pwd)
         {
             var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             var result = accountModel.LoginApp(email, pwd);
@@ -43,7 +43,8 @@ namespace Web.Controllers
                     HeadImagePath = HeadPath,
                     Phone = account.Phone,
                     Email = account.Email,
-                    Pwd = pwd
+                    Pwd = pwd,
+                    AccountMainID =account.CurrentAccountMainID
                 }
             };
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);

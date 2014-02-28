@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+using Poco.Enum;
 
 namespace Business
 {
@@ -183,22 +184,26 @@ namespace Business
         public Result DelAppAdvertorial(int ID, int AdverTorialType)
         {
             var appadivertorial = base.Get(ID);
-            if (appadivertorial.MinImagePath.Substring(appadivertorial.MinImagePath.LastIndexOf('/')) != "/Survey.png" && appadivertorial.MinImagePath.Substring(appadivertorial.MinImagePath.LastIndexOf('/')) != "/ActivityInfo.png")
+            if (appadivertorial.EnumAdverURLType.HasValue)
             {
-                string path = HttpContext.Current.Server.MapPath(appadivertorial.MinImagePath);
-                if (File.Exists(path))
+                var urltype = appadivertorial.EnumAdverURLType.Value;
+                if (urltype != (int)EnumAdverURLType.Activities && urltype != (int)EnumAdverURLType.Survey)
                 {
-                    File.Delete(path);
-                }
-                path = HttpContext.Current.Server.MapPath(appadivertorial.MainImagPath);
-                if (File.Exists(path))
-                {
-                    File.Delete(path);
-                }
-                path = HttpContext.Current.Server.MapPath(appadivertorial.AppShowImagePath);
-                if (File.Exists(path))
-                {
-                    File.Delete(path);
+                    string path = HttpContext.Current.Server.MapPath(appadivertorial.MinImagePath);
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
+                    path = HttpContext.Current.Server.MapPath(appadivertorial.MainImagPath);
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
+                    path = HttpContext.Current.Server.MapPath(appadivertorial.AppShowImagePath);
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
                 }
             }
             if (appadivertorial.stick == 1)
@@ -347,25 +352,27 @@ namespace Business
                     //缩略图mini
                     Tool.SuperGetPicThumbnail(imageshowPath, imageminiPath, 70, 120, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
 
-                    if (appadvertorials.MinImagePath.Substring(appadvertorials.MinImagePath.LastIndexOf('/')) != "/Survey.png" && appadvertorials.MinImagePath.Substring(appadvertorials.MinImagePath.LastIndexOf('/')) != "/ActivityInfo.png")
+                    if (appadvertorial.EnumAdverURLType.HasValue)
                     {
-
-                        string path2 = HttpContext.Current.Server.MapPath(appadvertorials.MinImagePath);
-                        if (File.Exists(path2))
+                        var urltype = appadvertorial.EnumAdverURLType.Value;
+                        if (urltype != (int)EnumAdverURLType.Activities && urltype != (int)EnumAdverURLType.Survey)
                         {
-                            File.Delete(path2);
+                            string path2 = HttpContext.Current.Server.MapPath(appadvertorials.MinImagePath);
+                            if (File.Exists(path2))
+                            {
+                                File.Delete(path2);
+                            }
+                            path2 = HttpContext.Current.Server.MapPath(appadvertorials.MainImagPath);
+                            if (File.Exists(path2))
+                            {
+                                File.Delete(path2);
+                            }
+                            path2 = HttpContext.Current.Server.MapPath(appadvertorials.AppShowImagePath);
+                            if (File.Exists(path2))
+                            {
+                                File.Delete(path2);
+                            }
                         }
-                        path2 = HttpContext.Current.Server.MapPath(appadvertorials.MainImagPath);
-                        if (File.Exists(path2))
-                        {
-                            File.Delete(path2);
-                        }
-                        path2 = HttpContext.Current.Server.MapPath(appadvertorials.AppShowImagePath);
-                        if (File.Exists(path2))
-                        {
-                            File.Delete(path2);
-                        }
-
                     }
                     appadvertorial.MainImagPath = path + imageName;
                     appadvertorial.AppShowImagePath = path + imageshowName;
