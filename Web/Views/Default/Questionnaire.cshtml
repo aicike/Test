@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Questionnaire";
+    ViewBag.Title = Model.SurveyTitle
     Layout = "~/Views/Shared/_LayoutBase.cshtml";
 }
 @section head{
@@ -222,6 +222,16 @@
 }
 @using (Html.BeginForm("AddQuestionnaire", "Default", new { surveyMainID = ViewBag.smid }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    <div style=" display:none">
+         @if (string.IsNullOrEmpty(Model.MinImagePath))
+            {
+                <img src="@Url.Content("~/Images/Survey_MINI.jpg")" />
+            }
+            else
+            { 
+                <img src="@Url.Content(Model.MinImagePath)" />
+            }
+    </div>
     <input id="UID" type="hidden" name="UID" value="@ViewBag.UID" />
     <input id="Utype" type="hidden" name="Utype" value="@ViewBag.Utype" />
     <input type="hidden" name="Answer" id="Answer" />

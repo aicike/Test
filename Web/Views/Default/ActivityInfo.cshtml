@@ -1,6 +1,7 @@
 ﻿@{
-    
+    ViewBag.Title = Model.Title;
     Layout = "~/Views/Shared/_LayoutBase.cshtml";
+
 }
 @section head{
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
@@ -155,6 +156,16 @@
 @model Poco.ActivityInfo
 <div data-role="page" rel="external">
     <div id="insert" data-role="content">
+        <div style="display: none">
+            @if (string.IsNullOrEmpty(Model.MinImagePath))
+            {
+                <img src="@Url.Content("~/Images/ActivityInfo_MINI.jpg")" />
+            }
+            else
+            { 
+                <img src="@Url.Content(Model.MinImagePath)" />
+            }
+        </div>
         <fieldset data-role="controlgroup">
             <div class="divTitle">
                 @Model.Title
