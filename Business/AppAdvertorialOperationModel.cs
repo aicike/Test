@@ -33,7 +33,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<AppAdvertorialOperation> getListByAID(int AID)
         {
-            var list = List().Where(a=>a.AppAdvertorialID==AID);
+            var list = List().Where(a => a.AppAdvertorialID == AID);
             return list;
         }
 
@@ -43,23 +43,23 @@ namespace Business
         /// <param name="AID"></param>
         /// <param name="type">0 已读用户 1未读用户</param>
         /// <returns></returns>
-        public IQueryable<_B_AdvertoriaOperation> getAOlist(int AID, int type)
+        public IQueryable<_B_AdvertoriaOperation> getAOlist(int AID, int type, int AMID)
         {
             var cmd = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
             string sql = "";
             //0 已读用户 1未读用户
             if (type == 0)
             {
-                sql = string.Format("select b.Name,b.Phone,c.forwardCnt,c.ForwardWeiXinCnt,c.ForwardWeiboCnt,c.ForwardFriendCnt from dbo.[User] a,dbo.UserLoginInfo b, dbo.AppAdvertorialOperation c "
-                                    + "where a.userlogininfoid = b.id and a.id= c.userid and a.id in(select userid from AppAdvertorialOperation where appadvertorialid = {0})"
-                                    ,AID);
+                sql = string.Format("select b.Name,b.Phone,c.forwardCnt,c.ForwardWeiXinCnt,c.ForwardWeiboCnt,c.ForwardFriendCnt  from [User] a left join UserLoginInfo b on a.UserLoginInfoID = b.ID "
+                                    + " left join AppAdvertorialOperation c on a.ID = c.UserID where c.appadvertorialid ={0} and a.AccountMainID={1}"
+                                    , AID, AMID);
             }
             else
             {
 
                 sql = string.Format("select b.Name,b.Phone,0 as forwardCnt,0 as ForwardWeiXinCnt,0 as ForwardWeiboCnt,0 as ForwardFriendCnt  from dbo.[User] a,dbo.UserLoginInfo b"
-                                    + " where a.userlogininfoid = b.id and a.id not in(select userid from AppAdvertorialOperation where appadvertorialid = {0})"
-                                    , AID);
+                                    + " where a.userlogininfoid = b.id and a.AccountMainID={0} and a.id not in(select userid from AppAdvertorialOperation where appadvertorialid = {1} )"
+                                    ,AMID, AID);
             }
             return cmd.SqlQuery<_B_AdvertoriaOperation>(sql);
         }
@@ -70,23 +70,23 @@ namespace Business
         /// <param name="AID"></param>
         /// <param name="type">0 已读用户 1未读用户</param>
         /// <returns></returns>
-        public IQueryable<_B_AdvertoriaOperation> getAOlist_account(int AID, int type)
+        public IQueryable<_B_AdvertoriaOperation> getAOlist_account(int AID, int type, int AMID)
         {
             var cmd = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
             string sql = "";
             //0 已读用户 1未读用户
             if (type == 0)
             {
-                sql = string.Format("select a.Name,a.Phone,b.forwardCnt,b.ForwardWeiXinCnt,b.ForwardWeiboCnt,b.ForwardFriendCnt from dbo.Account a, dbo.AppAdvertorialOperation b "
-                                    + " where a.id= b.userid  and a.id in(select userid from AppAdvertorialOperation where appadvertorialid = {0})"
-                                    , AID);
+                sql = string.Format("select a.Name,a.Phone,b.forwardCnt,b.ForwardWeiXinCnt,b.ForwardWeiboCnt,b.ForwardFriendCnt from dbo.Account a, dbo.AppAdvertorialOperation b , Account_AccountMain c"
+                                    + " where a.ID= c.AccountID and a.id= b.userid and c.AccountMainID={0}  and a.id in(select userid from AppAdvertorialOperation where appadvertorialid = {1})"
+                                    ,AMID, AID);
             }
             else
             {
 
-                sql = string.Format("select b.Name,b.Phone,0 as forwardCnt,0 as ForwardWeiXinCnt,0 as ForwardWeiboCnt,0 as ForwardFriendCnt  from dbo.Account b"
-                                    + " where b.id not in(select userid from AppAdvertorialOperation where appadvertorialid = {0})"
-                                    , AID);
+                sql = string.Format("select b.Name,b.Phone,0 as forwardCnt,0 as ForwardWeiXinCnt,0 as ForwardWeiboCnt,0 as ForwardFriendCnt  from dbo.Account b , Account_AccountMain c"
+                                    + " where  a.ID= c.AccountID and c.AccountMainID={0} and  b.id not in(select userid from AppAdvertorialOperation where appadvertorialid = {0})"
+                                    ,AMID, AID);
             }
             return cmd.SqlQuery<_B_AdvertoriaOperation>(sql);
         }

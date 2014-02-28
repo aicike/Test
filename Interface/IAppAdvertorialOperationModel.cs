@@ -30,7 +30,7 @@ namespace Interface
         /// <param name="AID"></param>
         /// <param name="type">0 已读用户 1未读用户</param>
         /// <returns></returns>
-        IQueryable<_B_AdvertoriaOperation> getAOlist(int AID, int type);
+        IQueryable<_B_AdvertoriaOperation> getAOlist(int AID, int type, int AMID);
 
          /// <summary>
         /// 查询资讯用户 销售端
@@ -38,7 +38,7 @@ namespace Interface
         /// <param name="AID"></param>
         /// <param name="type">0 已读用户 1未读用户</param>
         /// <returns></returns>
-        IQueryable<_B_AdvertoriaOperation> getAOlist_account(int AID, int type);
+        IQueryable<_B_AdvertoriaOperation> getAOlist_account(int AID, int type, int AMID);
 
 
         /// <summary>
