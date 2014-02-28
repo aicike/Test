@@ -371,7 +371,6 @@
 <div class="title">
     @Html.Partial("Menu3")
 </div>
-
 <div class="body">
     @using (Html.BeginForm("Edit", "AppAdvertorial", new { HostName = ViewBag.HostName, id = Model.ID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
@@ -446,7 +445,8 @@
                         @Html.HiddenFor(a => a.AppShowImagePath)
                         @Html.HiddenFor(a => a.MinImagePath)
                         @Html.HiddenFor(a => a.EnumAdverURLType)
-                         @Html.HiddenFor(a => a.BrowseCnt)
+                        @Html.HiddenFor(a => a.BrowseCnt)
+                        @Html.HiddenFor(a => a.UrlID)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Title)<div style="display: none">@Html.ValidationSummary()</div>
                     </td>
@@ -474,7 +474,7 @@
                     <td>
                     </td>
                 </tr>
-                <tr  style=" display:none">
+                <tr style="display: none">
                     <td class="tdTitle">
                         <span class="Identification">*</span> 软文类型
                     </td>

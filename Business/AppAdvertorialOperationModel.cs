@@ -90,5 +90,25 @@ namespace Business
             }
             return cmd.SqlQuery<_B_AdvertoriaOperation>(sql);
         }
+
+        /// <summary>
+        /// 删除咨询操作信息
+        /// </summary>
+        /// <param name="AID"></param>
+        /// <returns></returns>
+        public Result DelOperation(int AID)
+        {
+            Result result = new Result();
+            string sql = "delete AppAdvertorialOperation where appadvertorialid = " + AID;
+            if (base.SqlExecute(sql) > 0)
+            {
+                result.HasError = false;
+            }
+            else
+            {
+                result.HasError = true;
+            }
+            return result;
+        }
     }
 }

@@ -15,19 +15,18 @@
 
     });
     //生成软文
-    function ShowAddress(id, Name) {
-        $("#AID").val(id);
-        $("#dialogShowRW").dialog({
-            resizable: false,
-            height: 150,
-            width: 300,
-            modal: true,
-            draggable: false,
-            title: Name,
-            close: function (event, ui) {
-                $("#AID").val("");
-            }
+    function ShowAddress(id, client,text) {
+
+
+        JAlert({
+            Message: text,
+            DialogType: "confirm",
+            BtnOk: "确定",
+            BtnOkClick: "SetAppAdver("+id+","+client+")",
+            BtnCancel: "取消",
+            BtnCancelClick: "$(this).dialog('close');"
         });
+       
 
     }
 
@@ -49,9 +48,9 @@
 
 
     //ajax 生成软文
-    function SetAppAdver(client) {
-        //client  EnumAdvertorialUType
-        var id = $("#AID").val();
+    function SetAppAdver(id,client) {
+//        //client  EnumAdvertorialUType
+//        var id = $("#AID").val();
         var Url = '@Url.Action("SetAppAdverTorial", "ActivityInfo")';
         $.post(Url, { id: id, client: client }, function (result) {
 
@@ -59,7 +58,8 @@
                 JAlert({
                     Message: "生成成功！",
                     DialogType: "Ok",
-                    BtnOk: "确定"
+                    BtnOk: "确定",
+                    BtnOkClick: "location.reload()"
                 });
             }
             else {
@@ -69,7 +69,6 @@
                     BtnOk: "确定"
                 });
             }
-            $("#dialogShowRW").dialog("close");
         });
     }
 </script>
@@ -84,36 +83,47 @@
     </div>
     <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
         <tr>
-            <th style="width: 230px">
+            <th style=" width:80px">
+            app展示图片
+            </th>
+            <th style="width: 180px">
                 活动名称
             </th>
             <th style="width: 70px">
                 报名人数
             </th>
-            <th style="width: 70px">
+            <th style="width: 60px">
                 名额
             </th>
-            <th style="width: 110px;">
+            <th style="width: 100px;">
                 报名截止日期
             </th>
-            <th style="width: 110px;">
-                活动开始日期
-            </th>
-            <th style="width: 60px;">
+
+            <th style="width: 50px;">
                 状态
             </th>
-            <th style="width: 70px;">
+            <th style="width:100px;">
                 生成资讯
             </th>
-            <th style="width: 80px;">
+            <th style="width: 70px;">
                 操作
             </th>
         </tr>
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    @if (string.IsNullOrEmpty(item.AppShowImagePath))
+                    {
+                    <img style=" width:80px" src="@Url.Content("~/Images/ActivityInfo_MINI.jpg")" />
+                    }
+                    else
+                    { 
+                    <img style=" width:80px" src="@Url.Content(item.AppShowImagePath)" />
+                    }
+                </td>
                 <td class="operation">
-                    <div style="width: 230px; word-break: keep-all; white-space: nowrap; overflow: hidden;
+                    <div style="width: 180px; word-break: keep-all; white-space: nowrap; overflow: hidden;
                         text-overflow: ellipsis;">
                         <label name="labCbFirst" title="@item.Title">
                           @item.Title
@@ -131,9 +141,7 @@
                 <td>
                     @item.EnrollEndDate.ToString("yyyy-MM-dd")
                 </td>
-                <td>
-                     @item.ActivityStratDate
-                </td>
+
                 <td class="operation">
                     @if (@item.Status == 0)
                     {
@@ -148,10 +156,28 @@
                         </label>
                     }
                 </td>
-                <td class="operation">
-                    <label name="labCbFirst" title="生成资讯">
-                        <a onclick="ShowAddress(@item.ID,'@item.Title')">生成资讯</a>
+                <td class="operation" >
+                    @if (item.ISGenerateUserAdvisory == 0)
+                    { 
+                    <label name="labCbFirst" title="生成用户端咨讯">
+                        <a onclick="ShowAddress(@item.ID,@((int)Poco.Enum.EnumAdvertorialUType.UserEnd),'是否要生成用户端软文?')"  style=" font-size:12px">生成用户端咨讯</a>
                     </label>
+                    }
+                    else
+                    { 
+                        <span style=" font-size:12px">生成用户端咨讯</span>
+                    }
+                    <br />
+                    @if (item.ISGenerateSaleAdvisory == 0)
+                    { 
+                    <label name="labCbFirst" title="生成销售端咨讯">
+                        <a onclick="ShowAddress(@item.ID,@((int)Poco.Enum.EnumAdvertorialUType.AccountEnd),'是否要生成销售端软文?')"  style=" font-size:12px">生成销售端咨讯</a>
+                    </label>
+                    }
+                    else
+                    { 
+                        <span style=" font-size:12px">生成销售端咨讯</span>
+                    }
                 </td>
                 <td class="operation">
                   
@@ -182,19 +208,7 @@
 </div>
 <div style="clear: both">
 </div>
-<div id="dialogShowRW" title="生成软文" style="display: none; padding: 0px">
-    <table align="center" style="width: 95%; height: 90px" cellpadding="0" cellspacing="0">
-        <tr>
-            <td align="center">
-                <input type="hidden" id="AID" />
-                <input type="button" onclick="SetAppAdver(@((int)Poco.Enum.EnumAdvertorialUType.UserEnd))" id="btnSubmitU" value="生成用户端资讯" class="button" />
-            </td>
-            <td align="center">
-                <input type="button" onclick="SetAppAdver(@((int)Poco.Enum.EnumAdvertorialUType.AccountEnd))"  id="btnSubmitA" value="生成销售端资讯" class="button" />
-            </td>
-        </tr>
-    </table>
-</div>
+
 <div id="dialogShowP" title="报名列表" style="display: none; padding: 0px">
     <iframe id="iframeShowP" src="#" style="width: 760px; height: 650px; border: none;
         overflow: auto"></iframe>

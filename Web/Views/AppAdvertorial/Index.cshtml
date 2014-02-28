@@ -73,7 +73,7 @@
 
         function clickSelectInfo(id) {
             var src = '@Url.Action("SelecInfo", "AppAdvertorial")';
-            $("#iframeShowSelectInfo").attr("src", src + "?AID=" + id+"&AMID="+"@ViewBag.AMID");
+            $("#iframeShowSelectInfo").attr("src", src + "?AID=" + id + "&AMID=" + "@ViewBag.AMID");
             $("#dialogShowSelectInfo").dialog({
                 resizable: false,
                 height: 580,
@@ -254,7 +254,7 @@
                         else if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey)
                         {
                         @:调查问卷
-                                                                                    }
+                                                                                                        }
                     }
                 </td>
                 <td>
@@ -273,14 +273,21 @@
                     else
                     { 
                         @:无
-                                                                                                                                                                                                                                                 }
+                                                                                                                                                                                                                                                                     }
                 </td>
                 <td class="operation" align="center">
-                    @Html.ActionLink("修改", "Edit", "AppAdvertorial", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:10px" }, true)
+                    @if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey || item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Activities)
+                    {
+                    }
+                    else
+                    { 
+                        @Html.ActionLink("修改", "Edit", "AppAdvertorial", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:10px" }, true)
+                    }
                     @Ajax.ActionLink("删除", "Delete", "AppAdvertorial", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?！','" + Url.Action("Delete", "AppAdvertorial", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
-                    <br /><a onclick="clickSelectInfo('@item.ID')" style=" width:56px">&nbsp;查看详细</a>
-                    <br /><a onclick="clickaddress('@item.ID')" style=" width:56px">查看地址  </a>
-                    
+                    <br />
+                    <a onclick="clickSelectInfo('@item.ID')" style=" width:56px">&nbsp;查看详细</a>
+                    <br />
+                    <a onclick="clickaddress('@item.ID')" style=" width:56px">查看地址 </a>
                 </td>
             </tr>
         }
@@ -333,7 +340,6 @@
         <span id="urlAddress" style="font-weight: bold">11</span>
     </div>
 </div>
-
 <div id="dialogShowSelectInfo" title="资讯详细" style="display: none; padding: 0px">
     <iframe id="iframeShowSelectInfo" src="#" style="width: 100%; height: 530px; border: none;
         overflow: auto"></iframe>

@@ -38,5 +38,34 @@ namespace Interface
         /// </summary>
         /// <param name="id"></param>
         void BrowseCntADD(int id);
+
+
+        /// <summary>
+        /// 更改活动 修改资讯信息
+        /// </summary>
+        /// <param name="activityInfo"></param>
+        /// <param name="imageUrl"> 默认图片地址</param>
+        /// <param name="minimageUrl">默认缩略图地址</param>
+        /// <returns></returns>
+        Result Editadvert_ByActivityInfo(ActivityInfo activityInfo, string imageUrl, string minimageUrl);
+
+
+        /// <summary>
+        /// 更改调查 修改资讯信息
+        /// </summary>
+        /// <param name="surveymain"></param>
+        /// <param name="imageUrl"> 默认图片地址</param>
+        /// <param name="minimageUrl">默认缩略图地址</param>
+        /// <returns></returns>
+        Result Editadvert_BySurveyMain(SurveyMain surveymain, string imageUrl, string minimageUrl);
+
+
+         /// <summary>
+        /// 删除活动与调查时 删除资讯
+        /// </summary>
+        /// <param name="EnumAdverURLType"></param>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        Result DelAppadvertorial_byUrlType(int EnumAdverURLType, int ID);
     }
 }

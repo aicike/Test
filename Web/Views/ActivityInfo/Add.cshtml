@@ -7,17 +7,118 @@
     <script src="@Url.Content("~/Scripts/uploadify/jquery.uploadify.js")" type="text/javascript"></script>
     <script src="@Url.Content("/ueditor/ueditor.config.js")" type="text/javascript"></script>
     <script src="@Url.Content("/ueditor/ueditor.all.js")" type="text/javascript"></script>
-
     <link href="@Url.Content("~/Scripts/timepicker/demos.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Scripts/timepicker/jquery-ui-timepicker-addon.css")" rel="stylesheet"
         type="text/css" />
     <script src="@Url.Content("~/Scripts/timepicker/jquery-ui-timepicker-addon.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/timepicker/jquery-ui-timepicker-zh-CN.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/timepicker/jquery.ui.datepicker-zh-CN.js.js")" type="text/javascript"></script>
-
-
+    <script src="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.css")" rel="stylesheet" type="text/css" />
     <script>
+        var Cnt = 0;
+        var UpImgUrl = '@Url.Action("UpImg", "Ajax", new { HostName = ViewBag.HostName })';
         $(function () {
+
+
+
+            $("#file_upload").uploadify({
+                height: 30,
+                swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
+                uploader: UpImgUrl,
+                width: 70,
+                fileSizeLimit: '5MB',
+                buttonText: '选择图片',
+                multi: false,
+                fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
+                onUploadSuccess: function (file, data, response) {
+
+                    if (data == "" || data == undefined || data == "false") {
+                        JAlert({
+                            Message: "上传失败请重新上传！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return;
+                    }
+
+                    if (Cnt > 0) {
+                        jcrop_api.destroy();
+                        $('#x1').val("0");
+                        $('#y1').val("0");
+                        $('#w').val("0");
+                        $('#h').val("0");
+                        $('#tw').val("0");
+                        $('#th').val("0");
+                    }
+                    $("#imgSel").attr('src', data);
+                    $("#imgLogo").attr('src', data);
+                    $("#imgLogo2").attr('src', data);
+
+
+                    $("#MainImagPath").val(data);
+
+
+                    $('#imgSel').Jcrop({
+                        onChange: updatePreview,
+                        onSelect: updatePreview,
+                        aspectRatio: 2
+                    }, function () {
+                        // Use the API to get the real image size
+                        var bounds = this.getBounds();
+                        boundx = bounds[0];
+                        boundy = bounds[1];
+                        // Store the API in the jcrop_api variable
+                        jcrop_api = this;
+                    });
+                    Cnt = 1;
+
+
+                }
+            });
+
+            var jcrop_api, boundx, boundy;
+
+            function updatePreview(c) {
+                if (parseInt(c.w) > 0) {
+
+
+                    var rx2 = 200 / c.w;
+                    var ry2 = 100 / c.h;
+                    $('#imgLogo').css({
+                        width: Math.round(rx2 * boundx) + 'px',
+                        height: Math.round(ry2 * boundy) + 'px',
+                        marginLeft: '-' + Math.round(rx2 * c.x) + 'px',
+                        marginTop: '-' + Math.round(ry2 * c.y) + 'px'
+                    });
+
+                    var rx3 = 120 / c.w;
+                    var ry3 = 60 / c.h;
+                    $('#imgLogo2').css({
+                        width: Math.round(rx3 * boundx) + 'px',
+                        height: Math.round(ry3 * boundy) + 'px',
+                        marginLeft: '-' + Math.round(rx3 * c.x) + 'px',
+                        marginTop: '-' + Math.round(ry3 * c.y) + 'px'
+                    });
+                }
+                $('#x1').val(c.x);
+                $('#y1').val(c.y);
+                $('#w').val(c.w);
+                $('#h').val(c.h);
+                //获取当前显示图片高宽
+                $('#tw').val($("#imgSel").width());
+                $('#th').val($("#imgSel").height());
+            };
+
+
+
+
+
+
+
+
+
+
 
             window.UEDITOR_HOME_URL = "/ueditor/";
             //实例化编辑器
@@ -57,8 +158,16 @@
 
 
             $("#btnSubmit").click(function () {
-
-
+                if (Cnt > 0) {
+                    if ($("#w").val() == "0") {
+                        JAlert({
+                            Message: "请选择App列表展示区域！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return false;
+                    }
+                }
                 if (ue.getContent().length == 0) {
                     JAlert({
                         Message: "正文不能为空！",
@@ -74,21 +183,90 @@
 
         });
     </script>
-
     <style>
-    #ui-datepicker-div
-    {
-        z-index:100 !important;     
-    }
+        #ui-datepicker-div
+        {
+            z-index: 100 !important;
+        }
+        
+        .middle-out
+        {
+            width: 300px;
+            height: 300px;
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #d0d0d0;
+        }
+        .view p img
+        {
+            max-width: 100%;
+        }
     </style>
 }
 @model Poco.ActivityInfo
 <div class="title">
-        @Html.Partial("Menu3")
+    @Html.Partial("Menu3")
 </div>
 <div class="body">
     @using (Ajax.BeginForm("Add", "ActivityInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
+        <fieldset style="font-size: 14px">
+            <legend>展示与分享图片</legend>
+            <table style="line-height: 15px" width="100%">
+                <tr>
+                    <td style="width: 365px">
+                        <div class="middle-out">
+                            <div class="middle-in" style="margin: auto 0px">
+                                <img id="imgSel"  src="@Url.Content("~/Images/ActivityInfo.jpg")"   style="max-height:320px; max-width:320px;" />
+                            </div>
+                        </div>
+                    </td>
+                    <td valign="top">
+                        <p>
+                            App列表页展示图
+                        </p>
+                        <div style="width: 200px; height: 100px; overflow: hidden;">
+                            <img id="imgLogo" src="@Url.Content("~/Images/ActivityInfo.jpg")" style="width:200px; height:100px"/>
+                        </div>
+                        <span style="font-size: 12px; color: #979797">(320*160 缩略图)</span>
+                        <div style="width: 120px; height: 60px; overflow: hidden; margin-top: 17px">
+                            <img id="imgLogo2" src="@Url.Content("~/Images/ActivityInfo.jpg")" style="width:120px; height:60px"/>
+                        </div>
+                        <span style="font-size: 12px; color: #979797">(120*60 缩略图)</span>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div style="color: Red">
+                            提示：请上传小于5MB的图片
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input id="file_upload" name="file_upload" type="file" multiple="false" />
+                        @Html.TextBoxFor(a => a.MainImagPath, new { style = "width:0px;display:none" })
+                        @Html.ValidationMessageFor(a => a.MainImagPath)
+                        <div style="display: none">
+                            X1
+                            <input type="text" size="4" id="x1" name="x1" value="0" />
+                            Y1
+                            <input type="text" size="4" id="y1" name="y1" value="0" />
+                            W
+                            <input type="text" size="4" id="w" name="w" value="0" />
+                            H
+                            <input type="text" size="4" id="h" name="h" value="0" />
+                            TW
+                            <input type="text" size="4" id="tw" name="tw" value="0" />
+                            TH
+                            <input type="text" size="4" id="th" name="th" value="0" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
         <fieldset style="font-size: 14px">
             <legend>创建活动</legend>
             <table class="tableForm" style="width: 100%">
@@ -102,13 +280,22 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="tdTitle" style="width: 150px">
+                        <span class="Identification">*</span> 活动备注/描述
+                    </td>
+                    <td class="tdField">@Html.TextAreaFor(a => a.Remarks, new { style = "width:300px" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Remarks)
+                    </td>
+                </tr>
+                <tr>
                     <td class="tdTitle">
                         <span class="Identification">*</span> 报名截止日期
                     </td>
                     <td>
                         @Html.TextBoxFor(a => a.EnrollEndDate, new { @readonly = "readonly" })
                     </td>
-                     <td>@Html.ValidationMessageFor(a => a.EnrollEndDate)
+                    <td>@Html.ValidationMessageFor(a => a.EnrollEndDate)
                     </td>
                 </tr>
                 <tr>
@@ -118,7 +305,7 @@
                     <td>
                         @Html.TextBoxFor(a => a.ActivityStratDate, new { @readonly = "readonly" })
                     </td>
-                     <td>@Html.ValidationMessageFor(a => a.ActivityStratDate)
+                    <td>@Html.ValidationMessageFor(a => a.ActivityStratDate)
                     </td>
                 </tr>
                 <tr>
@@ -133,13 +320,13 @@
                     </td>
                 </tr>
                 <tr>
-                <td class="tdTitle">
+                    <td class="tdTitle">
                         <span class="Identification">*</span> 名额/最大报名人数
                     </td>
                     <td>
-                        @Html.TextBox("MaxCount",1000)
+                        @Html.TextBox("MaxCount", 1000)
                     </td>
-                      <td>@Html.ValidationMessageFor(a => a.MaxCount)
+                    <td>@Html.ValidationMessageFor(a => a.MaxCount)
                     </td>
                 </tr>
                 <tr>
@@ -147,7 +334,7 @@
                         <span class="Identification">*</span> 活动内容
                     </td>
                     <td class="tdField" colspan="2">
-                        <script type="text/plain" id="editor" height="300px" name="Remarks"></script>
+                        <script type="text/plain" id="editor" height="300px" name="Content"></script>
                     </td>
                 </tr>
             </table>

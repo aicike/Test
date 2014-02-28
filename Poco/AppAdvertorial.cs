@@ -65,6 +65,8 @@ namespace Poco
         [Display(Name = "浏览次数")]
         public int BrowseCnt { get; set; }
 
+        [Display(Name = "URLID 活动或调查ID")]
+        public int? UrlID { get; set; }
 
         public virtual ICollection<AppAdvertorialOperation> AppAdvertorialOperation { get; set; }
 

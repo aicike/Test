@@ -39,5 +39,13 @@ namespace Interface
         /// <param name="type">0 已读用户 1未读用户</param>
         /// <returns></returns>
         IQueryable<_B_AdvertoriaOperation> getAOlist_account(int AID, int type);
+
+
+        /// <summary>
+        /// 删除咨询操作信息
+        /// </summary>
+        /// <param name="AID"></param>
+        /// <returns></returns>
+        Result DelOperation(int AID);
     }
 }

@@ -49,13 +49,13 @@ namespace Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Add(ActivityInfo activityinfo)
+        public ActionResult Add(ActivityInfo activityinfo, int w, int h, int x1, int y1, int tw, int th)
         {
             activityinfo.CreateDate = DateTime.Now;
             activityinfo.AccountID = LoginAccount.ID;
             activityinfo.AccountMainID = LoginAccount.CurrentAccountMainID;
             var activityInfoModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
-            var result = activityInfoModel.Add(activityinfo);
+            var result = activityInfoModel.AddActivity(activityinfo, x1, y1, w, h, tw, th);
             if (result.HasError)
             {
                 return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
@@ -88,12 +88,12 @@ namespace Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(ActivityInfo activityinfo)
+        public ActionResult Edit(ActivityInfo activityinfo, int w, int h, int x1, int y1, int tw, int th)
         {
             activityinfo.AccountID = LoginAccount.ID;
             var activityInfoModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
 
-            var result = activityInfoModel.Edit(activityinfo);
+            var result = activityInfoModel.EditActivity(activityinfo,x1,y1,w,h,tw,th);
             if (result.HasError)
             {
                 return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
@@ -155,10 +155,31 @@ namespace Web.Controllers
             appRW.ContentURL = "http://" + SystemConst.WebUrl + "/Default/ActivityInfo?ActivityID=" + id;
             appRW.EnumAdverURLType = (int)EnumAdverURLType.Activities;
             appRW.AccountMainID = LoginAccount.CurrentAccountMainID;
-            appRW.AppShowImagePath = "~/Images/ActivityInfo.png";
-            appRW.MainImagPath = "~/Images/ActivityInfo.png";
-            appRW.MinImagePath = "~/Images/ActivityInfo_MINI.png";
-            appRW.Depict = main.Title;
+            if (string.IsNullOrEmpty(main.AppShowImagePath))
+            {
+                appRW.AppShowImagePath = "~/Images/ActivityInfo.jpg";
+            }
+            else
+            {
+                appRW.AppShowImagePath = main.AppShowImagePath;
+            }
+            if (string.IsNullOrEmpty(main.MainImagPath))
+            {
+                appRW.MainImagPath = "~/Images/ActivityInfo.jpg";
+            }
+            else
+            {
+                appRW.MainImagPath = main.MainImagPath;
+            }
+            if (string.IsNullOrEmpty(main.MinImagePath))
+            {
+                appRW.MinImagePath = "~/Images/ActivityInfo_MINI.jpg";
+            }
+            else
+            {
+                appRW.MinImagePath = main.MinImagePath;
+            }
+            appRW.Depict = main.Remarks;
             appRW.EnumAdverTorialType = (int)EnumAdverTorialType.url;
             appRW.EnumAdvertorialUType = client;
             appRW.IssueDate = DateTime.Now;
@@ -166,14 +187,18 @@ namespace Web.Controllers
             appRW.stick = 0;
             appRW.SystemStatus = 0;
             appRW.Title = main.Title;
+            appRW.UrlID = main.ID;
 
             result = AdvertorialModel.Add(appRW);
+            
+            
             if (result.HasError == true)
             {
                 return "No";
             }
             else
             {
+                activityInfoModel.Update_GenerateType(id, client, 1);
                 return "OK";
             }
         }

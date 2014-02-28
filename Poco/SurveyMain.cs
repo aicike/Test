@@ -65,6 +65,33 @@ namespace Poco
         [Display(Name = "调查类型")]
         public int EnumSurveyMainType { get; set; }
 
+        [Display(Name = "App展示与分享图片")]
+        public string MainImagPath { get; set; }
+
+
+        [Display(Name = "展示缩略图 中")]
+        public string AppShowImagePath { get; set; }
+
+
+        [Display(Name = "展示缩略图 小")]
+        public string MinImagePath { get; set; }
+
+
+        /// <summary>
+        /// 是否已生成用户端咨询 0否 1是
+        /// </summary>
+        [Display(Name = "是否已生成用户端咨询")]
+        public int ISGenerateUserAdvisory { get; set; }
+
+        /// <summary>
+        /// 是否已生成销售端咨询 0否 1是
+        /// </summary>
+        [Display(Name = "是否已生成销售端咨询")]
+        public int ISGenerateSaleAdvisory { get; set; }
+
+
+
+
         public virtual ICollection<SurveyTrouble> SurveyTrouble { get; set; }
 
 

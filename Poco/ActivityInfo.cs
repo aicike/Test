@@ -26,12 +26,34 @@ namespace Poco
         [StringLength(50, ErrorMessage = "长度小于50")]
         public string Title { get; set; }
 
+
         /// <summary>
         /// 活动备注或描述
         /// </summary>
         [Display(Name = "活动备注或描述")]
         [Required(ErrorMessage = "请输入活动备注或描述")]
         public string Remarks { get; set; }
+
+        /// <summary>
+        /// 活动内容
+        /// </summary>
+        [Display(Name = "活动内容")]
+        [Required(ErrorMessage = "请输入活动活动内容")]
+        public string Content { get; set; }
+
+
+        [Display(Name = "App展示与分享图片")]
+        public string MainImagPath { get; set; }
+
+
+        [Display(Name = "展示缩略图 中")]
+        public string AppShowImagePath { get; set; }
+
+
+        [Display(Name = "展示缩略图 小")]
+        public string MinImagePath { get; set; }
+
+
 
         /// <summary>
         /// 创建人
@@ -74,6 +96,20 @@ namespace Poco
         /// </summary>
         [Display(Name = "状态")]
         public int Status { get; set; }
+
+        /// <summary>
+        /// 是否已生成用户端咨询 0否 1是
+        /// </summary>
+         [Display(Name = "是否已生成用户端咨询")]
+        public int ISGenerateUserAdvisory { get; set; }
+
+         /// <summary>
+         /// 是否已生成销售端咨询 0否 1是
+         /// </summary>
+         [Display(Name = "是否已生成销售端咨询")]
+         public int ISGenerateSaleAdvisory { get; set; }
+
+
 
         public virtual ICollection<ActivityInfoParticipator> ActivityInfoParticipators { get; set; }
     }
