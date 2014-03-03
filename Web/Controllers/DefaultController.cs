@@ -11,6 +11,7 @@ using System.IO;
 using Common;
 using Poco.Enum;
 using System.Security.Policy;
+using System.Resources;
 
 namespace Web.Controllers
 {
@@ -442,12 +443,15 @@ namespace Web.Controllers
             {
                 ViewBag.IOSURL = AccountModel.IOSDownloadPath;
             }
+            //ResourceManager rm = new ResourceManager("ActivityInfo.cshtml", System.Reflection.Assembly.GetExecutingAssembly());
 
+            //var aa = rm.GetObject("Name");
+        
 
             return View(Activity);
         }
         /// <summary>
-        /// 校验是否报名（电话）
+        /// 校验是否报名
         /// </summary>
         /// <param name="AID"></param>
         /// <param name="phone"></param>
@@ -481,6 +485,10 @@ namespace Web.Controllers
             aip.Name = Request.Form["userName"];
             aip.Phone = Request.Form["userPhone"];
             aip.Email = Request.Form["userEmail"];
+            aip.Company = Request.Form["userCompany"];
+            aip.Position = Request.Form["userPosition"];
+
+
             if (UID.HasValue)
             {
                 aip.UserID = UID.Value;
