@@ -8,6 +8,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using EF;
 using System.Data.Entity;
+using System.Globalization;
 
 namespace Web
 {
@@ -31,5 +32,23 @@ namespace Web
         {
             Exception unhandledException = Server.GetLastError();
         }
+
+        //protected void Application_AcquireRequestState(object sender, EventArgs e)
+        //{
+        //    CultureInfo ci = null;
+        //    String[] userLang = Request.UserLanguages;
+
+        //    if (userLang.Length > 0)
+        //    {
+        //        ci = new CultureInfo(userLang[0]);
+        //    }
+        //    else
+        //    {
+        //        ci = new CultureInfo("zh");
+        //    }
+        //    System.Threading.Thread.CurrentThread.CurrentUICulture = ci;
+        //    System.Threading.Thread.CurrentThread.CurrentCulture =
+        //    CultureInfo.CreateSpecificCulture(ci.Name);
+        //}
     }
 }
