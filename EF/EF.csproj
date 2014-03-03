@@ -69,13 +69,9 @@
     <Compile Include="Migrations\201402190408289_initial.Designer.cs">
       <DependentUpon>201402190408289_initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201402260804510_upds.cs" />
-    <Compile Include="Migrations\201402260804510_upds.Designer.cs">
-      <DependentUpon>201402260804510_upds.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201402270422384_addupd.cs" />
-    <Compile Include="Migrations\201402270422384_addupd.Designer.cs">
-      <DependentUpon>201402270422384_addupd.cs</DependentUpon>
+    <Compile Include="Migrations\201403030224500_adds.cs" />
+    <Compile Include="Migrations\201403030224500_adds.Designer.cs">
+      <DependentUpon>201403030224500_adds.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs">
       <SubType>Code</SubType>
@@ -104,11 +100,8 @@
     <EmbeddedResource Include="Migrations\201402190408289_initial.resx">
       <DependentUpon>201402190408289_initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402260804510_upds.resx">
-      <DependentUpon>201402260804510_upds.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402270422384_addupd.resx">
-      <DependentUpon>201402270422384_addupd.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201403030224500_adds.resx">
+      <DependentUpon>201403030224500_adds.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

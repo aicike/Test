@@ -191,7 +191,7 @@ namespace Business
                 if (urltype == (int)EnumAdverURLType.Activities)
                 {
                     var activitiesModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
-                    activitiesModel.Update_GenerateType(appadivertorial.UrlID.Value, appadivertorial.EnumAdvertorialUType,0);
+                    activitiesModel.Update_GenerateType(appadivertorial.UrlID.Value, appadivertorial.EnumAdvertorialUType, 0);
                 }
                 else if (urltype == (int)EnumAdverURLType.Survey)
                 {
@@ -551,8 +551,14 @@ namespace Business
         public Result DelAppadvertorial_byUrlType(int EnumAdverURLType, int ID)
         {
             Result result = new Result();
-            string sql = string.Format("delete AppAdvertorial where EnumAdverURLType = {0} and UrlID={1}",EnumAdverURLType,ID);
-            int cnt  = base.SqlExecute(sql);
+            var appadvert = List().Where(a => a.EnumAdverURLType == EnumAdverURLType && a.UrlID == ID).FirstOrDefault();
+            if (appadvert != null)
+            {
+                var AppAdvertorialOperation = Factory.Get<IAppAdvertorialOperationModel>(SystemConst.IOC_Model.AppAdvertorialOperationModel);
+                AppAdvertorialOperation.DelOperation(appadvert.ID);
+            }
+            string sql = string.Format("delete AppAdvertorial where EnumAdverURLType = {0} and UrlID={1}", EnumAdverURLType, ID);
+            int cnt = base.SqlExecute(sql);
             if (cnt <= 0)
             {
                 result.HasError = true;
