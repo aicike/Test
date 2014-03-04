@@ -112,5 +112,8 @@ namespace Poco
 
 
         public virtual ICollection<ActivityInfoParticipator> ActivityInfoParticipators { get; set; }
+
+        
+        public virtual ICollection<ActivityInfoSignIn> ActivityInfoSignIn { get; set; }
     }
 }

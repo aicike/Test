@@ -54,17 +54,25 @@
             });
         }
 
-        function clickaddress(id) {
+        function clickaddress(id, ActivityID, URLType) {
 
+            $("#divactivitySigin").hide();
             var Address = "@ViewBag.UrlAddress";
             var url = "http://" + Address + "/default/News?id=" + id;
-
-
             $("#urlAddress").text(url);
+            if (URLType != null && URLType != undefined && URLType != "") {
+                var types = "@((int)Poco.Enum.EnumAdverURLType.Activities)";
+                if (URLType == types) {
+                    var signUrl = "http://" + Address + "/default/ActivitySignIn?ActivityID=" + ActivityID;
+                    $("#divactivitySigin").show();
+                    $("#urlSignInAddress").text(signUrl);
+                    
+                }
+            }
             $("#dialogShowUrl").dialog({
                 resizable: false,
-                height: 120,
-                width: 320,
+                height: 150,
+                width: 450,
                 modal: true,
                 draggable: false
             });
@@ -89,7 +97,6 @@
 
                 var Url = '@Url.Action("chickStick", "AppAdvertorial")';
                 $.post(Url, { ID: ID }, function (result) {
-
                     if (result == "No") {
                         JAlert({
                             Message: "修改失败 最多允许“5”篇软文置顶！",
@@ -254,7 +261,7 @@
                         else if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey)
                         {
                         @:调查问卷
-                                                                                                        }
+                                                                                                                            }
                     }
                 </td>
                 <td>
@@ -273,7 +280,7 @@
                     else
                     { 
                         @:无
-                                                                                                                                                                                                                                                                     }
+                                                                                                                                                                                                                                                                                         }
                 </td>
                 <td class="operation" align="center">
                     @if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey || item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Activities)
@@ -287,7 +294,8 @@
                     <br />
                     <a onclick="clickSelectInfo('@item.ID')" style=" width:56px">&nbsp;查看详细</a>
                     <br />
-                    <a onclick="clickaddress('@item.ID')" style=" width:56px">查看地址 </a>
+                    <a onclick="clickaddress('@item.ID','@item.UrlID','@item.EnumAdverURLType')" style=" width:56px">
+                        查看地址 </a>
                 </td>
             </tr>
         }
@@ -337,7 +345,12 @@
 </div>
 <div id="dialogShowUrl" title="资讯地址" style="display: none; padding: 0px; text-align: center">
     <div style="padding-top: 20px;">
-        <span id="urlAddress" style="font-weight: bold">11</span>
+        咨询地址：<span id="urlAddress" style="font-weight: bold"></span>
+        
+        <div id="divactivitySigin" style="display: none">
+            <br />
+            签到地址：<span id="urlSignInAddress" style="font-weight: bold"></span>
+        </div>
     </div>
 </div>
 <div id="dialogShowSelectInfo" title="资讯详细" style="display: none; padding: 0px">

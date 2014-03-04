@@ -65,9 +65,9 @@
     <Compile Include="Mapping\AppUpdateMap.cs" />
     <Compile Include="Mapping\OrderUserInfoMap.cs" />
     <Compile Include="Mapping\TaskMap.cs" />
-    <Compile Include="Migrations\201402270629240_Initail.cs" />
-    <Compile Include="Migrations\201402270629240_Initail.Designer.cs">
-      <DependentUpon>201402270629240_Initail.cs</DependentUpon>
+    <Compile Include="Migrations\201403030955504_adds.cs" />
+    <Compile Include="Migrations\201403030955504_adds.Designer.cs">
+      <DependentUpon>201403030955504_adds.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs">
       <SubType>Code</SubType>
@@ -93,8 +93,8 @@
     <Content Include="InitialProvince.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201402270629240_Initail.resx">
-      <DependentUpon>201402270629240_Initail.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201403030955504_adds.resx">
+      <DependentUpon>201403030955504_adds.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

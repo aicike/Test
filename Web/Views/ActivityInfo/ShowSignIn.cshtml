@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "ShowRegistration";
+    ViewBag.Title = "ShowSignIn";
     Layout = "~/Views/Shared/_LayoutBase.cshtml";
 }
 @section head{
@@ -20,7 +20,6 @@
         
         .ListTab
         {
-            width:95%;
             margin-top: 10px;
             margin-bottom: 20px;
         }
@@ -44,7 +43,7 @@
         }
     </style>
 }
-@model PagedList<Poco.ActivityInfoParticipator>
+@model PagedList<Poco.ActivityInfoSignIn>
 <table align="center" class="MainTab" cellpadding="0" cellspacing="0">
     <tr>
         <td>
@@ -82,9 +81,14 @@
                     <th style="width: 150px">
                         邮箱
                     </th>
-                   
+                    <th  style="width: 200px">
+                        公司
+                    </th>
+                    <th  style="width: 120px">
+                        职位
+                    </th>
                     <th style="width: 130px">
-                        报名日期
+                        签到日期
                     </th>
                 </tr>
                 @foreach (var item in Model)
@@ -100,15 +104,20 @@
                             @item.Email
                         </td>
                         <td>
+                             @item.Company
+                        </td>
+                        <td>
+                             @item.Position
+                        </td>
+                        <td>
                             @item.JoinDateTime.ToString("yyyy/MM/dd HH:mm")
                         </td>
                     </tr>
                 }
             </table>
-            
         </td>
     </tr>
-     <tr>
+    <tr>
         <td>
             <div class="pages" style="padding: 10px 10px 10px 10px;">
                 @Html.Pager(Model, new PagerOptions

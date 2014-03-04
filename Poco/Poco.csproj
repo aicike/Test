@@ -60,6 +60,7 @@
     <Compile Include="Account_Role.cs" />
     <Compile Include="ActivityInfo.cs" />
     <Compile Include="ActivityInfoParticipator.cs" />
+    <Compile Include="ActivityInfoSignIn.cs" />
     <Compile Include="AppAdvertorial.cs" />
     <Compile Include="AppAdvertorialOperation.cs" />
     <Compile Include="AppWaitImg.cs" />

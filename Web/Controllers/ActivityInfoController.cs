@@ -216,5 +216,18 @@ namespace Web.Controllers
             var ActivityInfoParticipator = ActivityInfoParticipatorModel.GetAIPList(AID, LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 50);
             return View(ActivityInfoParticipator);
         }
+
+        /// <summary>
+        /// 展示签到人
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="AID"></param>
+        /// <returns></returns>
+        public ActionResult ShowSignIn(int? id, int AID)
+        {
+            var ActivitySingInModel = Factory.Get<IActivityInfoSignInModel>(SystemConst.IOC_Model.ActivityInfoSignInModel);
+            var ActivityInfoParticipator = ActivitySingInModel.GetAIPList(AID, LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 50);
+            return View(ActivityInfoParticipator);
+        }
     }
 }
