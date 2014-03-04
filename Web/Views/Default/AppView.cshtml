@@ -28,7 +28,7 @@
     <div class="main">
         <div class="title">@Model.Title</div>
         <div class="image">
-            <img src="@Poco.SystemConst.WebUrlIP@Url.Content(@Model.ImagePath ?? "")" alt="@Model.Title" width="100%" />
+            <img src="@Poco.SystemConst.WebUrlIP@Url.Content(Model.ImagePath ?? "")" alt="@Model.Title" width="100%" />
         </div>
         <div style="word-break:break-all;word-wrap:break-word;">
             @Html.Raw(Model.Content)

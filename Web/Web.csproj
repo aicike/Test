@@ -888,7 +888,6 @@
     <Content Include="Views\SalesMessage\SelectAtoUmes.cshtml" />
     <Content Include="Views\SingleChat\HistoryMes.cshtml" />
     <Content Include="Views\Library\ImgTextManager.cshtml" />
-    <Content Include="Views\Default\Calculator.cshtml" />
     <Content Include="Views\BasisSet\Index.cshtml" />
     <Content Include="Views\Default\FindPwd.cshtml" />
     <Content Include="Views\AccountMainGuide\Index.cshtml" />
@@ -986,7 +985,6 @@
     <Content Include="Views\AccountMain\EditAccount.cshtml" />
     <Content Include="Views\AppAdvertorial\SelecInfo.cshtml" />
     <Content Include="Views\AppAdvertorialAccount\SelecInfo.cshtml" />
-    <Content Include="Views\Default\ceshi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

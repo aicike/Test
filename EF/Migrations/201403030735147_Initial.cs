@@ -2,8 +2,8 @@ namespace EF.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-    
-    public partial class Initail : DbMigration
+
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -27,7 +27,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.LookupOption", t => t.AccountStatusID)
                 .Index(t => t.ParentAccountID)
                 .Index(t => t.AccountStatusID);
-            
+
             CreateTable(
                 "dbo.Account_AccountMain",
                 c => new
@@ -42,7 +42,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.AccountMain",
                 c => new
@@ -95,7 +95,7 @@ namespace EF.Migrations
                 .Index(t => t.DistrictID)
                 .Index(t => t.ProvinceID)
                 .Index(t => t.ParentAccountMainID);
-            
+
             CreateTable(
                 "dbo.AccountMain_Service",
                 c => new
@@ -110,7 +110,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.Service", t => t.ServiceID)
                 .Index(t => t.AccountMainID)
                 .Index(t => t.ServiceID);
-            
+
             CreateTable(
                 "dbo.Service",
                 c => new
@@ -121,7 +121,7 @@ namespace EF.Migrations
                         IsIndependentSite = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.ID);
-            
+
             CreateTable(
                 "dbo.Menu",
                 c => new
@@ -145,7 +145,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.Service", t => t.ServiceID)
                 .Index(t => t.ParentMenuID)
                 .Index(t => t.ServiceID);
-            
+
             CreateTable(
                 "dbo.MenuOption",
                 c => new
@@ -160,7 +160,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Menu", t => t.MenuID)
                 .Index(t => t.MenuID);
-            
+
             CreateTable(
                 "dbo.RoleOption",
                 c => new
@@ -175,7 +175,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.Role", t => t.RoleID)
                 .Index(t => t.MenuOptionID)
                 .Index(t => t.RoleID);
-            
+
             CreateTable(
                 "dbo.Role",
                 c => new
@@ -194,7 +194,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.Role", t => t.ParentRoleID)
                 .Index(t => t.AccountMainID)
                 .Index(t => t.ParentRoleID);
-            
+
             CreateTable(
                 "dbo.Account_Role",
                 c => new
@@ -209,7 +209,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.Role", t => t.RoleID)
                 .Index(t => t.AccountID)
                 .Index(t => t.RoleID);
-            
+
             CreateTable(
                 "dbo.RoleMenu",
                 c => new
@@ -224,7 +224,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.Role", t => t.RoleID)
                 .Index(t => t.MenuID)
                 .Index(t => t.RoleID);
-            
+
             CreateTable(
                 "dbo.AccountMainHouses",
                 c => new
@@ -259,7 +259,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.AccountMainHouseInfoDetail",
                 c => new
@@ -288,7 +288,7 @@ namespace EF.Migrations
                 .Index(t => t.AccountMainHouses_ID)
                 .Index(t => t.AccountMainHouseTypeID)
                 .Index(t => t.EnumSoldStateID);
-            
+
             CreateTable(
                 "dbo.AccountMainHouseInfo",
                 c => new
@@ -305,7 +305,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMainHouses", t => t.AccountMainHousessID)
                 .Index(t => t.AccountMainHousessID);
-            
+
             CreateTable(
                 "dbo.AccountMainHouseType",
                 c => new
@@ -323,7 +323,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.AccountMain", t => t.AccountMain_ID)
                 .Index(t => t.AccountMainHousesID)
                 .Index(t => t.AccountMain_ID);
-            
+
             CreateTable(
                 "dbo.LookupOption",
                 c => new
@@ -337,7 +337,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Lookup", t => t.LookupID)
                 .Index(t => t.LookupID);
-            
+
             CreateTable(
                 "dbo.ClientInfo",
                 c => new
@@ -357,7 +357,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.LookupOption", t => t.EnumClientUserTypeID)
                 .Index(t => t.EnumClientSystemTypeID)
                 .Index(t => t.EnumClientUserTypeID);
-            
+
             CreateTable(
                 "dbo.KeywordAutoMessage",
                 c => new
@@ -375,7 +375,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.LookupOption", t => t.EnumMessageTypeID)
                 .Index(t => t.AutoMessage_KeywordID)
                 .Index(t => t.EnumMessageTypeID);
-            
+
             CreateTable(
                 "dbo.AutoMessage_Keyword",
                 c => new
@@ -397,7 +397,7 @@ namespace EF.Migrations
                 .Index(t => t.AccountMainID)
                 .Index(t => t.AccountMainHousesID)
                 .Index(t => t.ParentAutoMessage_KeywordID);
-            
+
             CreateTable(
                 "dbo.AutoMessage_User",
                 c => new
@@ -415,7 +415,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.AutoMessage_Keyword", t => t.AutoMessage_KeywordID)
                 .Index(t => t.AccountMainID)
                 .Index(t => t.AutoMessage_KeywordID);
-            
+
             CreateTable(
                 "dbo.Keyword",
                 c => new
@@ -428,7 +428,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AutoMessage_Keyword", t => t.AutoMessage_KeywordID, cascadeDelete: true)
                 .Index(t => t.AutoMessage_KeywordID);
-            
+
             CreateTable(
                 "dbo.Lookup",
                 c => new
@@ -439,7 +439,7 @@ namespace EF.Migrations
                         Value = c.String(nullable: false, maxLength: 50),
                     })
                 .PrimaryKey(t => t.ID);
-            
+
             CreateTable(
                 "dbo.SystemUser",
                 c => new
@@ -459,7 +459,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.SystemUserRole", t => t.SystemUserRoleID)
                 .Index(t => t.AccountStatusID)
                 .Index(t => t.SystemUserRoleID);
-            
+
             CreateTable(
                 "dbo.SystemUserRole",
                 c => new
@@ -472,7 +472,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.SystemUserRole", t => t.ParentSystemUserRoleID)
                 .Index(t => t.ParentSystemUserRoleID);
-            
+
             CreateTable(
                 "dbo.SystemUserRole_Option",
                 c => new
@@ -487,7 +487,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.SystemUserMenuOption", t => t.SystemUserMenuOptionID)
                 .Index(t => t.SystemUserRoleID)
                 .Index(t => t.SystemUserMenuOptionID);
-            
+
             CreateTable(
                 "dbo.SystemUserMenuOption",
                 c => new
@@ -502,7 +502,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.SystemUserMenu", t => t.SystemUserMenuID)
                 .Index(t => t.SystemUserMenuID);
-            
+
             CreateTable(
                 "dbo.SystemUserMenu",
                 c => new
@@ -519,7 +519,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.SystemUserMenu", t => t.ParentMenuID)
                 .Index(t => t.ParentMenuID);
-            
+
             CreateTable(
                 "dbo.SystemUserRole_SystemUserMenu",
                 c => new
@@ -534,7 +534,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.SystemUserRole", t => t.SystemUserRoleID)
                 .Index(t => t.SystemUserMenuID)
                 .Index(t => t.SystemUserRoleID);
-            
+
             CreateTable(
                 "dbo.User",
                 c => new
@@ -563,7 +563,7 @@ namespace EF.Migrations
                 .Index(t => t.AccountStatusID)
                 .Index(t => t.UserLoginInfoID)
                 .Index(t => t.UserTagID);
-            
+
             CreateTable(
                 "dbo.Account_User",
                 c => new
@@ -582,7 +582,7 @@ namespace EF.Migrations
                 .Index(t => t.AccountID)
                 .Index(t => t.GroupID)
                 .Index(t => t.UserID);
-            
+
             CreateTable(
                 "dbo.Group",
                 c => new
@@ -600,7 +600,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.Message",
                 c => new
@@ -637,7 +637,7 @@ namespace EF.Migrations
                 .Index(t => t.FromUserID)
                 .Index(t => t.ToAccountID)
                 .Index(t => t.ToUserID);
-            
+
             CreateTable(
                 "dbo.Conversation",
                 c => new
@@ -652,7 +652,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.ConversationDetailed",
                 c => new
@@ -671,7 +671,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.Conversation", t => t.ConversationID)
                 .Index(t => t.AccountMainID)
                 .Index(t => t.ConversationID);
-            
+
             CreateTable(
                 "dbo.PendingMessages",
                 c => new
@@ -709,7 +709,7 @@ namespace EF.Migrations
                 .Index(t => t.MessageID)
                 .Index(t => t.ToAccountID)
                 .Index(t => t.ToUserID);
-            
+
             CreateTable(
                 "dbo.LibraryImageText",
                 c => new
@@ -728,7 +728,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.LibraryImageText", t => t.LibraryImageTextParentID)
                 .Index(t => t.AccountMainID)
                 .Index(t => t.LibraryImageTextParentID);
-            
+
             CreateTable(
                 "dbo.MessageGroupChat",
                 c => new
@@ -743,7 +743,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Message", t => t.MessageID)
                 .Index(t => t.MessageID);
-            
+
             CreateTable(
                 "dbo.SystemMessage",
                 c => new
@@ -760,7 +760,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.User", t => t.UserID)
                 .Index(t => t.AccountID)
                 .Index(t => t.UserID);
-            
+
             CreateTable(
                 "dbo.UserDeliveryAddress",
                 c => new
@@ -788,7 +788,7 @@ namespace EF.Migrations
                 .Index(t => t.DistrictID)
                 .Index(t => t.ProvinceID)
                 .Index(t => t.UserID);
-            
+
             CreateTable(
                 "dbo.City",
                 c => new
@@ -802,7 +802,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Province", t => t.ProvinceID)
                 .Index(t => t.ProvinceID);
-            
+
             CreateTable(
                 "dbo.District",
                 c => new
@@ -815,7 +815,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.City", t => t.CityID)
                 .Index(t => t.CityID);
-            
+
             CreateTable(
                 "dbo.OrderUserInfo",
                 c => new
@@ -840,7 +840,7 @@ namespace EF.Migrations
                 .Index(t => t.CityID)
                 .Index(t => t.DistrictID)
                 .Index(t => t.ProvinceID);
-            
+
             CreateTable(
                 "dbo.Order",
                 c => new
@@ -866,7 +866,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.OrderUserInfo", t => t.OrderUserInfoID)
                 .Index(t => t.AccountMainID)
                 .Index(t => t.OrderUserInfoID);
-            
+
             CreateTable(
                 "dbo.OrderDetail",
                 c => new
@@ -890,7 +890,7 @@ namespace EF.Migrations
                 .Index(t => t.AccountMainID)
                 .Index(t => t.OrderID)
                 .Index(t => t.ProductID);
-            
+
             CreateTable(
                 "dbo.OrderMIntermediate",
                 c => new
@@ -906,7 +906,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Order", t => t.OrderID)
                 .Index(t => t.OrderID);
-            
+
             CreateTable(
                 "dbo.Province",
                 c => new
@@ -916,7 +916,7 @@ namespace EF.Migrations
                         Name = c.String(nullable: false, maxLength: 50),
                     })
                 .PrimaryKey(t => t.ID);
-            
+
             CreateTable(
                 "dbo.UserLoginInfo",
                 c => new
@@ -935,7 +935,7 @@ namespace EF.Migrations
                         FindPwdValidity = c.Boolean(),
                     })
                 .PrimaryKey(t => t.ID);
-            
+
             CreateTable(
                 "dbo.UserTag",
                 c => new
@@ -945,7 +945,7 @@ namespace EF.Migrations
                         TagName = c.String(),
                     })
                 .PrimaryKey(t => t.ID);
-            
+
             CreateTable(
                 "dbo.VIPInfo",
                 c => new
@@ -967,7 +967,7 @@ namespace EF.Migrations
                 .Index(t => t.AccountMainID)
                 .Index(t => t.CardInfoID)
                 .Index(t => t.UserID);
-            
+
             CreateTable(
                 "dbo.CardInfo",
                 c => new
@@ -986,7 +986,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.CardPrefix", t => t.CardPrefixID)
                 .Index(t => t.AccountMainID)
                 .Index(t => t.CardPrefixID);
-            
+
             CreateTable(
                 "dbo.CardPrefix",
                 c => new
@@ -999,7 +999,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.VIPInfoExpenseDetail",
                 c => new
@@ -1020,7 +1020,7 @@ namespace EF.Migrations
                 .Index(t => t.AccountID)
                 .Index(t => t.UserID)
                 .Index(t => t.VIPInfoID);
-            
+
             CreateTable(
                 "dbo.ActivityInfo",
                 c => new
@@ -1030,19 +1030,25 @@ namespace EF.Migrations
                         AccountMainID = c.Int(nullable: false),
                         Title = c.String(nullable: false, maxLength: 50),
                         Remarks = c.String(nullable: false),
+                        Content = c.String(nullable: false),
+                        MainImagPath = c.String(),
+                        AppShowImagePath = c.String(),
+                        MinImagePath = c.String(),
                         AccountID = c.Int(nullable: false),
                         CreateDate = c.DateTime(nullable: false),
                         EnrollEndDate = c.DateTime(nullable: false),
                         ActivityStratDate = c.String(nullable: false),
                         MaxCount = c.Int(nullable: false),
                         Status = c.Int(nullable: false),
+                        ISGenerateUserAdvisory = c.Int(nullable: false),
+                        ISGenerateSaleAdvisory = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.ActivityInfoParticipator",
                 c => new
@@ -1052,15 +1058,17 @@ namespace EF.Migrations
                         ActivityInfoID = c.Int(nullable: false),
                         EnumAdvertorialUType = c.Int(),
                         UserID = c.Int(),
-                        Phone = c.String(nullable: false, maxLength: 15),
+                        Phone = c.String(maxLength: 15),
                         Name = c.String(maxLength: 30),
                         Email = c.String(maxLength: 30),
+                        Company = c.String(maxLength: 50),
+                        Position = c.String(maxLength: 30),
                         JoinDateTime = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.ActivityInfo", t => t.ActivityInfoID)
                 .Index(t => t.ActivityInfoID);
-            
+
             CreateTable(
                 "dbo.AppAdvertorial",
                 c => new
@@ -1082,11 +1090,12 @@ namespace EF.Migrations
                         EnumAdverTorialType = c.Int(nullable: false),
                         EnumAdverURLType = c.Int(),
                         BrowseCnt = c.Int(nullable: false),
+                        UrlID = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.AppAdvertorialOperation",
                 c => new
@@ -1104,7 +1113,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AppAdvertorial", t => t.AppAdvertorialID)
                 .Index(t => t.AppAdvertorialID);
-            
+
             CreateTable(
                 "dbo.AppUpdate",
                 c => new
@@ -1116,7 +1125,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.ID)
                 .Index(t => t.ID);
-            
+
             CreateTable(
                 "dbo.AppWaitImg",
                 c => new
@@ -1129,7 +1138,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.AutoMessage_Add",
                 c => new
@@ -1142,7 +1151,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.AutoMessage_Reply",
                 c => new
@@ -1155,7 +1164,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.Classify",
                 c => new
@@ -1174,7 +1183,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.Product",
                 c => new
@@ -1203,7 +1212,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.Classify", t => t.ClassifyID)
                 .Index(t => t.AccountMainID)
                 .Index(t => t.ClassifyID);
-            
+
             CreateTable(
                 "dbo.ProductImg",
                 c => new
@@ -1217,7 +1226,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Product", t => t.ProductID)
                 .Index(t => t.ProductID);
-            
+
             CreateTable(
                 "dbo.Feedback",
                 c => new
@@ -1233,7 +1242,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.Holiday",
                 c => new
@@ -1247,7 +1256,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.LibraryImage",
                 c => new
@@ -1261,7 +1270,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.LibraryText",
                 c => new
@@ -1275,7 +1284,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.LibraryVideo",
                 c => new
@@ -1291,7 +1300,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.LibraryVoice",
                 c => new
@@ -1307,7 +1316,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.OrderMType",
                 c => new
@@ -1322,7 +1331,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.Panorama",
                 c => new
@@ -1342,7 +1351,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.PushMsg",
                 c => new
@@ -1363,7 +1372,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.PushMsgDetail",
                 c => new
@@ -1379,7 +1388,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.PushMsg", t => t.PushMsgID)
                 .Index(t => t.PushMsgID);
-            
+
             CreateTable(
                 "dbo.ReportFormPower",
                 c => new
@@ -1392,7 +1401,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.SurveyMain",
                 c => new
@@ -1406,13 +1415,18 @@ namespace EF.Migrations
                         CreateDate = c.DateTime(nullable: false),
                         Status = c.Int(nullable: false),
                         EnumSurveyMainType = c.Int(nullable: false),
+                        MainImagPath = c.String(),
+                        AppShowImagePath = c.String(),
+                        MinImagePath = c.String(),
+                        ISGenerateUserAdvisory = c.Int(nullable: false),
+                        ISGenerateSaleAdvisory = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .ForeignKey("dbo.AccountMain", t => t.AccountMainID)
                 .Index(t => t.AccountID)
                 .Index(t => t.AccountMainID);
-            
+
             CreateTable(
                 "dbo.SurveyTrouble",
                 c => new
@@ -1427,7 +1441,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.SurveyMain", t => t.SurveyMainID)
                 .Index(t => t.SurveyMainID);
-            
+
             CreateTable(
                 "dbo.SurveyAnswer",
                 c => new
@@ -1448,7 +1462,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.SurveyTrouble", t => t.SurveyTroubleID)
                 .Index(t => t.SurveyOptionID)
                 .Index(t => t.SurveyTroubleID);
-            
+
             CreateTable(
                 "dbo.SurveyOption",
                 c => new
@@ -1462,7 +1476,7 @@ namespace EF.Migrations
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.SurveyTrouble", t => t.SurveyTroubleID)
                 .Index(t => t.SurveyTroubleID);
-            
+
             CreateTable(
                 "dbo.Task",
                 c => new
@@ -1486,7 +1500,7 @@ namespace EF.Migrations
                 .Index(t => t.AccountMainID)
                 .Index(t => t.CreateAccountID)
                 .Index(t => t.ReceiverAccountID);
-            
+
             CreateTable(
                 "dbo.TaskDetail",
                 c => new
@@ -1504,7 +1518,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.Task", t => t.TaskID)
                 .Index(t => t.AccountID)
                 .Index(t => t.TaskID);
-            
+
             CreateTable(
                 "dbo.TaskAccount",
                 c => new
@@ -1519,7 +1533,7 @@ namespace EF.Migrations
                 .ForeignKey("dbo.TaskDetail", t => t.TaskDetailID)
                 .Index(t => t.AccountID)
                 .Index(t => t.TaskDetailID);
-            
+
             CreateTable(
                 "dbo.ActivateEmail",
                 c => new
@@ -1536,7 +1550,6 @@ namespace EF.Migrations
                 .ForeignKey("dbo.Account", t => t.AccountID)
                 .Index(t => t.AccountID);
 
-
             var migrationDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\");
             var ddlSqlFiles = new string[] { "InitialProvince.sql", "Initial.sql" };
             foreach (var file in ddlSqlFiles)
@@ -1549,8 +1562,9 @@ namespace EF.Migrations
                         Sql(commandText);
                 }
             }
+
         }
-        
+
         public override void Down()
         {
             DropForeignKey("dbo.ActivateEmail", "AccountID", "dbo.Account");

@@ -14,7 +14,7 @@
             var fileVoiceUrl='@Url.Action("VoiceManage", "Library", new { HostName = ViewBag.HostName })';
             var fileVideoUrl='@Url.Action("VideoManage", "Library", new { HostName = ViewBag.HostName })';
             var fileImageTextUrl='@Url.Action("ImgTextManager", "Library", new { HostName = ViewBag.HostName })';
-            $("#tabs").tabs();
+            $("#tabs_o").tabs();
             $("#selectUser").change(function () {
                 var value = $(this).val();
                 switch (value) {
@@ -72,7 +72,7 @@
                         return false;
                     }
                 }
-                var active = $("#tabs").tabs("option", "active");
+                var active = $("#tabs_o").tabs("option", "active");
                 switch (active) {
                     case 0:
                         var content=$("#txtText").val().trim();
@@ -279,19 +279,19 @@
                             var url = hidObj.val();
                             var id = hidObj.attr("fileID");
                             var type = hidObj.attr("fileType");
-                            $("#tabs-2,#tabs-3,#tabs-4,#tabs-5").empty();
+                            $("#tabs_o-2,#tabs_o-3,#tabs_o-4,#tabs_o-5").empty();
                             switch(type){
                                 case "LibraryImage":
-                                    $("#tabs-2").append('<img style="max-width: 230px; max-height: 100px;vertical-align:middle" src="'+url+'" />&nbsp;<input type="hidden" id="hidImage" url="'+url+'" fileType="'+type+'" title="'+title+'" value="'+id+'"/>');
+                                    $("#tabs_o-2").append('<img style="max-width: 230px; max-height: 100px;vertical-align:middle" src="'+url+'" />&nbsp;<input type="hidden" id="hidImage" url="'+url+'" fileType="'+type+'" title="'+title+'" value="'+id+'"/>');
                                     break;
                                 case "LibraryVoice":
-                                    $("#tabs-3").append('<span class="ico-music" style="vertical-align: middle;"></span><input type="hidden" id="hidVoice" url="'+url+'" fileType="'+type+'" title="'+title+'" value="'+id+'"/><label class="msgText">' + title + '</label>');
+                                    $("#tabs_o-3").append('<span class="ico-music" style="vertical-align: middle;"></span><input type="hidden" id="hidVoice" url="'+url+'" fileType="'+type+'" title="'+title+'" value="'+id+'"/><label class="msgText">' + title + '</label>');
                                     break;
                                 case "LibraryVideo":
-                                    $("#tabs-4").append('<span class="ico-facetime-video" style="vertical-align: middle;"></span><input type="hidden" id="hidVideo" url="'+url+'" fileType="'+type+'" title="'+title+'" value="'+id+'"/><label class="msgText">' + title + '</label>');
+                                    $("#tabs_o-4").append('<span class="ico-facetime-video" style="vertical-align: middle;"></span><input type="hidden" id="hidVideo" url="'+url+'" fileType="'+type+'" title="'+title+'" value="'+id+'"/><label class="msgText">' + title + '</label>');
                                     break;
                                 case "LibraryImageText":
-                                    $("#tabs-5").append('<img style="max-width: 230px; max-height: 100px;vertical-align:middle" src="'+url+'" />&nbsp;<input type="hidden" id="hidImageText" url="'+url+'" fileType="'+type+'" title="'+title+'" value="'+id+'"/>');
+                                    $("#tabs_o-5").append('<img style="max-width: 230px; max-height: 100px;vertical-align:middle" src="'+url+'" />&nbsp;<input type="hidden" id="hidImageText" url="'+url+'" fileType="'+type+'" title="'+title+'" value="'+id+'"/>');
                                     break;
                             }
                             $(this).dialog("close");
@@ -346,15 +346,15 @@
             <option value="user">指定用户</option>
         </select>
     </div>
-    <div class="tableList" id="tabs">
+    <div class="tableList" id="tabs_o">
         <ul style="padding:0px;">
-            <li><a href="#tabs-1">文字</a></li>
-            <li><a class="btnLibrary" type="LibraryImage" href="#tabs-2">图片</a></li>
-            <li><a class="btnLibrary" type="LibraryVoice" href="#tabs-3">语音</a></li>
-            <li><a class="btnLibrary" type="LibraryVideo" href="#tabs-4">视频</a></li>
-            <li><a class="btnLibrary" type="LibraryImageText" href="#tabs-5">图片消息</a></li>
+            <li><a href="#tabs_o-1">文字</a></li>
+            <li><a class="btnLibrary" type="LibraryImage" href="#tabs_o-2">图片</a></li>
+            <li><a class="btnLibrary" type="LibraryVoice" href="#tabs_o-3">语音</a></li>
+            <li><a class="btnLibrary" type="LibraryVideo" href="#tabs_o-4">视频</a></li>
+            <li><a class="btnLibrary" type="LibraryImageText" href="#tabs_o-5">图片消息</a></li>
         </ul>
-        <div class="tab" id="tabs-1">
+        <div class="tab" id="tabs_o-1">
             <textarea style="width: 99%" rows="12" id="txtText"></textarea>
             <div style="float: right" id="divTextInfo">
                 还可以输入500字</div>

@@ -247,11 +247,7 @@
                         return false;
                     }
                 }
-
-
-
             });
-
 
             $("form").submit(function () {
                 if ($(".validation-summary-errors").find("li[style!='display:none']").length == 0) {
@@ -260,7 +256,6 @@
                     $(".validation-summary-errors").find("li").remove();
                 }
             });
-
 
             var atype = $("#AType").val();
             //复文本
@@ -273,10 +268,7 @@
                 $("#zw").hide();
                 $("#dz").hide()
             }
-
-
         });
-
 
         var IsStick = 0;
         var iscansub = 0;
@@ -302,8 +294,6 @@
                 IsStick = 0;
             }
         }
-
-
 
         function ClickType()
         {
@@ -450,14 +440,12 @@
                     <td>
                     </td>
                 </tr>
-                <tr id="zw">
+                <tr id="zw" style="height:300px">
                     <td class="tdTitle" valign="top">
                         <span class="Identification">*</span> 正文
                     </td>
                     <td colspan="2" class="tdField">
-
                         <script type="text/plain" id="editor" height="300px" width="330px" name="Content"></script>
-                        
                     </td>
                    
                 </tr>
