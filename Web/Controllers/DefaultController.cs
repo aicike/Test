@@ -12,6 +12,7 @@ using Common;
 using Poco.Enum;
 using System.Security.Policy;
 using System.Resources;
+using System.Configuration;
 
 namespace Web.Controllers
 {
@@ -443,10 +444,8 @@ namespace Web.Controllers
             {
                 ViewBag.IOSURL = AccountModel.IOSDownloadPath;
             }
-            //ResourceManager rm = new ResourceManager("ActivityInfo.cshtml", System.Reflection.Assembly.GetExecutingAssembly());
 
-            //var aa = rm.GetObject("Name");
-        
+
 
             return View(Activity);
         }
@@ -485,8 +484,8 @@ namespace Web.Controllers
             aip.Name = Request.Form["userName"];
             aip.Phone = Request.Form["userPhone"];
             aip.Email = Request.Form["userEmail"];
-            aip.Company = Request.Form["userCompany"];
-            aip.Position = Request.Form["userPosition"];
+            aip.Company = "";
+            aip.Position = "";
 
 
             if (UID.HasValue)
@@ -498,9 +497,70 @@ namespace Web.Controllers
                 aip.EnumAdvertorialUType = Utype.Value;
             }
             var IActivityInfoParticipatorModelModel = Factory.Get<IActivityInfoParticipatorModel>(SystemConst.IOC_Model.ActivityInfoParticipatorModel);
-            IActivityInfoParticipatorModelModel.Add(aip);
+            var result = IActivityInfoParticipatorModelModel.Add(aip);
+            if (result.HasError == false)
+            {
+                try
+                {
+                    System.Threading.Tasks.Task t = new System.Threading.Tasks.Task(() =>
+                    {
+                        var activitymodel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
+                        var activity = activitymodel.Get(ActivityID);
+                        string webUrl = ConfigurationManager.AppSettings["WebUrl"].ToString();
+                        string content = string.Format("您好，{0}先生/女士。您参与的活动\"{1}\" 于明日{2}开始。详细地址：{3}/default/ActivityInfo?ActivityID={4}  【{5}】"
+                                                            , aip.Name, activity.Title, activity.ActivityStratDate.Substring(activity.ActivityStratDate.LastIndexOf(' ')), webUrl, activity.ID, activity.AccountMain.Name);
+                        SMS_Model sms = new SMS_Model();
+                        sms.SendSMS(aip.Phone, content);
+                    });
+                    t.Start();
+                }
+                catch { }
+            }
             return RedirectToAction("ActivityInfo", "Default", new { ActivityID = ActivityID, isok = 1 });
         }
+
+
+
+        //---------------活动签到-----------------------------------------
+        public ActionResult ActivitySignIn(int ActivityID, int? isok)
+        {
+            ViewBag.ActivityID = ActivityID;
+            var ActivityModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
+            var Activity = ActivityModel.Get(ActivityID);
+            if (isok.HasValue)
+            {
+                // 1 提交成功 2提交失败
+                ViewBag.isok = isok;
+            }
+
+            return View(Activity);
+        }
+        /// <summary>
+        /// 提交
+        /// </summary>
+        /// <param name="ActivityID"></param>
+        /// <param name="isok"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ActivitySignIn(int ActivityID)
+        {
+            ActivityInfoSignIn ais = new ActivityInfoSignIn();
+            ais.ActivityInfoID = ActivityID;
+            ais.JoinDateTime = DateTime.Now;
+            ais.Name = Request.Form["userName"];
+            ais.Phone = Request.Form["userPhone"];
+            ais.Email = Request.Form["userEmail"];
+            ais.Company = Request.Form["userCompany"];
+            ais.Position = Request.Form["userPosition"];
+
+            var ActivitySignInModel = Factory.Get<IActivityInfoSignInModel>(SystemConst.IOC_Model.ActivityInfoSignInModel);
+            ActivitySignInModel.Add(ais);
+
+            return RedirectToAction("ActivitySignIn", "Default", new { ActivityID = ActivityID, isok = 1 });
+        }
+
+
+
 
 
 

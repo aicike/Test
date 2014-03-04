@@ -37,7 +37,7 @@
         $("#dialogShowP").dialog({
             resizable: false,
             height: 710,
-            width: 850,
+            width: 760,
             modal: true,
             draggable: false,
             close: function (event, ui) {
@@ -46,6 +46,23 @@
         });
     }
 
+    //显示调查签到详细
+    function ShowSignInInfo(id) {
+        var src = '@Url.Action("ShowSignIn", "ActivityInfo")';
+        $("#iframeShowSign").attr("src", src + "?AID=" + id);
+        $("#dialogShowSign").dialog({
+            resizable: false,
+            height: 710,
+            width: 850,
+            modal: true,
+            draggable: false,
+            close: function (event, ui) {
+                $("#iframeShowSign").attr("src", "");
+            }
+        });
+    }
+
+    
 
     //ajax 生成软文
     function SetAppAdver(id,client) {
@@ -92,6 +109,9 @@
             <th style="width: 70px">
                 报名人数
             </th>
+             <th style="width: 70px">
+                签到人数
+            </th>
             <th style="width: 60px">
                 名额
             </th>
@@ -133,6 +153,11 @@
                 <td class="operation">
                     <label name="labCbFirst" title="查看详细">
                         <a onclick="ShowPInfo(@item.ID)">@item.ActivityInfoParticipators.Count()<span>人</span></a>
+                    </label>
+                </td>
+                  <td class="operation">
+                    <label name="labCbFirst" title="查看详细">
+                        <a onclick="ShowSignInInfo(@item.ID)">@item.ActivityInfoSignIn.Count()<span>人</span></a>
                     </label>
                 </td>
                 <td>
@@ -210,6 +235,11 @@
 </div>
 
 <div id="dialogShowP" title="报名列表" style="display: none; padding: 0px">
-    <iframe id="iframeShowP" src="#" style="width: 850px; height: 650px; border: none;
+    <iframe id="iframeShowP" src="#" style="width: 760px; height: 650px; border: none;
+        overflow: auto"></iframe>
+</div>
+
+<div id="dialogShowSign" title="签到列表" style="display: none; padding: 0px">
+    <iframe id="iframeShowSign" src="#" style="width: 850px; height: 650px; border: none;
         overflow: auto"></iframe>
 </div>

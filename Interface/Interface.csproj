@@ -50,6 +50,7 @@
     <Compile Include="IAccountModel.cs" />
     <Compile Include="IActivityInfoModel.cs" />
     <Compile Include="IActivityInfoParticipatorModel.cs" />
+    <Compile Include="IActivityInfoSignInModel.cs" />
     <Compile Include="IAppAdvertorialModel.cs" />
     <Compile Include="IAppAdvertorialOperationModel.cs" />
     <Compile Include="IAppWaitImgModel.cs" />

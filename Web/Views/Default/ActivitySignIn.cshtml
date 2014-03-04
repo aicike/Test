@@ -1,7 +1,6 @@
 ﻿@{
     ViewBag.Title = Model.Title;
     Layout = "~/Views/Shared/_LayoutBase.cshtml";
-
 }
 @section head{
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
@@ -18,9 +17,6 @@
 
         $(function () {
 
-
-        
-
             //----------------提交后状态----
             var isok = '@ViewBag.isok';
             if (isok == 1) {
@@ -34,6 +30,7 @@
             }
         });
 
+
         var isSub = false;
         function checkUP() {
             if (!isSub) {
@@ -41,6 +38,8 @@
                 var name = $('#userName').val();
                 var phone = $('#userPhone').val();
                 var email = $('#userEmail').val();
+                var Company = $('#userCompany').val();
+                var Position = $('#userPosition').val();
 
                 if (name == undefined || name == "") {
                     alert("姓名不能为空");
@@ -57,6 +56,19 @@
                     isSub = false;
                     return false;
                 }
+                if (Company == undefined || Company == "") {
+                    alert("公司不能为空");
+                    isSub = false;
+                    return false;
+                }
+                if (Position == undefined || Position == "") {
+                    alert("职位不能为空");
+                    isSub = false;
+                    return false;
+                }
+
+
+
                 var reg0 = /^(((1[0-9]{1}[0-9]{1}))+\d{8})$/;
                 var my = false;
                 if (reg0.test(phone)) my = true;
@@ -75,41 +87,12 @@
                     return false;
                 }
 
-
-                var PUrl = '@Url.Action("CheckISBM", "Default")';
-                var AID = '@ViewBag.ActivityID';
-
-                $.ajaxSetup({
-                    async: false
-                });
-                var isture = false;
-                $.post(PUrl, { AID: AID, phone: phone, Email: email }, function (result) {
-                    if (result == "1") {
-                        isture = true;
-                        showMess.click();
-                        $('#userPhone').val("");
-                    }
-                    else if (result == "2") {
-                        isture = true;
-                        showMessEmail.click();
-                        $('#userEmail').val("");
-                    }
-
-                });
-                if (isture) {
-                    isSub = false;
-                    return false;
-                }
             }
             else {
                 return false;
             }
 
         }
-
-     
-
-
     </script>
     <style>
         .divTitle
@@ -134,7 +117,7 @@
             background-color: #ffffff;
             border: 1px solid #aaaaab;
             padding: 5px 10px 5px 10px;
-            line-height: 25px;
+            line-height: 30px;
             font-size: 14px;
             margin-bottom: 10px;
         }
@@ -188,27 +171,14 @@
             <div>
                 @if (Model.Status == 1)
                 { 
-                    <a href="#" data-role="button" data-theme="b">报名已截止 感谢您的参与</a> 
-                }
-                else if (ViewBag.IsJS == "true")
-                {
-                    <a href="#" data-role="button" data-theme="b">报名已截止 感谢您的参与</a> 
+                    <a href="#" data-role="button" data-theme="b">报名已结束 感谢您的参与</a> 
                 }
                 else
                 {
-                    if (ViewBag.isSignUP == "true")
-                    {
-                    <a href="#" data-role="button" data-theme="b">您已经报过名啦</a> 
-                    }
-                    else if (ViewBag.IsMaxCnt == "true")
-                    {
-                    <a href="#" data-role="button" data-theme="b">报名人额已满 感谢您的参与</a> 
-                    }
-                    else
-                    {
+                  
                     <a href="#shwoSubmit" data-rel="popup" data-position-to="window" data-role="button"
-                        data-theme="b">我要报名</a> 
-                    }
+                        data-theme="b">我要签到</a> 
+
                 }
             </div>
             <br />
@@ -221,36 +191,23 @@
             <div>
                 @if (Model.Status == 1)
                 { 
-                    <a href="#" data-role="button" data-theme="b">报名已截止 感谢您的参与</a> 
-                }
-                else if (ViewBag.IsJS == "true")
-                {
-                    <a href="#" data-role="button" data-theme="b">报名已截止 感谢您的参与</a> 
+                    <a href="#" data-role="button" data-theme="b">活动已结束 感谢您的参与</a> 
                 }
                 else
                 {
-                    if (ViewBag.isSignUP == "true")
-                    {
-                    <a href="#" data-role="button" data-theme="b">您已经报过名啦</a> 
-                    }
-                    else if (ViewBag.IsMaxCnt == "true")
-                    {
-                    <a href="#" data-role="button" data-theme="b">报名人额已满 感谢您的参与</a> 
-                    }
-                    else
-                    {
+                  
                     <a href="#shwoSubmit" data-rel="popup" data-position-to="window" data-role="button"
-                        data-theme="b">我要报名</a> 
-                    }
+                        data-theme="b">我要签到</a> 
+
                 }
                 <div data-role="popup" id="shwoSubmit" data-overlay-theme="a" data-theme="b" data-dismissible="false">
                     <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete"
                         data-iconpos="notext" class="ui-btn-right">Close</a>
-                    @using (Html.BeginForm("AddActivityInfo", "Default", new { ActivityID = ViewBag.ActivityID }, FormMethod.Post, new { enctype = "multipart/form-data", style = "padding:10px 20px" }))
+                    @using (Html.BeginForm("ActivitySignIn", "Default", new { ActivityID = ViewBag.ActivityID }, FormMethod.Post, new { enctype = "multipart/form-data", style = "padding:10px 20px" }))
                     {
                         <input id="UID" type="hidden" name="UID" value="@ViewBag.UID" />
                         <input id="Utype" type="hidden" name="Utype" value="@ViewBag.Utype" />
-                        <div style=" line-height:20px">
+                        <div style="line-height: 20px">
                             请留下您的信息
                             <br />
                             Please enter your information
@@ -259,8 +216,10 @@
                         <input type="text" name="userName" id="userName" placeholder="姓名/Name" />   
                         <input type="tel" name="userPhone" id="userPhone" placeholder="电话号码/TelePhone" />  
                         <input type="text" name="userEmail" id="userEmail" placeholder="邮箱地址/Email" />    
+                        <input type="text" name="userCompany" id="userCompany" placeholder="公司/Company" />    
+                        <input type="text" name="userPosition" id="userPosition" placeholder="职位/Position" />    
                         <button type="submit" data-theme="b" onclick="return checkUP()">
-                            提交/Submit
+                            签到/Sign in
                         </button>   
                     
                     }
@@ -280,47 +239,11 @@
                         该邮箱已经报过名啦</p>
                 </div>
             </div>
-            @*<a id="Adowload" href="#" style="text-decoration: none; margin-top: 15px; text-shadow: none">
-                <table align="center" class="APPDow" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td align="center">
-                            下载@(ViewBag.AMName)APP获取更多精彩资讯
-                        </td>
-                    </tr>
-                </table>
-            </a>
-            <script>
-
-                (function () {
-                    var IPHONEURL = "@ViewBag.IOSURL"+"";
-                    var ANDROIDURL = "@ViewBag.AndroidURL";
-                    var page = {};
-                    page.init = function () {
-                        page.initView();
-                    };
-                    page.initView = function () {
-                        var ua = window.navigator.userAgent.toLowerCase();
-                        if (ua.indexOf('android') != -1) {
-                            $('#Adowload').attr("href", ANDROIDURL+"#weixin.qq.com");
-                        } else if (ua.indexOf('iphone') != -1) {
-                            $('#Adowload').attr("href", IPHONEURL);
-                        }
-                        else
-                        {
-                            $('#Adowload').attr("href", "@Url.Action("QrCodeSkip", "Default", new { AMID = ViewBag.AMID })");
-                            
-                        }
-                    };
-
-                    page.init();
-                })();
-
-            </script>*@
         </fieldset>
     </div>
     <div id="isok" data-role="content">
         <div style="text-align: center; font-size: 25px; margin-top: 30%;">
-            报名成功<br />
+            签到成功<br />
             感谢您的参与<br />
         </div>
     </div>

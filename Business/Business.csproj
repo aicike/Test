@@ -87,6 +87,7 @@
     <Compile Include="Account_UserModel.cs" />
     <Compile Include="ActivityInfoModel.cs" />
     <Compile Include="ActivityInfoParticipatorModel.cs" />
+    <Compile Include="ActivityInfoSignInModel.cs" />
     <Compile Include="AppAdvertorialModel.cs" />
     <Compile Include="AppAdvertorialOperationModel.cs" />
     <Compile Include="AppWaitImgModel.cs" />
