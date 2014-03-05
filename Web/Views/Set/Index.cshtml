@@ -25,8 +25,6 @@
 //                $("#HeadImagePathFile").click();
 //            });
 
-          
-
             $("#file_upload").uploadify({
                 height: 30,
                 swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
@@ -81,10 +79,6 @@
                 }
             });
 
-
-
-
-
             var jcrop_api, boundx, boundy;
 
             function updatePreview(c)
@@ -132,10 +126,6 @@
             $("#LoginPwdPage,#LoginPwdPageCompare").val('@Common.DESEncrypt.Decrypt(Model.LoginPwd)');
 
             //选择本地图片
-           
-
-
-
             @if (isEdit)
             {
                 if (editStatus == "true")
@@ -147,10 +137,7 @@
                      @:JAlert({Message: "@error",DialogType: "Ok",BtnOk: "确定"});
                 }
             }
-
-
-
-            
+             
               //唯一验证
             $("#Email").blur(function () {
 

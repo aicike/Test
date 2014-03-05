@@ -190,8 +190,6 @@ namespace Poco
 
         public virtual ICollection<AutoMessage_Add> AutoMessage_Adds { get; set; }
 
-        public virtual ICollection<AutoMessage_Reply> AutoMessage_Replys { get; set; }
-
         public virtual ICollection<AutoMessage_Keyword> AutoMessage_Keywords { get; set; }
 
         public virtual ICollection<Group> Groups { get; set; }

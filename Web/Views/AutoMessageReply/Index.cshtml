@@ -1,0 +1,50 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.AutoMessageReply;
+}
+@model Poco.AutoMessage_Reply
+@section head{
+    <script type="text/javascript" language="javascript">
+        var msg = '@ViewBag.Msg';
+        var hasError= '@ViewBag.HasError';
+        $("#btnOK").click(function () {
+            var value = $("#Content").val().trim()
+            if (value.length == 0) {
+                return false;
+            }
+
+        });
+        $(function () {
+            if (hasError == "1" && msg.length > 0) {
+                JMessage(msg,true);
+            } else if (hasError == "0") {
+
+                JMessage("保存成功。");
+            }
+        })
+    </script>
+
+}
+<div class="title">
+    @Html.Partial("Menu3")
+</div>
+<div class="body" style="font-size: 14px">
+    @using (Html.BeginForm("Index", "AutoMessageReply", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <fieldset style="border: 1px solid #E7E7E7;">
+            <legend>被添加时自动回复</legend>
+            <table style="width: 100%">
+                <tr>
+                    <td>
+                        @Html.TextAreaFor(a => a.Content, new { style = "width:100%;height:130px" })
+                    </td>
+                    <td style="vertical-align: bottom; padding-left: 10px;">@Html.ValidationMessageFor(a => a.Content)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="submit" value="保存" id="btnOK" class="button" />
+        </div>
+    }
+</div>

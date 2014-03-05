@@ -10,6 +10,9 @@ namespace Business
 {
     public class AutoMessage_ReplyModel : BaseModel<AutoMessage_Reply>, IAutoMessage_ReplyModel
     {
-        
+        public AutoMessage_Reply GetByAccountID(int accountID)
+        {
+            return List().Where(a => a.AccountID == accountID).FirstOrDefault();
+        }
     }
 }

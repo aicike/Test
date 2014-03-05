@@ -73,6 +73,7 @@ namespace Web.Controllers
         /// 每次打开应用时，提交的clientID
         /// </summary>
         [HttpPost]
+        [ValidateInput(false)]
         public string PostClientID(string clientID, int accountMainID, int? userID)
         {
             var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
@@ -141,7 +142,8 @@ namespace Web.Controllers
                 HeadImagePath = a.HeadImagePath,
                 Email = a.Email,
                 Phone = a.Phone,
-                Role = "销售代表"/*a.Role.Name*/
+                Role = "销售代表"/*a.Role.Name*/,
+                AutoMessage = a.AutoMessage_Replys.FirstOrDefault() == null ? "" : a.AutoMessage_Replys.FirstOrDefault().Content
             }).ToList();
             foreach (var item in accountList)
             {

@@ -16,7 +16,6 @@ namespace EF
         public DbSet<ActivateEmail> ActivateEmail { get; set; }
         public DbSet<AutoMessage_Add> AutoMessage_Add { get; set; }
         public DbSet<AutoMessage_Keyword> AutoMessage_Keyword { get; set; }
-        public DbSet<AutoMessage_Reply> AutoMessage_Reply { get; set; }
         public DbSet<Group> Group { get; set; }
         public DbSet<LibraryImage> LibraryImage { get; set; }
         public DbSet<LibraryImageText> LibraryImageText { get; set; }

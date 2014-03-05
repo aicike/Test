@@ -8,5 +8,6 @@ namespace Interface
 {
     public interface IAutoMessage_ReplyModel : IBaseModel<AutoMessage_Reply>
     {
+        AutoMessage_Reply GetByAccountID(int accountID);
     }
 }

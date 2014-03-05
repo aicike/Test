@@ -9,7 +9,7 @@
             data.BtnOkClick += " window.location='/" + data.Controller + '/' + data.Action + "';";
         }
         jqueryAlert += (data.BtnOk ? data.BtnOk : "OK") + ":function () {" + (data.BtnOkClick ? data.BtnOkClick : "$(this).dialog('close');") + "}}";
-      //  jqueryAlert += (data.BtnOk ? data.BtnOk : "OK") + ":function () {" + (data.BtnOkClick ? data.BtnOkClick : "alert($(this).dialog());") + "}}";
+        //  jqueryAlert += (data.BtnOk ? data.BtnOk : "OK") + ":function () {" + (data.BtnOkClick ? data.BtnOkClick : "alert($(this).dialog());") + "}}";
     } else {
         jqueryAlert += (data.BtnOk ? data.BtnOk : "OK") + ":function () {" + (data.BtnOkClick ? data.BtnOkClick : "$(this).dialog('close');") + "},";
         jqueryAlert += data.BtnCancel + ":function () {" + data.BtnCancelClick + "}}";
@@ -19,6 +19,15 @@
     $('#dialog').html(data.Message);
     //console.log(jqueryAlert);
     eval(jqueryAlert);
+}
+
+function JMessage(msg, isError) {
+    $('#jmessage').html(msg);
+    if (isError != undefined && isError == true) {
+        $('#jmessage').showTopbarMessage({ background: "#f00", close: 2000 });
+    } else {
+        $('#jmessage').showTopbarMessage({ background: "#093", close: 2000 });
+    }
 }
 
 function AppDelete(msg, url, fun) {
@@ -162,7 +171,7 @@ jQuery.validator.addMethod('dropdownlist', function (value, element, params) {
 //    }, '');
 
 //BtnID 按钮ID,GIfID图片空间ID ,Status:1显示 2隐藏
-function LandWaitFor(BtnID,GifID, Status) {
+function LandWaitFor(BtnID, GifID, Status) {
     if (Status == 1) {
         $("#" + BtnID).hide();
         $("#" + GifID).show();

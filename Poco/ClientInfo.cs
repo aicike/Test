@@ -49,7 +49,7 @@ namespace Poco
         public string Tag { get; set; }
 
         [Display(Name = "客户端ID")]
-        [StringLength(50, ErrorMessage = "长度小于50")]
+        [StringLength(100, ErrorMessage = "长度小于50")]
         public string ClientID { get; set; }
 
         #endregion

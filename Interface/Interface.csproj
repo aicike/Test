@@ -54,6 +54,9 @@
     <Compile Include="IAppAdvertorialModel.cs" />
     <Compile Include="IAppAdvertorialOperationModel.cs" />
     <Compile Include="IAppWaitImgModel.cs" />
+    <Compile Include="IAutoMessage_ReplyModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="IAutoMessage_UserModel.cs" />
     <Compile Include="IBaseModel.cs" />
     <Compile Include="ICardInfoModel.cs" />
@@ -126,9 +129,6 @@
       <Project>{DDFA1F60-3A1E-42BD-AD5C-64E5F5CCDEEE}</Project>
       <Name>Poco</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="IAutoMessage_ReplyModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ISystemMessageModel.cs" />

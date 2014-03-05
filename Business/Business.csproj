@@ -92,6 +92,9 @@
     <Compile Include="AppAdvertorialOperationModel.cs" />
     <Compile Include="AppWaitImgModel.cs" />
     <Compile Include="App_AutoMessageReplyContentModel.cs" />
+    <Compile Include="AutoMessage_ReplyModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="AutoMessage_UserModel.cs" />
     <Compile Include="CardInfoModel.cs" />
     <Compile Include="CardPrefixModel.cs" />
@@ -215,9 +218,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMessage_KeywordModel.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AutoMessage_ReplyModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientInfoModel.cs" />

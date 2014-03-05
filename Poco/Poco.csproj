@@ -64,6 +64,9 @@
     <Compile Include="AppAdvertorial.cs" />
     <Compile Include="AppAdvertorialOperation.cs" />
     <Compile Include="AppWaitImg.cs" />
+    <Compile Include="AutoMessage_Reply.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="AutoMessage_User.cs" />
     <Compile Include="CardInfo.cs" />
     <Compile Include="CardPrefix.cs" />
@@ -167,7 +170,6 @@
     <Compile Include="ActivateEmail.cs" />
     <Compile Include="AutoMessage_Add.cs" />
     <Compile Include="AutoMessage_Keyword.cs" />
-    <Compile Include="AutoMessage_Reply.cs" />
     <Compile Include="ClientInfo.cs" />
     <Compile Include="_B_Dialog.cs" />
     <Compile Include="EmailInfo.cs" />

@@ -170,6 +170,7 @@
     <Compile Include="Controllers\AppAdvertorialAccountController.cs" />
     <Compile Include="Controllers\AppAdvertorialController.cs" />
     <Compile Include="Controllers\AppWaitImgController.cs" />
+    <Compile Include="Controllers\AutoMessageReplyController.cs" />
     <Compile Include="Controllers\BaseController\BaseController.cs" />
     <Compile Include="Controllers\BasisSetController.cs" />
     <Compile Include="Controllers\CardInfoController.cs" />
@@ -322,6 +323,7 @@
     <Content Include="Scripts\mobiscroll\css\wp_icons.png" />
     <Content Include="Scripts\mobiscroll\css\wp_icons_light.png" />
     <Content Include="Scripts\mobiscroll\js\mobiscroll.custom-2.6.2.min.js" />
+    <Content Include="Scripts\topbar\juery.topbar.js" />
     <Content Include="Scripts\nivoSlider\bar\arrows.png" />
     <Content Include="Scripts\nivoSlider\bar\bar.css" />
     <Content Include="Scripts\nivoSlider\bar\bullets.png" />
@@ -985,9 +987,9 @@
     <Content Include="Views\AccountMain\EditAccount.cshtml" />
     <Content Include="Views\AppAdvertorial\SelecInfo.cshtml" />
     <Content Include="Views\AppAdvertorialAccount\SelecInfo.cshtml" />
-    <Content Include="Views\Default\ceshi.cshtml" />
     <Content Include="Views\Default\ActivitySignIn.cshtml" />
     <Content Include="Views\ActivityInfo\ShowSignIn.cshtml" />
+    <Content Include="Views\AutoMessageReply\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

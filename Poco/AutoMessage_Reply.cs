@@ -6,6 +6,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Poco
 {
+    /// <summary>
+    /// 被添加时自动回复
+    /// </summary>
     [Serializable]
     public class AutoMessage_Reply : IBaseEntity
     {
@@ -18,8 +21,8 @@ namespace Poco
         [StringLength(4000, ErrorMessage = "长度小于4000")]
         public string Content { get; set; }
 
-        public int AccountMainID { get; set; }
+        public int AccountID { get; set; }
 
-        public virtual AccountMain AccountMain { get; set; }
+        public virtual Account Account { get; set; }
     }
 }

@@ -22,5 +22,10 @@ namespace Poco.WebAPI_Poco
         public string Role { get; set; }
 
         public int AccountMainID { get; set; }
+
+        /// <summary>
+        /// 被添加时自动回复
+        /// </summary>
+        public string AutoMessage { get; set; }
     }
 }

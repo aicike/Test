@@ -109,7 +109,7 @@ namespace Poco
         /// <summary>
         /// 业务字段，不会在数据库中生成该字段
         /// </summary>
-        public bool IsSuperAdmin{ get; set; }
+        public bool IsSuperAdmin { get; set; }
 
         public virtual ICollection<ActivateEmail> ActivateEmails { get; set; }
 
@@ -144,5 +144,6 @@ namespace Poco
         public virtual ICollection<SurveyMain> SurveyMain { get; set; }
         public virtual ICollection<Account_Role> Account_Roles { get; set; }
         public virtual ICollection<ActivityInfo> ActivityInfos { get; set; }
+        public virtual ICollection<AutoMessage_Reply> AutoMessage_Replys { get; set; }
     }
 }

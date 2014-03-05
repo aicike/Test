@@ -141,6 +141,7 @@ namespace Poco
             public const string Panorama = "Panorama";
             public const string MicroOrder = "MicroOrder";
             public const string AccountMain = "AccountMain";
+            public const string AutoMessageReply = "AutoMessageReply";
 
 
 
