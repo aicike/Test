@@ -184,7 +184,7 @@ namespace Web.Controllers
                     ADVERTORIAL.T = item.Title;
                     ADVERTORIAL.P = item.Depict;
                     ADVERTORIAL.D = item.IssueDate.ToString("yyyy-MM-dd");
-                    ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.MinImagePath ?? "");
+                    ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
                     ADVERTORIAL.F = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
                     ListShow.Add(ADVERTORIAL);
                 }
@@ -323,7 +323,7 @@ namespace Web.Controllers
                     ADVERTORIAL.T = item.Title;
                     ADVERTORIAL.P = item.Depict;
                     ADVERTORIAL.D = item.IssueDate.ToString("yyyy-MM-dd");
-                    ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.MinImagePath ?? "");
+                    ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
                     ADVERTORIAL.F = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
                     ListShow.Add(ADVERTORIAL);
                 }
