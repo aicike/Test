@@ -24,7 +24,7 @@ namespace Web.Controllers
 
 
             ViewBag.HostName = LoginAccount.HostName;
-
+            ViewBag.WeiURL = SystemConst.MicroSiteHostName + "." + SystemConst.WebUrl + "/MicroMall/ShopIndex?AMID=" + LoginAccount.CurrentAccountMainID;
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "产品管理", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
