@@ -22,9 +22,6 @@
             $("#EditUrl").attr("href","javascript://function(){}");
             $("#DeleteUrl").attr("href","javascript://function(){}");
 
-
-
-
               $("#file_upload1").uploadify({
                 height: 25,
                 swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
@@ -44,12 +41,9 @@
                         });
                         return;
                     }
-
                     $("#imgLogo1").attr('src', data);
                 
                     $("#imgpath1").val(data);
-
-
                 }
 
             });
@@ -76,21 +70,15 @@
 
                     $("#imgLogo2").attr('src', data);
                     $("#imgpath2").val(data);
-
-
                 }
-
             });
-
-
-
         });
 
-          function ckAdd()
-        {
-            
+        function ckAdd()
+        {            
             var name = $("#AddCname").val();
             var Depict = $("#AddDepict").val();
+            var color = $("#AddBackgroundColor").val();
 
             if(name!=""&&name!=undefined)
             {
@@ -132,19 +120,18 @@
                             BtnOk: "确定"
                       }); 
                       return false;
-                }
-               
-            }
-           
+                }               
+            }           
             $("#btnAdd").click();
               
         }
         function ckEdit()
         {
-
             var name = $("#EditCname").val();
             var Depict = $("#EditDepict").val();
+            var Color = $("#EditBackgroundColor").val();
 
+            
             if(name!=""&&name!=undefined)
             {
                 if($.trim(name)=="")
@@ -185,11 +172,8 @@
                             BtnOk: "确定"
                       }); 
                       return false;
-                }
-               
+                }               
             }
-
-
              $("#btnEdit").click();
             
         }
@@ -226,7 +210,7 @@
             }
         }
 
-        function ckSet(id,level,Name,PID,imgval,imgpath)
+        function ckSet(id,level,Name,Color,PID,imgval,imgpath)
         {
             //添加
             $("#CPID").val(id);
@@ -235,6 +219,7 @@
             //修改
             $("#CEditID").val(id);
             $("#EditCname").val(Name);
+            $("#EditBackgroundColor").val(Color);
             $("#EditPID").val(PID);
             $("#imgpath2").val(imgval);
             $("#imgLogo2").attr("src",imgpath);
@@ -363,12 +348,20 @@
                                 <input id="AddCname" name="AddCname" type="text" />
                             </td>
                         </tr>
-                          <tr>
+                        <tr>
                             <td style="width: 100px">
                                 描述/备注：
                             </td>
                             <td>
                                 <input id="AddDepict" name="AddDepict" type="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 100px">
+                                背景颜色：
+                            </td>
+                            <td>
+                                <input id="AddBackgroundColor" name="AddBackgroundColor" type="color" />
                             </td>
                         </tr>
                         <tr>
@@ -411,12 +404,20 @@
                                 <input id="EditCname" name="EditCname" type="text" />
                             </td>
                         </tr>
-                          <tr>
+                        <tr>
                             <td style="width: 100px">
                                 描述/备注：
                             </td>
                             <td>
                                 <input id="EditDepict" name="EditDepict" type="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 100px">
+                                背景颜色：
+                            </td>
+                            <td>
+                                <input id="EditBackgroundColor" name="EditBackgroundColor" type="color" />
                             </td>
                         </tr>
                         <tr>

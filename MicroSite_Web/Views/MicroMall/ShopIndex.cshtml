@@ -14,15 +14,15 @@
 
             });
 
-            //控制颜色
-            $(".MainTab").each(function(){
-                $(this).attr("style","background-color:"+color[colorIndex]);
-                colorIndex=colorIndex+1;
-                if(colorIndex>4)
-                {
-                colorIndex=0;
-                }
-            });
+//            //控制颜色
+//            $(".MainTab").each(function(){
+//                $(this).attr("style","background-color:"+color[colorIndex]);
+//                colorIndex=colorIndex+1;
+//                if(colorIndex>4)
+//                {
+//                colorIndex=0;
+//                }
+//            });
 
 
         });
@@ -111,7 +111,7 @@
         @for (int i = 0; i < Model.Count(); i++)
         {
             <div class="grid">
-                <table  class="MainTab" cellpadding="0" cellspacing="0" onclick="OpenUrl(@Model[i].ID)">
+                <table  class="MainTab" cellpadding="0" cellspacing="0" onclick="OpenUrl(@Model[i].ID)" style="background-color:@Model[i].BackgroundColor">
                     <tr>
                         <td style="width: 30%;">
                             <div class="TitDIVLeft">
@@ -140,7 +140,7 @@
             if (i < Model.Count())
             { 
             <div class="grid">
-                <table class="MainTab" cellpadding="0" cellspacing="0" onclick="OpenUrl(@Model[i].ID)">
+                <table class="MainTab" cellpadding="0" cellspacing="0" onclick="OpenUrl(@Model[i].ID)" style="background-color:@Model[i].BackgroundColor">
                     <tr>
                         <td style="width: 70%;">
                             <div class="ImgDIV">

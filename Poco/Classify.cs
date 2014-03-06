@@ -36,6 +36,9 @@ namespace Poco
         [StringLength(20, ErrorMessage = "长度小于20")]
         public string Depict { get; set; }
 
+        [Display(Name = "背景颜色")]
+        [StringLength(7, ErrorMessage = "请输入正确的颜色编码")]
+        public string BackgroundColor { get; set; }
 
         /// <summary>
         /// 类别图片

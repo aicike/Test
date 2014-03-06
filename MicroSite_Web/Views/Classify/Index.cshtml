@@ -22,9 +22,6 @@
             $("#EditUrl").attr("href","javascript://function(){}");
             $("#DeleteUrl").attr("href","javascript://function(){}");
 
-
-
-
               $("#file_upload1").uploadify({
                 height: 25,
                 swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
@@ -91,6 +88,7 @@
             
             var name = $("#AddCname").val();
             var Depict = $("#AddDepict").val();
+            var AddBackgroundColor = $("#AddBackgroundColor").val();
 
             if(name!=""&&name!=undefined)
             {
@@ -133,9 +131,7 @@
                       }); 
                       return false;
                 }
-               
-            }
-           
+            }           
             $("#btnAdd").click();
               
         }
@@ -245,6 +241,11 @@
                 //修改
                 $("#CEditID").val(id);
                 $("#EditCname").val(result.Name);
+                if(result.BackgroundColor==null||result.BackgroundColor.length==0){
+                    $("#EditBackgroundColor").val("#ffffff");
+                }else{
+                    $("#EditBackgroundColor").val(result.BackgroundColor);
+                }
                 $("#EditPID").val(PID);
                  $("#EditDepict").val(result.Depict);
                 $("#imgpath2").val(result.ImgPath);
@@ -370,6 +371,14 @@
                             </td>
                         </tr>
                         <tr>
+                            <td style="width: 100px">
+                                背景颜色：
+                            </td>
+                            <td>
+                                <input id="AddBackgroundColor" name="AddBackgroundColor" type="color" value="#ffffff" />
+                            </td>
+                        </tr>
+                        <tr>
                             <td rowspan="2" style="width: 100px">
                                 图片：
                             </td>
@@ -415,6 +424,14 @@
                             </td>
                             <td>
                                 <input id="EditDepict" name="EditDepict" type="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 100px">
+                                背景颜色：
+                            </td>
+                            <td>
+                                <input id="EditBackgroundColor" name="EditBackgroundColor" type="color" />
                             </td>
                         </tr>
                         <tr>

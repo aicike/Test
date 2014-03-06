@@ -53,7 +53,7 @@ namespace Web.Controllers
 
         //
 
-        public ActionResult Add(int PID, string AddCname, string AddDepict, string imgpath1)
+        public ActionResult Add(int PID, string AddCname, string AddDepict,string AddBackgroundColor, string imgpath1)
         {
             var classModel = Factory.Get<IClassifyModel>(SystemConst.IOC_Model.ClassifyModle);
             Classify cl = new Classify();
@@ -65,12 +65,13 @@ namespace Web.Controllers
             cl.ImgPath = imgpath1;
             cl.Sort = 0;
             cl.Subordinate = "0";
+            cl.BackgroundColor = AddBackgroundColor;
 
             var cnt = classModel.AddClass(cl);
             return RedirectToAction("Index", "Classify", new { HostName = LoginAccount.HostName });
         }
 
-        public ActionResult Edit(int CID, string EditCname, string EditDepict, int PID, string imgpath2)
+        public ActionResult Edit(int CID, string EditCname, string EditBackgroundColor, string EditDepict, int PID, string imgpath2)
         {
             var classModel = Factory.Get<IClassifyModel>(SystemConst.IOC_Model.ClassifyModle);
             Classify cl = new Classify();
@@ -83,6 +84,7 @@ namespace Web.Controllers
             cl.ImgPath = imgpath2;
             cl.Sort = 0;
             cl.Subordinate = "0";
+            cl.BackgroundColor = EditBackgroundColor;
             var cnt = classModel.UpdClass(cl);
 
             return RedirectToAction("Index", "Classify", new { HostName = LoginAccount.HostName });
@@ -169,6 +171,7 @@ namespace Web.Controllers
             bcf.Name = classify.Name;
             bcf.Sort = classify.Sort;
             bcf.Depict = classify.Depict;
+            bcf.BackgroundColor = classify.BackgroundColor;
             if (string.IsNullOrEmpty(classify.ImgPath))
             {
                 bcf.ImgFIlePath = Url.Content("~/Images/nopicture.png");

@@ -23,6 +23,11 @@ namespace Poco
         public string Depict { get; set; }
 
         /// <summary>
+        /// 背景颜色
+        /// </summary>
+        public string BackgroundColor { get; set; }
+
+        /// <summary>
         /// 类别图片
         /// </summary>
         public string ImgPath { get; set; }

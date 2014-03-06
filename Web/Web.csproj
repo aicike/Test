@@ -175,7 +175,6 @@
     <Compile Include="Controllers\BasisSetController.cs" />
     <Compile Include="Controllers\CardInfoController.cs" />
     <Compile Include="Controllers\CharacterController.cs" />
-    <Compile Include="Controllers\ClassifyController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ExitController.cs" />
     <Compile Include="Controllers\GuideController.cs" />
@@ -907,8 +906,6 @@
     <Content Include="Views\Default\Advertorial.cshtml" />
     <Content Include="Views\Default\QrCode.cshtml" />
     <Content Include="Views\Default\QrCodeSkip.cshtml" />
-    <Content Include="Views\Classify\Index.cshtml" />
-    <Content Include="Views\Classify\ShowParent.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\Add.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
