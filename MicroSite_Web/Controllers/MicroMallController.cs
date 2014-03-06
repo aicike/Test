@@ -222,7 +222,7 @@ namespace MicroSite_Web.Controllers
                 else
                 {
                     //支付界面
-                    return View();
+                    return RedirectToAction("Index", "Center", new { AMID = AMID, userID = HuserID });
 
                 }
 

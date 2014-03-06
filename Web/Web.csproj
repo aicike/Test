@@ -276,6 +276,7 @@
     <Content Include="Images\Leavemessage.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\Logo_144.png" />
+    <Content Include="Images\nopicture.png" />
     <Content Include="Images\nopicture_icon.png" />
     <Content Include="Images\SelImg.jpg" />
     <Content Include="Images\sep.png" />
