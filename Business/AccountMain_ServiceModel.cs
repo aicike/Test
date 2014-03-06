@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Interface;
 using Poco;
+using Poco.Enum;
 
 namespace Business
 {
@@ -12,7 +13,7 @@ namespace Business
         public Result Add(int accountMainID, int[] serviceID)
         {
             Result result = new Result();
-            StringBuilder sb = new StringBuilder("DELETE dbo.AccountMain_Service WHERE AccountMainID="+accountMainID+"; INSERT dbo.AccountMain_Service( SystemStatus ,AccountMainID ,ServiceID) ");
+            StringBuilder sb = new StringBuilder("DELETE dbo.AccountMain_Service WHERE AccountMainID=" + accountMainID + "; INSERT dbo.AccountMain_Service( SystemStatus ,AccountMainID ,ServiceID) ");
             foreach (var item in serviceID)
             {
                 sb.Append(string.Format(" SELECT 0,{0},{1} UNION ALL", accountMainID, item));
@@ -26,6 +27,14 @@ namespace Business
         public List<AccountMain_Service> GetListByAccountMainID(int accountMainID)
         {
             return List().Where(a => a.AccountMainID == accountMainID).ToList();
+        }
+
+        /// <summary>
+        /// 检查账号是否有某种服务
+        /// </summary>
+        public bool CheckService(EnumService enumService, int accountMainID)
+        {
+            return List().Any(a => a.AccountMainID == accountMainID && a.ServiceID == (int)enumService);
         }
     }
 }
