@@ -130,8 +130,10 @@ namespace Business
             pushMessage.Add(rep);
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(pushMessage);
 
-            //ios推送
-            //未实现
+            //ios推送 用户端
+
+            pushNotifications_User("您有一条新的消息。", accountMainID, PushIDInfo.IOS);
+
             //android推送
             PushMessage message = new PushMessage();
             message.Title = title;
@@ -144,11 +146,14 @@ namespace Business
         }
 
         /// <summary>
-        /// 当没有在线，并且接收到消息时，调用推送方法
+        /// 当没有在线，并且接收到消息时，调用推送方法 备注 目前只能发送用户端
         /// </summary>
         public Result PushFromChat(EnumMessageType msgType, string content, EnumClientUserType toUserType, int toUserID, EnumClientUserType fromUserType, int fromUserID)
         {
-            string title = "你有一条消息。";
+            var accountmodel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
+            var account = accountmodel.Get(fromUserID);
+            var account_accounmain = account.Account_AccountMains.FirstOrDefault();
+            string title = account_accounmain.AccountMain.Name + "的" + account + " 给您发来一条消息。";
             Result result = new Result();
             var iosModel = Factory.Get("Push_IOS") as IPushModel;
             var androidModel = Factory.Get("Push_Getui") as IPushModel;
@@ -160,12 +165,17 @@ namespace Business
             rep.MsgID = fromUserID;
             rep.UserType = (int)fromUserType;
             rep.EnumMsgMode = (int)EnumMsgMode.Call;
-            rep.Type = (int)msgType;            
+            rep.Type = (int)msgType;
             pushMessage.Add(rep);
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(pushMessage);
 
-            //ios推送
-            //未实现
+            //ios推送 用户端
+            if (toUserType == EnumClientUserType.User)
+            {
+                var usermodel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+                var user = usermodel.Get(toUserID);
+                pushNotifications_User(title, user.AccountMainID, PushIDInfo.IOS);
+            }
             //android推送
             PushMessage message = new PushMessage();
             message.Title = title;
@@ -226,8 +236,8 @@ namespace Business
             string clientSystemType_android = EnumClientSystemType.Android.ToString();
             string clientSystemType_ios = EnumClientSystemType.IOS.ToString();
             var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
-            string ut= userType.ToString();
-            var android = clientInfoModel.List().Where(a => a.EnumClientUserType.Token == ut && a.EntityID == userID && a.EnumClientSystemType.Token == clientSystemType_android).Select(a=>a.ClientID);
+            string ut = userType.ToString();
+            var android = clientInfoModel.List().Where(a => a.EnumClientUserType.Token == ut && a.EntityID == userID && a.EnumClientSystemType.Token == clientSystemType_android).Select(a => a.ClientID);
             var ios = clientInfoModel.List().Where(a => a.EnumClientUserType.Token == ut && a.EntityID == userID && a.EnumClientSystemType.Token == clientSystemType_ios).Select(a => a.ClientID);
             PushIDInfo pi = new PushIDInfo();
             pi.Android = android.ToArray();
@@ -252,67 +262,25 @@ namespace Business
         /// <summary>
         /// （用户端）IOS推送服务
         /// </summary>
-        /// <param name="strDeviceToken">手机UDID</param>
-        /// <param name="strContent">推送内容</param>
-        /// <param name="accountMainID">售楼部ID</param>
-        /// <param name="toUserType">客户端类型ID</param>
-        public static void pushNotifications_User(string strDeviceToken, string strContent, int accountMainID, EnumClientUserType toUserType)
+        /// <param name="strContent"></param>
+        /// <param name="accountMainID"></param>
+        /// <param name="clientIDs">用户token</param>
+        public static void pushNotifications_User(string strContent, int accountMainID, string[] ClientIDs)
         {
-         
-            bool sandbox = true;
-            string testDeviceToken = strDeviceToken;
             var accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             var accountMain = accountMainModel.Get(accountMainID);
-            //证书路径
-            string p12File = "";
-            if (toUserType == EnumClientUserType.Account)
+            //证书路径 用户端证书
+            string p12File = accountMain.IOSClientCertificate;
+            foreach (var item in ClientIDs)
             {
-                //销售端证书
-                p12File = accountMain.IOSSalestCertificate;
+                //推送
+                Push_IOS.SendMessage(item, strContent, p12File);
             }
-            else
-            {
-                //用户端证书
-                p12File = accountMain.IOSClientCertificate;
-            }
-            
-            //证书密码
-            string p12FilePassword = "password";
-
-
-            string p12Filename = HttpContext.Current.Server.MapPath(p12File);
-
-            NotificationService service = new NotificationService(sandbox, p12Filename, p12FilePassword,1);
-
-            service.SendRetries = 5; //5 retries before generating notificationfailed event
-            service.ReconnectDelay = 5000; //5 seconds
-
-            //service.Error += new NotificationService.OnError(service_Error);
-            //service.NotificationTooLong += new NotificationService.OnNotificationTooLong(service_NotificationTooLong);
-            //service.BadDeviceToken += new NotificationService.OnBadDeviceToken(service_BadDeviceToken);
-            //service.NotificationFailed += new NotificationService.OnNotificationFailed(service_NotificationFailed);
-            //service.NotificationSuccess += new NotificationService.OnNotificationSuccess(service_NotificationSuccess);
-            //service.Connecting += new NotificationService.OnConnecting(service_Connecting);
-            //service.Connected += new NotificationService.OnConnected(service_Connected);
-            //service.Disconnected += new NotificationService.OnDisconnected(service_Disconnected);
-            Notification alertNotification = new Notification(testDeviceToken);
-
-            //通知内容
-            alertNotification.Payload.Alert.Body = strContent;
-
-            alertNotification.Payload.Sound = "default";
-            alertNotification.Payload.Badge = 1;
-
-            //队列的通知是否送达
-            if (service.QueueNotification(alertNotification))
-            { 
-                
-            }
-
-            service.Close();
-            service.Dispose();
 
         }
+
+
+
 
 
     }
