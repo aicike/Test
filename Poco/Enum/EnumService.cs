@@ -13,18 +13,18 @@ namespace Poco.Enum
         /// <summary>
         /// WEB基本服务
         /// </summary>
-        Web_Base=0,
+        Web_Base=1,
         /// <summary>
         /// 售楼部服务（App）
         /// </summary>
-        House_Service=1,
+        House_Service=2,
         /// <summary>
         /// 微网站服务
         /// </summary>
-        MicroSite_Service=2,
+        MicroSite_Service=3,
         /// <summary>
         /// 微信集成服务
         /// </summary>
-        Weixin_Service=3
+        Weixin_Service=4
     }
 }

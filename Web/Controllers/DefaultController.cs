@@ -118,7 +118,7 @@ namespace Web.Controllers
             {
                 string url = advertorial.ContentURL;
 
-                //用户端ID
+                //用户ID
                 if (imtimely_userid.HasValue)
                 {
 
@@ -131,6 +131,10 @@ namespace Web.Controllers
                         url = url + "?imtimely_userid=" + imtimely_userid + "&imtimely_Apptype=" + advertorial.EnumAdvertorialUType;
                     }
                 }
+                else
+                {
+                    url = url.Replace("?", "?imtimely_Apptype=" + advertorial.EnumAdvertorialUType + "&");
+                }
 
                 //imtimely_userid  用户ID
                 //imtimely_Apptype 用户端类型 0用户端 1销售端 EnumAdvertorialUType
@@ -140,23 +144,29 @@ namespace Web.Controllers
             else
             {
 
-                //用户端软文附加下载地址
-                ViewBag.Utype = advertorial.EnumAdvertorialUType;
-                if (advertorial.EnumAdvertorialUType == (int)EnumAdvertorialUType.UserEnd)
+                var AccountserverModel = Factory.Get<IAccountMain_ServiceModel>(SystemConst.IOC_Model.AccountMain_ServiceModel);
+                var hasAPP = AccountserverModel.CheckService(EnumService.House_Service, advertorial.AccountMainID);
+                ViewBag.HasAPP = hasAPP;
+                if (hasAPP)
                 {
-                    var AccountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
-                    var AccountModel = AccountMainModel.Get(advertorial.AccountMainID);
-                    ViewBag.AMID = advertorial.AccountMainID;
-                    ViewBag.AMName = AccountModel.Name;
-                    if (!string.IsNullOrEmpty(AccountModel.AndroidDownloadPath))
+                    //用户端软文附加下载地址
+                    ViewBag.Utype = advertorial.EnumAdvertorialUType;
+                    if (advertorial.EnumAdvertorialUType == (int)EnumAdvertorialUType.UserEnd)
                     {
-                        ViewBag.AndroidURL = "http://" + SystemConst.WebUrl + Url.Content(AccountModel.AndroidDownloadPath ?? "");
-                    }
-                    if (!string.IsNullOrEmpty(AccountModel.IOSDownloadPath))
-                    {
-                        ViewBag.IOSURL = AccountModel.IOSDownloadPath;
-                    }
+                        var AccountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
+                        var AccountModel = AccountMainModel.Get(advertorial.AccountMainID);
+                        ViewBag.AMID = advertorial.AccountMainID;
+                        ViewBag.AMName = AccountModel.Name;
+                        if (!string.IsNullOrEmpty(AccountModel.AndroidDownloadPath))
+                        {
+                            ViewBag.AndroidURL = "http://" + SystemConst.WebUrl + Url.Content(AccountModel.AndroidDownloadPath ?? "");
+                        }
+                        if (!string.IsNullOrEmpty(AccountModel.IOSDownloadPath))
+                        {
+                            ViewBag.IOSURL = AccountModel.IOSDownloadPath;
+                        }
 
+                    }
                 }
                 return View(advertorial);
             }
@@ -439,20 +449,25 @@ namespace Web.Controllers
                 ViewBag.IsMaxCnt = "false";
             }
 
-            //下载APP
-            var AccountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
-            var AccountModel = AccountMainModel.Get(Activity.AccountMainID);
-            ViewBag.AMID = Activity.AccountMainID;
-            ViewBag.AMName = AccountModel.Name;
-            if (!string.IsNullOrEmpty(AccountModel.AndroidDownloadPath))
+            var AccountserverModel = Factory.Get<IAccountMain_ServiceModel>(SystemConst.IOC_Model.AccountMain_ServiceModel);
+            var hasAPP = AccountserverModel.CheckService(EnumService.House_Service, Activity.AccountMainID);
+            ViewBag.HasAPP = hasAPP;
+            if (hasAPP)
             {
-                ViewBag.AndroidURL = "http://" + SystemConst.WebUrl + Url.Content(AccountModel.AndroidDownloadPath ?? "");
+                //下载APP
+                var AccountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
+                var AccountModel = AccountMainModel.Get(Activity.AccountMainID);
+                ViewBag.AMID = Activity.AccountMainID;
+                ViewBag.AMName = AccountModel.Name;
+                if (!string.IsNullOrEmpty(AccountModel.AndroidDownloadPath))
+                {
+                    ViewBag.AndroidURL = "http://" + SystemConst.WebUrl + Url.Content(AccountModel.AndroidDownloadPath ?? "");
+                }
+                if (!string.IsNullOrEmpty(AccountModel.IOSDownloadPath))
+                {
+                    ViewBag.IOSURL = AccountModel.IOSDownloadPath;
+                }
             }
-            if (!string.IsNullOrEmpty(AccountModel.IOSDownloadPath))
-            {
-                ViewBag.IOSURL = AccountModel.IOSDownloadPath;
-            }
-
 
 
             return View(Activity);

@@ -19,7 +19,7 @@
         $(function () {
 
 
-        
+
 
             //----------------提交后状态----
             var isok = '@ViewBag.isok';
@@ -250,7 +250,7 @@
                     {
                         <input id="UID" type="hidden" name="UID" value="@ViewBag.UID" />
                         <input id="Utype" type="hidden" name="Utype" value="@ViewBag.Utype" />
-                        <div style=" line-height:20px">
+                        <div style="line-height: 20px">
                             请留下您的信息
                             <br />
                             Please enter your information
@@ -280,16 +280,20 @@
                         该邮箱已经报过名啦</p>
                 </div>
             </div>
-            <a id="Adowload" href="#" style="text-decoration: none; margin-top: 15px; text-shadow: none">
-                <table align="center" class="APPDow" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td align="center">
-                            下载@(ViewBag.AMName)APP获取更多精彩资讯
-                        </td>
-                    </tr>
-                </table>
-            </a>
-            <script>
+            @if (ViewBag.HasAPP)
+            {
+                if (ViewBag.Utype == (int)Poco.Enum.EnumAdvertorialUType.UserEnd)
+                { 
+                <a id="Adowload" href="#" style="text-decoration: none; margin-top: 15px; text-shadow: none">
+                    <table align="center" class="APPDow" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td align="center">
+                                下载@(ViewBag.AMName)APP获取更多精彩资讯
+                            </td>
+                        </tr>
+                    </table>
+                </a>
+                <script>
 
                 (function () {
                     var IPHONEURL = "@ViewBag.IOSURL"+"";
@@ -315,7 +319,9 @@
                     page.init();
                 })();
 
-            </script>
+                </script>
+                }
+            }
         </fieldset>
     </div>
     <div id="isok" data-role="content">
