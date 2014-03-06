@@ -15,7 +15,11 @@
 }
 @model PagedList<Poco.Product>
 <div class="title">
-    @Html.Partial("Menu3")</div>
+    <div style=" float:right"><a href="http://@ViewBag.WeiURL" target="_blank" style=" color:#00aec8">点击进入微商城</a></div> 
+    @Html.Partial("Menu3")
+   
+    <div style=" clear:both"></div>
+</div>
 
 <div class="body">
     <div class="option">@Html.ActionLink("添加", "Add", "Product", new { HostName = ViewBag.HostName }, null, true)</div>

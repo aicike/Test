@@ -9,6 +9,7 @@ using Injection;
 using Poco.WebAPI_Poco;
 using Injection.Transaction;
 using JdSoft.Apple.Apns.Notifications;
+using System.Web;
 
 namespace Business
 {
@@ -249,23 +250,39 @@ namespace Business
 
 
         /// <summary>
-        /// 推送服务方法应用
+        /// （用户端）IOS推送服务
         /// </summary>
         /// <param name="strDeviceToken">手机UDID</param>
         /// <param name="strContent">推送内容</param>
-        /// <param name="strCertificate">推送服务用证书名称</param>
-        public static void pushNotifications(string strDeviceToken, string strContent, string strCertificate)
+        /// <param name="accountMainID">售楼部ID</param>
+        /// <param name="toUserType">客户端类型ID</param>
+        public static void pushNotifications_User(string strDeviceToken, string strContent, int accountMainID, EnumClientUserType toUserType)
         {
          
             bool sandbox = true;
             string testDeviceToken = strDeviceToken;
-            string p12File = strCertificate;
+            var accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
+            var accountMain = accountMainModel.Get(accountMainID);
+            //证书路径
+            string p12File = "";
+            if (toUserType == EnumClientUserType.Account)
+            {
+                //销售端证书
+                p12File = accountMain.IOSSalestCertificate;
+            }
+            else
+            {
+                //用户端证书
+                p12File = accountMain.IOSClientCertificate;
+            }
+            
+            //证书密码
             string p12FilePassword = "password";
 
 
-            string p12Filename = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, p12File);
+            string p12Filename = HttpContext.Current.Server.MapPath(p12File);
 
-            NotificationService service = new NotificationService(sandbox, p12Filename, p12FilePassword, 1);
+            NotificationService service = new NotificationService(sandbox, p12Filename, p12FilePassword,1);
 
             service.SendRetries = 5; //5 retries before generating notificationfailed event
             service.ReconnectDelay = 5000; //5 seconds

@@ -166,13 +166,21 @@ namespace Web.Controllers
 
 
         #endregion
-
+        /// <summary>
+        /// web端 二维码扫描界面 （用户端与销售端）
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
         public ActionResult AppQrCode(int AMID)
         {
             ViewBag.AMID = AMID;
             return View();
         }
-
+        /// <summary>
+        /// 手机用户端扫描界面
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
         public ActionResult QrCode(int AMID)
         {
             ViewBag.AMID = AMID;
@@ -180,7 +188,7 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// 二维码用户端
+        /// 创建二维码用户端
         /// </summary>
         /// <param name="AMID"></param>
         public void CreateQrCode(int AMID)
@@ -196,7 +204,7 @@ namespace Web.Controllers
 
 
         /// <summary>
-        /// 二维码销售端
+        /// 创建二维码销售端
         /// </summary>
         /// <param name="AMID"></param>
         public void CreateQrCodeAccount(int AMID)
@@ -211,7 +219,7 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// 二维码用户端界面
+        /// 二维码用户端下载界面
         /// </summary>
         /// <param name="AMID"></param>
         public ActionResult QrCodeSkip(int AMID)
@@ -224,7 +232,7 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// 二维码销售端界面
+        /// 二维码销售端下载界面
         /// </summary>
         /// <param name="AMID"></param>
         public ActionResult QrCodeSkipAccount(int AMID)
