@@ -1,6 +1,8 @@
 ﻿@{
-    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    Layout = "~/Views/Shared/_LayoutUser2.cshtml";
     ViewBag.Menu = Poco.SystemConst.Menu.UserManage;
+    ViewBag.Menu2 = Poco.SystemConst.Menu.UserManage;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.UserManage;
 }
 @section head{
     <link href="@Url.Content("~/Scripts/MediaElement/mediaelementplayer.min.css")" rel="stylesheet" type="text/css" />
@@ -190,129 +192,128 @@
 }
 @model PagedList<Poco.Message>
 <div class="title">
-    "@ViewBag.UserName" 的历史聊天
+    "@ViewBag.UserName" 的历史聊天记录
 </div>
-<div class="body">
-    <div id="div_data" style="padding: 0px 0px 25px 0px;">
-        @foreach (var item in Model)
-        {
-            <div class="div_item">
-                <div class="div_td" style="width: 70px; float: left; text-align: center">
+<div id="div_data" style="padding: 0px 0px 25px 0px;">
+    @foreach (var item in Model)
+    {
+        <div class="div_item">
+            <div class="div_td" style="width: 70px; float: left; text-align: center">
+                @if (item.EnumMessageSendDirectionID == (int)Poco.Enum.EnumMessageSendDirection.Account_User)
+                {
+                    if (!string.IsNullOrEmpty(item.FromAccount.HeadImagePath))
+                    { 
+                    <img id="imgUHead" style="max-width: 50px; max-height: 50px;" src="@Url.Content(item.FromAccount.HeadImagePath ?? "")" />
+                    }
+                    else
+                    { 
+                    <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
+                            
+                    }
+                }
+                else if (item.EnumMessageSendDirectionID == (int)Poco.Enum.EnumMessageSendDirection.User_Account)
+                {
+                    if (!string.IsNullOrEmpty(item.FromUser.UserLoginInfo.HeadImagePath))
+                    { 
+                    <img id="imgUHead" style="max-width: 50px; max-height: 50px;" src="@Url.Content(item.FromUser.UserLoginInfo.HeadImagePath ?? "")" />
+                    }
+                    else
+                    { 
+                    <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
+                            
+                    }
+                }
+            </div>
+            <div class="div_td" style="float: left">
+                <div style="font-weight: bold; margin-top: 5px">
                     @if (item.EnumMessageSendDirectionID == (int)Poco.Enum.EnumMessageSendDirection.Account_User)
                     {
-                        if (!string.IsNullOrEmpty(item.FromAccount.HeadImagePath))
-                        { 
-                        <img id="imgUHead" style="max-width: 50px; max-height: 50px;" src="@Url.Content(item.FromAccount.HeadImagePath ?? "")" />
-                        }
-                        else
-                        { 
-                        <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
-                            
-                        }
+                        @item.FromAccount.Name;
                     }
                     else if (item.EnumMessageSendDirectionID == (int)Poco.Enum.EnumMessageSendDirection.User_Account)
                     {
-                        if (!string.IsNullOrEmpty(item.FromUser.UserLoginInfo.HeadImagePath))
+                        if (item.FromUser.UserLoginInfo.Name == item.FromUser.Name)
                         { 
-                        <img id="imgUHead" style="max-width: 50px; max-height: 50px;" src="@Url.Content(item.FromUser.UserLoginInfo.HeadImagePath ?? "")" />
+                        @item.FromUser.UserLoginInfo.Name
                         }
                         else
                         { 
-                        <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
-                            
-                        }
+                        @item.FromUser.Name @:(@item.FromUser.UserLoginInfo.Name)
+                                                                                                                                                                                        }
                     }
                 </div>
-                <div class="div_td" style="float: left">
-                    <div style="font-weight: bold; margin-top: 5px">
-                        @if (item.EnumMessageSendDirectionID == (int)Poco.Enum.EnumMessageSendDirection.Account_User)
-                        {
-                            @item.FromAccount.Name;
+                <div style="margin-top: 10px; width: 510px; word-wrap: break-word; word-break: normal;">
+                    @if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Text)
+                    {
+                        @item.TextContent 
+                    }
+                    else if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Image)
+                    {
+                        if (!string.IsNullOrEmpty(item.FileUrl))
+                        { 
+                        <img id="imgUImg" onclick="ShowMessage('1','@Url.Content(item.FileUrl)')" style=" height:120px;max-width:230px; max-height:140px; cursor:pointer" src="@Url.Content(item.FileUrl)" />
                         }
-                        else if (item.EnumMessageSendDirectionID == (int)Poco.Enum.EnumMessageSendDirection.User_Account)
-                        {
-                            if (item.FromUser.UserLoginInfo.Name == item.FromUser.Name)
-                            { 
-                            @item.FromUser.UserLoginInfo.Name
-                            }
-                            else
-                            { 
-                            @item.FromUser.Name @:(@item.FromUser.UserLoginInfo.Name)
-                                                                                                                                                                    }
-                        }
-                    </div>
-                    <div style="margin-top: 10px; width: 510px; word-wrap: break-word; word-break: normal;">
-                        @if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Text)
-                        {
-                            @item.TextContent 
-                        }
-                        else if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Image)
-                        {
-                            if (!string.IsNullOrEmpty(item.FileUrl))
-                            { 
-                            <img id="imgUImg" onclick="ShowMessage('1','@Url.Content(item.FileUrl)')" style=" height:120px;max-width:230px; max-height:140px; cursor:pointer" src="@Url.Content(item.FileUrl)" />
-                            }
-                        }
-                        else if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Voice)
-                        {
-                            <table cellpadding="0" cellspacing="0" border="0">
-                                <tr>
-                                    <td width="35px">
-                                        <img id="VoiceYL"  onclick="ShowMessage('2','@Url.Content(item.voiceMP3Url ?? "")',this)" width="32px" src="~/Images/Start.png" title="点击播放" style=" cursor:pointer" />
-                                    </td>
-                                    <td>
-                                        [点击播放语音]
-                                    </td>
-                                </tr>
-                            </table> 
+                    }
+                    else if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Voice)
+                    {
+                        <table cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                                <td width="35px">
+                                    <img id="VoiceYL"  onclick="ShowMessage('2','@Url.Content(item.voiceMP3Url ?? "")',this)" width="32px" src="~/Images/Start.png" title="点击播放" style=" cursor:pointer" />
+                                </td>
+                                <td>
+                                    [点击播放语音]
+                                </td>
+                            </tr>
+                        </table> 
                     
-                        }
-                        else if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Video)
-                        {
-                            <table cellpadding="0" cellspacing="0" border="0">
+                    }
+                    else if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.Video)
+                    {
+                        <table cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                                <td width="35px">
+                                    <img id="VoiceYL"  onclick="ShowMessage('3','@Url.Content(item.FileUrl ?? "")')" width="32px" src="~/Images/Start.png" title="点击播放" style=" cursor:pointer" />
+                                </td>
+                                <td>
+                                    [点击播放视频]
+                                </td>
+                            </tr>
+                        </table> 
+                    }
+                    else if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.ImageText)
+                    {
+                        <div onclick="ShowMessage('4','@item.LibraryImageTextsID')" style=" cursor:pointer; border:1px solid #b3b3b3 ;border-radius:10px; width:220px; background-color:#fff; padding:8px">
+                            <table cellpadding="0" cellspacing="0" style="width: 100%; line-height: 15px">
                                 <tr>
-                                    <td width="35px">
-                                        <img id="VoiceYL"  onclick="ShowMessage('3','@Url.Content(item.FileUrl ?? "")')" width="32px" src="~/Images/Start.png" title="点击播放" style=" cursor:pointer" />
-                                    </td>
-                                    <td>
-                                        [点击播放视频]
+                                    <td style="word-break: break-all; padding-bottom: 10px; font-size: 14px; font-weight: bold">@item.LibraryImageTexts.Title
                                     </td>
                                 </tr>
-                            </table> 
-                        }
-                        else if (item.EnumMessageTypeID == (int)Poco.Enum.EnumMessageType.ImageText)
-                        {
-                            <div onclick="ShowMessage('4','@item.LibraryImageTextsID')" style=" cursor:pointer; border:1px solid #b3b3b3 ;border-radius:10px; width:220px; background-color:#fff; padding:8px">
-                                <table cellpadding="0" cellspacing="0" style="width: 100%; line-height: 15px">
-                                    <tr>
-                                        <td style="word-break: break-all; padding-bottom: 10px; font-size: 14px; font-weight: bold">@item.LibraryImageTexts.Title
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <img style=" max-width:220px; " src="@Url.Content(item.LibraryImageTexts.ImagePath ?? "")"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="word-break: break-all; padding-top: 10px">@item.LibraryImageTexts.Summary
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
+                                <tr>
+                                    <td>
+                                        <img style=" max-width:220px; " src="@Url.Content(item.LibraryImageTexts.ImagePath ?? "")"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="word-break: break-all; padding-top: 10px">@item.LibraryImageTexts.Summary
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                 
-                        }
-                    </div>
-                </div>
-                <div class="div_td" style="font-size: 12px; color: #aaaaaa; width: 150px; margin-top: 5px;
-                    float: right; text-align: center">
-                    @item.SendTime.DateFormat()
-                </div>
-                <div style="clear: both">
+                    }
                 </div>
             </div>
-        }
-        <div style="float: right; font-size: 12px; margin-top: 15px">
-            @Html.Pager(Model, new PagerOptions
+            <div class="div_td" style="font-size: 12px; color: #aaaaaa; width: 150px; margin-top: 5px;
+                float: right; text-align: center">
+                @item.SendTime.DateFormat()
+            </div>
+            <div style="clear: both">
+            </div>
+        </div>
+    }
+    <div style="float: right; font-size: 12px; margin-top: 15px">
+        @Html.Pager(Model, new PagerOptions
        {
            PageIndexParameterName = "ID",
            CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
@@ -328,7 +329,6 @@
            PageIndexOutOfRangeErrorMessage = "Page index out of range.",
            ShowFirstLast = false
        })
-        </div>
     </div>
 </div>
 <div id="dialogShowMessage" title="" style="display: none">
@@ -351,7 +351,7 @@
         <tr id="trImgText">
             <td>
                 <iframe id="iframeShowImgText" src="#" style="width: 540px; height: 530px; border: none;
-                    overflow:auto"></iframe>
+                    overflow: auto"></iframe>
             </td>
         </tr>
     </table>

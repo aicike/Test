@@ -56,18 +56,11 @@ namespace Web.ueditor.net
             string oriName = up.getOtherInfo(context, "fileName");                //获取原始文件名
 
 
-            string Url =  Poco.SystemConst.WebUrlIP;
+            string Url = Poco.SystemConst.WebUrlIP;
 
-            //集成微网站
-            if (SystemConst.IsIntegrationWebProject)
-            {
 
-            }
-            //不是集成微网站
-            else {
-                HttpContext.Current.Response.Write("{'url':'" + Url + info["url"] + "','title':'" + title + "','original':'" + oriName + "','state':'" + info["state"] + "'}");  //向浏览器返回数据json数据
-            }
-            
+            HttpContext.Current.Response.Write("{'url':'" + Url + info["url"] + "','title':'" + title + "','original':'" + oriName + "','state':'" + info["state"] + "'}");  //向浏览器返回数据json数据
+
         }
 
 
