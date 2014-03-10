@@ -2,7 +2,9 @@
     ViewBag.Title = "View";
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
         var ip = Poco.SystemConst.WebUrlIP;
+        int id = ViewBag.ID;
+        string token = id.TokenEncrypt();
 }
-<iframe data-inset="false" style="border:none" width="100%" height="600px;" seamless="" src="@Url.Action("News", "Default", new { id=ViewBag.ID,})">
+<iframe data-inset="false" style="border:none" width="100%" height="600px;" seamless="" src="@Url.Action("News", "Default", new { id_token = token })">
 
 </iframe>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Poco;
+using System.Web;
 
 namespace System
 {
@@ -165,6 +166,31 @@ namespace System
             {
                 return path.Substring(path.LastIndexOf("\\")+1);
             }
+        }
+
+        /// <summary>
+        /// 解密token为id值
+        /// </summary>
+        /// <param name="id_token"></param>
+        /// <returns></returns>
+        public static int TokenDecrypt(this string id_token)
+        {
+            var value = Common.DESEncrypt.Decrypt(id_token);
+            int id = 0;
+            bool isOk = int.TryParse(value, out id);
+            return id;
+        }
+
+        /// <summary>
+        /// 加密id为token值
+        /// </summary>
+        /// <param name="id_token"></param>
+        /// <returns></returns>
+        public static string TokenEncrypt(this int id_token)
+        {
+            var value = Common.DESEncrypt.Encrypt(id_token+"");
+            value = HttpUtility.UrlEncodeUnicode(value);
+            return value;
         }
 
     }

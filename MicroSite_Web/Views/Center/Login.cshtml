@@ -103,7 +103,7 @@
         });
 
         $("#btnRegister").click(function () {
-            window.location.href = url_reg;
+            window.location.href = url_reg+"&backUrl="+backUrl;
         });
     })
     function showError(error) {

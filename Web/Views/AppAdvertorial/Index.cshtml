@@ -58,7 +58,7 @@
 
             $("#divactivitySigin").hide();
             var Address = "@ViewBag.UrlAddress";
-            var url = "http://" + Address + "/default/News?id=" + id;
+            var url = "http://" + Address + "/default/News?id_token=" + id;
             $("#urlAddress").text(url);
             if (URLType != null && URLType != undefined && URLType != "") {
                 var types = "@((int)Poco.Enum.EnumAdverURLType.Activities)";
@@ -294,7 +294,7 @@
                     <br />
                     <a onclick="clickSelectInfo('@item.ID')" style=" width:56px">&nbsp;查看详细</a>
                     <br />
-                    <a onclick="clickaddress('@item.ID','@item.UrlID','@item.EnumAdverURLType')" style=" width:56px">
+                    <a onclick="clickaddress('@item.ID.TokenEncrypt()','@item.UrlID','@item.EnumAdverURLType')" style=" width:56px">
                         查看地址 </a>
                 </td>
             </tr>

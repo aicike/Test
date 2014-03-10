@@ -49,6 +49,7 @@
 <script language="javascript">
     var url_index = '@Url.Action("Index", "Center", new { amid = amid })';
     var url_reg = '@Url.Action("Register", "Center", new { amid = amid })';
+    var backUrl=GetQueryString("backUrl");
     $(function () {
         $("#reg_btnSubmit").click(function () {
             //            //    $.mobile.ajaxEnabled = false;
@@ -107,9 +108,14 @@
                     localStorage.IsAutoLogin=1;
                     SetUserID(@amid,result.Entity);
                     sessionStorage.setItem("userID",result.Entity);
-                    url_index=url_index+"&userID="+result.Entity;
+                    var url=url_index+"&userID="+result.Entity;
                     localStorage.IsAutoLogin=1;
-                    showSucceed("恭喜您成功注册。",url_index);
+                    if(backUrl!=null&&backUrl.length>0){
+                        url=backUrl;
+                        showSucceed2("恭喜您成功注册。",url);
+                    }else{
+                        showSucceed("恭喜您成功注册。",url);
+                    }
                 }
             }, "json");
         });
@@ -143,6 +149,29 @@
             buttonPrompt: msg,
             buttons: {
                 '进入个人中心': {
+                    click: function () {
+                        window.location.href=href;
+                    }
+                }
+                //'Cancel': {
+                //    click: function () {
+                //        $('#buttonoutput').text('Cancel');
+                //    },
+                //    icon: "delete",
+                //    theme: "c"
+                //}
+            }
+        })
+    }
+
+    function showSucceed2(msg,href) {
+        $('<div>').simpledialog2({
+            mode: 'button',
+            headerText: '消息',
+            headerClose: false,
+            buttonPrompt: msg,
+            buttons: {
+                '返回订单确认页面': {
                     click: function () {
                         window.location.href=href;
                     }

@@ -281,6 +281,7 @@
     <Content Include="Images\SelImg.jpg" />
     <Content Include="Images\sep.png" />
     <Content Include="Images\LandWaitFor.gif" />
+    <Content Include="Images\share_msg.png" />
     <Content Include="Images\shouqi.png" />
     <Content Include="Images\shouqi_2.png" />
     <Content Include="Images\sliders\slider-1-1.jpg" />
@@ -323,6 +324,9 @@
     <Content Include="Scripts\mobiscroll\css\wp_icons.png" />
     <Content Include="Scripts\mobiscroll\css\wp_icons_light.png" />
     <Content Include="Scripts\mobiscroll\js\mobiscroll.custom-2.6.2.min.js" />
+    <Content Include="Scripts\popup\jquery.popup.js" />
+    <Content Include="Scripts\popup\jquery.popup.min.js" />
+    <Content Include="Scripts\popup\popup.css" />
     <Content Include="Scripts\topbar\juery.topbar.js" />
     <Content Include="Scripts\nivoSlider\bar\arrows.png" />
     <Content Include="Scripts\nivoSlider\bar\bar.css" />
@@ -391,6 +395,7 @@
     <Content Include="Scripts\uploadify\uploadify-cancel.png" />
     <Content Include="Scripts\waterfall\jquery.infinitescroll.min.js" />
     <Content Include="Scripts\waterfall\jquery.masonry.js" />
+    <Content Include="Scripts\weixin.js" />
     <Content Include="SSO\TokenService.svc" />
     <Content Include="ueditor\net\Uploader.cs">
       <SubType>Code</SubType>
@@ -1018,7 +1023,7 @@
           <IISAppRootUrl>http://192.168.1.138/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>True</UseCustomServer>
-          <CustomServerUrl>http://192.168.1.138</CustomServerUrl>
+          <CustomServerUrl>http://192.168.1.166</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

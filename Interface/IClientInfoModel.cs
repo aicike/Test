@@ -9,7 +9,7 @@ namespace Interface
 {
     public interface IClientInfoModel : IBaseModel<ClientInfo>
     {
-        Result PostClientID(string clientID, int accountMainID, int? userID);
+        Result PostClientID(string clientID, int accountMainID, int? userID, EnumClientSystemType sytemType);
         ClientInfo GetByClientID(string clientID, int? userID);
     }
 }
