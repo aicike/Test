@@ -16,9 +16,9 @@ namespace Business
         /// <param name="UserID"></param>
         /// <param name="UserType"></param>
         /// <returns></returns>
-        public Result GetUserIsSignUP(int UserID, int UserType)
+        public Result GetUserIsSignUP(int UserID, int UserType,int AID)
         {
-            var acinfo = List().Where(a => a.UserID == UserID && a.EnumAdvertorialUType == UserType);
+            var acinfo = List().Where(a => a.UserID == UserID && a.EnumAdvertorialUType == UserType&&a.ActivityInfoID==AID);
             Result result = new Result();
             if (acinfo.Count() > 0)
             {

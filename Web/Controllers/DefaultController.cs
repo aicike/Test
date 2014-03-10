@@ -413,7 +413,7 @@ namespace Web.Controllers
 
                 //判断是否报过名
                 var IActivityInfoParticipatorModelModel = Factory.Get<IActivityInfoParticipatorModel>(SystemConst.IOC_Model.ActivityInfoParticipatorModel);
-                Result result = IActivityInfoParticipatorModelModel.GetUserIsSignUP(imtimely_userid.Value, imtimely_Apptype.Value);
+                Result result = IActivityInfoParticipatorModelModel.GetUserIsSignUP(imtimely_userid.Value, imtimely_Apptype.Value,ActivityID);
                 if (result.HasError)
                 {
                     ViewBag.isSignUP = "true";

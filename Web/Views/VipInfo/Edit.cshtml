@@ -38,13 +38,8 @@
 <div class="title">
     @Html.Partial("Menu3")
 </div>
-<div class="bodyLeft">
-    <ul class="ulList">
-        <li class="select">@Html.ActionLink("会员管理", "Index", "VipInfo", new { HostName = ViewBag.HostName }, null, true)</li>
-        <li>@Html.ActionLink("卡片管理", "Index", "CardInfo", new { HostName = ViewBag.HostName }, null, true)</li>
-    </ul>
-</div>
-<div class="bodyRight" style="font-size: 14px">
+
+<div class="body" style="font-size: 14px">
     @using (Ajax.BeginForm("Edit", "VipInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
         <fieldset>

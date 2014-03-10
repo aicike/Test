@@ -14,7 +14,7 @@ namespace Interface
         /// <param name="UserID"></param>
         /// <param name="UserType"></param>
         /// <returns></returns>
-        Result GetUserIsSignUP(int UserID, int UserType);
+        Result GetUserIsSignUP(int UserID, int UserType, int AID);
 
         /// <summary>
         /// 根据活动ID获取表面人信息
