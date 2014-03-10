@@ -5,6 +5,7 @@ using System.IO;
 using System.Collections;
 using System.Drawing;
 using Common;
+using Poco;
 
     /// <summary>
     /// UEditor编辑器通用上传类
@@ -28,10 +29,20 @@ using Common;
       *@param int
       * @return Hashtable
       */
-        public Hashtable upFile(HttpContext cxt, string pathbase, string[] filetype, int size)
+        public Hashtable upFile(HttpContext cxt, string pathbase, string[] filetype, int size, string VirtualPath
+)
         {
             pathbase = pathbase + DateTime.Now.ToString("yyyy-MM-dd") + "/";
-            uploadpath = cxt.Server.MapPath(pathbase);//获取文件上传路径
+            //集成微网站
+            if (SystemConst.IsIntegrationWebProject)
+            {
+                uploadpath = pathbase;//获取文件上传路径
+            }
+            //不是集成微网站
+            else
+            {
+                uploadpath = cxt.Server.MapPath(pathbase);//获取文件上传路径
+            }
 
             try
             {
@@ -66,9 +77,9 @@ using Common;
                     Image img = Image.FromStream(tream);
 
                     Tool.SuperGetPicThumbnail(img, uploadpath + filename, 70, 800, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
-        
 
-                    URL = pathbase + filename;
+
+                    URL = VirtualPath + filename;
                 }
             }
             catch (Exception e)

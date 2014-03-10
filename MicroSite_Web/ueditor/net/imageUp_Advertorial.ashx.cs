@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Collections;
+using Poco;
 
 namespace Web.ueditor.net
 {
@@ -34,9 +35,22 @@ namespace Web.ueditor.net
 
 
             var tempPath = Poco.SystemConst.Business.PathBase.Replace("~", "");
-            var path = string.Format(tempPath, account.CurrentAccountMainID);
+            var VirtualPath = string.Format(tempPath, account.CurrentAccountMainID);
+            var path = "";
+            //集成微网站
+            if (SystemConst.IsIntegrationWebProject)
+            {
+                path = string.Format(SystemConst.IntegrationPathBase, account.CurrentAccountMainID);
+            }
+            //不是集成微网站
+            else
+            {
+                path = string.Format(tempPath, account.CurrentAccountMainID);
+            }
 
-            info = up.upFile(context,path, filetype, size);                   //获取上传状态
+
+            info = up.upFile(context, path, filetype, size, VirtualPath);                   //获取上传状态
+
 
             string title = up.getOtherInfo(context, "pictitle");                   //获取图片描述
             string oriName = up.getOtherInfo(context, "fileName");                //获取原始文件名
@@ -44,7 +58,16 @@ namespace Web.ueditor.net
 
             string Url =  Poco.SystemConst.WebUrlIP;
 
-            HttpContext.Current.Response.Write("{'url':'" + Url+info["url"] + "','title':'" + title + "','original':'" + oriName + "','state':'" + info["state"] + "'}");  //向浏览器返回数据json数据
+            //集成微网站
+            if (SystemConst.IsIntegrationWebProject)
+            {
+
+            }
+            //不是集成微网站
+            else {
+                HttpContext.Current.Response.Write("{'url':'" + Url + info["url"] + "','title':'" + title + "','original':'" + oriName + "','state':'" + info["state"] + "'}");  //向浏览器返回数据json数据
+            }
+            
         }
 
 
