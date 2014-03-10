@@ -5,7 +5,8 @@
 
     var uasertag = ViewBag.UserTag as List<Poco.UserTag>;
     var hostName = ViewBag.HostName;
-    ViewBag.Menu = Poco.SystemConst.Menu.UserManage;
+    ViewBag.Menu2 = Poco.SystemConst.Menu.UserManage;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.UserManage;
 }
 @section head{
     <script type="text/javascript">
@@ -23,30 +24,7 @@
 @model Poco.User
 <div class="title">
     @Html.Partial("Menu3")</div>
-<div class="bodyLeft">
-    <ul class="ulList" id="ulGroup">
-        <li><a href="@Url.Action("Index", "InstantMes", new { HostName = ViewBag.HostName })">
-            销售消息 </a></li>
-        <li>@Html.ActionLink("销售与客户管理", "Index", "SalesMessage", new { HostName = ViewBag.HostName }, null, true)
-        </li>
-        <li style="height: 10px; background-color: #f0f0f0; border-bottom: 1px solid #d3d3d3;
-            border-top: 1px solid #d3d3d3"></li>
-        @foreach (var item in groupList)
-        {
-            if (item.IsDefaultGroup)
-            { 
-            <li class="select"><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())</a>
-            </li>
-            }
-            else
-            {  
-            <li><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())</a>
-            </li>
-            }
-        }
-    </ul>
-</div>
-<div class="bodyRight">
+<div class="body">
     @using (Ajax.BeginForm("EditUser", "UserManage", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
         <fieldset>
@@ -112,9 +90,12 @@
                     </td>
                     <td class="tdField">
                         <select name="UserTagID" id="UserTagID">
-                            @foreach (var item in uasertag)
-                            {
-                                <option value="@item.ID">@item.TagName</option>
+                            @if (uasertag != null)
+                            { 
+                                foreach (var item in uasertag)
+                                {
+                                    <option value="@item.ID">@item.TagName</option>
+                                }
                             }
                         </select>
                     </td>

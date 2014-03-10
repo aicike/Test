@@ -56,7 +56,7 @@
 <div class="title">
     @Html.Partial("Menu3")
 </div>
-<div class="bodyLeft">
+<div class="body">
     <div class="option">
         <div id="Ts" onclick="javascript:window.top.location.reload()" style="display: none;
             height: 25px; width: 98%; margin: auto auto; line-height: 25px; font-size: 12px;
@@ -174,14 +174,6 @@
        ShowFirstLast = false
    })
     </div>
-</div>
-<div class="bodyRight">
-    <ul class="ulList" id="ulGroup">
-        <li class="select"><a href="@Url.Action("Index", "InstantMes", new { HostName = ViewBag.HostName })">
-            销售消息 </a></li>
-        <li>@Html.ActionLink("销售与客户管理", "Index", "SalesMessage", new { HostName = ViewBag.HostName }, null, true)
-        </li>
-    </ul>
 </div>
 <div style="clear: both">
 </div>

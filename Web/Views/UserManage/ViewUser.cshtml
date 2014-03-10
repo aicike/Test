@@ -8,7 +8,7 @@
 @model Poco.User
 <div class="title">
     @Html.Partial("Menu3")</div>
-<div class="bodyLeft">
+<div class="body">
     <fieldset>
         <legend>用户</legend>
         <table class="tableForm">
@@ -91,29 +91,6 @@
     <div class="action">
         <input type="button" class="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" />
     </div>
-</div>
-<div class="bodyRight">
-    <ul class="ulList" id="ulGroup">
-        <li><a href="@Url.Action("Index", "InstantMes", new { HostName = ViewBag.HostName })">
-            销售消息 </a></li>
-        <li>@Html.ActionLink("销售与客户管理", "Index", "SalesMessage", new { HostName = ViewBag.HostName }, null, true)
-        </li>
-        <li style="height: 10px; background-color: #f0f0f0; border-bottom: 1px solid #d3d3d3;
-            border-top: 1px solid #d3d3d3"></li>
-        @foreach (var item in groupList)
-        {
-            if (item.IsDefaultGroup)
-            { 
-            <li class="select"><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())</a>
-            </li>
-            }
-            else
-            {  
-            <li><a href="@Url.Action("Index", "UserManage", new { HostName = hostName, groupID = item.ID })">@item.GroupName&nbsp;(@item.Account_Users.Where(a => a.SystemStatus == (int)Poco.Enum.EnumSystemStatus.Active).Count())</a>
-            </li>
-            }
-        }
-    </ul>
 </div>
 <div style="clear: both">
 </div>
