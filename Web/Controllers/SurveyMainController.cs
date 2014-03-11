@@ -476,7 +476,7 @@ namespace Web.Controllers
 
             if (string.IsNullOrEmpty(main.AppShowImagePath))
             {
-                appRW.AppShowImagePath = "~/Images/Survey.jpg";
+                appRW.AppShowImagePath = "~/Images/Survey_show.jpg";
             }
             else
             {

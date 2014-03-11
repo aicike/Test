@@ -459,7 +459,7 @@ namespace Web.Controllers
                     sql = string.Format(str, AdvertoriaID, UserID, "ForwardWeiXinCnt", "(ForwardWeiXinCnt+1)");
                     break;
                 case (int)Poco.Enum.EnumSocialType.WeixinFriendCircle:
-                    sql = string.Format(str, AdvertoriaID, UserID, "ForwardFriendCnt", "(ForwardWeiXinCnt+1)");
+                    sql = string.Format(str, AdvertoriaID, UserID, "ForwardFriendCnt", "(ForwardFriendCnt+1)");
                     break;
             }
 

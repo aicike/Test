@@ -157,7 +157,7 @@ namespace Web.Controllers
             appRW.AccountMainID = LoginAccount.CurrentAccountMainID;
             if (string.IsNullOrEmpty(main.AppShowImagePath))
             {
-                appRW.AppShowImagePath = "~/Images/ActivityInfo.jpg";
+                appRW.AppShowImagePath = "~/Images/ActivityInfo_show.jpg";
             }
             else
             {
