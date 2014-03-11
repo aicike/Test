@@ -32,6 +32,26 @@
                 $('#insert').show();
                 $('#isok').hide();
             }
+
+
+            var UName = "@ViewBag.UName";
+            var UPhone = "@ViewBag.UPhone";
+            var UEmail = "@ViewBag.UEmail ";
+
+
+
+            if (UName != undefined && UName != "") {
+                $('#userName').val(UName);
+            }
+            if (UPhone != undefined && UPhone != "") {
+                $('#userPhone').val(UPhone);
+            }
+            if (UEmail != undefined && UEmail != "") {
+                $('#userEmail').val(UEmail);
+            }
+
+
+
         });
 
         var isSub = false;
