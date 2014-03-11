@@ -421,6 +421,27 @@ namespace Web.Controllers
                 else
                 {
                     ViewBag.isSignUP = "false";
+                    //获取用户信息
+                    if (imtimely_Apptype.HasValue)
+                    {
+                        // 0用户端，1销售端
+                        if (imtimely_Apptype.Value == 0)
+                        {
+                            var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+                            var user = userModel.Get(imtimely_userid.Value);
+                            ViewBag.UName = user.UserLoginInfo.Name;
+                            ViewBag.UPhone = user.UserLoginInfo.Phone;
+                            ViewBag.UEmail = user.UserLoginInfo.Email;
+                        }
+                        else if (imtimely_Apptype.Value == 1)
+                        {
+                            var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
+                            var account = accountModel.Get(imtimely_userid.Value);
+                            ViewBag.UName = account.Name;
+                            ViewBag.UPhone = account.Phone;
+                            ViewBag.UEmail = account.Email;
+                        }
+                    }
                 }
 
             }
