@@ -21,8 +21,10 @@ namespace Web.Controllers
             var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
             var list = productModel.GetList(LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 15);
 
-
-
+            if (id.HasValue)
+            {
+                ViewBag.pageID = id.Value;
+            }
             ViewBag.HostName = LoginAccount.HostName;
             ViewBag.WeiURL = SystemConst.MicroSiteHostName + "." + SystemConst.WebUrl + "/MicroMall/ShopIndex?AMID=" + LoginAccount.CurrentAccountMainID;
             string WebTitleRemark = SystemConst.WebTitleRemark;
@@ -34,14 +36,27 @@ namespace Web.Controllers
 
         public ActionResult Add()
         {
-
-
+            //产品状态
             List<SelectListItem> newstatus = new List<SelectListItem>();
             newstatus.Add(new SelectListItem { Text = "正常", Value = ((int)Poco.Enum.EnumProductType.Normal).ToString(), Selected = true });
             newstatus.Add(new SelectListItem { Text = "下架", Value = ((int)Poco.Enum.EnumProductType.OffShelves).ToString() });
             newstatus.Add(new SelectListItem { Text = "缺货", Value = ((int)Poco.Enum.EnumProductType.Shortages).ToString() });
 
             ViewData["Status"] = newstatus;
+            //发布状态
+            List<SelectListItem> Release = new List<SelectListItem>();
+            Release.Add(new SelectListItem { Text = "不发布", Value = "false", Selected = true });
+            Release.Add(new SelectListItem { Text = "发布", Value ="true" });
+            ViewData["Release"] = Release;
+            //优惠类型
+            List<SelectListItem> DiscountType = new List<SelectListItem>();
+            DiscountType.Add(new SelectListItem { Text = "无优惠", Value = ((int)Poco.Enum.EnumProductDiscountType.No).ToString(), Selected = true });
+            DiscountType.Add(new SelectListItem { Text = "折扣", Value = ((int)Poco.Enum.EnumProductDiscountType.Discount).ToString() });
+            DiscountType.Add(new SelectListItem { Text = "优惠", Value = ((int)Poco.Enum.EnumProductDiscountType.preferential).ToString() });
+            DiscountType.Add(new SelectListItem { Text = "促销", Value = ((int)Poco.Enum.EnumProductDiscountType.Promotion).ToString() });
+            ViewData["DiscountType"] = DiscountType;
+
+            
 
             ViewBag.HostName = LoginAccount.HostName;
 
@@ -58,7 +73,10 @@ namespace Web.Controllers
             product.LastSetDate = DateTime.Now.ToString("yyyy-MM-dd hhmmss");
             product.AccountMainID = LoginAccount.CurrentAccountMainID;
             //product.imgFilePath = "~/Images/nopicture_icon.png";
-
+            if (product.EnumProductDiscountType == (int)EnumProductDiscountType.No)
+            {
+                product.DiscountPrice = product.Price;
+            }
             var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
             var result = productModel.Add(product);
             if (result.HasError)
@@ -152,6 +170,9 @@ namespace Web.Controllers
         }
 
 
+
+
+
         public ActionResult Delete(int id)
         {
             var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
@@ -179,6 +200,14 @@ namespace Web.Controllers
             var productImgModel = Factory.Get<IProductImgModel>(SystemConst.IOC_Model.ProductImgModel);
             ViewBag.ProductIMG = product.ProductImg.ToList();
             return View(product);
+        }
+
+        [HttpPost]
+        public ActionResult Release(int productID,bool Release,int pageID)
+        {
+            var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
+            var result = productModel.UPRelease(productID, LoginAccount.CurrentAccountMainID, Release);
+            return RedirectToAction("Index", "Product", new { HostName = LoginAccount.HostName, id = pageID });
         }
 
     }

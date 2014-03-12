@@ -30,7 +30,7 @@ namespace Business
 
                 //证书密码
                 string p12FilePassword = "password";
-                string p12Filename = HttpContext.Current.Server.MapPath(p12File);
+                string p12Filename =p12File;
 
                 NotificationService service = new NotificationService(sandbox, p12Filename, p12FilePassword, 1);
 

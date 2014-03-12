@@ -26,10 +26,12 @@ namespace Poco
 
         [Display(Name = "销售价格")]
         [Required(ErrorMessage = "请输入销售价格")]
+        [RegularExpression(@"^(\d+(.\d{1,2})|\d+)$", ErrorMessage = "请输入有效的金额")]
         public double Price { get; set; }
 
         [Display(Name = "运费")]
         [Required(ErrorMessage = "请输入运费")]
+        [RegularExpression(@"^(\d+(.\d{1,2})|\d+)$", ErrorMessage = "请输入有效的金额")]
         public double Freight { get; set; }
 
         [Display(Name = "介绍")]
@@ -46,6 +48,46 @@ namespace Poco
         public int ClassifyID { get; set; }
         public virtual Classify Classify { get; set; }
 
+        /// <summary>
+        /// 优惠类型
+        /// </summary>
+        [Display(Name = "优惠类型")]
+        public int EnumProductDiscountType { get; set; }
+
+        /// <summary>
+        /// 折扣
+        /// </summary>
+        [Display(Name = "折扣")]
+        [RegularExpression(@"^(\d+(.\d{1,2})|\d+)$", ErrorMessage = "请输入有效的折扣")]
+        public double? Discount { get; set; }
+
+        /// <summary>
+        /// 优惠价
+        /// </summary>
+        [Display(Name = "优惠价")]
+        [RegularExpression(@"^(\d+(.\d{1,2})|\d+)$", ErrorMessage = "请输入有效的金额")]
+        public double? DiscountPrice { get; set; }
+
+        /// <summary>
+        /// 是否发布
+        /// </summary>
+        [Display(Name = "是否发布")]
+        public bool IsRelease { get; set; }
+
+        /// <summary>
+        /// 排序
+        /// </summary>
+        [Display(Name = "排序")]
+        public int Sort { get; set; }
+
+        /// <summary>
+        /// 库存
+        /// </summary>
+        [Display(Name = "库存")]
+        [Required(ErrorMessage = "请输入库存")]
+        public int Stock { get; set; }
+
+      
         //扩展字段
         public string file1 { get; set; }
         public string file2 { get; set; }

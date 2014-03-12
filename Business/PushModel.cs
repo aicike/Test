@@ -153,7 +153,7 @@ namespace Business
             var accountmodel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             var account = accountmodel.Get(fromUserID);
             var account_accounmain = account.Account_AccountMains.FirstOrDefault();
-            string title = account_accounmain.AccountMain.Name + "的" + account + " 给您发来一条消息。";
+            string title = account_accounmain.AccountMain.Name + "的" + account.Name + " 给您发来一条消息。";
             Result result = new Result();
             var iosModel = Factory.Get("Push_IOS") as IPushModel;
             var androidModel = Factory.Get("Push_Getui") as IPushModel;

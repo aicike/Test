@@ -33,7 +33,6 @@ namespace Web.ueditor.net
                 false.NotAuthorizedPage();
             }
 
-
             var tempPath = Poco.SystemConst.Business.PathBase.Replace("~", "");
             var VirtualPath = string.Format(tempPath, account.CurrentAccountMainID);
             var path = "";

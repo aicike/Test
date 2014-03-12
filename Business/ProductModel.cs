@@ -176,5 +176,25 @@ namespace Business
             var product = List().Where(a => a.ID == id && a.AccountMainID == AccountMainID).FirstOrDefault();
             return product;
         }
+
+        /// <summary>
+        /// 修改发布状态
+        /// </summary>
+        /// <param name="PID">产品ID</param>
+        /// <param name="AMID"></param>
+        /// <param name="Release">发布状态 true 发布 false 不发布</param>
+        /// <returns></returns>
+        public Result UPRelease(int PID, int AMID, bool Release)
+        {
+            Result result = new Result();
+            string sql = string.Format("update [dbo].[Product] set IsRelease = '{0}' where id={1} and AccountMainID={2}", Release, PID, AMID);
+            if (base.SqlExecute(sql) <= 0)
+            {
+                result.HasError = true;
+                result.Error = "更改发布状态失败";
+            }
+            
+            return result;
+        }
     }
 }

@@ -76,6 +76,7 @@
     <Compile Include="Enum\EnumAdverTorialType.cs" />
     <Compile Include="Enum\EnumAdvertorialUType.cs" />
     <Compile Include="Enum\EnumAdverURLType.cs" />
+    <Compile Include="Enum\EnumProductDiscountType.cs" />
     <Compile Include="Enum\EnumReportForm.cs" />
     <Compile Include="Enum\EnumService.cs" />
     <Compile Include="Enum\EnumSocialType.cs" />

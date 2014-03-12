@@ -49,6 +49,15 @@ namespace Interface
         /// <param name="AccountMainID"></param>
         /// <returns></returns>
         IQueryable<Product> GetProductListByIDs(int[] IDS, int AccountMainID);
+
+         /// <summary>
+        /// 修改发布状态
+        /// </summary>
+        /// <param name="PID">产品ID</param>
+        /// <param name="AMID"></param>
+        /// <param name="Release">发布状态 true 发布 false 不发布</param>
+        /// <returns></returns>
+        Result UPRelease(int PID, int AMID, bool Release);
        
     }
 }

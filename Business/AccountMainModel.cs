@@ -172,7 +172,7 @@ namespace Business
                         var androidSellPath = string.Format("{0}/{1}_{2}_{3}", basePath, Clienttoken, com.CreateRandom("", 5), CertificateName);
 
                         IOSClientCertificateFile.SaveAs(androidSellPath);
-                        accountMain.IOSClientCertificate = string.Format(SystemConst.Business.PathBase, accountMain.ID) + CertificateName;
+                        accountMain.IOSClientCertificate = androidSellPath;
                     }
                     //IOS销售端证书
                     if (IOSSalestCertificateFile != null)
@@ -182,7 +182,7 @@ namespace Business
                         var androidSellPath = string.Format("{0}/{1}_{2}_{3}", basePath, Salesttoken, com.CreateRandom("", 5), CertificateName);
 
                         IOSSalestCertificateFile.SaveAs(androidSellPath);
-                        accountMain.IOSSalestCertificate = string.Format(SystemConst.Business.PathBase, accountMain.ID) + CertificateName;
+                        accountMain.IOSSalestCertificate = androidSellPath;
                     }
 
 
@@ -512,7 +512,7 @@ namespace Business
                     //删除原路径
                     if (!string.IsNullOrEmpty(accountMain.IOSClientCertificate))
                     {
-                        var YPath = HttpContext.Current.Server.MapPath(accountMain.IOSClientCertificate);
+                        var YPath =accountMain.IOSClientCertificate;
                         if (File.Exists(YPath))
                         {
                             File.Delete(YPath);
@@ -525,7 +525,7 @@ namespace Business
                     var androidSellPath = string.Format("{0}/{1}", basePath, fileName);
 
                     IOSClientCertificateFile.SaveAs(androidSellPath);
-                    accountMain.IOSClientCertificate = string.Format(SystemConst.Business.PathBase, accountMain.ID) + fileName;
+                    accountMain.IOSClientCertificate = androidSellPath;
                 }
                 //IOS销售端证书
                 if (result.HasError == false && IOSSalestCertificateFile != null)
@@ -533,7 +533,7 @@ namespace Business
                     //删除原路径
                     if (!string.IsNullOrEmpty(accountMain.IOSSalestCertificate))
                     {
-                        var YPath = HttpContext.Current.Server.MapPath(accountMain.IOSSalestCertificate);
+                        var YPath =accountMain.IOSSalestCertificate;
                         if (File.Exists(YPath))
                         {
                             File.Delete(YPath);
@@ -546,7 +546,7 @@ namespace Business
                     var androidSellPath = string.Format("{0}/{1}_{2}_{3}", basePath, fileName);
 
                     IOSSalestCertificateFile.SaveAs(androidSellPath);
-                    accountMain.IOSSalestCertificate = string.Format(SystemConst.Business.PathBase, accountMain.ID) + fileName;
+                    accountMain.IOSSalestCertificate = androidSellPath;
                 }
 
 

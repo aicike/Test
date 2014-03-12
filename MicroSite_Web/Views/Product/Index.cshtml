@@ -4,58 +4,78 @@
     ViewBag.Menu3 = Poco.SystemConst.Menu.Product;
 }
 @section head{
+    <script>
+        $(function () {
+            $("label[name=labCbFirst]").each(function () {
+                $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
+            });
 
-<script>
-    $(function () {
-        $("label[name=labCbFirst]").each(function () {
-            $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
         });
-    });
-</script>
+
+        //pid 产品ID ，Release 是否发布
+        function UPRelease(PID, Release) {
+            var id = "@ViewBag.pageID";
+            if (id == undefined || id == "") {
+                id = 1;
+            }
+            $("#productID").val(PID);
+            $("#Release").val(Release);
+            $("#pageID").val(id); 
+            $("#btnRelease").click();
+        }
+    </script>
 }
 @model PagedList<Poco.Product>
 <div class="title">
-    <div style=" float:right"><a href="http://@ViewBag.WeiURL" target="_blank" style=" color:#00aec8">点击进入微商城</a></div> 
+    <div style="float: right">
+        <a href="http://@ViewBag.WeiURL" target="_blank" style=" color:#00aec8">点击进入微商城</a></div>
     @Html.Partial("Menu3")
-   
-    <div style=" clear:both"></div>
+    <div style="clear: both">
+    </div>
 </div>
-
 <div class="body">
+@using (Html.BeginForm("Release", "Product", new { HostName = ViewBag.HostName }, FormMethod.Post))
+{
+    <input type="hidden" id="productID" name="productID" />
+    <input type="hidden" id="Release" name="Release" />
+    <input type="hidden" id="pageID" name="pageID" />
+    <input type="submit" id="btnRelease" style="visibility: hidden" />
+}
     <div class="option">@Html.ActionLink("添加", "Add", "Product", new { HostName = ViewBag.HostName }, null, true)</div>
     <table class="tableList" cellpadding="0" cellspacing="0">
         <tr>
-          
             <th style="width: 180px; word-wrap: break-word; word-break: normal;">
                 产品名称
             </th>
             <th style="width: 100px; word-wrap: break-word; word-break: normal;">
-                规格
-            </th>
-            <th style="width: 100px; word-wrap: break-word; word-break: normal;"> 
                 类别
+            </th>
+            <th>
+                原价
+            </th>
+            <th  style="width: 65px;" >
+                优惠类型
             </th>
             <th>
                 售价
             </th>
-             <th>
+            <th>
                 状态
             </th>
-            <th style="width: 100px;">
+            <th style="width: 50px;">
+                排序
+            </th>
+            <th style="width: 120px;">
                 操作
             </th>
         </tr>
         @foreach (var item in Model)
         {
             <tr>
-                
-                <td  class="operation">
-                 <label name="labCbFirst" title="查看详细">
-                    <a href="@Url.Action("SelectProduct", "Product", new { ID = item.ID })"  target="_blank">@item.Name</a>
+                <td class="operation">
+                    <label name="labCbFirst" title="查看详细">
+                        <a href="@Url.Action("SelectProduct", "Product", new { ID = item.ID })"  target="_blank">@item.Name</a>
                     </label>
-                </td>
-                <td>
-                    @item.Specification
                 </td>
                 <td>
                     @item.Classify.Name
@@ -64,25 +84,58 @@
                     @item.Price
                 </td>
                 <td>
+                   
+                     @switch (item.EnumProductDiscountType)
+                     {
+                         case (int)Poco.Enum.EnumProductDiscountType.No:
+                        @:无
+                            break;
+                         case (int)Poco.Enum.EnumProductDiscountType.Discount:
+                        @:折扣
+                            break;
+                         case (int)Poco.Enum.EnumProductDiscountType.preferential:
+                        @:优惠
+                        break;
+                         case (int)Poco.Enum.EnumProductDiscountType.Promotion:
+                        @:促销
+                        break;
+                     }
+                </td>
+                <td>
+                    @item.DiscountPrice
+                </td>
+                <td>
                     @switch (item.Status)
                     {
                         case (int)Poco.Enum.EnumProductType.Normal:
-                            @:正常
+                        @:正常
                             break;
                         case (int)Poco.Enum.EnumProductType.OffShelves:
-                            @:下架
+                        @:下架
                             break;
                         case (int)Poco.Enum.EnumProductType.Shortages:
-                            @:缺货
-                            break;
+                        @:缺货
+                        break;
                     }
                 </td>
-                 <td class="operation">
-
-                    @Html.ActionLink("修改", "Edit", "Product", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:15px" }, true)
-                   
+                <td>
+                
+                </td>
+                <td class="operation">
+                    @if (item.IsRelease)
+                    { 
+                         <label name="labCbFirst" title="点击撤销发布">
+                        <span onclick="UPRelease(@item.ID,false)" style=" cursor:pointer; color:#00A4BD">已发布</span>
+                        </label>
+                    }
+                    else
+                    { 
+                        <label name="labCbFirst" title="点击发布产品">
+                        <span  onclick="UPRelease(@item.ID,true)" style=" cursor:pointer; color:red">未发布</span>
+                        </label>
+                    }
+                    @Html.ActionLink("修改", "Edit", "Product", new { HostName = ViewBag.HostName, id = item.ID }, new { }, true)
                     @Ajax.ActionLink("删除", "Delete", "Product", new { HostName = ViewBag.HostName, id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "Product", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
-                    
                 </td>
             </tr>
         }

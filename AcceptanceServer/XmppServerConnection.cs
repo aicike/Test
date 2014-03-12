@@ -584,7 +584,7 @@ namespace AcceptanceServer
                 //接收人类型
                 int ToType = 0;
                 //发送人ID
-                int FromUID = int.Parse(jid.User.Substring(1));
+                int FromUID = int.Parse(msg.From.User.Substring(1));
                 //接收人ID
                 int ToUID = int.Parse(msg.To.User.Substring(1));
                 //消息方向

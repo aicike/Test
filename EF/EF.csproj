@@ -65,13 +65,7 @@
     <Compile Include="Mapping\AppUpdateMap.cs" />
     <Compile Include="Mapping\OrderUserInfoMap.cs" />
     <Compile Include="Mapping\TaskMap.cs" />
-    <Compile Include="Migrations\201403120456018_adds.cs" />
-
     <Compile Include="Mapping\RoleMenuMap.cs" />
-    <Compile Include="Migrations\201403060624248_Update.cs" />
-    <Compile Include="Migrations\201403060624248_Update.Designer.cs">
-      <DependentUpon>201403060624248_Update.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -94,11 +88,6 @@
   <ItemGroup>
     <Content Include="Initial.sql" />
     <Content Include="InitialProvince.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201403120456018_adds.resx">
-      <DependentUpon>201403120456018_adds.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

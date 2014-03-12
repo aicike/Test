@@ -175,6 +175,54 @@
             });
 
 
+
+
+            //优惠类型选择事件
+            $("#EnumProductDiscountType").bind('change', function () {
+                switch ($(this).val()) {
+                    //无 
+                    case "@((int)Poco.Enum.EnumProductDiscountType.No)":
+
+                        $("#tr_discount").hide();
+                        $("#Discount").val("");
+                        $("#tr_discountPrice").hide();
+                        $("#DiscountPrice").val("");
+                        $("#span_Discount").text("");
+                        
+                        break;
+                    //折扣 
+                    case "@((int)Poco.Enum.EnumProductDiscountType.Discount)":
+                        $("#tr_discount").show();
+                        $("#Discount").val("");
+                        $("#tr_discountPrice").show();
+                        $("#DiscountPrice").val("");
+                        $("#span_Discount").text("折扣价");
+                        break;
+                    //促销 
+                    case "@((int)Poco.Enum.EnumProductDiscountType.Promotion)":
+                        $("#tr_discount").hide();
+                        $("#Discount").val("");
+                        $("#tr_discountPrice").show();
+                        $("#DiscountPrice").val("");
+                        $("#span_Discount").text("促销价");
+                        break;
+                    //优惠 
+                    case "@((int)Poco.Enum.EnumProductDiscountType.preferential)":
+                        $("#tr_discount").hide();
+                        $("#Discount").val("");
+                        $("#tr_discountPrice").show();
+                        $("#DiscountPrice").val("");
+                        $("#span_Discount").text("优惠价");
+                        break;
+                }
+
+            });
+
+
+
+
+
+
         });
 
 
@@ -218,8 +266,55 @@
 
         }
 
+        function chickForm()
+        {
+            var DiscountType = $("#EnumProductDiscountType").val();
+            var Discount = $("#Discount").val();
+            var DiscountPrice = $("#DiscountPrice").val();
+            switch (DiscountType) {
+                //无
+                case "@((int)Poco.Enum.EnumProductDiscountType.No)":
+                    return true;
+                    break;
+                //折扣
+                case "@((int)Poco.Enum.EnumProductDiscountType.Discount)":
+                    if (Discount == "" || Discount == undefined) {
+                        alert("请输入折扣率！");
+                        return false;
+                    }
+                    if (DiscountPrice == "" || DiscountPrice == undefined) {
+                        alert("请输入折扣价！");
+                        return false;
+                    }
+                    break;
+                //促销  
+                case "@((int)Poco.Enum.EnumProductDiscountType.Promotion)":
+                    if (DiscountPrice == "" || DiscountPrice == undefined) {
+                        alert("请输入促销价！");
+                        return false;
+                    }
+                    break;
+                //优惠  
+                case "@((int)Poco.Enum.EnumProductDiscountType.preferential)":
+                    if (DiscountPrice == "" || DiscountPrice == undefined) {
+                        alert("请输入优惠价！");
+                        return false;
+                    }
+                    break;
+            }
+        }
 
-
+        //折扣的计算
+        function CalculatingDiscount()
+        {
+            var DiscountType = $("#EnumProductDiscountType").val();
+            if (DiscountType == "@((int)Poco.Enum.EnumProductDiscountType.Discount)")
+            {
+                var YJ = "";
+                var ZHK = "";
+                var ZHKJ = "";
+            }
+        }
 
     </script>
 }
@@ -239,57 +334,58 @@
                     </td>
                     <td class="tdField" colspan="2">
                         <div>
-                            <div style=" float:left; max-width:110px; margin:2px 2px">
+                            <div style="float: left; max-width: 110px; margin: 2px 2px">
                                 <img id="imgLogo1" style="max-width: 100px; max-height: 100px; float: left" />
                             </div>
-                            <div style=" float:left; width:110px">
+                            <div style="float: left; width: 110px">
                                 <input id="file_upload1" name="file_upload" type="file" multiple="false" />
-                                 <input type="hidden" id="imgpath1" name="imgpath1" />
+                                <input type="hidden" id="imgpath1" name="imgpath1" />
                             </div>
                         </div>
-                        <div style=" clear:both"></div>
+                        <div style="clear: both">
+                        </div>
                         <div>
-                            <div style=" float:left; max-width:110px; margin:2px 2px">
+                            <div style="float: left; max-width: 110px; margin: 2px 2px">
                                 <img id="imgLogo2" style="max-width: 100px; max-height: 100px; float: left" />
                             </div>
-                            <div style=" float:left; width:110px">
+                            <div style="float: left; width: 110px">
                                 <input id="file_upload2" name="file_upload" type="file" multiple="false" />
-                                 <input type="hidden" id="imgpath2" name="imgpath2" />
+                                <input type="hidden" id="imgpath2" name="imgpath2" />
                             </div>
                         </div>
-                        <div style=" clear:both"></div>
+                        <div style="clear: both">
+                        </div>
                         <div>
-                            <div style=" float:left; max-width:110px; margin:2px 2px">
+                            <div style="float: left; max-width: 110px; margin: 2px 2px">
                                 <img id="imgLogo3" style="max-width: 100px; max-height: 100px; float: left" />
                             </div>
-                            <div style=" float:left; width:110px">
+                            <div style="float: left; width: 110px">
                                 <input id="file_upload3" name="file_upload" type="file" multiple="false" />
-                                 <input type="hidden" id="imgpath3" name="imgpath3" />
+                                <input type="hidden" id="imgpath3" name="imgpath3" />
                             </div>
                         </div>
-                        <div style=" clear:both"></div>
+                        <div style="clear: both">
+                        </div>
                         <div>
-                            <div style=" float:left; max-width:110px; margin:2px 2px">
+                            <div style="float: left; max-width: 110px; margin: 2px 2px">
                                 <img id="imgLogo4" style="max-width: 100px; max-height: 100px; float: left" />
                             </div>
-                            <div style=" float:left; width:110px">
+                            <div style="float: left; width: 110px">
                                 <input id="file_upload4" name="file_upload" type="file" multiple="false" />
-                                 <input type="hidden" id="imgpath4" name="imgpath4" />
+                                <input type="hidden" id="imgpath4" name="imgpath4" />
                             </div>
                         </div>
-                        <div style=" clear:both"></div>
+                        <div style="clear: both">
+                        </div>
                         <div>
-                            <div style=" float:left; max-width:110px; margin:2px 2px">
+                            <div style="float: left; max-width: 110px; margin: 2px 2px">
                                 <img id="imgLogo5" style="max-width: 100px; max-height: 100px; float: left" />
                             </div>
-                            <div style=" float:left; width:110px">
+                            <div style="float: left; width: 110px">
                                 <input id="file_upload5" name="file_upload" type="file" multiple="false" />
-                                 <input type="hidden" id="imgpath5" name="imgpath5" />
+                                <input type="hidden" id="imgpath5" name="imgpath5" />
                             </div>
                         </div>
-
-
-
                     </td>
                 </tr>
                 <tr>
@@ -299,6 +395,16 @@
                     <td class="tdField">@Html.TextBoxFor(a => a.Name)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        &nbsp;&nbsp;规格
+                    </td>
+                    <td class="tdField">
+                        @Html.TextBoxFor(a => a.Specification)
+                    </td>
+                    <td>
                     </td>
                 </tr>
                 <tr>
@@ -320,6 +426,15 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 库存
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Stock)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Stock)
+                    </td>
+                </tr>
+                <tr>
                     <td class="tdTitle ">
                         <span class="Identification">*</span> 类别
                     </td>
@@ -334,20 +449,48 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        &nbsp;&nbsp; 规格
+                        <span class="Identification">*</span> 优惠类型
                     </td>
                     <td class="tdField">
-                        @Html.TextBoxFor(a => a.Specification)
+                        @Html.DropDownListFor(a => a.EnumProductDiscountType, ViewData["DiscountType"] as List<SelectListItem>, new { })
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr id="tr_discount" style="display: none">
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 折扣率
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Discount)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Discount)
+                    </td>
+                </tr>
+                <tr id="tr_discountPrice" style="display: none">
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> <span id="span_Discount">优惠价</span>
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.DiscountPrice)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.DiscountPrice)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 产品状态
+                    </td>
+                    <td class="tdField">
+                        @Html.DropDownListFor(a => a.Status, ViewData["Status"] as List<SelectListItem>, new { })
                     </td>
                     <td>
                     </td>
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        <span class="Identification">*</span> 状态
+                        <span class="Identification">*</span> 发布状态
                     </td>
                     <td class="tdField">
-                        @Html.DropDownListFor(a => a.Status, ViewData["Status"] as List<SelectListItem>, new { })
+                        @Html.DropDownListFor(a => a.IsRelease, ViewData["Release"] as List<SelectListItem>, new { })
                     </td>
                     <td>
                     </td>
@@ -365,7 +508,7 @@
      
      
         <div class="action">
-            <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+            <input type="submit" id="btnSubmit" onclick="return chickForm()" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
         </div>
     }
 </div>

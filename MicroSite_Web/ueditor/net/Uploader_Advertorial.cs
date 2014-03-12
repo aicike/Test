@@ -33,15 +33,13 @@ public class Uploader_Advertorial
     {
         pathbase = pathbase + DateTime.Now.ToString("yyyy-MM-dd") + "/";
         VirtualPath = VirtualPath + DateTime.Now.ToString("yyyy-MM-dd") + "/";
-        //集成微网站
         if (SystemConst.IsIntegrationWebProject)
         {
             uploadpath = pathbase;//获取文件上传路径
         }
-        //不是集成微网站
         else
         {
-            uploadpath = cxt.Server.MapPath(pathbase);//获取文件上传路径
+                uploadpath = cxt.Server.MapPath(pathbase);//获取文件上传路径
         }
 
         try
