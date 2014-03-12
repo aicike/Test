@@ -85,16 +85,15 @@ namespace Web.Controllers
             return View(advertorial);
         }
 
-
-
         /// <summary>
         /// 显示软文
         /// </summary>
         /// <param name="id"></param>
         /// <param name="imtimely_userid">用户ID</param>
         /// <returns></returns>
-        public ActionResult News(int id, int? imtimely_userid)
+        public ActionResult News(string id_token, int? imtimely_userid)
         {
+            var id = id_token.TokenDecrypt();
             var AdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             var AdvertorialOperModel = Factory.Get<IAppAdvertorialOperationModel>(SystemConst.IOC_Model.AppAdvertorialOperationModel);
             //更改浏览次数
@@ -171,8 +170,6 @@ namespace Web.Controllers
                 return View(advertorial);
             }
         }
-
-
 
 
         #endregion

@@ -355,9 +355,6 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(ADVERTORIAL);
         }
 
-
-
-
         /// <summary>
         /// 获取等待界面图片
         /// </summary>

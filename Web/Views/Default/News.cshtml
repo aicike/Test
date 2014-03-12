@@ -89,9 +89,7 @@
                     </tr>
                 </table>
             </a>
-            
             <script>
-
                 (function () {
                     var IPHONEURL = "@ViewBag.IOSURL";
                     var ANDROIDURL = "@ViewBag.AndroidURL";
@@ -118,16 +116,12 @@
                         }
                         else
                         {
-                            $('#Adowload').attr("href", "@Url.Action("QrCodeSkip", "Default", new { AMID = ViewBag.AMID })");
-                            
+                           $('#Adowload').attr("href", "@Url.Action("QrCodeSkip", "Default", new { AMID = ViewBag.AMID })");
                         }
                     };
-
                     page.init();
                 })();
-
             </script>
-            
             }
         }
     </div>

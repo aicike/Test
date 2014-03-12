@@ -17,7 +17,7 @@ namespace Business
         /// User App
         /// </summary>
         [Transaction]
-        public Result PostClientID(string clientID, int accountMainID, int? userID)
+        public Result PostClientID(string clientID, int accountMainID, int? userID,EnumClientSystemType sytemType)
         {
             Result result = new Result();
             bool isHas = true;
@@ -75,7 +75,7 @@ namespace Business
                     userloginInfo.Name = "游客" + com.CreateRandom("0123456789", 4);
                     userloginInfo.AccountMainID = accountMainID;
                     userloginInfo.ClientID = clientID;
-                    userloginInfo.EnumClientSystemType = (int)EnumClientSystemType.Android;
+                    userloginInfo.EnumClientSystemType = (int)sytemType;
                     userloginInfo.EnumClientUserType = (int)EnumClientUserType.User;
                     result = ulim.Register(userloginInfo);
                   

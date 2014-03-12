@@ -57,8 +57,6 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
-
-
         /// <summary>
         /// 注册
         /// </summary>
@@ -74,10 +72,10 @@ namespace Web.Controllers
         /// </summary>
         [HttpPost]
         [ValidateInput(false)]
-        public string PostClientID(string clientID, int accountMainID, int? userID)
+        public string PostClientID(string clientID, int accountMainID, int? userID,int systemType=1)
         {
             var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
-            var result = clientInfoModel.PostClientID(clientID, accountMainID, userID);
+            var result = clientInfoModel.PostClientID(clientID, accountMainID, userID, (EnumClientSystemType)systemType);
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
