@@ -182,7 +182,7 @@ namespace System
         }
 
         /// <summary>
-        /// 加密id为token值
+        /// 加密id为token值(同时把URL进行编码)
         /// </summary>
         /// <param name="id_token"></param>
         /// <returns></returns>
@@ -190,6 +190,18 @@ namespace System
         {
             var value = Common.DESEncrypt.Encrypt(id_token+"");
             value = HttpUtility.UrlEncodeUnicode(value);
+            return value;
+        }
+
+        /// <summary>
+        /// 加密id为token值(不把URL进行编码)
+        /// </summary>
+        /// <param name="id_token"></param>
+        /// <param name="isNoUrlEncode"></param>
+        /// <returns></returns>
+        public static string TokenEncrypt(this int id_token,bool isNoUrlEncode=false)
+        {
+            var value = Common.DESEncrypt.Encrypt(id_token + "");
             return value;
         }
 
