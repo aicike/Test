@@ -76,6 +76,9 @@ namespace Poco
         [Display(Name = "展示缩略图 小")]
         public string MinImagePath { get; set; }
 
+        [Display(Name = "是否记名投票")]
+        public bool IsRegistered { get; set; }
+
 
         /// <summary>
         /// 是否已生成用户端咨询 0否 1是

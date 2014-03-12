@@ -202,6 +202,90 @@
 
         }
 
+        var isEmailSub = true;
+        var isphoneSub = true;
+        function checkJM() {
+            var name = $('#userName').val();
+            var phone = $('#userPhone').val();
+            var email = $('#userEmail').val();
+            var company = $('#userCompany').val();
+            var position = $('#userPosition').val();
+            if (name != "" && name != undefined && phone != "" && phone != undefined && email != "" && email != undefined && company != "" && company != undefined && position != "" && position != undefined) {
+                if (isEmailSub==true&&isphoneSub == true) {
+                    $('#btn_Uinfo').button("enable");
+                }
+                else {
+                    $('#btn_Uinfo').button("disable");
+                }
+            }
+            else {
+                $('#btn_Uinfo').button("disable");
+            }
+
+
+        }
+
+        function checkEmail() {
+            isEmailSub = true;
+            var name = $('#userName').val();
+            var phone = $('#userPhone').val();
+            var email = $('#userEmail').val();
+            var company = $('#userCompany').val();
+            var position = $('#userPosition').val();
+
+            if (email != "" && email != undefined) {
+                var reg1 = /^([a-zA-Z0-9_\.\-])+\@@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                var my = false;
+                if (reg1.test(email)) my = true;
+                if (!my) {
+                    alert("请输入正确的邮箱地址");
+                    isEmailSub = false;
+                }
+
+                if (name != "" && name != undefined && phone != "" && phone != undefined && email != "" && email != undefined && company != "" && company != undefined && position != "" && position != undefined) {
+                    if (isEmailSub==true&&isphoneSub == true) {
+                        $('#btn_Uinfo').button("enable");
+                    }
+                    else {
+                        $('#btn_Uinfo').button("disable");
+                    }
+                }
+                else {
+                    $('#btn_Uinfo').button("disable");
+                }
+            }
+
+        }
+
+        function CheckPhone() {
+            isphoneSub = true;
+            var name = $('#userName').val();
+            var phone = $('#userPhone').val();
+            var email = $('#userEmail').val();
+            var company = $('#userCompany').val();
+            var position = $('#userPosition').val();
+            if (phone != "" && phone != undefined) {
+                var reg0 = /^(((1[0-9]{1}[0-9]{1}))+\d{8})$/;
+                var my = false;
+                if (reg0.test(phone)) my = true;
+                if (!my) {
+                    alert("请输入正确的电话号码");
+                    isphoneSub = false;
+                }
+                if (name != "" && name != undefined && phone != "" && phone != undefined && email != "" && email != undefined && company != "" && company != undefined && position != "" && position != undefined) {
+
+                    if (isEmailSub==true&&isphoneSub == true) {
+                        $('#btn_Uinfo').button("enable");
+                    }
+                    else {
+                        $('#btn_Uinfo').button("disable");
+                    }
+                }
+                else {
+                    $('#btn_Uinfo').button("disable");
+                }
+            }
+        }
 
     </script>
     <style>
@@ -222,15 +306,15 @@
 }
 @using (Html.BeginForm("AddQuestionnaire", "Default", new { surveyMainID = ViewBag.smid }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <div style=" display:none">
-         @if (string.IsNullOrEmpty(Model.MinImagePath))
-            {
-                <img src="@Url.Content("~/Images/Survey.jpg")" />
-            }
-            else
-            { 
-                <img src="@Url.Content(Model.MinImagePath)" />
-            }
+    <div style="display: none">
+        @if (string.IsNullOrEmpty(Model.MinImagePath))
+        {
+            <img src="@Url.Content("~/Images/Survey.jpg")" />
+        }
+        else
+        { 
+            <img src="@Url.Content(Model.MinImagePath)" />
+        }
     </div>
     <input id="UID" type="hidden" name="UID" value="@ViewBag.UID" />
     <input id="Utype" type="hidden" name="Utype" value="@ViewBag.Utype" />
@@ -255,6 +339,62 @@
                 {
                     <input type="button" id="Btnbegin" disabled="disabled" class="BeginT" value="调 查 已 经 束" />
                 }
+            </div>
+        </div>
+        <div data-role="page" id="ui_pages">
+            <div data-role="content">
+                <fieldset data-role="controlgroup">
+                    <legend>注：本调查为记名调查，请您填写完下列内容开始调查。</legend>
+                    <table style="width: 100%">
+                        <tr>
+                            <td style="width: 50px">
+                                姓名：
+                            </td>
+                            <td>
+                                <input type="text" name="userName" id="userName" onkeyup="checkJM()" placeholder="姓名/Name" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50px">
+                                电话：
+                            </td>
+                            <td>
+                                <input type="tel" name="userPhone" id="userPhone" onblur="CheckPhone()" onkeyup="checkJM()"
+                                    placeholder="电话号码/TelePhone" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50px">
+                                邮箱：
+                            </td>
+                            <td>
+                                <input type="text" name="userEmail" id="userEmail" onblur="checkEmail()" onkeyup="checkJM()"
+                                    placeholder="邮箱地址/Email" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50px">
+                                公司：
+                            </td>
+                            <td>
+                                <input type="text" name="userCompany" id="userCompany" onkeyup="checkJM()" placeholder="公司/Company" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50px">
+                                职位：
+                            </td>
+                            <td>
+                                <input type="text" name="userPosition" id="userPosition" onkeyup="checkJM()" placeholder="职位/Position" />
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <div style="float: left; width: 45%">
+                    <input type="button" class="topT" value="简介" /></div>
+                <div style="float: right; width: 45%">
+                    <input type="button" id="btn_Uinfo" class="lastT" disabled="disabled" value="答题" />
+                </div>
             </div>
         </div>
         @for (int i = 0; i < Trouble.Count(); i++)
@@ -297,33 +437,41 @@
                     </fieldset>
                     @if (Trouble.Count() == 1)
                     {
-                            <div style="float: left; width: 45%"> <input type="button" class="topT" value="简介"
-                            /></div>
-                            <div style="float: right; width: 45%"> <input type="submit" id="btn_@Trouble[i].ID" 
-                            class="Tok" onclick="return GetAnswer()"; disabled="disabled" value="完成" /> </div>
+                        <div style="float: left; width: 45%">
+                            <input type="button" class="topT" value="简介" /></div>
+                        <div style="float: right; width: 45%">
+                            <input type="submit" id="btn_@Trouble[i].ID" 
+                            class="Tok" onclick="return GetAnswer()"; disabled="disabled" value="完成" />
+                        </div>
                     }
                     else
                     {
                         if (i == 0)
                         {
-                            <div style="float: left; width: 45%"> <input type="button" class="topT" value="简介"
-                            /></div>
-                            <div style="float: right; width: 45%"> <input type="button" id="btn_@Trouble[i].ID"
-                            class="lastT" disabled="disabled" value="下一题" /> </div>
+                        <div style="float: left; width: 45%">
+                            <input type="button" class="topT" value="简介" /></div>
+                        <div style="float: right; width: 45%">
+                            <input type="button" id="btn_@Trouble[i].ID"
+                            class="lastT" disabled="disabled" value="下一题" />
+                        </div>
                         }
                         else if (i == (Trouble.Count() - 1))
                         {
-                            <div style="float: left; width: 45%"> <input type="button" class="topT" value="上一题"
-                            /></div>
-                            <div style="float: right; width: 45%"> <input type="submit" id="btn_@Trouble[i].ID" 
-                            class="Tok" onclick="return GetAnswer()"; disabled="disabled" value="完成" /> </div>
+                        <div style="float: left; width: 45%">
+                            <input type="button" class="topT" value="上一题" /></div>
+                        <div style="float: right; width: 45%">
+                            <input type="submit" id="btn_@Trouble[i].ID" 
+                            class="Tok" onclick="return GetAnswer()"; disabled="disabled" value="完成" />
+                        </div>
                         }
                         else
                         {
-                            <div style="float: left; width: 45%"> <input type="button" class="topT" value="上一题"
-                            /></div>
-                            <div style="float: right; width: 45%"> <input type="button" id="btn_@Trouble[i].ID"
-                        class="lastT" disabled="disabled" value="下一题" /> </div>
+                        <div style="float: left; width: 45%">
+                            <input type="button" class="topT" value="上一题" /></div>
+                        <div style="float: right; width: 45%">
+                            <input type="button" id="btn_@Trouble[i].ID"
+                        class="lastT" disabled="disabled" value="下一题" />
+                        </div>
                         }
                     }
                 </div>

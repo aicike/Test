@@ -69,5 +69,13 @@ namespace Poco
         /// </summary>
         [Display(Name = "回答用户编码")]
         public string UserCode { get; set; }
+
+
+        /// <summary>
+        /// 回答用户信息表ID
+        /// </summary>
+        [Display(Name = "用户信息表ID")]
+        public int? SurveyAnswerUserID { get; set; }
+        public virtual SurveyTrouble SurveyAnswerUser { get; set; }
     }
 }
