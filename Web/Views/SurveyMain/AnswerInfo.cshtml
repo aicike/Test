@@ -153,8 +153,23 @@
                         { 
                             <span style="font-size: 12px; color: #6c6c6c">| (满分:@(ViewBag.FullMarks)分 评分:@(ViewBag.Average)分)</span>
                         }
-                        <span style="font-size: 12px; color: #6c6c6c">| 提交日期： @Answer.FirstOrDefault().CreateDate | 提交人：@Answer.FirstOrDefault().UserName</span>
-                        
+                        <span style="font-size: 12px; color: #6c6c6c"><span style="color: #000">| 提交日期：</span> @Answer.FirstOrDefault().CreateDate</span><br />
+                         <span style="font-size: 12px; color: #6c6c6c"> 
+                            
+                            @if (Answer.FirstOrDefault().SurveyAnswerUserID != null)
+                            {
+                                var answerUser = Answer.FirstOrDefault().SurveyAnswerUser;
+                                <span style="color: #000">提交人：</span>@answerUser.UserName 
+                                <span style="color: #000">| 电话：</span>@answerUser.UserPhone 
+                                <span style="color: #000">| 邮箱：</span>@answerUser.UserEmail 
+                                <span style="color: #000">| 公司：</span>@answerUser.UserComPany 
+                                <span style="color: #000">| 职位：</span>@answerUser.UserPosition
+                            }
+                            else
+                            { 
+                            <span style="color: #000">提交人：</span>@Answer.FirstOrDefault().UserName 
+                            }
+                         </span>
                     </td>
                 </tr>
                 <tr>

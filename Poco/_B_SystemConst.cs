@@ -248,7 +248,7 @@ namespace Poco
             public const string ActivityInfoSignInModel = "ActivityInfoSignInModel";
 
             public const string UserTagModel = "UserTagModel";
-
+            public const string SurveyAnswerUserModel = "SurveyAnswerUserModel";
 
         }
     }

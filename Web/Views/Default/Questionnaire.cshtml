@@ -105,8 +105,21 @@
 
 
             //------------------其他-----
-
-
+            var isregistered = "@Model.IsRegistered";
+            if (isregistered == true) {
+                var UName = "@ViewBag.UName";
+                var UPhone = "@ViewBag.UPhone";
+                var UEmail = "@ViewBag.UEmail";
+                if (UName != undefined && UName != "") {
+                    $('#userName').val(UName);
+                }
+                if (UPhone != undefined && UPhone != "") {
+                    $('#userPhone').val(UPhone);
+                }
+                if (UEmail != undefined && UEmail != "") {
+                    $('#userEmail').val(UEmail);
+                }
+            }
 
             //--------------处理300毫秒-----------------
             $(".topT").each(function (i, n) {
@@ -211,7 +224,7 @@
             var company = $('#userCompany').val();
             var position = $('#userPosition').val();
             if (name != "" && name != undefined && phone != "" && phone != undefined && email != "" && email != undefined && company != "" && company != undefined && position != "" && position != undefined) {
-                if (isEmailSub==true&&isphoneSub == true) {
+                if (isEmailSub == true && isphoneSub == true) {
                     $('#btn_Uinfo').button("enable");
                 }
                 else {
@@ -243,7 +256,7 @@
                 }
 
                 if (name != "" && name != undefined && phone != "" && phone != undefined && email != "" && email != undefined && company != "" && company != undefined && position != "" && position != undefined) {
-                    if (isEmailSub==true&&isphoneSub == true) {
+                    if (isEmailSub == true && isphoneSub == true) {
                         $('#btn_Uinfo').button("enable");
                     }
                     else {
@@ -274,7 +287,7 @@
                 }
                 if (name != "" && name != undefined && phone != "" && phone != undefined && email != "" && email != undefined && company != "" && company != undefined && position != "" && position != undefined) {
 
-                    if (isEmailSub==true&&isphoneSub == true) {
+                    if (isEmailSub == true && isphoneSub == true) {
                         $('#btn_Uinfo').button("enable");
                     }
                     else {
@@ -304,7 +317,7 @@
 @{
     var Trouble = Model.SurveyTrouble.OrderBy(a => a.TroubleNumber).ToList();    
 }
-@using (Html.BeginForm("AddQuestionnaire", "Default", new { surveyMainID = ViewBag.smid }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("AddQuestionnaire", "Default", new { surveyMainID = ViewBag.smid, IsRegistered= Model.IsRegistered }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div style="display: none">
         @if (string.IsNullOrEmpty(Model.MinImagePath))
@@ -341,62 +354,65 @@
                 }
             </div>
         </div>
-        <div data-role="page" id="ui_pages">
-            <div data-role="content">
-                <fieldset data-role="controlgroup">
-                    <legend>注：本调查为记名调查，请您填写完下列内容开始调查。</legend>
-                    <table style="width: 100%">
-                        <tr>
-                            <td style="width: 50px">
-                                姓名：
-                            </td>
-                            <td>
-                                <input type="text" name="userName" id="userName" onkeyup="checkJM()" placeholder="姓名/Name" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50px">
-                                电话：
-                            </td>
-                            <td>
-                                <input type="tel" name="userPhone" id="userPhone" onblur="CheckPhone()" onkeyup="checkJM()"
-                                    placeholder="电话号码/TelePhone" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50px">
-                                邮箱：
-                            </td>
-                            <td>
-                                <input type="text" name="userEmail" id="userEmail" onblur="checkEmail()" onkeyup="checkJM()"
-                                    placeholder="邮箱地址/Email" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50px">
-                                公司：
-                            </td>
-                            <td>
-                                <input type="text" name="userCompany" id="userCompany" onkeyup="checkJM()" placeholder="公司/Company" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50px">
-                                职位：
-                            </td>
-                            <td>
-                                <input type="text" name="userPosition" id="userPosition" onkeyup="checkJM()" placeholder="职位/Position" />
-                            </td>
-                        </tr>
-                    </table>
-                </fieldset>
-                <div style="float: left; width: 45%">
-                    <input type="button" class="topT" value="简介" /></div>
-                <div style="float: right; width: 45%">
-                    <input type="button" id="btn_Uinfo" class="lastT" disabled="disabled" value="答题" />
+        @if (Model.IsRegistered)
+        { 
+            <div data-role="page" id="ui_pages">
+                <div data-role="content">
+                    <fieldset data-role="controlgroup">
+                        <legend>注：本调查为记名调查，请您填写完下列内容开始调查。</legend>
+                        <table style="width: 100%">
+                            <tr>
+                                <td style="width: 50px">
+                                    姓名：
+                                </td>
+                                <td>
+                                    <input type="text" name="userName" id="userName" onkeyup="checkJM()" placeholder="姓名/Name" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50px">
+                                    电话：
+                                </td>
+                                <td>
+                                    <input type="tel" name="userPhone" id="userPhone" onblur="CheckPhone()" onkeyup="checkJM()"
+                                        placeholder="电话号码/TelePhone" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50px">
+                                    邮箱：
+                                </td>
+                                <td>
+                                    <input type="text" name="userEmail" id="userEmail" onblur="checkEmail()" onkeyup="checkJM()"
+                                        placeholder="邮箱地址/Email" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50px">
+                                    公司：
+                                </td>
+                                <td>
+                                    <input type="text" name="userCompany" id="userCompany" onkeyup="checkJM()" placeholder="公司/Company" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50px">
+                                    职位：
+                                </td>
+                                <td>
+                                    <input type="text" name="userPosition" id="userPosition" onkeyup="checkJM()" placeholder="职位/Position" />
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                    <div style="float: left; width: 45%">
+                        <input type="button" class="topT" value="简介" /></div>
+                    <div style="float: right; width: 45%">
+                        <input type="button" id="btn_Uinfo" class="lastT" disabled="disabled" value="答题" />
+                    </div>
                 </div>
             </div>
-        </div>
+        }
         @for (int i = 0; i < Trouble.Count(); i++)
         {
             var Option = Trouble[i].SurveyOption.OrderBy(a => a.ID);

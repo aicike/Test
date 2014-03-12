@@ -86,6 +86,7 @@
     <Compile Include="IReportFormPowerModel.cs" />
     <Compile Include="IServiceModel.cs" />
     <Compile Include="ISurveyAnswerModel.cs" />
+    <Compile Include="ISurveyAnswerUserModel.cs" />
     <Compile Include="ISurveyMainModel.cs" />
     <Compile Include="ISurveyOptionModel.cs" />
     <Compile Include="ISurveyTroubleModel.cs" />

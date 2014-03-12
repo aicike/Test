@@ -361,7 +361,8 @@ namespace Web.Controllers
             SA = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SurveyAnswer>>(Answer);
 
             var AnswerModel = Factory.Get<ISurveyAnswerModel>(SystemConst.IOC_Model.SurveyAnswerModel);
-            var result = AnswerModel.InsertAnswer(SA, UID, Utype);
+            int? sauid = null;
+            var result = AnswerModel.InsertAnswer(SA, UID, Utype,sauid);
             if (result.HasError)
             {
                 return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));

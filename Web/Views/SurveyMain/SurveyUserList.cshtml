@@ -2,6 +2,14 @@
     Layout = "~/Views/Shared/_LayoutBase.cshtml";
 }
 @section head{
+    <script>
+        $(function () {
+            $("label[name=labCbFirst]").each(function () {
+                $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
+            });
+        });
+        
+    </script>
     <style>
         body
         {
@@ -33,11 +41,11 @@
         }
         .ListTab td
         {
-            font-size: 14px;
+            font-size: 12px;
             color: #6c6c6c;
             padding-top: 7px;
-            padding-right: 10px;
-            padding-left: 5px;
+            padding-right: 3px;
+            padding-left: 3px;
             padding-bottom: 7px;
             text-align: center;
         }
@@ -67,7 +75,7 @@
             </div>
             <table align="center" class="ListTab" cellpadding="0" cellspacing="0">
                 <tr>
-                    <th style="width: 280px">
+                    <th style="width: 150px">
                         调查问卷名称
                     </th>
                     <th style="width: 100px">
@@ -75,6 +83,18 @@
                     </th>
                     <th style="width: 100px">
                         提交人
+                    </th>
+                    <th style="width: 100px">
+                        电话
+                    </th>
+                    <th style="width: 100px">
+                        邮箱
+                    </th>
+                    <th style="width: 100px">
+                        公司
+                    </th>
+                    <th style="width: 100px">
+                        职位
                     </th>
                     <th style="width: 150px">
                         提交日期
@@ -84,7 +104,7 @@
                 {
                     <tr>
                         <td class="operation" style="text-align: left">
-                            <div style="width: 280px; word-break: keep-all; white-space: nowrap; overflow: hidden;
+                            <div style="width: 150px; word-break: keep-all; white-space: nowrap; overflow: hidden;
                                 text-overflow: ellipsis;">
                                 <label name="labCbFirst" title="@item.SurveyTrouble.SurveyMain.SurveyTitle">
                                     <a href="@Url.Action("AnswerInfo", "SurveyMain", new { SMID = ViewBag.SMID, Ucode = item.UserCode })" target="_blank">@item.SurveyTrouble.SurveyMain.SurveyTitle</a>
@@ -92,20 +112,81 @@
                             </div>
                         </td>
                         <td>
-                            @if (item.SurveyTrouble.SurveyMain.EnumSurveyMainType == (int)Poco.Enum.EnumSurveyMainType.Rate)
-                            {
-                                @:评分调查
+                            <div style="width: 100px; word-wrap: break-word; word-break: normal;">
+                                @if (item.SurveyTrouble.SurveyMain.EnumSurveyMainType == (int)Poco.Enum.EnumSurveyMainType.Rate)
+                                {
+                                    @:评分调查
                             }
-                            else
-                            { 
-                                @:普通调查
-                            }
+                                else
+                                { 
+                                    @:普通调查
+                                                                }
+                            </div>
                         </td>
                         <td>
-                            @item.UserName
+                            <div style="width: 100px; word-wrap: break-word; word-break: normal;">
+                                @if (item.SurveyAnswerUserID.HasValue)
+                                { 
+                                    @item.SurveyAnswerUser.UserName
+                                }
+                                else
+                                {
+                                    @item.UserName
+                                }
+                            </div>
                         </td>
                         <td>
-                            @item.CreateDate.ToString("yyyy-MM-dd HH:mm")
+                            <div style="width: 100px; word-wrap: break-word; word-break: normal;">
+                                @if (item.SurveyAnswerUserID.HasValue)
+                                { 
+                                    @item.SurveyAnswerUser.UserPhone
+                                }
+                                else
+                                {
+                                    @:无
+                                                                     }
+                            </div>
+                        </td>
+                        <td>
+                            <div style="width: 100px; word-wrap: break-word; word-break: normal;">
+                                @if (item.SurveyAnswerUserID.HasValue)
+                                { 
+                                    @item.SurveyAnswerUser.UserEmail
+                                }
+                                else
+                                {
+                                    @:无
+                                                                    }
+                            </div>
+                        </td>
+                        <td>
+                            <div style="width: 100px; word-wrap: break-word; word-break: normal;">
+                                @if (item.SurveyAnswerUserID.HasValue)
+                                { 
+                                    @item.SurveyAnswerUser.UserComPany
+                                }
+                                else
+                                {
+                                    @:无
+                                                                    }
+                            </div>
+                        </td>
+                        <td>
+                            <div style="width: 100px; word-wrap: break-word; word-break: normal;">
+                                @if (item.SurveyAnswerUserID.HasValue)
+                                { 
+                                    @item.SurveyAnswerUser.UserPosition
+                                }
+                                else
+                                {
+                                    @:无
+                                                                     }
+                            </div>
+                        </td>
+                        <td>
+                            <div style="width: 150px; word-wrap: break-word; word-break: normal;">
+                                @item.CreateDate.ToString("yyyy-MM-dd HH:mm")
+                            </div>
                         </td>
                     </tr>
                 }
