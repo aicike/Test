@@ -32,13 +32,13 @@
         
         .ui-input-btn input
         {
-            opacity:1 !important;
-            font-size:16px !important;
-            font-weight:bold !important;
-            text-indent:0 !important;
-            }
+            opacity: 1 !important;
+            font-size: 16px !important;
+            font-weight: bold !important;
+            text-indent: 0 !important;
+        }
     </style>
-    <script>
+    <script language="javascript" type="text/javascript">
          if(CheckIsLogin(@ViewBag.AMID))
          {
          
@@ -47,10 +47,18 @@
                 var PUrl = '@Url.Action("GetAdsInfo", "MicroMall")';
         
                 var UID = GetUserID(@ViewBag.AMID);
+                $("#Noaddress").show();
+                $("#Noaddress").click(function (event) {
+           
+                     var Url = "@Url.Action("Add", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID })";
+                     var ThisUrl = "@Url.Action("OrderConfirmation", "MicroMall", new { AMID = ViewBag.AMID })";
+                
+                     var href = Url+"&userID=" + GetUserID(@ViewBag.AMID)+"&backUrl="+ThisUrl;
+                     window.location.href = href;
+                });
+                $("#addorder").attr("disabled","").button("disable");
 
-
-                $.post(PUrl, { adsID:@ViewBag.adsID, AMID: @ViewBag.AMID, UserID: UID}, function (result) {
-                          
+                $.post(PUrl, { adsID:@ViewBag.adsID, AMID: @ViewBag.AMID, UserID: UID}, function (result) {                          
                     if(result!= undefined && result!=null && result!="[]"&& result!="null"&& result!="")
                     { 
                         $("#address").show();
@@ -59,33 +67,19 @@
                              var Url = "@Url.Action("Index", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID })";
                              var ThisUrl = "@Url.Action("OrderConfirmation", "MicroMall", new { AMID = ViewBag.AMID })";
                     
-                             var href = Url+"&userID=" + GetUserID(@ViewBag.AMID)+"&backUrl="+ThisUrl;
+                             var href = Url+"&userID=" + GetUserID('@ViewBag.AMID')+"&backUrl="+ThisUrl;
                              window.location.href = href;
 
                         });
-                   
+                        $("#Noaddress").hide();
                         $("#AID").val(result.ID);
                         $("#AName").text(result.Receiver);
                         $("#APhone").text(result.RPhone);
                         $("#AAddress").text(result.Address );
-                   
-
-
-                    }
-                    else
-                    {
-                        $("#Noaddress").show();
-                        $("#Noaddress").click(function (event) {
-           
-                             var Url = "@Url.Action("Add", "MicroUserDeliveryAddress", new { amid = ViewBag.AMID })";
-                             var ThisUrl = "@Url.Action("OrderConfirmation", "MicroMall", new { AMID = ViewBag.AMID })";
-                       
-                             var href = Url+"&userID=" + GetUserID(@ViewBag.AMID)+"&backUrl="+ThisUrl;
-                             window.location.href = href;
-                        });
+                        $("#addorder").button("enable");
+                    }else{
                         $("#addorder").attr("disabled","").button("disable");
                     }
-
                 },"json");
 
            
@@ -225,8 +219,8 @@
             <tr id="SessionInfo">
                 <td style="">
                     商品详情
-                    <input type="hidden" id="HPIDSandCnt" name="HPIDSandCnt" /><input type="hidden" id="HPIDS" name="HPIDS" /><input
-                        type="hidden" id="HuserID" name="HuserID" />
+                    <input type="hidden" id="HPIDSandCnt" name="HPIDSandCnt" /><input type="hidden" id="HPIDS"
+                        name="HPIDS" /><input type="hidden" id="HuserID" name="HuserID" />
                 </td>
             </tr>
             <tr>
@@ -238,7 +232,8 @@
         
      
         <input id="addorder" onclick="AddSessionID()" type="submit" value="提交订单" data-corners="false"
-            data-theme="a"  style=" background-color:#FF8C00; text-shadow:0 1px 0 #FF8C00 ; color:#fff"  data-ajax="false">
+            data-theme="a" style="background-color: #FF8C00; text-shadow: 0 1px 0 #FF8C00;
+            color: #fff" data-ajax="false">
     }
 </div>
 <script>

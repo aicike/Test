@@ -66,8 +66,11 @@
     <Compile Include="Mapping\OrderUserInfoMap.cs" />
     <Compile Include="Mapping\TaskMap.cs" />
     <Compile Include="Migrations\201403120456018_adds.cs" />
-    <Compile Include="Migrations\201403120456018_adds.Designer.cs">
-      <DependentUpon>201403120456018_adds.cs</DependentUpon>
+
+    <Compile Include="Mapping\RoleMenuMap.cs" />
+    <Compile Include="Migrations\201403060624248_Update.cs" />
+    <Compile Include="Migrations\201403060624248_Update.Designer.cs">
+      <DependentUpon>201403060624248_Update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs">
       <SubType>Code</SubType>

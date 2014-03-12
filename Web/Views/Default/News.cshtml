@@ -5,10 +5,13 @@
 @model Poco.AppAdvertorial
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8">
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <title>@Model.Title</title>
     <script src="@Url.Content("~/Scripts/jquery-1.8.3.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/weixin.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Scripts/popup/popup.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/popup/jquery.popup.js")" type="text/javascript"></script>
     <style>
         .title
         {
@@ -99,9 +102,19 @@
                     page.initView = function () {
                         var ua = window.navigator.userAgent.toLowerCase();
                         if (ua.indexOf('android') != -1) {
-                            $('#Adowload').attr("href", ANDROIDURL+"#weixin.qq.com");
+                            if(is_weixn()){
+                                $('#Adowload').attr("href",'@Url.Content("/Images/share_msg.png")');
+                                $('#Adowload').popup();
+                            }else{
+                                $('#Adowload').attr("href", ANDROIDURL+"#weixin.qq.com");
+                            }
                         } else if (ua.indexOf('iphone') != -1) {
-                            $('#Adowload').attr("href", IPHONEURL);
+                            if(is_weixn()){
+                                $('#Adowload').attr("href",'@Url.Content("/Images/share_msg.png")');
+                                $('#Adowload').popup();
+                            }else{
+                                $('#Adowload').attr("href", IPHONEURL);
+                            }
                         }
                         else
                         {
