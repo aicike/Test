@@ -334,8 +334,9 @@ namespace Web.Controllers
         /// <param name="isok">1 提交成功 2提交失败</param>
         /// <param name="isok"></param>
         /// <returns></returns>
-        public ActionResult Questionnaire(int surveyMainID, int? imtimely_userid, int? imtimely_Apptype, int? isok)
+        public ActionResult Questionnaire(string surveyMainID_token, int? imtimely_userid, int? imtimely_Apptype, int? isok)
         {
+            int surveyMainID = surveyMainID_token.TokenDecrypt();
             if (isok.HasValue)
             {
                 // 1 提交成功 2提交失败
@@ -416,8 +417,9 @@ namespace Web.Controllers
         /// <param name="?"></param>
         /// <param name="isok"></param>
         /// <returns></returns>
-        public ActionResult ActivityInfo(int ActivityID, int? imtimely_userid, int? imtimely_Apptype, int? isok)
+        public ActionResult ActivityInfo(string ActivityID_token, int? imtimely_userid, int? imtimely_Apptype, int? isok)
         {
+            int ActivityID = ActivityID_token.TokenDecrypt();
             ViewBag.ActivityID = ActivityID;
             var ActivityModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
             var Activity = ActivityModel.Get(ActivityID);
