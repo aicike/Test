@@ -76,6 +76,6 @@ namespace Poco
         /// </summary>
         [Display(Name = "用户信息表ID")]
         public int? SurveyAnswerUserID { get; set; }
-        public virtual SurveyTrouble SurveyAnswerUser { get; set; }
+        public virtual SurveyAnswerUser SurveyAnswerUser { get; set; }
     }
 }

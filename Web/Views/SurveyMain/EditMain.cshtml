@@ -12,10 +12,8 @@
         var UpImgUrl = '@Url.Action("UpImg", "Ajax", new { HostName = ViewBag.HostName })';
         $(function () {
 
-
             $("#Status").val("@Model.Status");
             $("#EnumSurveyMainType").val("@Model.EnumSurveyMainType");
-
 
             $("#file_upload").uploadify({
                 height: 30,
@@ -72,7 +70,6 @@
                 }
             });
 
-
             var jcrop_api, boundx, boundy;
 
             function updatePreview(c) {
@@ -106,7 +103,6 @@
                 $('#th').val($("#imgSel").height());
             };
 
-
             $("#btnSubmit").click(function () {
                 if (Cnt > 0) {
                     if ($("#w").val() == "0") {
@@ -121,6 +117,9 @@
 
 
             });
+
+
+            $("#IsRegistered").val("@ViewBag.IsRegistered");
 
 
         });
@@ -260,6 +259,17 @@
                         <select id="EnumSurveyMainType" name="EnumSurveyMainType">
                             <option value="1">普通调查</option>
                             <option value="2">评分调查</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 是否记名调查
+                    </td>
+                    <td>
+                        <select id="IsRegistered" name="IsRegistered">
+                            <option value="False">否</option>
+                            <option value="True">是</option>
                         </select>
                     </td>
                 </tr>

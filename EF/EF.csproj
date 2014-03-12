@@ -69,6 +69,17 @@
     <Compile Include="Migrations\201403120531398_Update.cs" />
     <Compile Include="Migrations\201403120531398_Update.Designer.cs">
       <DependentUpon>201403120531398_Update.cs</DependentUpon>
+    <Compile Include="Migrations\201403120532140_adds.cs" />
+    <Compile Include="Migrations\201403120532140_adds.Designer.cs">
+      <DependentUpon>201403120532140_adds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201403120536515_upda.cs" />
+    <Compile Include="Migrations\201403120536515_upda.Designer.cs">
+      <DependentUpon>201403120536515_upda.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201403120632506_adds1.cs" />
+    <Compile Include="Migrations\201403120632506_adds1.Designer.cs">
+      <DependentUpon>201403120632506_adds1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs">
       <SubType>Code</SubType>
@@ -96,6 +107,14 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201403120531398_Update.resx">
       <DependentUpon>201403120531398_Update.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201403120532140_adds.resx">
+      <DependentUpon>201403120532140_adds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403120536515_upda.resx">
+      <DependentUpon>201403120536515_upda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403120632506_adds1.resx">
+      <DependentUpon>201403120632506_adds1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

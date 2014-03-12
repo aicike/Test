@@ -135,6 +135,7 @@
     <Compile Include="ServiceModel.cs" />
     <Compile Include="SMS_Model.cs" />
     <Compile Include="SurveyAnswerModel.cs" />
+    <Compile Include="SurveyAnswerUserModel.cs" />
     <Compile Include="SurveyMainModel.cs" />
     <Compile Include="SurveyOptionModel.cs" />
     <Compile Include="SurveyTroubleModel.cs" />

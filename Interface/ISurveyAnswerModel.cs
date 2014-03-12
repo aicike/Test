@@ -23,8 +23,9 @@ namespace Interface
         /// <param name="sa">列表</param>
         /// <param name="UID">？用户</param>
         /// <param name="Utype">？0用户端，1销售端</param>
+        /// <param name="SAUID">？记名投票用户信息ID</param>
         /// <returns></returns>
-        Result InsertAnswer(List<SurveyAnswer> sa, int? UID, int? Utype);
+        Result InsertAnswer(List<SurveyAnswer> sa, int? UID, int? Utype,int ?SAUID);
 
         /// <summary>
         /// 查询调查问卷回答平均分

@@ -96,7 +96,7 @@ namespace Web.Controllers
 
             var MainModel = Factory.Get<ISurveyMainModel>(SystemConst.IOC_Model.SurveyMainModel);
             var SMain = MainModel.GetSurveyMainByID(id, LoginAccount.CurrentAccountMainID);
-
+            ViewBag.IsRegistered = SMain.IsRegistered;
 
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "调查问卷 - 修改调查问卷", LoginAccount.CurrentAccountMainName, WebTitleRemark);

@@ -391,15 +391,29 @@ namespace Web.Controllers
         /// <param name="Utype"> 0用户端，1销售端</param>
         /// <param name="isok">1 提交成功 2提交失败</param>
         /// <param name="Answer">json</param>
+        /// <param name="IsRegistered">是否为记名调查</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddQuestionnaire(int surveyMainID, int? UID, int? Utype, string Answer)
+        public ActionResult AddQuestionnaire(int surveyMainID, int? UID, int? Utype, string Answer, bool IsRegistered)
         {
             List<SurveyAnswer> SA = null;
             SA = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SurveyAnswer>>(Answer);
+            int? SAUID = null;
+            if (IsRegistered)
+            {
+                var AnswerUserModel = Factory.Get<ISurveyAnswerUserModel>(SystemConst.IOC_Model.SurveyAnswerUserModel);
+                SurveyAnswerUser sau = new SurveyAnswerUser();
+                sau.UserComPany = Request.Form["userCompany"];
+                sau.UserEmail = Request.Form["userEmail"];
+                sau.UserName = Request.Form["userName"];
+                sau.UserPhone = Request.Form["userPhone"];
+                sau.UserPosition = Request.Form["userPosition"];
+                AnswerUserModel.Add(sau);
+                SAUID = sau.ID;
 
+            }
             var AnswerModel = Factory.Get<ISurveyAnswerModel>(SystemConst.IOC_Model.SurveyAnswerModel);
-            var result = AnswerModel.InsertAnswer(SA, UID, Utype);
+            var result = AnswerModel.InsertAnswer(SA, UID, Utype, SAUID);
             if (result.HasError)
             {
                 return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
