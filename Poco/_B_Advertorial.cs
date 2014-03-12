@@ -28,7 +28,10 @@ namespace Poco
         //App分享图片
         public string F { get; set; }
 
-
+        /// <summary>
+        /// 软文地址
+        /// </summary>
+        public string URL { get; set; }
 
     }
 }
