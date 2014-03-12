@@ -418,7 +418,7 @@ namespace Web.Controllers
             {
                 return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
             }
-            return RedirectToAction("Questionnaire", "Default", new { surveyMainID = surveyMainID, isok = 1 });
+            return RedirectToAction("Questionnaire", "Default", new { surveyMainID_token = surveyMainID.TokenEncrypt(), isok = 1 });
         }
 
 
@@ -598,7 +598,7 @@ namespace Web.Controllers
                 }
                 catch { }
             }
-            return RedirectToAction("ActivityInfo", "Default", new { ActivityID = ActivityID, isok = 1 });
+            return RedirectToAction("ActivityInfo", "Default", new { ActivityID_token = ActivityID.TokenEncrypt(), isok = 1 });
         }
 
 
@@ -638,12 +638,8 @@ namespace Web.Controllers
             var ActivitySignInModel = Factory.Get<IActivityInfoSignInModel>(SystemConst.IOC_Model.ActivityInfoSignInModel);
             ActivitySignInModel.Add(ais);
 
-            return RedirectToAction("ActivitySignIn", "Default", new { ActivityID = ActivityID, isok = 1 });
+            return RedirectToAction("ActivitySignIn", "Default", new { ActivityID_token = ActivityID.TokenEncrypt(), isok = 1 });
         }
-
-
-
-
 
 
 
