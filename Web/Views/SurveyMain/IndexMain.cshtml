@@ -162,7 +162,7 @@
                     <div style="width: 200px; word-break: keep-all; white-space: nowrap; overflow: hidden;
                         text-overflow: ellipsis;">
                         <label name="labCbFirst" title="调查信息统计">
-                            <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id = item.ID })" target="_blank">@item.SurveyTitle</a>
+                            <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id_token = item.ID.TokenEncrypt(true) })" target="_blank">@item.SurveyTitle</a>
                         </label>
                     </div>
                 </td>

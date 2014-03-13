@@ -192,12 +192,12 @@
                     if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey)
                     {
                     <td>
-                        <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id = item.ContentURL.Substring(item.ContentURL.LastIndexOf('=') + 1) })" target="_blank">
+                        <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id_token = item.UrlID.Value.TokenEncrypt(true) })" target="_blank">
                             <img style="width: 150px;  margin-top:5px; cursor:pointer; border:0 "   src="@Url.Content(item.AppShowImagePath ?? "")" /></a>
                     </td>
                     <td style="font-size: 14px" class="operation">
                         <label name="labCbFirst" title="@item.Depict"  style=" cursor:pointer">
-                            <a  href="@Url.Action("TroubleStatistics", "SurveyMain", new { id = item.ContentURL.Substring(item.ContentURL.LastIndexOf('=') + 1) })"  target="_blank">
+                            <a  href="@Url.Action("TroubleStatistics", "SurveyMain", new { id_token = item.UrlID.Value.TokenEncrypt(true) })"  target="_blank">
                                 @item.Title
                             </a>
                         </label>

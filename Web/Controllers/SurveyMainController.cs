@@ -391,8 +391,9 @@ namespace Web.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [AllowCheckPermissions(false)]
-        public ActionResult TroubleStatistics(int id)
+        public ActionResult TroubleStatistics(string id_token)
         {
+            int id = id_token.TokenDecrypt();
             //主表
             var MainModel = Factory.Get<ISurveyMainModel>(SystemConst.IOC_Model.SurveyMainModel);
             var main = MainModel.GetSurveyMainByID(id, LoginAccount.CurrentAccountMainID);
