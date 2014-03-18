@@ -27,6 +27,9 @@ namespace Web.Controllers
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.AccountEnd).ToPagedList(id ?? 1, 15);
 
+            var AccountserverModel = Factory.Get<IAccountMain_ServiceModel>(SystemConst.IOC_Model.AccountMain_ServiceModel);
+            var hasAPP = AccountserverModel.CheckService(EnumService.House_Service, LoginAccount.CurrentAccountMainID);
+            ViewBag.HasAPP = hasAPP;
 
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-销售端资讯", LoginAccount.CurrentAccountMainName, WebTitleRemark);

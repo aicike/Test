@@ -250,9 +250,7 @@
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\userStyle.css" />
-    <Content Include="File\LoginPageShow\Client\361037.jpg" />
     <Content Include="File\LoginPageShow\Client\363609.jpg" />
-    <Content Include="File\LoginPageShow\Client\394388.jpg" />
     <Content Include="File\LoginPageShow\Default\Default.jpg" />
     <Content Include="File\LoginPageShow\System\347327.jpg" />
     <Content Include="File\LoginPageShow\System\5.jpg" />

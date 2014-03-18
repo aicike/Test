@@ -96,8 +96,7 @@ namespace Web.Controllers
             var id = id_token.TokenDecrypt();
             var AdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             var AdvertorialOperModel = Factory.Get<IAppAdvertorialOperationModel>(SystemConst.IOC_Model.AppAdvertorialOperationModel);
-            //更改浏览次数
-            AdvertorialModel.BrowseCntADD(id);
+
             //查询数据
             var advertorial = AdvertorialModel.Get(id);
             //添加数据到资讯操作表
@@ -123,16 +122,16 @@ namespace Web.Controllers
 
                     if (url.Contains('?'))
                     {
-                        url = url.Replace("?", "?imtimely_userid=" + imtimely_userid + "&imtimely_Apptype=" + advertorial.EnumAdvertorialUType + "&");
+                        url = url.Replace("?", "?imtimely_userid=" + imtimely_userid + "&imtimely_Apptype=" + advertorial.EnumAdvertorialUType + "&ADverID=" + id + "&");
                     }
                     else
                     {
-                        url = url + "?imtimely_userid=" + imtimely_userid + "&imtimely_Apptype=" + advertorial.EnumAdvertorialUType;
+                        url = url + "?imtimely_userid=" + imtimely_userid + "&imtimely_Apptype=" + advertorial.EnumAdvertorialUType + "&ADverID=" + id;
                     }
                 }
                 else
                 {
-                    url = url.Replace("?", "?imtimely_Apptype=" + advertorial.EnumAdvertorialUType + "&");
+                    url = url.Replace("?", "?imtimely_Apptype=" + advertorial.EnumAdvertorialUType + "&ADverID=" + id + "&");
                 }
 
                 //imtimely_userid  用户ID
@@ -167,6 +166,8 @@ namespace Web.Controllers
 
                     }
                 }
+                //更改浏览次数
+                AdvertorialModel.BrowseCntADD(id);
                 return View(advertorial);
             }
         }
@@ -334,7 +335,7 @@ namespace Web.Controllers
         /// <param name="isok">1 提交成功 2提交失败</param>
         /// <param name="isok"></param>
         /// <returns></returns>
-        public ActionResult Questionnaire(string surveyMainID_token, int? imtimely_userid, int? imtimely_Apptype, int? isok)
+        public ActionResult Questionnaire(string surveyMainID_token, int ADverID, int? imtimely_userid, int? imtimely_Apptype, int? isok)
         {
             int surveyMainID = surveyMainID_token.TokenDecrypt();
             if (isok.HasValue)
@@ -380,7 +381,9 @@ namespace Web.Controllers
             var main = MainModel.Get(surveyMainID);
 
 
-
+            var AdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
+            //更改浏览次数
+            AdvertorialModel.BrowseCntADD(ADverID);
             return View(main);
         }
 
@@ -432,7 +435,7 @@ namespace Web.Controllers
         /// <param name="?"></param>
         /// <param name="isok"></param>
         /// <returns></returns>
-        public ActionResult ActivityInfo(string ActivityID_token, int? imtimely_userid, int? imtimely_Apptype, int? isok)
+        public ActionResult ActivityInfo(string ActivityID_token, int ADverID, int? imtimely_userid, int? imtimely_Apptype, int? isok)
         {
             int ActivityID = ActivityID_token.TokenDecrypt();
             ViewBag.ActivityID = ActivityID;
@@ -450,7 +453,7 @@ namespace Web.Controllers
 
                 //判断是否报过名
                 var IActivityInfoParticipatorModelModel = Factory.Get<IActivityInfoParticipatorModel>(SystemConst.IOC_Model.ActivityInfoParticipatorModel);
-                Result result = IActivityInfoParticipatorModelModel.GetUserIsSignUP(imtimely_userid.Value, imtimely_Apptype.Value,ActivityID);
+                Result result = IActivityInfoParticipatorModelModel.GetUserIsSignUP(imtimely_userid.Value, imtimely_Apptype.Value, ActivityID);
                 if (result.HasError)
                 {
                     ViewBag.isSignUP = "true";
@@ -528,7 +531,9 @@ namespace Web.Controllers
                     ViewBag.IOSURL = AccountModel.IOSDownloadPath;
                 }
             }
-
+            var AdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
+            //更改浏览次数
+            AdvertorialModel.BrowseCntADD(ADverID);
 
             return View(Activity);
         }

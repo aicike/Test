@@ -342,12 +342,16 @@ namespace Business
                     HPIDS = HPIDS.TrimEnd('|');
                     int[] Pstr = HPIDS.ConvertToIntArray('|');
                     var productList = productModel.GetProductListByIDs(Pstr, AMID).ToList();
-                    //计算总价钱 与获取产品信息
+                    
                     List<OrderDetail> ods = new List<OrderDetail>();
                     double amount = 0;
                     HPIDSandCnt = HPIDSandCnt.TrimEnd('|');
                     string[] HPIDCnt = HPIDSandCnt.Split('|');
+                    
+                  
+
                     CommonModel com = new CommonModel();
+                    //计算总价钱 与获取产品信息
                     foreach (var item in productList)
                     {
                         if (item.Status != (int)EnumProductType.Normal)
@@ -360,6 +364,13 @@ namespace Business
                             string[] cnts = K.Split(',');
                             if (item.ID == int.Parse(cnts[0]))
                             {
+                                //校验库存是否足够
+                                if (item.Stock < int.Parse(cnts[1]))
+                                {
+                                    result.HasError = true;
+                                    result.Error = item.ID.ToString();                                    
+                                    return result;
+                                }
                                 //总价
                                 amount = amount + (item.Price * int.Parse(cnts[1]));
                                 OrderDetail od = new OrderDetail();
