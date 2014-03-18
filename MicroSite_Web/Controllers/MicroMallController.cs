@@ -85,6 +85,7 @@ namespace MicroSite_Web.Controllers
             dt.Columns.Add("PID"); //id
             dt.Columns.Add("Status"); //状态 0：正常 1：价格变化 2：产品缺货 3：产品下架 4:商品不存在
             dt.Columns.Add("ImgPath"); //图片路径
+            dt.Columns.Add("Stock"); //库存
             var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
             string[] Pstrs = IDPriceStrs.Split('|');
             foreach (string k in Pstrs)
@@ -112,7 +113,7 @@ namespace MicroSite_Web.Controllers
                         }
                         else
                         {
-                            if (double.Parse(PIDandprice[1]) == product.Price)
+                            if (double.Parse(PIDandprice[1]) == product.DiscountPrice)
                             {
                                 row["Status"] = 0;
                             }
@@ -129,6 +130,7 @@ namespace MicroSite_Web.Controllers
                         {
                             row["ImgPath"] = Url.Content("~/Images/nopicture.png");
                         }
+                        row["Stock"] = product.Stock;
                        
                     }
                     dt.Rows.Add(row);

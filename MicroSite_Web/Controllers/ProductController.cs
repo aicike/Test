@@ -73,11 +73,12 @@ namespace Web.Controllers
             product.LastSetDate = DateTime.Now.ToString("yyyy-MM-dd hhmmss");
             product.AccountMainID = LoginAccount.CurrentAccountMainID;
             //product.imgFilePath = "~/Images/nopicture_icon.png";
+          
+            var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
             if (product.EnumProductDiscountType == (int)EnumProductDiscountType.No)
             {
                 product.DiscountPrice = product.Price;
             }
-            var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
             var result = productModel.Add(product);
             if (result.HasError)
             {
@@ -120,6 +121,18 @@ namespace Web.Controllers
             newstatus.Add(new SelectListItem { Text = "正常", Value = ((int)Poco.Enum.EnumProductType.Normal).ToString(), Selected = true });
             newstatus.Add(new SelectListItem { Text = "下架", Value = ((int)Poco.Enum.EnumProductType.OffShelves).ToString() });
             newstatus.Add(new SelectListItem { Text = "缺货", Value = ((int)Poco.Enum.EnumProductType.Shortages).ToString() });
+            //发布状态
+            List<SelectListItem> Release = new List<SelectListItem>();
+            Release.Add(new SelectListItem { Text = "不发布", Value = "false", Selected = true });
+            Release.Add(new SelectListItem { Text = "发布", Value = "true" });
+            ViewData["Release"] = Release;
+            //优惠类型
+            List<SelectListItem> DiscountType = new List<SelectListItem>();
+            DiscountType.Add(new SelectListItem { Text = "无优惠", Value = ((int)Poco.Enum.EnumProductDiscountType.No).ToString(), Selected = true });
+            DiscountType.Add(new SelectListItem { Text = "折扣", Value = ((int)Poco.Enum.EnumProductDiscountType.Discount).ToString() });
+            DiscountType.Add(new SelectListItem { Text = "优惠", Value = ((int)Poco.Enum.EnumProductDiscountType.preferential).ToString() });
+            DiscountType.Add(new SelectListItem { Text = "促销", Value = ((int)Poco.Enum.EnumProductDiscountType.Promotion).ToString() });
+            ViewData["DiscountType"] = DiscountType;
 
             ViewData["Status"] = newstatus;
             ViewData["Tstatus"] = product.Status;
@@ -138,6 +151,10 @@ namespace Web.Controllers
             product.LastSetDate = DateTime.Now.ToString("yyyy-MM-dd hhmmss");
 
             var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
+            if (product.EnumProductDiscountType == (int)EnumProductDiscountType.No)
+            {
+                product.DiscountPrice = product.Price;
+            }
             var result = productModel.Edit(product);
             if (result.HasError)
             {

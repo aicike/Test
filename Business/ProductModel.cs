@@ -144,7 +144,7 @@ namespace Business
             {
 
                 int []types = TypeIDS.ConvertToIntArray(',');
-                var list = List().Where(a => types.Contains(a.ClassifyID) && a.Status != (int)Poco.Enum.EnumProductType.OffShelves);
+                var list = List().Where(a => types.Contains(a.ClassifyID) && a.Status != (int)Poco.Enum.EnumProductType.OffShelves && a.IsRelease == true);
                 return list;
             }
             else

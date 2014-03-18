@@ -49,8 +49,8 @@ namespace Business
                     }
                     var imageName = string.Format("{0}_{1}", token, LastName);
                     var imageName2 = string.Format("{0}_M_{1}", token, LastName);
-                    var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
-                    var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
+                    var imagePath = string.Format("{0}//{1}", accountPath, imageName);
+                    var imagePath2 = string.Format("{0}//{1}", accountPath, imageName2);
 
                     var lsImaFilePath = HttpContext.Current.Server.MapPath(item);
 

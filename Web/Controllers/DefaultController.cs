@@ -408,6 +408,7 @@ namespace Web.Controllers
                 sau.UserName = Request.Form["userName"];
                 sau.UserPhone = Request.Form["userPhone"];
                 sau.UserPosition = Request.Form["userPosition"];
+                sau.QQ_Weixin = Request.Form["userQQ"];
                 AnswerUserModel.Add(sau);
                 SAUID = sau.ID;
 

@@ -76,6 +76,11 @@
             width: 100%;
             text-align: center;
         }
+        
+        .inputBack
+        {
+            border: 2px solid red;
+        }
     </style>
     <script>
 
@@ -87,6 +92,8 @@
             it.PFreight = 0;
             it.PImage = "";
             it.Pcount = 0;
+            it.YPPrive=0;   //原价
+            it.PDiscount=""; //优惠活动
             return it;
         }
         var items = [];
@@ -104,6 +111,7 @@
                 increaseArea: '20%' // optional
             });
 
+            //数量输入事件
             $(".txtNumber").keyup(function () {
                 var tmptxt = $(this).val();
                 $(this).val(tmptxt.replace(/\D|^0/g, ''));
@@ -111,16 +119,47 @@
                     $(this).val(0);
                 }
                 var zj = $("#zj").text();
-                var YJ = $(this).parent().next().find("span").text();
+                var YJ = $(this).parent().next().next().find("span").text();
                 var DJ = $(this).next().val();
                 var XJ = parseInt(DJ) * parseInt($(this).val());
                 zj = parseInt(zj) - parseInt(YJ) + parseInt(XJ);
+                  
                 var ID = $(this).attr("id").split('_')[1];
-                $(this).parent().next().find("span").text(XJ);
-
+                $(this).parent().next().next().find("span").text(XJ);
+               
                 if ($("#ckb_" + ID).attr("checked") == "checked") {
                     $("#zj").text(zj);
                 }
+                //处理是否选择产品
+                var Xtmptxt = $(this).val(); //当前数量
+                var stock =  $(this).parent().next().find("span").text(); //库存
+                if(parseInt(Xtmptxt)>parseInt(stock))
+                {
+                    $(this).addClass("inputBack");
+                    $("#ckb_"+ID).iCheck('uncheck');
+                    $("#ckb_"+ID).attr("disabled","disabled");
+                    $("#ckb_"+ID).removeClass("ckb");
+                    $("#text_"+ID).text("商品库存不足");
+                }
+                else
+                {
+                    if(parseInt(Xtmptxt)<=0)
+                    {
+                        $("#ckb_"+ID).iCheck('uncheck');
+                        $("#ckb_"+ID).attr("disabled","disabled");
+                        $("#ckb_"+ID).removeClass("ckb");
+                        $("#text_"+ID).text("商品数量必须大于0");
+                    }
+                    else
+                    {
+                        $(this).removeClass("inputBack");
+                        $("#ckb_"+ID).removeAttr("disabled");
+                        $("#ckb_"+ID).addClass("ckb");
+                        $("#text_"+ID).text("");
+                    }
+                }
+               
+
                 //设置local
                 var jsonStr = "";
                 jsonStr = localStorage.ImtimelyCartShop;
@@ -286,6 +325,10 @@
                                 + '            <div class="price">'
                                 + '                单价：<span class="onePrice" id="dj_' + items[i].PID + '">￥' + items[i].PPrive + '</span>'
                                 + '            </div>'
+                                + '            <div class="price">'
+                                + '                <strike>原价：<span class="onePrice" id="Ydj_' + items[i].PID + '">￥' + items[i].YPPrive + '</span></strike>'
+                                + '                <span style="background-color:red;color:#fff; text-shadow: none;padding: 2px;"> ' + items[i].PDiscount + '</span>'
+                                + '            </div>'
                                 + '            <div style="clear: both"> </div>'
                                 + '        </td>'
                                 + '    </tr>'
@@ -307,13 +350,16 @@
                                 + '                            </div>'
                                 + '                        </div>'
                                 + '                    </td>'
-                                + '                    <td style="padding:2px 5px">'
+                                + '                    <td style="padding:2px 5px; font-size:12px">'
                                 + '                        数量:'
                                 + '                        <input id="num_' + items[i].PID + '" class="txtNumber" type="tel" value="' + items[i].Pcount + '" data-role="none" style="width: 30px" />'
                                 + '                        <input  id="Price_' + items[i].PID + '" type="hidden" value="' + items[i].PPrive + '"/> '
                                 + '                    </td>'
-                                + '                    <td align="left" style="padding:2px 5px">'
-                                + '                        共计:<span class="onePrice" id="zj_' + items[i].PID + '">￥' + parseInt(items[i].Pcount) * parseInt(items[i].PPrive) + '</span>'
+                                + '                    <td style="padding:2px 5px; font-size:12px">'
+                                + '                        (库存<span id="span_stock_'+items[i].PID+'"></span>)'
+                                + '                    </td>'
+                                + '                    <td align="left" style="padding:2px 5px; font-size:12px">'
+                                + '                        共计:￥<span class="onePrice" id="zj_' + items[i].PID + '">' + parseInt(items[i].Pcount) * parseInt(items[i].PPrive) + '</span>'
                                 + '                    </td>'
                                 + '                </tr>'
                                 + '            </table>'
@@ -355,6 +401,29 @@
                     { 
                         for(var i in result)
                         {
+                            //库存
+                            var stock = result[i].Stock;
+                            $("#span_stock_"+result[i].PID).text(stock);
+                            var cnt =  $("#num_"+result[i].PID).val();
+                            //购买数量与库存的校验
+                            if(parseInt(cnt)>parseInt(stock))
+                            {
+                               
+                                $("#ckb_"+result[i].PID).iCheck('uncheck');
+                                $("#ckb_"+result[i].PID).attr("disabled","disabled");
+                                $("#ckb_"+result[i].PID).removeClass("ckb");
+                                $("#num_"+result[i].PID).addClass("inputBack");
+                                $("#text_"+result[i].PID).text("商品库存不足");
+                            }
+                            if(parseInt(cnt)<=0)
+                            {
+                                $("#ckb_"+result[i].PID).iCheck('uncheck');
+                                $("#ckb_"+result[i].PID).attr("disabled","disabled");
+                                $("#ckb_"+result[i].PID).removeClass("ckb");
+                                $("#num_"+result[i].PID).addClass("inputBack");
+                                $("#text_"+result[i].PID).text("商品数量必须大于0");
+                            }
+                
                             //状态 0：正常 1：价格变化 2：产品缺货 3：产品下架
                             switch(result[i].Status)
                             {
@@ -420,15 +489,14 @@
 
         function DeleteCart(ID) {
 
-
             var jsonStr = "";
             jsonStr = localStorage.ImtimelyCartShop;
 
             if (jsonStr != undefined && jsonStr != "" && jsonStr != "[]") {
                 items = eval(jsonStr);
-                //循环判断是否有重复商品
+                
                 for (var i in items) {
-                    //有重复数据只增加数量
+                    
                     if (items[i].PID == ID) {
                         var prices = parseInt(items[i].Pcount) * parseInt(items[i].PPrive)
                         $("#zj").text(parseInt($("#zj").text()) - parseInt(prices));
@@ -454,6 +522,12 @@
 
         function GoCheckOut()
         {
+            var zj = $("#zj").text();
+            if(zj==""||zj==undefined||zj<=0)
+            {
+                alert("总价为“0”请选择商品或更改商品数量");
+                return false;
+            }
             var IDS = [];
             $('.ckb').each(function (){
                 if($(this).attr("checked")=="checked")
@@ -524,14 +598,14 @@
         </tr>
         <tr>
             <td style="padding: 2px 0px">
-                <table style="width: 100%">
+                <table style="width: 100%; font-size:12px">
                     <tr>
                         <td>
                             <input type="checkbox" id="ckbAll" checked="checked" data-role='none' />
                             全选
                         </td>
                         <td>
-                            总价： <span id="zj" style="color: Red"></span>
+                            总价(不含快递费)： <span id="zj" style="color: Red"></span>
                         </td>
                         <td>
                             <a id="GoJS" onclick="return GoCheckOut()"  style=" background-color:#FF3030; text-shadow:0 1px 0 #FF3030 ; color:#fff" href="@Url.Action("OrderConfirmation", "MicroMall", new { AMID = ViewBag.AMID })" data-role="button" data-corners="false" data-ajax="false" >

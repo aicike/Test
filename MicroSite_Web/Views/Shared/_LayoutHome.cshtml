@@ -79,24 +79,102 @@
         {
             -webkit-user-select: auto;
         }
+        .drawer
+        {
+            background:url(/images/WeiBGimg.jpg);
+            @*filter:alpha(opacity=50);  
+            -moz-opacity:0.5;  
+            -khtml-opacity: 0.5;  
+            opacity: 0.5;  *@
+            
+        }
+        .ui-panel-inner
+        {
+            padding:0px !important;
+        }
+        .div_LJ
+        {
+            width:100%;
+            height:70px;
+            text-shadow: none;
+            font-size:20px;
+            color:#fff;
+             
+        }
+        .div_tab
+        {
+         width:100%;
+            height:70px;
+        }
     </style>
     @RenderSection("head", required: false)
 </head>
 <body>
     <div data-role="page" class="myPage">
-        <div data-role="header" data-position="fixed" data-tap-toggle="false" class="ui-header ui-header-fixed ui-bar-c">
+        @*<div data-role="header" data-position="fixed" data-tap-toggle="false" class="ui-header ui-header-fixed ui-bar-c">
             <div data-role="navbar">
                 <ul>
-                    @* <li><a href="@Url.Action("Index","Default")" class="menu0">首页</a></li>*@ @*<li><a href="/Home.aspx" data-icon="grid" class="menu1">户型介绍</a></li>*@
+                     <li><a href="@Url.Action("Index","Default")" class="menu0">首页</a></li><li><a href="/Home.aspx" data-icon="grid" class="menu1">户型介绍</a></li>
                     <li><a href="@Url.Action("ShopIndex", "MicroMall", new { AMID = amid })"  data-ajax="false" class="menu2" >
                         商城</a></li>
                     <li><a id="layouthome_center" href="@Url.Action("Index", "Center", new { amid = amid })" data-ajax="false"  class="menu3">
                         个人中心 </a></li>
                     <li><a href="@Url.Action("ShoppingCart", "MicroMall", new { AMID = amid })"  data-ajax="false" class="menu2">
                         购物车 </a></li>
-                    @* <li><a href="/Center.aspx" class="menu3">关于我们</a></li>*@
+                     <li><a href="/Center.aspx" class="menu3">关于我们</a></li>
                 </ul>
             </div>
+        </div>*@
+        <div data-role="header">
+            <a href="@Url.Action("ShopIndex", "MicroMall", new { AMID = 1 })" data-ajax="false" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-home">
+                首页</a>
+            <h1 style="font-size: 1em !important;">
+                APP</h1>
+            <a href="#nav-panel" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-grid">
+                更多</a>
+        </div>
+        <div data-role="panel" data-position="right" data-position-fixed="true" data-display="overlay"
+            data-ajax="false" data-theme="a" id="nav-panel" class="drawer">
+            <a href="www.baidu.com" style="text-decoration: none;">
+                <div class="div_LJ" style="background: url(/images/WeiRed.png)">
+                    <table cellpadding="0" cellspacing="0" class="div_tab">
+                        <tr>
+                            <td align="right" style="width: 100px">
+                                图标
+                            </td>
+                            <td align="left" style="padding-left: 10px">
+                                首页
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </a><a href="www.baidu.com" style="text-decoration: none">
+                <div class="div_LJ" style="background: url(/images/WeiOrange.png)">
+                    <table cellpadding="0" cellspacing="0" class="div_tab">
+                        <tr>
+                            <td align="right" style="width: 100px">
+                                图标
+                            </td>
+                            <td align="left" style="padding-left: 10px">
+                                个人中心
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </a><a href="www.baidu.com" style="text-decoration: none">
+                <div class="div_LJ" style="background: url(/images/WeiBlue.png)">
+                    <table cellpadding="0" cellspacing="0" class="div_tab">
+                        <tr>
+                            <td align="right" style="width: 100px">
+                                图标
+                            </td>
+                            <td align="left" style="padding-left: 10px">
+                                购物车
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </a>
         </div>
         <!-- /container -->
         @RenderBody()

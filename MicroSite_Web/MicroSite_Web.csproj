@@ -331,6 +331,12 @@
     <Content Include="Images\test.jpg" />
     <Content Include="Images\Unread.png" />
     <Content Include="Images\up.png" />
+    <Content Include="Images\weiBGimg.jpg" />
+    <Content Include="Images\WeiBGimg2.jpg" />
+    <Content Include="Images\WeiBlue.png" />
+    <Content Include="Images\WeiOrange.png" />
+    <Content Include="Images\weiPriceBack.png" />
+    <Content Include="Images\WeiRed.png" />
     <Content Include="Images\zhankai.png" />
     <Content Include="Images\zhankai_2.png" />
     <Content Include="ReadMe.txt" />

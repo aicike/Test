@@ -55,21 +55,7 @@ $("#btn_yang").show();
 $("#btn_yang").hide();
 			}
 
-            var UName = "@ViewBag.UName";
-            var UPhone = "@ViewBag.UPhone";
-            var UEmail = "@ViewBag.UEmail ";
-
-
-
-            if (UName != undefined && UName != "") {
-                $('#userName').val(UName);
-            }
-            if (UPhone != undefined && UPhone != "") {
-                $('#userPhone').val(UPhone);
-            }
-            if (UEmail != undefined && UEmail != "") {
-                $('#userEmail').val(UEmail);
-            }
+        
 
 
         });
@@ -166,12 +152,14 @@ $("#btn_yang").hide();
         }
         .divRemarks
         {
-            background-color: #ffffff;
             border: 1px solid #aaaaab;
             padding: 5px 10px 5px 10px;
-            line-height: 25px;
-            font-size: 14px;
             margin-bottom: 10px;
+            color: #000 !important;
+            line-height: 1.5 !important;
+            background: none !important;
+            text-shadow: none !important;
+            font-size: 16px !important;
         }
         .Registration
         {
@@ -197,6 +185,20 @@ $("#btn_yang").hide();
         img
         {
             max-width: 100%;
+        }
+        
+        .divRemarks p
+        {
+            margin: 0px !important;
+        }
+        .divRemarks *
+        {
+            line-height: 1.5 !important;
+            @*background: none !important;
+            color: #000 !important;*@
+            font-size: 16px !important;
+            text-shadow: none !important;
+            width: 100% !important;
         }
     </style>
 }
@@ -331,7 +333,8 @@ $("#btn_yang").hide();
                         </tr>
                     </table>
                 </a>
-                <a id="Adowload2" href="#popupParis" data-rel="popup" data-position-to="window" data-transition="fade" style="text-decoration: none;text-shadow: none">
+                <a id="Adowload2" href="#popupParis" data-rel="popup" data-position-to="window" data-transition="fade"
+                    style="text-decoration: none; text-shadow: none">
                     <table align="center" class="APPDow" cellpadding="0" cellspacing="0">
                         <tr>
                             <td align="center">

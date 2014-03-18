@@ -45,6 +45,12 @@ namespace Poco
         [Display(Name = "职位")]
         public string UserPosition { get; set; }
 
+        /// <summary>
+        /// qq或weixin号
+        /// </summary>
+        [Display(Name = "qq或weixin号")]
+        public string QQ_Weixin { get; set; }
+
 
         public virtual ICollection<SurveyAnswer> SurveyAnswer { get; set; }
     }

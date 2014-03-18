@@ -21,8 +21,8 @@
         body
         {
             color: #666666;
-            font-family: Arial;
-            font-size: 12px;
+            @*font-family: Arial;
+            font-size: 12px;*@
         }
         .clearfix:after
         {
@@ -52,6 +52,8 @@
         {
             width: 95%;
             margin: 0 auto;
+            font-family: Arial;
+            font-size: 12px;
         }
         
         /* item_list */
@@ -174,6 +176,14 @@
             color: Red;
             font-size: 12px;
         }
+        .bottom_yj
+        {
+            margin-top: 5px;
+            position: relative;
+            bottom: 8px;
+            color: #3C3C3C;
+            font-size: 12px;
+        }
         .loadOK
         {
             font-size: 14px;
@@ -185,6 +195,15 @@
         .ui-mobile .ui-page-active
         {
             overflow: hidden !important;
+        }
+        
+        .sp_Discount
+        {
+            background-color: Red;
+            color: #fff;
+            text-shadow: none;
+            padding: 2px;
+            margin-left: 5px;
         }
     </style>
     <script type="text/javascript">
@@ -297,7 +316,7 @@
                                 }
                                 else
                                 { 
-                                <img class="imgs" src="@Url.Content(item.ProductImg.FirstOrDefault().PImgOriginal,true)" />
+                                <img class="imgs" src="@Url.Content(item.ProductImg.FirstOrDefault().PImgOriginal, true)" />
                                 }
                             }
                             else
@@ -307,7 +326,7 @@
                         </a>
                     </div>
                     <div class="title">
-                        <span>@item.Name</span>
+                          <span>@item.Name</span>
                     </div>
                     <div class="bottom">
                         @if (item.Status == (int)Poco.Enum.EnumProductType.Shortages)
@@ -320,7 +339,26 @@
                         }
                         else
                         {
-                            @item.Price.ToString("C")
+                            <span>@item.DiscountPrice.Value.ToString("C")</span>
+                            
+                        }
+                    </div>
+                    <div class="bottom_yj">
+                        @if (item.EnumProductDiscountType == (int)Poco.Enum.EnumProductDiscountType.Discount)
+                        {
+                            <strike>原价： @item.Price.ToString("C")</strike> <span  class="sp_Discount">@item.Discount 折</span>
+                        }
+                        else if (item.EnumProductDiscountType == (int)Poco.Enum.EnumProductDiscountType.preferential)
+                        {
+                            <strike>原价： @item.Price.ToString("C")</strike><span  class="sp_Discount">优惠</span>
+                        }
+                        else if (item.EnumProductDiscountType == (int)Poco.Enum.EnumProductDiscountType.Promotion)
+                        {
+                            <strike>原价： @item.Price.ToString("C")</strike><span  class="sp_Discount">促销</span>
+                        }
+                        else
+                        {
+
                         }
                     </div>
                 </div>

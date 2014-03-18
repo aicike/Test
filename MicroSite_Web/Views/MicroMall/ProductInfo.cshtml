@@ -90,12 +90,14 @@
 
         function OptintModel() {
             var it = new Object;
-            it.PID = "";
-            it.PName = "";
-            it.PPrive = 0;
-            it.PFreight = 0;
-            it.PImage = "";
-            it.Pcount = 0;
+            it.PID = "";    //产品ID
+            it.PName = "";  //产品名称
+            it.PPrive = 0;  //售价
+            it.PFreight = 0;//运费
+            it.PImage = ""; //图片店址
+            it.Pcount = 0;  //数量
+            it.YPPrive=0;   //原价
+            it.PDiscount=""; //优惠活动
             return it;
         }
         var items = [];
@@ -114,31 +116,55 @@
                 }
                 else {
 
-                    $("#txtNumber").val("0");
+                    $("#txtNumber").val("1");
+                }
+                var Tnumber = $("#txtNumber").val();
+                if(Tnumber>=stocl)
+                {
+                    $("#txtNumber").val(stocl);
                 }
             });
 
             $("#delete").click(function () {
                 var number = $("#txtNumber").val();
                 if (number != "" && number != undefined) {
-                    if (number == 0) {
-                        $("#txtNumber").val("0");
+                    if (number <= 1) {
+                        $("#txtNumber").val("1");
                     }
                     else {
                         $("#txtNumber").val(parseInt(number) - 1);
                     }
                 }
                 else {
-                    $("#txtNumber").val("0");
+                    $("#txtNumber").val("1");
                 }
             });
 
+            var stocl = @(Model.Stock);
             $("#txtNumber").keyup(function () {
                 var tmptxt = $(this).val();
+               
                 $(this).val(tmptxt.replace(/\D|^0/g, ''));
+                var ttxt = $(this).val();
+                if (ttxt == "" || ttxt == undefined) {
+                    $(this).val("1");
+                }
+                 if(tmptxt>=stocl)
+                {
+                $(this).val(stocl);
+                }
+
             }).bind("paste", function () {
                 var tmptxt = $(this).val();
                 $(this).val(tmptxt.replace(/\D|^0/g, ''));
+                var ttxt = $(this).val();
+                if (ttxt == "" || ttxt == undefined) {
+                    $(this).val("1");
+                }
+                 if(tmptxt>=stocl)
+                {
+                $(this).val(stocl);
+                }
             }).css("ime-mode", "disabled");
 
 
@@ -150,6 +176,20 @@
             });
 
             $(window).resize();
+
+            var stock = @Model.Stock;
+            if(stock>0)
+            {
+                $("#txtNumber").val("1");
+            }
+            else
+            {
+                $("#txtNumber").val("0");
+            }
+
+
+
+
         });
 
 
@@ -187,7 +227,8 @@
             var PFreight = $("#PFreight").val();
             var PImage = $("#PImage").val();
             var Pcount = $("#txtNumber").val();
-
+            var YPPrive =  $("#YPPrive").val();
+            var PDiscount =  $("#PDiscount").val();
             var jsonStr = "";
             jsonStr = localStorage.ImtimelyCartShop;
 
@@ -206,6 +247,8 @@
                         items[i].PName = PName;
                         items[i].PFreight = PFreight;
                         items[i].PImage = PImage;
+                        items[i].YPPrive =YPPrive;
+                        items[i].PDiscount =PDiscount;
                         J = true;
                     }
                 }
@@ -219,6 +262,8 @@
                     Cart.PFreight = PFreight;
                     Cart.PImage = PImage;
                     Cart.Pcount = Pcount;
+                    Cart.YPPrive =YPPrive;
+                    Cart.PDiscount =PDiscount;
                     items.unshift(Cart);
                     jsonStr = JSON.stringify(items);
                 }
@@ -239,6 +284,8 @@
                 Cart.PFreight = PFreight;
                 Cart.PImage = PImage;
                 Cart.Pcount = Pcount;
+                Cart.YPPrive =YPPrive;
+                Cart.PDiscount =PDiscount;
                 items.push(Cart);
                 jsonStr = JSON.stringify(items);
             }
@@ -249,12 +296,22 @@
         }
 
         function instantly() {
+            var cnt = $("#txtNumber").val();
+            if (cnt == "" || cnt != undefined ) {
+                if (cnt <= 0) {
+                    alert("商品库存不足");
+                    return false;
+                }
+            }
             var PID = $("#PID").val();
             var PName = $("#PName").val();
             var PPrive = $("#PPrive").val();
             var PFreight = $("#PFreight").val();
             var PImage = $("#PImage").val();
             var Pcount = $("#txtNumber").val();
+            var YPPrive =  $("#YPPrive").val();
+            var PDiscount =  $("#PDiscount").val();
+            Cart.PDiscount =PDiscount;
             if (Pcount <= 0) {
                 showMsg("请选择数量！");
                 return false;
@@ -267,6 +324,8 @@
             Cart.PFreight = PFreight;
             Cart.PImage = PImage;
             Cart.Pcount = Pcount;
+            Cart.YPPrive =YPPrive;
+            Cart.PDiscount =PDiscount;
             JZitems.push(Cart);
 
             var jsonStrZJ = JSON.stringify(JZitems);
@@ -285,7 +344,7 @@
         {
             if (!string.IsNullOrEmpty(item.PImgOriginal))
             { 
-        <img class="imgs" src="@Url.Content(item.PImgOriginal,true)" />
+        <img class="imgs" src="@Url.Content(item.PImgOriginal, true)" />
             }
         }
 
@@ -300,15 +359,16 @@
 <div style="width: 95%; margin: 25px auto;">
     <input id="PID" type="hidden" value="@Model.ID" />
     <input id="PName" type="hidden"  value="@Model.Name" />
-    <input id="PPrive" type="hidden"  value="@Model.Price" />
+    <input id="PPrive" type="hidden"  value="@Model.DiscountPrice" />
     <input id="PFreight" type="hidden"  value="@Model.Freight" />
+    <input id="YPPrive" type="hidden"  value="@Model.Price" />
     @if (Model.ProductImg.FirstOrDefault() != null)
     {
 
         if (!string.IsNullOrEmpty(Model.ProductImg.FirstOrDefault().PImgMini))
         { 
             
-        <input id="PImage" type="hidden"  value="@Url.Content(Model.ProductImg.FirstOrDefault().PImgMini,true)" />
+        <input id="PImage" type="hidden"  value="@Url.Content(Model.ProductImg.FirstOrDefault().PImgMini, true)" />
         }
         else
         { 
@@ -320,27 +380,65 @@
     { 
         <input id="PImage" type="hidden"  value="@Url.Content("~/Images/nopicture.png")" />
     }
-    <div style="line-height: 25px">
+    <div style="line-height: 25px; font-weight: bolder">
         @Model.Name
     </div>
-    <div style="margin-top: 10px;">
-        价格：
-        @if (Model.Status == (int)Poco.Enum.EnumProductType.Shortages)
-        {
-            <span style="color: #6E6E6E">(缺货)</span>
-        }
-        else if (Model.Status == (int)Poco.Enum.EnumProductType.OffShelves)
-        {
-            <span style="color: #6E6E6E">(已下架)</span>
-        }
-        else
-        {
-                           
-            <span style="color: Red; font-weight: bold">@Model.Price.ToString("C")</span>
-        }
-    </div>
-    <div style="margin-top: 5px; font-size: 12px; color: #8E8E8E">
-        运费：快递￥@Model.Freight
+    <div style=" padding:10px;margin-top:10px;background:url(@Url.Content("~/Images/weiPriceBack.png"));">
+        <table>
+            <tr>
+                <td valign="top" style="width: 70px;">
+                    <div style="margin-top: 10px; color: #fff; text-shadow: none; font-size: 14px; font-weight: bold;">
+                        @if (Model.EnumProductDiscountType == (int)Poco.Enum.EnumProductDiscountType.Discount)
+                        {
+                            @:折扣价：
+                            <input id="PDiscount" type="hidden"  value="@(Model.Discount)折" />
+                        }
+                        else if (Model.EnumProductDiscountType == (int)Poco.Enum.EnumProductDiscountType.preferential)
+                        {
+                            @:优惠价：
+                             <input id="PDiscount" type="hidden"  value="优惠" />
+                        }
+                        else if (Model.EnumProductDiscountType == (int)Poco.Enum.EnumProductDiscountType.Promotion)
+                        {
+                            @:促销价：
+                             <input id="PDiscount" type="hidden"  value="促销" />
+                        }
+                        else
+                        {
+                            @:价格：
+                             <input id="PDiscount" type="hidden"  value="" />
+                        }
+                    </div>
+                </td>
+                <td>
+                    <div style="color: #fff; text-shadow: none; font-size: 14px; font-weight: bold;">
+                        @if (Model.Status == (int)Poco.Enum.EnumProductType.Shortages)
+                        {
+                            @:(缺货)
+                        }
+                        else if (Model.Status == (int)Poco.Enum.EnumProductType.OffShelves)
+                        {
+                            @:(已下架)
+                        }
+                        else
+                        {
+                
+                            <span style="font-size: 30px; font-family: Arial; font-weight: bold">@Model.DiscountPrice.Value.ToString("C")</span>
+                            if (Model.EnumProductDiscountType == (int)Poco.Enum.EnumProductDiscountType.Discount)
+                            {
+                                <span style="font-size: 18px; font-family: Arial; font-weight: bold">（@(Model.Discount.Value.ToString())折）</span>
+                            }
+                        }
+                    </div>
+                    <div style="color: #ffc5c5; text-shadow: none; font-size: 12px; font-weight: bold">
+                        <strike>原价： @Model.Price.ToString("C")</strike>
+                    </div>
+                    <div style="margin-top: 5px; font-size: 12px; text-shadow: none; color: #ffc5c5">
+                        运费：快递<span style="color: #fff">￥@Model.Freight</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
     <div style="margin: 15px 0px; height: 3px; width: 100%; background: url(@Url.Content("~/Images/item_line.png")) repeat-x;">
     </div>
@@ -360,6 +458,9 @@
                 <td>
                     <a href="#" id="add" data-role="button" data-iconpos="notext" data-icon="plus" data-theme="a"
                         data-inline="true" data-iconshadow="false"></a>
+                </td>
+                <td>
+                    <span style="color: #878787; font-size: 14px; margin-left: 10px">库存@(Model.Stock)件</span>
                 </td>
             </tr>
         </table>

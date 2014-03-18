@@ -19,7 +19,7 @@
                         }
                         else
                         { 
-                        <img class="imgs" src="@Url.Content(item.ProductImg.FirstOrDefault().PImgOriginal,true)" />
+                        <img class="imgs" src="@Url.Content(item.ProductImg.FirstOrDefault().PImgOriginal, true)" />
                         }
                     }
                     else
@@ -38,11 +38,30 @@
                 }
                 else if (item.Status == (int)Poco.Enum.EnumProductType.OffShelves)
                 {
-                     <span style="color: #6E6E6E">(已经下架)</span>
+                    <span style="color: #6E6E6E">(已经下架)</span>
                 }
                 else
                 {
-                    @item.Price.ToString("C")
+                    @item.DiscountPrice.Value.ToString("C")
+                }
+            </div>
+            <div class="bottom_yj">
+                @if (item.EnumProductDiscountType == (int)Poco.Enum.EnumProductDiscountType.Discount)
+                {
+                    <strike>原价： @item.Price.ToString("C")</strike> <span class="sp_Discount">@item.Discount
+                        折</span>
+                }
+                else if (item.EnumProductDiscountType == (int)Poco.Enum.EnumProductDiscountType.preferential)
+                {
+                    <strike>原价： @item.Price.ToString("C")</strike><span class="sp_Discount">优惠</span>
+                }
+                else if (item.EnumProductDiscountType == (int)Poco.Enum.EnumProductDiscountType.Promotion)
+                {
+                    <strike>原价： @item.Price.ToString("C")</strike><span class="sp_Discount">促销</span>
+                }
+                else
+                {
+
                 }
             </div>
         </div>

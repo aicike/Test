@@ -91,6 +91,9 @@
                         邮箱
                     </th>
                     <th style="width: 100px">
+                        QQ/Weixin
+                    </th>
+                    <th style="width: 100px">
                         公司
                     </th>
                     <th style="width: 100px">
@@ -152,6 +155,18 @@
                                 @if (item.SurveyAnswerUserID.HasValue)
                                 { 
                                     @item.SurveyAnswerUser.UserEmail
+                                }
+                                else
+                                {
+                                    @:无
+                                                                    }
+                            </div>
+                        </td>
+                         <td>
+                            <div style="width: 100px; word-wrap: break-word; word-break: normal;">
+                                @if (item.SurveyAnswerUserID.HasValue)
+                                { 
+                                    @item.SurveyAnswerUser.QQ_Weixin
                                 }
                                 else
                                 {
