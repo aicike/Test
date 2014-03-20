@@ -150,9 +150,6 @@ namespace Business
         }
 
 
-
-
-
         public IQueryable<T> SqlQuery<T>(string sql, params object[] parameters)
         {
             return Context.Database.SqlQuery<T>(sql, parameters).AsQueryable();

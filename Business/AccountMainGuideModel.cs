@@ -116,7 +116,7 @@ namespace Business
             //    dt.Rows.Add(row);
             //    i = true;
             //}
-            //是否设置App软文
+            //是否设置App资讯
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             var AppAdvertorial = AppAdvertorialModel.GetList(AccountMainID, (int)EnumAdvertorialUType.UserEnd);
             if (AppAdvertorial != null)

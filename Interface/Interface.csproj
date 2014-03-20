@@ -70,6 +70,7 @@
     <Compile Include="IKeywordModel.cs" />
     <Compile Include="ILibraryModel.cs" />
     <Compile Include="ILookupOptionModel.cs" />
+    <Compile Include="ILottery_dishModel.cs" />
     <Compile Include="IMessageGroupChatModel.cs" />
     <Compile Include="IMessageModel.cs" />
     <Compile Include="IOrderDetailModelcs.cs" />
@@ -148,6 +149,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ITaskDetailModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ILottery_dish_detailModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ILottery_UserModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

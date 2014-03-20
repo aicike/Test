@@ -8,7 +8,7 @@ namespace Interface
 {
     public interface IBaseModel<T> where T : class,IBaseEntity
     {
-        IQueryable<T> List();
+        IQueryable<T> List(bool isOrder = false);
 
         Result Add(T entity);
 

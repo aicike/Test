@@ -66,14 +66,14 @@
     <Compile Include="Mapping\UserMap.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Context.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201402180345209_Initial.cs" />
     <Compile Include="Migrations\201402180345209_Initial.Designer.cs">
       <DependentUpon>201402180345209_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Context.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

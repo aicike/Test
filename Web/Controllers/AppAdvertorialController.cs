@@ -27,10 +27,6 @@ namespace Web.Controllers
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd).ToPagedList(id ?? 1, 15);
 
-            var AccountserverModel = Factory.Get<IAccountMain_ServiceModel>(SystemConst.IOC_Model.AccountMain_ServiceModel);
-            var hasAPP = AccountserverModel.CheckService(EnumService.House_Service, LoginAccount.CurrentAccountMainID);
-            ViewBag.HasAPP = hasAPP;
-
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-用户端资讯", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
@@ -59,11 +55,7 @@ namespace Web.Controllers
             {
                 return JavaScript(AlertJS_NoTag(new Dialog("请在图片上选择展示区域")));
             }
-            if (AType == (int)EnumAdverTorialType.txt)
-            {
-                appAdver.ContentURL = "http://";
-            }
-            else
+            if (AType == (int)EnumAdverTorialType.url)
             {
                 appAdver.Content = "";
                 appAdver.EnumAdverURLType = (int)EnumAdverURLType.Ordinary;
@@ -76,8 +68,6 @@ namespace Web.Controllers
             appAdver.BrowseCnt = 0;
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             Result result = AppAdvertorialModel.AddAppAdvertorial(appAdver, w, h, x1, y1, tw, th);
-
-
             return RedirectToAction("Index", "AppAdvertorial");
         }
 
@@ -116,12 +106,7 @@ namespace Web.Controllers
                     return JavaScript(AlertJS_NoTag(new Dialog("请在图片上选择展示区域")));
                 }
             }
-            if (AType == (int)EnumAdverTorialType.txt)
-            {
-                appadver.ContentURL = "http://";
-                appadver.EnumAdverURLType = null;
-            }
-            else
+            if (AType == (int)EnumAdverTorialType.url)
             {
                 appadver.Content = "";
                 if (appadver.EnumAdverURLType.HasValue)
@@ -133,6 +118,8 @@ namespace Web.Controllers
                     appadver.EnumAdverURLType = (int)EnumAdverURLType.Ordinary;
                 }
             }
+
+
             appadver.EnumAdverTorialType = AType;
             appadver.EnumAdvertorialUType = (int)EnumAdvertorialUType.UserEnd;
             Result result = AppAdvertorialModel.EditAppAdvertorial(appadver, w, h, x1, y1, tw, th);

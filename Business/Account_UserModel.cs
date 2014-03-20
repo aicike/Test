@@ -30,8 +30,7 @@ namespace Business
         /// <returns></returns>
         public bool ChickUserInAccount(int SID, int UID)
         {
-            var axcountUser = List().Any(a => a.AccountID == SID && a.UserID == UID);
-            return axcountUser;
+            return List().Any(a => a.AccountID == SID && a.UserID == UID);
         }
 
         public int UpdUserTooAccount(int userID, int AmiAccountID, int groupID)

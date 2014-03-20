@@ -54,6 +54,7 @@
     <Compile Include="HttpRequestHelp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendEmail.cs" />
+    <Compile Include="ShortURL.cs" />
     <Compile Include="Tool.cs" />
     <Compile Include="UrlHelperExpand.cs" />
   </ItemGroup>

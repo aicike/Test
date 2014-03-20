@@ -226,11 +226,9 @@ namespace Poco
 
         public virtual ICollection<Task> Task { get; set; }
 
-
         public virtual ICollection<ConversationDetailed> ConversationDetailed { get; set; }
 
         public virtual ICollection<ReportFormPower> ReportFormPower { get; set; }
-
 
         public virtual ICollection<VIPInfo> VIPInfo { get; set; }
 
@@ -248,6 +246,8 @@ namespace Poco
         public virtual ICollection<UserDeliveryAddress> UserDeliveryAddress { get; set; }
 
         public virtual ICollection<AccountMain_Service> AccountMain_Services { get; set; }
+
+        public virtual ICollection<Lottery_dish> Lottery_dishs { get; set; }
 
     }
 }

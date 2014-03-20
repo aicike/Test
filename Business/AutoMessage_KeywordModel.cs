@@ -97,7 +97,7 @@ namespace Business
 
         public IQueryable<AutoMessage_Keyword> List(int accoutMainID)
         {
-            return List().Where(a => a.AccountMainID == accoutMainID && a.ParentAutoMessage_KeywordID.HasValue == false);
+            return List(true).Where(a => a.AccountMainID == accoutMainID && a.ParentAutoMessage_KeywordID.HasValue == false);
         }
 
         public int GetRuleNo(int accountMainID, int? parentAutoMessage_KeywordID)
@@ -296,7 +296,7 @@ namespace Business
 
         public List<AutoMessage_Keyword> GetFirstAutoMessage(int accountMainID)
         {
-            return List().Where(a => a.AccountMainID == accountMainID&&a.IsFistAutoMessage==true).OrderBy(a => a.ID).ToList();
+            return List().Where(a => a.AccountMainID == accountMainID&&a.IsFistAutoMessage==true).ToList();
         }
 
         public List<AutoMessage_Keyword> GetAutoMessageByKey(int accountMainID, string key)
@@ -313,15 +313,7 @@ namespace Business
         /// <returns></returns>
         public bool GetKeyByHouseID(int HousesID)
         {
-            var list = List().Where(a=> a.AccountMainHousesID==HousesID);
-            if (list.Count() > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return List().Any(a=> a.AccountMainHousesID==HousesID);
         }
     }
 }

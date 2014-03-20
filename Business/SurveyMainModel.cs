@@ -23,9 +23,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<SurveyMain> GetList(int AccountMainID)
         {
-            var list = List().Where(a => a.AccountMainID == AccountMainID);
-
-            return list;
+            return List(true).Where(a => a.AccountMainID == AccountMainID);
         }
 
         /// <summary>
@@ -112,8 +110,7 @@ namespace Business
         /// <returns></returns>
         public SurveyMain GetSurveyMainByID(int ID, int AccountMainID)
         {
-            var survey = List().Where(a => a.ID == ID && a.AccountMainID == AccountMainID).FirstOrDefault();
-            return survey;
+            return List().Where(a => a.ID == ID && a.AccountMainID == AccountMainID).FirstOrDefault();
         }
 
         /// <summary>

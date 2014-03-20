@@ -84,9 +84,12 @@ namespace Poco
 
             //public const string LoginAccountOrganization = "LoginAccountOrganization";
 
+
             public const string LoginUser = "LoginUser";
 
             public const string MicroSiteLoginAccount = "MicroSiteLoginUser";
+
+            public const string MicroSiteAccountMain = "MicroSiteAccountMain";
 
             public const string MicroSiteMenu = "MicroSiteMenu";
 
@@ -142,6 +145,7 @@ namespace Poco
             public const string MicroOrder = "MicroOrder";
             public const string AccountMain = "AccountMain";
             public const string AutoMessageReply = "AutoMessageReply";
+            public const string LotteryDish = "LotteryDish";
 
 
 
@@ -249,6 +253,9 @@ namespace Poco
 
             public const string UserTagModel = "UserTagModel";
             public const string SurveyAnswerUserModel = "SurveyAnswerUserModel";
+            public const string Lottery_dishModel = "Lottery_dishModel";
+            public const string Lottery_dish_detailModel = "Lottery_dish_detailModel";
+            public const string Lottery_UserModel = "Lottery_UserModel";
 
         }
     }

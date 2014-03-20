@@ -15,7 +15,7 @@ namespace Business
 
         public IQueryable<CardInfo> getList(int AccountMainID, string cardNum, string qz)
         {
-            var list = List().Where(a=>a.AccountMainID==AccountMainID);
+            var list = List(true).Where(a=>a.AccountMainID==AccountMainID);
 
             if (!string.IsNullOrEmpty(qz))
             {
@@ -33,7 +33,7 @@ namespace Business
 
         public IQueryable<CardInfo> getListEQ(int AccountMainID, string cardNum, int qz)
         {
-            var list = List().Where(a => a.AccountMainID == AccountMainID);
+            var list = List(true).Where(a => a.AccountMainID == AccountMainID);
 
            
                 list = list.Where(a => a.CardPrefixID == qz);
@@ -49,15 +49,7 @@ namespace Business
 
         public bool ckbCardRepeat(string cardNum, int qz,int AccountMainID)
         {
-            var list = List().Where(a => a.AccountMainID == AccountMainID && a.CardNum == cardNum && a.CardPrefixID == qz);
-            if (list.Count() > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return List().Any(a => a.AccountMainID == AccountMainID && a.CardNum == cardNum && a.CardPrefixID == qz);
         }
 
         public Result DelAll(string CardIDs)
@@ -88,15 +80,13 @@ namespace Business
 
         public CardInfo GetCardInfoBy(string cardNum, int qz, int AccountMainID)
         {
-            var list = List().Where(a => a.AccountMainID == AccountMainID && a.CardNum == cardNum && a.CardPrefixID == qz);
-            return list.FirstOrDefault();
+            return List().Where(a => a.AccountMainID == AccountMainID && a.CardNum == cardNum && a.CardPrefixID == qz).FirstOrDefault();
         }
 
 
         public CardInfo GetCardInfoBy(string cardNum, string qz, int AccountMainID)
         {
-            var list = List().Where(a => a.AccountMainID == AccountMainID && a.CardNum == cardNum && a.CardPrefix.PrefixName == qz);
-            return list.FirstOrDefault();
+            return List().Where(a => a.AccountMainID == AccountMainID && a.CardNum == cardNum && a.CardPrefix.PrefixName == qz).First();
         }
 
         /// <summary>

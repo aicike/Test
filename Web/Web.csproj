@@ -192,6 +192,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\BaseController\ManageAccountController.cs" />
     <Compile Include="Controllers\BaseController\ManageSystemUserController.cs" />
+    <Compile Include="Controllers\LotteryDishController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\LibraryTextController.cs" />
     <Compile Include="Controllers\MyTaskController.cs" />
@@ -241,6 +242,7 @@
     <Content Include="Content\blue.css" />
     <Content Include="Content\Icon\Icon.css" />
     <Content Include="Content\Icon\glyphicons.png" />
+    <Content Include="Content\News.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
@@ -250,7 +252,9 @@
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\userStyle.css" />
+    <Content Include="File\LoginPageShow\Client\361037.jpg" />
     <Content Include="File\LoginPageShow\Client\363609.jpg" />
+    <Content Include="File\LoginPageShow\Client\394388.jpg" />
     <Content Include="File\LoginPageShow\Default\Default.jpg" />
     <Content Include="File\LoginPageShow\System\347327.jpg" />
     <Content Include="File\LoginPageShow\System\5.jpg" />
@@ -993,6 +997,8 @@
     <Content Include="Views\Default\ActivitySignIn.cshtml" />
     <Content Include="Views\ActivityInfo\ShowSignIn.cshtml" />
     <Content Include="Views\AutoMessageReply\Index.cshtml" />
+    <Content Include="Views\LotteryDish\Index.cshtml" />
+    <Content Include="Views\LotteryDish\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
@@ -1014,16 +1020,14 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>16123</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://192.168.1.138/</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://192.168.1.138/</IISAppRootUrl>
+          <IISUrl>http://tllhs.imtimely.com/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>True</UseCustomServer>
-          <CustomServerUrl>http://192.168.1.138</CustomServerUrl>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>http://192.168.1.166</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

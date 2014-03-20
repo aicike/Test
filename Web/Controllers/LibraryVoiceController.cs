@@ -44,7 +44,6 @@ namespace Web.Controllers
                     libraryModel.UpdateVoiceTime(entity.ID, Server.MapPath(entity.FileMp3Path));
                 });
                 t.Start();
-
                 return "window.location.href='" + Url.Action("Index", "LibraryVoice", new { HostName = LoginAccount.HostName }) + "'";
             }
             else

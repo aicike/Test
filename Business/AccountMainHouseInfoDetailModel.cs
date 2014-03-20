@@ -11,7 +11,7 @@ namespace Business
     {
         public IQueryable<AccountMainHouseInfoDetail> GetList(int AccountMainHouseInfoID)
         {
-            return List().Where(a => a.AccountMainHouseInfoID == AccountMainHouseInfoID);
+            return List(true).Where(a => a.AccountMainHouseInfoID == AccountMainHouseInfoID);
         }
     }
 }

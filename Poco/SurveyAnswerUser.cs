@@ -53,5 +53,7 @@ namespace Poco
 
 
         public virtual ICollection<SurveyAnswer> SurveyAnswer { get; set; }
+
+        public virtual ICollection<Lottery_User> Lottery_Users { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace Business
     {
         public List<UserDeliveryAddress> GetListByUserID(int userID, int amid)
         {
-            return List().Where(a => a.UserID == userID && a.AccountMainID == amid).ToList();
+            return List(true).Where(a => a.UserID == userID && a.AccountMainID == amid).ToList();
         }
 
         public Result Delete(int amid, int userID, int udaID)

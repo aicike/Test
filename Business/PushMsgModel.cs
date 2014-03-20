@@ -25,7 +25,7 @@ namespace Business
 
         public IQueryable<PushMsg> GetList(int accountMainID, int accountID)
         {
-            return List().Where(a => a.AccountMainID == accountMainID && a.AccountID == accountID);
+            return List(true).Where(a => a.AccountMainID == accountMainID && a.AccountID == accountID);
         }
 
         [Transaction]

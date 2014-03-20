@@ -84,7 +84,7 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// web显示软文
+        /// web显示资讯
         /// </summary>
         /// <param name="id"></param>
         /// <param name="imtimely_userid">用户端ID</param>
@@ -103,7 +103,7 @@ namespace Web.Controllers
 
 
         /// <summary>
-        /// 显示软文
+        /// 显示资讯
         /// </summary>
         /// <param name="id"></param>
         /// <param name="imtimely_userid">用户ID</param>
@@ -139,7 +139,7 @@ namespace Web.Controllers
             else
             {
 
-                //用户端软文附加下载地址
+                //用户端资讯附加下载地址
                 ViewBag.Utype = advertorial.EnumAdvertorialUType;
                 if (advertorial.EnumAdvertorialUType == (int)EnumAdvertorialUType.UserEnd)
                 {

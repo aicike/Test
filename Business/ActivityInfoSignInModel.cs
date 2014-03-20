@@ -17,8 +17,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<ActivityInfoSignIn> GetAIPList(int ActivityID, int AMID)
         {
-            var list = List().Where(a => a.ActivityInfo.AccountMainID == AMID && a.ActivityInfoID == ActivityID);
-            return list;
+            return List(true).Where(a => a.ActivityInfo.AccountMainID == AMID && a.ActivityInfoID == ActivityID);
         }
     }
 }

@@ -80,17 +80,17 @@ namespace Business
 
         public new IQueryable<Role> List()
         {
-            return base.List().OrderBy(a => a.ID);
+            return base.List();
         }
 
         public IQueryable<Role> GetListByAMID(int AccountMainID)
         {
-            return base.List().Where(a => a.AccountMainID == AccountMainID).OrderBy(a => a.ID);
+            return base.List().Where(a => a.AccountMainID == AccountMainID);
         }
 
         public IQueryable<Role> GetListNoAdmin(int AccountMainID)
         {
-            return base.List().Where(a => a.AccountMainID == AccountMainID&&a.IsCanDelete==true).OrderBy(a => a.ID);
+            return base.List().Where(a => a.AccountMainID == AccountMainID&&a.IsCanDelete==true);
         }
 
         [Transaction]

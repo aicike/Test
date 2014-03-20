@@ -1,0 +1,145 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.LotteryDish;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.LotteryDish;
+}
+@section head{
+    <script type="text/javascript">
+        $(function () {
+            $("#btnInsert").click(function () {
+                $("#table_detail").append('<tr class="tr_item"><td>' +
+                    '<input type="file" style="display: none" class="file_item" /><img class="btn_img"width="40px" height="40px" style="vertical-align: middle; cursor: pointer" /></td>' +
+                    '<td><input type="text" style="width: 190px;" /></td>' +
+                    '<td><input type="text" style="width: 50px;" /></td>' +
+                    '<td><input type="text" style="width: 320px;" /></td>' +
+                    '<td><a class="btn_delete" style="color: #00aec8">删除</a></td></tr>');
+            });
+            $(".btn_img").live("click", function () {
+                $(this).prev(":file").click();
+            });
+
+            $(".file_item").live("change", function () {
+                var obj = $(this);
+                var fileName = obj.val();
+                if (fileName.length == 0) { return false; }
+                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+                switch (suffix) {
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".gif":
+                    case ".bmp":
+                        break;
+                    default:
+                        JAlert({
+                            Message: "格式限制：jpg, jpge, gif, png, bmp",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return false;
+                        break;
+                }
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        obj.next(".btn_img").attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+                return false;
+            });
+
+            $(".btn_delete").live("click", function () {
+                var count = $(".tr_item").length;
+                if (count <= 1) {
+                    JAlert({
+                        Message: "至少需要一项奖品。",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return;
+                } else {
+                    console.log($(this).parent().parent("tr"));
+                    $(this).parent().parent("tr").remove();
+                }
+            });
+        });
+    </script>
+}
+@model Poco.Lottery_dish
+<div class="title">
+    @Html.Partial("SitePath")
+</div>
+<div class="body">
+    @using (Ajax.BeginForm("Add", "LotteryDish", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {
+        <fieldset>
+            <legend>基本信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 标题
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Name)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 描述
+                    </td>
+                    <td class="tdField">@Html.TextAreaFor(a => a.Description)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Description)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <br />
+        <div>
+            奖品信息&nbsp;&nbsp;<a style="float: right; color: #00aec8" id="btnInsert">点击新增奖品</a></div>
+        <table id="table_detail" class="tableList" cellpadding="0" cellspacing="0">
+            <tr>
+                <th style="width: 50px">
+                    图片
+                </th>
+                <th style="width: 200px">
+                    奖品名称
+                </th>
+                <th style="width: 60px">
+                    中奖率(%)
+                </th>
+                <th style="width: 320px">
+                    奖品详细
+                </th>
+                <th style="width: 50px">
+                    操作
+                </th>
+            </tr>
+            <tr class="tr_item">
+                <td>
+                    <input type="file" style="display: none" class="file_item" /><img class="btn_img"
+                        width="40px" height="40px" style="vertical-align: middle; cursor: pointer" />
+                </td>
+                <td>
+                    <input type="text" style="width: 190px;" />
+                </td>
+                <td>
+                    <input type="text" style="width: 50px;" />
+                </td>
+                <td>
+                    <input type="text" style="width: 320px;" />
+                </td>
+                <td>
+                    <a class="btn_delete" style="color: #00aec8">删除</a>
+                </td>
+            </tr>
+        </table>
+     
+        <div class="action">
+            <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }
+</div>

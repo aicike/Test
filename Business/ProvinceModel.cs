@@ -12,7 +12,7 @@ namespace Business
     {
         public List<Province> GetProvinceList()
         {
-            return List().OrderBy(a => a.ID).ToList();
+            return List().ToList();
         }
     }
 }

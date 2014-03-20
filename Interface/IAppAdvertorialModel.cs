@@ -19,13 +19,9 @@ namespace Interface
         /// <returns></returns>
         AppAdvertorial GetInfo(int AID, int AMID);
 
-        Result AddAppAdvertorial(AppAdvertorial appadvertorial, HttpPostedFileBase HousShowImagePathFile, int w, int h, int x1, int y1, int tw, int th);
-
         Result AddAppAdvertorial(AppAdvertorial appadvertorial, int w, int h, int x1, int y1, int tw, int th);
 
         Result DelAppAdvertorial(int ID, int AdverTorialType);
-
-        Result EditAppAdvertorial(AppAdvertorial appadvertorial, HttpPostedFileBase HousShowImagePathFile, int w, int h, int x1, int y1, int tw, int th);
 
         Result EditAppAdvertorial(AppAdvertorial appadvertorial, int w, int h, int x1, int y1, int tw, int th);
 

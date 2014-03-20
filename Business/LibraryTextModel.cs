@@ -12,7 +12,7 @@ namespace Business
     {
         public IQueryable<LibraryText> GetLibraryList(int accountMainID)
         {
-            return List().Where(a => a.AccountMainID == accountMainID);
+            return List(true).Where(a => a.AccountMainID == accountMainID);
         }
 
         public Result Add(LibraryText libraryText, int accontMainID)

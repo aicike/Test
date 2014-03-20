@@ -7,9 +7,15 @@ namespace Business
 {
     public class BaseModel<T> : EFModel where T : class, IBaseEntity
     {
-        public IQueryable<T> List()
+        public IQueryable<T> List(bool isOrder=false)
         {
-            return base.List<T>().OrderByDescending(a=>a.ID);
+            if (isOrder)
+            {
+                return base.List<T>().OrderByDescending(a => a.ID);
+            }
+            else {
+                return base.List<T>().OrderBy(a => a.ID);
+            }
         }
         public IQueryable<T> GlobalList()
         {

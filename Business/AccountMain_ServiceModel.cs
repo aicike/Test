@@ -26,7 +26,7 @@ namespace Business
 
         public List<AccountMain_Service> GetListByAccountMainID(int accountMainID)
         {
-            return List().Where(a => a.AccountMainID == accountMainID).ToList();
+            return List(true).Where(a => a.AccountMainID == accountMainID).ToList();
         }
 
         /// <summary>

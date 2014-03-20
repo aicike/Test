@@ -15,7 +15,7 @@ namespace Business
     {
         public IQueryable<Product> GetList(int AccountMainID)
         {
-            var ProductList = List().Where(a => a.AccountMainID == AccountMainID);
+            var ProductList = List(true).Where(a => a.AccountMainID == AccountMainID);
 
             return ProductList;
         }
@@ -28,8 +28,7 @@ namespace Business
         /// <returns></returns>
         public Product GetProduct(int PID, int AccountMainID)
         {
-            var product = List().Where(a=>a.ID==PID&a.AccountMainID==AccountMainID).FirstOrDefault();
-            return product;
+            return List().Where(a=>a.ID==PID&a.AccountMainID==AccountMainID).FirstOrDefault();
         }
 
         [Transaction]
@@ -144,7 +143,7 @@ namespace Business
             {
 
                 int []types = TypeIDS.ConvertToIntArray(',');
-                var list = List().Where(a => types.Contains(a.ClassifyID) && a.Status != (int)Poco.Enum.EnumProductType.OffShelves && a.IsRelease == true);
+                var list = List(true).Where(a => types.Contains(a.ClassifyID) && a.Status != (int)Poco.Enum.EnumProductType.OffShelves);
                 return list;
             }
             else
@@ -161,8 +160,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<Product> GetProductListByIDs(int[] IDS, int AccountMainID)
         {
-            var list = List().Where(a => IDS.Contains(a.ID) && a.AccountMainID == AccountMainID);
-            return list;
+            return List(true).Where(a => IDS.Contains(a.ID) && a.AccountMainID == AccountMainID);
         }
 
         /// <summary>
@@ -173,8 +171,7 @@ namespace Business
         /// <returns></returns>
         public Product GetPInfo(int id, int AccountMainID)
         {
-            var product = List().Where(a => a.ID == id && a.AccountMainID == AccountMainID).FirstOrDefault();
-            return product;
+            return List().Where(a => a.ID == id && a.AccountMainID == AccountMainID).FirstOrDefault();
         }
 
         /// <summary>

@@ -76,6 +76,7 @@
     <Compile Include="Enum\EnumAdverTorialType.cs" />
     <Compile Include="Enum\EnumAdvertorialUType.cs" />
     <Compile Include="Enum\EnumAdverURLType.cs" />
+    <Compile Include="Enum\EnumLotteryStatus.cs" />
     <Compile Include="Enum\EnumProductDiscountType.cs" />
     <Compile Include="Enum\EnumReportForm.cs" />
     <Compile Include="Enum\EnumService.cs" />
@@ -86,6 +87,9 @@
     <Compile Include="Enum\EnumTroubleType.cs" />
     <Compile Include="Enum\EnumVIPOperate.cs" />
     <Compile Include="Feedback.cs" />
+    <Compile Include="Lottery_dish.cs" />
+    <Compile Include="Lottery_dish_detail.cs" />
+    <Compile Include="Lottery_User.cs" />
     <Compile Include="Panorama.cs" />
     <Compile Include="ProductImg.cs" />
     <Compile Include="ReportBody.cs" />
@@ -219,6 +223,7 @@
     <Compile Include="_RoleMenu.cs" />
     <Compile Include="_RoleOption.cs" />
     <Compile Include="XMPP_Body_SMS.cs" />
+    <Compile Include="Lottery_egg.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

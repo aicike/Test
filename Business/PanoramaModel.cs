@@ -13,7 +13,7 @@ namespace Business
     {
         public IQueryable<Panorama> GetByAccountMainID(int accountMainID)
         {
-            return base.List().Where(a => a.AccountMainID == accountMainID);
+            return base.List(true).Where(a => a.AccountMainID == accountMainID);
         }
 
         public new Result Add(Panorama panorama)

@@ -25,7 +25,7 @@ namespace Business
         {
             CommonModel commonModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
             string sql = "select ConversationID from ConversationDetailed where SystemStatus=0 and Ctype=0 and AccountMainID = {0} and ((UserID={1} and UserType={2}) or (UserID ={3} and UserType={4})) group by ConversationID having count(ConversationID)>1";
-       
+
             switch (Ctype)
             {
                 //售楼部与用户间对话
@@ -42,7 +42,7 @@ namespace Business
                     break;
             }
 
-            int  CID = commonModel.SqlQuery<int>(sql).FirstOrDefault();
+            int CID = commonModel.SqlQuery<int>(sql).FirstOrDefault();
             return CID;
 
         }
@@ -92,7 +92,7 @@ namespace Business
         /// <param name="UserType">用户类型 枚举</param>
         /// <param name="Ctype">会话类型 0：单人会话 1：多人会话</param>
         /// <returns></returns>
-        public Result InsertOne(int CID,int AccountMainID, int UserID, int UserType, int Ctype)
+        public Result InsertOne(int CID, int AccountMainID, int UserID, int UserType, int Ctype)
         {
             Result result = new Result();
             ConversationDetailed cd = new ConversationDetailed();
@@ -112,10 +112,9 @@ namespace Business
         /// <param name="UserType">用户类型 EnumClientUserType</param>
         /// <param name="UID">用户ID</param>
         /// <returns></returns>
-        public IQueryable<ConversationDetailed> GetUserAllSID(int UserType, int UID,int AccountMainID)
+        public IQueryable<ConversationDetailed> GetUserAllSID(int UserType, int UID, int AccountMainID)
         {
-            var list = List().Where(a=>a.AccountMainID == AccountMainID&& a.UserType==UserType && a.UserID==UID&&a.SystemStatus==0);
-            return list;
+            return List(true).Where(a => a.AccountMainID == AccountMainID && a.UserType == UserType && a.UserID == UID && a.SystemStatus == 0);
         }
 
 
@@ -124,10 +123,10 @@ namespace Business
             Result result = new Result();
             string sql = "update ConversationDetailed set SystemStatus = 1 where ConversationID=" + SID;
             int cnt = base.SqlExecute(sql);
-            if(cnt<=0)
+            if (cnt <= 0)
             {
                 result.HasError = true;
-                result.Error="删除失败！";
+                result.Error = "删除失败！";
             }
             return result;
         }

@@ -35,7 +35,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net40\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -66,9 +66,9 @@
     <Compile Include="Mapping\OrderUserInfoMap.cs" />
     <Compile Include="Mapping\TaskMap.cs" />
     <Compile Include="Mapping\RoleMenuMap.cs" />
-    <Compile Include="Migrations\201403130343414_adds.cs" />
-    <Compile Include="Migrations\201403130343414_adds.Designer.cs">
-      <DependentUpon>201403130343414_adds.cs</DependentUpon>
+    <Compile Include="Migrations\201403190428559_Update.cs" />
+    <Compile Include="Migrations\201403190428559_Update.Designer.cs">
+      <DependentUpon>201403190428559_Update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs">
       <SubType>Code</SubType>
@@ -94,8 +94,8 @@
     <Content Include="InitialProvince.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201403130343414_adds.resx">
-      <DependentUpon>201403130343414_adds.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201403190428559_Update.resx">
+      <DependentUpon>201403190428559_Update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

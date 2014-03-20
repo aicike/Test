@@ -17,7 +17,7 @@ namespace Business
 
         public IQueryable<VIPInfo> getList(int AccountMainID, string cardNum, string phoneNum)
         {
-            var list = List().Where(a => a.AccountMainID == AccountMainID);
+            var list = List(true).Where(a => a.AccountMainID == AccountMainID);
 
             if (!string.IsNullOrEmpty(phoneNum))
             {
@@ -68,30 +68,16 @@ namespace Business
             {
                 return -1;
             }
-
-
-
         }
-
-
-
 
         /// <summary>
         /// 校验是否绑定
         /// </summary>
         /// <param name="CardIDs">卡ID</param>
         /// <returns>true:已绑定 false：未绑定</returns>
-        public bool ckbIsbind(int [] CardIDs)
+        public bool ckbIsbind(int[] CardIDs)
         {
-            var list = List().Where(a => CardIDs.Contains(a.CardInfoID));
-            if (list.Count() > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return List().Any(a => CardIDs.Contains(a.CardInfoID));
         }
 
 
@@ -126,8 +112,7 @@ namespace Business
         /// <returns></returns>
         public VIPInfo GetInfoBYCardID(int CardID, int AccountMainID)
         {
-            var list = List().Where(a => a.AccountMainID == AccountMainID && a.CardInfoID == CardID).FirstOrDefault();
-            return list;
+            return List().Where(a => a.AccountMainID == AccountMainID && a.CardInfoID == CardID).FirstOrDefault();
         }
     }
 }

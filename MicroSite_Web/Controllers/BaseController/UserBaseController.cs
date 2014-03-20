@@ -11,17 +11,11 @@ namespace MicroSite_Web.Controllers
 {
     public class UserBaseController : System.Web.Mvc.BaseController
     {
-        protected User LoginUser
-        {
-            get
-            {
-                var user = Session[SystemConst.Session.LoginUser] as User;
-                return user;
-            }
-            set { Session[SystemConst.Session.LoginUser] = value; }
-        }
-        
-        public static int GetAccountMainID()
+    }
+
+    public class UserBase
+    {
+        public int GetAccountMainID()
         {
             var accountMainID = CacheModel.GetCache_Struct<int>(SystemConst.Cache.AccountMainID);
             if (accountMainID != 0)
@@ -35,8 +29,10 @@ namespace MicroSite_Web.Controllers
             }
             else
             {
-                accountMainID = accountMainModel.List().Select(a => a.ID).FirstOrDefault();
-                if (accountMainID == 0) {
+                var accountMain = accountMainModel.List().FirstOrDefault();
+                accountMainID = accountMain.ID;
+                if (accountMainID == 0)
+                {
                     throw new Exception("该网站还未配置基本信息，无法使用");
                 }
                 CacheModel.SetCache(SystemConst.Cache.AccountMainID, accountMainID);

@@ -154,8 +154,8 @@ namespace Business
         //删除角色校验
         public bool ChickDeleteRole(int roleID)
         {
-            var list = List().Where(a => a.SystemUserRoleID == roleID);
-            if (list.Count() > 0)
+            var list = List().Any(a => a.SystemUserRoleID == roleID);
+            if (list)
             {
                 return true;
             }

@@ -20,7 +20,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<Message> GetList(int SID)
         {
-            var list = List().Where(a => (a.ConversationID == SID));
+            var list = List(true).Where(a => (a.ConversationID == SID));
             return list;
         }
 
@@ -56,13 +56,7 @@ namespace Business
         /// <returns></returns>
         public int getUnreadCnt(int AccountID)
         {
-            int cnt = 0;
-            var list = List().Where(a => a.ToAccountID == AccountID && a.IsReceive==false);
-
-            if (list != null)
-            {
-                cnt = list.Count();
-            }
+            int cnt= List().Where(a => a.ToAccountID == AccountID && a.IsReceive == false).Count();
             var messGroupModel = Factory.Get<IMessageGroupChatModel>(SystemConst.IOC_Model.MessageGroupChatModel);
             int cnts = messGroupModel.GetMessageGroupCnt(AccountID, 1);
             return cnt+cnts;

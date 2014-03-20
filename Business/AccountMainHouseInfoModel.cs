@@ -13,7 +13,7 @@ namespace Business
 
         public IQueryable<AccountMainHouseInfo> GetList(int AccountMainHouseID)
         {
-            return List().Where(a => a.AccountMainHousessID == AccountMainHouseID);
+            return List(true).Where(a => a.AccountMainHousessID == AccountMainHouseID);
         }
 
 

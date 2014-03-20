@@ -43,7 +43,7 @@ namespace Business
                 }));
                 return newList;
             }
-            var list = base.List().ToList();
+            var list = base.List(true).ToList();
             CacheModel.SetCache(SystemConst.Cache.Menu, list);
             return list;
         }
@@ -74,7 +74,7 @@ namespace Business
         /// <returns></returns>
         public List<Menu> GetMenuByRoleID_NoCache(List<int> roleIDs, int? parentMenuID = null)
         {
-            List<Menu> list = base.List().ToList();
+            List<Menu> list = base.List(true).ToList();
             list = list.Where(a => a.RoleMenus.Any(b => b.SystemStatus == (int)EnumSystemStatus.Active &&
               roleIDs.Contains(b.RoleID)) && a.ParentMenuID == parentMenuID).OrderBy(a => a.Order).ToList();
             foreach (var item in list)

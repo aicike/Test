@@ -12,7 +12,7 @@ namespace Business
 
         public IQueryable<CardPrefix> getList(int AccountMainID)
         {
-            var list = List().Where(a => a.AccountMainID == AccountMainID);
+            var list = List(true).Where(a => a.AccountMainID == AccountMainID);
             return list;
         }
 
@@ -20,8 +20,8 @@ namespace Business
         public Result CheckName(string PName, int AccountMainID)
         {
             Result result = new Result();
-            var list = List().Where(a => a.AccountMainID == AccountMainID&&a.PrefixName==PName.Trim());
-            if (list.Count() > 0)
+            bool isOk= List().Any(a => a.AccountMainID == AccountMainID&&a.PrefixName==PName.Trim());
+            if (isOk)
             {
                 result.HasError = true;
                 result.Error = "前缀名称重复，添加失败！";

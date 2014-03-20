@@ -18,7 +18,7 @@ namespace Web.Areas.System.Controllers
         public ActionResult Index(int ?id)
         {
             var FeedbackModel = Factory.Get<IFeedbackModel>(SystemConst.IOC_Model.FeedbackModel);
-            var feedback = FeedbackModel.List().ToPagedList(id ?? 1, 50);
+            var feedback = FeedbackModel.List(true).ToPagedList(id ?? 1, 50);
             return View(feedback);
         }
 

@@ -170,6 +170,11 @@ function showMsg(error, fun) {
         }
     });
 }
+
+/*
+微商城代码
+*/
+
 function SetUserID(amid, userID) {
     localStorage.setItem("amid_" + amid + "_userid_", userID);
 }

@@ -188,8 +188,9 @@ namespace System
         /// <returns></returns>
         public static string TokenEncrypt(this int id_token, bool isNoUrlEncode = false)
         {
-            var value = Common.DESEncrypt.Encrypt(id_token+"");
-            if (!isNoUrlEncode) {
+            var value = Common.DESEncrypt.Encrypt(id_token + "");
+            if (!isNoUrlEncode)
+            {
                 value = HttpUtility.UrlEncodeUnicode(value);
             }
             return value;

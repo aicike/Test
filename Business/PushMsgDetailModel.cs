@@ -57,7 +57,7 @@ namespace Business
             if (list != null && list.Count > 0)
             {
                 var ids = list.Select(a => a.ID).ToList();
-                list = List().Where(a => ids.Contains(a.ID)).OrderBy(a=>a.ID).ToList();
+                list = List().Where(a => ids.Contains(a.ID)).ToList();
                 //设置消息已读
                 StringBuilder id_str = new StringBuilder();
                 int length = ids.Count();

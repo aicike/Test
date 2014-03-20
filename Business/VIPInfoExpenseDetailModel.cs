@@ -12,7 +12,7 @@ namespace Business
     {
         public IQueryable<VIPInfoExpenseDetail> GetByUserID(int userID)
         {
-            return List().Where(a => a.UserID == userID);
+            return List(true).Where(a => a.UserID == userID);
         }
     }
 }
