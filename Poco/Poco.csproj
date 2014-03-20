@@ -62,6 +62,7 @@
     <Compile Include="ActivityInfoParticipator.cs" />
     <Compile Include="ActivityInfoSignIn.cs" />
     <Compile Include="AppAdvertorial.cs" />
+    <Compile Include="AppAdvertorialBrowse.cs" />
     <Compile Include="AppAdvertorialOperation.cs" />
     <Compile Include="AppWaitImg.cs" />
     <Compile Include="AutoMessage_Reply.cs">
@@ -76,6 +77,7 @@
     <Compile Include="Enum\EnumAdverTorialType.cs" />
     <Compile Include="Enum\EnumAdvertorialUType.cs" />
     <Compile Include="Enum\EnumAdverURLType.cs" />
+    <Compile Include="Enum\EnumBrowseType.cs" />
     <Compile Include="Enum\EnumLotteryStatus.cs" />
     <Compile Include="Enum\EnumProductDiscountType.cs" />
     <Compile Include="Enum\EnumReportForm.cs" />
