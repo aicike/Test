@@ -168,6 +168,9 @@ namespace Web.Controllers
                 }
                 //更改浏览次数
                 AdvertorialModel.BrowseCntADD(id);
+                //更改浏览次数(报表)
+                var BrowseModel = Factory.Get<IAppAdvertorialBrowseModel>(SystemConst.IOC_Model.AppAdvertorialBrowseModel);
+                BrowseModel.AddOrUpdBrowse(id,EnumBrowseAdvertorialType.Information);
                 return View(advertorial);
             }
         }
@@ -379,11 +382,14 @@ namespace Web.Controllers
             //主表
             var MainModel = Factory.Get<ISurveyMainModel>(SystemConst.IOC_Model.SurveyMainModel);
             var main = MainModel.Get(surveyMainID);
-
+            ViewBag.ADverID = ADverID;
 
             var AdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             //更改浏览次数
             AdvertorialModel.BrowseCntADD(ADverID);
+            //更改浏览次数(报表)
+            var BrowseModel = Factory.Get<IAppAdvertorialBrowseModel>(SystemConst.IOC_Model.AppAdvertorialBrowseModel);
+            BrowseModel.AddOrUpdBrowse(surveyMainID, EnumBrowseAdvertorialType.SurveyMain);
             return View(main);
         }
 
@@ -397,7 +403,7 @@ namespace Web.Controllers
         /// <param name="IsRegistered">是否为记名调查</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddQuestionnaire(int surveyMainID, int? UID, int? Utype, string Answer, bool IsRegistered)
+        public ActionResult AddQuestionnaire(int surveyMainID, int ADverID, int? UID, int? Utype, string Answer, bool IsRegistered)
         {
             List<SurveyAnswer> SA = null;
             SA = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SurveyAnswer>>(Answer);
@@ -422,7 +428,7 @@ namespace Web.Controllers
             {
                 return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
             }
-            return RedirectToAction("Questionnaire", "Default", new { surveyMainID_token = surveyMainID.TokenEncrypt(true), isok = 1 });
+            return RedirectToAction("Questionnaire", "Default", new { surveyMainID_token = surveyMainID.TokenEncrypt(true),ADverID= ADverID, isok = 1 });
         }
 
 
@@ -531,10 +537,13 @@ namespace Web.Controllers
                     ViewBag.IOSURL = AccountModel.IOSDownloadPath;
                 }
             }
+            ViewBag.ADverID = ADverID;
             var AdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             //更改浏览次数
             AdvertorialModel.BrowseCntADD(ADverID);
-
+            //更改浏览次数(报表)
+            var BrowseModel = Factory.Get<IAppAdvertorialBrowseModel>(SystemConst.IOC_Model.AppAdvertorialBrowseModel);
+            BrowseModel.AddOrUpdBrowse(ActivityID, EnumBrowseAdvertorialType.ActivityInfo);
             return View(Activity);
         }
         /// <summary>
@@ -563,7 +572,7 @@ namespace Web.Controllers
 
 
         [HttpPost]
-        public ActionResult AddActivityInfo(int ActivityID, int? UID, int? Utype)
+        public ActionResult AddActivityInfo(int ActivityID, int ADverID, int? UID, int? Utype)
         {
 
             ActivityInfoParticipator aip = new ActivityInfoParticipator();
@@ -604,7 +613,7 @@ namespace Web.Controllers
                 }
                 catch { }
             }
-            return RedirectToAction("ActivityInfo", "Default", new { ActivityID_token = ActivityID.TokenEncrypt(true), isok = 1 });
+            return RedirectToAction("ActivityInfo", "Default", new { ActivityID_token = ActivityID.TokenEncrypt(true), ADverID = ADverID, isok = 1 });
         }
 
 

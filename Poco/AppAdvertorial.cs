@@ -70,5 +70,7 @@ namespace Poco
 
         public virtual ICollection<AppAdvertorialOperation> AppAdvertorialOperation { get; set; }
 
+        public virtual ICollection<AppAdvertorialBrowse> AppAdvertorialBrowse { get; set; }
+        
     }
 }

@@ -310,17 +310,41 @@
             font-size: 18px;
             font-weight: bold;
         }
-        .divRemarks
+         .divRemarks
         {
-            font-size: 14px;
+            border: 1px solid #aaaaab;
+            padding: 5px 10px 5px 10px;
+            margin-bottom: 10px;
+            color: #000 !important;
+            line-height: 1.5 !important;
+            background: none !important;
+            text-shadow: none !important;
+            font-size: 16px !important;
         }
+         .divRemarks p
+        {
+            margin: 0px !important;
+        }
+        .divRemarks *
+        {
+            line-height: 1.5 !important;
+            @*background: none !important;
+            color: #000 !important;*@
+            font-size: 16px !important;
+            text-shadow: none !important;
+            width: 100% !important;
+        }
+        img
+        {
+            max-width:100%;
+            }
     </style>
 }
 @model Poco.SurveyMain
 @{
     var Trouble = Model.SurveyTrouble.OrderBy(a => a.TroubleNumber).ToList();    
 }
-@using (Html.BeginForm("AddQuestionnaire", "Default", new { surveyMainID = ViewBag.smid, IsRegistered = Model.IsRegistered }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("AddQuestionnaire", "Default", new { surveyMainID = ViewBag.smid, IsRegistered = Model.IsRegistered ,ADverID =ViewBag.ADverID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div style="display: none">
         @if (string.IsNullOrEmpty(Model.MinImagePath))
@@ -342,14 +366,13 @@
                 <fieldset data-role="controlgroup">
                     <div class="divTitle">@Model.SurveyTitle</div>
                     <div class="divRemarks">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        @Model.SurveyRemarks
+                        @Html.Raw(Model.Content)
                     </div>
                 </fieldset>
                 @*//0 开启 1停止*@
                 @if (Model.Status == 0)
                 { 
-                    <input type="button" id="Btnbegin" class="BeginT" value="意 见 表" />
+                    <input type="button" id="Btnbegin" class="BeginT" value="开 始 调 查" />
                 }
                 else
                 {

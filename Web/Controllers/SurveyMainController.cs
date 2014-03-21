@@ -62,6 +62,7 @@ namespace Web.Controllers
         /// <param name="surveymain"></param>
         /// <returns></returns>
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult AddMain(SurveyMain surveymain, int w, int h, int x1, int y1, int tw, int th)
         {
             surveymain.CreateDate = DateTime.Now;
@@ -110,6 +111,7 @@ namespace Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult EditMain(SurveyMain surveymain, int w, int h, int x1, int y1, int tw, int th)
         {
             surveymain.CreateDate = DateTime.Now;

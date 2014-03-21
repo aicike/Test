@@ -7,6 +7,8 @@
     <link href="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Scripts/uploadify/uploadify.css")" rel="stylesheet" type="text/css" />
     <script src="@Url.Content("~/Scripts/uploadify/jquery.uploadify.js")" type="text/javascript"></script>
+            <script src="@Url.Content("/ueditor/ueditor.config.js")" type="text/javascript"></script>
+    <script src="@Url.Content("/ueditor/ueditor.all.js")" type="text/javascript"></script>
     <script>
         var Cnt = 0;
         var UpImgUrl = '@Url.Action("UpImg", "Ajax", new { HostName = ViewBag.HostName })';
@@ -115,9 +117,31 @@
                     }
                 }
 
+                if (ue.getContent().length == 0) {
+                    JAlert({
+                        Message: "正文不能为空！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return false;
+                }
+
 
             });
 
+
+            window.UEDITOR_HOME_URL = "/ueditor/";
+            //实例化编辑器
+            var options = {
+                initialFrameWidth: '100%',
+                initialFrameHeight: 300,
+                imageUrl: UEDITOR_HOME_URL + "net/imageUp_Advertorial.ashx",
+                imagePath: "",
+                imageManagerUrl: UEDITOR_HOME_URL + "net/imageManager_LibraryImageText.ashx",
+                imageManagerPath: "",
+                initialContent: ""
+            };
+            var ue = UE.getEditor('editor', options);
 
             $("#IsRegistered").val("@ViewBag.IsRegistered");
 
@@ -227,7 +251,7 @@
         </fieldset>
         <fieldset style="font-size: 14px">
             <legend>创建调查问卷</legend>
-            <table class="tableForm">
+            <table class="tableForm" style=" width:100%">
                 <tr>
                     <td class="tdTitle" style="width: 150px">
                         <span class="Identification">*</span> 调查问卷标题
@@ -282,6 +306,14 @@
                             <option value="0">开启</option>
                             <option value="1">停用</option>
                         </select>
+                    </td>
+                </tr>
+                 <tr style="height:300px">
+                    <td class="tdTitle" valign="top">
+                        <span class="Identification">*</span> 简介/内容
+                    </td>
+                    <td class="tdField" colspan="2" style="height:300px"> 
+                        <script type="text/plain" id="editor" height="300px" name="Content">@Html.Raw(Model.Content)</script>
                     </td>
                 </tr>
             </table>

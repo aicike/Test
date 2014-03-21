@@ -115,5 +115,7 @@ namespace Poco
 
         
         public virtual ICollection<ActivityInfoSignIn> ActivityInfoSignIn { get; set; }
+
+        public virtual ICollection<AppAdvertorialBrowse> AppAdvertorialBrowse { get; set; }
     }
 }

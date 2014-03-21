@@ -249,7 +249,7 @@ namespace Poco
 
             public const string UserTagModel = "UserTagModel";
             public const string SurveyAnswerUserModel = "SurveyAnswerUserModel";
-
+            public const string AppAdvertorialBrowseModel = "AppAdvertorialBrowseModel";
         }
     }
 }

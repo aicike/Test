@@ -286,7 +286,7 @@ $("#btn_yang").hide();
                 <div data-role="popup" id="shwoSubmit" data-overlay-theme="a" data-theme="b" data-dismissible="false">
                     <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete"
                         data-iconpos="notext" class="ui-btn-right">Close</a>
-                    @using (Html.BeginForm("AddActivityInfo", "Default", new { ActivityID = ViewBag.ActivityID }, FormMethod.Post, new { enctype = "multipart/form-data", style = "padding:10px 20px" }))
+                    @using (Html.BeginForm("AddActivityInfo", "Default", new { ActivityID = ViewBag.ActivityID, ADverID = ViewBag.ADverID }, FormMethod.Post, new { enctype = "multipart/form-data", style = "padding:10px 20px" }))
                     {
                         <input id="UID" type="hidden" name="UID" value="@ViewBag.UID" />
                         <input id="Utype" type="hidden" name="Utype" value="@ViewBag.Utype" />

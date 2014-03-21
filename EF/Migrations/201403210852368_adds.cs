@@ -7,12 +7,12 @@ namespace EF.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.SurveyAnswerUser", "QQ_Weixin", c => c.String());
+            AddColumn("dbo.SurveyMain", "Content", c => c.String(nullable: false));
         }
         
         public override void Down()
         {
-            DropColumn("dbo.SurveyAnswerUser", "QQ_Weixin");
+            DropColumn("dbo.SurveyMain", "Content");
         }
     }
 }

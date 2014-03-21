@@ -41,6 +41,14 @@ namespace Poco
         public string SurveyRemarks { get; set; }
 
         /// <summary>
+        /// 简介或内容
+        /// </summary>
+        [Display(Name = "调查备注或描述")]
+        [Required(ErrorMessage = "请输入调查备注或描述")]
+        public string Content { get; set; }
+
+
+        /// <summary>
         /// 创建人
         /// </summary>
         [Display(Name = "创建人")]
@@ -96,6 +104,8 @@ namespace Poco
 
 
         public virtual ICollection<SurveyTrouble> SurveyTrouble { get; set; }
+
+        public virtual ICollection<AppAdvertorialBrowse> AppAdvertorialBrowse { get; set; }
 
 
     }
