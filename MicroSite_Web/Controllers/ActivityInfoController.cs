@@ -136,7 +136,7 @@ namespace Web.Controllers
 
 
         /// <summary>
-        /// 生成软文 ajax
+        /// 生成资讯 ajax
         /// </summary>
         /// <param name="id"></param>
         /// <param name="client">客户端 EnumAdvertorialUType</param>

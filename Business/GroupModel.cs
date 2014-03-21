@@ -18,11 +18,11 @@ namespace Business
             var accountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
             if (accountMainID != null && accountMainID.HasValue)
             {
-                list.AddRange(List().Where(a => a.AccountID == accountID && a.AccountMainID == accountMainID).OrderBy(a => a.ID).ToList());
+                list.AddRange(List().Where(a => a.AccountID == accountID && a.AccountMainID == accountMainID).ToList());
             }
             else
             {
-                list.AddRange(List().Where(a => a.AccountID == accountID).OrderBy(a => a.ID).ToList());
+                list.AddRange(List().Where(a => a.AccountID == accountID).ToList());
             }
             return list;
         }

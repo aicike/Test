@@ -84,7 +84,7 @@ namespace Business
         public List<Account> GetAccountListByAccountMainID(int accountMainID)
         {
             string accountStatus = EnumAccountStatus.Enabled.ToString();
-            return List().Where(a => a.AccountMainID == accountMainID &&
+            return List(true).Where(a => a.AccountMainID == accountMainID &&
                 a.Account.SystemStatus == (int)EnumSystemStatus.Active &&
                 a.Account.AccountStatus.Token.Equals(accountStatus) &&
                 a.AccountMain.AccountStatus.Token.Equals(accountStatus) &&

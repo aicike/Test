@@ -118,7 +118,7 @@ namespace Web.Controllers
             surveymain.AccountMainID = LoginAccount.CurrentAccountMainID;
             surveymain.AccountID = LoginAccount.ID;
             var MainModel = Factory.Get<ISurveyMainModel>(SystemConst.IOC_Model.SurveyMainModel);
-            var result = MainModel.EditSurveyMain(surveymain,w,h,x1,y1,tw,th);
+            var result = MainModel.EditSurveyMain(surveymain, w, h, x1, y1, tw, th);
             if (result.HasError)
             {
                 return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
@@ -214,7 +214,7 @@ namespace Web.Controllers
             var AnswerModel = Factory.Get<ISurveyAnswerModel>(SystemConst.IOC_Model.SurveyAnswerModel);
             if (AnswerModel.GetListBySMID(SMID, LoginAccount.CurrentAccountMainID).Count() > 0)
             {
-                return RedirectToAction("IndexTrouble", "SurveyMain", new { HostName = LoginAccount.HostName, SMID = SMID, tishi = 1});
+                return RedirectToAction("IndexTrouble", "SurveyMain", new { HostName = LoginAccount.HostName, SMID = SMID, tishi = 1 });
             }
 
             //基本信息
@@ -473,7 +473,7 @@ namespace Web.Controllers
             var MainModel = Factory.Get<ISurveyMainModel>(SystemConst.IOC_Model.SurveyMainModel);
             var main = MainModel.GetSurveyMainByID(id, LoginAccount.CurrentAccountMainID);
             appRW.Content = "";
-            appRW.ContentURL =  SystemConst.WebUrlIP + "/Default/Questionnaire?surveyMainID_token=" + id.TokenEncrypt();
+            appRW.ContentURL = string.Format("http://{0}/Default/Questionnaire?surveyMainID_token={1}", SystemConst.WebUrl, id.TokenEncrypt()).ConvertToShortURL();
             appRW.EnumAdverURLType = (int)EnumAdverURLType.Survey;
             appRW.AccountMainID = LoginAccount.CurrentAccountMainID;
 

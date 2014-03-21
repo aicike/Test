@@ -33,7 +33,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<AppAdvertorialOperation> getListByAID(int AID)
         {
-            var list = List().Where(a => a.AppAdvertorialID == AID);
+            var list = List(true).Where(a => a.AppAdvertorialID == AID);
             return list;
         }
 

@@ -15,7 +15,7 @@ namespace Business
     {
         public IQueryable<LibraryVideo> GetLibraryList(int accountMainID)
         {
-            return List().Where(a => a.AccountMainID == accountMainID);
+            return List(true).Where(a => a.AccountMainID == accountMainID);
         }
 
         public Result Upload(LibraryVideo entity, System.Web.HttpPostedFileBase video)

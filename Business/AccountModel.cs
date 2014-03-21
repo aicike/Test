@@ -26,7 +26,7 @@ namespace Business
         public IQueryable<Account> GetAccountListByAccountMain(int accountMainID)
         {
             var entity = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
-            return entity.List().Where(a => a.AccountMainID == accountMainID).Select(a => a.Account);
+            return entity.List(true).Where(a => a.AccountMainID == accountMainID).Select(a => a.Account);
         }
         /// <summary>
         /// 获取项目成员(不包含管理员)
@@ -34,7 +34,7 @@ namespace Business
         public IList<Account> GetAccountListNoAdminByAccountMain(int accountMainID)
         {
             var entity = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
-            return entity.List().Where(a => a.AccountMainID == accountMainID & a.Account.Account_Roles.Any(b => b.RoleID == 1) == false).Select(a => a.Account).ToList();
+            return entity.List(true).Where(a => a.AccountMainID == accountMainID & a.Account.Account_Roles.Any(b => b.RoleID == 1) == false).Select(a => a.Account).ToList();
         }
 
         public IQueryable<Account> GetAccountListByAccountMain(AccountMain accountMain)
@@ -926,7 +926,7 @@ namespace Business
         /// <returns></returns>
         public List<Account> GetSubAccounts(int accountID)
         {
-            return List().Where(a => a.ParentAccountID == accountID).ToList();
+            return List(true).Where(a => a.ParentAccountID == accountID).ToList();
         }
 
 

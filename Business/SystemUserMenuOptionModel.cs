@@ -13,7 +13,7 @@ namespace Business
     {
         public List<SystemUserMenuOption> GetAllOptionByRoleID(int systemUserRoleID)
         {
-            return base.List().Where(a => a.SystemUserRole_Options
+            return base.List(true).Where(a => a.SystemUserRole_Options
                                            .Any(b => b.SystemStatus == (int)EnumSystemStatus.Active &&
                                                      b.SystemUserRoleID == systemUserRoleID)).ToList();
         }

@@ -48,7 +48,7 @@
 
 //        }
 
-        //生成软文
+        //生成资讯
         function ShowAddress(id, client, text) {
             JAlert({
                 Message: text,
@@ -78,7 +78,7 @@
             });
         }
 
-        //ajax 生成软文
+        //ajax 生成资讯
         function SetAppAdver(id, client)
         {
             //client  EnumAdvertorialUType
@@ -199,7 +199,7 @@
                     @if (item.ISGenerateUserAdvisory == 0)
                     { 
                     <label name="labCbFirst" title="生成用户端咨讯">
-                        <a onclick="ShowAddress(@item.ID,@((int)Poco.Enum.EnumAdvertorialUType.UserEnd),'是否要生成用户端软文?')"  style=" font-size:12px">生成用户端咨讯</a>
+                        <a onclick="ShowAddress(@item.ID,@((int)Poco.Enum.EnumAdvertorialUType.UserEnd),'是否要生成用户端资讯?')"  style=" font-size:12px">生成用户端咨讯</a>
                     </label>
                     }
                     else
@@ -210,7 +210,7 @@
                     @if (item.ISGenerateSaleAdvisory == 0)
                     { 
                     <label name="labCbFirst" title="生成销售端咨讯">
-                        <a onclick="ShowAddress(@item.ID,@((int)Poco.Enum.EnumAdvertorialUType.AccountEnd),'是否要生成销售端软文?')"  style=" font-size:12px">生成销售端咨讯</a>
+                        <a onclick="ShowAddress(@item.ID,@((int)Poco.Enum.EnumAdvertorialUType.AccountEnd),'是否要生成销售端资讯?')"  style=" font-size:12px">生成销售端咨讯</a>
                     </label>
                     }
                     else

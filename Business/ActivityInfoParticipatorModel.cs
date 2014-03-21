@@ -18,9 +18,9 @@ namespace Business
         /// <returns></returns>
         public Result GetUserIsSignUP(int UserID, int UserType,int AID)
         {
-            var acinfo = List().Where(a => a.UserID == UserID && a.EnumAdvertorialUType == UserType&&a.ActivityInfoID==AID);
+            var acinfo = List().Any(a => a.UserID == UserID && a.EnumAdvertorialUType == UserType&&a.ActivityInfoID==AID);
             Result result = new Result();
-            if (acinfo.Count() > 0)
+            if (acinfo)
             {
                 result.HasError = true;
             }
@@ -34,9 +34,9 @@ namespace Business
         /// <returns></returns>
         public Result GetUserIsSignUP2(string phone,int AID)
         {
-            var acinfo = List().Where(a => a.ActivityInfoID == AID && a.Phone == phone);
+            var acinfo = List().Any(a => a.ActivityInfoID == AID && a.Phone == phone);
             Result result = new Result();
-            if (acinfo.Count() > 0)
+            if (acinfo)
             {
                 result.HasError = true;
             }
@@ -51,9 +51,9 @@ namespace Business
         /// <returns></returns>
         public Result GetUserIsSignUP3(string Email, int AID)
         {
-            var acinfo = List().Where(a => a.ActivityInfoID == AID && a.Email == Email);
+            var acinfo = List().Any(a => a.ActivityInfoID == AID && a.Email == Email);
             Result result = new Result();
-            if (acinfo.Count() > 0)
+            if (acinfo)
             {
                 result.HasError = true;
             }
@@ -68,7 +68,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<ActivityInfoParticipator> GetAIPList(int ActivityID, int AMID)
         {
-            var list = List().Where(a => a.ActivityInfo.AccountMainID == AMID && a.ActivityInfoID == ActivityID);
+            var list = List(true).Where(a => a.ActivityInfo.AccountMainID == AMID && a.ActivityInfoID == ActivityID);
             return list;
         }
     }

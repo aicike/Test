@@ -5,7 +5,9 @@
     var TitleShow = ViewBag.TitleShow as List<Poco._B_Advertorial>;
     var ListShow = ViewBag.ListShow as List<Poco._B_Advertorial>;
     var lastID = Convert.ToInt32(ViewBag.LastID);
-    var accountMainID = MicroSite_Web.Controllers.UserBaseController.GetAccountMainID();
+
+    MicroSite_Web.Controllers.UserBase ub = new MicroSite_Web.Controllers.UserBase();
+    var accountMainID = ub.GetAccountMainID();
 }
 @section head{
     <script type="text/javascript">

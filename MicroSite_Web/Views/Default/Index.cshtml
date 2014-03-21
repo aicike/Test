@@ -8,7 +8,8 @@
     }
     else
     {
-        accountMainID = MicroSite_Web.Controllers.UserBaseController.GetAccountMainID();
+        MicroSite_Web.Controllers.UserBase ub=new MicroSite_Web.Controllers.UserBase();
+        accountMainID = ub.GetAccountMainID();
     }
 }
 <script>

@@ -240,7 +240,7 @@
                 }
                 if (IsStick == 1) {
                     JAlert({
-                        Message: "最多允许“5”篇软文置顶！请重新选择！",
+                        Message: "最多允许“5”篇资讯置顶！请重新选择！",
                         DialogType: "Ok",
                         BtnOk: "确定"
                     });
@@ -310,7 +310,7 @@
 
                     if (result == "No") {
                         JAlert({
-                            Message: "最多允许“5”篇软文置顶！请重新选择！",
+                            Message: "最多允许“5”篇资讯置顶！请重新选择！",
                             DialogType: "Ok",
                             BtnOk: "确定"
                         });
@@ -436,7 +436,7 @@
             <table class="tableForm" style="width: 100%">
                 <tr>
                     <td class="tdTitle">
-                        <span class="Identification">*</span> 软文标题
+                        <span class="Identification">*</span> 资讯标题
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.Title) @Html.HiddenFor(a => a.AccountMainID)
                         @Html.HiddenFor(a => a.ID)
@@ -467,14 +467,14 @@
                             <option value="0">否</option>
                             <option value="1">是</option>
                         </select>
-                        (最多只能有“5”篇软文置顶)
+                        (最多只能有“5”篇资讯置顶)
                     </td>
                     <td>
                     </td>
                 </tr>
                 <tr style=" display:none">
                     <td class="tdTitle">
-                        <span class="Identification">*</span> 软文类型
+                        <span class="Identification">*</span> 资讯类型
                     </td>
                     <td class="tdField">
                         <select id="AType" onchange="ClickType()" name="AType" style="width: 100px">

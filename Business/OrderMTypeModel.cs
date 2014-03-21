@@ -11,7 +11,7 @@ namespace Business
     {
         public IQueryable<OrderMType> GetList(int AccountMainID)
         {
-            var Orderlist = List().Where(a => a.AccountMainID == AccountMainID);
+            var Orderlist = List(true).Where(a => a.AccountMainID == AccountMainID);
             return Orderlist;
         }
     }

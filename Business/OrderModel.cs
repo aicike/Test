@@ -21,17 +21,17 @@ namespace Business
 
         public IQueryable<Order> GetByAccountMianID(int accountMainID)
         {
-            return List().Where(a => a.AccountMainID == accountMainID);
+            return List(true).Where(a => a.AccountMainID == accountMainID);
         }
 
         public IQueryable<Order> GetByAccountID(int accountID)
         {
-            return List().Where(a => a.OrderUserID == accountID && a.OrderUserType == (int)EnumClientUserType.Account);
+            return List(true).Where(a => a.OrderUserID == accountID && a.OrderUserType == (int)EnumClientUserType.Account);
         }
 
         public IQueryable<Order> GetByAccountID(int accountID, bool orderStatusComplete)
         {
-            var list = List().Where(a => a.OrderUserID == accountID && a.OrderUserType == (int)EnumClientUserType.Account);
+            var list = List(true).Where(a => a.OrderUserID == accountID && a.OrderUserType == (int)EnumClientUserType.Account);
             if (orderStatusComplete)
             {
                 list = list.Where(a => a.status == (int)EnumOrderStatus.Complete || a.status == (int)EnumOrderStatus.Cancel);
@@ -46,7 +46,7 @@ namespace Business
 
         public IQueryable<Order> GetList(int accountMainID, int daybyday, string orderNum, string PhoneNum, string status)
         {
-            var list = List().Where(a => a.AccountMainID == accountMainID);
+            var list = List(true).Where(a => a.AccountMainID == accountMainID);
             DateTime day = DateTime.Now;
             if (status != "all")
             {
@@ -268,7 +268,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<Order> MicroSite_GetByUserID_WaitPayMent(int amid, int userID)
         {
-            return List().Where(a => a.AccountMainID == amid && a.OrderUserID == userID && a.OrderUserType == 2 && a.status == (int)EnumOrderStatus.WaitPayMent);
+            return List(true).Where(a => a.AccountMainID == amid && a.OrderUserID == userID && a.OrderUserType == 2 && a.status == (int)EnumOrderStatus.WaitPayMent);
         }
 
 
@@ -280,7 +280,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<Order> MicroSite_GetByUserID_Proceed(int amid, int userID)
         {
-            return List().Where(a => a.AccountMainID == amid && a.OrderUserID == userID && a.OrderUserType == 2
+            return List(true).Where(a => a.AccountMainID == amid && a.OrderUserID == userID && a.OrderUserType == 2
                 && (a.status == (int)EnumOrderStatus.Proceed ||
                 a.status == (int)EnumOrderStatus.Shipped ||
                 a.status == (int)EnumOrderStatus.Payment));
@@ -294,7 +294,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<Order> MicroSite_GetByUserID_Complete(int amid, int userID)
         {
-            return List().Where(a => a.AccountMainID == amid && a.OrderUserID == userID && a.OrderUserType == 2
+            return List(true).Where(a => a.AccountMainID == amid && a.OrderUserID == userID && a.OrderUserType == 2
                 && (
                 a.status == (int)EnumOrderStatus.Cancel ||
                 a.status == (int)EnumOrderStatus.Complete));
@@ -342,16 +342,12 @@ namespace Business
                     HPIDS = HPIDS.TrimEnd('|');
                     int[] Pstr = HPIDS.ConvertToIntArray('|');
                     var productList = productModel.GetProductListByIDs(Pstr, AMID).ToList();
-                    
+                    //计算总价钱 与获取产品信息
                     List<OrderDetail> ods = new List<OrderDetail>();
                     double amount = 0;
                     HPIDSandCnt = HPIDSandCnt.TrimEnd('|');
                     string[] HPIDCnt = HPIDSandCnt.Split('|');
-                    
-                  
-
                     CommonModel com = new CommonModel();
-                    //计算总价钱 与获取产品信息
                     foreach (var item in productList)
                     {
                         if (item.Status != (int)EnumProductType.Normal)
@@ -364,13 +360,6 @@ namespace Business
                             string[] cnts = K.Split(',');
                             if (item.ID == int.Parse(cnts[0]))
                             {
-                                //校验库存是否足够
-                                if (item.Stock < int.Parse(cnts[1]))
-                                {
-                                    result.HasError = true;
-                                    result.Error = item.ID.ToString();                                    
-                                    return result;
-                                }
                                 //总价
                                 amount = amount + (item.Price * int.Parse(cnts[1]));
                                 OrderDetail od = new OrderDetail();
@@ -485,7 +474,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<Order> Micro_GetList(int accountMainID, int daybyday, string orderNum, string PhoneNum, string status, string UserName, string Pname)
         {
-            var list = List().Where(a => a.AccountMainID == accountMainID);
+            var list = List(true).Where(a => a.AccountMainID == accountMainID);
             DateTime day = DateTime.Now;
             if (status != "all")
             {

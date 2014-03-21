@@ -6,7 +6,7 @@ using System.Text;
 namespace Poco.Enum
 {
     /// <summary>
-    /// 软文URL类型
+    /// 资讯URL类型
     /// </summary>
     public enum EnumAdverURLType
     {

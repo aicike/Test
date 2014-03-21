@@ -65,6 +65,8 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -107,12 +109,16 @@
     <Compile Include="ConversationModel.cs" />
     <Compile Include="DistrictModel.cs" />
     <Compile Include="EFModel.cs" />
+    <Compile Include="ExpandMethod.cs" />
     <Compile Include="FeedbackModel.cs" />
     <Compile Include="HolidayModel.cs" />
     <Compile Include="KeywordAutoMessageModel.cs" />
     <Compile Include="KeywordModel.cs" />
     <Compile Include="LookupFactory.cs" />
     <Compile Include="LookupOptionModel.cs" />
+    <Compile Include="Lottery_dishModel.cs" />
+    <Compile Include="Lottery_dish_detailModel.cs" />
+    <Compile Include="Lottery_UserModel.cs" />
     <Compile Include="MessageGroupChatModel.cs" />
     <Compile Include="MessageModel.cs" />
     <Compile Include="OrderDetailModel.cs" />
@@ -133,6 +139,11 @@
     <Compile Include="QrCodeModel.cs" />
     <Compile Include="ReportFormPowerModel.cs" />
     <Compile Include="RoleModel.cs" />
+    <Compile Include="Service References\Imtimely_ShortURL\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="ServiceModel.cs" />
     <Compile Include="SMS_Model.cs" />
     <Compile Include="SurveyAnswerModel.cs" />
@@ -249,6 +260,40 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TaskDetailModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Service References\Imtimely_ShortURL\ShortURLService.wsdl" />
+    <None Include="Service References\Imtimely_ShortURL\ShortURLService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Imtimely_ShortURL\ShortURLService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Imtimely_ShortURL\ShortURLService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\Imtimely_ShortURL\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Imtimely_ShortURL\ShortURLService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Imtimely_ShortURL\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Imtimely_ShortURL\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Imtimely_ShortURL\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

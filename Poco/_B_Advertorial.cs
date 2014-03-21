@@ -29,7 +29,7 @@ namespace Poco
         public string F { get; set; }
 
         /// <summary>
-        /// 软文地址
+        /// 资讯地址
         /// </summary>
         public string URL { get; set; }
 

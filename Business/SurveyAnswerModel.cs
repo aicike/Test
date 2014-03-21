@@ -19,7 +19,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<SurveyAnswer> GetListBySMID(int SMID, int AccountMainID)
         {
-            var list = List().Where(a => a.SurveyTrouble.SurveyMain.ID == SMID && a.SurveyTrouble.SurveyMain.AccountMainID == AccountMainID);
+            var list = List(true).Where(a => a.SurveyTrouble.SurveyMain.ID == SMID && a.SurveyTrouble.SurveyMain.AccountMainID == AccountMainID);
             return list;
         }
 
@@ -170,8 +170,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<SurveyAnswer> GetAnswerUserList(int SMID, int AccountMainID)
         {
-            var list = List().Where(a => a.SurveyTrouble.SurveyMainID == SMID && a.SurveyTrouble.SurveyMain.AccountMainID == AccountMainID).GroupBy(a => a.UserCode).Select(a => a.FirstOrDefault()).OrderByDescending(a => a.ID);
-            return list;
+            return List().Where(a => a.SurveyTrouble.SurveyMainID == SMID && a.SurveyTrouble.SurveyMain.AccountMainID == AccountMainID).GroupBy(a => a.UserCode).Select(a => a.FirstOrDefault()).OrderByDescending(a => a.ID);
         }
 
         /// <summary>
@@ -181,8 +180,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<SurveyAnswer> GetAnswerInfoByUserCode(string UserCode)
         {
-            var list = List().Where(a=>a.UserCode==UserCode);
-            return list;
+            return List(true).Where(a=>a.UserCode==UserCode);
         }
 
         /// <summary>

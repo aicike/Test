@@ -192,6 +192,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\BaseController\ManageAccountController.cs" />
     <Compile Include="Controllers\BaseController\ManageSystemUserController.cs" />
+    <Compile Include="Controllers\LotteryDishController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\LibraryTextController.cs" />
     <Compile Include="Controllers\MyTaskController.cs" />
@@ -241,6 +242,7 @@
     <Content Include="Content\blue.css" />
     <Content Include="Content\Icon\Icon.css" />
     <Content Include="Content\Icon\glyphicons.png" />
+    <Content Include="Content\News.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
@@ -320,6 +322,11 @@
     <Content Include="Scripts\JqueryMobile\jquery.mobile-1.4.0.js" />
     <Content Include="Scripts\JqueryMobile\jquery.mobile-1.4.0.min.css" />
     <Content Include="Scripts\JqueryMobile\jquery.mobile.subpage.js" />
+    <Content Include="Scripts\LotteryDish\disk.jpg" />
+    <Content Include="Scripts\LotteryDish\index.html" />
+    <Content Include="Scripts\LotteryDish\jquery.easing.min.js" />
+    <Content Include="Scripts\LotteryDish\jQueryRotate.2.2.js" />
+    <Content Include="Scripts\LotteryDish\start.png" />
     <Content Include="Scripts\mobiscroll\css\mobiscroll.custom-2.6.2.min.css" />
     <Content Include="Scripts\mobiscroll\css\wp_icons.png" />
     <Content Include="Scripts\mobiscroll\css\wp_icons_light.png" />
@@ -993,6 +1000,10 @@
     <Content Include="Views\Default\ActivitySignIn.cshtml" />
     <Content Include="Views\ActivityInfo\ShowSignIn.cshtml" />
     <Content Include="Views\AutoMessageReply\Index.cshtml" />
+    <Content Include="Views\LotteryDish\Index.cshtml" />
+    <Content Include="Views\LotteryDish\Add.cshtml" />
+    <Content Include="Views\LotteryDish\View.cshtml" />
+    <Content Include="Views\Default\ceshi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
@@ -1018,12 +1029,10 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>16123</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://192.168.1.138/</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://192.168.1.138/</IISAppRootUrl>
+          <IISUrl>http://tllhs.imtimely.com/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>True</UseCustomServer>
-          <CustomServerUrl>http://192.168.1.138</CustomServerUrl>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>http://192.168.1.166</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

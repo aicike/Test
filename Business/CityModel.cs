@@ -11,7 +11,7 @@ namespace Business
     {
         public List<City> GetCityList(int provinceID)
         {
-            return List().Where(a => a.ProvinceID == provinceID).OrderBy(a => a.ID).ToList();
+            return List().Where(a => a.ProvinceID == provinceID).ToList();
         }
     }
 }

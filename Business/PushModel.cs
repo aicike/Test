@@ -276,12 +276,6 @@ namespace Business
                 //推送
                 Push_IOS.SendMessage(item, strContent, p12File);
             }
-
         }
-
-
-
-
-
     }
 }

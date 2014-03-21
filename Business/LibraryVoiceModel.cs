@@ -90,7 +90,7 @@ namespace Business
 
         public IQueryable<LibraryVoice> GetLibraryList(int accountMainID)
         {
-            return List().Where(a => a.AccountMainID == accountMainID);
+            return List(true).Where(a => a.AccountMainID == accountMainID);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Business
     {
         public List<Service> GetList()
         {
-            return List().OrderBy(a=>a.ID).ToList();
+            return List().ToList();
         }
     }
 }

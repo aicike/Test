@@ -44,5 +44,7 @@ namespace Poco
 
         [Display(Name = "参与时间")]
         public DateTime JoinDateTime { get; set; }
+
+        public virtual ICollection<Lottery_User> Lottery_Users { get; set; }
     }
 }

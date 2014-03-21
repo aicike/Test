@@ -91,7 +91,7 @@
 
                     if (result == "No") {
                         JAlert({
-                            Message: "修改失败 最多允许“5”篇软文置顶！",
+                            Message: "修改失败 最多允许“5”篇资讯置顶！",
                             DialogType: "Ok",
                             BtnOk: "确定"
                         });
@@ -129,7 +129,6 @@
 }
 <div class="title">
     @Html.Partial("Menu3")</div>
-
 <div class="body">
     <div class="option">
         @Html.ActionLink("添加", "Add", "AppAdvertorialAccount", new { HostName = ViewBag.HostName }, null, true)
@@ -145,13 +144,13 @@
                 展示图片
             </th>
             <th style="width: 230px; word-wrap: break-word; word-break: normal;">
-                软文标题
+                资讯标题
             </th>
             <th>
                 发布日期
             </th>
             <th>
-                咨询类型
+                资讯类型
             </th>
             <th>
                 浏览次数
@@ -232,10 +231,10 @@
                 <td style="font-size: 12px; color: #696969">
                     @item.IssueDate.ToString("yyyy-MM-dd")
                 </td>
-                 <td>
+                <td>
                     @if (item.EnumAdverTorialType == (int)Poco.Enum.EnumAdverTorialType.txt)
                     { 
-                        @:软文
+                        @:资讯
                     }
                     else if (item.EnumAdverTorialType == (int)Poco.Enum.EnumAdverTorialType.url)
                     {
@@ -250,7 +249,7 @@
                         else if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey)
                         {
                         @:调查问卷
-                                            }
+                                                                }
                     }
                 </td>
                 <td>
@@ -269,7 +268,7 @@
                     else
                     { 
                         @:无
-                     }
+                                         }
                 </td>
                 <td class="operation">
                     @if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey || item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Activities)
@@ -279,13 +278,11 @@
                     { 
                         @Html.ActionLink("修改", "Edit", "AppAdvertorialAccount", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:10px" }, true)
                     }
-                    
                     @Ajax.ActionLink("删除", "Delete", "AppAdvertorialAccount", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?！','" + Url.Action("Delete", "AppAdvertorialAccount", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
-                    @if (ViewBag.HasAPP)
-                    {  
-                    <br /><a onclick="clickSelectInfo('@item.ID')" style=" width:56px">&nbsp;查看详细</a>
-                    }
-                    <br /><a onclick="clickaddress('@item.ID.TokenEncrypt()')" style=" width:56px">查看地址</a>
+                    <br />
+                    <a onclick="clickSelectInfo('@item.ID')" style=" width:56px">&nbsp;查看详细</a>
+                    <br />
+                    <a onclick="clickaddress('@item.ID.TokenEncrypt()')" style=" width:56px">查看地址</a>
                 </td>
             </tr>
         }
@@ -335,12 +332,11 @@
 </div>
 <div id="dialogShowUrl" title="资讯地址" style="display: none; padding: 0px; text-align: center">
     <div style="padding-top: 20px;">
-        <label name="labCbFirst" title="点击复制" onclick="copy()" style=" cursor:pointer">
+        <label name="labCbFirst" title="点击复制" onclick="copy()" style="cursor: pointer">
             <span id="urlAddress" style="font-weight: bold">11</span>
         </label>
     </div>
 </div>
-
 <div id="dialogShowSelectInfo" title="资讯详细" style="display: none; padding: 0px">
     <iframe id="iframeShowSelectInfo" src="#" style="width: 100%; height: 530px; border: none;
         overflow: auto"></iframe>

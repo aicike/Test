@@ -63,7 +63,7 @@
 
                     if (result == "No") {
                         JAlert({
-                            Message: "修改失败 最多允许“5”篇软文置顶！",
+                            Message: "修改失败 最多允许“5”篇资讯置顶！",
                             DialogType: "Ok",
                             BtnOk: "确定"
                         });
@@ -117,7 +117,7 @@
                 展示图片
             </th>
             <th style="width: 230px; word-wrap: break-word; word-break: normal;">
-                软文标题
+                资讯标题
             </th>
             <th>
                 发布日期
@@ -204,7 +204,7 @@
                  <td>
                     @if (item.EnumAdverTorialType == (int)Poco.Enum.EnumAdverTorialType.txt)
                     { 
-                        @:软文
+                        @:资讯
                     }
                     else if (item.EnumAdverTorialType == (int)Poco.Enum.EnumAdverTorialType.url)
                     {

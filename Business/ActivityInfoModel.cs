@@ -23,7 +23,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<ActivityInfo> GetListByAMID(int AMID)
         {
-            var list = List().Where(a => a.AccountMainID == AMID);
+            var list = List(true).Where(a => a.AccountMainID == AMID);
             return list;
         }
 
@@ -61,8 +61,7 @@ namespace Business
         /// <returns></returns>
         public ActivityInfo GetActivityByID(int AID, int AccountMainID)
         {
-            var activity = List().Where(a => a.AccountMainID == AccountMainID && a.ID == AID).FirstOrDefault();
-            return activity;
+           return List().Where(a => a.AccountMainID == AccountMainID && a.ID == AID).FirstOrDefault();
         }
 
         /// <summary>

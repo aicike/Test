@@ -80,8 +80,6 @@ namespace Poco
 
         public int UserLoginInfoID { get; set; }
 
-
-
         public virtual UserLoginInfo UserLoginInfo { get; set; }
 
         public virtual ICollection<SystemMessage> SystemMessages { get; set; }
@@ -101,6 +99,8 @@ namespace Poco
         public virtual ICollection<VIPInfoExpenseDetail> VIPInfoExpenseDetails { get; set; }
 
         public virtual ICollection<UserDeliveryAddress> UserDeliveryAddress { get; set; }
+
+        public virtual ICollection<Lottery_User> Lottery_Users { get; set; }
         
     }
 }

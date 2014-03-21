@@ -12,7 +12,7 @@ namespace Business
     {
         public IQueryable<AccountMainHouses> GetList(int AccountMainID)
         {
-            return List().Where(a => a.AccountMainID == AccountMainID);
+            return List(true).Where(a => a.AccountMainID == AccountMainID);
         }
 
         //删除所有数据 级联删除

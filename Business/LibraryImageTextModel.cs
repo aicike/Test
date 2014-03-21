@@ -17,7 +17,7 @@ namespace Business
     {
         public IQueryable<LibraryImageText> GetLibraryList(int accountMainID)
         {
-            return List().Where(a => a.AccountMainID == accountMainID && a.LibraryImageTextParentID.HasValue == false);
+            return List(true).Where(a => a.AccountMainID == accountMainID && a.LibraryImageTextParentID.HasValue == false);
         }
 
         [Transaction]

@@ -16,7 +16,7 @@ namespace Web.Areas.System.Controllers
         public ActionResult Index(int? id)
         {
             var systemUserModel = Factory.Get<ISystemUserModel>(SystemConst.IOC_Model.SystemUserModel);
-            var pageList = systemUserModel.List().Where(a => a.SystemUserRoleID != 1).OrderBy(a => a.ID).ToPagedList(id ?? 1, 15);
+            var pageList = systemUserModel.List().Where(a => a.SystemUserRoleID != 1).ToPagedList(id ?? 1, 15);
             return View(pageList);
         }
 

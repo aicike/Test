@@ -19,7 +19,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<SurveyOption> GetListBYTroubleID(int TID, int AccountMainID)
         {
-            var list = List().Where(a => a.SurveyTroubleID == TID && a.SurveyTrouble.SurveyMain.AccountMainID == AccountMainID).OrderBy(a => a.ID);
+            var list = List().Where(a => a.SurveyTroubleID == TID && a.SurveyTrouble.SurveyMain.AccountMainID == AccountMainID);
             return list;
         }
 

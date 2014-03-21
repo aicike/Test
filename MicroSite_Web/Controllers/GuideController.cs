@@ -162,7 +162,7 @@ namespace MicroSite_Web.Controllers
             }
             if (isOk)
             {
-                var account = account_accountMainModel.List().Select(a => a.Account).OrderBy(a => a.ID).FirstOrDefault();
+                var account = account_accountMainModel.List().Select(a => a.Account).FirstOrDefault();
                 account.IsSuperAdmin = true;
                 account.CurrentAccountMainID = account.Account_AccountMains.FirstOrDefault().AccountMainID;
                 Session[SystemConst.Session.LoginAccount] = account;

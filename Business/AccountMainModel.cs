@@ -23,7 +23,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<AccountMain> ListForOrganization(int organization_accountMainID)
         {
-            return List().Where(a => a.ParentAccountMainID == organization_accountMainID);
+            return List(true).Where(a => a.ParentAccountMainID == organization_accountMainID);
         }
 
         public IQueryable<AccountMain> List_Permission(int loginSystemUserID = 0)
@@ -38,16 +38,16 @@ namespace Business
                 }
                 if (loginSystemUser.SystemUserRoleID == 1)
                 {
-                    return base.List().OrderByDescending(a => a.ID);
+                    return base.List(true);
                 }
                 else
                 {
-                    return base.List().Where(a => a.SystemUserID == loginSystemUserID).OrderByDescending(a => a.ID);
+                    return base.List(true).Where(a => a.SystemUserID == loginSystemUserID);
                 }
             }
             else
             {
-                return base.List().OrderByDescending(a => a.ID);
+                return base.List(true);
             }
         }
 
@@ -512,7 +512,7 @@ namespace Business
                     //删除原路径
                     if (!string.IsNullOrEmpty(accountMain.IOSClientCertificate))
                     {
-                        var YPath =accountMain.IOSClientCertificate;
+                        var YPath = accountMain.IOSClientCertificate;
                         if (File.Exists(YPath))
                         {
                             File.Delete(YPath);
@@ -533,7 +533,7 @@ namespace Business
                     //删除原路径
                     if (!string.IsNullOrEmpty(accountMain.IOSSalestCertificate))
                     {
-                        var YPath =accountMain.IOSSalestCertificate;
+                        var YPath = accountMain.IOSSalestCertificate;
                         if (File.Exists(YPath))
                         {
                             File.Delete(YPath);
@@ -1097,15 +1097,8 @@ namespace Business
         /// <returns></returns>
         public bool CheckPropertyRandomCode(int AccountMainID, string RandomCode)
         {
-            var list = this.List().Where(a => a.ID == AccountMainID && a.RandomCode == RandomCode);
-            if (list.Count() > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            var list = this.List().Any(a => a.ID == AccountMainID && a.RandomCode == RandomCode);
+            return list;
         }
 
 

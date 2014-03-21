@@ -13,7 +13,7 @@ namespace Business
     {
         public IQueryable<OrderDetail> GetOrderDetailByOrderID(int OrderID)
         {
-            var list = List().Where(a=>a.OrderID==OrderID);
+            var list = List(true).Where(a=>a.OrderID==OrderID);
             return list;
         }
 

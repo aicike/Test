@@ -11,12 +11,7 @@ namespace Business
     {
         public int GetMessageGroupCnt(int UserID, int UserType)
         {
-            var list = List().Where(a => a.UserID == UserID && a.UserType == UserType);
-            if (list != null)
-            {
-                return list.Count();
-            }
-            return 0;
+            return List().Where(a => a.UserID == UserID && a.UserType == UserType).Count();
         }
     }
 }

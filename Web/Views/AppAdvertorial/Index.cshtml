@@ -1,6 +1,8 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
     ViewBag.Menu2 = Poco.SystemConst.Menu.AppAdvertorial;
+    string Address = ViewBag.UrlAddress;
+    string activityURL = "http://" + Address + "/default/News?id_token=";
 }
 @model PagedList<Poco.AppAdvertorial>
 @section head{
@@ -54,19 +56,17 @@
             });
         }
 
-        function clickaddress(id, ActivityID, URLType) {
+        function clickaddress(shortURL, ActivityID, URLType) {
 
             $("#divactivitySigin").hide();
-            var Address = "@ViewBag.UrlAddress";
-            var url = "http://" + Address + "/default/News?id_token=" + id;
-            $("#urlAddress").text(url);
+            $("#urlAddress").text(shortURL);
             if (URLType != null && URLType != undefined && URLType != "") {
                 var types = "@((int)Poco.Enum.EnumAdverURLType.Activities)";
                 if (URLType == types) {
-                    var signUrl = "http://" + Address + "/default/ActivitySignIn?ActivityID=" + ActivityID;
+                    var signUrl = "http://" + '@Address' + "/default/ActivitySignIn?ActivityID=" + ActivityID;
                     $("#divactivitySigin").show();
                     $("#urlSignInAddress").text(signUrl);
-                    
+
                 }
             }
             $("#dialogShowUrl").dialog({
@@ -99,7 +99,7 @@
                 $.post(Url, { ID: ID }, function (result) {
                     if (result == "No") {
                         JAlert({
-                            Message: "修改失败 最多允许“5”篇软文置顶！",
+                            Message: "修改失败 最多允许“5”篇资讯置顶！",
                             DialogType: "Ok",
                             BtnOk: "确定"
                         });
@@ -120,8 +120,6 @@
                 $("#Sort").val(Sort);
                 $("#btnStick").click();
             }
-
-
         }
 
         function clickSort(ID, Sort, Type) {
@@ -130,9 +128,6 @@
             $("#Sort_stye").val(Type);
             $("#btnSort").click();
         }
-
-     
-
     </script>
 }
 <div class="title">
@@ -152,13 +147,13 @@
                 展示图片
             </th>
             <th style="width: 230px; word-wrap: break-word; word-break: normal;">
-                软文标题
+                资讯标题
             </th>
             <th>
                 发布日期
             </th>
             <th>
-                咨询类型
+                资讯类型
             </th>
             <th>
                 浏览次数
@@ -200,14 +195,14 @@
                     if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey)
                     {
                     <td>
-                        <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id_token = item.UrlID.Value.TokenEncrypt(true) })" target="_blank">
+                        <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id_token = item.UrlID.Value.TokenEncrypt(true)  })" target="_blank">
                             <img style="width: 150px; border:0; margin-top:5px
                             ;cursor:pointer " src="@Url.Content(item.AppShowImagePath ?? "")" /></a>
                     </td>
                     <td style="font-size: 14px" class="operation">
                         <label
                             name="labCbFirst" title="@item.Depict" style=" cursor:pointer">
-                            <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id_token = item.UrlID.Value.TokenEncrypt(true) })" target="_blank">
+                            <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id_token =item.UrlID.Value.TokenEncrypt(true) })" target="_blank">
                                 @item.Title
                             </a>
                         </label>
@@ -246,7 +241,7 @@
                 <td>
                     @if (item.EnumAdverTorialType == (int)Poco.Enum.EnumAdverTorialType.txt)
                     { 
-                        @:软文
+                        @:资讯
                     }
                     else if (item.EnumAdverTorialType == (int)Poco.Enum.EnumAdverTorialType.url)
                     {
@@ -261,7 +256,7 @@
                         else if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey)
                         {
                         @:调查问卷
-                                                                                                                            }
+                                                                                                                                                }
                     }
                 </td>
                 <td>
@@ -280,7 +275,7 @@
                     else
                     { 
                         @:无
-                                                                                                                                                                                                                                                                                         }
+                                                                                                                                                                                                                                                                                                             }
                 </td>
                 <td class="operation" align="center">
                     @if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey || item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Activities)
@@ -292,12 +287,9 @@
                     }
                     @Ajax.ActionLink("删除", "Delete", "AppAdvertorial", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?！','" + Url.Action("Delete", "AppAdvertorial", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
                     <br />
-                    @if (ViewBag.HasAPP)
-                    { 
                     <a onclick="clickSelectInfo('@item.ID')" style=" width:56px">&nbsp;查看详细</a>
                     <br />
-                    }
-                    <a onclick="clickaddress('@item.ID.TokenEncrypt()','@item.UrlID','@item.EnumAdverURLType')" style=" width:56px">
+                    <a onclick="clickaddress('@item.ContentURL','@item.UrlID','@item.EnumAdverURLType')" style=" width:56px">
                         查看地址 </a>
                 </td>
             </tr>
@@ -348,8 +340,7 @@
 </div>
 <div id="dialogShowUrl" title="资讯地址" style="display: none; padding: 0px; text-align: center">
     <div style="padding-top: 20px;">
-        咨询地址：<span id="urlAddress" style="font-weight: bold"></span>
-        
+        资讯地址：<span id="urlAddress" style="font-weight: bold"></span>
         <div id="divactivitySigin" style="display: none">
             <br />
             签到地址：<span id="urlSignInAddress" style="font-weight: bold"></span>

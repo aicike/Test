@@ -19,7 +19,7 @@ namespace Business
             {
                 return obj;
             }
-            var list = base.List().ToList();
+            var list = base.List(true).ToList();
             CacheModel.SetCache(SystemConst.Cache.SystemUserMenu, list);
             return list;
         }

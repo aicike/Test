@@ -311,6 +311,7 @@
             var Pcount = $("#txtNumber").val();
             var YPPrive =  $("#YPPrive").val();
             var PDiscount =  $("#PDiscount").val();
+            Cart.PDiscount =PDiscount;
             if (Pcount <= 0) {
                 showMsg("请选择数量！");
                 return false;

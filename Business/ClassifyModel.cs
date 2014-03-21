@@ -21,7 +21,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<Classify> GetLastClass(int ParentID, int AccountMainID)
         {
-            var classifyModel = List().Where(a => a.AccountMainID == AccountMainID && a.ParentID == ParentID);
+            var classifyModel = List(true).Where(a => a.AccountMainID == AccountMainID && a.ParentID == ParentID);
             return classifyModel;
         }
 
@@ -65,14 +65,14 @@ namespace Business
 
         public IQueryable<Classify> GetClassByPID(int PID)
         {
-            var classifyModel = List().Where(a => a.ParentID == PID);
+            var classifyModel = List(true).Where(a => a.ParentID == PID);
             return classifyModel;
         }
 
 
         public IQueryable<Classify> GetLastClass(int ParentID, int AccountMainID, int NoID)
         {
-            var classifyModel = List().Where(a => a.AccountMainID == AccountMainID && a.ParentID == ParentID && a.ID != NoID);
+            var classifyModel = List(true).Where(a => a.AccountMainID == AccountMainID && a.ParentID == ParentID && a.ID != NoID);
             return classifyModel;
         }
 
@@ -146,15 +146,7 @@ namespace Business
 
         public bool GetIsMainNode(int ID)
         {
-            var Class = List().Where(a => a.ID == ID && a.ParentID == 0);
-            if (Class.Count() > 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return !List().Any(a => a.ID == ID && a.ParentID == 0);
         }
 
         /// <summary>
@@ -164,8 +156,7 @@ namespace Business
         public List<Classify> Get1levelClass(int accountMainID)
         {
             var parentIDs = GetLastClass(0, accountMainID).Select(a => a.ID);
-            var list = List().Where(a => parentIDs.Contains(a.ParentID));
-            return list.ToList();
+            return List(true).Where(a => parentIDs.Contains(a.ParentID)).ToList();
         }
 
         /// <summary>
@@ -220,9 +211,7 @@ namespace Business
         public IQueryable<Classify> GetOneLevel(int AccountMainID)
         {
             int ParentID = List().Where(a => a.AccountMainID == AccountMainID && a.ParentID == 0).FirstOrDefault().ID;
-
-            var list = List().Where(a => a.ParentID == ParentID);
-
+            var list = List(true).Where(a => a.ParentID == ParentID);
             return list;
         }
 
@@ -234,7 +223,7 @@ namespace Business
         public string GetTypeSUBID(int ID,int AccountMainID)
         {
             string strID = "";
-            var list = List().Where(a => a.ParentID == ID && a.AccountMainID == AccountMainID).ToList();
+            var list = List(true).Where(a => a.ParentID == ID && a.AccountMainID == AccountMainID).ToList();
             foreach (var item in list)
             {
                 strID += item.ID + ",";
@@ -250,13 +239,12 @@ namespace Business
         public string GetSubID(int ID, int AccountMainID)
         {
             string strID = "";
-            var list = List().Where(a => a.ParentID == ID && a.AccountMainID == AccountMainID).ToList();
+            var list = List(true).Where(a => a.ParentID == ID && a.AccountMainID == AccountMainID).ToList();
             foreach (var item in list)
             {
                 strID += item.ID + ",";
                 strID += GetSubID(item.ID, AccountMainID);
             }
-
             return strID;
         }
     }

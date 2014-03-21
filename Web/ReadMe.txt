@@ -29,3 +29,30 @@ WebConfig中UpLodeFile节点值+“所属售楼部ID”+“.Message/”
 
 ----6.jquery mobile 主题编辑器
 http://themeroller.jquerymobile.com/
+
+
+----7.短域名需要配置wcf
+
+<bindings>
+      <basicHttpBinding>
+        <binding name="BasicHttpBinding_IShortURLService" closeTimeout="00:01:00"
+          openTimeout="00:01:00" receiveTimeout="00:10:00" sendTimeout="00:01:00"
+          allowCookies="false" bypassProxyOnLocal="false" hostNameComparisonMode="StrongWildcard"
+          maxBufferSize="65536" maxBufferPoolSize="524288" maxReceivedMessageSize="65536"
+          messageEncoding="Text" textEncoding="utf-8" transferMode="Buffered"
+          useDefaultWebProxy="true">
+          <readerQuotas maxDepth="32" maxStringContentLength="8192" maxArrayLength="16384"
+            maxBytesPerRead="4096" maxNameTableCharCount="16384" />
+          <security mode="None">
+            <transport clientCredentialType="None" proxyCredentialType="None"
+              realm="" />
+            <message clientCredentialType="UserName" algorithmSuite="Default" />
+          </security>
+        </binding>
+      </basicHttpBinding>
+    </bindings>
+    <client>
+      <endpoint address="http://url.imtimely.com/WCF/ShortURLService.svc"
+        binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IShortURLService"
+        contract="Imtimely_ShortURL.IShortURLService" name="BasicHttpBinding_IShortURLService" />
+    </client>

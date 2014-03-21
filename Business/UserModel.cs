@@ -15,14 +15,13 @@ namespace Business
     {
         public IQueryable<User> GetUserByAccountID(int accountID, int groupID)
         {
-            var list = List().Where(a => a.Account_Users.Any(b => b.AccountID == accountID && b.SystemStatus == (int)EnumSystemStatus.Active && b.GroupID == groupID));
+            var list = List(true).Where(a => a.Account_Users.Any(b => b.AccountID == accountID && b.SystemStatus == (int)EnumSystemStatus.Active && b.GroupID == groupID));
             return list;
         }
 
         public List<User> GetUserListByAccountID(int accountMainID, int accountID)
         {
-            var list = List().Where(a => a.AccountMainID == accountMainID && a.Account_Users.Any(b => b.AccountID == accountID)).OrderBy(a=>a.Account_Users.FirstOrDefault().GroupID).ToList();
-            return list;
+            return List().Where(a => a.AccountMainID == accountMainID && a.Account_Users.Any(b => b.AccountID == accountID)).OrderBy(a=>a.Account_Users.FirstOrDefault().GroupID).ToList();
         }
 
         public new Result Add(User user)
@@ -39,8 +38,7 @@ namespace Business
         
         public User getUserByLoginID(int AccountMainID, int LoginID)
         {
-            var list = List().Where(a => a.AccountMainID == AccountMainID && a.UserLoginInfoID == LoginID).FirstOrDefault();
-            return list;
+            return List().Where(a => a.AccountMainID == AccountMainID && a.UserLoginInfoID == LoginID).FirstOrDefault();
         }
     }
 }

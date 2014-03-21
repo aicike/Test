@@ -56,10 +56,10 @@ namespace Poco
         [Display(Name = "内容地址")]
         public string ContentURL { get; set; }
 
-        [Display(Name = "软文类型")]
+        [Display(Name = "资讯类型")]
         public int EnumAdverTorialType { get; set; }
 
-        [Display(Name = "软文URL类型")]
+        [Display(Name = "资讯URL类型")]
         public int? EnumAdverURLType { get; set; }
 
         [Display(Name = "浏览次数")]
