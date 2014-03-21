@@ -5,14 +5,26 @@
 }
 @section head{
     <script type="text/javascript">
+
+        //奖品信息
+        function LotteryItem() {
+            var it = new Object;
+            it.Name = "";
+            it.Ratio = "";
+            it.Image = "";
+            it.Description = "";
+            return it;
+        }
+
         $(function () {
             $("#btnInsert").click(function () {
                 $("#table_detail").append('<tr class="tr_item"><td>' +
-                    '<input type="file" style="display: none" class="file_item" /><img class="btn_img"width="40px" height="40px" style="vertical-align: middle; cursor: pointer" /></td>' +
-                    '<td><input type="text" style="width: 190px;" /></td>' +
-                    '<td><input type="text" style="width: 50px;" /></td>' +
-                    '<td><input type="text" style="width: 320px;" /></td>' +
+                    '<input type="file" style="display: none" class="file_item" name="file_item" /><img class="btn_img"width="40px" height="40px" style="vertical-align: middle; cursor: pointer" /></td>' +
+                    '<td><input type="text" style="width: 190px;" class="txtItemTitle" /></td>' +
+                    '<td><input type="text" class="txtItemRatio" maxlength="5" style="width: 50px;" title="填写数字（格式：10 , 10.5）"/></td>' +
+                    '<td><input type="text" style="width: 320px;" class="txtItemDescription" /></td>' +
                     '<td><a class="btn_delete" style="color: #00aec8">删除</a></td></tr>');
+                init();
             });
             $(".btn_img").live("click", function () {
                 $(this).prev(":file").click();
@@ -52,9 +64,9 @@
 
             $(".btn_delete").live("click", function () {
                 var count = $(".tr_item").length;
-                if (count <= 1) {
+                if (count <= 2) {
                     JAlert({
-                        Message: "至少需要一项奖品。",
+                        Message: "至少需要2项奖品。",
                         DialogType: "Ok",
                         BtnOk: "确定"
                     });
@@ -64,7 +76,70 @@
                     $(this).parent().parent("tr").remove();
                 }
             });
+
+
+            $(".txtItemRatio").live("keyup blur", function () {
+                var value = $(this).val().trim();
+                if (value.length > 0) {
+                    var regex = /^\d{1,2}((\.)|(\.\d{1,2}))?$/;
+                    if (!regex.test(value)) {
+                        $(this).addClass("input-validation-error").focus();
+
+                    } else {
+                        $(this).removeClass("input-validation-error")
+                    }
+                }
+            });
+
+            $("#btnSubmit").click(function () {
+                var hasError = false;
+                $(".txtItemTitle,.txtItemRatio,.txtItemDescription").each(function (i, n) {
+                    if ($(n).val().trim().length == 0) {
+                        JAlert({
+                            Message: "请填写完整的奖品信息。",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        hasError = true;
+                        return;
+                    }
+                    var ratioSum = 0;
+                    $(".txtItemRatio").each(function (i, n) {
+                        ratioSum += parseInt($(n).val().trim());
+                    });
+                    if (ratioSum != 100) {
+                        JAlert({
+                            Message: "各奖品中奖率和要等于100。",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        hasError = true;
+                        return;
+                    }
+                });
+                if (hasError) {
+                    return false;
+                } else {
+                    //获取奖品信息
+                    var items = [];
+                    $(".tr_item").each(function (i, n) {
+                        var li = new LotteryItem();
+                        li.Name = $(n).find(".txtItemTitle").val().trim();
+                        li.Ratio = $(n).find(".txtItemRatio").val().trim();
+                        li.Image = $(n).find(".file_item").val().trim();
+                        li.Description = $(n).find(".txtItemDescription").val().trim();
+                        items.push(li);
+                    });
+                    $("#hidItems").val(JSON.stringify(items));
+                    return true;
+                }
+            });
+            init();
         });
+
+        function init() {
+            $(".txtItemRatio").tipTip({ activation: "hover,focus", delay: 3, defaultPosition: "top" });
+        }
     </script>
 }
 @model Poco.Lottery_dish
@@ -72,7 +147,7 @@
     @Html.Partial("SitePath")
 </div>
 <div class="body">
-    @using (Ajax.BeginForm("Add", "LotteryDish", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    @using (Html.BeginForm("Add", "LotteryDish", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <fieldset>
             <legend>基本信息</legend>
@@ -81,7 +156,7 @@
                     <td class="tdTitle">
                         <span class="Identification">*</span> 标题
                     </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.Name)
+                    <td class="tdField">@Html.TextBoxFor(a => a.Name)<input id="hidItems" name="hidItems" type="hidden" />
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Name)
                     </td>
@@ -99,7 +174,7 @@
         </fieldset>
         <br />
         <div>
-            奖品信息&nbsp;&nbsp;<a style="float: right; color: #00aec8" id="btnInsert">点击新增奖品</a></div>
+            奖品信息（至少2件奖品）&nbsp;&nbsp;<a style="float: right; color: #00aec8" id="btnInsert">点击新增奖品</a></div>
         <table id="table_detail" class="tableList" cellpadding="0" cellspacing="0">
             <tr>
                 <th style="width: 50px">
@@ -120,17 +195,35 @@
             </tr>
             <tr class="tr_item">
                 <td>
-                    <input type="file" style="display: none" class="file_item" /><img class="btn_img"
+                    <input type="file" style="display: none" class="file_item" name="file_item" /><img class="btn_img"
                         width="40px" height="40px" style="vertical-align: middle; cursor: pointer" />
                 </td>
                 <td>
-                    <input type="text" style="width: 190px;" />
+                    <input type="text" style="width: 190px;" class="txtItemTitle" />
                 </td>
                 <td>
-                    <input type="text" style="width: 50px;" />
+                    <input type="text" class="txtItemRatio" maxlength="5" style="width: 50px;" title="填写数字（格式：10 , 10.5）" />
                 </td>
                 <td>
-                    <input type="text" style="width: 320px;" />
+                    <input type="text" style="width: 320px;" class="txtItemDescription" />
+                </td>
+                <td>
+                    <a class="btn_delete" style="color: #00aec8">删除</a>
+                </td>
+            </tr>
+            <tr class="tr_item">
+                <td>
+                    <input type="file" style="display: none" class="file_item" name="file_item" /><img class="btn_img"
+                        width="40px" height="40px" style="vertical-align: middle; cursor: pointer" />
+                </td>
+                <td>
+                    <input type="text" style="width: 190px;" class="txtItemTitle" />
+                </td>
+                <td>
+                    <input type="text" class="txtItemRatio" maxlength="5" style="width: 50px;" title="填写数字（格式：10 , 10.5）" />
+                </td>
+                <td>
+                    <input type="text" style="width: 320px;" class="txtItemDescription" />
                 </td>
                 <td>
                     <a class="btn_delete" style="color: #00aec8">删除</a>

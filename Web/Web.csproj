@@ -324,6 +324,11 @@
     <Content Include="Scripts\JqueryMobile\jquery.mobile-1.4.0.js" />
     <Content Include="Scripts\JqueryMobile\jquery.mobile-1.4.0.min.css" />
     <Content Include="Scripts\JqueryMobile\jquery.mobile.subpage.js" />
+    <Content Include="Scripts\LotteryDish\disk.jpg" />
+    <Content Include="Scripts\LotteryDish\index.html" />
+    <Content Include="Scripts\LotteryDish\jquery.easing.min.js" />
+    <Content Include="Scripts\LotteryDish\jQueryRotate.2.2.js" />
+    <Content Include="Scripts\LotteryDish\start.png" />
     <Content Include="Scripts\mobiscroll\css\mobiscroll.custom-2.6.2.min.css" />
     <Content Include="Scripts\mobiscroll\css\wp_icons.png" />
     <Content Include="Scripts\mobiscroll\css\wp_icons_light.png" />
@@ -999,6 +1004,8 @@
     <Content Include="Views\AutoMessageReply\Index.cshtml" />
     <Content Include="Views\LotteryDish\Index.cshtml" />
     <Content Include="Views\LotteryDish\Add.cshtml" />
+    <Content Include="Views\LotteryDish\View.cshtml" />
+    <Content Include="Views\Default\ceshi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
