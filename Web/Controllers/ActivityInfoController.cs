@@ -229,5 +229,20 @@ namespace Web.Controllers
             var ActivityInfoParticipator = ActivitySingInModel.GetAIPList(AID, LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 50);
             return View(ActivityInfoParticipator);
         }
+
+
+        //-------------报表展示-----------------------------------------------------------------------------------------
+
+
+        /// <summary>
+        /// 活动报表界面
+        /// </summary>
+        /// <param name="AID"></param>
+        /// <returns></returns>
+        public ActionResult ActivityReport(int AID)
+        {
+
+            return View();
+        }
     }
 }
