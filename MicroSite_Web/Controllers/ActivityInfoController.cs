@@ -151,7 +151,8 @@ namespace Web.Controllers
             var activityInfoModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
             var main = activityInfoModel.GetActivityByID(id, LoginAccount.CurrentAccountMainID);
             appRW.Content = "";
-            appRW.ContentURL = "http://" + SystemConst.WebUrl + "/Default/ActivityInfo?ActivityID=" + id;
+            appRW.ContentURL = "http://" + SystemConst.WebUrl + "/Default/ActivityInfo?ActivityID_token=" + id.TokenEncrypt();
+            appRW.ShortURL = string.Format("http://{0}/Default/News?id_token={1}", SystemConst.WebUrl, id.TokenEncrypt()).ConvertToShortURL();
             appRW.EnumAdverURLType = (int)EnumAdverURLType.Activities;
             appRW.AccountMainID = LoginAccount.CurrentAccountMainID;
             appRW.AppShowImagePath = "~/Images/ActivityInfo.png";

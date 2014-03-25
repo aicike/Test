@@ -93,7 +93,7 @@ namespace Web.Controllers
             activityinfo.AccountID = LoginAccount.ID;
             var activityInfoModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
 
-            var result = activityInfoModel.EditActivity(activityinfo, x1, y1, w, h, tw, th);
+            var result = activityInfoModel.EditActivity(activityinfo,x1,y1,w,h,tw,th);
             if (result.HasError)
             {
                 return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
@@ -152,7 +152,8 @@ namespace Web.Controllers
             var activityInfoModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
             var main = activityInfoModel.GetActivityByID(id, LoginAccount.CurrentAccountMainID);
             appRW.Content = "";
-            appRW.ContentURL = string.Format("http://{0}/Default/ActivityInfo?ActivityID_token={1}", SystemConst.WebUrl, id.TokenEncrypt()).ConvertToShortURL();
+            appRW.ContentURL = "http://" + SystemConst.WebUrl + "/Default/ActivityInfo?ActivityID_token=" + id.TokenEncrypt();
+            appRW.ShortURL = string.Format("http://{0}/Default/News?id_token={1}", SystemConst.WebUrl, id.TokenEncrypt()).ConvertToShortURL();
             appRW.EnumAdverURLType = (int)EnumAdverURLType.Activities;
             appRW.AccountMainID = LoginAccount.CurrentAccountMainID;
             if (string.IsNullOrEmpty(main.AppShowImagePath))
@@ -190,8 +191,8 @@ namespace Web.Controllers
             appRW.UrlID = main.ID;
 
             result = AdvertorialModel.Add(appRW);
-
-
+            
+            
             if (result.HasError == true)
             {
                 return "No";
@@ -239,49 +240,10 @@ namespace Web.Controllers
         /// </summary>
         /// <param name="AID"></param>
         /// <returns></returns>
-        public ActionResult ActivityReport(string AID)
+        public ActionResult ActivityReport(int AID)
         {
-            var id = AID.TokenDecrypt();
-            var activityInfoModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
-            //获取活动信息
-            var activityInfo = activityInfoModel.GetActivityByID(id, LoginAccount.CurrentAccountMainID);
-            if (activityInfo != null)
-            {
-                ViewBag.Title = activityInfo.Title;
-                ViewBag.AID = AID;
-                var beginDate = Request.Form["beginDate"];
-                if (beginDate != null)
-                {
-                    DateTime begin = Convert.ToDateTime(beginDate);
-                    ViewBag.BeginDate = beginDate;
-                    ViewBag.EndDate = begin.AddDays(11).ToString("yyyy-MM-dd");
-                }
-                else
-                {
-                    ViewBag.EndDate = activityInfo.EnrollEndDate.ToString("yyyy-MM-dd");
-                    ViewBag.BeginDate = activityInfo.EnrollEndDate.AddDays(-11).ToString("yyyy-MM-dd");
-                }
-                return View();
-            }
-            else
-            {
-                return View();
-            }
+
+            return View();
         }
-
-        /// <summary>
-        /// 获取报表数据(浏览与报名)
-        /// </summary>
-        /// <param name="AID"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public ActionResult GetReportInfo(string AID, string BeginDate, string EndDate)
-        {
-            return null;
-        }
-
-
-
-
     }
 }

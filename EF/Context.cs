@@ -57,6 +57,7 @@ namespace EF
             modelBuilder.Configurations.Add(new PushMsgMap());
             modelBuilder.Configurations.Add(new TaskMap());
             modelBuilder.Configurations.Add(new RoleMenuMap());
+            modelBuilder.Configurations.Add(new Lottery_dish_detailMap());
         }
     }
 }

@@ -56,6 +56,9 @@ namespace Poco
         [Display(Name = "内容地址")]
         public string ContentURL { get; set; }
 
+        [Display(Name = "短链接")]
+        public string ShortURL { get; set; }
+
         [Display(Name = "资讯类型")]
         public int EnumAdverTorialType { get; set; }
 

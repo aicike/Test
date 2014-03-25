@@ -9,5 +9,19 @@ namespace Business
 {
     public class Lottery_dish_detailModel : BaseModel<Lottery_dish_detail>, ILottery_dish_detailModel
     {
+        public Result DeleteByLottery_dishID(int dishID)
+        {
+           Result result = new Result();
+           try
+           {
+               string sql = "DELETE dbo.Lottery_dish_detail WHERE Lottery_dishID=" + dishID;
+               int i = base.SqlExecute(sql);
+           }
+           catch (Exception ex)
+           {
+               result.Error = ex.Message;
+           }
+           return result;
+        }
     }
 }

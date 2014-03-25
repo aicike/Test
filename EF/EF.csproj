@@ -51,6 +51,7 @@
     <Compile Include="Context.cs" />
     <Compile Include="Mapping\AutoMessage_KeywordMap.cs" />
     <Compile Include="Mapping\LibraryImageTextMap.cs" />
+    <Compile Include="Mapping\Lottery_dish_detailMap.cs.cs" />
     <Compile Include="Mapping\MessageMap.cs" />
     <Compile Include="Mapping\PendingMessagesMap.cs" />
     <Compile Include="Mapping\PushMsgMap.cs" />

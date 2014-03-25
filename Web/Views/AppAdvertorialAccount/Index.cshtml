@@ -54,13 +54,9 @@
             });
         }
 
-        function clickaddress(id) {
 
-            var Address = "@ViewBag.UrlAddress";
-            var url = "http://" + Address + "/default/News?id_token=" + id;
-
-
-            $("#urlAddress").text(url);
+        function clickaddress(shortURL) {
+            $("#urlAddress").text(shortURL);
             $("#dialogShowUrl").dialog({
                 resizable: false,
                 height: 120,
@@ -282,7 +278,7 @@
                     <br />
                     <a onclick="clickSelectInfo('@item.ID')" style=" width:56px">&nbsp;查看详细</a>
                     <br />
-                    <a onclick="clickaddress('@item.ID.TokenEncrypt()')" style=" width:56px">查看地址</a>
+                    <a onclick="clickaddress('@item.ShortURL')" style=" width:56px">查看地址</a>
                 </td>
             </tr>
         }

@@ -1,6 +1,7 @@
-﻿@{
+﻿﻿@{
     Layout = null;
 }
+@model Poco.Lottery_dish
 <html>
 <head>
     <script src="@Url.Content("~/Scripts/jquery-1.8.3.min.js")" type="text/javascript"></script>
@@ -8,28 +9,40 @@
 
         var cans = null;
         var deg = Math.PI / 180;
-        var colorArr = ["#6D7278", "#B55610", "#349933", "#CC3333", "#2C3144", "#B12E3D", "#FFE44C", "#41547F"];
-        var textArr = ["javascript", "photoshop", "css3", "html5", "mysql", "php", "java", "dreamweaver"];
+       var colorArr = ["#6D7278", "#B55610", "#349933", "#CC3333", "#2C3144", "#B12E3D", "#FFE44C", "#41547F"];
+       var textArr = ["javascript", "photoshop", "css3", "html5", "mysql", "php", "java", "dreamweaver"];
+       var colorArr = [@Html.Raw(ViewBag.Color)];
+       var textArr = [@Html.Raw(ViewBag.Name)];        
+       var imgArr = [@Html.Raw(ViewBag.Img)];
+       
         var arg = 0;
         var step = 50 + 50 * Math.random();
         var t = null;
+       var jiaodu = 360 * 1.00 / textArr.length;
         $(function () {
-            $("#div_canvas").append('<canvas id="can" width="500" height="400"></canvas>');
+           $("#div_canvas").append('<canvas id="can" width="500" height="400"></canvas>');
+           $("#div_canvas").append('<canvas id="can" width="440" height="400"></canvas>');
             var canid = document.getElementById("can");
             cans = canid.getContext("2d");
             cans.translate(200, 200); //cans.strokeStyle="#000000";
+
+           
             zpFun();
             $("#btnTryAgain").click(function () {
                 var arg = 0;
                 step = 50 + 50 * Math.random();
-                $("#div_canvas").empty().append('<canvas id="can" width="500" height="400"></canvas>');
+               $("#div_canvas").empty().append('<canvas id="can" width="500" height="400"></canvas>');
+               $("#div_canvas").empty().append('<canvas id="can" width="440" height="400"></canvas>');
                 var canid = document.getElementById("can");
                 cans = canid.getContext("2d");
                 cans.translate(200, 200); //cans.strokeStyle="#000000";
                 zpFun();
             });
         });
+
         function zpFun() {
+       
+
             var t = setInterval(function () {
 
                 step *= 0.95;
@@ -37,7 +50,8 @@
                 if (step <= 0.2) {
 
                     clearInterval(t);
-                    var snum = Math.ceil(arg / 45);
+                   var snum = Math.ceil(arg / 45);
+                   var snum = Math.ceil(arg / jiaodu);
                     var con = textArr[textArr.length - snum];
 
 
@@ -62,43 +76,95 @@
                 //画指针
                 cans.beginPath();
                 cans.lineWidth = 10;
-                cans.moveTo(230, 0);
-                cans.lineTo(300, 0);
-                cans.stroke();
+               cans.moveTo(230, 0);
+               cans.lineTo(300, 0);
+               cans.stroke();
 
 
 
-                //    //画扇形
+               //    //画扇形
 
+               cans.moveTo(205, 0);
+               cans.lineTo(240, 0);
+               cans.stroke();
+               
+               //画扇形
                 cans.save();
                 cans.rotate(arg * deg);
                 cans.lineWidth = 1;
 
 
-                for (var i = 0; i < 8; i++) {
+               for (var i = 0; i < 8; i++) {
+               for (var i = 0; i < textArr.length; i++) {
                     cans.beginPath();
                     cans.fillStyle = colorArr[i];
                     cans.moveTo(0, 0);
-                    cans.arc(0, 0, 200, i * 45 * deg, (i + 1) * 45 * deg);
+                   cans.arc(0, 0, 200, i * 45 * deg, (i + 1) * 45 * deg);
+                   cans.arc(0, 0, 200, i * jiaodu * deg, (i + 1) * jiaodu * deg);
                     cans.closePath();
                     cans.fill();
                     cans.stroke();
+
                 }
-                //    //画中心园
-                cans.beginPath();
+               //    //画中心园
+               cans.beginPath();
+               //画中心园
+               //cans.beginPath();
                 cans.fillStyle = "#ffffff";
-                cans.arc(0, 0, 50, 0, 360 * deg);
-                cans.fill();
+               cans.arc(0, 0, 50, 0, 360 * deg);
+               cans.fill();
+               var bg=new Image();
+               bg.src="/Images/pointer.png"
+               //cans.arc(0, 0, 50, 0, 360 * deg);
+               //cans.drawImage(bg, 0, 0);  
+               cans.drawImage(bg,-35,-35,103,70);
+               //cans.fill();
 
                 //写文字
-                for (var i = 0; i < 8; i++) {
+               for (var i = 0; i < 8; i++) {
+               var t_j=180/colorArr.length;
+               var i_j=t_j-12;
+               for (var i = 0; i <colorArr.length; i++) {
+               
                     cans.save();
                     cans.beginPath();
-                    cans.rotate((i * 45 + 25) * deg);
+                   cans.rotate((i * 45 + 25) * deg);
+                   cans.rotate((i * jiaodu + t_j) * deg);
                     cans.font = "20px Arial";
-                    cans.fillText(textArr[i], 70, 0);
+                   cans.fillText(textArr[i], 70, 0);
+                   cans.fillText(textArr[i], 55, 0);
+                   cans.restore();              
+                   
+                   
+                   var img=new Image();
+                   img.src = imgArr[i];
+                   cans.save();
+                   cans.beginPath(); 
+                   cans.rotate((i * jiaodu +i_j) * deg);
+                   cans.arc(165, 30, 30, 0, Math.PI * 2, true);
+                   cans.closePath();
+                   cans.clip();
+                   cans.drawImage(img,135, 0, 60, 60);
                     cans.restore();
 
+                   
+                   //画图片
+                   // var img = document.createElement('img');
+//                   var img=new Image();
+//                   img.src = '/Images/Logo_144.png';
+//                   img.onload = function() {
+//                       cans.save();
+//                       cans.beginPath(); 
+//                       cans.arc(25, 25, 25, 0, Math.PI * 2, true);
+//                       cans.closePath();
+//                       cans.clip();
+//                       cans.drawImage(img,0, 0, 50, 50);
+//                       cans.beginPath();
+//                       cans.arc(0, 0, 25, 0, Math.PI * 2, true);
+//                       cans.clip();
+//                       cans.closePath();
+//                       cans.restore();
+//                   };
                 }
                 cans.restore();
 
@@ -111,10 +177,10 @@
 </head>
 <body>
     <div id="div_canvas">
-   
-    </div>
-    <div>
-        <input type="button" id="btnTryAgain" value="再试一次" />
+  
+   </div>
+   <div>
+       <input type="button" id="btnTryAgain" value="再试一次" />
     </div>
 </body>
 </html>

@@ -12,5 +12,7 @@ namespace Interface
         IQueryable<Lottery_dish> List(int accountMainID);
 
         Result Add(Lottery_dish entity, List<Lottery_dish_detail> items, HttpFileCollection files);
+
+        Result Edit(Lottery_dish entity, List<Lottery_dish_detail> items, HttpFileCollection files);
     }
 }

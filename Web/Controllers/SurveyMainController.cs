@@ -473,7 +473,8 @@ namespace Web.Controllers
             var MainModel = Factory.Get<ISurveyMainModel>(SystemConst.IOC_Model.SurveyMainModel);
             var main = MainModel.GetSurveyMainByID(id, LoginAccount.CurrentAccountMainID);
             appRW.Content = "";
-            appRW.ContentURL = string.Format("http://{0}/Default/Questionnaire?surveyMainID_token={1}", SystemConst.WebUrl, id.TokenEncrypt()).ConvertToShortURL();
+            appRW.ContentURL = string.Format("http://{0}/Default/Questionnaire?surveyMainID_token={1}", SystemConst.WebUrl, id.TokenEncrypt());
+            appRW.ShortURL = string.Format("http://{0}/Default/News?id_token={1}", SystemConst.WebUrl, id.TokenEncrypt()).ConvertToShortURL();
             appRW.EnumAdverURLType = (int)EnumAdverURLType.Survey;
             appRW.AccountMainID = LoginAccount.CurrentAccountMainID;
 

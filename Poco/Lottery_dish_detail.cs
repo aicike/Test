@@ -45,5 +45,11 @@ namespace Poco
         [Display(Name = "奖品描述")]
         [Required(ErrorMessage = "请输入奖品描述")]
         public string Description { get; set; }
+
+        /// <summary>
+        /// 业务字段，不会在数据库中生成
+        /// </summary>
+        [Display(Name = "是否新上传图片")]
+        public bool IsNewImg { get; set; }
     }
 }

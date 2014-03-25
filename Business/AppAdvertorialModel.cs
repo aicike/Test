@@ -90,7 +90,7 @@ namespace Business
             //如果是外链URL，则对这个URL进行短链接
             if (appadvertorial.EnumAdverURLType == (int)EnumAdverURLType.Ordinary && appadvertorial.ContentURL != null && appadvertorial.ContentURL.Length > 0)
             {
-                appadvertorial.ContentURL = appadvertorial.ContentURL.ConvertToShortURL();
+                appadvertorial.ShortURL = appadvertorial.ContentURL.ConvertToShortURL();
             }
             result = base.Add(appadvertorial);
 
@@ -102,7 +102,7 @@ namespace Business
             else
             {
                 //富文本，如果是富文本，则对这个URL进行短链接
-                appadvertorial.ContentURL = string.Format("http://{0}/default/News?id_token={1}", SystemConst.WebUrl, appadvertorial.ID.TokenEncrypt()).ConvertToShortURL();
+                appadvertorial.ShortURL = string.Format("http://{0}/default/News?id_token={1}", SystemConst.WebUrl, appadvertorial.ID.TokenEncrypt()).ConvertToShortURL();
                 result = base.Edit(appadvertorial);
             }
 
@@ -165,9 +165,7 @@ namespace Business
             }
             var AppAdvertorialOperation = Factory.Get<IAppAdvertorialOperationModel>(SystemConst.IOC_Model.AppAdvertorialOperationModel);
             AppAdvertorialOperation.DelOperation(ID);
-            var appbrowsemodel = Factory.Get<IAppAdvertorialBrowseModel>(SystemConst.IOC_Model.AppAdvertorialBrowseModel);
-            appbrowsemodel.DelBrowse(ID,EnumBrowseAdvertorialType.Information);
-            string shrotURL = appadivertorial.ContentURL;
+            string shrotURL = appadivertorial.ShortURL;
             var result = base.CompleteDelete(ID);
             if (result.HasError == false)
             {
@@ -406,7 +404,7 @@ namespace Business
                 var AppAdvertorialOperation = Factory.Get<IAppAdvertorialOperationModel>(SystemConst.IOC_Model.AppAdvertorialOperationModel);
                 AppAdvertorialOperation.DelOperation(appadvert.ID);
             }
-            string shortURL = appadvert.ContentURL;
+            string shortURL = appadvert.ShortURL;
             string sql = string.Format("delete AppAdvertorial where EnumAdverURLType = {0} and UrlID={1}", EnumAdverURLType, ID);
             int cnt = base.SqlExecute(sql);
             if (cnt <= 0)
