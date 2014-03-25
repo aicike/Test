@@ -208,6 +208,8 @@
                   
                     @Html.ActionLink("修改", "Edit", "ActivityInfo", new { HostName = ViewBag.HostName, ActionId = item.ID }, new { style = "padding-right:5px" }, true)
                     @Ajax.ActionLink("删除", "Delete", "ActivityInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('此操作会删除该活动下的所有报名人信息。<br/>“确定删除?”！！！','" + Url.Action("Delete", "ActivityInfo", new { HostName = ViewBag.HostName, ActionId = item.ID }) + "',null)" }, true)
+                    <br />
+                    @Html.ActionLink("查看报表", "ActivityReport", "ActivityInfo", new { HostName = ViewBag.HostName, AID = item.ID.TokenEncrypt(true) }, new { target = "_blank" }, true)
                 </td>
             </tr>
         }

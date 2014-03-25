@@ -99,7 +99,9 @@ namespace Business
                 //删除资讯中的数据
                 var advertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
                 advertorialModel.DelAppadvertorial_byUrlType((int)EnumAdverURLType.Activities, Activity.ID);
-
+                //删除浏览表中数据
+                var appbrowsemodel = Factory.Get<IAppAdvertorialBrowseModel>(SystemConst.IOC_Model.AppAdvertorialBrowseModel);
+                appbrowsemodel.DelBrowse(AID, EnumBrowseAdvertorialType.ActivityInfo);
                 CommonModel commonModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
                 string sql = string.Format("delete ActivityInfoParticipator where ActivityInfoID={0} delete ActivityInfo where ID = {0}", Activity.ID);
                 commonModel.SqlExecute(sql);

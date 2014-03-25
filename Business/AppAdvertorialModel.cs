@@ -165,6 +165,8 @@ namespace Business
             }
             var AppAdvertorialOperation = Factory.Get<IAppAdvertorialOperationModel>(SystemConst.IOC_Model.AppAdvertorialOperationModel);
             AppAdvertorialOperation.DelOperation(ID);
+            var appbrowsemodel = Factory.Get<IAppAdvertorialBrowseModel>(SystemConst.IOC_Model.AppAdvertorialBrowseModel);
+            appbrowsemodel.DelBrowse(ID,EnumBrowseAdvertorialType.Information);
             string shrotURL = appadivertorial.ContentURL;
             var result = base.CompleteDelete(ID);
             if (result.HasError == false)

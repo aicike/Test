@@ -107,5 +107,40 @@ namespace Business
             }
             return result;
         }
+
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <param name="id">ID</param>
+        /// <param name="ebat">EnumBrowseAdvertorialType 类型</param>
+        /// <returns></returns>
+        public Result DelBrowse(int id, EnumBrowseAdvertorialType ebat)
+        {
+            Result result = new Result();
+            string sql = "delete AppAdvertorialBrowse where {0}={1}";
+            switch (ebat)
+            {
+                //咨讯
+                case EnumBrowseAdvertorialType.Information:
+                    sql = string.Format(sql, "AppAdvertorialID", id);
+                    break;
+                //活动
+                case EnumBrowseAdvertorialType.ActivityInfo:
+                    sql = string.Format(sql, "ActivityInfoID", id);
+                    break;
+                //调查
+                case EnumBrowseAdvertorialType.SurveyMain:
+                    sql = string.Format(sql, "SurveyMainID", id);
+                    break;
+            }
+            base.SqlExecute(sql);
+            //int cnt = base.SqlExecute(sql);
+            //if (cnt <= 0)
+            //{
+            //    result.HasError = true;
+            //    result.Error = "删除失败";
+            //}
+            return result;
+        }
     }
 }
