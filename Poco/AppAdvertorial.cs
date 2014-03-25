@@ -71,6 +71,9 @@ namespace Poco
         [Display(Name = "URLID 活动或调查ID")]
         public int? UrlID { get; set; }
 
+        [Display(Name = "活动签到地址")]
+        public string ActivitySignUrl { get; set; }
+
         public virtual ICollection<AppAdvertorialOperation> AppAdvertorialOperation { get; set; }
 
         public virtual ICollection<AppAdvertorialBrowse> AppAdvertorialBrowse { get; set; }

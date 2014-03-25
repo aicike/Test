@@ -56,16 +56,15 @@
             });
         }
 
-        function clickaddress(shortURL, ActivityID, URLType) {
+        function clickaddress(shortURL, ActivitySignUrl, URLType) {
 
             $("#divactivitySigin").hide();
             $("#urlAddress").text(shortURL);
             if (URLType != null && URLType != undefined && URLType != "") {
                 var types = "@((int)Poco.Enum.EnumAdverURLType.Activities)";
                 if (URLType == types) {
-                    var signUrl = "http://" + '@Address' + "/default/ActivitySignIn?ActivityID=" + ActivityID;
                     $("#divactivitySigin").show();
-                    $("#urlSignInAddress").text(signUrl);
+                    $("#urlSignInAddress").text(ActivitySignUrl);
 
                 }
             }
@@ -289,7 +288,7 @@
                     <br />
                     <a onclick="clickSelectInfo('@item.ID')" style=" width:56px">&nbsp;查看详细</a>
                     <br />
-                    <a onclick="clickaddress('@item.ShortURL','@item.UrlID','@item.EnumAdverURLType')" style=" width:56px">
+                    <a onclick="clickaddress('@item.ShortURL','@item.ActivitySignUrl','@item.EnumAdverURLType')" style=" width:56px">
                         查看地址 </a>
                 </td>
             </tr>

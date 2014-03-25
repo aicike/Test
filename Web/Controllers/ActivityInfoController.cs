@@ -188,7 +188,8 @@ namespace Web.Controllers
             appRW.stick = 0;
             appRW.SystemStatus = 0;
             appRW.Title = main.Title;
-            appRW.UrlID = main.ID;
+            appRW.UrlID = main.ID; 
+            appRW.ActivitySignUrl = ("http://" + SystemConst.WebUrl + "/default/ActivitySignIn?ActivityID=" + id).ConvertToShortURL();
 
             result = AdvertorialModel.Add(appRW);
             
