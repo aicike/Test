@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Poco;
 using Interface;
+using System.Data;
+using Injection;
 
 namespace Business
 {
@@ -70,6 +72,47 @@ namespace Business
         {
             var list = List(true).Where(a => a.ActivityInfo.AccountMainID == AMID && a.ActivityInfoID == ActivityID);
             return list;
+        }
+
+
+        /// <summary>
+        /// 获取报名 报表数据 12天
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="BeginDate"></param>
+        /// <param name="EndDate"></param>
+        /// <returns></returns>
+        public DataTable GetReportInfo(int ID,string BeginDate,string EndDate)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Date");
+            dt.Columns.Add("Cnt", typeof(int));
+            DateTime beginDT = Convert.ToDateTime(BeginDate);
+            DateTime endDT = Convert.ToDateTime(EndDate);
+            for (int i = 0; i < 12; i++)
+            {
+                DataRow row = dt.NewRow();
+                row["Date"] = beginDT.AddDays(i).ToString("yyyy-MM-dd");
+                row["Cnt"] = 0;
+                dt.Rows.Add(row);
+            }
+            CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+            string sql = string.Format("select Convert(varchar(50),joinDateTime,23) as CreateDate,count(*) as cnt from dbo.ActivityInfoParticipator "
+                                      + " where ActivityInfoID= {0} and joinDateTime between '{1}' and '{2}' group by Convert(varchar(50),joinDateTime,23)"
+                                      , ID, BeginDate, endDT.AddDays(1).ToString("yyyy-MM-dd"));
+            var result = model.SqlQuery<_B_UserCount>(sql);
+
+            foreach (var item in result)
+            {
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    if (item.CreateDate == dt.Rows[i]["Date"].ToString())
+                    {
+                        dt.Rows[i]["Cnt"] = item.cnt;
+                    }
+                }
+            }
+            return dt;
         }
     }
 }

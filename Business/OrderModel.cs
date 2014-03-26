@@ -360,6 +360,13 @@ namespace Business
                             string[] cnts = K.Split(',');
                             if (item.ID == int.Parse(cnts[0]))
                             {
+                                //校验库存是否足够
+                                if (item.Stock < int.Parse(cnts[1]))
+                                {
+                                    result.HasError = true;
+                                    result.Error = item.ID.ToString();
+                                    return result;
+                                }
                                 //总价
                                 amount = amount + (item.Price * int.Parse(cnts[1]));
                                 OrderDetail od = new OrderDetail();
