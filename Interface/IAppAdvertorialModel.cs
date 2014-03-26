@@ -63,5 +63,13 @@ namespace Interface
         /// <param name="ID"></param>
         /// <returns></returns>
         Result DelAppadvertorial_byUrlType(int EnumAdverURLType, int ID);
+
+        /// <summary>
+        /// 查询是否已经生产资讯
+        /// </summary>
+        /// <param name="id">活动 或调查 ID</param>
+        /// <param name="client">咨询url类型 EnumAdvertorialUType </param>
+        /// <returns></returns>
+        bool CKAppadverBy_clientAndID(int id, int client);
     }
 }
