@@ -18,5 +18,5 @@ namespace Interface
 
         bool CheckIsExistAccountAdmin(int accountMainID, int? accountID = null);
         List<Account> GetAccountListByAccountMainID(int accountMainID);
-    }
+    } 
 }
