@@ -2,10 +2,9 @@
     Layout = "~/Views/Shared/_LayoutBase.cshtml";
 }
 @section head{
-   
     <script src="@Url.Content("~/Scripts/Highcharts/highcharts.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/Highcharts/modules/exporting.js")" type="text/javascript"></script>
-     <script src="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.js")" type="text/javascript"></script>
     <link href="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.css")" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         $(function () {
@@ -21,120 +20,111 @@
                 onSelect: function (selectedDate) {
                     var begin = new Date(selectedDate);
                     begin.setDate(begin.getDate() + 11);
-                    var getendDate = begin.getFullYear() + "-" + (begin.getMonth()+1) + "-" + begin.getDate();
+                    var getendDate = begin.getFullYear() + "-" + (begin.getMonth() + 1) + "-" + begin.getDate();
                     $("#endDate").text(getendDate);
                 }
             });
 
 
             //获取报表
-            var Url = "GetReportInfo/ActivityInfo";
-            var Data = { AccountMainID: options.accountmainid };
-
-            var thisController = $(this);
+            var AID = '@ViewBag.AID';
+            var BeginDate = beginDate;
+            var EndDate = ennDate;
+            var Url = '@Url.Action("GetReportInfo", "ActivityInfo")';
+            var Data = { AID: AID, BeginDate: BeginDate, EndDate: EndDate };
 
             $.ajax({
                 type: "post",
                 url: Url,
                 data: Data,
                 success: function (result) {
-                    var strs = result.split(',');
-                    for (i = 0; i < strs.length; i++) {
-                        switch (strs[i]) {
-                            case "DayAddPeople": //每日净增人数
-                            case "DayAddNews":   //每日接收消息数
-                                thisController.ShowReportIndex({
-                                    type: strs[i],
-                                    accountid: options.accountid
-                                });
-                                break;
+                    $('#container').highcharts({
+                        chart: {
+                            zoomType: 'xy'
+                        },
+                        title: {
+                            text: '@ViewBag.Title'
+                        },
+                        subtitle: {
+                            text: '报名与浏览图表展示'
+                        },
+                        credits: {
+                            enabled: false
                         }
+                        ,
+                        xAxis: [{
+                            categories: result[0].categories.split(',')
+                        }],
+                        yAxis: [{ // Primary yAxis
+                            labels: {
+                                format: '{value}次',
+                                style: {
+                                    color: '#89A54E'
+                                }
+                            },
+                            title: {
+                                text: '预览次数',
+                                style: {
+                                    color: '#89A54E'
+                                }
+                            }, min: 0, tickInterval: parseInt(result[0].tickInterval)
+                        }, { // Secondary yAxis
+                            title: {
+                                text: '报名次数',
+                                style: {
+                                    color: '#4572A7'
+                                }
+                            },
+                            labels: {
+                                format: '{value}次',
+                                style: {
+                                    color: '#4572A7'
+                                }
+                            },
+                            opposite: true
+                            , min: 0, tickInterval: parseInt(result[0].tickInterval)
+                        }],
+                        tooltip: {
+                            shared: true
+                        },
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'left',
+                            x: 120,
+                            verticalAlign: 'top',
+                            y: 100,
+                            floating: true,
+                            backgroundColor: '#FFFFFF',
+                            enabled: false
+                        },
+                        series: [{
+                            name: '报名',
+                            color: '#4572A7',
+                            type: 'column',
+                            yAxis: 1,
+                            data: JSON.parse(result[1].data),
+                            tooltip: {
+                                valueSuffix: ' 次'
+                            }
 
-                    }
+                        }, {
+                            name: '预览',
+                            color: '#89A54E',
+                            type: 'spline',
+                            data: JSON.parse(result[0].data),
+                            tooltip: {
+                                valueSuffix: ' 次'
+                            }
+                        }]
+                    });
 
                 }
             });
 
 
-            $('#container').highcharts({
-                chart: {
-                    zoomType: 'xy'
-                },
-                title: {
-                    text: '@ViewBag.Title'
-                },
-                subtitle: {
-                    text: '报名与浏览图表展示'
-                },
-                credits: {
-                    enabled: false
-                }
-                ,
-                xAxis: [{
-                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-                }],
-                yAxis: [{ // Primary yAxis
-                    labels: {
-                        format: '{value}次',
-                        style: {
-                            color: '#89A54E'
-                        }
-                    },
-                    title: {
-                        text: '预览次数',
-                        style: {
-                            color: '#89A54E'
-                        }
-                    }
-                }, { // Secondary yAxis
-                    title: {
-                        text: '报名次数',
-                        style: {
-                            color: '#4572A7'
-                        }
-                    },
-                    labels: {
-                        format: '{value}次',
-                        style: {
-                            color: '#4572A7'
-                        }
-                    },
-                    opposite: true
-                }],
-                tooltip: {
-                    shared: true
-                },
-                legend: {
-                    layout: 'horizontal',
-                    align: 'left',
-                    x: 120,
-                    verticalAlign: 'top',
-                    y: 100,
-                    floating: true,
-                    backgroundColor: '#FFFFFF',
-                    enabled: false
-                },
-                series: [{
-                    name: '报名',
-                    color: '#4572A7',
-                    type: 'column',
-                    yAxis: 1,
-                    data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-                    tooltip: {
-                        valueSuffix: ' 次'
-                    }
 
-                }, {
-                    name: '预览',
-                    color: '#89A54E',
-                    type: 'spline',
-                    data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
-                    tooltip: {
-                        valueSuffix: ' 次'
-                    }
-                }]
-            });
+
+
         });
     </script>
 }
@@ -143,9 +133,9 @@
     {
         <div style="margin-left: 30px">
             起始日期：<input type="text" name="beginDate" id="beginDate" readonly="readonly" style="width: 100px" />
-            至 <span id="endDate"></span>
-            <span style=" font-size:12px;color:#bfbfbf">(12天内)</span>
-            <button id="btnSub" type="submit" name="btnSub" class="button">查看</button>
+            至 <span id="endDate"></span><span style="font-size: 12px; color: #bfbfbf">(12天内)</span>
+            <button id="btnSub" type="submit" name="btnSub" class="button">
+                查看</button>
         </div>
     }
     <div id="container" style="min-width: 600px; height: 400px; margin: 0 auto">
