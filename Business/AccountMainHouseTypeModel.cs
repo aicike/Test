@@ -24,7 +24,7 @@ namespace Business
         {
             var result = base.Add(HouseType);
             if (result.HasError == false && HouseImagePath != null)
-            {
+            { 
                 try
                 {
                     CommonModel com = new CommonModel();
