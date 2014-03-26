@@ -35,7 +35,7 @@ namespace EF
         public DbSet<Conversation> Conversation { get; set; }
         public DbSet<OrderMType> OrderMType { get; set; }
         public DbSet<SurveyAnswerUser> SurveyAnswerUser { get; set; }
-
+         
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
