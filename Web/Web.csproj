@@ -1005,6 +1005,7 @@
     <Content Include="Views\LotteryDish\View.cshtml" />
     <Content Include="Views\Default\ceshi.cshtml" />
     <Content Include="Views\LotteryDish\Edit.cshtml" />
+    <Content Include="Views\ActivityInfo\ActivityReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
@@ -1032,8 +1033,8 @@
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://tllhs.imtimely.com/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>http://192.168.1.166</CustomServerUrl>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://192.168.1.138</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

@@ -8,6 +8,7 @@ using Injection;
 using Interface;
 using Controllers;
 using Poco.Enum;
+using System.Data;
 
 namespace Web.Controllers
 {
@@ -141,13 +142,17 @@ namespace Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <param name="client">客户端 EnumAdvertorialUType</param>
-        /// <returns>OK 成功 NO失败</returns>
+        /// <returns>OK 成功 NO失败 T:已经生成资讯</returns>
         [AllowCheckPermissions(false)]
         public string SetAppAdverTorial(int id, int client)
         {
             AppAdvertorial appRW = new AppAdvertorial();
             Result result = new Result();
             var AdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
+            if (AdvertorialModel.CKAppadverBy_clientAndID(id, client))
+            {
+                return "T";
+            }
             //主表
             var activityInfoModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
             var main = activityInfoModel.GetActivityByID(id, LoginAccount.CurrentAccountMainID);
@@ -240,10 +245,117 @@ namespace Web.Controllers
         /// </summary>
         /// <param name="AID"></param>
         /// <returns></returns>
-        public ActionResult ActivityReport(int AID)
+        public ActionResult ActivityReport(string AID)
         {
-
-            return View();
+            var id = AID.TokenDecrypt();
+            var activityInfoModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
+            //获取活动信息
+            var activityInfo = activityInfoModel.GetActivityByID(id, LoginAccount.CurrentAccountMainID);
+            if (activityInfo != null)
+            {
+                ViewBag.Title = activityInfo.Title;
+                ViewBag.AID = AID;
+                var beginDate = Request.Form["beginDate"];
+                if (beginDate != null)
+                {
+                    DateTime begin = Convert.ToDateTime(beginDate);
+                    ViewBag.BeginDate = beginDate;
+                    ViewBag.EndDate = begin.AddDays(11).ToString("yyyy-MM-dd");
+                }
+                else
+                {
+                    ViewBag.EndDate = activityInfo.EnrollEndDate.ToString("yyyy-MM-dd");
+                    ViewBag.BeginDate = activityInfo.EnrollEndDate.AddDays(-11).ToString("yyyy-MM-dd");
+                }
+                return View();
+            }
+            else
+            {
+                return View();
+            }
         }
+
+
+        /// <summary>
+        /// 获取报表数据(浏览与报名)
+        /// </summary>
+        /// <param name="AID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult GetReportInfo(string AID, string BeginDate, string EndDate)
+        {
+            int ID = AID.TokenDecrypt();
+            List<ReportBody> RBs =  new List<ReportBody>();
+            
+            //获取浏览数据
+            var advertorialbrowsemodel = Factory.Get<IAppAdvertorialBrowseModel>(SystemConst.IOC_Model.AppAdvertorialBrowseModel);
+            DataTable dt = advertorialbrowsemodel.GetReportInfo(ID, BeginDate, EndDate);
+            ReportBody browseRB = new ReportBody();
+            string browseDate = "";
+            //string UserCnt = "";
+            List<int> Cnt = new List<int>();
+            foreach (DataRow row in dt.Rows)
+            {
+                browseDate += row["Date"].ToString() + ",";
+                Cnt.Add(Convert.ToInt32(row["Cnt"]));
+            }
+            browseRB.categories = browseDate.TrimEnd(',');
+            browseRB.data = Newtonsoft.Json.JsonConvert.SerializeObject(Cnt); 
+
+            DataView browsedv = dt.DefaultView;
+            browsedv.Sort = "Cnt desc";
+            int maxUserCnt = int.Parse(browsedv[0]["Cnt"].ToString());
+            if (maxUserCnt != 0)
+            {
+                browseRB.tickInterval = Math.Ceiling(maxUserCnt * 1.0 / 5).ToString();
+            }
+            else
+            {
+                browseRB.tickInterval = "1";
+            }
+           
+
+            //获取报名数据
+            var activityInfoParticipatormodel = Factory.Get<IActivityInfoParticipatorModel>(SystemConst.IOC_Model.ActivityInfoParticipatorModel);
+            DataTable dt2 = activityInfoParticipatormodel.GetReportInfo(ID, BeginDate, EndDate);
+            ReportBody browseRB2 = new ReportBody();
+
+            string browseDate2 = "";
+            //string UserCnt = "";
+            List<int> Cnt2 = new List<int>();
+            foreach (DataRow row in dt2.Rows)
+            {
+                browseDate2 += row["Date"].ToString() + ",";
+                Cnt2.Add(Convert.ToInt32(row["Cnt"]));
+            }
+            browseRB2.categories = browseDate.TrimEnd(',');
+            browseRB2.data = Newtonsoft.Json.JsonConvert.SerializeObject(Cnt2);
+
+            DataView browsedv2 = dt2.DefaultView;
+            browsedv2.Sort = "Cnt desc";
+            int maxUserCnt2 = int.Parse(browsedv2[0]["Cnt"].ToString());
+            if (maxUserCnt2 != 0)
+            {
+                browseRB2.tickInterval = Math.Ceiling(maxUserCnt2 * 1.0 / 5).ToString();
+            }
+            else
+            {
+                browseRB2.tickInterval = "1";
+            }
+
+            if (Math.Ceiling(maxUserCnt * 1.0 / 5) < Math.Ceiling(maxUserCnt2 * 1.0 / 5))
+            {
+                browseRB.tickInterval = browseRB2.tickInterval;
+            }
+            RBs.Add(browseRB);
+            RBs.Add(browseRB2);
+            
+
+            return Json(RBs);
+        }
+
+
+
     }
 }

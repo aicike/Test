@@ -23,8 +23,8 @@ namespace Business
         public Result AddInfo(AccountMainHouseType HouseType, int accountMainID, System.Web.HttpPostedFileBase HouseImagePath)
         {
             var result = base.Add(HouseType);
-            if (result.HasError == false && HouseImagePath != null) 
-            { 
+            if (result.HasError == false && HouseImagePath != null)
+            {
                 try
                 {
                     CommonModel com = new CommonModel();

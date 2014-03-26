@@ -95,6 +95,23 @@
                 {
                     showMsg("提交订单失败");
                 }
+                else if(IsError==3)
+                {
+                   var ErrorPID = @ViewBag.ErrorPID;
+                   var jsonStrZJ = "";
+                   jsonStrZJ = sessionStorage.ImtimelyShopZJ;
+                   if (jsonStrZJ != undefined && jsonStrZJ != "" && jsonStrZJ != "[]") {
+                       var items2 = eval(jsonStrZJ);
+                       var prices = 0;
+                       for (var i in items2) {
+                           if(items[i].PID==ErrorPID)
+                           {
+                                showMsg(items[i].PName+"库存不足！请重新选择商品");
+                               break;
+                           }
+                       }
+                   }
+                }
 
             });
 

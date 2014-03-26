@@ -87,6 +87,9 @@ namespace Business
                 var advertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
                 advertorialModel.DelAppadvertorial_byUrlType((int)EnumAdverURLType.Survey, MainID);
 
+                //删除浏览表中数据
+                var appbrowsemodel = Factory.Get<IAppAdvertorialBrowseModel>(SystemConst.IOC_Model.AppAdvertorialBrowseModel);
+                appbrowsemodel.DelBrowse(MainID, EnumBrowseAdvertorialType.SurveyMain);
 
                 CommonModel commonModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
                 string DelMainSql = string.Format("delete SurveyAnswer where SurveyTroubleID in ({0})  delete SurveyOption where SurveyTroubleID in ({0})  delete SurveyTrouble where ID in ({0})  delete SurveyMain where ID ={1} and AccountMainID = {2}"
