@@ -1,12 +1,14 @@
-namespace EF.Migrations
+namespace ShortURL.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using ShortURL.EF;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<EF.Context>
+    internal sealed class Configuration : DbMigrationsConfiguration<Context>
     {
+
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
@@ -14,7 +16,7 @@ namespace EF.Migrations
 
         protected override void Seed(EF.Context context)
         {
-            
+
         }
     }
 }
