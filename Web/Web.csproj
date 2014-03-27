@@ -279,6 +279,7 @@
     <Content Include="Images\Logo_144.png" />
     <Content Include="Images\nopicture.png" />
     <Content Include="Images\nopicture_icon.png" />
+    <Content Include="Images\pointer.png" />
     <Content Include="Images\SelImg.jpg" />
     <Content Include="Images\sep.png" />
     <Content Include="Images\LandWaitFor.gif" />
@@ -1005,7 +1006,6 @@
     <Content Include="Views\LotteryDish\View.cshtml" />
     <Content Include="Views\Default\ceshi.cshtml" />
     <Content Include="Views\LotteryDish\Edit.cshtml" />
-    <Content Include="Views\ActivityInfo\ActivityReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
@@ -1027,14 +1027,14 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>16123</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://tllhs.imtimely.com/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>True</UseCustomServer>
-          <CustomServerUrl>http://192.168.1.138</CustomServerUrl>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>http://192.168.1.166</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
