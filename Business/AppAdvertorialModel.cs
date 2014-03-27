@@ -405,22 +405,23 @@ namespace Business
             {
                 var AppAdvertorialOperation = Factory.Get<IAppAdvertorialOperationModel>(SystemConst.IOC_Model.AppAdvertorialOperationModel);
                 AppAdvertorialOperation.DelOperation(appadvert.ID);
-            }
-            string shortURL = appadvert.ShortURL;
-            string ActivitySignUrl = appadvert.ActivitySignUrl;
-            string sql = string.Format("delete AppAdvertorial where EnumAdverURLType = {0} and UrlID={1}", EnumAdverURLType, ID);
-            int cnt = base.SqlExecute(sql);
-            if (cnt <= 0)
-            {
-                result.HasError = true;
-            }
-            else {
+
+                string shortURL = appadvert.ShortURL;
+                string ActivitySignUrl = appadvert.ActivitySignUrl;
                 shortURL.DeleteShortURL();//删除短URL
                 if (string.IsNullOrEmpty(ActivitySignUrl) == false)
                 {
                     ActivitySignUrl.DeleteShortURL();
                 }
             }
+           
+            string sql = string.Format("delete AppAdvertorial where EnumAdverURLType = {0} and UrlID={1}", EnumAdverURLType, ID);
+            int cnt = base.SqlExecute(sql);
+            if (cnt <= 0)
+            {
+                result.HasError = true;
+            }
+           
             return result;
         }
 

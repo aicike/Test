@@ -104,6 +104,10 @@ namespace Business
                 var appbrowsemodel = Factory.Get<IAppAdvertorialBrowseModel>(SystemConst.IOC_Model.AppAdvertorialBrowseModel);
                 appbrowsemodel.DelBrowse(AID, EnumBrowseAdvertorialType.ActivityInfo);
 
+                //删除签到表中数据
+                var activitySignmodel = Factory.Get<IActivityInfoSignInModel>(SystemConst.IOC_Model.ActivityInfoSignInModel);
+                activitySignmodel.DelInfo(AID);
+
                 CommonModel commonModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
                 string sql = string.Format("delete ActivityInfoParticipator where ActivityInfoID={0} delete ActivityInfo where ID = {0}", Activity.ID);
                 commonModel.SqlExecute(sql);

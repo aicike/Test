@@ -441,6 +441,7 @@ namespace Web.Controllers
         /// <param name="?"></param>
         /// <param name="isok"></param>
         /// <returns></returns>
+        [ValidateInput(false)]
         public ActionResult ActivityInfo(string ActivityID_token, int ADverID, int? imtimely_userid, int? imtimely_Apptype, int? isok)
         {
             int ActivityID = ActivityID_token.TokenDecrypt();

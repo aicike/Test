@@ -45,7 +45,8 @@
             });
         }
 
-        function clickInfoUrl(src) {
+        function clickInfoUrl(src,id) {
+            src =src+"&ADverID="+ id
             $("#iframeShowInfo").attr("src", src);
             $("#dialogShowInfo").dialog({
                 resizable: false,
@@ -224,10 +225,10 @@
                     else if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Activities)
                     {
                     <td>
-                        <img style="width: 150px; margin-top:5px;  cursor:pointer "  onclick="clickInfoUrl('@item.ContentURL')" src="@Url.Content(item.AppShowImagePath ?? "")" />
+                        <img style="width: 150px; margin-top:5px;  cursor:pointer "  onclick="clickInfoUrl('@item.ContentURL',@item.ID)" src="@Url.Content(item.AppShowImagePath ?? "")" />
                     </td>
                     <td style="font-size: 14px" class="operation">
-                        <label name="labCbFirst" title="@item.Depict" onclick="clickInfoUrl('@item.ContentURL')" style=" cursor:pointer">
+                        <label name="labCbFirst" title="@item.Depict" onclick="clickInfoUrl('@item.ContentURL',@item.ID)" style=" cursor:pointer">
                             <a>@item.Title</a>
                         </label>
                     </td>
