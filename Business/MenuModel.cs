@@ -159,8 +159,41 @@ namespace Business
         /// <returns></returns>
         public bool CheckHasPermissions(List<int> roleIDs, string menuToken)
         {
-            int[] menuIDArray = List().Where(a => menuToken == a.Token).Select(a => a.ID).ToArray();
-            return GetMenuByRoleID(roleIDs).Any(a => menuIDArray.Contains(a.ID));
+            int menuID = List().Where(a => menuToken == a.Token).Select(a => a.ID).FirstOrDefault();
+            var menus = GetMenuByRoleID(roleIDs);
+            bool has = false;
+            foreach (var item in menus)
+            {
+                if (item.ID == menuID)
+                {
+                    has = true;
+                    break;
+                }
+                if (item.Menus != null)
+                {
+                    foreach (var subMenus_2 in item.Menus)
+                    {
+                        if (subMenus_2.ID == menuID)
+                        {
+                            has = true;
+                            break;
+                        }
+                        if (subMenus_2.Menus != null)
+                        {
+                            foreach (var subMenus_3 in subMenus_2.Menus)
+                            {
+                                if (subMenus_3.ID == menuID)
+                                {
+                                    has = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+            return has;
         }
 
         public void ReSetCache()

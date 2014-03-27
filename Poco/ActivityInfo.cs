@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Poco
 {
-    public class ActivityInfo:IBaseEntity
+    public class ActivityInfo : IBaseEntity
     {
         public int ID { get; set; }
 
@@ -100,20 +100,32 @@ namespace Poco
         /// <summary>
         /// 是否已生成用户端咨询 0否 1是
         /// </summary>
-         [Display(Name = "是否已生成用户端咨询")]
+        [Display(Name = "是否已生成用户端咨询")]
         public int ISGenerateUserAdvisory { get; set; }
 
-         /// <summary>
-         /// 是否已生成销售端咨询 0否 1是
-         /// </summary>
-         [Display(Name = "是否已生成销售端咨询")]
-         public int ISGenerateSaleAdvisory { get; set; }
+        /// <summary>
+        /// 是否已生成销售端咨询 0否 1是
+        /// </summary>
+        [Display(Name = "是否已生成销售端咨询")]
+        public int ISGenerateSaleAdvisory { get; set; }
 
+        /// <summary>
+        /// 引用的抽奖活动ID(大转盘)
+        /// </summary>
+        public int? Lottery_dishID { get; set; }
 
+        public virtual Lottery_dish Lottery_dish { get; set; }
+
+        /// <summary>
+        /// 引用的抽奖活动ID(砸金蛋)
+        /// </summary>
+        public int? Lottery_eggID { get; set; }
+
+        public virtual Lottery_egg Lottery_egg { get; set; }
 
         public virtual ICollection<ActivityInfoParticipator> ActivityInfoParticipators { get; set; }
 
-        
+
         public virtual ICollection<ActivityInfoSignIn> ActivityInfoSignIn { get; set; }
 
         public virtual ICollection<AppAdvertorialBrowse> AppAdvertorialBrowse { get; set; }

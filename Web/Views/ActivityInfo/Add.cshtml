@@ -180,26 +180,26 @@
                                 name = $(n).attr("lname");
                             });
                             if (uids.length > 0) {
-                                $("#hidLotteryDish").val(uids);
+                                $("#Lottery_dishID").val(uids);
                                 $("#btnLotteryDish").text(name);
                                 $(this).dialog("close");
                             } else {
-                                $("#hidLotteryDish").val("");
+                                $("#Lottery_dishID").val("");
                                 $("#btnLotteryDish").text("选择");
                                 $(this).dialog("close");
                             }
                         },
                         "取消": function () {
                             $(this).dialog("close");
+                        },
+                        "清空": function () {
+                            $("#btnLotteryDish").text("选择");
+                            $("#Lottery_dishID").val("");
+                            $(":radio").attr("checked", false)
+                            $(this).dialog("close");
                         }
                     }
                 });
-            });
-
-            $("#btnClear").click(function () {
-                $("#btnLotteryDish").text("选择");
-                $("#hidLotteryDish").val("");
-                $(":radio").attr("checked", false)
             });
         });
     </script>
@@ -349,16 +349,21 @@
                     <td>@Html.ValidationMessageFor(a => a.MaxCount)
                     </td>
                 </tr>
-                <tr>
-                    <td class="tdTitle" style="height: 30px;">大转盘抽奖活动
-                    </td>
-                    <td>
-                        <label style="color: #00A4BD" id="btnLotteryDish">
-                            选择</label><input type="hidden" id="hidLotteryDish"/>
-                    </td>
-                    <td>
-                    </td>
-                </tr>
+                @if (ViewBag.HasLotteryDish)
+                { 
+
+                    <tr>
+                        <td class="tdTitle" style="height: 30px;">
+                            大转盘抽奖活动
+                        </td>
+                        <td>
+                            <label style="color: #00A4BD" id="btnLotteryDish">
+                                选择</label>@Html.HiddenFor(a => a.Lottery_dishID)
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                }
                 <tr style="height: 300px">
                     <td class="tdTitle" valign="top">
                         <span class="Identification">*</span> 活动内容
@@ -376,16 +381,17 @@
 </div>
 <div style="clear: both">
 </div>
-<div id="dialogShow" title="大转盘" style="display: none; padding: 0px">
-    <ul style="padding:0px;margin:5px 0px;">
-        <li style="list-style-type:none">
-            <input type="button" value="清空" id="btnClear" class="button" />
-        </li>
-        @foreach (var item in lotteryDishList)
+<div id="dialogShow" title="抽奖-大转盘" style="display: none; padding: 0px">
+    <ul style="padding: 10px; margin: 5px 0px;">
+        @if (lotteryDishList != null)
         {
-            <li style="list-style-type:none">
-                <input type="radio" id="cb_@item.ID" value="@item.ID" name="radio_lottery_dish" lname="@item.Name" /><label for="cb_@item.ID">@item.Name</label>
+            foreach (var item in lotteryDishList)
+            {
+            <li style="list-style-type: none">
+                <input type="radio" id="cb_@item.ID" value="@item.ID"
+               name="radio_lottery_dish" lname="@item.Name" /><label for="cb_@item.ID">@item.Name</label>
             </li>
+            }
         }
     </ul>
 </div>
