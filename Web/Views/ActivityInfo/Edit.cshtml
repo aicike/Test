@@ -7,24 +7,21 @@
     <script src="@Url.Content("~/Scripts/uploadify/jquery.uploadify.js")" type="text/javascript"></script>
     <script src="@Url.Content("/ueditor/ueditor.config.js")" type="text/javascript"></script>
     <script src="@Url.Content("/ueditor/ueditor.all.js")" type="text/javascript"></script>
-
-    
     <link href="@Url.Content("~/Scripts/timepicker/demos.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Scripts/timepicker/jquery-ui-timepicker-addon.css")" rel="stylesheet"
         type="text/css" />
     <script src="@Url.Content("~/Scripts/timepicker/jquery-ui-timepicker-addon.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/timepicker/jquery-ui-timepicker-zh-CN.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/timepicker/jquery.ui.datepicker-zh-CN.js.js")" type="text/javascript"></script>
-        <script src="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.js")" type="text/javascript"></script>
     <link href="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.css")" rel="stylesheet" type="text/css" />
-
     <script>
         var Cnt = 0;
         var UpImgUrl = '@Url.Action("UpImg", "Ajax", new { HostName = ViewBag.HostName })';
         $(function () {
 
 
-            
+
             $("#file_upload").uploadify({
                 height: 30,
                 swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
@@ -46,41 +43,41 @@
                     }
 
 
-                      if (Cnt > 0) {
-                            jcrop_api.destroy();
-                            $('#x1').val("0");
-                            $('#y1').val("0");
-                            $('#w').val("0");
-                            $('#h').val("0");
-                            $('#tw').val("0");
-                            $('#th').val("0");
-                        }
-                        $("#imgSel").attr('src', data);
-                        $("#imgLogo").attr('src', data);
-                        $("#imgLogo2").attr('src', data);
+                    if (Cnt > 0) {
+                        jcrop_api.destroy();
+                        $('#x1').val("0");
+                        $('#y1').val("0");
+                        $('#w').val("0");
+                        $('#h').val("0");
+                        $('#tw').val("0");
+                        $('#th').val("0");
+                    }
+                    $("#imgSel").attr('src', data);
+                    $("#imgLogo").attr('src', data);
+                    $("#imgLogo2").attr('src', data);
 
-                        $("#MainImagPath").val(data);
+                    $("#MainImagPath").val(data);
 
 
-                        $('#imgSel').Jcrop({
-                            onChange: updatePreview,
-                            onSelect: updatePreview,
-                            aspectRatio: 2
-                        }, function () {
-                            // Use the API to get the real image size
-                            var bounds = this.getBounds();
-                            boundx = bounds[0];
-                            boundy = bounds[1];
-                            // Store the API in the jcrop_api variable
-                            jcrop_api = this;
-                        });
-                        Cnt = 1;
+                    $('#imgSel').Jcrop({
+                        onChange: updatePreview,
+                        onSelect: updatePreview,
+                        aspectRatio: 2
+                    }, function () {
+                        // Use the API to get the real image size
+                        var bounds = this.getBounds();
+                        boundx = bounds[0];
+                        boundy = bounds[1];
+                        // Store the API in the jcrop_api variable
+                        jcrop_api = this;
+                    });
+                    Cnt = 1;
 
 
                 }
             });
 
-            
+
             var jcrop_api, boundx, boundy;
 
             function updatePreview(c) {
@@ -113,14 +110,6 @@
                 $('#tw').val($("#imgSel").width());
                 $('#th').val($("#imgSel").height());
             };
-
-
-
-
-
-
-
-
 
             window.UEDITOR_HOME_URL = "/ueditor/";
             //实例化编辑器
@@ -157,7 +146,7 @@
             $("#EnrollEndDate").datepicker("option", "minDate", "+1");
             $("#EnrollEndDate").val("@ViewBag.EndDate");
 
-            $("#ActivityStratDate").datepicker("option", "minDate",  $("#EnrollEndDate").val());
+            $("#ActivityStratDate").datepicker("option", "minDate", $("#EnrollEndDate").val());
             $("#ActivityStratDate").val("@ViewBag.StratDate");
 
             $("#btnSubmit").click(function () {
@@ -182,20 +171,55 @@
                     return false;
                 }
             });
-
+            //显示抽奖活动
+            $("#btnLotteryDish").click(function () {
+                $("#dialogShow").dialog({
+                    resizable: false,
+                    height: 600,
+                    width: 500,
+                    modal: true,
+                    buttons: {
+                        "确定": function () {
+                            var uids = "";
+                            var name = "";
+                            $.each($("#dialogShow").find(":checked"), function (i, n) {
+                                uids = $(n).val();
+                                name = $(n).attr("lname");
+                            });
+                            if (uids.length > 0) {
+                                $("#Lottery_dishID").val(uids);
+                                $("#btnLotteryDish").text(name);
+                                $(this).dialog("close");
+                            } else {
+                                $("#Lottery_dishID").val("");
+                                $("#btnLotteryDish").text("选择");
+                                $(this).dialog("close");
+                            }
+                        },
+                        "取消": function () {
+                            $(this).dialog("close");
+                        },
+                        "清空": function () {
+                            $("#btnLotteryDish").text("选择");
+                            $("#Lottery_dishID").val("");
+                            $(":radio").attr("checked", false)
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
 
             var Status = '@Model.Status'
             $("#Status").val(Status);
 
         });
     </script>
-
     <style>
-    #ui-datepicker-div
-    {
-        z-index:100 !important;     
-    }
-     .middle-out
+        #ui-datepicker-div
+        {
+            z-index: 100 !important;
+        }
+        .middle-out
         {
             width: 320px;
             height: 320px;
@@ -208,13 +232,13 @@
 }
 @model Poco.ActivityInfo
 <div class="title">
-        @Html.Partial("Menu3")
+    @Html.Partial("Menu3")
 </div>
 <div class="body">
     @using (Ajax.BeginForm("Edit", "ActivityInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
 
-    <fieldset style="font-size: 14px">
+        <fieldset style="font-size: 14px">
             <legend>展示图片</legend>
             <table style="line-height: 15px" width="100%">
                 <tr>
@@ -223,11 +247,11 @@
                             <div class="middle-in" style="margin: auto 0px">
                                 @if (string.IsNullOrEmpty(Model.MainImagPath))
                                 {
-                                  <img id="imgSel"  src="@Url.Content("~/Images/ActivityInfo.jpg")"   style="max-height:320px; max-width:320px;" />
+                                    <img id="imgSel"  src="@Url.Content("~/Images/ActivityInfo.jpg")"   style="max-height:320px; max-width:320px;" />
                                 }
                                 else
                                 { 
-                                <img id="imgSel"  src="@Url.Content(Model.MainImagPath ?? "")"   style="max-height:320px; max-width:320px;" />
+                                    <img id="imgSel"  src="@Url.Content(Model.MainImagPath ?? "")"   style="max-height:320px; max-width:320px;" />
                                 }
                             </div>
                         </div>
@@ -237,20 +261,20 @@
                             App列表页展示图
                         </p>
                         <div style="width: 200px; height: 100px; overflow: hidden;">
-                        @if (string.IsNullOrEmpty(Model.AppShowImagePath))
-                        {
-                            <img id="imgLogo" src="@Url.Content("~/Images/ActivityInfo.jpg")" style="width:200px; height:100px"/>
-                        }
-                        else
-                        { 
-                            <img id="imgLogo" src="@Url.Content(Model.AppShowImagePath ?? "")" style="width:200px; height:100px"/>
-                        }
+                            @if (string.IsNullOrEmpty(Model.AppShowImagePath))
+                            {
+                                <img id="imgLogo" src="@Url.Content("~/Images/ActivityInfo.jpg")" style="width:200px; height:100px"/>
+                            }
+                            else
+                            { 
+                                <img id="imgLogo" src="@Url.Content(Model.AppShowImagePath ?? "")" style="width:200px; height:100px"/>
+                            }
                         </div>
                         <span style="font-size: 12px; color: #979797">(320*160 缩略图)</span>
                         <div style="width: 120px; height: 60px; overflow: hidden; margin-top: 17px">
                             @if (string.IsNullOrEmpty(Model.MinImagePath))
                             {
-                            <img id="imgLogo2" src="@Url.Content("~/Images/ActivityInfo.jpg")" style="width:120px; height:60px"/>
+                                <img id="imgLogo2" src="@Url.Content("~/Images/ActivityInfo.jpg")" style="width:120px; height:60px"/>
                             }
                             else
                             { 
@@ -300,18 +324,18 @@
                         <span class="Identification">*</span> 活动标题
                     </td>
                     <td class="tdField">@Html.TextBoxFor(a => a.Title, new { style = "width:300px" })
-                    @Html.HiddenFor(a => a.AccountMainID)
-                    @Html.HiddenFor(a => a.CreateDate)
-                    @Html.HiddenFor(a => a.ID)
-                    @Html.HiddenFor(a => a.ISGenerateSaleAdvisory)
-                    @Html.HiddenFor(a => a.ISGenerateUserAdvisory)
-                     @Html.HiddenFor(a => a.AppShowImagePath)
+                        @Html.HiddenFor(a => a.AccountMainID)
+                        @Html.HiddenFor(a => a.CreateDate)
+                        @Html.HiddenFor(a => a.ID)
+                        @Html.HiddenFor(a => a.ISGenerateSaleAdvisory)
+                        @Html.HiddenFor(a => a.ISGenerateUserAdvisory)
+                        @Html.HiddenFor(a => a.AppShowImagePath)
                         @Html.HiddenFor(a => a.MinImagePath)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Title)
                     </td>
                 </tr>
-                  <tr>
+                <tr>
                     <td class="tdTitle" style="width: 150px">
                         <span class="Identification">*</span> 活动备注/描述
                     </td>
@@ -320,14 +344,14 @@
                     <td>@Html.ValidationMessageFor(a => a.Remarks)
                     </td>
                 </tr>
-                 <tr>
+                <tr>
                     <td class="tdTitle">
                         <span class="Identification">*</span> 报名截止日期
                     </td>
                     <td>
                         @Html.TextBoxFor(a => a.EnrollEndDate, new { @readonly = "readonly" })
                     </td>
-                     <td>@Html.ValidationMessageFor(a => a.EnrollEndDate)
+                    <td>@Html.ValidationMessageFor(a => a.EnrollEndDate)
                     </td>
                 </tr>
                 <tr>
@@ -337,7 +361,7 @@
                     <td>
                         @Html.TextBoxFor(a => a.ActivityStratDate, new { @readonly = "readonly" })
                     </td>
-                     <td>@Html.ValidationMessageFor(a => a.ActivityStratDate)
+                    <td>@Html.ValidationMessageFor(a => a.ActivityStratDate)
                     </td>
                 </tr>
                 <tr>
@@ -352,20 +376,44 @@
                     </td>
                 </tr>
                 <tr>
-                  <td class="tdTitle">
+                    <td class="tdTitle">
                         <span class="Identification">*</span> 名额/最大报名人数
                     </td>
                     <td>
                         @Html.TextBoxFor(a => a.MaxCount)
                     </td>
-                     <td>@Html.ValidationMessageFor(a => a.MaxCount)
+                    <td>@Html.ValidationMessageFor(a => a.MaxCount)
                     </td>
                 </tr>
-                <tr style="height:300px">
+                @if (ViewBag.HasLotteryDish)
+                { 
+
+                    <tr>
+                        <td class="tdTitle" style="height: 30px;">
+                            大转盘抽奖活动
+                        </td>
+                        <td>
+                            @if (Model.Lottery_dishID.HasValue)
+                            { 
+
+                                <label style="color: #00A4BD" id="btnLotteryDish">
+                                    @Model.Lottery_dish.Name</label>
+                            }
+                            else
+                            { 
+
+                                <label style="color: #00A4BD" id="btnLotteryDish">
+                                    选择</label>}@Html.HiddenFor(a => a.Lottery_dishID)
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                }
+                <tr style="height: 300px">
                     <td class="tdTitle" valign="top">
                         <span class="Identification">*</span> 活动内容
                     </td>
-                    <td class="tdField" colspan="2" style="height:300px"> 
+                    <td class="tdField" colspan="2" style="height: 300px">
                         <script type="text/plain" id="editor" height="300px" name="Content">@Html.Raw(Model.Content)</script>
                     </td>
                 </tr>
@@ -377,4 +425,29 @@
     }
 </div>
 <div style="clear: both">
+</div>
+<div id="dialogShow" title="抽奖-大转盘" style="display: none; padding: 0px">
+    <ul style="padding: 10px; margin: 5px 0px;">
+        @if (lotteryDishList != null)
+        {
+            foreach (var item in lotteryDishList)
+            {
+
+            <li style="list-style-type: none">
+                @if (Model.Lottery_dishID.HasValue && Model.Lottery_dishID.Value == item.ID)
+                { 
+
+                    <input type="radio" id="cb_@item.ID" value="@item.ID"
+               name="radio_lottery_dish" lname="@item.Name" checked="checked" />}
+                else
+                { 
+
+                    <input type="radio" id="cb_@item.ID" value="@item.ID"
+               name="radio_lottery_dish" lname="@item.Name" />
+                }
+                <label for="cb_@item.ID">@item.Name</label>
+            </li>
+            }
+        }
+    </ul>
 </div>

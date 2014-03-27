@@ -16,5 +16,7 @@ namespace Poco
         public int SystemStatus { get; set; }
 
         public virtual ICollection<Lottery_User> Lottery_Users { get; set; }
+
+        public virtual ICollection<ActivityInfo> ActivityInfos { get; set; }
     }
 }

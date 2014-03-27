@@ -45,11 +45,13 @@ namespace Web.Controllers
             //检查是否有大转盘权限
             var menuModel = Factory.Get<IMenuModel>(SystemConst.IOC_Model.MenuModel);
             var has = menuModel.CheckHasPermissions(LoginAccount.RoleIDs, "Token_News_L_D");
+            ViewBag.HasLotteryDish = false;
             if (has)
             {
                 var lottery_dishModel = Factory.Get<ILottery_dishModel>(SystemConst.IOC_Model.Lottery_dishModel);
                 var lotteryDishList = lottery_dishModel.List_ActiveStatus(LoginAccount.CurrentAccountMainID).ToList();
                 ViewBag.lotteryDishList = lotteryDishList;
+                ViewBag.HasLotteryDish = true;
             }
             #endregion
 
@@ -92,6 +94,19 @@ namespace Web.Controllers
             var actiovity = activityInfoModel.GetActivityByID(ActionId, LoginAccount.CurrentAccountMainID);
             ViewBag.EndDate = actiovity.EnrollEndDate.ToString("yyyy-MM-dd");
             ViewBag.StratDate = actiovity.ActivityStratDate;
+            #region 大转盘抽奖
+            //检查是否有大转盘权限
+            var menuModel = Factory.Get<IMenuModel>(SystemConst.IOC_Model.MenuModel);
+            var has = menuModel.CheckHasPermissions(LoginAccount.RoleIDs, "Token_News_L_D");
+            ViewBag.HasLotteryDish = false;
+            if (has)
+            {
+                var lottery_dishModel = Factory.Get<ILottery_dishModel>(SystemConst.IOC_Model.Lottery_dishModel);
+                var lotteryDishList = lottery_dishModel.List_ActiveStatus(LoginAccount.CurrentAccountMainID).ToList();
+                ViewBag.lotteryDishList = lotteryDishList;
+                ViewBag.HasLotteryDish = true; ;
+            }
+            #endregion
             return View(actiovity);
         }
         /// <summary>

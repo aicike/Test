@@ -42,5 +42,7 @@ namespace Poco
         public virtual ICollection<Lottery_dish_detail> Lottery_dish_details { get; set; }
 
         public virtual ICollection<Lottery_User> Lottery_Users { get; set; }
+
+        public virtual ICollection<ActivityInfo> ActivityInfos { get; set; }
     }
 }
