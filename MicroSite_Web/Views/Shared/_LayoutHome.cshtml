@@ -11,10 +11,9 @@
         MicroSite_Web.Controllers.UserBase ub = new MicroSite_Web.Controllers.UserBase();
         amid = ub.GetAccountMainID();
     }
-
-    var AMNAME = "";
-    var accountMainModel = Injection.Factory.Get<Interface.IAccountMainModel>(Poco.SystemConst.IOC_Model.AccountMainModel);
-    AMNAME = accountMainModel.Get(amid).Name;
+    var accountMainModel= Injection.Factory.Get<Interface.IAccountMainModel>(Poco.SystemConst.IOC_Model.AccountMainModel);
+    var accountMain= accountMainModel.Get(amid);
+    
 }
 <html>
 <head>
@@ -101,16 +100,16 @@
         .div_LJ
         {
             width:100%;
-            height:50px;
+            height:70px;
             text-shadow: none;
-            font-size:18px;
+            font-size:20px;
             color:#fff;
              
         }
         .div_tab
         {
          width:100%;
-            height:50px;
+            height:70px;
         }
     </style>
     @RenderSection("head", required: false)
@@ -135,17 +134,52 @@
             <a href="@Url.Action("ShopIndex", "MicroMall", new { AMID = 1 })" data-ajax="false" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-home">
                 首页</a>
             <h1 style="font-size: 1em !important;">
-                @AMNAME</h1>
+                APP</h1>
             <a href="#nav-panel" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-grid">
                 更多</a>
         </div>
         <div data-role="panel" data-position="right" data-position-fixed="true" data-display="overlay"
             data-ajax="false" data-theme="a" id="nav-panel" class="drawer">
-            <ul data-role="listview" data-inset="true" style=" margin:0px">
-               <li><a  href="@Url.Action("ShopIndex", "MicroMall", new { AMID = amid })" class="ui-icon-home" data-ajax="false" >首页</a></li>
-               <li><a id="layouthome_center" href="@Url.Action("Index", "Center", new { amid = amid })"   class="ui-icon-user"  data-ajax="false" >个人中心</a></li>
-               <li><a href="@Url.Action("ShoppingCart", "MicroMall", new { AMID = amid })"   class="ui-icon-shop"  data-ajax="false" >购物车</a></li>
-           </ul>
+            <a href="www.baidu.com" style="text-decoration: none;">
+                <div class="div_LJ" style="background: url(/images/WeiRed.png)">
+                    <table cellpadding="0" cellspacing="0" class="div_tab">
+                        <tr>
+                            <td align="right" style="width: 100px">
+                                图标
+                            </td>
+                            <td align="left" style="padding-left: 10px">
+                                首页
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </a><a href="www.baidu.com" style="text-decoration: none">
+                <div class="div_LJ" style="background: url(/images/WeiOrange.png)">
+                    <table cellpadding="0" cellspacing="0" class="div_tab">
+                        <tr>
+                            <td align="right" style="width: 100px">
+                                图标
+                            </td>
+                            <td align="left" style="padding-left: 10px">
+                                个人中心
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </a><a href="www.baidu.com" style="text-decoration: none">
+                <div class="div_LJ" style="background: url(/images/WeiBlue.png)">
+                    <table cellpadding="0" cellspacing="0" class="div_tab">
+                        <tr>
+                            <td align="right" style="width: 100px">
+                                图标
+                            </td>
+                            <td align="left" style="padding-left: 10px">
+                                购物车
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </a>
         </div>
         <!-- /container -->
         @RenderBody()

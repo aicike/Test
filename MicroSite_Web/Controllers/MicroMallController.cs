@@ -143,15 +143,8 @@ namespace MicroSite_Web.Controllers
 
 
 
-        /// <summary>
-        /// 订单确认界面
-        /// </summary>
-        /// <param name="AMID"></param>
-        /// <param name="adsID"></param>
-        /// <param name="IsError">IsError 0:正常1:操作失败 2：提交订单失败,3:产品库存不足</param>
-        /// <param name="ErrorPID">3:产品库存不足的 商品ID</param>
-        /// <returns></returns>
-        public ActionResult OrderConfirmation(int AMID, int? adsID, int? IsError, int? ErrorPID)
+        //订单确认界面
+        public ActionResult OrderConfirmation(int AMID, int? adsID, int? IsError)
         {
             ViewBag.AMID = AMID;
             if (adsID.HasValue)
@@ -164,20 +157,12 @@ namespace MicroSite_Web.Controllers
             }
             if (IsError.HasValue)
             {
-                //IsError 0:正常1:操作失败 2：提交订单失败,3:产品库存不足
+                //IsError 1:操作失败 2：提交订单失败
                 ViewBag.Error = IsError;
             }
             else
             {
                 ViewBag.Error = 0;
-            }
-            if (ErrorPID.HasValue)
-            {
-                ViewBag.ErrorPID = ErrorPID.Value;
-            }
-            else
-            {
-                ViewBag.ErrorPID = 0;
             }
             return View();
         }
@@ -235,15 +220,7 @@ namespace MicroSite_Web.Controllers
 
                 if (result.HasError)
                 {
-                    try
-                    {
-                        int PID = int.Parse(result.Error);
-                        return RedirectToAction("OrderConfirmation", "MicroMall", new { AMID = AMID, adsID = AID, IsError = 3, ErrorPID = PID });
-                    }
-                    catch
-                    {
-                        return RedirectToAction("OrderConfirmation", "MicroMall", new { AMID = AMID, adsID = AID, IsError = 2 });
-                    }
+                    return RedirectToAction("OrderConfirmation", "MicroMall", new { AMID = AMID, adsID = AID, IsError = 2 });
                 }
                 else
                 {
