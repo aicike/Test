@@ -56,10 +56,15 @@
 
 
         function clickaddress(shortURL) {
+            
+               //二维码
+           var src = "@Url.Action("CreateQrCode", "AppAdvertorial")"+"?Url="+shortURL;
+           $("#codeImg").attr("src", src);
+
             $("#urlAddress").text(shortURL);
             $("#dialogShowUrl").dialog({
                 resizable: false,
-                height: 120,
+                height: 350,
                 width: 320,
                 modal: true,
                 draggable: false
@@ -331,9 +336,12 @@
 </div>
 <div id="dialogShowUrl" title="资讯地址" style="display: none; padding: 0px; text-align: center">
     <div style="padding-top: 20px;">
-        <label name="labCbFirst" title="点击复制" onclick="copy()" style="cursor: pointer">
-            <span id="urlAddress" style="font-weight: bold">11</span>
-        </label>
+         <div>
+            <img id="codeImg" style="width: 220px" />
+        </div>
+        <span style=" font-weight:bold">资讯地址：</span> 
+        <span id="urlAddress" style="font-weight: bold">11</span>
+        
     </div>
 </div>
 <div id="dialogShowSelectInfo" title="资讯详细" style="display: none; padding: 0px">

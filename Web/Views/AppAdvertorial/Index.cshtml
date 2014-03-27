@@ -65,16 +65,26 @@
                 if (URLType == types) {
                     $("#divactivitySigin").show();
                     $("#urlSignInAddress").text(ActivitySignUrl);
+                    //二维码
+                   var srcqd = "@Url.Action("CreateQrCode", "AppAdvertorial")"+"?Url="+ActivitySignUrl;
+                   $("#codeImgQD").attr("src", srcqd);
 
+                   $("#div_zxdz").attr("style","width:290px");
+                  
                 }
+            }
+            else
+            {
+                $("#div_zxdz").attr("style","width:100%");
             }
 
             //二维码
            var src = "@Url.Action("CreateQrCode", "AppAdvertorial")"+"?Url="+shortURL;
            $("#codeImg").attr("src", src);
+           
             $("#dialogShowUrl").dialog({
                 resizable: false,
-                height: 500,
+                height: 350,
                width:600,
                 modal: true,
                 draggable: false
@@ -198,14 +208,14 @@
                     if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey)
                     {
                     <td>
-                        <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id_token = item.UrlID.Value.TokenEncrypt(true)  })" target="_blank">
+                        <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id_token = item.UrlID.Value.TokenEncrypt(true) })" target="_blank">
                             <img style="width: 150px; border:0; margin-top:5px
                             ;cursor:pointer " src="@Url.Content(item.AppShowImagePath ?? "")" /></a>
                     </td>
                     <td style="font-size: 14px" class="operation">
                         <label
                             name="labCbFirst" title="@item.Depict" style=" cursor:pointer">
-                            <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id_token =item.UrlID.Value.TokenEncrypt(true) })" target="_blank">
+                            <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id_token = item.UrlID.Value.TokenEncrypt(true) })" target="_blank">
                                 @item.Title
                             </a>
                         </label>
@@ -259,7 +269,7 @@
                         else if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey)
                         {
                         @:调查问卷
-                                                                                                                                                }
+                                                                                                                                                                                                            }
                     }
                 </td>
                 <td>
@@ -278,7 +288,7 @@
                     else
                     { 
                         @:无
-                                                                                                                                                                                                                                                                                                             }
+                                                                                                                                                                                                                                                                                                                                                                         }
                 </td>
                 <td class="operation" align="center">
                     @if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey || item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Activities)
@@ -290,12 +300,11 @@
                     }
                     @Ajax.ActionLink("删除", "Delete", "AppAdvertorial", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?！','" + Url.Action("Delete", "AppAdvertorial", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
                     <br />
-
                     @if (ViewBag.HasAPP)
-                   { 
-                       <a onclick="clickSelectInfo('@item.ID')" style=" width:56px">&nbsp;查看详细</a>
-                       <br />
-                   }
+                    { 
+                        <a onclick="clickSelectInfo('@item.ID')" style=" width:56px">&nbsp;查看详细</a>
+                        <br />
+                    }
                     <a onclick="clickaddress('@item.ShortURL','@item.ActivitySignUrl','@item.EnumAdverURLType')" style=" width:56px">
                         查看地址 </a>
                 </td>
@@ -345,17 +354,25 @@
     <iframe id="iframeShowInfo" src="#" style="width: 320px; height: 480px; border: none;
         overflow: auto"></iframe>
 </div>
-<div id="dialogShowUrl" title="资讯地址" style="display: none; padding: 0px; text-align: center">
-    <div style="padding-top: 20px;">
-    <div>
-           <img id="codeImg" style=" width:220px" />
-       </div>
-        资讯地址：<span id="urlAddress" style="font-weight: bold"></span>
-        <div id="divactivitySigin" style="display: none">
-            <br />
-            签到地址：<span id="urlSignInAddress" style="font-weight: bold"></span>
+<div id="dialogShowUrl" title="资讯地址" style="display: none; padding: 0px; text-align: center; padding-top:20px">
+   
+    <div id="divactivitySigin" style=" display: none; float:right; width:290px">
+        <div>
+            <img id="codeImgQD" style="width: 220px" />
+        </div>
+        <div style="word-break:break-all ; width:280px;" >
+        <span style=" font-weight:bold">签到地址：</span><span id="urlSignInAddress" style="font-weight: bold"></span>
         </div>
     </div>
+    <div id="div_zxdz" style=" width:100%">
+        <div>
+            <img id="codeImg" style="width: 220px" />
+        </div>
+        <div style="word-break:break-all; width:100%;" >
+        <span style=" font-weight:bold">资讯地址：</span> <span id="urlAddress" style="font-weight: bold"></span>
+        </div>
+    </div>
+   
 </div>
 <div id="dialogShowSelectInfo" title="资讯详细" style="display: none; padding: 0px">
     <iframe id="iframeShowSelectInfo" src="#" style="width: 100%; height: 530px; border: none;
