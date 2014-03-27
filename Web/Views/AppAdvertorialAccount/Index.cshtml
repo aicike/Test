@@ -50,7 +50,7 @@
                 height: 530,
                 width: 320,
                 modal: true,
-                draggable: false 
+                draggable: false
             });
         }
 
@@ -245,7 +245,7 @@
                         else if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey)
                         {
                         @:调查问卷
-                                                                                    }
+                                                                }
                     }
                 </td>
                 <td>
@@ -264,7 +264,7 @@
                     else
                     { 
                         @:无
-                                                             }
+                                         }
                 </td>
                 <td class="operation">
                     @if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey || item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Activities)
@@ -276,11 +276,8 @@
                     }
                     @Ajax.ActionLink("删除", "Delete", "AppAdvertorialAccount", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?！','" + Url.Action("Delete", "AppAdvertorialAccount", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
                     <br />
-                    @if (ViewBag.HasAPP)
-                    { 
-                        <a onclick="clickSelectInfo('@item.ID')" style=" width:56px">&nbsp;查看详细</a>
-                        <br />
-                    }
+                    <a onclick="clickSelectInfo('@item.ID')" style=" width:56px">&nbsp;查看详细</a>
+                    <br />
                     <a onclick="clickaddress('@item.ShortURL')" style=" width:56px">查看地址</a>
                 </td>
             </tr>

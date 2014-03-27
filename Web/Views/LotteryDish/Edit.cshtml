@@ -1,234 +1,245 @@
 ﻿﻿@{
-   Layout = "~/Views/Shared/_LayoutUser.cshtml";
-   ViewBag.Menu2 = Poco.SystemConst.Menu.LotteryDish;
-   ViewBag.Menu3 = Poco.SystemConst.Menu.LotteryDish;
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.LotteryDish;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.LotteryDish;
 }
 @section head{
-   <script type="text/javascript">
-       //奖品信息
-       function LotteryItem() {
-           var it = new Object;
-           it.Name = "";
-           it.Ratio = "";
-           it.Image = "";
-           it.Description = "";
-           it.IsNewImg = true;
-           return it;
-       }
+    <script type="text/javascript">
+        //奖品信息
+        function LotteryItem() {
+            var it = new Object;
+            it.Name = "";
+            it.Ratio = "";
+            it.Image = "";
+            it.Description = "";
+            it.IsNewImg = true;
+            return it;
+        }
 
-       $(function () {
-           $("#btnInsert").click(function () {
-               $("#table_detail").append('<tr class="tr_item"><td>' +
+        $(function () {
+            $("#btnInsert").click(function () {
+                $("#table_detail").append('<tr class="tr_item"><td>' +
                    '<input type="file" style="display: none" class="file_item" name="file_item" /><img class="btn_img"width="40px" height="40px" style="vertical-align: middle; cursor: pointer" /></td>' +
                    '<td><input type="text" style="width: 190px;" class="txtItemTitle" /></td>' +
                    '<td><input type="text" class="txtItemRatio" maxlength="5" style="width: 50px;" title="填写数字（格式：10 , 10.5）"/></td>' +
                    '<td><input type="text" style="width: 320px;" class="txtItemDescription" /></td>' +
                    '<td><a class="btn_delete" style="color: #00aec8">删除</a></td></tr>');
-               init();
-           });
-           $(".btn_img").live("click", function () {
-               $(this).prev(":file").click();
-           });
+                init();
+            });
+            $(".btn_img").live("click", function () {
+                $(this).prev(":file").click();
+            });
 
-           $(".file_item").live("change", function () {
-               var obj = $(this);
-               var fileName = obj.val();
-               if (fileName.length == 0) { return false; }
-               var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
-               switch (suffix) {
-                   case ".jpg":
-                   case ".jpeg":
-                   case ".png":
-                   case ".gif":
-                   case ".bmp":
-                       break;
-                   default:
-                       JAlert({
-                           Message: "格式限制：jpg, jpge, gif, png, bmp",
-                           DialogType: "Ok",
-                           BtnOk: "确定"
-                       });
-                       return false;
-                       break;
-               }
-               var input = this;
-               if (input.files && input.files[0]) {
-                   var reader = new FileReader();
-                   reader.onload = function (e) {
-                       obj.next(".btn_img").attr('src', e.target.result);
-                   };
-                   reader.readAsDataURL(input.files[0]);
-               }
-               return false;
-           });
+            $(".file_item").live("change", function () {
+                var obj = $(this);
+                var fileName = obj.val();
+                if (fileName.length == 0) { return false; }
+                var suffix = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+                switch (suffix) {
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".gif":
+                    case ".bmp":
+                        break;
+                    default:
+                        JAlert({
+                            Message: "格式限制：jpg, jpge, gif, png, bmp",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return false;
+                        break;
+                }
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        obj.next(".btn_img").attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+                return false;
+            });
 
-           $(".btn_delete").live("click", function () {
-               var count = $(".tr_item").length;
-               if (count <= 2) {
-                   JAlert({
-                       Message: "至少需要2项奖品。",
-                       DialogType: "Ok",
-                       BtnOk: "确定"
-                   });
-                   return;
-               } else {
-                   console.log($(this).parent().parent("tr"));
-                   $(this).parent().parent("tr").remove();
-               }
-           });
+            $(".btn_delete").live("click", function () {
+                var count = $(".tr_item").length;
+                if (count <= 2) {
+                    JAlert({
+                        Message: "至少需要2项奖品。",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return;
+                } else {
+                    console.log($(this).parent().parent("tr"));
+                    $(this).parent().parent("tr").remove();
+                }
+            });
 
 
-           $(".txtItemRatio").live("keyup blur", function () {
-               var value = $(this).val().trim();
-               if (value.length > 0) {
-                   var regex = /^\d{1,2}((\.)|(\.\d{1,2}))?$/;
-                   if (!regex.test(value)) {
-                       $(this).addClass("input-validation-error").focus();
+            $(".txtItemRatio").live("keyup blur", function () {
+                var value = $(this).val().trim();
+                if (value.length > 0) {
+                    var regex = /^\d{1,2}((\.)|(\.\d{1,2}))?$/;
+                    if (!regex.test(value)) {
+                        $(this).addClass("input-validation-error").focus();
 
-                   } else {
-                       $(this).removeClass("input-validation-error")
-                   }
-               }
-           });
+                    } else {
+                        $(this).removeClass("input-validation-error")
+                    }
+                }
+            });
 
-           $("#btnSubmit").click(function () {
-               var hasError = false;
-               $(".txtItemTitle,.txtItemRatio,.txtItemDescription").each(function (i, n) {
-                   if ($(n).val().trim().length == 0) {
-                       JAlert({
-                           Message: "请填写完整的奖品信息。",
-                           DialogType: "Ok",
-                           BtnOk: "确定"
-                       });
-                       hasError = true;
-                       return;
-                   }
-                   var ratioSum = 0;
-                   $(".txtItemRatio").each(function (i, n) {
-                       ratioSum += parseInt($(n).val().trim());
-                   });
-                   if (ratioSum != 100) {
-                       JAlert({
-                           Message: "各奖品中奖率和要等于100。",
-                           DialogType: "Ok",
-                           BtnOk: "确定"
-                       });
-                       hasError = true;
-                       return;
-                   }
-               });
-               if (hasError) {
-                   return false;
-               } else {
-                   //获取奖品信息
-                   var items = [];
-                   $(".tr_item").each(function (i, n) {
-                       var li = new LotteryItem();
-                       var hidItem = $(n).find(".hid_item");
-                       if (hidItem.length > 0) {
-                           li.ID = hidItem.val().trim();
-                       }
-                       li.Name = $(n).find(".txtItemTitle").val().trim();
-                       li.Ratio = $(n).find(".txtItemRatio").val().trim();
-                       li.IsNewImg = true;
-                       var itemImg = $(n).find(".file_item").val().trim();
-                       if (itemImg.length <= 0) {
-                           itemImg = $(n).find(".hid_item_img").val().trim();
-                           li.IsNewImg = false;
-                       }
-                       li.Image = itemImg;
-                       li.Description = $(n).find(".txtItemDescription").val().trim();
-                       items.push(li);
-                   });
-                   $("#hidItems").val(JSON.stringify(items));
-                   return true;
-               }
-           });
-           init();
-       });
+            $("#btnSubmit").click(function () {
+                var hasError = false;
+                $(".txtItemTitle,.txtItemRatio,.txtItemDescription").each(function (i, n) {
+                    if ($(n).val().trim().length == 0) {
+                        JAlert({
+                            Message: "请填写完整的奖品信息。",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        hasError = true;
+                        return;
+                    }
+                    var ratioSum = 0;
+                    $(".txtItemRatio").each(function (i, n) {
+                        ratioSum += parseInt($(n).val().trim());
+                    });
+                    if (ratioSum != 100) {
+                        JAlert({
+                            Message: "各奖品中奖率和要等于100。",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        hasError = true;
+                        return;
+                    }
+                });
+                if (hasError) {
+                    return false;
+                } else {
+                    //获取奖品信息
+                    var items = [];
+                    $(".tr_item").each(function (i, n) {
+                        var li = new LotteryItem();
+                        var hidItem = $(n).find(".hid_item");
+                        if (hidItem.length > 0) {
+                            li.ID = hidItem.val().trim();
+                        }
+                        li.Name = $(n).find(".txtItemTitle").val().trim();
+                        li.Ratio = $(n).find(".txtItemRatio").val().trim();
+                        li.IsNewImg = true;
+                        var itemImg = $(n).find(".file_item").val().trim();
+                        if (itemImg.length <= 0) {
+                            var hidItemImg = $(n).find(".hid_item_img");
+                            if (hidItemImg.length > 0) {
+                                itemImg = hidItemImg.val().trim();
+                            }
+                            li.IsNewImg = false;
+                        }
+                        li.Image = itemImg;
+                        li.Description = $(n).find(".txtItemDescription").val().trim();
+                        items.push(li);
+                    });
+                    $("#hidItems").val(JSON.stringify(items));
+                    return true;
+                }
+            });
+            init();
+        });
 
-       function init() {
-           $(".txtItemRatio").tipTip({ activation: "hover,focus", delay: 3, defaultPosition: "top" });
-       }
-   </script>
+        function init() {
+            $(".txtItemRatio").tipTip({ activation: "hover,focus", delay: 3, defaultPosition: "top" });
+        }
+    </script>
 }
 @model Poco.Lottery_dish
 <div class="title">
-   @Html.Partial("SitePath")
+    @Html.Partial("SitePath")
 </div>
 <div class="body">
-   @using (Html.BeginForm("Edit", "LotteryDish", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
-   {
-       <fieldset>
-           <legend>基本信息</legend>
-           <table class="tableForm">
-               <tr>
-                   <td class="tdTitle">
-                       <span class="Identification">*</span> 标题
-                   </td>
-                   <td class="tdField">@Html.TextBoxFor(a => a.Name)<input id="hidItems" name="hidItems"
-                       type="hidden" />
-                   </td>
-                   <td>@Html.ValidationMessageFor(a => a.Name)
-                   </td>
-               </tr>
-               <tr>
-                   <td class="tdTitle">
-                       <span class="Identification">*</span> 描述
-                   </td>
-                   <td class="tdField">@Html.TextAreaFor(a => a.Description)
-                   </td>
-                   <td>@Html.ValidationMessageFor(a => a.Description)
-                   </td>
-               </tr>
-           </table>
-       </fieldset>
-       <br />
-       <div>
-           奖品信息（至少2件奖品）&nbsp;&nbsp;<a style="float: right; color: #00aec8" id="btnInsert">点击新增奖品</a></div>
-       <table id="table_detail" class="tableList" cellpadding="0" cellspacing="0">
-           <tr>
-               <th style="width: 50px">
-                   图片
-               </th>
-               <th style="width: 200px">
-                   奖品名称
-               </th>
-               <th style="width: 60px">
-                   中奖率(%)
-               </th>
-               <th style="width: 320px">
-                   奖品详细
-               </th>
-               <th style="width: 50px">
-                   操作
-               </th>
-           </tr>
-           @foreach (var item in Model.Lottery_dish_details)
-           {
-               <tr class="tr_item">
-                   <td>
-                       <input type="file" style="display: none" class="file_item" name="file_item" /><img src="@Url.Content(item.Image)"
-                           class="btn_img" width="40px" height="40px" style="vertical-align: middle; cursor: pointer" /><input type="hidden" class="hid_item_img" value="@item.Image" /><input type="hidden" class="hid_item" value="@item.ID" />
-                   </td>
-                   <td>
-                       <input type="text" style="width: 190px;" class="txtItemTitle" value="@item.Name" />
-                   </td>
-                   <td>
-                       <input type="text" class="txtItemRatio" maxlength="5" style="width: 50px;" title="填写数字（格式：10 , 10.5）" value="@item.Ratio" />
-                   </td>
-                   <td>
-                       <input type="text" style="width: 320px;" class="txtItemDescription" value="@item.Description" />
-                   </td>
-                   <td>
-                       <a class="btn_delete" style="color: #00aec8">删除</a>
-                   </td>
-               </tr>
-           }
-       </table>
+    @using (Html.BeginForm("Edit", "LotteryDish", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <fieldset>
+            <legend>基本信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 标题
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Name)<input id="hidItems" name="hidItems"
+                        type="hidden" />
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 描述
+                    </td>
+                    <td class="tdField">@Html.TextAreaFor(a => a.Description)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Description)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <br />
+        <div>
+            奖品信息（至少2件奖品）&nbsp;&nbsp;<a style="float: right; color: #00aec8" id="btnInsert">点击新增奖品</a></div>
+        <table id="table_detail" class="tableList" cellpadding="0" cellspacing="0">
+            <tr>
+                <th style="width: 50px">
+                    图片
+                </th>
+                <th style="width: 200px">
+                    奖品名称
+                </th>
+                <th style="width: 60px">
+                    中奖率(%)
+                </th>
+                <th style="width: 320px">
+                    奖品详细
+                </th>
+                <th style="width: 50px">
+                    操作
+                </th>
+            </tr>
+            @foreach (var item in Model.Lottery_dish_details)
+            {
+                <tr class="tr_item">
+                    <td>
+                        <input type="file" style="display: none" class="file_item" name="file_item" />
+                        @if (string.IsNullOrEmpty(item.Image) == false)
+                        { 
+                            <img src="@Url.Content(item.Image)" class="btn_img" width="40px" height="40px" style="vertical-align: middle; cursor: pointer" />
+                        }
+                        else
+                        { 
+                            <img class="btn_img" width="40px" height="40px" style="vertical-align: middle; cursor: pointer" />
+                        }
+                        <input type="hidden" class="hid_item_img" value="@item.Image" /><input type="hidden" class="hid_item" value="@item.ID" />
+                    </td>
+                    <td>
+                        <input type="text" style="width: 190px;" class="txtItemTitle" value="@item.Name" />
+                    </td>
+                    <td>
+                        <input type="text" class="txtItemRatio" maxlength="5" style="width: 50px;" title="填写数字（格式：10 , 10.5）" value="@item.Ratio" />
+                    </td>
+                    <td>
+                        <input type="text" style="width: 320px;" class="txtItemDescription" value="@item.Description" />
+                    </td>
+                    <td>
+                        <a class="btn_delete" style="color: #00aec8">删除</a>
+                    </td>
+                </tr>
+            }
+        </table>
     
-       <div class="action">
-           <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
-       </div>
-   }
+        <div class="action">
+            <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }
 </div>

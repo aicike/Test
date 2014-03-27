@@ -81,7 +81,7 @@
             $(".txtItemRatio").live("keyup blur", function () {
                 var value = $(this).val().trim();
                 if (value.length > 0) {
-                    var regex = /^\d{1,2}((\.)|(\.\d{1,2}))?$/;
+                    var regex = /(^(100)$)|(^\d{1,2}((\.)|(\.\d{1,2}))?$)/;
                     if (!regex.test(value)) {
                         $(this).addClass("input-validation-error").focus();
 

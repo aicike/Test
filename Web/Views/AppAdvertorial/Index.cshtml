@@ -56,27 +56,22 @@
             });
         }
 
-        function clickaddress(shortURL, ActivityID, URLType) {
+        function clickaddress(shortURL, ActivitySignUrl, URLType) {
 
             $("#divactivitySigin").hide();
             $("#urlAddress").text(shortURL);
             if (URLType != null && URLType != undefined && URLType != "") {
                 var types = "@((int)Poco.Enum.EnumAdverURLType.Activities)";
                 if (URLType == types) {
-                    var signUrl = "http://" + '@Address' + "/default/ActivitySignIn?ActivityID=" + ActivityID;
                     $("#divactivitySigin").show();
-                    $("#urlSignInAddress").text(signUrl);
+                    $("#urlSignInAddress").text(ActivitySignUrl);
 
                 }
             }
-            //二维码
-            var src = "@Url.Action("CreateQrCode", "AppAdvertorial")"+"?Url="+shortURL;
-            $("#codeImg").attr("src", src);
-
             $("#dialogShowUrl").dialog({
                 resizable: false,
-                height: 500,
-                width:600,
+                height: 150,
+                width: 450,
                 modal: true,
                 draggable: false
             });
@@ -199,14 +194,14 @@
                     if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey)
                     {
                     <td>
-                        <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id_token = item.UrlID.Value.TokenEncrypt(true) })" target="_blank">
+                        <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id_token = item.UrlID.Value.TokenEncrypt(true)  })" target="_blank">
                             <img style="width: 150px; border:0; margin-top:5px
                             ;cursor:pointer " src="@Url.Content(item.AppShowImagePath ?? "")" /></a>
                     </td>
                     <td style="font-size: 14px" class="operation">
                         <label
                             name="labCbFirst" title="@item.Depict" style=" cursor:pointer">
-                            <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id_token = item.UrlID.Value.TokenEncrypt(true) })" target="_blank">
+                            <a href="@Url.Action("TroubleStatistics", "SurveyMain", new { id_token =item.UrlID.Value.TokenEncrypt(true) })" target="_blank">
                                 @item.Title
                             </a>
                         </label>
@@ -260,7 +255,7 @@
                         else if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey)
                         {
                         @:调查问卷
-                                                                                                                                                                                                            }
+                                                                                                                                                }
                     }
                 </td>
                 <td>
@@ -279,7 +274,7 @@
                     else
                     { 
                         @:无
-                                                                                                                                                                                                                                                                                                                                                                         }
+                                                                                                                                                                                                                                                                                                             }
                 </td>
                 <td class="operation" align="center">
                     @if (item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Survey || item.EnumAdverURLType == (int)Poco.Enum.EnumAdverURLType.Activities)
@@ -291,12 +286,9 @@
                     }
                     @Ajax.ActionLink("删除", "Delete", "AppAdvertorial", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?！','" + Url.Action("Delete", "AppAdvertorial", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
                     <br />
-                    @if (ViewBag.HasAPP)
-                    { 
-                        <a onclick="clickSelectInfo('@item.ID')" style=" width:56px">&nbsp;查看详细</a>
-                        <br />
-                    }
-                    <a onclick="clickaddress('@item.ShortURL','@item.UrlID','@item.EnumAdverURLType')" style=" width:56px">
+                    <a onclick="clickSelectInfo('@item.ID')" style=" width:56px">&nbsp;查看详细</a>
+                    <br />
+                    <a onclick="clickaddress('@item.ShortURL','@item.ActivitySignUrl','@item.EnumAdverURLType')" style=" width:56px">
                         查看地址 </a>
                 </td>
             </tr>
@@ -347,9 +339,6 @@
 </div>
 <div id="dialogShowUrl" title="资讯地址" style="display: none; padding: 0px; text-align: center">
     <div style="padding-top: 20px;">
-        <div>
-            <img id="codeImg" style=" width:220px" />
-        </div>
         资讯地址：<span id="urlAddress" style="font-weight: bold"></span>
         <div id="divactivitySigin" style="display: none">
             <br />
