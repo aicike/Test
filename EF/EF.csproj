@@ -67,9 +67,9 @@
     <Compile Include="Mapping\OrderUserInfoMap.cs" />
     <Compile Include="Mapping\TaskMap.cs" />
     <Compile Include="Mapping\RoleMenuMap.cs" />
-    <Compile Include="Migrations\201403250725132_adds.cs" />
-    <Compile Include="Migrations\201403250725132_adds.Designer.cs">
-      <DependentUpon>201403250725132_adds.cs</DependentUpon>
+    <Compile Include="Migrations\201403210947531_addsupd.cs" />
+    <Compile Include="Migrations\201403210947531_addsupd.Designer.cs">
+      <DependentUpon>201403210947531_addsupd.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs">
       <SubType>Code</SubType>
@@ -95,8 +95,8 @@
     <Content Include="InitialProvince.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201403250725132_adds.resx">
-      <DependentUpon>201403250725132_adds.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201403210947531_addsupd.resx">
+      <DependentUpon>201403210947531_addsupd.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
