@@ -27,10 +27,6 @@ namespace Web.Controllers
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd).ToPagedList(id ?? 1, 15);
 
-            var AccountserverModel = Factory.Get<IAccountMain_ServiceModel>(SystemConst.IOC_Model.AccountMain_ServiceModel);
-            var hasAPP = AccountserverModel.CheckService(EnumService.House_Service, LoginAccount.CurrentAccountMainID);
-            ViewBag.HasAPP = hasAPP;
-
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "设置-用户端资讯", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
@@ -270,22 +266,6 @@ namespace Web.Controllers
             ViewBag.AMID = AMID;
             ViewBag.type= type.Value;
             return View(aaoperation);
-        }
-
-
-        /// <summary>
-        /// 创建二维码
-        /// </summary>
-        /// <param name="AMID"></param>
-        public void CreateQrCode(string  Url)
-        {
-            QrCodeModel model = new QrCodeModel();
-
-            MemoryStream ms = model.Get_Android_DownloadUrl(Url);
-            if (null != ms)
-            {
-                Response.BinaryWrite(ms.ToArray());
-            }
         }
     }
 }

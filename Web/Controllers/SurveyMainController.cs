@@ -469,10 +469,6 @@ namespace Web.Controllers
             AppAdvertorial appRW = new AppAdvertorial();
             Result result = new Result();
             var AdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            if (AdvertorialModel.CKAppadverBy_clientAndID(id, client))
-            {
-                return "T";
-            }
             //主表
             var MainModel = Factory.Get<ISurveyMainModel>(SystemConst.IOC_Model.SurveyMainModel);
             var main = MainModel.GetSurveyMainByID(id, LoginAccount.CurrentAccountMainID);

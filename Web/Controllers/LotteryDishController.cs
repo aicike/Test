@@ -77,7 +77,7 @@ namespace Web.Controllers
             var name_value = names.Remove(names.Length - 1, 1).ToString();
             ViewBag.Name = name_value;
             //颜色
-            string[] color = new string[] { "#6D7278", "#B55610", "#349933", "#CC3333", "#2C3144", "#B12E3D", "#FFE44C", "#41547F", "#ff0000" };
+            string[] color = new string[] { "#6D7278", "#B55610", "#349933", "#CC3333", "#2C3144", "#B12E3D", "#FFE44C", "#41547F", "#ff0000", "#FFE44C", "#41547F", "#ff0000" };
             StringBuilder colors = new StringBuilder();
             for (int i = 0; i < list.Count; i++)
             {
@@ -89,10 +89,37 @@ namespace Web.Controllers
             StringBuilder img = new StringBuilder();
             foreach (var item in list)
             {
-                img.AppendFormat("\"{0}\",", Url.Content(item.Image));
+                if (string.IsNullOrEmpty(item.Image) == false)
+                {
+                    img.AppendFormat("\"{0}\",", Url.Content(item.Image));
+                }
+                else
+                {
+                    img.AppendFormat("\"{0}\",", "");
+                }
             }
             var img_value = img.Remove(img.Length - 1, 1).ToString();
             ViewBag.Img = img_value;
+
+            #region 中奖率情况
+
+            ////中奖情况计算
+            Random r = new Random();
+            Lottery_dish_detail detail = ControllerRandomExtract(list, r, 1)[0];
+            int index=0;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].ID == detail.ID) {
+                    index = i;
+                    break;
+                }
+            }
+            ViewBag.WinningIndex = index+1;
+            ViewBag.Winning = detail;
+
+            #endregion
+
+
             return View(entity);
         }
 
@@ -129,5 +156,63 @@ namespace Web.Controllers
             }
             return RedirectToAction("Index", "LotteryDish", new { HostName = LoginAccount.HostName });
         }
+
+        #region 受控随机抽取
+
+        /// <summary>
+        /// 随机抽取
+        /// </summary>
+        /// <param name="rand">随机数生成器</param>
+        /// <param name="Count">随机抽取个数</param>
+        /// <returns></returns>
+        public List<Lottery_dish_detail> ControllerRandomExtract(List<Lottery_dish_detail> datas, Random rand, int Count = 1)
+        {
+            List<Lottery_dish_detail> result = new List<Lottery_dish_detail>();
+            if (rand != null)
+            {
+                //临时变量
+                Dictionary<Lottery_dish_detail, double> dict = new Dictionary<Lottery_dish_detail, double>(datas.Count);
+
+                //为每个项算一个随机数并乘以相应的权值
+                for (int i = datas.Count - 1; i >= 0; i--)
+                {
+                    dict.Add(datas[i], rand.Next(100) * datas[i].Ratio);
+                }
+
+                //排序
+                List<KeyValuePair<Lottery_dish_detail, double>> listDict = SortByValue(dict);
+
+                //拷贝抽取权值最大的前Count项
+                foreach (KeyValuePair<Lottery_dish_detail, double> kvp in listDict.GetRange(0, Count))
+                {
+                    result.Add(kvp.Key);
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 排序集合
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <returns></returns>
+        private List<KeyValuePair<Lottery_dish_detail, double>> SortByValue(Dictionary<Lottery_dish_detail, double> dict)
+        {
+            List<KeyValuePair<Lottery_dish_detail, double>> list = new List<KeyValuePair<Lottery_dish_detail, double>>();
+
+            if (dict != null)
+            {
+                list.AddRange(dict);
+
+                list.Sort(
+                  delegate(KeyValuePair<Lottery_dish_detail, double> kvp1, KeyValuePair<Lottery_dish_detail, double> kvp2)
+                  {
+                      return (int)(kvp2.Value - kvp1.Value);
+                  });
+            }
+            return list;
+        }
+        #endregion
+
     }
 }
