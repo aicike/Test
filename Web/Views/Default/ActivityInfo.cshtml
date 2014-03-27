@@ -50,14 +50,10 @@
 	    
 	    var activityID=@ViewBag.ActivityID;
 		    if(activityID==22){
-$("#btn_yang").show();
+                $("#btn_yang").show();
 			}else{
-$("#btn_yang").hide();
+                $("#btn_yang").hide();
 			}
-
-        
-
-
         });
 
         var isSub = false;
@@ -91,7 +87,6 @@ $("#btn_yang").hide();
                     isSub = false;
                     return false;
                 }
-
                 var reg1 = /^([a-zA-Z0-9_\.\-])+\@@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
                 var my = false;
                 if (reg1.test(email)) my = true;
@@ -100,8 +95,6 @@ $("#btn_yang").hide();
                     isSub = false;
                     return false;
                 }
-
-
                 var PUrl = '@Url.Action("CheckISBM", "Default")';
                 var AID = '@ViewBag.ActivityID';
 
@@ -120,7 +113,6 @@ $("#btn_yang").hide();
                         showMessEmail.click();
                         $('#userEmail').val("");
                     }
-
                 });
                 if (isture) {
                     isSub = false;
@@ -394,8 +386,24 @@ $("#btn_yang").hide();
     </div>
     <div id="isok" data-role="content">
         <div style="text-align: center; font-size: 25px; margin-top: 30%;">
-            报名成功<br />
-            感谢您的参与<br />
+            <label>
+                报名成功！</label><br />
+            @if (Model.Lottery_dish != null)
+            { 
+                <label>
+                    感谢您的参与，您已经获得了一次大转盘抽奖机会。</label>
+                <a href="#popupLogin" data-rel="popup" data-position-to="window" data-role="button"
+                    data-theme="b">立即抽奖</a> 
+                <div data-role="popup" id="popupLogin" data-theme="a" class="ui-corner-all">
+                    <iframe src="http://player.vimeo.com/video/41135183" width="497" height="298" seamless>
+                    </iframe>
+                </div>
+            }
+            else
+            { 
+                <label>
+                    感谢您的参与</label>
+            }
         </div>
     </div>
 </div>

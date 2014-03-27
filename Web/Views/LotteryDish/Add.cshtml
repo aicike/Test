@@ -12,7 +12,7 @@
             it.Name = "";
             it.Ratio = "";
             it.Image = "";
-            it.Description = "";
+            it.Count = "";
             return it;
         }
 
@@ -20,9 +20,9 @@
             $("#btnInsert").click(function () {
                 $("#table_detail").append('<tr class="tr_item"><td>' +
                     '<input type="file" style="display: none" class="file_item" name="file_item" /><img class="btn_img"width="40px" height="40px" style="vertical-align: middle; cursor: pointer" /></td>' +
-                    '<td><input type="text" style="width: 190px;" class="txtItemTitle" /></td>' +
-                    '<td><input type="text" class="txtItemRatio" maxlength="5" style="width: 50px;" title="填写数字（格式：10 , 10.5）"/></td>' +
-                    '<td><input type="text" style="width: 320px;" class="txtItemDescription" /></td>' +
+                    '<td><input type="text" style="width: 340px;" class="txtItemTitle" /></td>' +
+                    '<td><input type="text" class="txtItemRatio" maxlength="5" style="width: 80px;" title="填写数字（格式：10 , 10.5）"/></td>' +
+                    '<td><input type="text" style="width: 80px;" class="txtItemCount" title="填写整数" /></td>' +
                     '<td><a class="btn_delete" style="color: #00aec8">删除</a></td></tr>');
                 init();
             });
@@ -91,9 +91,23 @@
                 }
             });
 
+            $(".txtItemCount").live("keyup blur", function () {
+                var value = $(this).val().trim();
+                if (value.length > 0) {
+                    var regex = /^\d+$/;
+                    if (!regex.test(value)) {
+                        $(this).addClass("input-validation-error").focus();
+
+                    } else {
+                        $(this).removeClass("input-validation-error")
+                    }
+                }
+            });
+
+
             $("#btnSubmit").click(function () {
                 var hasError = false;
-                $(".txtItemTitle,.txtItemRatio,.txtItemDescription").each(function (i, n) {
+                $(".txtItemTitle,.txtItemRatio,.txtItemCount").each(function (i, n) {
                     if ($(n).val().trim().length == 0) {
                         JAlert({
                             Message: "请填写完整的奖品信息。",
@@ -117,6 +131,14 @@
                         return;
                     }
                 });
+                if ($(".input-validation-error").length > 0) {
+                    JAlert({
+                        Message: "请检查奖品信息中的错误。",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    hasError = true;
+                }
                 if (hasError) {
                     return false;
                 } else {
@@ -127,7 +149,7 @@
                         li.Name = $(n).find(".txtItemTitle").val().trim();
                         li.Ratio = $(n).find(".txtItemRatio").val().trim();
                         li.Image = $(n).find(".file_item").val().trim();
-                        li.Description = $(n).find(".txtItemDescription").val().trim();
+                        li.Count = $(n).find(".txtItemCount").val().trim();
                         items.push(li);
                     });
                     $("#hidItems").val(JSON.stringify(items));
@@ -139,6 +161,7 @@
 
         function init() {
             $(".txtItemRatio").tipTip({ activation: "hover,focus", delay: 3, defaultPosition: "top" });
+            $(".txtItemCount").tipTip({ activation: "hover,focus", delay: 3, defaultPosition: "top" });
         }
     </script>
 }
@@ -177,17 +200,17 @@
             奖品信息（至少2件奖品）&nbsp;&nbsp;<a style="float: right; color: #00aec8" id="btnInsert">点击新增奖品</a></div>
         <table id="table_detail" class="tableList" cellpadding="0" cellspacing="0">
             <tr>
-                <th style="width: 50px">
+                <th style="width: 80px">
                     图片
                 </th>
-                <th style="width: 200px">
+                <th style="width: 350px">
                     奖品名称
                 </th>
-                <th style="width: 60px">
+                <th style="width: 100px">
                     中奖率(%)
                 </th>
-                <th style="width: 320px">
-                    奖品详细
+                <th style="width: 100px">
+                    奖品数量
                 </th>
                 <th style="width: 50px">
                     操作
@@ -199,13 +222,13 @@
                         width="40px" height="40px" style="vertical-align: middle; cursor: pointer" />
                 </td>
                 <td>
-                    <input type="text" style="width: 190px;" class="txtItemTitle" />
+                    <input type="text" style="width: 340px;" class="txtItemTitle" />
                 </td>
                 <td>
-                    <input type="text" class="txtItemRatio" maxlength="5" style="width: 50px;" title="填写数字（格式：10 , 10.5）" />
+                    <input type="text" class="txtItemRatio" maxlength="5" style="width: 80px;" title="填写数字（格式：10 , 10.5）" />
                 </td>
                 <td>
-                    <input type="text" style="width: 320px;" class="txtItemDescription" />
+                    <input type="text" style="width: 80px;" class="txtItemCount" title="填写整数" />
                 </td>
                 <td>
                     <a class="btn_delete" style="color: #00aec8">删除</a>
@@ -217,13 +240,13 @@
                         width="40px" height="40px" style="vertical-align: middle; cursor: pointer" />
                 </td>
                 <td>
-                    <input type="text" style="width: 190px;" class="txtItemTitle" />
+                    <input type="text" style="width: 340px;" class="txtItemTitle" />
                 </td>
                 <td>
-                    <input type="text" class="txtItemRatio" maxlength="5" style="width: 50px;" title="填写数字（格式：10 , 10.5）" />
+                    <input type="text" class="txtItemRatio" maxlength="5" style="width: 80px;" title="填写数字（格式：10 , 10.5）" />
                 </td>
                 <td>
-                    <input type="text" style="width: 320px;" class="txtItemDescription" />
+                    <input type="text" style="width: 80px;" class="txtItemCount" title="填写整数"  />
                 </td>
                 <td>
                     <a class="btn_delete" style="color: #00aec8">删除</a>

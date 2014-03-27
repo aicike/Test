@@ -29,5 +29,14 @@ namespace Interface
         /// <param name="status"></param>
         /// <returns></returns>
         Result ChangeStatus(int id, int status);
+
+        
+        /// <summary>
+        /// 随机抽取
+        /// </summary>
+        /// <param name="rand">随机数生成器</param>
+        /// <param name="Count">随机抽取个数</param>
+        /// <returns></returns>
+        List<Lottery_dish_detail> ControllerRandomExtract(List<Lottery_dish_detail> datas, Random rand, int Count = 1);
     }
 }

@@ -13,6 +13,7 @@ using Poco.Enum;
 using System.Security.Policy;
 using System.Resources;
 using System.Configuration;
+using System.Text;
 
 namespace Web.Controllers
 {
@@ -170,7 +171,7 @@ namespace Web.Controllers
                 AdvertorialModel.BrowseCntADD(id);
                 //更改浏览次数(报表)
                 var BrowseModel = Factory.Get<IAppAdvertorialBrowseModel>(SystemConst.IOC_Model.AppAdvertorialBrowseModel);
-                BrowseModel.AddOrUpdBrowse(id,EnumBrowseAdvertorialType.Information);
+                BrowseModel.AddOrUpdBrowse(id, EnumBrowseAdvertorialType.Information);
                 return View(advertorial);
             }
         }
@@ -428,7 +429,7 @@ namespace Web.Controllers
             {
                 return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
             }
-            return RedirectToAction("Questionnaire", "Default", new { surveyMainID_token = surveyMainID.TokenEncrypt(true),ADverID= ADverID, isok = 1 });
+            return RedirectToAction("Questionnaire", "Default", new { surveyMainID_token = surveyMainID.TokenEncrypt(true), ADverID = ADverID, isok = 1 });
         }
 
 
@@ -488,10 +489,7 @@ namespace Web.Controllers
                             ViewBag.UEmail = account.Email;
                         }
                     }
-
-
                 }
-
             }
             if (imtimely_Apptype.HasValue)
             {
@@ -569,12 +567,9 @@ namespace Web.Controllers
             return "False";
         }
 
-
-
         [HttpPost]
         public ActionResult AddActivityInfo(int ActivityID, int ADverID, int? UID, int? Utype)
         {
-
             ActivityInfoParticipator aip = new ActivityInfoParticipator();
             aip.ActivityInfoID = ActivityID;
             aip.JoinDateTime = DateTime.Now;
@@ -583,8 +578,6 @@ namespace Web.Controllers
             aip.Email = Request.Form["userEmail"];
             aip.Company = "";
             aip.Position = "";
-
-
             if (UID.HasValue)
             {
                 aip.UserID = UID.Value;
@@ -616,6 +609,85 @@ namespace Web.Controllers
             return RedirectToAction("ActivityInfo", "Default", new { ActivityID_token = ActivityID.TokenEncrypt(true), ADverID = ADverID, isok = 1 });
         }
 
+        /// <summary>
+        /// 大转盘抽奖
+        /// </summary>
+        /// <param name="type">类型</param>
+        /// <param name="id">资讯ID，活动ID，调查ID</param>
+        /// <returns></returns>
+        public ActionResult LotteryDish(int type, int id)
+        {
+            EnumBrowseAdvertorialType advertorialType = (EnumBrowseAdvertorialType)type;
+            int lottery_dishID=0;
+            switch (advertorialType)
+            {
+                case EnumBrowseAdvertorialType.Information:
+                    break;
+                case EnumBrowseAdvertorialType.ActivityInfo:
+                    var activityModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
+                    var activity= activityModel.Get(id);
+                    lottery_dishID = activity.Lottery_dishID.Value;
+                    break;
+                case EnumBrowseAdvertorialType.SurveyMain:
+                    break;
+            }
+            var model = Factory.Get<ILottery_dishModel>(SystemConst.IOC_Model.Lottery_dishModel);
+            var entity = model.Get(lottery_dishID);
+            var list = entity.Lottery_dish_details.ToList();
+            //名称
+            StringBuilder names = new StringBuilder();
+            foreach (var item in list)
+            {
+                names.AppendFormat("\"{0}\",", item.Name);
+            }
+            var name_value = names.Remove(names.Length - 1, 1).ToString();
+            ViewBag.Name = name_value;
+            //颜色
+            string[] color = new string[] { "#6D7278", "#B55610", "#349933", "#CC3333", "#2C3144", "#B12E3D", "#FFE44C", "#41547F", "#ff0000", "#FFE44C", "#41547F", "#ff0000" };
+            StringBuilder colors = new StringBuilder();
+            for (int i = 0; i < list.Count; i++)
+            {
+                colors.AppendFormat("\"{0}\",", color[i]);
+            }
+            var color_value = colors.Remove(colors.Length - 1, 1).ToString();
+            ViewBag.Color = color_value;
+            //图片
+            StringBuilder img = new StringBuilder();
+            foreach (var item in list)
+            {
+                if (string.IsNullOrEmpty(item.Image) == false)
+                {
+                    img.AppendFormat("\"{0}\",", Url.Content(item.Image));
+                }
+                else
+                {
+                    img.AppendFormat("\"{0}\",", "");
+                }
+            }
+            var img_value = img.Remove(img.Length - 1, 1).ToString();
+            ViewBag.Img = img_value;
+
+            #region 中奖率情况
+
+            ////中奖情况计算
+            Random r = new Random();
+            Lottery_dish_detail detail = model.ControllerRandomExtract(list, r, 1)[0];
+            int index = 0;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].ID == detail.ID)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            //中奖奖品
+            ViewBag.WinningIndex = index + 1;
+            ViewBag.Winning = detail;
+
+            #endregion
+            return View(entity);
+        }
 
 
         //---------------活动签到-----------------------------------------

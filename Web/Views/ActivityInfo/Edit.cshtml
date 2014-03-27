@@ -43,7 +43,6 @@
                         return;
                     }
 
-
                     if (Cnt > 0) {
                         jcrop_api.destroy();
                         $('#x1').val("0");
@@ -59,7 +58,6 @@
 
                     $("#MainImagPath").val(data);
 
-
                     $('#imgSel').Jcrop({
                         onChange: updatePreview,
                         onSelect: updatePreview,
@@ -73,18 +71,13 @@
                         jcrop_api = this;
                     });
                     Cnt = 1;
-
-
                 }
             });
-
-
+            
             var jcrop_api, boundx, boundy;
 
             function updatePreview(c) {
                 if (parseInt(c.w) > 0) {
-
-
                     var rx2 = 200 / c.w;
                     var ry2 = 100 / c.h;
                     $('#imgLogo').css({
@@ -125,7 +118,6 @@
             };
 
             var ue = UE.getEditor('editor', options);
-
 
             var myDate = new Date();
             var date = myDate.getFullYear() + "-" + myDate.getMonth() + "-" + myDate.getDate();

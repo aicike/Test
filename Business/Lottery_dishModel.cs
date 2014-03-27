@@ -139,5 +139,62 @@ namespace Business
         {
             return List(true).Where(a => a.AccountMainID == accountMainID && a.Status == 0);
         }
+
+        #region 受控随机抽取中奖概率
+
+        /// <summary>
+        /// 随机抽取
+        /// </summary>
+        /// <param name="rand">随机数生成器</param>
+        /// <param name="Count">随机抽取个数</param>
+        /// <returns></returns>
+        public List<Lottery_dish_detail> ControllerRandomExtract(List<Lottery_dish_detail> datas, Random rand, int Count = 1)
+        {
+            List<Lottery_dish_detail> result = new List<Lottery_dish_detail>();
+            if (rand != null)
+            {
+                //临时变量
+                Dictionary<Lottery_dish_detail, double> dict = new Dictionary<Lottery_dish_detail, double>(datas.Count);
+
+                //为每个项算一个随机数并乘以相应的权值
+                for (int i = datas.Count - 1; i >= 0; i--)
+                {
+                    dict.Add(datas[i], rand.Next(100) * datas[i].Ratio);
+                }
+
+                //排序
+                List<KeyValuePair<Lottery_dish_detail, double>> listDict = SortByValue(dict);
+
+                //拷贝抽取权值最大的前Count项
+                foreach (KeyValuePair<Lottery_dish_detail, double> kvp in listDict.GetRange(0, Count))
+                {
+                    result.Add(kvp.Key);
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 排序集合
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <returns></returns>
+        private List<KeyValuePair<Lottery_dish_detail, double>> SortByValue(Dictionary<Lottery_dish_detail, double> dict)
+        {
+            List<KeyValuePair<Lottery_dish_detail, double>> list = new List<KeyValuePair<Lottery_dish_detail, double>>();
+
+            if (dict != null)
+            {
+                list.AddRange(dict);
+
+                list.Sort(
+                  delegate(KeyValuePair<Lottery_dish_detail, double> kvp1, KeyValuePair<Lottery_dish_detail, double> kvp2)
+                  {
+                      return (int)(kvp2.Value - kvp1.Value);
+                  });
+            }
+            return list;
+        }
+        #endregion
     }
 }

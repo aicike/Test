@@ -38,19 +38,12 @@ namespace Poco
         /// </summary>
         [Display(Name = "奖品图片")]
         public string Image { get; set; }
-
-        /// <summary>
-        /// 奖品描述
-        /// </summary>
-        [Display(Name = "奖品描述")]
-        [Required(ErrorMessage = "请输入奖品描述")]
-        public string Description { get; set; }
-
+        
         /// <summary>
         /// 奖品数量（不填写则代表无限）
         /// </summary>
         [Display(Name = "奖品描述")]
-        public int? Count { get; set; }
+        public int Count { get; set; }
 
         /// <summary>
         /// 业务字段，不会在数据库中生成
