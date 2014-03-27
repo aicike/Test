@@ -24,7 +24,7 @@ namespace Poco
         public string Name { get; set; }
 
         /// <summary>
-        /// 抽奖状态
+        /// 抽奖状态 0:启用 1禁用
         /// </summary>
         public int Status { get; set; }
 

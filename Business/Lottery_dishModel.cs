@@ -20,13 +20,6 @@ namespace Business
             return List(true).Where(a => a.AccountMainID == accountMainID);
         }
 
-        //public Result Add(Lottery_dish lottery_dish)
-        //{
-
-        //    return null;
-
-        //}
-
         [Transaction]
         public Result Add(Lottery_dish entity, List<Lottery_dish_detail> items, System.Web.HttpFileCollection files)
         {
@@ -113,6 +106,38 @@ namespace Business
                 }
             }
             return result;
+        }
+
+        /// <summary>
+        /// 设置启用0   禁用1
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public Result ChangeStatus(int id, int status)
+        {
+            if (status == 0)
+            {
+                status = 1;
+            }
+            else
+            {
+                status = 0;
+            }
+            string sql = string.Format("UPDATE dbo.Lottery_dish SET Status={0} where ID={1}", status, id);
+            int i = base.SqlExecute(sql);
+            return new Result(); ;
+        }
+
+
+        /// <summary>
+        /// 获取所有启用的大转盘活动
+        /// </summary>
+        /// <param name="accountMainID"></param>
+        /// <returns></returns>
+        public IQueryable<Lottery_dish> List_ActiveStatus(int accountMainID)
+        {
+            return List(true).Where(a => a.AccountMainID == accountMainID && a.Status == 0);
         }
     }
 }

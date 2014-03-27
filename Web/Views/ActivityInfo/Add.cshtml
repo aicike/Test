@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
     ViewBag.Menu2 = Poco.SystemConst.Menu.ActivityInfo;
+    var lotteryDishList = ViewBag.lotteryDishList as List<Poco.Lottery_dish>;
 }
 @section head{
     <link href="@Url.Content("~/Scripts/uploadify/uploadify.css")" rel="stylesheet" type="text/css" />
@@ -19,8 +20,6 @@
         var Cnt = 0;
         var UpImgUrl = '@Url.Action("UpImg", "Ajax", new { HostName = ViewBag.HostName })';
         $(function () {
-
-
 
             $("#file_upload").uploadify({
                 height: 30,
@@ -110,16 +109,6 @@
                 $('#th').val($("#imgSel").height());
             };
 
-
-
-
-
-
-
-
-
-
-
             window.UEDITOR_HOME_URL = "/ueditor/";
             //实例化编辑器
             var options = {
@@ -154,9 +143,6 @@
 
             $("#EnrollEndDate").datepicker("option", "minDate", "+1");
 
-
-
-
             $("#btnSubmit").click(function () {
                 if (Cnt > 0) {
                     if ($("#w").val() == "0") {
@@ -176,11 +162,45 @@
                     });
                     return false;
                 }
-
-
-
             });
 
+            //显示抽奖活动
+            $("#btnLotteryDish").click(function () {
+                $("#dialogShow").dialog({
+                    resizable: false,
+                    height: 600,
+                    width: 500,
+                    modal: true,
+                    buttons: {
+                        "确定": function () {
+                            var uids = "";
+                            var name = "";
+                            $.each($("#dialogShow").find(":checked"), function (i, n) {
+                                uids = $(n).val();
+                                name = $(n).attr("lname");
+                            });
+                            if (uids.length > 0) {
+                                $("#hidLotteryDish").val(uids);
+                                $("#btnLotteryDish").text(name);
+                                $(this).dialog("close");
+                            } else {
+                                $("#hidLotteryDish").val("");
+                                $("#btnLotteryDish").text("选择");
+                                $(this).dialog("close");
+                            }
+                        },
+                        "取消": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
+
+            $("#btnClear").click(function () {
+                $("#btnLotteryDish").text("选择");
+                $("#hidLotteryDish").val("");
+                $(":radio").attr("checked", false)
+            });
         });
     </script>
     <style>
@@ -269,7 +289,7 @@
         </fieldset>
         <fieldset style="font-size: 14px">
             <legend>创建活动</legend>
-            <table style="width: 100%;" >
+            <table style="width: 100%;">
                 <tr>
                     <td class="tdTitle" style="width: 150px">
                         <span class="Identification">*</span> 活动标题
@@ -329,7 +349,17 @@
                     <td>@Html.ValidationMessageFor(a => a.MaxCount)
                     </td>
                 </tr>
-                <tr style="height:300px">
+                <tr>
+                    <td class="tdTitle" style="height: 30px;">大转盘抽奖活动
+                    </td>
+                    <td>
+                        <label style="color: #00A4BD" id="btnLotteryDish">
+                            选择</label><input type="hidden" id="hidLotteryDish"/>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr style="height: 300px">
                     <td class="tdTitle" valign="top">
                         <span class="Identification">*</span> 活动内容
                     </td>
@@ -345,4 +375,17 @@
     }
 </div>
 <div style="clear: both">
+</div>
+<div id="dialogShow" title="大转盘" style="display: none; padding: 0px">
+    <ul style="padding:0px;margin:5px 0px;">
+        <li style="list-style-type:none">
+            <input type="button" value="清空" id="btnClear" class="button" />
+        </li>
+        @foreach (var item in lotteryDishList)
+        {
+            <li style="list-style-type:none">
+                <input type="radio" id="cb_@item.ID" value="@item.ID" name="radio_lottery_dish" lname="@item.Name" /><label for="cb_@item.ID">@item.Name</label>
+            </li>
+        }
+    </ul>
 </div>

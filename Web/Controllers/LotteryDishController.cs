@@ -157,6 +157,23 @@ namespace Web.Controllers
             return RedirectToAction("Index", "LotteryDish", new { HostName = LoginAccount.HostName });
         }
 
+        /// <summary>
+        /// 设置状态
+        /// </summary>
+        /// <returns></returns>
+        [AllowCheckPermissions(false)]
+        public ActionResult SetStatus(int id, int status)
+        {
+            var model = Factory.Get<ILottery_dishModel>(SystemConst.IOC_Model.Lottery_dishModel);
+            var result = model.ChangeStatus(id, status);
+            if (result.HasError)
+            {
+                return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
+            }
+            return JavaScript("window.location.href='" + Url.Action("Index", "LotteryDish", new { HostName = LoginAccount.HostName }) + "'");
+        }
+
+
         #region 受控随机抽取
 
         /// <summary>

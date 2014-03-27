@@ -41,6 +41,12 @@ namespace Web.Controllers
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "活动 - 创建活动", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
+            //大转盘抽奖列表
+            
+            var lottery_dishModel = Factory.Get<ILottery_dishModel>(SystemConst.IOC_Model.Lottery_dishModel);
+            var lotteryDishList= lottery_dishModel.List_ActiveStatus(LoginAccount.CurrentAccountMainID).ToList();
+            ViewBag.lotteryDishList = lotteryDishList;
+
             return View();
         }
         /// <summary>

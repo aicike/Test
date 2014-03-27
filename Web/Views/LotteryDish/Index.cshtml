@@ -87,6 +87,8 @@
                                 new
                                 {
                                     HostName = ViewBag.HostName,
+                                    id=item.ID,
+                                    status=item.Status
                                 }) + "',null)"
                         })
                     }
@@ -103,12 +105,14 @@
                                 new
                                 {
                                     HostName = ViewBag.HostName,
+                                    id = item.ID,
+                                    status = item.Status
                                 }) + "',null)"
                         })
                     }
                 </td>
                 <td class="operation">
-                    @Html.ActionLink("预览", "View", "LotteryDish", new { HostName = ViewBag.HostName, id = item.ID }, new { href="#", onClick = "ShowView("+item.ID+")" }, true)
+                    @Html.ActionLink("预览", "View", "LotteryDish", new { HostName = ViewBag.HostName, id = item.ID }, new { href = "#", onClick = "ShowView(" + item.ID + ")" }, true)
                     @Html.ActionLink("修改", "Edit", "LotteryDish", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
                     @Ajax.ActionLink("删除", "Delete", "LotteryDish", new { HostName = ViewBag.HostName, id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?删除此项将会删除其关联的所有数据！','" + Url.Action("Delete", "LotteryDish", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
                 </td>
