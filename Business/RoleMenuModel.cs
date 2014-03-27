@@ -75,7 +75,6 @@ namespace Business
             roleOptionModel.ReSetCache();
         }
 
-
         public void ReSetCache()
         {
             var list = base.List().ToList();

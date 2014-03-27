@@ -41,11 +41,17 @@ namespace Web.Controllers
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "活动 - 创建活动", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
-            //大转盘抽奖列表
-            
-            var lottery_dishModel = Factory.Get<ILottery_dishModel>(SystemConst.IOC_Model.Lottery_dishModel);
-            var lotteryDishList= lottery_dishModel.List_ActiveStatus(LoginAccount.CurrentAccountMainID).ToList();
-            ViewBag.lotteryDishList = lotteryDishList;
+            #region 大转盘抽奖
+            //检查是否有大转盘权限
+            var menuModel = Factory.Get<IMenuModel>(SystemConst.IOC_Model.MenuModel);
+            var has = menuModel.CheckHasPermissions(LoginAccount.RoleIDs, "Token_News_L_D");
+            if (has)
+            {
+                var lottery_dishModel = Factory.Get<ILottery_dishModel>(SystemConst.IOC_Model.Lottery_dishModel);
+                var lotteryDishList = lottery_dishModel.List_ActiveStatus(LoginAccount.CurrentAccountMainID).ToList();
+                ViewBag.lotteryDishList = lotteryDishList;
+            }
+            #endregion
 
             return View();
         }
@@ -100,7 +106,7 @@ namespace Web.Controllers
             activityinfo.AccountID = LoginAccount.ID;
             var activityInfoModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
 
-            var result = activityInfoModel.EditActivity(activityinfo,x1,y1,w,h,tw,th);
+            var result = activityInfoModel.EditActivity(activityinfo, x1, y1, w, h, tw, th);
             if (result.HasError)
             {
                 return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
@@ -198,14 +204,14 @@ namespace Web.Controllers
             appRW.stick = 0;
             appRW.SystemStatus = 0;
             appRW.Title = main.Title;
-            appRW.UrlID = main.ID; 
+            appRW.UrlID = main.ID;
             appRW.ActivitySignUrl = ("http://" + SystemConst.WebUrl + "/default/ActivitySignIn?ActivityID=" + id).ConvertToShortURL();
 
             result = AdvertorialModel.Add(appRW);
 
             appRW.ShortURL = string.Format("http://{0}/Default/News?id_token={1}", SystemConst.WebUrl, appRW.ID.TokenEncrypt()).ConvertToShortURL();
             result = AdvertorialModel.Edit(appRW);
-            
+
             if (result.HasError == true)
             {
                 return "No";

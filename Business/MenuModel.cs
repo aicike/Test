@@ -151,12 +151,24 @@ namespace Business
             return true;
         }
 
+        /// <summary>
+        /// 检查有没有相应的菜单权限
+        /// </summary>
+        /// <param name="roleIDs">角色ID</param>
+        /// <param name="menuToken">菜单token</param>
+        /// <returns></returns>
+        public bool CheckHasPermissions(List<int> roleIDs, string menuToken)
+        {
+            int[] menuIDArray = List().Where(a => menuToken == a.Token).Select(a => a.ID).ToArray();
+            return GetMenuByRoleID(roleIDs).Any(a => menuIDArray.Contains(a.ID));
+        }
 
         public void ReSetCache()
         {
             var list = base.List().ToList();
             CacheModel.SetCache(SystemConst.Cache.Menu, list);
         }
+
 
     }
 }

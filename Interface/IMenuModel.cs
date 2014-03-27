@@ -22,5 +22,14 @@ namespace Interface
         void ReSetCache();
 
         List<Menu> MicroSite_GetAllMenuByRoleID();
+
+        /// <summary>
+        /// 检查有没有相应的菜单权限
+        /// </summary>
+        /// <param name="roleIDs">角色ID</param>
+        /// <param name="menuToken">菜单token</param>
+        /// <returns></returns>
+        bool CheckHasPermissions(List<int> roleIDs, string menuToken);
+        
     }
 }
