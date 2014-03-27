@@ -478,7 +478,6 @@ namespace Web.Controllers
             var main = MainModel.GetSurveyMainByID(id, LoginAccount.CurrentAccountMainID);
             appRW.Content = "";
             appRW.ContentURL = string.Format("http://{0}/Default/Questionnaire?surveyMainID_token={1}", SystemConst.WebUrl, id.TokenEncrypt());
-            appRW.ShortURL = string.Format("http://{0}/Default/News?id_token={1}", SystemConst.WebUrl, id.TokenEncrypt()).ConvertToShortURL();
             appRW.EnumAdverURLType = (int)EnumAdverURLType.Survey;
             appRW.AccountMainID = LoginAccount.CurrentAccountMainID;
 
@@ -517,6 +516,10 @@ namespace Web.Controllers
             appRW.UrlID = main.ID;
 
             result = AdvertorialModel.Add(appRW);
+
+            appRW.ShortURL = string.Format("http://{0}/Default/News?id_token={1}", SystemConst.WebUrl, appRW.ID.TokenEncrypt()).ConvertToShortURL();
+            result = AdvertorialModel.Edit(appRW);
+
             if (result.HasError == true)
             {
                 return "No";
