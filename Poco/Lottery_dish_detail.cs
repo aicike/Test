@@ -47,6 +47,12 @@ namespace Poco
         public string Description { get; set; }
 
         /// <summary>
+        /// 奖品数量（不填写则代表无限）
+        /// </summary>
+        [Display(Name = "奖品描述")]
+        public int? Count { get; set; }
+
+        /// <summary>
         /// 业务字段，不会在数据库中生成
         /// </summary>
         [Display(Name = "是否新上传图片")]
