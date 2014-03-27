@@ -15,7 +15,6 @@ namespace Business
             return List(true).Where(a => a.AccountMainID == AccountMainID);
         }
 
-
         //删除所有数据 级联删除
         [Transaction]
         public Result DelteAll(int HousesID)

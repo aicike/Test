@@ -165,8 +165,6 @@ namespace Business
             }
             var AppAdvertorialOperation = Factory.Get<IAppAdvertorialOperationModel>(SystemConst.IOC_Model.AppAdvertorialOperationModel);
             AppAdvertorialOperation.DelOperation(ID);
-            var appbrowsemodel = Factory.Get<IAppAdvertorialBrowseModel>(SystemConst.IOC_Model.AppAdvertorialBrowseModel);
-            appbrowsemodel.DelBrowse(ID, EnumBrowseAdvertorialType.Information);
             string shrotURL = appadivertorial.ShortURL;
             var result = base.CompleteDelete(ID);
             if (result.HasError == false)
@@ -407,42 +405,22 @@ namespace Business
                 AppAdvertorialOperation.DelOperation(appadvert.ID);
             }
             string shortURL = appadvert.ShortURL;
+            string ActivitySignUrl = appadvert.ActivitySignUrl;
             string sql = string.Format("delete AppAdvertorial where EnumAdverURLType = {0} and UrlID={1}", EnumAdverURLType, ID);
             int cnt = base.SqlExecute(sql);
             if (cnt <= 0)
             {
                 result.HasError = true;
             }
-            else
-            {
+            else {
                 shortURL.DeleteShortURL();//删除短URL
+                if (string.IsNullOrEmpty(ActivitySignUrl) == false)
+                {
+                    ActivitySignUrl.DeleteShortURL();
+                }
             }
             return result;
         }
-
-
-        /// <summary>
-        /// 查询是否已经生产资讯
-        /// </summary>
-        /// <param name="id">活动 或调查 ID</param>
-        /// <param name="client">咨询url类型 EnumAdvertorialUType </param>
-        /// <returns></returns>
-        public bool CKAppadverBy_clientAndID(int id, int client)
-        {
-            var appadver = List().Where(a => a.EnumAdvertorialUType == client && a.UrlID == id).FirstOrDefault();
-
-            if (appadver != null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-
-
 
     }
 }

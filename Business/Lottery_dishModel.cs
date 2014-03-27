@@ -42,10 +42,13 @@ namespace Business
             for (int i = 0; i < files.Count; i++)
             {
                 var file = files[i];
-                var imageName = string.Format("{0}_{1}", token, file.FileName);
-                var imageshowPath = string.Format("{0}/{1}", path, imageName);
-                items[i].Image = imageshowPath;
-                UploadTemp(file, HttpContext.Current.Server.MapPath(imageshowPath));
+                if (file.FileName.Length > 0)
+                {
+                    var imageName = string.Format("{0}_{1}", token, file.FileName);
+                    var imageshowPath = string.Format("{0}/{1}", path, imageName);
+                    items[i].Image = imageshowPath;
+                    UploadTemp(file, HttpContext.Current.Server.MapPath(imageshowPath));
+                }
             }
             var detailModel = Factory.Get<ILottery_dish_detailModel>(SystemConst.IOC_Model.Lottery_dish_detailModel);
             foreach (var item in items)
