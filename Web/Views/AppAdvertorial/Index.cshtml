@@ -68,10 +68,14 @@
 
                 }
             }
+
+            //二维码
+           var src = "@Url.Action("CreateQrCode", "AppAdvertorial")"+"?Url="+shortURL;
+           $("#codeImg").attr("src", src);
             $("#dialogShowUrl").dialog({
                 resizable: false,
-                height: 150,
-                width: 450,
+                height: 500,
+               width:600,
                 modal: true,
                 draggable: false
             });
@@ -286,8 +290,12 @@
                     }
                     @Ajax.ActionLink("删除", "Delete", "AppAdvertorial", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?！','" + Url.Action("Delete", "AppAdvertorial", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
                     <br />
-                    <a onclick="clickSelectInfo('@item.ID')" style=" width:56px">&nbsp;查看详细</a>
-                    <br />
+
+                    @if (ViewBag.HasAPP)
+                   { 
+                       <a onclick="clickSelectInfo('@item.ID')" style=" width:56px">&nbsp;查看详细</a>
+                       <br />
+                   }
                     <a onclick="clickaddress('@item.ShortURL','@item.ActivitySignUrl','@item.EnumAdverURLType')" style=" width:56px">
                         查看地址 </a>
                 </td>
@@ -339,6 +347,9 @@
 </div>
 <div id="dialogShowUrl" title="资讯地址" style="display: none; padding: 0px; text-align: center">
     <div style="padding-top: 20px;">
+    <div>
+           <img id="codeImg" style=" width:220px" />
+       </div>
         资讯地址：<span id="urlAddress" style="font-weight: bold"></span>
         <div id="divactivitySigin" style="display: none">
             <br />

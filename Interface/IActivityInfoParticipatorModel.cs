@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Poco;
+using System.Data;
 
 namespace Interface
 {
@@ -40,5 +41,14 @@ namespace Interface
         /// <param name="AID"></param>
         /// <returns></returns>
         Result GetUserIsSignUP3(string Email, int AID);
+
+        /// <summary>
+        /// 获取报名 报表数据 12天
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="BeginDate"></param>
+        /// <param name="EndDate"></param>
+        /// <returns></returns>
+        DataTable GetReportInfo(int ID, string BeginDate, string EndDate);
     }
 }
