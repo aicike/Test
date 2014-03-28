@@ -86,6 +86,16 @@ namespace Business
                     oldUserLoginInfo.Name = userLoginInfo.Name;
                     userLoginInfoID = oldUserLoginInfo.ID;
                     result = base.Edit(oldUserLoginInfo);
+                    if (result.HasError)
+                    {
+                        return result;
+                    }
+                    //获取UserID
+                    var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+                    var user = userModel.getUserByLoginID(userLoginInfo.AccountMainID, oldUserLoginInfo.ID);
+                    string headImg = null;
+                    headImg = SystemConst.WebUrlIP + "".DefaultHeadImage().Replace("~", "");
+                    result.Entity = new App_User() { ID = user.ID, Phone = userLoginInfo.Phone == null ? "" : userLoginInfo.Phone, Name = userLoginInfo.Name, Email = "", Pwd = userLoginInfo.Pwd, HeadImagePath = headImg };
                 }
                 else
                 {

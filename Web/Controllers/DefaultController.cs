@@ -614,6 +614,8 @@ namespace Web.Controllers
         /// </summary>
         /// <param name="type">类型</param>
         /// <param name="id">资讯ID，活动ID，调查ID</param>
+        /// <param name="uid">App中UserID</param>
+        /// <param name="phone">资讯ID，活动ID，调查ID</param>
         /// <returns></returns>
         public ActionResult LotteryDish(int type, int id)
         {

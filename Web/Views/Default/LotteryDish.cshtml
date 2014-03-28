@@ -44,7 +44,13 @@
                 if(isStop==true){
                     if(sIndex>=1){
                     sIndex=0;
-                    $("#div_Msg").text("恭喜您，您抽中了@(detail.Name)，活动举办方稍后会与您联系。").show();
+                    var msg='';
+                   if('@detail.IsWinning'=='True'){
+                       msg="恭喜您，您抽中了@(detail.Name)，活动举办方稍后会与您联系。";
+                   }else{
+                       msg="抱歉，您没有抽中奖品，感谢您的参与。";
+                   }
+                   $("#div_Msg").text(msg).show();
                     clearInterval(t); 
                     return;
                     }else{

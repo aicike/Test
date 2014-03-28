@@ -12,7 +12,8 @@
             it.Name = "";
             it.Ratio = "";
             it.Image = "";
-            it.Count = "";
+            it.Count = ""; 
+            it.IsWinning = false;
             return it;
         }
 
@@ -23,6 +24,7 @@
                     '<td><input type="text" style="width: 340px;" class="txtItemTitle" /></td>' +
                     '<td><input type="text" class="txtItemRatio" maxlength="5" style="width: 80px;" title="填写数字（格式：10 , 10.5）"/></td>' +
                     '<td><input type="text" style="width: 80px;" class="txtItemCount" title="填写整数" /></td>' +
+                    '<td><input type="checkbox" class="cbIsWinning" /></td>' +
                     '<td><a class="btn_delete" style="color: #00aec8">删除</a></td></tr>');
                 init();
             });
@@ -151,6 +153,7 @@
                         li.Ratio = $(n).find(".txtItemRatio").val().trim();
                         li.Image = $(n).find(".file_item").val().trim();
                         li.Count = $(n).find(".txtItemCount").val().trim();
+                        li.IsWinning = $(n).find(".cbIsWinning").attr("checked") == undefined ? false : ($(n).find(".cbIsWinning").attr("checked") == "checked" ? true : false);
                         items.push(li);
                     });
                     $("#hidItems").val(JSON.stringify(items));
@@ -213,7 +216,10 @@
                 <th style="width: 100px">
                     奖品数量
                 </th>
-                <th style="width: 50px">
+                <th style="width: 70px">
+                   是否中奖
+               </th>
+               <th style="width: 70px">
                     操作
                 </th>
             </tr>
@@ -231,6 +237,9 @@
                 <td>
                     <input type="text" style="width: 80px;" class="txtItemCount" title="填写整数" />
                 </td>
+                <td>
+                   <input type="checkbox" class="cbIsWinning" />
+               </td>
                 <td>
                     <a class="btn_delete" style="color: #00aec8">删除</a>
                 </td>
