@@ -78,7 +78,6 @@
     <Compile Include="Enum\EnumAdvertorialUType.cs" />
     <Compile Include="Enum\EnumAdverURLType.cs" />
     <Compile Include="Enum\EnumBrowseAdvertorialType.cs" />
-    <Compile Include="Enum\EnumBrowseType.cs" />
     <Compile Include="Enum\EnumLotteryStatus.cs" />
     <Compile Include="Enum\EnumProductDiscountType.cs" />
     <Compile Include="Enum\EnumReportForm.cs" />

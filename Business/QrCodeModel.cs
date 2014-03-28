@@ -19,7 +19,7 @@ namespace Business
 
             GraphicsRenderer renderer = new GraphicsRenderer(new FixedModuleSize(5, QuietZoneModules.Two), Brushes.Black, Brushes.Transparent);
 
-            MemoryStream ms = new MemoryStream();
+            MemoryStream ms = new MemoryStream(); 
             renderer.WriteToStream(qrCode.Matrix, ImageFormat.Png, ms);
 
             return ms;

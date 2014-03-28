@@ -71,7 +71,7 @@ namespace Web.Controllers
             msg.RuleNo = ruleNo;
             msg.FullRuleNo = fullRuleNo;
             msg.ParentAutoMessage_KeywordID = parentID;
-            msg.AccountMainHousesID = projectID;
+            //msg.AccountMainHousesID = projectID;
             msg.IsFistAutoMessage = isFirstAutoMsg;
             List<Files> fileList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Files>>(files);
             var result = autoMessage_KeywordModel.Add(msg, keys, messageFileIDs, messageImageTextIDs, LoginAccount.CurrentAccountMainID, fileList);
@@ -180,7 +180,7 @@ namespace Web.Controllers
                 RuleName = entity.RuleName,
                 RuleNo = entity.RuleNo,
                 FullRuleNo = entity.FullRuleNo,
-                ProjectID = entity.AccountMainHousesID,
+                ProjectID =0,// entity.AccountMainHousesID,
                 IsFistAutoMessage = entity.IsFistAutoMessage,
                 Keywords = entity.Keywords.Select(a => a.Token).ToList().ConvertToString(","),
                 KeywordAutoMessages = files.ObjectToJson("Files")

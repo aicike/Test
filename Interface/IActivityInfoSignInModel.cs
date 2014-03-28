@@ -15,5 +15,13 @@ namespace Interface
         /// <param name="AMID"></param>
         /// <returns></returns>
         IQueryable<ActivityInfoSignIn> GetAIPList(int ActivityID, int AMID);
+
+
+        /// <summary>
+        /// 根据活动ID 删除签到信息
+        /// </summary>
+        /// <param name="AID"></param>
+        /// <returns></returns>
+        Result DelInfo(int AID);
     }
 }

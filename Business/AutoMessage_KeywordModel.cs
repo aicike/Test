@@ -165,7 +165,7 @@ namespace Business
             Result result = new Result();
 
             var autoMessage_Keyword = Get(keyID);
-            autoMessage_Keyword.AccountMainHousesID = projectID;
+            //autoMessage_Keyword.AccountMainHousesID = projectID;
             autoMessage_Keyword.RuleName = ruleName;
             autoMessage_Keyword.IsFistAutoMessage = isFistAutoMessage;
             //添加回复规则
