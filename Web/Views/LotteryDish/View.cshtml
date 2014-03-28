@@ -22,19 +22,19 @@
         var jiaodu = 360 * 1.00 / textArr.length;
         //var finalAngle=360+30;
         $(function () {
-           $("#div_canvas").append('<canvas id="can" width="405" height="400"></canvas>');
+           $("#div_canvas").append('<canvas id="can" width="380" height="380"></canvas>');
             var canid = document.getElementById("can");
             cans = canid.getContext("2d");
-            cans.translate(200, 200); //cans.strokeStyle="#000000";
+            cans.translate(190, 190); //cans.strokeStyle="#000000";
 
             zpFun();
             $("#btnTryAgain").click(function () {
                 var arg = 0;
                 step = 50 + 50 * Math.random();
-                $("#div_canvas").empty().append('<canvas id="can" width="440" height="400"></canvas>');
+                $("#div_canvas").empty().append('<canvas id="can" width="380" height="380"></canvas>');
                 var canid = document.getElementById("can");
                 cans = canid.getContext("2d");
-                cans.translate(200, 200); //cans.strokeStyle="#000000";
+                cans.translate(190, 190); //cans.strokeStyle="#000000";
                 zpFun();
             });
         });
@@ -94,7 +94,7 @@
                      cans.beginPath();
                      cans.fillStyle = colorArr[i];
                      cans.moveTo(0, 0);
-                     cans.arc(0, 0, 200, i * jiaodu * deg, (i + 1) * jiaodu * deg);
+                     cans.arc(0, 0, 180, i * jiaodu * deg, (i + 1) * jiaodu * deg);
                      cans.closePath();
                      cans.fill();
                      cans.stroke();

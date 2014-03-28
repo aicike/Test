@@ -86,7 +86,7 @@
                         $(this).addClass("input-validation-error").focus();
 
                     } else {
-                        $(this).removeClass("input-validation-error")
+                        $(this).removeClass("input-validation-error");
                     }
                 }
             });
@@ -99,11 +99,13 @@
                         $(this).addClass("input-validation-error").focus();
 
                     } else {
-                        $(this).removeClass("input-validation-error")
+                        $(this).removeClass("input-validation-error");
                     }
+                } else {
+                    $(this).addClass("input-validation-error").focus();
                 }
             });
-            
+
 
             $("#btnSubmit").click(function () {
                 var hasError = false;

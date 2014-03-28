@@ -50,5 +50,11 @@ namespace Poco
         /// </summary>
         [Display(Name = "是否新上传图片")]
         public bool IsNewImg { get; set; }
+
+        /// <summary>
+        /// 该奖项是否是中奖
+        /// </summary>
+        [Display(Name = "该奖项是否中奖")]
+        public bool IsWinning { get; set; }
     }
 }

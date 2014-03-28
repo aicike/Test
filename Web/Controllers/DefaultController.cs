@@ -685,6 +685,7 @@ namespace Web.Controllers
             ViewBag.WinningIndex = index + 1;
             ViewBag.Winning = detail;
 
+            //保存中奖情况
             #endregion
             return View(entity);
         }
@@ -727,8 +728,6 @@ namespace Web.Controllers
 
             return RedirectToAction("ActivitySignIn", "Default", new { ActivityID_token = ActivityID.TokenEncrypt(true), isok = 1 });
         }
-
-
 
         public ActionResult ceshi()
         {

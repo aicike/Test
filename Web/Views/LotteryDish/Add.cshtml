@@ -86,7 +86,7 @@
                         $(this).addClass("input-validation-error").focus();
 
                     } else {
-                        $(this).removeClass("input-validation-error")
+                        $(this).removeClass("input-validation-error");
                     }
                 }
             });
@@ -97,10 +97,11 @@
                     var regex = /^\d+$/;
                     if (!regex.test(value)) {
                         $(this).addClass("input-validation-error").focus();
-
                     } else {
-                        $(this).removeClass("input-validation-error")
+                        $(this).removeClass("input-validation-error");
                     }
+                } else {
+                    $(this).addClass("input-validation-error").focus();
                 }
             });
 
