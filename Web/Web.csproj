@@ -1007,6 +1007,7 @@
     <Content Include="Views\Default\ceshi.cshtml" />
     <Content Include="Views\LotteryDish\Edit.cshtml" />
     <Content Include="Views\ActivityInfo\ActivityReport.cshtml" />
+    <Content Include="Views\Default\LotteryDish.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
