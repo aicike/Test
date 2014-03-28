@@ -121,6 +121,78 @@ namespace Poco
         /// </summary>
         public int? Lottery_eggID { get; set; }
 
+
+        /// <summary>
+        /// 报名时电话 是否必填
+        /// </summary>
+        public bool PhoneIsRequired { get; set; }
+
+        /// <summary>
+        /// 报名时姓名 是否必填
+        /// </summary>
+        public bool NameIsRequired { get; set; }
+
+        /// <summary>
+        /// 报名时邮箱 是否必填
+        /// </summary>
+        public bool EmailIsRequired { get; set; }
+
+
+
+        /// <summary>
+        /// 报名时填写字段1
+        /// </summary>
+        public string Extension1 { get; set; }
+
+        /// <summary>
+        /// 报名时填写字段1 是否必填
+        /// </summary>
+        public bool Extension1IsRequired { get; set; }
+
+
+        /// <summary>
+        /// 报名时填写字段2
+        /// </summary>
+        public string Extension2 { get; set; }
+
+        /// <summary>
+        /// 报名时填写字段2 是否必填
+        /// </summary>
+        public bool Extension2IsRequired { get; set; }
+
+
+        /// <summary>
+        /// 报名时填写字段3
+        /// </summary>
+        public string Extension3 { get; set; }
+
+        /// <summary>
+        /// 报名时填写字段3 是否必填
+        /// </summary>
+        public bool Extension3IsRequired { get; set; }
+
+        /// <summary>
+        /// 报名时填写字段4
+        /// </summary>
+        public string Extension4 { get; set; }
+
+        /// <summary>
+        /// 报名时填写字段4 是否必填
+        /// </summary>
+        public bool Extension4IsRequired { get; set; }
+
+        /// <summary>
+        /// 报名时填写字段5
+        /// </summary>
+        public string Extension5 { get; set; }
+
+        /// <summary>
+        /// 报名时填写字段5 是否必填
+        /// </summary>
+        public bool Extension5IsRequired { get; set; }
+
+
+
         public virtual Lottery_egg Lottery_egg { get; set; }
 
         public virtual ICollection<ActivityInfoParticipator> ActivityInfoParticipators { get; set; }

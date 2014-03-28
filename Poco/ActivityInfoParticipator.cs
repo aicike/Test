@@ -45,6 +45,37 @@ namespace Poco
         [Display(Name = "参与时间")]
         public DateTime JoinDateTime { get; set; }
 
+        /// <summary>
+        /// 报名时填写字段1 对应活动表中的字段
+        /// </summary>
+        [Display(Name = "报名时填写字段1")]
+        public string Extension1 { get; set; }
+
+        /// <summary>
+        /// 报名时填写字段2  对应活动表中的字段
+        /// </summary>
+        [Display(Name = "报名时填写字段1")]
+        public string Extension2 { get; set; }
+
+        /// <summary>
+        /// 报名时填写字段3 对应活动表中的字段
+        /// </summary>
+        [Display(Name = "报名时填写字段1")]
+        public string Extension3 { get; set; }
+
+        /// <summary>
+        /// 报名时填写字段4 对应活动表中的字段
+        /// </summary>
+        [Display(Name = "报名时填写字段1")]
+        public string Extension4 { get; set; }
+
+        /// <summary>
+        /// 报名时填写字段5 对应活动表中的字段
+        /// </summary>
+        [Display(Name = "报名时填写字段1")]
+        public string Extension5 { get; set; }
+
+
         public virtual ICollection<Lottery_User> Lottery_Users { get; set; }
     }
 }
