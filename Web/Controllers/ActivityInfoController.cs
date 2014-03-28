@@ -293,8 +293,22 @@ namespace Web.Controllers
                 }
                 else
                 {
-                    ViewBag.EndDate = activityInfo.EnrollEndDate.ToString("yyyy-MM-dd");
-                    ViewBag.BeginDate = activityInfo.EnrollEndDate.AddDays(-11).ToString("yyyy-MM-dd");
+                    var advertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
+                    var adver = advertorialModel.GetAppadverBy_clientAndID(id, (int)EnumAdverURLType.Activities);
+                    if (adver != null)
+                    {
+
+                        ViewBag.BeginDate = adver.IssueDate.ToString("yyyy-MM-dd");
+                        ViewBag.EndDate = adver.IssueDate.AddDays(11).ToString("yyyy-MM-dd");
+                    }
+                    else
+                    {
+
+                        ViewBag.BeginDate =DateTime.Now.ToString("yyyy-MM-dd");
+                        ViewBag.EndDate = DateTime.Now.AddDays(11).ToString("yyyy-MM-dd");
+                    }
+
+                   
                 }
                 return View();
             }

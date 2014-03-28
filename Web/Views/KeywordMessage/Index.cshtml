@@ -308,15 +308,15 @@
                 if (parentID.length == 0) {
                     parentID = null;
                 }
-                if(projectID=="0"){
-                    $(this).focus();
-                    JAlert({
-                        Message: "请选择项目。",
-                        DialogType: "Ok",
-                        BtnOk: "确定"
-                    });
-                    return false;
-                }
+//                if(projectID=="0"){
+//                    $(this).focus();
+//                    JAlert({
+//                        Message: "请选择项目。",
+//                        DialogType: "Ok",
+//                        BtnOk: "确定"
+//                    });
+//                    return false;
+//                }
                 if (ruleName.length == 0) {
                     $("#txtRuleName").focus();
                     JAlert({
@@ -432,7 +432,7 @@
                     新规则</label>
             </div>
             <div style="padding: 10px 5px 0px 10px;">
-                <div class="keyItem">
+                <div class="keyItem" style="display:none">
                     <div style="width: 58px; text-align: right; float: left">
                         项目：</div>
                     @Html.DropDownList("AccountMainHousesID", ViewData["Project"] as List<SelectListItem>, new { })

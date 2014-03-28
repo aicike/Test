@@ -445,5 +445,18 @@ namespace Business
             }
         }
 
+        /// <summary>
+        /// 获取生成的资讯信息
+        /// </summary>
+        /// <param name="id">活动 或调查 ID</param>
+        /// <param name="client">咨询url类型 EnumAdverURLType </param>
+        /// <returns></returns>
+        public AppAdvertorial GetAppadverBy_clientAndID(int id, int EnumAdverURLType)
+        {
+            var appadver = List().Where(a => a.EnumAdverURLType == EnumAdverURLType && a.UrlID == id).FirstOrDefault();
+
+            return appadver;
+        }
+
     }
 }

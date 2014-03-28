@@ -32,7 +32,7 @@ namespace Poco
 
         public int? ParentAutoMessage_KeywordID { get; set; }
 
-        public int AccountMainHousesID { get; set; }
+        public int? AccountMainHousesID { get; set; }
         public virtual AccountMainHouses AccountMainHouses { get; set; }
 
         /// <summary>

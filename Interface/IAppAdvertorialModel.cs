@@ -71,5 +71,13 @@ namespace Interface
         /// <param name="client">咨询url类型 EnumAdvertorialUType </param>
         /// <returns></returns>
         bool CKAppadverBy_clientAndID(int id, int client);
+
+         /// <summary>
+        /// 获取生成的资讯信息
+        /// </summary>
+        /// <param name="id">活动 或调查 ID</param>
+        /// <param name="client">咨询url类型 EnumAdverURLType </param>
+        /// <returns></returns>
+        AppAdvertorial GetAppadverBy_clientAndID(int id, int EnumAdverURLType);
     }
 }
