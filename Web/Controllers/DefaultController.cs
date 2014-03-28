@@ -442,7 +442,6 @@ namespace Web.Controllers
         /// <param name="?"></param>
         /// <param name="isok"></param>
         /// <returns></returns>
-        [ValidateInput(false)]
         public ActionResult ActivityInfo(string ActivityID_token, int ADverID, int? imtimely_userid, int? imtimely_Apptype, int? isok)
         {
             int ActivityID = ActivityID_token.TokenDecrypt();
@@ -618,17 +617,17 @@ namespace Web.Controllers
         /// <param name="uid">App中UserID</param>
         /// <param name="phone">资讯ID，活动ID，调查ID</param>
         /// <returns></returns>
-        public ActionResult LotteryDish(int type, int id)
+        public ActionResult LotteryDish(int type, int id, int? uid, string phone)
         {
             EnumBrowseAdvertorialType advertorialType = (EnumBrowseAdvertorialType)type;
-            int lottery_dishID=0;
+            int lottery_dishID = 0;
             switch (advertorialType)
             {
                 case EnumBrowseAdvertorialType.Information:
                     break;
                 case EnumBrowseAdvertorialType.ActivityInfo:
                     var activityModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
-                    var activity= activityModel.Get(id);
+                    var activity = activityModel.Get(id);
                     lottery_dishID = activity.Lottery_dishID.Value;
                     break;
                 case EnumBrowseAdvertorialType.SurveyMain:
@@ -688,8 +687,8 @@ namespace Web.Controllers
             ViewBag.WinningIndex = index + 1;
             ViewBag.Winning = detail;
 
-            //保存中奖情况
             #endregion
+            //保存中奖情况
             return View(entity);
         }
 
