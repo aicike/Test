@@ -170,7 +170,7 @@ namespace Poco
         /// 报名时填写字段3 是否必填
         /// </summary>
         public bool Extension3IsRequired { get; set; }
-
+         
         /// <summary>
         /// 报名时填写字段4
         /// </summary>
