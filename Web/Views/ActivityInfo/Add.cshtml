@@ -17,6 +17,17 @@
     <script src="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.js")" type="text/javascript"></script>
     <link href="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.css")" rel="stylesheet" type="text/css" />
     <script>
+
+
+        function OptintModel() {
+            var it = new Object;
+            it.Option = "";
+            it.IsRequired = "true";
+
+            return it;
+        }
+        var items = [];
+
         var Cnt = 0;
         var UpImgUrl = '@Url.Action("UpImg", "Ajax", new { HostName = ViewBag.HostName })';
         $(function () {
@@ -143,6 +154,7 @@
 
             $("#EnrollEndDate").datepicker("option", "minDate", "+1");
 
+            //提交校验
             $("#btnSubmit").click(function () {
                 if (Cnt > 0) {
                     if ($("#w").val() == "0") {
@@ -156,12 +168,66 @@
                 }
                 if (ue.getContent().length == 0) {
                     JAlert({
-                        Message: "正文不能为空！",
+                        Message: "活动内容不能为空！",
                         DialogType: "Ok",
                         BtnOk: "确定"
                     });
                     return false;
                 }
+
+                //获取自定义内容
+                var isOK = true;
+                var RowName = $("div[name='div_option']");
+                //选项数量
+                var ocnt = 0;
+                items = [];
+                RowName.each(function (i, n) {
+                    var optionTitle = $(n).find("input[name='option']").val().trim();
+                    var optionRequired = "true";
+                    if (optionTitle.length <= 0) {
+                        JAlert({
+                            Message: "请填写报名内容设定选项！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        isOK = false;
+                        return;
+                    }
+
+                    var Om = new OptintModel();
+                    Om.Option = optionTitle;
+
+                    optionRequired = $(n).find("input[name='option_Required']").attr("checked");
+                    if (optionRequired == "checked") {
+                        Om.IsRequired = "true";
+                    }
+                    else {
+                        Om.IsRequired = "false";
+                    }
+                    items.push(Om);
+                    ocnt = ocnt + 1;
+                });
+                if (ocnt == 0) {
+                    var Requiredname = $("#ckb_Name").attr("checked");
+                    var Requiredphone = $("#ckb_Phone").attr("checked");
+                    var Requiredemail = $("#ckb_Email").attr("checked");
+
+                    if (Requiredname != "checked" && Requiredphone != "checked" && Requiredemail != "checked") {
+                        JAlert({
+                            Message: "至少选择一个报名自定义填写内容！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return false;
+                    }
+                }
+                if (isOK == true) {
+                    var value = JSON.stringify(items);
+                    $("#Options").val(value);
+                }
+
+
+
             });
 
             //显示抽奖活动
@@ -200,6 +266,32 @@
                         }
                     }
                 });
+            });
+
+
+
+
+            var optionCnt = 0;
+            //添加选项
+            $("#addOption").click(function () {
+                if (optionCnt >= 5) {
+                    JAlert({
+                        Message: "最多只能添加5项！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return;
+                }
+                var DIVrow = '<div  name="div_option"><input name="option" type="text" />  是否必填：<input name="option_Required" type="checkbox"  checked="checked"/> <a class="delOption">删除</a></div>';
+                $("#div_Option").append($(DIVrow));
+                optionCnt = optionCnt + 1
+            });
+
+            //删除选项
+            $(".delOption").live("click", function () {
+
+                $(this).parent().remove();
+                optionCnt = optionCnt - 1;
             });
         });
     </script>
@@ -287,6 +379,7 @@
                 </tr>
             </table>
         </fieldset>
+        <input type="hidden" name="Options" id="Options" />
         <fieldset style="font-size: 14px">
             <legend>创建活动</legend>
             <table style="width: 100%;">
@@ -364,6 +457,28 @@
                         </td>
                     </tr>
                 }
+                <tr style="line-height: 25px">
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 报名填写内容设定
+                    </td>
+                    <td>
+                        <input type="checkbox" id="ckb_Name" name="ckb_Name" checked="checked" />
+                        姓名
+                        <input type="checkbox" id="ckb_Phone" name="ckb_Phone" checked="checked" />
+                        电话
+                        <input type="checkbox" id="ckb_Email" name="ckb_Email" checked="checked" />
+                        邮箱
+                        <div class="operation">
+                            <a id="addOption" class="operation">添加自定义选项</a>(最多添加5项)
+                        </div>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><div id="div_Option" class="operation">
+                        </div></td>
+                </tr>
                 <tr style="height: 300px">
                     <td class="tdTitle" valign="top">
                         <span class="Identification">*</span> 活动内容

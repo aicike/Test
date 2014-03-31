@@ -123,17 +123,17 @@ namespace Poco
 
 
         /// <summary>
-        /// 报名时电话 是否必填
+        /// 是否填写电话 （预制的）
         /// </summary>
         public bool PhoneIsRequired { get; set; }
 
         /// <summary>
-        /// 报名时姓名 是否必填
+        ///  是否填写姓名 （预制的）
         /// </summary>
         public bool NameIsRequired { get; set; }
 
         /// <summary>
-        /// 报名时邮箱 是否必填
+        ///  是否填写邮箱 （预制的）
         /// </summary>
         public bool EmailIsRequired { get; set; }
 
