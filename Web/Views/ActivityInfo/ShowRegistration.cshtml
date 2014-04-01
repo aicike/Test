@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "ShowRegistration";
     Layout = "~/Views/Shared/_LayoutBase.cshtml";
+    var activity = ViewBag.Activity as Poco.ActivityInfo;
 }
 @section head{
     <style>
@@ -20,7 +21,7 @@
         
         .ListTab
         {
-            width:95%;
+            width: 95%;
             margin-top: 10px;
             margin-bottom: 20px;
         }
@@ -50,21 +51,21 @@
         <td>
             <div class="pages" style="padding: 10px 10px 10px 10px;">
                 @Html.Pager(Model, new PagerOptions
-                {
-                    PageIndexParameterName = "ID",
-                    CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
-                    NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
-                    NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
-                    CssClass = "manage_pages pages",
-                    SeparatorHtml = "&nbsp;",
-                    AutoHide = false,
-                    /*LastPageText = "Last",
-                    FirstPageText = "First",
-                    PrevPageText = "Back",
-                    NextPageText = "Next",*/
-                    PageIndexOutOfRangeErrorMessage = "Page index out of range.",
-                    ShowFirstLast = false
-                })
+           {
+               PageIndexParameterName = "ID",
+               CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+               NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+               NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+               CssClass = "manage_pages pages",
+               SeparatorHtml = "&nbsp;",
+               AutoHide = false,
+               /*LastPageText = "Last",
+               FirstPageText = "First",
+               PrevPageText = "Back",
+               NextPageText = "Next",*/
+               PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+               ShowFirstLast = false
+           })
             </div>
         </td>
     </tr>
@@ -73,16 +74,54 @@
             <table align="center" class="ListTab" cellpadding="0" cellspacing="0" style="table-layout: fixed;
                 word-break: break-all">
                 <tr>
-                    <th style="width: 100px">
-                        姓名
-                    </th>
-                    <th style="width: 100px">
-                        电话
-                    </th>
-                    <th style="width: 150px">
-                        邮箱
-                    </th>
-                   
+                    @if (activity.NameIsRequired)
+                    { 
+                        <th>
+                            姓名
+                        </th>
+                    }
+                    @if (activity.PhoneIsRequired)
+                    { 
+                        <th>
+                            电话
+                        </th>
+                    }
+                    @if (activity.EmailIsRequired)
+                    { 
+                        <th>
+                            邮箱
+                        </th>
+                    }
+                    @if (!string.IsNullOrEmpty(activity.Extension1))
+                    { 
+                        <th>
+                            @activity.Extension1
+                        </th>
+                    }
+                    @if (!string.IsNullOrEmpty(activity.Extension2))
+                    {
+                        <th>
+                            @activity.Extension2
+                        </th>
+                    }
+                    @if (!string.IsNullOrEmpty(activity.Extension3))
+                    {
+                        <th>
+                            @activity.Extension3
+                        </th>
+                    }
+                    @if (!string.IsNullOrEmpty(activity.Extension4))
+                    {
+                        <th>
+                            @activity.Extension4
+                        </th>
+                    }
+                    @if (!string.IsNullOrEmpty(activity.Extension5))
+                    {
+                        <th>
+                            @activity.Extension5
+                        </th>
+                    }
                     <th style="width: 130px">
                         报名日期
                     </th>
@@ -90,43 +129,81 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
-                            @item.Name
-                        </td>
-                        <td>
-                            @item.Phone
-                        </td>
-                        <td>
-                            @item.Email
-                        </td>
+                        @if (activity.NameIsRequired)
+                        { 
+                            <td>
+                                @item.Name
+                            </td>
+                        }
+                        @if (activity.PhoneIsRequired)
+                        { 
+                            <td>
+                                @item.Phone
+                            </td>
+                        }
+                        @if (activity.EmailIsRequired)
+                        { 
+                            <td>
+                                @item.Email
+                            </td>
+                        }
+                        @if (!string.IsNullOrEmpty(activity.Extension1))
+                        { 
+                            <td>
+                                @item.Extension1
+                            </td>
+                        }
+                        @if (!string.IsNullOrEmpty(activity.Extension2))
+                        {
+                            <td>
+                                @item.Extension2
+                            </td>
+                        }
+                        @if (!string.IsNullOrEmpty(activity.Extension3))
+                        {
+                            <td>
+                                @item.Extension3
+                            </td>
+                        }
+                        @if (!string.IsNullOrEmpty(activity.Extension4))
+                        {
+                            <td>
+                                @item.Extension4
+                            </td>
+                        }
+                        @if (!string.IsNullOrEmpty(activity.Extension5))
+                        {
+                            <td>
+                                @item.Extension5
+                            </td>
+                        }
                         <td>
                             @item.JoinDateTime.ToString("yyyy/MM/dd HH:mm")
                         </td>
                     </tr>
                 }
             </table>
-            
         </td>
     </tr>
-     <tr>
+    <tr>
         <td>
             <div class="pages" style="padding: 10px 10px 10px 10px;">
                 @Html.Pager(Model, new PagerOptions
-                {
-                    PageIndexParameterName = "ID",
-                    CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
-                    NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
-                    NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
-                    CssClass = "manage_pages pages",
-                    SeparatorHtml = "&nbsp;",
-                    AutoHide = false,
-                    /*LastPageText = "Last",
-                    FirstPageText = "First",
-                    PrevPageText = "Back",
-                    NextPageText = "Next",*/
-                    PageIndexOutOfRangeErrorMessage = "Page index out of range.",
-                    ShowFirstLast = false
-                })
+           {
+               PageIndexParameterName = "ID",
+               CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+               NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+               NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+               CssClass = "manage_pages pages",
+               SeparatorHtml = "&nbsp;",
+               AutoHide = false,
+               /*LastPageText = "Last",
+               FirstPageText = "First",
+               PrevPageText = "Back",
+               NextPageText = "Next",*/
+               PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+               ShowFirstLast = false
+           })
             </div>
         </td>
     </tr>

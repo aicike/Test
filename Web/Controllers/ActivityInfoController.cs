@@ -289,6 +289,10 @@ namespace Web.Controllers
         {
             var ActivityInfoParticipatorModel = Factory.Get<IActivityInfoParticipatorModel>(SystemConst.IOC_Model.ActivityInfoParticipatorModel);
             var ActivityInfoParticipator = ActivityInfoParticipatorModel.GetAIPList(AID, LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 50);
+            var acctivityInfoModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
+            var acctivityInfo = acctivityInfoModel.GetActivityByID(AID,LoginAccount.CurrentAccountMainID);
+            ViewBag.Activity = acctivityInfo;
+
             return View(ActivityInfoParticipator);
         }
 
