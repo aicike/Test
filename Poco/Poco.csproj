@@ -98,6 +98,7 @@
     <Compile Include="ReportFormPower.cs" />
     <Compile Include="SurveyAnswerUser.cs" />
     <Compile Include="UserTag.cs" />
+    <Compile Include="_B_ActivityOption.cs" />
     <Compile Include="_B_AdvertoriaOperation.cs" />
     <Compile Include="_Service.cs" />
     <Compile Include="SMS.cs" />

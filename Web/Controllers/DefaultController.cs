@@ -421,7 +421,6 @@ namespace Web.Controllers
                 sau.QQ_Weixin = Request.Form["userQQ"];
                 AnswerUserModel.Add(sau);
                 SAUID = sau.ID;
-
             }
             var AnswerModel = Factory.Get<ISurveyAnswerModel>(SystemConst.IOC_Model.SurveyAnswerModel);
             var result = AnswerModel.InsertAnswer(SA, UID, Utype, SAUID);
@@ -574,9 +573,38 @@ namespace Web.Controllers
             ActivityInfoParticipator aip = new ActivityInfoParticipator();
             aip.ActivityInfoID = ActivityID;
             aip.JoinDateTime = DateTime.Now;
-            aip.Name = Request.Form["userName"];
-            aip.Phone = Request.Form["userPhone"];
-            aip.Email = Request.Form["userEmail"];
+            if (!string.IsNullOrEmpty(Request.Form["userName"]))
+            {
+                aip.Name = Request.Form["userName"];
+            }
+            if (!string.IsNullOrEmpty(Request.Form["userPhone"]))
+            {
+                aip.Phone = Request.Form["userPhone"];
+            }
+            if (!string.IsNullOrEmpty(Request.Form["userEmail"]))
+            {
+                aip.Email = Request.Form["userEmail"];
+            }
+            if (!string.IsNullOrEmpty(Request.Form["Extension1"]))
+            {
+                aip.Extension1 = Request.Form["Extension1"];
+            }
+            if (!string.IsNullOrEmpty(Request.Form["Extension2"]))
+            {
+                aip.Extension2 = Request.Form["Extension2"];
+            }
+            if (!string.IsNullOrEmpty(Request.Form["Extension3"]))
+            {
+                aip.Extension3 = Request.Form["Extension3"];
+            }
+            if (!string.IsNullOrEmpty(Request.Form["Extension4"]))
+            {
+                aip.Extension4 = Request.Form["Extension4"];
+            }
+            if (!string.IsNullOrEmpty(Request.Form["Extension5"]))
+            {
+                aip.Extension5 = Request.Form["Extension5"];
+            }
             aip.Company = "";
             aip.Position = "";
             if (UID.HasValue)

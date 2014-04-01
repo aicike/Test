@@ -64,12 +64,52 @@ namespace Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Add(ActivityInfo activityinfo, int w, int h, int x1, int y1, int tw, int th)
+        public ActionResult Add(ActivityInfo activityinfo, string Options, string ckb_Name, string ckb_Phone, string ckb_Email, int w, int h, int x1, int y1, int tw, int th)
         {
             activityinfo.CreateDate = DateTime.Now;
             activityinfo.AccountID = LoginAccount.ID;
             activityinfo.AccountMainID = LoginAccount.CurrentAccountMainID;
             var activityInfoModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
+            var option = Newtonsoft.Json.JsonConvert.DeserializeObject<List<_B_ActivityOption>>(Options);
+            int optionCnt = option.Count;
+            if (optionCnt > 0)
+            {
+                activityinfo.Extension1 = option[0].Option;
+                activityinfo.Extension1IsRequired = Convert.ToBoolean(option[0].IsRequired);
+            }
+            if (optionCnt > 1)
+            {
+                activityinfo.Extension2 = option[1].Option;
+                activityinfo.Extension2IsRequired = Convert.ToBoolean(option[1].IsRequired);
+            }
+            if (optionCnt > 2)
+            {
+                activityinfo.Extension3 = option[2].Option;
+                activityinfo.Extension3IsRequired = Convert.ToBoolean(option[2].IsRequired);
+            }
+            if (optionCnt > 3)
+            {
+                activityinfo.Extension4 = option[3].Option;
+                activityinfo.Extension4IsRequired = Convert.ToBoolean(option[3].IsRequired);
+            }
+            if (optionCnt > 4)
+            {
+                activityinfo.Extension5 = option[4].Option;
+                activityinfo.Extension5IsRequired = Convert.ToBoolean(option[4].IsRequired);
+            }
+            if (!string.IsNullOrEmpty(ckb_Name))
+            {
+                activityinfo.NameIsRequired = true;
+            }
+            if (!string.IsNullOrEmpty(ckb_Phone))
+            {
+                activityinfo.PhoneIsRequired = true;
+            }
+            if (!string.IsNullOrEmpty(ckb_Email))
+            {
+                activityinfo.EmailIsRequired = true;
+            }
+
             var result = activityInfoModel.AddActivity(activityinfo, x1, y1, w, h, tw, th);
             if (result.HasError)
             {
@@ -249,6 +289,10 @@ namespace Web.Controllers
         {
             var ActivityInfoParticipatorModel = Factory.Get<IActivityInfoParticipatorModel>(SystemConst.IOC_Model.ActivityInfoParticipatorModel);
             var ActivityInfoParticipator = ActivityInfoParticipatorModel.GetAIPList(AID, LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 50);
+            var acctivityInfoModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
+            var acctivityInfo = acctivityInfoModel.GetActivityByID(AID,LoginAccount.CurrentAccountMainID);
+            ViewBag.Activity = acctivityInfo;
+
             return View(ActivityInfoParticipator);
         }
 
@@ -304,11 +348,11 @@ namespace Web.Controllers
                     else
                     {
 
-                        ViewBag.BeginDate =DateTime.Now.ToString("yyyy-MM-dd");
+                        ViewBag.BeginDate = DateTime.Now.ToString("yyyy-MM-dd");
                         ViewBag.EndDate = DateTime.Now.AddDays(11).ToString("yyyy-MM-dd");
                     }
 
-                   
+
                 }
                 return View();
             }

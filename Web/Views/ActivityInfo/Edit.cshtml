@@ -73,7 +73,7 @@
                     Cnt = 1;
                 }
             });
-            
+
             var jcrop_api, boundx, boundy;
 
             function updatePreview(c) {
@@ -204,6 +204,35 @@
 
             var Status = '@Model.Status'
             $("#Status").val(Status);
+
+
+            var optionCnt = 0;
+            //添加选项
+            $("#addOption").click(function () {
+                var div_option = $("div[name=div_option]").length;
+                optionCnt = div_option;
+                if (optionCnt >= 5) {
+                    JAlert({
+                        Message: "最多只能添加5项！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return;
+                }
+                var DIVrow = '<div  name="div_option"><input name="option" type="text" />  是否必填：<input name="option_Required" type="checkbox"  checked="checked"/> <a class="delOption">删除</a></div>';
+                $("#div_Option").append($(DIVrow));
+                optionCnt = optionCnt + 1
+            });
+
+            //删除选项
+            $(".delOption").live("click", function () {
+
+                $(this).parent().remove();
+                optionCnt = optionCnt - 1;
+            });
+
+
+
 
         });
     </script>
@@ -402,6 +431,110 @@
                         </td>
                     </tr>
                 }
+                <tr style="line-height: 25px">
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 报名填写内容设定
+                    </td>
+                    <td>
+                        <input type="checkbox" id="ckb_Name" name="ckb_Name" />
+                        姓名
+                        <input type="checkbox" id="ckb_Phone" name="ckb_Phone" />
+                        电话
+                        <input type="checkbox" id="ckb_Email" name="ckb_Email" />
+                        邮箱
+                        <div class="operation">
+                            <a id="addOption" class="operation">添加自定义选项</a>(最多添加5项)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <div id="div_Option" class="operation">
+                            @if (!string.IsNullOrEmpty(Model.Extension1))
+                            { 
+                                <div name="div_option">
+                                    <input name="option" type="text" value="@Model.Extension1" />
+                                    是否必填：
+                                    @if (Model.Extension1IsRequired)
+                                    { 
+                                        <input name="option_Required" type="checkbox" checked="checked" />
+                                    }
+                                    else
+                                    { 
+                                        <input name="option_Required" type="checkbox" />
+                                    }
+                                    <a class="delOption">删除</a>
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.Extension2))
+                            { 
+                                <div name="div_option">
+                                    <input name="option" type="text" />
+                                    是否必填：
+                                    @if (Model.Extension2IsRequired)
+                                    { 
+                                        <input name="option_Required" type="checkbox" checked="checked" />
+                                    }
+                                    else
+                                    { 
+                                        <input name="option_Required" type="checkbox" />
+                                    }
+                                    <a class="delOption">删除</a>
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.Extension3))
+                            { 
+                                <div name="div_option">
+                                    <input name="option" type="text" />
+                                    是否必填：
+                                    @if (Model.Extension3IsRequired)
+                                    { 
+                                        <input name="option_Required" type="checkbox" checked="checked" />
+                                    }
+                                    else
+                                    { 
+                                        <input name="option_Required" type="checkbox" />
+                                    }
+                                    <a class="delOption">删除</a>
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.Extension4))
+                            { 
+                                <div name="div_option">
+                                    <input name="option" type="text" />
+                                    是否必填：
+                                    @if (Model.Extension4IsRequired)
+                                    { 
+                                        <input name="option_Required" type="checkbox" checked="checked" />
+                                    }
+                                    else
+                                    { 
+                                        <input name="option_Required" type="checkbox" />
+                                    }
+                                    <a class="delOption">删除</a>
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.Extension5))
+                            { 
+                                <div name="div_option">
+                                    <input name="option" type="text" />
+                                    是否必填：
+                                    @if (Model.Extension5IsRequired)
+                                    { 
+                                        <input name="option_Required" type="checkbox" checked="checked" />
+                                    }
+                                    else
+                                    { 
+                                        <input name="option_Required" type="checkbox" />
+                                    }
+                                    <a class="delOption">删除</a>
+                                </div>
+                            }
+                        </div>
+                    </td>
+                </tr>
                 <tr style="height: 300px">
                     <td class="tdTitle" valign="top">
                         <span class="Identification">*</span> 活动内容

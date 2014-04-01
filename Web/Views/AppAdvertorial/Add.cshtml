@@ -13,6 +13,18 @@
     <script src="@Url.Content("/ueditor/ueditor.all.js")" type="text/javascript"></script>
     <script>
 
+        function OptintModel() {
+            var it = new Object;
+            it.Option = "";
+            it.IsRequired = "True";
+
+            return it;
+        }
+        var items = [];
+
+
+
+
         var Cnt = 0;
         var UpImgUrl = '@Url.Action("UpImg", "AppAdvertorial", new { HostName = ViewBag.HostName })';
         $(function () {

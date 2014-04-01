@@ -58,38 +58,109 @@
                 var name = $('#userName').val();
                 var phone = $('#userPhone').val();
                 var email = $('#userEmail').val();
+                var nameIsReq = "@Model.NameIsRequired";
+                var phoneIsReq = "@Model.PhoneIsRequired";
+                var emailIsReq = "@Model.EmailIsRequired";
 
-                if (name == undefined || name == "") {
-                    alert("姓名不能为空");
-                    isSub = false;
-                    return false;
+                var Extension1 = "@Model.Extension1";
+                var Extension2 = "@Model.Extension2";
+                var Extension3 = "@Model.Extension3";
+                var Extension4 = "@Model.Extension4";
+                var Extension5 = "@Model.Extension5";
+                var Extension1IsReq = "@Model.Extension1IsRequired";
+                var Extension2IsReq = "@Model.Extension2IsRequired";
+                var Extension3IsReq = "@Model.Extension3IsRequired";
+                var Extension4IsReq = "@Model.Extension4IsRequired";
+                var Extension5IsReq = "@Model.Extension5IsRequired";
+
+
+
+                if(nameIsReq=="True")
+                {
+                    if (name == undefined || name == "") {
+                        alert("姓名不能为空");
+                        isSub = false;
+                        return false;
+                    }
                 }
-                if (phone == undefined || phone == "") {
-                    alert("电话不能为空");
-                    isSub = false;
-                    return false;
+                if(phoneIsReq=="True")
+                {
+                    if (phone == undefined || phone == "") {
+                        alert("电话不能为空");
+                        isSub = false;
+                        return false;
+                    }
+                    var reg0 = /^(((1[0-9]{1}[0-9]{1}))+\d{8})$/;
+                    var my = false;
+                    if (reg0.test(phone)) my = true;
+                    if (!my) {
+                        alert("请输入正确的电话号码");
+                        isSub = false;
+                        return false;
+                    }
                 }
-                if (email == undefined || email == "") {
-                    alert("邮箱不能为空");
-                    isSub = false;
-                    return false;
+                if(emailIsReq=="True")
+                {
+                    if (email == undefined || email == "") {
+                        alert("邮箱不能为空");
+                        isSub = false;
+                        return false;
+                    }
+                    var reg1 = /^([a-zA-Z0-9_\.\-])+\@@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                    var my = false;
+                    if (reg1.test(email)) my = true;
+                    if (!my) {
+                        alert("请输入正确的邮箱地址");
+                        isSub = false;
+                        return false;
+                    }
                 }
-                var reg0 = /^(((1[0-9]{1}[0-9]{1}))+\d{8})$/;
-                var my = false;
-                if (reg0.test(phone)) my = true;
-                if (!my) {
-                    alert("请输入正确的电话号码");
-                    isSub = false;
-                    return false;
+                if(Extension1IsReq=="True")
+                {
+                    var strEx1 = $("#Extension1").val();
+                    if (strEx1 == undefined || strEx1 == "") {
+                        alert(Extension1+"不能为空");
+                        isSub = false;
+                        return false;
+                    }
                 }
-                var reg1 = /^([a-zA-Z0-9_\.\-])+\@@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-                var my = false;
-                if (reg1.test(email)) my = true;
-                if (!my) {
-                    alert("请输入正确的邮箱地址");
-                    isSub = false;
-                    return false;
+                if(Extension2IsReq=="True")
+                {
+                    var strEx2 = $("#Extension2").val();
+                    if (strEx2 == undefined || strEx2 == "") {
+                        alert(Extension2+"不能为空");
+                        isSub = false;
+                        return false;
+                    }
                 }
+                if(Extension3IsReq=="True")
+                {
+                    var strEx3 = $("#Extension3").val();
+                    if (strEx1strEx3 == undefined || strEx3 == "") {
+                        alert(Extension3+"不能为空");
+                        isSub = false;
+                        return false;
+                    }
+                }
+                if(Extension4IsReq=="True")
+                {
+                    var strEx4 = $("#Extension4").val();
+                    if (strEx4 == undefined || strEx4 == "") {
+                        alert(Extension4+"不能为空");
+                        isSub = false;
+                        return false;
+                    }
+                }
+                if(Extension5IsReq=="True")
+                {
+                    var strEx5 = $("#Extension5").val();
+                    if (strEx5 == undefined || strEx5 == "") {
+                        alert(Extension5+"不能为空");
+                        isSub = false;
+                        return false;
+                    }
+                }
+                
                 var PUrl = '@Url.Action("CheckISBM", "Default")';
                 var AID = '@ViewBag.ActivityID';
 
@@ -99,14 +170,20 @@
                 var isture = false;
                 $.post(PUrl, { AID: AID, phone: phone, Email: email }, function (result) {
                     if (result == "1") {
-                        isture = true;
+                        if(phoneIsReq=="True")
+                        {
+                            isture = true;
                         $("#showMess").click();
-                        $('#userPhone').val("");
+                            $('#userPhone').val("");
+                        }
                     }
                     else if (result == "2") {
-                        isture = true;
+                        if(emailIsReq=="True")
+                        {
+                            isture = true;
                         $("#showMessEmail").click();
-                        $('#userEmail').val("");
+                            $('#userEmail').val("");
+                        }
                     }
                 });
                 if (isture) {
@@ -282,10 +359,38 @@
                             <br />
                             Please enter your information
                         </div>  
-                        
+                        if (Model.NameIsRequired)
+                        { 
                         <input type="text" name="userName" id="userName" placeholder="姓名/Name" />   
+                        }
+                        if (Model.PhoneIsRequired)
+                        { 
                         <input type="tel" name="userPhone" id="userPhone" placeholder="电话号码/TelePhone" />  
+                        }
+                        if (Model.EmailIsRequired)
+                        { 
                         <input type="text" name="userEmail" id="userEmail" placeholder="邮箱地址/Email" />    
+                        }
+                        if (!string.IsNullOrEmpty(Model.Extension1))
+                        { 
+                        <input type="text" name="Extension1" id="Extension1" placeholder="@Model.Extension1" />    
+                        }
+                        if (!string.IsNullOrEmpty(Model.Extension2))
+                        {
+                        <input type="text" name="Extension2" id="Extension2" placeholder="@Model.Extension2" />    
+                        }
+                        if (!string.IsNullOrEmpty(Model.Extension3))
+                        {
+                        <input type="text" name="Extension3" id="Extension3" placeholder="@Model.Extension3" />    
+                        }
+                        if (!string.IsNullOrEmpty(Model.Extension4))
+                        {
+                        <input type="text" name="Extension4" id="Extension4" placeholder="@Model.Extension4" />    
+                        }
+                        if (!string.IsNullOrEmpty(Model.Extension5))
+                        {
+                        <input type="text" name="Extension5" id="Extension5" placeholder="@Model.Extension5" />    
+                        }
                         <button type="submit" data-theme="b" onclick="return checkUP()">
                             提交/Submit
                         </button>   
@@ -337,42 +442,41 @@
                 </div>
                 <script type="text/javascript">
 
-                (function () {
-                    var IPHONEURL = "@ViewBag.IOSURL"+"";
-                    var ANDROIDURL = "@ViewBag.AndroidURL";
-                    var page = {};
-                    page.init = function () {
-                        page.initView();
-                    };
-                    page.initView = function () {
-                        var ua = window.navigator.userAgent.toLowerCase();
-                        if (ua.indexOf('android') != -1) {
-                         if(is_weixn()){
-                                $('#Adowload').hide();
-                                $('#Adowload2').show();
-                            }else{
-                                $('#Adowload').attr("href", ANDROIDURL+"#weixin.qq.com");
+                    (function () {
+                        var IPHONEURL = "@ViewBag.IOSURL" + "";
+                        var ANDROIDURL = "@ViewBag.AndroidURL";
+                        var page = {};
+                        page.init = function () {
+                            page.initView();
+                        };
+                        page.initView = function () {
+                            var ua = window.navigator.userAgent.toLowerCase();
+                            if (ua.indexOf('android') != -1) {
+                                if (is_weixn()) {
+                                    $('#Adowload').hide();
+                                    $('#Adowload2').show();
+                                } else {
+                                    $('#Adowload').attr("href", ANDROIDURL + "#weixin.qq.com");
+                                    $('#Adowload2').hide();
+                                }
+                            } else if (ua.indexOf('iphone') != -1) {
+                                if (is_weixn()) {
+                                    $('#Adowload').hide();
+                                    $('#Adowload2').show();
+
+                                } else {
+                                    $('#Adowload').attr("href", IPHONEURL);
+                                    $('#Adowload2').hide();
+                                }
+                            }
+                            else {
+                                $('#Adowload').attr("href", "@Url.Action("QrCodeSkip", "Default", new { AMID = ViewBag.AMID })");
                                 $('#Adowload2').hide();
                             }
-                        } else if (ua.indexOf('iphone') != -1) {
-                         if(is_weixn()){
-                                $('#Adowload').hide();
-                                $('#Adowload2').show();
+                        };
 
-                            }else{
-                                $('#Adowload').attr("href", IPHONEURL);
-                                $('#Adowload2').hide();
-                            }
-                        }
-                        else
-                        {
-                            $('#Adowload').attr("href", "@Url.Action("QrCodeSkip", "Default", new { AMID = ViewBag.AMID })");
-                            $('#Adowload2').hide();
-                        }
-                    };
-
-                    page.init();
-                })();
+                        page.init();
+                    })();
 
                 </script>
                 }
