@@ -404,7 +404,7 @@
         $(function () {
             $("#btnLotteryDish").click(function () {
                 $('#isok').hide();
-                $("#iframe_lotteryDish").attr("src", "@Url.Action("LotteryDish","Default", new { type = (int)Poco.Enum.EnumBrowseAdvertorialType.ActivityInfo, id = Model.ID })");
+                $("#iframe_lotteryDish").attr("src", "@Url.Action("LotteryDish","Default", new { type = (int)Poco.Enum.EnumBrowseAdvertorialType.ActivityInfo, id = Model.ID,aid=ViewBag.AIP  })");
                 $('#div_lotteryDish').show();
             });
         });

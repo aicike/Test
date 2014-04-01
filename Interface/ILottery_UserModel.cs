@@ -8,5 +8,6 @@ namespace Interface
 {
     public interface ILottery_UserModel : IBaseModel<Lottery_User>
     {
+        
     }
 }

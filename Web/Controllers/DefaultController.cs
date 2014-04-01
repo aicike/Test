@@ -442,7 +442,7 @@ namespace Web.Controllers
         /// <param name="?"></param>
         /// <param name="isok"></param>
         /// <returns></returns>
-        public ActionResult ActivityInfo(string ActivityID_token, int ADverID, int? imtimely_userid, int? imtimely_Apptype, int? isok)
+        public ActionResult ActivityInfo(string ActivityID_token, int ADverID, int? imtimely_userid, int? imtimely_Apptype, int? isok, int? AIP)
         {
             int ActivityID = ActivityID_token.TokenDecrypt();
             ViewBag.ActivityID = ActivityID;
@@ -453,6 +453,7 @@ namespace Web.Controllers
             {
                 // 1 提交成功 2提交失败
                 ViewBag.isok = isok;
+                ViewBag.AIP = AIP.HasValue==false?0:AIP.Value;
             }
             if (imtimely_userid.HasValue)
             {
@@ -606,7 +607,7 @@ namespace Web.Controllers
                 }
                 catch { }
             }
-            return RedirectToAction("ActivityInfo", "Default", new { ActivityID_token = ActivityID.TokenEncrypt(true), ADverID = ADverID, isok = 1 });
+            return RedirectToAction("ActivityInfo", "Default", new { ActivityID_token = ActivityID.TokenEncrypt(true), ADverID = ADverID, isok = 1 ,AIP=aip.ID});
         }
 
         /// <summary>
@@ -617,7 +618,7 @@ namespace Web.Controllers
         /// <param name="uid">App中UserID</param>
         /// <param name="phone">资讯ID，活动ID，调查ID</param>
         /// <returns></returns>
-        public ActionResult LotteryDish(int type, int id, int? uid, string phone)
+        public ActionResult LotteryDish(int type, int id, int? uid,int aid)
         {
             EnumBrowseAdvertorialType advertorialType = (EnumBrowseAdvertorialType)type;
             int lottery_dishID = 0;
@@ -689,6 +690,15 @@ namespace Web.Controllers
 
             #endregion
             //保存中奖情况
+            Lottery_User lu = new Lottery_User();
+            lu.Lottery_dishID = lottery_dishID;
+            lu.Dish_Egg_detailID = detail.ID;
+            lu.UserID = uid;
+            lu.ActivityInfoParticipatorID = aid;
+            lu.LotteryDate = DateTime.Now;
+            lu.EnumLotteryStatus = 0;
+            var Lottery_UserModel= Factory.Get<ILottery_UserModel>(SystemConst.IOC_Model.Lottery_UserModel);
+            var result=Lottery_UserModel.Add(lu);
             return View(entity);
         }
 
