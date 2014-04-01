@@ -700,7 +700,7 @@ namespace Web.Controllers
 
             #region 中奖率情况
 
-            ////中奖情况计算
+            //中奖情况计算
             Random r = new Random();
             Lottery_dish_detail detail = model.ControllerRandomExtract(list, r, 1)[0];
             int index = 0;

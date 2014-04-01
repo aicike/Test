@@ -42,8 +42,14 @@ namespace Poco
         /// <summary>
         /// 奖品数量（不填写则代表无限）
         /// </summary>
-        [Display(Name = "奖品描述")]
+        [Display(Name = "奖品总数")]
         public int Count { get; set; }
+
+        /// <summary>
+        /// 剩余奖品数量
+        /// </summary>
+        [Display(Name = "剩余奖品数量")]
+        public int RestCount { get; set; }
 
         /// <summary>
         /// 业务字段，不会在数据库中生成
