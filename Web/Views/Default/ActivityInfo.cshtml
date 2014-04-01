@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = Model.Title;
     Layout = "~/Views/Shared/_LayoutBase.cshtml";
+    int userID = ViewBag.UID == null ? 0 : ViewBag.UID;
 }
 @section head{
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
@@ -99,12 +100,12 @@
                 $.post(PUrl, { AID: AID, phone: phone, Email: email }, function (result) {
                     if (result == "1") {
                         isture = true;
-                        showMess.click();
+                        $("#showMess").click();
                         $('#userPhone').val("");
                     }
                     else if (result == "2") {
                         isture = true;
-                        showMessEmail.click();
+                        $("#showMessEmail").click();
                         $('#userEmail').val("");
                     }
                 });
@@ -396,15 +397,19 @@
             }
         </div>
     </div>
-    <div id="div_lotteryDish" data-role="content" style="display:none">
-    <iframe id="iframe_lotteryDish" width="290px" height="400px" style="border:none" >
-                    </iframe>
+    <div id="div_lotteryDish" data-role="content" style="display: none">
+        <iframe id="iframe_lotteryDish" width="290px" height="400px" style="border: none">
+        </iframe>
     </div>
     <script>
         $(function () {
             $("#btnLotteryDish").click(function () {
                 $('#isok').hide();
-                $("#iframe_lotteryDish").attr("src", "@Url.Action("LotteryDish","Default", new { type = (int)Poco.Enum.EnumBrowseAdvertorialType.ActivityInfo, id = Model.ID,aid=ViewBag.AIP  })");
+                if(@userID==0){
+                $("#iframe_lotteryDish").attr("src", "@Html.Raw(Url.Action("LotteryDish", "Default", new { type = (int)Poco.Enum.EnumBrowseAdvertorialType.ActivityInfo, entityId = Model.ID, aid = ViewBag.AIP }))");
+                }else{
+                $("#iframe_lotteryDish").attr("src", "@Html.Raw(@Url.Action("LotteryDish", "Default", new { type = (int)Poco.Enum.EnumBrowseAdvertorialType.ActivityInfo, entityId = Model.ID, aid = ViewBag.AIP, uid = @userID }))");
+                }
                 $('#div_lotteryDish').show();
             });
         });

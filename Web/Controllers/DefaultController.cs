@@ -607,7 +607,7 @@ namespace Web.Controllers
                 }
                 catch { }
             }
-            return RedirectToAction("ActivityInfo", "Default", new { ActivityID_token = ActivityID.TokenEncrypt(true), ADverID = ADverID, isok = 1 ,AIP=aip.ID});
+            return RedirectToAction("ActivityInfo", "Default", new { ActivityID_token = ActivityID.TokenEncrypt(true), ADverID = ADverID, isok = 1, AIP = aip.ID, imtimely_userid = UID });
         }
 
         /// <summary>
@@ -618,7 +618,7 @@ namespace Web.Controllers
         /// <param name="uid">App中UserID</param>
         /// <param name="phone">资讯ID，活动ID，调查ID</param>
         /// <returns></returns>
-        public ActionResult LotteryDish(int type, int id, int? uid,int aid)
+        public ActionResult LotteryDish(int type, int entityId, int aid, int? uid)
         {
             EnumBrowseAdvertorialType advertorialType = (EnumBrowseAdvertorialType)type;
             int lottery_dishID = 0;
@@ -628,7 +628,7 @@ namespace Web.Controllers
                     break;
                 case EnumBrowseAdvertorialType.ActivityInfo:
                     var activityModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
-                    var activity = activityModel.Get(id);
+                    var activity = activityModel.Get(entityId);
                     lottery_dishID = activity.Lottery_dishID.Value;
                     break;
                 case EnumBrowseAdvertorialType.SurveyMain:
