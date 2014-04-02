@@ -31,8 +31,8 @@
 <div data-role="tabs" id="tabs" style="padding: 0px;">
     <div data-role="navbar">
         <ul>
-            <li><a href="#one" data-ajax="false" id="center_order_1">待支付 <span style="color: #FF8686;">@(Model.TotalItemCount == 0 ? "" : Model.TotalItemCount + "")</span></a></li>
-            <li><a href="#two" data-ajax="false">待收货 <span style="color: #FF8686;">@(proceedList.TotalItemCount == 0 ? "" : proceedList.TotalItemCount + "")</span></a></li>
+            <li><a href="#one" data-ajax="false">待支付 <span style="color: #FF8686;">@(Model.TotalItemCount == 0 ? "" : Model.TotalItemCount + "")</span></a></li>
+            <li><a href="#two" data-ajax="false" id="center_order_1">待收货 <span style="color: #FF8686;">@(proceedList.TotalItemCount == 0 ? "" : proceedList.TotalItemCount + "")</span></a></li>
             <li><a href="#three" data-ajax="false">已结束 <span style="color: #FF8686;">@(completeList.TotalItemCount == 0 ? "" : completeList.TotalItemCount + "")</span></a></li>
         </ul>
     </div>
@@ -133,11 +133,11 @@
                     <div style="clear: both">
                     </div>
                 </div>
-                @*<div>
+                <div>
                     <button data-mini="true" style="background-color: #FF3030; color: #fff; text-shadow: none;
                         font-size: 14px;">
-                        查看</button>
-                </div>*@
+                        取消</button>
+                </div>
             </div>
         }
     </div>
