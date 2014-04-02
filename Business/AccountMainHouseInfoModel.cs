@@ -10,10 +10,24 @@ namespace Business
 {
     public class AccountMainHouseInfoModel : BaseModel<AccountMainHouseInfo>, IAccountMainHouseInfo
     {
-
-        public IQueryable<AccountMainHouseInfo> GetList(int AccountMainHouseID)
+        /// <summary>
+        /// 售楼部根据AccountMainHouseID获取楼号信息
+        /// </summary>
+        /// <param name="accountMainID"></param>
+        /// <returns></returns>
+        public IQueryable<AccountMainHouseInfo> GetListByAccountMainHouseID(int AccountMainHouseID)
         {
             return List(true).Where(a => a.AccountMainHousessID == AccountMainHouseID);
+        }
+
+        /// <summary>
+        /// 物业根据AccountMainID获取楼号信息
+        /// </summary>
+        /// <param name="accountMainID"></param>
+        /// <returns></returns>
+        public IQueryable<AccountMainHouseInfo> GetListByAccountMainID(int accountMainID)
+        {
+            return List(true).Where(a => a.AccountMainID == accountMainID);
         }
 
 
@@ -35,5 +49,6 @@ namespace Business
             }
             return result;
         }
+
     }
 }

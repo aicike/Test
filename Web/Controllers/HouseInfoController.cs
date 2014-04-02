@@ -21,15 +21,23 @@ namespace Web.Controllers
         /// <param name="id"></param>
         /// <param name="index"></param>
         /// <returns></returns>
-        public ActionResult Index(int? id,int houseId)
+        public ActionResult Index(int? id, int? houseId)
         {
             var hounsesInfoModel = Factory.Get<IAccountMainHouseInfo>(SystemConst.IOC_Model.AccountMainHouseInfoModel);
-            var list = hounsesInfoModel.GetList(houseId).ToPagedList(id ?? 1, 15);
+            PagedList<AccountMainHouseInfo> list = null;
+            if (houseId.HasValue)
+            {
+                ViewBag.HID = houseId;
+                list = hounsesInfoModel.GetListByAccountMainHouseID(houseId.Value).ToPagedList(id ?? 1, 15);
+                var hounsesModel = Factory.Get<IAccountMainHousesModel>(SystemConst.IOC_Model.AccountMainHousesModel);
+                var Hounse = hounsesModel.Get(houseId.Value);
+                ViewBag.HostTitle = Hounse.HName;
+               
+            }
+            else {
+                list = hounsesInfoModel.GetListByAccountMainID(LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 15);
+            }
             ViewBag.HostName = LoginAccount.HostName;
-            ViewBag.HID = houseId;
-            var hounsesModel = Factory.Get<IAccountMainHousesModel>(SystemConst.IOC_Model.AccountMainHousesModel);
-            var Hounse = hounsesModel.Get(houseId);
-            ViewBag.HostTitle = Hounse.HName;
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "项目管理-单元管理", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
@@ -78,7 +86,7 @@ namespace Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Edit(int id,int hid)
+        public ActionResult Edit(int id, int hid)
         {
             var hounsesInfoModel = Factory.Get<IAccountMainHouseInfo>(SystemConst.IOC_Model.AccountMainHouseInfoModel);
             var HouseInfo = hounsesInfoModel.Get(id);
@@ -114,7 +122,7 @@ namespace Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Delete(int id,int Hid)
+        public ActionResult Delete(int id, int Hid)
         {
             var hounsesInfoModel = Factory.Get<IAccountMainHouseInfo>(SystemConst.IOC_Model.AccountMainHouseInfoModel);
             var result = hounsesInfoModel.DelteAll(id);

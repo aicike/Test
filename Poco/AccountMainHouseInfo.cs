@@ -19,6 +19,9 @@ namespace Poco
         public int? AccountMainHousessID { get; set; }
         public virtual AccountMainHouses AccountMainHousess { get; set; }
 
+        public int? AccountMainID { get; set; }
+        public virtual AccountMain AccountMain { get; set; }
+
         [Display(Name = "楼号")]
         [Required(ErrorMessage = "请输入楼号")]
         public string Building { get; set; }
