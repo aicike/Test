@@ -24,7 +24,7 @@ namespace Web.Controllers
         public ActionResult Index(int? id,int houseId)
         {
             var hounsesInfoModel = Factory.Get<IAccountMainHouseInfo>(SystemConst.IOC_Model.AccountMainHouseInfoModel);
-            var list = hounsesInfoModel.GetList(houseId).ToPagedList(id ?? 1, 15);
+            var list = hounsesInfoModel.GetListByAccountMainHouseID(houseId).ToPagedList(id ?? 1, 15);
             ViewBag.HostName = LoginAccount.HostName;
             ViewBag.HID = houseId;
             var hounsesModel = Factory.Get<IAccountMainHousesModel>(SystemConst.IOC_Model.AccountMainHousesModel);
