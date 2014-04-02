@@ -40,7 +40,7 @@
         @foreach (var item in Model)
         {
             <div style="background-color: White; padding: 9px 10px 3px 10px; border: 1px solid #ccc;
-                font-size: 15px; margin-bottom: 10px;box-shadow: 1px 2px 5px #ccc; -moz-box-shadow: 1px 2px 5px #ccc;
+                font-size: 15px; margin-bottom: 10px; box-shadow: 1px 2px 5px #ccc; -moz-box-shadow: 1px 2px 5px #ccc;
                 -webkit-box-shadow: 1px 2px 5px #ccc; border-radius: 3px; -moz-border-radius: 3px;
                 -webkit-border-radius: 3px;">
                 <div style="border-bottom: 1px solid #E7E7E7; padding: 0px 0px 5px 0px;">
@@ -59,7 +59,7 @@
                                 }
                                 else
                                 {
-                                <img style="width: 75px; height: 75px;border:1px solid #E7E7E7;float:left;margin-bottom:7px" src="@Url.Content(orderDetailList[i].ProductImg,true)" />
+                                <img style="width: 75px; height: 75px;border:1px solid #E7E7E7;float:left;margin-bottom:7px" src="@Url.Content(orderDetailList[i].ProductImg, true)" />
                                 }
                             }
                         </div>
@@ -93,7 +93,7 @@
         @foreach (var item in proceedList)
         {
             <div style="background-color: White; padding: 9px 10px 3px 10px; border: 1px solid #ccc;
-                font-size: 15px; margin-bottom: 10px;box-shadow: 1px 2px 5px #ccc; -moz-box-shadow: 1px 2px 5px #ccc;
+                font-size: 15px; margin-bottom: 10px; box-shadow: 1px 2px 5px #ccc; -moz-box-shadow: 1px 2px 5px #ccc;
                 -webkit-box-shadow: 1px 2px 5px #ccc; border-radius: 3px; -moz-border-radius: 3px;
                 -webkit-border-radius: 3px;">
                 <div style="border-bottom: 1px solid #E7E7E7; padding: 0px 0px 5px 0px;">
@@ -134,9 +134,25 @@
                     </div>
                 </div>
                 <div>
-                    <button data-mini="true" style="background-color: #FF3030; color: #fff; text-shadow: none;
-                        font-size: 14px;">
-                        取消</button>
+                    @*  <button data-mini="true" style="background-color: #FF3030; color: #fff; text-shadow: none;
+                        font-size: 14px;" onclick="CancelOrder(@item.ID)">
+                        取消</button>*@ <a href="#popupDialog" style="background-color: #FF3030; color: #fff;
+                            text-shadow: none; font-size: 14px;" data-role="button" data-position-to="window"
+                            data-transition="pop" data-rel="popup" data-corners="false" onclick="javascript:$('#center_order_1').click();">
+                            取消</a>
+                    <div id="popupDialog" style="width: 300px" data-role="popup" data-theme="b" data-overlay-theme="b"
+                        data-dismissible="false">
+                        <div class="ui-corner-bottom ui-content" data-role="content" data-theme="b">
+                            <div class="ui-content" style="text-align: center; min-height: 30px">
+                                确定要取消订单？
+                            </div>
+                            <a href="#" data-role="button" class="spanSize" style="font-weight: normal; width: 32%"
+                                    data-rel="back" data-theme="b" data-inline="true" data-corners="false" onclick="btnCancelOrder(@item.ID)">
+                                确定</a> <a href="#" data-role="button" class="spanSize" style="font-weight: normal;
+                                    width: 32%" data-rel="back" data-theme="b" data-inline="true" data-corners="false">
+                                    取消</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         }
@@ -145,7 +161,7 @@
         @foreach (var item in completeList)
         {
             <div style="background-color: White; padding: 9px 10px 3px 10px; border: 1px solid #ccc;
-                font-size: 15px; margin-bottom: 10px;box-shadow: 1px 2px 5px #ccc; -moz-box-shadow: 1px 2px 5px #ccc;
+                font-size: 15px; margin-bottom: 10px; box-shadow: 1px 2px 5px #ccc; -moz-box-shadow: 1px 2px 5px #ccc;
                 -webkit-box-shadow: 1px 2px 5px #ccc; border-radius: 3px; -moz-border-radius: 3px;
                 -webkit-border-radius: 3px;">
                 <div style="border-bottom: 1px solid #E7E7E7; padding: 0px 0px 5px 0px;">
@@ -185,7 +201,7 @@
                     <div style="clear: both">
                     </div>
                 </div>
-               @* <div>
+                @* <div>
                     <button data-mini="true" style="background-color: #FF3030; color: #fff; text-shadow: none;
                         font-size: 14px;">
                         查看</button>
@@ -218,4 +234,10 @@
         $("#center_order_1").click();
         //$("#cender_index_page").find("a").attr("data-ajax","false");
     });
+    function btnCancelOrder(orderID){
+    var cancelOrderUrl = '@Url.Action("CancelOrder", "Center")';
+        $.post(cancelOrderUrl,{amid:@amid,orderID:orderID},function(result){
+        
+        });
+    }
 </script>

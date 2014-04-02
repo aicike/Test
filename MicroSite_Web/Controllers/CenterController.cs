@@ -7,6 +7,7 @@ using Injection;
 using Interface;
 using Poco;
 using Poco.WebAPI_Poco;
+using Business;
 
 namespace MicroSite_Web.Controllers
 {
@@ -138,6 +139,18 @@ namespace MicroSite_Web.Controllers
                 result.Entity = user.ID;
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+        /// <summary>
+        /// 取消订单
+        /// </summary>
+        /// <param name="orderID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public void CancelOrder(int amid,int orderID) {
+            var orderModel= Factory.Get<IOrderModel>(SystemConst.IOC_Model.OrderModel);
+            var result = orderModel.CancelOrder(amid,orderID);
+
         }
     }
 }

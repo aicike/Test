@@ -96,8 +96,6 @@ namespace Poco
         public string file6 { get; set; }
         public string file7 { get; set; }
 
-
-
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
 
         public virtual ICollection<ProductImg> ProductImg { get; set; }

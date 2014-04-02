@@ -16,11 +16,11 @@ namespace Poco
 
         public int SystemStatus { get; set; }
 
-        public int AccountMainHousessID { get; set; }
+        public int? AccountMainHousessID { get; set; }
         public virtual AccountMainHouses AccountMainHousess { get; set; }
 
-        [Display(Name = "栋数")]
-        [Required(ErrorMessage = "请输入栋数")]
+        [Display(Name = "楼号")]
+        [Required(ErrorMessage = "请输入楼号")]
         public string Building { get; set; }
 
         [Display(Name = "单元")]
@@ -38,5 +38,7 @@ namespace Poco
         public string NumberOfFamily { get; set; }
 
         public virtual ICollection<AccountMainHouseInfoDetail> AccountMainHouseInfoDetails { get; set; }
+
+        public virtual ICollection<Property_House> Property_Houses { get; set; }
     }
 }

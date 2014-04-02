@@ -1,0 +1,119 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.PropertyHouse;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.PropertyHouse;
+
+}
+@section head{
+    <script type="text/javascript">
+       
+    </script>
+}
+@model PagedList<Poco.Lottery_dish>
+<div class="title">
+    @Html.Partial("Menu3")
+</div>
+<div class="body">
+    <div class="option">
+        @Html.ActionLink("添加", "Add", "LotteryDish", new { HostName = ViewBag.HostName }, null, true)
+    </div>
+    <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
+        <tr>
+            <th style="width: 250px; word-wrap: break-word; word-break: normal;">
+                标题
+            </th>
+            <th style="width: 250px;">
+                描述
+            </th>
+            <th>
+                参加人数
+            </th>
+            <th>
+                状态
+            </th>
+            <th style="width: 150px;">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td>
+                    0
+                </td>
+                <td class="operation">
+                    @if (@item.Status == 0)
+                    {
+                        @Ajax.ActionLink("开启", "SetStatus", "LotteryDish", new
+                   {
+                       HostName = ViewBag.HostName,
+
+                   },
+                        new AjaxOptions()
+                        {
+                            UpdateTargetId = "alert",
+                            OnBegin = "return AppDelete('确定要关闭?','" + Url.Action("SetStatus", "LotteryDish",
+                                new
+                                {
+                                    HostName = ViewBag.HostName,
+                                    id=item.ID,
+                                    status=item.Status
+                                }) + "',null)"
+                        })
+                    }
+                    else
+                    {
+                        @Ajax.ActionLink("关闭", "SetStatus", "LotteryDish", new
+                   {
+                       HostName = ViewBag.HostName,
+                   },
+                        new AjaxOptions()
+                        {
+                            UpdateTargetId = "alert",
+                            OnBegin = "return AppDelete('确定要开启?','" + Url.Action("SetStatus", "LotteryDish",
+                                new
+                                {
+                                    HostName = ViewBag.HostName,
+                                    id = item.ID,
+                                    status = item.Status
+                                }) + "',null)"
+                        })
+                    }
+                </td>
+                <td class="operation">
+                    @Html.ActionLink("预览", "View", "LotteryDish", new { HostName = ViewBag.HostName, id = item.ID }, new { href = "#", onClick = "ShowView(" + item.ID + ")" }, true)
+                    @Html.ActionLink("修改", "Edit", "LotteryDish", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
+                    @Ajax.ActionLink("删除", "Delete", "LotteryDish", new { HostName = ViewBag.HostName, id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?删除此项将会删除其关联的所有数据！','" + Url.Action("Delete", "LotteryDish", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
+<div id="dialogView" title="预览" style="display: none; padding: 0px">
+    <iframe id="iframeShow" src="#" style="width: 415px; height: 423px; border: none;
+        overflow: none"></iframe>
+</div>

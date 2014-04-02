@@ -59,8 +59,6 @@ namespace Interface
         /// <returns></returns>
         Result Micro_AddOrder(string HPIDS, string HPIDSandCnt, int HUserID, int AID, int AMID);
 
-
-
         /// <summary>
         /// 微商城 web端 获取全部订单列表
         /// </summary>
@@ -73,5 +71,12 @@ namespace Interface
         /// <param name="Pname">产品名称</param>
         /// <returns></returns>
         IQueryable<Order> Micro_GetList(int accountMainID, int daybyday, string orderNum, string PhoneNum, string status, string UserName, string Pname);
+
+        /// <summary>
+        /// 取消订单
+        /// </summary>
+        /// <param name="orderID"></param>
+        /// <returns></returns>
+        Result CancelOrder(int amid,int orderID);
     }
 }

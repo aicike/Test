@@ -282,7 +282,7 @@ namespace Business
         {
             return List(true).Where(a => a.AccountMainID == amid && a.OrderUserID == userID && a.OrderUserType == 2
                 && (a.status == (int)EnumOrderStatus.Proceed ||
-                a.status == (int)EnumOrderStatus.WaitDistribution||
+                a.status == (int)EnumOrderStatus.WaitDistribution ||
                 a.status == (int)EnumOrderStatus.Shipped ||
                 a.status == (int)EnumOrderStatus.Payment));
         }
@@ -393,10 +393,10 @@ namespace Business
                                     if (SystemConst.IsIntegrationWebProject)
                                     {
                                         var accountPath = string.Format(SystemConst.IntegrationPathBase, AMID);
-                                        var itemImg =item.ProductImg.FirstOrDefault().PImgMini;
+                                        var itemImg = item.ProductImg.FirstOrDefault().PImgMini;
                                         YimgPath = accountPath + itemImg.Substring(itemImg.LastIndexOf('/') + 1);
                                         mapePath = string.Format(SystemConst.IntegrationOrderTemporary, AMID) + Path.Substring(Path.LastIndexOf('/')) + "/" + LastName;
-                                 
+
                                     }
                                     //不是集成微网站
                                     else
@@ -526,5 +526,40 @@ namespace Business
             return list;
         }
 
+        /// <summary>
+        /// 取消订单
+        /// </summary>
+        /// <param name="orderID"></param>
+        /// <returns></returns>
+        [Transaction]
+        public Result CancelOrder(int amid, int orderID)
+        {
+            Result result = new Result();
+            Order order = List().Where(a => a.AccountMainID == amid && a.ID == orderID).FirstOrDefault();
+            if (order == null) {
+                result.Error = "无效的订单参数，无法操作。";
+                return result;
+            }
+            var status = (EnumOrderStatus)order.status;
+            if (status != EnumOrderStatus.WaitDistribution)
+            {
+                result.Error = "该订单已在配送过程中，无法取消。";
+                return result;
+            }
+            //恢复产品库存
+            var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
+            foreach (var item in order.OrderDetail)
+            {
+                item.Product.Stock = item.Product.Stock + item.Count;
+            }
+            //更改订单状态为取消
+            order.status = (int)EnumOrderStatus.Revoke;
+            result = Edit(order);
+            //if (result.HasError)
+            //{
+            //    return result;
+            //}
+            return result;
+        }
     }
 }

@@ -1,120 +1,123 @@
 ﻿<objects xmlns="http://www.springframework.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.net http://www.springframework.net/xsd/spring-objects.xsd">
-  <object id="DbContext" type="EF.Context,EF" scope="request" singleton="false">
-  </object>
-  <!--<object id="DbContext" type="MicroSite_EF.Context,MicroSite_EF" scope="request" singleton="false">
-  </object>-->
-  <object id="EFModel" type="Business.EFModel" singleton="false">
-    <property name="Context" ref="DbContext"/>
-  </object>
-  <object id="CommonModel" type="Business.CommonModel" parent="EFModel" singleton="false"></object>
-  <object id="MessageModel" type="Business.MessageModel" parent="EFModel" singleton="false"></object>
-  <object id="SystemUserModel" type="Business.SystemUserModel" parent="EFModel" singleton="false"></object>
-  <object id="AccountMainModel" type="Business.AccountMainModel" parent="EFModel" singleton="false"></object>
-  <object id="AccountModel" type="Business.AccountModel" parent="EFModel" singleton="false"></object>
-  <object id="ProvinceModel" type="Business.ProvinceModel" parent="EFModel" singleton="false"></object>
-  <object id="CityModel" type="Business.CityModel" parent="EFModel" singleton="false"></object>
-  <object id="DistrictModel" type="Business.DistrictModel" parent="EFModel" singleton="false"></object>
-  <object id="LookupOptionModel" type="Business.LookupOptionModel" parent="EFModel" singleton="false"></object>
-  <object id="LookupFactory" type="Business.LookupFactory" singleton="true">
-    <property name="LookupOptionModel" ref="LookupOptionModel"/>
-  </object>
-  <object id="RoleModel" type="Business.RoleModel" parent="EFModel" singleton="false"></object>
-  <object id="Account_AccountMainModel" type="Business.Account_AccountMainModel" parent="EFModel" singleton="false"></object>
-  <object id="ActivateEmailModel" type="Business.ActivateEmailModel" parent="EFModel" singleton="false"></object>
-  <object id="AutoMessage_AddModel" type="Business.AutoMessage_AddModel" parent="EFModel" singleton="false"></object>
-  <object id="AutoMessage_KeywordModel" type="Business.AutoMessage_KeywordModel" parent="EFModel" singleton="false"></object>
-  <object id="AutoMessage_ReplyModel" type="Business.AutoMessage_ReplyModel" parent="EFModel" singleton="false"></object>
-  <object id="ClientInfoModel" type="Business.ClientInfoModel" parent="EFModel" singleton="false"></object>
-  <object id="GroupModel" type="Business.GroupModel" parent="EFModel" singleton="false"></object>
-  <object id="LibraryImageModel" type="Business.LibraryImageModel" parent="EFModel" singleton="false"></object>
-  <object id="LibraryImageTextModel" type="Business.LibraryImageTextModel" parent="EFModel" singleton="false"></object>
-  <object id="LibraryTextModel" type="Business.LibraryTextModel" parent="EFModel" singleton="false"></object>
-  <object id="LibraryVideoModel" type="Business.LibraryVideoModel" parent="EFModel" singleton="false"></object>
-  <object id="LibraryVoiceModel" type="Business.LibraryVoiceModel" parent="EFModel" singleton="false"></object>
-  <object id="SystemMessageModel" type="Business.SystemMessageModel" parent="EFModel" singleton="false"></object>
-  <object id="SystemUserRoleModel" type="Business.SystemUserRoleModel" parent="EFModel" singleton="false"></object>
-  <object id="SystemUserMenuModel" type="Business.SystemUserMenuModel" parent="EFModel" singleton="false"></object>
-  <object id="SystemUserMenuOptionModel" type="Business.SystemUserMenuOptionModel" parent="EFModel" singleton="false"></object>
-  <object id="SystemUserRole_SystemUserMenuModel" type="Business.SystemUserRole_SystemUserMenuModel" parent="EFModel" singleton="false"></object>
-  <object id="SystemUserRole_OptionModel" type="Business.SystemUserRole_OptionModel" parent="EFModel" singleton="false"></object>
-  <object id="RoleOptionModel" type="Business.RoleOptionModel" parent="EFModel" singleton="false"></object>
-  <object id="RoleMenuModel" type="Business.RoleMenuModel" parent="EFModel" singleton="false"></object>
-  <object id="MenuOptionModel" type="Business.MenuOptionModel" parent="EFModel" singleton="false"></object>
-  <object id="MenuModel" type="Business.MenuModel" parent="EFModel" singleton="false"></object>
-  <object id="UserModel" type="Business.UserModel" parent="EFModel" singleton="false"></object>
-  <object id="UserTagModel" type="Business.UserTagModel" parent="EFModel" singleton="false"></object>
-  <object id="Account_UserModel" type="Business.Account_UserModel" parent="EFModel" singleton="false"></object>
-  <object id="AccountMainHousesModel" type="Business.AccountMainHousesModel" parent="EFModel" singleton="false"></object>
-  <object id="AccountMainHouseInfoModel" type="Business.AccountMainHouseInfoModel" parent="EFModel" singleton="false"></object>
-  <object id="AccountMainHouseTypeModel" type="Business.AccountMainHouseTypeModel" parent="EFModel" singleton="false"></object>
-  <object id="AccountMainHouseInfoDetailModel" type="Business.AccountMainHouseInfoDetailModel" parent="EFModel" singleton="false"></object>
-  <object id="UserLoginInfoModel" type="Business.UserLoginInfoModel" parent="EFModel" singleton="false"></object>
-  <object id="KeywordModel" type="Business.KeywordModel" parent="EFModel" singleton="false"></object>
-  <object id="KeywordAutoMessageModel" type="Business.KeywordAutoMessageModel" parent="EFModel" singleton="false"></object>
-  <object id="PendingMessagesModel" type="Business.PendingMessagesModel" parent="EFModel" singleton="false"></object>
-  <object id="TemporayInstantMesModel" type="Business.TemporayInstantMesModel" parent="EFModel" singleton="false"></object>
+	<object id="DbContext" type="EF.Context,EF" scope="request" singleton="false">
+	</object>
+	<!--<object id="DbContext" type="MicroSite_EF.Context,MicroSite_EF" scope="request" singleton="false">
+	</object>-->
+	<object id="EFModel" type="Business.EFModel" singleton="false">
+		<property name="Context" ref="DbContext"/>
+	</object>
+	<object id="CommonModel" type="Business.CommonModel" parent="EFModel" singleton="false"></object>
+	<object id="MessageModel" type="Business.MessageModel" parent="EFModel" singleton="false"></object>
+	<object id="SystemUserModel" type="Business.SystemUserModel" parent="EFModel" singleton="false"></object>
+	<object id="AccountMainModel" type="Business.AccountMainModel" parent="EFModel" singleton="false"></object>
+	<object id="AccountModel" type="Business.AccountModel" parent="EFModel" singleton="false"></object>
+	<object id="ProvinceModel" type="Business.ProvinceModel" parent="EFModel" singleton="false"></object>
+	<object id="CityModel" type="Business.CityModel" parent="EFModel" singleton="false"></object>
+	<object id="DistrictModel" type="Business.DistrictModel" parent="EFModel" singleton="false"></object>
+	<object id="LookupOptionModel" type="Business.LookupOptionModel" parent="EFModel" singleton="false"></object>
+	<object id="LookupFactory" type="Business.LookupFactory" singleton="true">
+		<property name="LookupOptionModel" ref="LookupOptionModel"/>
+	</object>
+	<object id="RoleModel" type="Business.RoleModel" parent="EFModel" singleton="false"></object>
+	<object id="Account_AccountMainModel" type="Business.Account_AccountMainModel" parent="EFModel" singleton="false"></object>
+	<object id="ActivateEmailModel" type="Business.ActivateEmailModel" parent="EFModel" singleton="false"></object>
+	<object id="AutoMessage_AddModel" type="Business.AutoMessage_AddModel" parent="EFModel" singleton="false"></object>
+	<object id="AutoMessage_KeywordModel" type="Business.AutoMessage_KeywordModel" parent="EFModel" singleton="false"></object>
+	<object id="AutoMessage_ReplyModel" type="Business.AutoMessage_ReplyModel" parent="EFModel" singleton="false"></object>
+	<object id="ClientInfoModel" type="Business.ClientInfoModel" parent="EFModel" singleton="false"></object>
+	<object id="GroupModel" type="Business.GroupModel" parent="EFModel" singleton="false"></object>
+	<object id="LibraryImageModel" type="Business.LibraryImageModel" parent="EFModel" singleton="false"></object>
+	<object id="LibraryImageTextModel" type="Business.LibraryImageTextModel" parent="EFModel" singleton="false"></object>
+	<object id="LibraryTextModel" type="Business.LibraryTextModel" parent="EFModel" singleton="false"></object>
+	<object id="LibraryVideoModel" type="Business.LibraryVideoModel" parent="EFModel" singleton="false"></object>
+	<object id="LibraryVoiceModel" type="Business.LibraryVoiceModel" parent="EFModel" singleton="false"></object>
+	<object id="SystemMessageModel" type="Business.SystemMessageModel" parent="EFModel" singleton="false"></object>
+	<object id="SystemUserRoleModel" type="Business.SystemUserRoleModel" parent="EFModel" singleton="false"></object>
+	<object id="SystemUserMenuModel" type="Business.SystemUserMenuModel" parent="EFModel" singleton="false"></object>
+	<object id="SystemUserMenuOptionModel" type="Business.SystemUserMenuOptionModel" parent="EFModel" singleton="false"></object>
+	<object id="SystemUserRole_SystemUserMenuModel" type="Business.SystemUserRole_SystemUserMenuModel" parent="EFModel" singleton="false"></object>
+	<object id="SystemUserRole_OptionModel" type="Business.SystemUserRole_OptionModel" parent="EFModel" singleton="false"></object>
+	<object id="RoleOptionModel" type="Business.RoleOptionModel" parent="EFModel" singleton="false"></object>
+	<object id="RoleMenuModel" type="Business.RoleMenuModel" parent="EFModel" singleton="false"></object>
+	<object id="MenuOptionModel" type="Business.MenuOptionModel" parent="EFModel" singleton="false"></object>
+	<object id="MenuModel" type="Business.MenuModel" parent="EFModel" singleton="false"></object>
+	<object id="UserModel" type="Business.UserModel" parent="EFModel" singleton="false"></object>
+	<object id="UserTagModel" type="Business.UserTagModel" parent="EFModel" singleton="false"></object>
+	<object id="Account_UserModel" type="Business.Account_UserModel" parent="EFModel" singleton="false"></object>
+	<object id="AccountMainHousesModel" type="Business.AccountMainHousesModel" parent="EFModel" singleton="false"></object>
+	<object id="AccountMainHouseInfoModel" type="Business.AccountMainHouseInfoModel" parent="EFModel" singleton="false"></object>
+	<object id="AccountMainHouseTypeModel" type="Business.AccountMainHouseTypeModel" parent="EFModel" singleton="false"></object>
+	<object id="AccountMainHouseInfoDetailModel" type="Business.AccountMainHouseInfoDetailModel" parent="EFModel" singleton="false"></object>
+	<object id="UserLoginInfoModel" type="Business.UserLoginInfoModel" parent="EFModel" singleton="false"></object>
+	<object id="KeywordModel" type="Business.KeywordModel" parent="EFModel" singleton="false"></object>
+	<object id="KeywordAutoMessageModel" type="Business.KeywordAutoMessageModel" parent="EFModel" singleton="false"></object>
+	<object id="PendingMessagesModel" type="Business.PendingMessagesModel" parent="EFModel" singleton="false"></object>
+	<object id="TemporayInstantMesModel" type="Business.TemporayInstantMesModel" parent="EFModel" singleton="false"></object>
 
-  <object id="PushMsgModel" type="Business.PushMsgModel" parent="EFModel" singleton="false"></object>
-  <object id="PushMsgDetailModel" type="Business.PushMsgDetailModel" parent="EFModel" singleton="false"></object>
-  <object id="ConversationModel" type="Business.ConversationModel" parent="EFModel" singleton="false"></object>
-  <object id="AppWaitImgModel" type="Business.AppWaitImgModel" parent="EFModel" singleton="false"></object>
-  <object id="AppAdvertorialModel" type="Business.AppAdvertorialModel" parent="EFModel" singleton="false"></object>
-  <object id="ClassifyModel" type="Business.ClassifyModel" parent="EFModel" singleton="false"></object>
-  <object id="ProductModel" type="Business.ProductModel" parent="EFModel" singleton="false"></object>
-  <object id="ProductImgModel" type="Business.ProductImgModel" parent="EFModel" singleton="false"></object>
-  
-  <object id="OrderMTypeModel" type="Business.OrderMTypeModel" parent="EFModel" singleton="false"></object>
-  <object id="OrderUserInfoModel" type="Business.OrderUserInfoModel" parent="EFModel" singleton="false"></object>
-  <object id="OrderModel" type="Business.OrderModel" parent="EFModel" singleton="false"></object>
-  <object id="OrderDetailModel" type="Business.OrderDetailModel" parent="EFModel" singleton="false"></object>
-  <object id="OrderMIntermediateModel" type="Business.OrderMIntermediateModel" parent="EFModel" singleton="false"></object>
-  <object id="HolidayModel" type="Business.HolidayModel" parent="EFModel" singleton="false"></object>
-  <object id="MessageGroupChatModel" type="Business.MessageGroupChatModel" parent="EFModel" singleton="false"></object>
-  <object id="ReportFormPowerModel" type="Business.ReportFormPowerModel" parent="EFModel" singleton="false"></object>
-  <object id="VipInfoModel" type="Business.VipInfoModel" parent="EFModel" singleton="false"></object>
-  <object id="CardInfoModel" type="Business.CardInfoModel" parent="EFModel" singleton="false"></object>
-  <object id="CardPrefixModel" type="Business.CardPrefixModel" parent="EFModel" singleton="false"></object>
-  <object id="FeedbackModel" type="Business.FeedbackModel" parent="EFModel" singleton="false"></object>
+	<object id="PushMsgModel" type="Business.PushMsgModel" parent="EFModel" singleton="false"></object>
+	<object id="PushMsgDetailModel" type="Business.PushMsgDetailModel" parent="EFModel" singleton="false"></object>
+	<object id="ConversationModel" type="Business.ConversationModel" parent="EFModel" singleton="false"></object>
+	<object id="AppWaitImgModel" type="Business.AppWaitImgModel" parent="EFModel" singleton="false"></object>
+	<object id="AppAdvertorialModel" type="Business.AppAdvertorialModel" parent="EFModel" singleton="false"></object>
+	<object id="ClassifyModel" type="Business.ClassifyModel" parent="EFModel" singleton="false"></object>
+	<object id="ProductModel" type="Business.ProductModel" parent="EFModel" singleton="false"></object>
+	<object id="ProductImgModel" type="Business.ProductImgModel" parent="EFModel" singleton="false"></object>
+	
+	<object id="OrderMTypeModel" type="Business.OrderMTypeModel" parent="EFModel" singleton="false"></object>
+	<object id="OrderUserInfoModel" type="Business.OrderUserInfoModel" parent="EFModel" singleton="false"></object>
+	<object id="OrderModel" type="Business.OrderModel" parent="EFModel" singleton="false"></object>
+	<object id="OrderDetailModel" type="Business.OrderDetailModel" parent="EFModel" singleton="false"></object>
+	<object id="OrderMIntermediateModel" type="Business.OrderMIntermediateModel" parent="EFModel" singleton="false"></object>
+	<object id="HolidayModel" type="Business.HolidayModel" parent="EFModel" singleton="false"></object>
+	<object id="MessageGroupChatModel" type="Business.MessageGroupChatModel" parent="EFModel" singleton="false"></object>
+	<object id="ReportFormPowerModel" type="Business.ReportFormPowerModel" parent="EFModel" singleton="false"></object>
+	<object id="VipInfoModel" type="Business.VipInfoModel" parent="EFModel" singleton="false"></object>
+	<object id="CardInfoModel" type="Business.CardInfoModel" parent="EFModel" singleton="false"></object>
+	<object id="CardPrefixModel" type="Business.CardPrefixModel" parent="EFModel" singleton="false"></object>
+	<object id="FeedbackModel" type="Business.FeedbackModel" parent="EFModel" singleton="false"></object>
 
-  <object id="SurveyMainModel" type="Business.SurveyMainModel" parent="EFModel" singleton="false"></object>
-  <object id="SurveyTroubleModel" type="Business.SurveyTroubleModel" parent="EFModel" singleton="false"></object>
-  <object id="SurveyAnswerModel" type="Business.SurveyAnswerModel" parent="EFModel" singleton="false"></object>
-  <object id="SurveyOptionModel" type="Business.SurveyOptionModel" parent="EFModel" singleton="false"></object>
-  <object id="AppAdvertorialOperationModel" type="Business.AppAdvertorialOperationModel" parent="EFModel" singleton="false"></object>
-  
+	<object id="SurveyMainModel" type="Business.SurveyMainModel" parent="EFModel" singleton="false"></object>
+	<object id="SurveyTroubleModel" type="Business.SurveyTroubleModel" parent="EFModel" singleton="false"></object>
+	<object id="SurveyAnswerModel" type="Business.SurveyAnswerModel" parent="EFModel" singleton="false"></object>
+	<object id="SurveyOptionModel" type="Business.SurveyOptionModel" parent="EFModel" singleton="false"></object>
+	<object id="AppAdvertorialOperationModel" type="Business.AppAdvertorialOperationModel" parent="EFModel" singleton="false"></object>
+	
 
-  <object id="Push_IOS" type="Business.Push_IOS" singleton="false">
-  </object>
-  <object id="Push_Getui" type="Business.Push_Getui" singleton="false">
-  </object>
+	<object id="Push_IOS" type="Business.Push_IOS" singleton="false">
+	</object>
+	<object id="Push_Getui" type="Business.Push_Getui" singleton="false">
+	</object>
 
-  <object id="AutoMessage_UserModel" type="Business.AutoMessage_UserModel" parent="EFModel" singleton="false"></object>
+	<object id="AutoMessage_UserModel" type="Business.AutoMessage_UserModel" parent="EFModel" singleton="false"></object>
 
-  <object id="TaskModel" type="Business.TaskModel" parent="EFModel" singleton="false"></object>
-  <object id="TaskDetailModel" type="Business.TaskDetailModel" parent="EFModel" singleton="false"></object>
+	<object id="TaskModel" type="Business.TaskModel" parent="EFModel" singleton="false"></object>
+	<object id="TaskDetailModel" type="Business.TaskDetailModel" parent="EFModel" singleton="false"></object>
 
 
-  <object id="ConversationDetailedModel" type="Business.ConversationDetailedModel" parent="EFModel" singleton="false"></object>
-  <object id="VIPInfoExpenseDetailModel" type="Business.VIPInfoExpenseDetailModel" parent="EFModel" singleton="false"></object>
-  <object id="AccountRoleModel" type="Business.AccountRoleModel" parent="EFModel" singleton="false"></object>
-  <object id="ActivityInfoModel" type="Business.ActivityInfoModel" parent="EFModel" singleton="false"></object>
-  <object id="ActivityInfoParticipatorModel" type="Business.ActivityInfoParticipatorModel" parent="EFModel" singleton="false"></object>
-  <object id="ActivityInfoSignInModel" type="Business.ActivityInfoSignInModel" parent="EFModel" singleton="false"></object>
-  
-  <object id="PanoramaModel" type="Business.PanoramaModel" parent="EFModel" singleton="false"></object>
-  <object id="UserDeliveryAddressModel" type="Business.UserDeliveryAddressModel" parent="EFModel" singleton="false"></object>
-  <object id="ServiceModel" type="Business.ServiceModel" parent="EFModel" singleton="false"></object>
-  <object id="AccountMain_ServiceModel" type="Business.AccountMain_ServiceModel" parent="EFModel" singleton="false"></object>
-  <object id="SurveyAnswerUserModel" type="Business.SurveyAnswerUserModel" parent="EFModel" singleton="false"></object>
-  <object id="AppAdvertorialBrowseModel" type="Business.AppAdvertorialBrowseModel" parent="EFModel" singleton="false"></object>
- <object id="Lottery_dishModel" type="Business.Lottery_dishModel" parent="EFModel" singleton="false"></object>
-  <object id="Lottery_dish_detailModel" type="Business.Lottery_dish_detailModel" parent="EFModel" singleton="false"></object>
-  <object id="Lottery_UserModel" type="Business.Lottery_UserModel" parent="EFModel" singleton="false"></object>
+	<object id="ConversationDetailedModel" type="Business.ConversationDetailedModel" parent="EFModel" singleton="false"></object>
+	<object id="VIPInfoExpenseDetailModel" type="Business.VIPInfoExpenseDetailModel" parent="EFModel" singleton="false"></object>
+	<object id="AccountRoleModel" type="Business.AccountRoleModel" parent="EFModel" singleton="false"></object>
+	<object id="ActivityInfoModel" type="Business.ActivityInfoModel" parent="EFModel" singleton="false"></object>
+	<object id="ActivityInfoParticipatorModel" type="Business.ActivityInfoParticipatorModel" parent="EFModel" singleton="false"></object>
+	<object id="ActivityInfoSignInModel" type="Business.ActivityInfoSignInModel" parent="EFModel" singleton="false"></object>
+	
+	<object id="PanoramaModel" type="Business.PanoramaModel" parent="EFModel" singleton="false"></object>
+	<object id="UserDeliveryAddressModel" type="Business.UserDeliveryAddressModel" parent="EFModel" singleton="false"></object>
+	<object id="ServiceModel" type="Business.ServiceModel" parent="EFModel" singleton="false"></object>
+	<object id="AccountMain_ServiceModel" type="Business.AccountMain_ServiceModel" parent="EFModel" singleton="false"></object>
+	<object id="SurveyAnswerUserModel" type="Business.SurveyAnswerUserModel" parent="EFModel" singleton="false"></object>
+	<object id="AppAdvertorialBrowseModel" type="Business.AppAdvertorialBrowseModel" parent="EFModel" singleton="false"></object>
+	<object id="Lottery_dishModel" type="Business.Lottery_dishModel" parent="EFModel" singleton="false"></object>
+	<object id="Lottery_dish_detailModel" type="Business.Lottery_dish_detailModel" parent="EFModel" singleton="false"></object>
+	<object id="Lottery_UserModel" type="Business.Lottery_UserModel" parent="EFModel" singleton="false"></object>
+	<object id="Property_HouseModel" type="Business.Property_HouseModel" parent="EFModel" singleton="false"></object>
 
-  <!--<object id="UserModel" type="NightClubBooth.Business.UserModel" parent="EFModel" singleton="false">
-    <property name="LookupOptionModel" ref="LookupOptionModel"/>
-    <property name="RoleModel" ref="RoleModel"/>
-    <property name="UserMappingModel" ref="UserMappingModel"/>
-  </object>-->
+	
+
+	<!--<object id="UserModel" type="NightClubBooth.Business.UserModel" parent="EFModel" singleton="false">
+		<property name="LookupOptionModel" ref="LookupOptionModel"/>
+		<property name="RoleModel" ref="RoleModel"/>
+		<property name="UserMappingModel" ref="UserMappingModel"/>
+	</object>-->
 </objects>

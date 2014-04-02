@@ -146,6 +146,7 @@ namespace Poco
             public const string AccountMain = "AccountMain";
             public const string AutoMessageReply = "AutoMessageReply";
             public const string LotteryDish = "LotteryDish";
+            public const string PropertyHouse = "PropertyHouse";
 
 
 
@@ -257,6 +258,9 @@ namespace Poco
             public const string Lottery_dish_detailModel = "Lottery_dish_detailModel";
             public const string Lottery_UserModel = "Lottery_UserModel";
             public const string AppAdvertorialBrowseModel = "AppAdvertorialBrowseModel";
+            public const string Property_HouseModel = "Property_HouseModel";
+
+            
         }
     }
 }

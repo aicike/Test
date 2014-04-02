@@ -24,6 +24,8 @@ namespace Poco
         /// </summary>
         public int ProductID { get; set; }
 
+        public virtual Product Product { get; set; } 
+
         /// <summary>
         /// 产品名称
         /// </summary>
