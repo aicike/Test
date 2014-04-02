@@ -395,17 +395,17 @@
                         else if (Model.EnumProductDiscountType == (int)Poco.Enum.EnumProductDiscountType.preferential)
                         {
                             @:优惠价：
-                             <input id="PDiscount" type="hidden"  value="优惠" />
+                             <input id="PDiscount" type="hidden" value="优惠" />
                         }
                         else if (Model.EnumProductDiscountType == (int)Poco.Enum.EnumProductDiscountType.Promotion)
                         {
                             @:促销价：
-                             <input id="PDiscount" type="hidden"  value="促销" />
+                             <input id="PDiscount" type="hidden" value="促销" />
                         }
                         else
                         {
                             @:价格：
-                             <input id="PDiscount" type="hidden"  value="" />
+                             <input id="PDiscount" type="hidden" value="" />
                         }
                     </div>
                 </td>
@@ -425,12 +425,15 @@
                             <span style="font-size: 30px; font-family: Arial; font-weight: bold">@Model.DiscountPrice.Value.ToString("C")</span>
                             if (Model.EnumProductDiscountType == (int)Poco.Enum.EnumProductDiscountType.Discount)
                             {
-                                <span style="font-size: 18px; font-family: Arial; font-weight: bold">（@(Model.Discount.Value.ToString())折）</span>
+                            <span style="font-size: 18px; font-family: Arial; font-weight: bold">（@(Model.Discount.Value.ToString())折）</span>
                             }
                         }
                     </div>
                     <div style="color: #ffc5c5; text-shadow: none; font-size: 12px; font-weight: bold">
-                        <strike>原价： @Model.Price.ToString("C")</strike>
+                        @if (Model.EnumProductDiscountType != (int)Poco.Enum.EnumProductDiscountType.No)
+                        {
+                            <strike>原价： @Model.Price.ToString("C")</strike>
+                        }
                     </div>
                     <div style="margin-top: 5px; font-size: 12px; text-shadow: none; color: #ffc5c5">
                         运费：快递<span style="color: #fff">￥@Model.Freight</span>

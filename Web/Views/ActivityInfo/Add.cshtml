@@ -182,6 +182,7 @@
                 var ocnt = 0;
                 items = [];
                 RowName.each(function (i, n) {
+                    ocnt = ocnt + 1;
                     var optionTitle = $(n).find("input[name='option']").val().trim();
                     var optionRequired = "true";
                     if (optionTitle.length <= 0) {
@@ -191,7 +192,7 @@
                             BtnOk: "确定"
                         });
                         isOK = false;
-                        return;
+                        return false;
                     }
 
                     var Om = new OptintModel();
@@ -205,7 +206,6 @@
                         Om.IsRequired = "false";
                     }
                     items.push(Om);
-                    ocnt = ocnt + 1;
                 });
                 if (ocnt == 0) {
                     var Requiredname = $("#ckb_Name").attr("checked");
@@ -224,6 +224,9 @@
                 if (isOK == true) {
                     var value = JSON.stringify(items);
                     $("#Options").val(value);
+                }
+                else {
+                    return false;
                 }
 
 

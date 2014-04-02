@@ -149,6 +149,8 @@ namespace Web.Controllers
             #endregion
             return View(actiovity);
         }
+
+
         /// <summary>
         /// 修改
         /// </summary>
@@ -156,11 +158,53 @@ namespace Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(ActivityInfo activityinfo, int w, int h, int x1, int y1, int tw, int th)
+        public ActionResult Edit(ActivityInfo activityinfo, string Options, string ckb_Name, string ckb_Phone, string ckb_Email, int w, int h, int x1, int y1, int tw, int th)
         {
             activityinfo.AccountID = LoginAccount.ID;
             var activityInfoModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
+            if (!string.IsNullOrEmpty(ckb_Name))
+            {
+                activityinfo.NameIsRequired = true;
+            }
+            if (!string.IsNullOrEmpty(ckb_Phone))
+            {
+                activityinfo.PhoneIsRequired = true;
+            }
+            if (!string.IsNullOrEmpty(ckb_Email))
+            {
+                activityinfo.EmailIsRequired = true;
+            }
 
+            var option = Newtonsoft.Json.JsonConvert.DeserializeObject<List<_B_ActivityOption>>(Options);
+            int optionCnt = option.Count;
+            if (optionCnt > 0)
+            {
+                activityinfo.Extension1 = option[0].Option;
+                activityinfo.Extension1IsRequired = Convert.ToBoolean(option[0].IsRequired);
+            }
+            if (optionCnt > 1)
+            {
+                activityinfo.Extension2 = option[1].Option;
+                activityinfo.Extension2IsRequired = Convert.ToBoolean(option[1].IsRequired);
+            }
+            if (optionCnt > 2)
+            {
+                activityinfo.Extension3 = option[2].Option;
+                activityinfo.Extension3IsRequired = Convert.ToBoolean(option[2].IsRequired);
+            }
+            if (optionCnt > 3)
+            {
+                activityinfo.Extension4 = option[3].Option;
+                activityinfo.Extension4IsRequired = Convert.ToBoolean(option[3].IsRequired);
+            }
+            if (optionCnt > 4)
+            {
+                activityinfo.Extension5 = option[4].Option;
+                activityinfo.Extension5IsRequired = Convert.ToBoolean(option[4].IsRequired);
+            }
+            
+
+           
             var result = activityInfoModel.EditActivity(activityinfo, x1, y1, w, h, tw, th);
             if (result.HasError)
             {
