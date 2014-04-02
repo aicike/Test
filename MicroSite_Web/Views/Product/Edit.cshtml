@@ -35,7 +35,7 @@
             //优惠类型选择事件
             $("#EnumProductDiscountType").bind('change', function () {
                 switch ($(this).val()) {
-                    //无    
+                    //无     
                     case "@((int)Poco.Enum.EnumProductDiscountType.No)":
 
                         $("#tr_discount").hide();
@@ -45,7 +45,7 @@
                         $("#span_Discount").text("");
 
                         break;
-                    //折扣    
+                    //折扣     
                     case "@((int)Poco.Enum.EnumProductDiscountType.Discount)":
                         $("#tr_discount").show();
                         $("#Discount").val("");
@@ -53,7 +53,7 @@
                         $("#DiscountPrice").val("");
                         $("#span_Discount").text("折扣价");
                         break;
-                    //促销    
+                    //促销     
                     case "@((int)Poco.Enum.EnumProductDiscountType.Promotion)":
                         $("#tr_discount").hide();
                         $("#Discount").val("");
@@ -61,7 +61,7 @@
                         $("#DiscountPrice").val("");
                         $("#span_Discount").text("促销价");
                         break;
-                    //优惠    
+                    //优惠     
                     case "@((int)Poco.Enum.EnumProductDiscountType.preferential)":
                         $("#tr_discount").hide();
                         $("#Discount").val("");
@@ -76,26 +76,26 @@
             var EnumProductDiscountType = $("#EnumProductDiscountType").val();
 
             switch (EnumProductDiscountType) {
-                //无     
+                //无      
                 case "@((int)Poco.Enum.EnumProductDiscountType.No)":
 
                     $("#tr_discount").hide();
                     $("#tr_discountPrice").hide();
 
                     break;
-                //折扣     
+                //折扣      
                 case "@((int)Poco.Enum.EnumProductDiscountType.Discount)":
                     $("#tr_discount").show();
                     $("#tr_discountPrice").show();
                     $("#span_Discount").text("折扣价");
                     break;
-                //促销     
+                //促销      
                 case "@((int)Poco.Enum.EnumProductDiscountType.Promotion)":
                     $("#tr_discount").hide();
                     $("#tr_discountPrice").show();
                     $("#span_Discount").text("促销价");
                     break;
-                //优惠     
+                //优惠      
                 case "@((int)Poco.Enum.EnumProductDiscountType.preferential)":
                     $("#tr_discount").hide();
                     $("#tr_discountPrice").show();
@@ -250,6 +250,15 @@
             });
 
 
+            $("#cbIsNoFreight").change(function () {
+                var isChecked = $(this).attr("checked");
+                if (isChecked != undefined && isChecked == "checked") {
+                    $("#Freight").val("0");
+                    $("#Freight").attr("disabled", "disabled");
+                } else {
+                    $("#Freight").removeAttr("disabled");
+                }
+            });
         });
 
 
@@ -288,9 +297,6 @@
                     }
                 }
             });
-
-
-
         }
 
 
@@ -300,11 +306,11 @@
             var Discount = $("#Discount").val();
             var DiscountPrice = $("#DiscountPrice").val();
             switch (DiscountType) {
-                //无  
+                //无   
                 case "@((int)Poco.Enum.EnumProductDiscountType.No)":
                     return true;
                     break;
-                //折扣  
+                //折扣   
                 case "@((int)Poco.Enum.EnumProductDiscountType.Discount)":
                     if (Discount == "" || Discount == undefined) {
                         alert("请输入折扣率！");
@@ -315,14 +321,14 @@
                         return false;
                     }
                     break;
-                //促销    
+                //促销     
                 case "@((int)Poco.Enum.EnumProductDiscountType.Promotion)":
                     if (DiscountPrice == "" || DiscountPrice == undefined) {
                         alert("请输入促销价！");
                         return false;
                     }
                     break;
-                //优惠    
+                //优惠     
                 case "@((int)Poco.Enum.EnumProductDiscountType.preferential)":
                     if (DiscountPrice == "" || DiscountPrice == undefined) {
                         alert("请输入优惠价！");
@@ -419,9 +425,18 @@
                     <td class="tdTitle">
                         <span class="Identification">*</span> 运费
                     </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.Freight)
+                    <td class="tdField">
+                        @if (Model.Freight == 0)
+                        { 
+                            @Html.TextBoxFor(a => a.Freight, new { disabled = "disabled" })                    
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(a => a.Freight)
+                        }
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.Freight)
+                    <td>@Html.ValidationMessageFor(a => a.Freight)@Html.ValidationMessageFor(a => a.Freight)&nbsp;&nbsp;<input
+                        type="checkbox" id="cbIsNoFreight" checked="checked" /><label for="cbIsNoFreight">是否免运费</label>
                     </td>
                 </tr>
                 <tr>

@@ -12,7 +12,6 @@
     <script src="@Url.Content("/ueditor/ueditor.all.js")" type="text/javascript"></script>
     <script type="text/javascript">
 
-
         var UpImgUrl = '@Url.Action("UpImg", "Ajax", new { HostName = ViewBag.HostName })';
         $(function () {
 
@@ -29,8 +28,6 @@
             };
 
             var ue = UE.getEditor('editor', options);
-
-
 
             $("#file_upload1").uploadify({
                 height: 25,
@@ -55,12 +52,8 @@
                     $("#imgLogo1").attr('src', data);
 
                     $("#imgpath1").val(data);
-
-
                 }
-
             });
-
 
             $("#file_upload2").uploadify({
                 height: 25,
@@ -81,13 +74,9 @@
                         });
                         return;
                     }
-
                     $("#imgLogo2").attr('src', data);
                     $("#imgpath2").val(data);
-
-
                 }
-
             });
 
             $("#file_upload3").uploadify({
@@ -109,13 +98,9 @@
                         });
                         return;
                     }
-
                     $("#imgLogo3").attr('src', data);
                     $("#imgpath3").val(data);
-
-
                 }
-
             });
 
             $("#file_upload4").uploadify({
@@ -165,13 +150,9 @@
                         });
                         return;
                     }
-
                     $("#imgLogo5").attr('src', data);
                     $("#imgpath5").val(data);
-
-
                 }
-
             });
 
 
@@ -180,7 +161,7 @@
             //优惠类型选择事件
             $("#EnumProductDiscountType").bind('change', function () {
                 switch ($(this).val()) {
-                    //无 
+                    //无      
                     case "@((int)Poco.Enum.EnumProductDiscountType.No)":
 
                         $("#tr_discount").hide();
@@ -188,9 +169,9 @@
                         $("#tr_discountPrice").hide();
                         $("#DiscountPrice").val("");
                         $("#span_Discount").text("");
-                        
+
                         break;
-                    //折扣 
+                    //折扣      
                     case "@((int)Poco.Enum.EnumProductDiscountType.Discount)":
                         $("#tr_discount").show();
                         $("#Discount").val("");
@@ -198,7 +179,7 @@
                         $("#DiscountPrice").val("");
                         $("#span_Discount").text("折扣价");
                         break;
-                    //促销 
+                    //促销      
                     case "@((int)Poco.Enum.EnumProductDiscountType.Promotion)":
                         $("#tr_discount").hide();
                         $("#Discount").val("");
@@ -206,7 +187,7 @@
                         $("#DiscountPrice").val("");
                         $("#span_Discount").text("促销价");
                         break;
-                    //优惠 
+                    //优惠      
                     case "@((int)Poco.Enum.EnumProductDiscountType.preferential)":
                         $("#tr_discount").hide();
                         $("#Discount").val("");
@@ -215,14 +196,17 @@
                         $("#span_Discount").text("优惠价");
                         break;
                 }
-
             });
 
-
-
-
-
-
+            $("#cbIsNoFreight").change(function () {
+                var isChecked = $(this).attr("checked");
+                if (isChecked != undefined && isChecked == "checked") {
+                    $("#Freight").val("0");
+                    $("#Freight").attr("disabled", "disabled");
+                } else {
+                    $("#Freight").removeAttr("disabled");
+                }
+            });
         });
 
 
@@ -230,7 +214,6 @@
         function SelParent() {
             var ID = 0;
             var YZUrl = '@Url.Action("ShowParent", "Classify", new { Area = "", HostName = "" })' + "?id=" + ID;
-
 
             $("#iframeshow").attr("src", YZUrl);
             $("#showParent").dialog({
@@ -261,9 +244,6 @@
                     }
                 }
             });
-
-
-
         }
 
         function chickForm()
@@ -420,9 +400,9 @@
                     <td class="tdTitle">
                         <span class="Identification">*</span> 运费
                     </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.Freight)
+                    <td class="tdField">@Html.TextBoxFor(a => a.Freight, new { disabled = "disabled" })
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.Freight)
+                    <td>@Html.ValidationMessageFor(a => a.Freight)&nbsp;&nbsp;<input type="checkbox" id="cbIsNoFreight" checked="checked" /><label for="cbIsNoFreight">是否免运费</label>
                     </td>
                 </tr>
                 <tr>

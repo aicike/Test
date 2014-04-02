@@ -282,6 +282,7 @@ namespace Business
         {
             return List(true).Where(a => a.AccountMainID == amid && a.OrderUserID == userID && a.OrderUserType == 2
                 && (a.status == (int)EnumOrderStatus.Proceed ||
+                a.status == (int)EnumOrderStatus.WaitDistribution||
                 a.status == (int)EnumOrderStatus.Shipped ||
                 a.status == (int)EnumOrderStatus.Payment));
         }
@@ -440,7 +441,7 @@ namespace Business
                     order.OrderUserInfoID = ouInfo.ID;
                     order.Remark = "";
                     order.Price = amount;
-                    order.status = (int)EnumOrderStatus.WaitPayMent;
+                    order.status = (int)EnumOrderStatus.WaitDistribution;
                     order.DeliveryType = (int)EnumDeliveryType.EveryDay;
                     result = base.Add(order);
                     if (result.HasError)

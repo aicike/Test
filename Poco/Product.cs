@@ -86,8 +86,7 @@ namespace Poco
         [Display(Name = "库存")]
         [Required(ErrorMessage = "请输入库存")]
         public int Stock { get; set; }
-
-      
+              
         //扩展字段
         public string file1 { get; set; }
         public string file2 { get; set; }

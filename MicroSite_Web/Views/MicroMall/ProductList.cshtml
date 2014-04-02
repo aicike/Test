@@ -326,7 +326,7 @@
                         </a>
                     </div>
                     <div class="title">
-                          <span>@item.Name</span>
+                        <span>@item.Name</span>
                     </div>
                     <div class="bottom">
                         @if (item.Status == (int)Poco.Enum.EnumProductType.Shortages)
@@ -339,22 +339,29 @@
                         }
                         else
                         {
-                            <span>@item.DiscountPrice.Value.ToString("C")</span>
-                            
+                            if (item.DiscountPrice.HasValue)
+                            {
+                                <span>@item.DiscountPrice.Value.ToString("C")</span>
+                            }
+                            else
+                            {
+
+                            }
                         }
                     </div>
                     <div class="bottom_yj">
                         @if (item.EnumProductDiscountType == (int)Poco.Enum.EnumProductDiscountType.Discount)
                         {
-                            <strike>原价： @item.Price.ToString("C")</strike> <span  class="sp_Discount">@item.Discount 折</span>
+                            <strike>原价： @item.Price.ToString("C")</strike> <span class="sp_Discount">@item.Discount
+                                折</span>
                         }
                         else if (item.EnumProductDiscountType == (int)Poco.Enum.EnumProductDiscountType.preferential)
                         {
-                            <strike>原价： @item.Price.ToString("C")</strike><span  class="sp_Discount">优惠</span>
+                            <strike>原价： @item.Price.ToString("C")</strike><span class="sp_Discount">优惠</span>
                         }
                         else if (item.EnumProductDiscountType == (int)Poco.Enum.EnumProductDiscountType.Promotion)
                         {
-                            <strike>原价： @item.Price.ToString("C")</strike><span  class="sp_Discount">促销</span>
+                            <strike>原价： @item.Price.ToString("C")</strike><span class="sp_Discount">促销</span>
                         }
                         else
                         {

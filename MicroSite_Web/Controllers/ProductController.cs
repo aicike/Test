@@ -186,10 +186,6 @@ namespace Web.Controllers
             return RedirectToAction("Index", "Product");
         }
 
-
-
-
-
         public ActionResult Delete(int id)
         {
             var productModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
