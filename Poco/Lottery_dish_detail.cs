@@ -46,12 +46,6 @@ namespace Poco
         public int Count { get; set; }
 
         /// <summary>
-        /// 剩余奖品数量
-        /// </summary>
-        [Display(Name = "剩余奖品数量")]
-        public int RestCount { get; set; }
-
-        /// <summary>
         /// 业务字段，不会在数据库中生成
         /// </summary>
         [Display(Name = "是否新上传图片")]

@@ -38,5 +38,12 @@ namespace Interface
         /// <param name="Count">随机抽取个数</param>
         /// <returns></returns>
         List<Lottery_dish_detail> ControllerRandomExtract(List<Lottery_dish_detail> datas, Random rand, int Count = 1);
+
+        /// <summary>
+        /// 根据奖品数量修改中将奖品子项概率
+        /// </summary>
+        /// <param name="dish"></param>
+        /// <returns></returns>
+        List<Lottery_dish_detail> GetDetailRatioFix(Lottery_dish dish);
     }
 }

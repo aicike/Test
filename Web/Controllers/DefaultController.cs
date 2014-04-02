@@ -452,7 +452,7 @@ namespace Web.Controllers
             {
                 // 1 提交成功 2提交失败
                 ViewBag.isok = isok;
-                ViewBag.AIP = AIP.HasValue==false?0:AIP.Value;
+                ViewBag.AIP = AIP.HasValue == false ? 0 : AIP.Value;
             }
             if (imtimely_userid.HasValue)
             {
@@ -542,6 +542,15 @@ namespace Web.Controllers
             //更改浏览次数(报表)
             var BrowseModel = Factory.Get<IAppAdvertorialBrowseModel>(SystemConst.IOC_Model.AppAdvertorialBrowseModel);
             BrowseModel.AddOrUpdBrowse(ActivityID, EnumBrowseAdvertorialType.ActivityInfo);
+            ////判断有没有抽奖活动
+            //var dish = Activity.Lottery_dish;
+            //if (dish != null)
+            //{
+            //    var details = dish.Lottery_dish_details.Where(a => a.IsWinning).ToList();//中奖奖品所有子项
+            //    var detailIDs = details.Select(a => a.ID).ToList();
+            //    var count = details.Where(a => a.IsWinning).Sum(a => a.Count);//奖品总和
+            //    var joinUserCount = dish.Lottery_Users.Where(a => a.Lottery_dishID == dish.ID && detailIDs.Contains(a.Dish_Egg_detailID)).Count();//用户已抽中奖品数量
+            //}
             return View(Activity);
         }
         /// <summary>
@@ -725,8 +734,8 @@ namespace Web.Controllers
             lu.ActivityInfoParticipatorID = aid;
             lu.LotteryDate = DateTime.Now;
             lu.EnumLotteryStatus = 0;
-            var Lottery_UserModel= Factory.Get<ILottery_UserModel>(SystemConst.IOC_Model.Lottery_UserModel);
-            var result=Lottery_UserModel.Add(lu);
+            var Lottery_UserModel = Factory.Get<ILottery_UserModel>(SystemConst.IOC_Model.Lottery_UserModel);
+            var result = Lottery_UserModel.Add(lu);
             return View(entity);
         }
 

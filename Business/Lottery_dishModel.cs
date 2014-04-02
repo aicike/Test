@@ -142,6 +142,30 @@ namespace Business
 
         #region 受控随机抽取中奖概率
 
+
+        //根据用户已抽中奖品数量和配置奖品总数，更正奖品中奖几率
+        public List<Lottery_dish_detail> GetDetailRatioFix(Lottery_dish dish)
+        {
+            var details = dish.Lottery_dish_details.Where(a => a.IsWinning).ToList();//中奖奖品所有子项
+            var detailIDs = details.Select(a => a.ID).ToList();
+            var joinUserDetails = dish.Lottery_Users.Where(a => a.Lottery_dishID == dish.ID && detailIDs.Contains(a.Dish_Egg_detailID));//用户已抽中奖品ID
+            var list = dish.Lottery_dish_details;
+            foreach (var item in list)
+            {
+                foreach (var detail in joinUserDetails)
+                {
+                    if (item.ID == detail.Dish_Egg_detailID)
+                    {
+                        item.Count = item.Count - 1;
+                    }
+                }
+                if (item.Count == 0) {
+                    item.Ratio = 0;
+                }
+            }
+            return list.ToList();
+        }
+
         /// <summary>
         /// 随机抽取
         /// </summary>
