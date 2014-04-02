@@ -17,6 +17,18 @@
     <script src="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.js")" type="text/javascript"></script>
     <link href="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.css")" rel="stylesheet" type="text/css" />
     <script>
+
+
+        function OptintModel() {
+            var it = new Object;
+            it.Option = "";
+            it.IsRequired = "true";
+
+            return it;
+        }
+        var items = [];
+
+
         var Cnt = 0;
         var UpImgUrl = '@Url.Action("UpImg", "Ajax", new { HostName = ViewBag.HostName })';
         $(function () {
@@ -163,6 +175,66 @@
                     });
                     return false;
                 }
+
+                //获取自定义内容
+                var isOK = true;
+                var RowName = $("div[name='div_option']");
+                //选项数量
+                var ocnt = 0;
+                items = [];
+                RowName.each(function (i, n) {
+                    ocnt = ocnt + 1;
+                    var optionTitle = $(n).find("input[name='option']").val().trim();
+                    var optionRequired = "true";
+                    if (optionTitle.length <= 0) {
+                        JAlert({
+                            Message: "请填写报名内容设定选项！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        isOK = false;
+                        return false;
+                    }
+
+                    var Om = new OptintModel();
+                    Om.Option = optionTitle;
+
+                    optionRequired = $(n).find("input[name='option_Required']").attr("checked");
+                    if (optionRequired == "checked") {
+                        Om.IsRequired = "true";
+                    }
+                    else {
+                        Om.IsRequired = "false";
+                    }
+                    items.push(Om);
+
+                });
+                if (ocnt == 0) {
+                    var Requiredname = $("#ckb_Name").attr("checked");
+                    var Requiredphone = $("#ckb_Phone").attr("checked");
+                    var Requiredemail = $("#ckb_Email").attr("checked");
+
+                    if (Requiredname != "checked" && Requiredphone != "checked" && Requiredemail != "checked") {
+                        JAlert({
+                            Message: "至少选择一个报名自定义填写内容！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return false;
+                    }
+                }
+                if (isOK == true) {
+                    var value = JSON.stringify(items);
+                    $("#Options").val(value);
+                }
+                else {
+                    return false;
+                }
+
+
+
+
+
             });
             //显示抽奖活动
             $("#btnLotteryDish").click(function () {
@@ -338,6 +410,7 @@
                 </tr>
             </table>
         </fieldset>
+        <input type="hidden" name="Options" id="Options" />
         <fieldset style="font-size: 14px">
             <legend>创建活动</legend>
             <table style="width: 100%">
@@ -436,11 +509,32 @@
                         <span class="Identification">*</span> 报名填写内容设定
                     </td>
                     <td>
-                        <input type="checkbox" id="ckb_Name" name="ckb_Name" />
+                        @if (Model.NameIsRequired)
+                        {
+                            <input type="checkbox" id="ckb_Name" name="ckb_Name" checked="checked" />
+                        }
+                        else
+                        { 
+                            <input type="checkbox" id="ckb_Name" name="ckb_Name" />
+                        }
                         姓名
-                        <input type="checkbox" id="ckb_Phone" name="ckb_Phone" />
+                        @if (Model.PhoneIsRequired)
+                        {
+                            <input type="checkbox" id="ckb_Phone" name="ckb_Phone" checked="checked" />
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="ckb_Phone" name="ckb_Phone" />
+                        }
                         电话
-                        <input type="checkbox" id="ckb_Email" name="ckb_Email" />
+                        @if (Model.PhoneIsRequired)
+                        {
+                            <input type="checkbox" id="ckb_Email" name="ckb_Email" checked="checked" />
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="ckb_Email" name="ckb_Email" />
+                        }
                         邮箱
                         <div class="operation">
                             <a id="addOption" class="operation">添加自定义选项</a>(最多添加5项)
@@ -471,7 +565,7 @@
                             @if (!string.IsNullOrEmpty(Model.Extension2))
                             { 
                                 <div name="div_option">
-                                    <input name="option" type="text" />
+                                    <input name="option" type="text" value="@Model.Extension2" />
                                     是否必填：
                                     @if (Model.Extension2IsRequired)
                                     { 
@@ -487,7 +581,7 @@
                             @if (!string.IsNullOrEmpty(Model.Extension3))
                             { 
                                 <div name="div_option">
-                                    <input name="option" type="text" />
+                                    <input name="option" type="text" value="@Model.Extension3" />
                                     是否必填：
                                     @if (Model.Extension3IsRequired)
                                     { 
@@ -503,7 +597,7 @@
                             @if (!string.IsNullOrEmpty(Model.Extension4))
                             { 
                                 <div name="div_option">
-                                    <input name="option" type="text" />
+                                    <input name="option" type="text" value="@Model.Extension4" />
                                     是否必填：
                                     @if (Model.Extension4IsRequired)
                                     { 
@@ -519,7 +613,7 @@
                             @if (!string.IsNullOrEmpty(Model.Extension5))
                             { 
                                 <div name="div_option">
-                                    <input name="option" type="text" />
+                                    <input name="option" type="text" value="@Model.Extension5" />
                                     是否必填：
                                     @if (Model.Extension5IsRequired)
                                     { 
