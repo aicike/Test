@@ -32,7 +32,7 @@ namespace Web
         {
             Exception unhandledException = Server.GetLastError();
         }
-
+         
         //protected void Application_AcquireRequestState(object sender, EventArgs e)
         //{
         //    CultureInfo ci = null;
