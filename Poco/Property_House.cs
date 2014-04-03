@@ -15,8 +15,12 @@ namespace Poco
 
         public int SystemStatus { get; set; }
 
-        public int AccountMainHouseInfoID { get; set; }
+        public int? AccountMainHouseInfoID { get; set; }
         public virtual AccountMainHouseInfo AccountMainHouseInfo { get; set; }
+
+        public int AccountMainID { get; set; }
+
+        public virtual AccountMain AccountMain { get; set; }
 
         [Display(Name = "楼层")]
         public int Layer { get; set; }

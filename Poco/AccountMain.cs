@@ -252,5 +252,7 @@ namespace Poco
         public virtual ICollection<AccountMainHouseInfo> AccountMainHouseInfos { get; set; }
 
         public virtual ICollection<MicroSiteSetInfo> MicroSiteSetInfos { get; set; }
+
+        public virtual ICollection<Property_House> Property_Houses { get; set; }
     }
 }

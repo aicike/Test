@@ -150,14 +150,9 @@ namespace Poco
             public const string HouseInfo_Property = "HouseInfo_Property";
             public const string MicroSiteSet = "MicroSiteSet";
             
-            
-
             //Action
             public const string History = "History";
             public const string Index = "Index";
-
-
-
         }
 
         public class IOC_Model
@@ -262,6 +257,7 @@ namespace Poco
             public const string AppAdvertorialBrowseModel = "AppAdvertorialBrowseModel";
             public const string Property_HouseModel = "Property_HouseModel";
             public const string MicroSiteSetInfoModel = "MicroSiteSetInfoModel";
+            public const string Property_UserModel = "Property_UserModel";
 
             
         }
