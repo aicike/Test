@@ -20,6 +20,7 @@ namespace Poco
 
         [Display(Name = "房间号")]
         [Required(ErrorMessage = "请输入房间号")]
+        [StringLength(50, ErrorMessage = "长度小于50")]
         public string RoomNumber { get; set; }
     }
 }
