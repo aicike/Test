@@ -24,7 +24,7 @@ namespace Poco
         /// <summary>
         /// 用户信息
         /// </summary>
-        public int? UserLoginInfoID { get; set; }
+        public int UserLoginInfoID { get; set; }
 
         public virtual UserLoginInfo UserLoginInfo { get; set; }
     }

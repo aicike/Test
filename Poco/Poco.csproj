@@ -96,6 +96,7 @@
     <Compile Include="Panorama.cs" />
     <Compile Include="ProductImg.cs" />
     <Compile Include="Property_House.cs" />
+    <Compile Include="Property_User.cs" />
     <Compile Include="ReportBody.cs" />
     <Compile Include="ReportFormPower.cs" />
     <Compile Include="SurveyAnswerUser.cs" />
