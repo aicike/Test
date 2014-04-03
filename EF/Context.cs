@@ -41,6 +41,7 @@ namespace EF
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
+            modelBuilder.Ignore<PropertyComplexEntity>();
             modelBuilder.Configurations.Add(new LibraryImageTextMap());
             modelBuilder.Configurations.Add(new SystemUserMap());
             modelBuilder.Configurations.Add(new ClientInfoMap());

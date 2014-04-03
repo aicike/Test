@@ -95,6 +95,7 @@
     <Compile Include="MicroSiteSetInfo.cs" />
     <Compile Include="Panorama.cs" />
     <Compile Include="ProductImg.cs" />
+    <Compile Include="PropertyComplexEntity.cs" />
     <Compile Include="Property_House.cs" />
     <Compile Include="Property_User.cs" />
     <Compile Include="ReportBody.cs" />

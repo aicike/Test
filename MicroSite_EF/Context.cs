@@ -30,6 +30,7 @@ namespace MicroSite_EF
             modelBuilder.Ignore<PendingMessages>();
             modelBuilder.Ignore<PushMsg>();
             modelBuilder.Ignore<Task>();
+            modelBuilder.Ignore<PropertyComplexEntity>();
 
             //modelBuilder.Configurations.Add(new LibraryImageTextMap());
             //modelBuilder.Configurations.Add(new SystemUserMap());
