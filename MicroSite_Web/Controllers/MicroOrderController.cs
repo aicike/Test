@@ -113,5 +113,25 @@ namespace MicroSite_Web.Controllers
 
             return orderDetail.GetOrderDetailByOrderID(OrderID);
         }
+
+        /// <summary>
+        /// 更改订单状态
+        /// </summary>
+        /// <param name="OrderID"></param>
+        /// <param name="Status"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public string SetOrderStatus(int OrderID,int Status)
+        {
+            var orderModel = Factory.Get<IOrderModel>(SystemConst.IOC_Model.OrderModel);
+            orderModel.SetOrderStatus(OrderID, Status);
+            //如果是取消 则增加相应的库存
+            if (Status == (int)Poco.Enum.EnumOrderStatus.Cancel)
+            {
+                var porductModel = Factory.Get<IProductModel>(SystemConst.IOC_Model.ProductModel);
+                porductModel.HandleStock(0,OrderID);
+            }
+            return "更改成功！";
+        }
     }
 }

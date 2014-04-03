@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "setexcel";
+}
+<h2>
+    setexcel</h2>
+      @using (Html.BeginForm("setexcel", "Test", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+    <input type="file" name="XLSXPath" id="XLSXPath" />
+    <button type="submit">
+        aaa</button>
+}

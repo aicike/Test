@@ -29,8 +29,7 @@
             $("#Pname").val('@ViewBag.Pname');
         });
 
-        function LookInfo(ID)
-        {
+        function LookInfo(ID) {
 
             var YZUrl = '@Url.Action("OrderInfo", "MicroOrder")' + "?id=" + ID;
             $("#iframeshow").attr("src", YZUrl);
@@ -52,7 +51,23 @@
             });
         }
 
-
+        function SetOrderType(OrdID) {
+            var stypeID = $("#select_setType_" + OrdID).val();
+            var stypeName = $("#select_setType_" + OrdID).find("option:selected").text();
+            if (stypeID == '@((int)Poco.Enum.EnumOrderStatus.Cancel)' || stypeID == '@((int)Poco.Enum.EnumOrderStatus.Complete)' || stypeID == '@((int)Poco.Enum.EnumOrderStatus.Revoke)') {
+                $("#select_setType_" + OrdID).attr("style", "display:none");
+            }
+            $("#span_type_" + OrdID).text(stypeName);
+            var PUrl = '@Url.Action("SetOrderStatus", "MicroOrder")';
+            $.post(PUrl, { OrderID: OrdID, Status: stypeID }, function (result) {
+                JAlert({
+                    Message: result,
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+            });
+            $("#select_setType_" + OrdID).val("-1");
+        }
 
     </script>
     <style>
@@ -235,15 +250,15 @@
                            
                             <tr>
                                 <td valign="top" style="border-right: 0px" widht="80px">
-                                 <label name="labCbFirst" title="查看详细">
-                                    <a href="@Url.Action("SelectProduct", "Product", new { ID = item2.ProductID })"  target="_blank"> <img src="@Url.Content(item2.ProductImg,true)" style="max-width: 60px; border:1px solid #deedde" /></a>
+                                    <label name="labCbFirst" title="查看详细">
+                                        <a href="@Url.Action("SelectProduct", "Product", new { ID = item2.ProductID })"  target="_blank">
+                                            <img src="@Url.Content(item2.ProductImg, true)" style="max-width: 60px; border:1px solid #deedde" /></a>
                                     </label>
-                                   
                                 </td>
                                 <td valign="top" align="left" style="font-size: 12px; border-right: 0px; word-wrap: break-word;
                                     padding-left: 10px; word-break: break-all" width="200px;" class="operation">
-                                   <label name="labCbFirst" title="查看详细">
-                                    <a href="@Url.Action("SelectProduct", "Product", new { ID = item2.ProductID })"  target="_blank">@item2.ProductName</a>
+                                    <label name="labCbFirst" title="查看详细">
+                                        <a href="@Url.Action("SelectProduct", "Product", new { ID = item2.ProductID })"  target="_blank">@item2.ProductName</a>
                                     </label>
                                 </td>
                                 <td width="90px" style="border-right: 0px">
@@ -257,30 +272,61 @@
                     </table>
                 </td>
                 <td style="font-weight: bold">
-                   @item.Price.ToString("C")
+                    @item.Price.ToString("C")
                 </td>
                 <td>
                     @switch (item.status)
                     {
                         case (int)Poco.Enum.EnumOrderStatus.Cancel:
-                        <span style="color: #808080">交易关闭</span>
-                            break;
+                        <span style="color: #808080" id="span_type_@item.ID">交易关闭</span>
+                                                              break;
                         case (int)Poco.Enum.EnumOrderStatus.Complete:
-                        <span style="color: #066601">已完成</span>
-                            break;
+                        <span style="color: #066601" id="span_type_@item.ID">已完成</span>
+                                                              break;
                         case (int)Poco.Enum.EnumOrderStatus.Payment:
-                        <span style="color: #00aec8">对方已付款</span>
-                            break;
+                        <span style="color: #00aec8" id="span_type_@item.ID">对方已付款</span>
+                                                              break;
                         case (int)Poco.Enum.EnumOrderStatus.Shipped:
-                        <span style="color: #EEA11C">已发货</span>
-                            break;
+                        <span style="color: #EEA11C" id="span_type_@item.ID">已发货</span>
+                                                              break;
                         case (int)Poco.Enum.EnumOrderStatus.WaitPayMent:
-                        <span style="color: #000">等待付款</span>
-                            break;
+                        <span style="color: #000" id="span_type_@item.ID">等待付款</span>
+                                                           break;
+                        case (int)Poco.Enum.EnumOrderStatus.WaitDistribution:
+                        <span style="color:Red" id="span_type_@item.ID">待配送</span>
+                                                         break;
+                        case (int)Poco.Enum.EnumOrderStatus.Proceed:
+                        <span style="color: #000" id="span_type_@item.ID">配送中</span>
+                                                           break;
+                        case (int)Poco.Enum.EnumOrderStatus.Revoke:
+                        <span style="color: #000" id="span_type_@item.ID">已撤销</span>
+                                                           break;
+
                     }
                 </td>
                 <td class="operation">
-                    其他操作
+                    @if (item.status == (int)Poco.Enum.EnumOrderStatus.Cancel)
+                    {
+
+                    }
+                    else if (item.status == (int)Poco.Enum.EnumOrderStatus.Complete)
+                    {
+
+                    }
+                    else if (item.status == (int)Poco.Enum.EnumOrderStatus.Revoke)
+                    {
+
+                    }
+                    else
+                    {
+                        <select onchange="SetOrderType(@item.ID)" id="select_setType_@item.ID">
+                            <option value="-1">更改订单状态</option>
+                            <option value="@((int)Poco.Enum.EnumOrderStatus.Complete)">已完成</option>
+                            <option value="@((int)Poco.Enum.EnumOrderStatus.Proceed)">配送中</option>
+                            <option value="@((int)Poco.Enum.EnumOrderStatus.WaitDistribution)">待配送</option>
+                            <option value="@((int)Poco.Enum.EnumOrderStatus.Cancel)">交易关闭</option>
+                        </select>
+                    }
                 </td>
             </tr>
         }

@@ -11,6 +11,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Poco;
 using Poco.Enum;
+using System.Data;
+using Common;
 
 namespace Web.Controllers
 {
@@ -204,6 +206,22 @@ namespace Web.Controllers
 
         public ActionResult TestHtml()
         {
+            return View();
+        }
+
+
+
+        public ActionResult setexcel()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult setexcel(System.Web.HttpPostedFileBase XLSXPath)
+        {
+            DataTable dt = new DataTable();
+            Result retult = Tool.GetXLSXInfo(XLSXPath);
+            CommonModel com = new CommonModel();
+            retult = com.CopyDataTableToDB(retult.Entity as DataTable, "cs");
             return View();
         }
 

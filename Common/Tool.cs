@@ -8,6 +8,8 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Web;
 using Poco;
+using System.Data;
+using System.Data.OleDb;
 
 namespace Common
 {
@@ -796,5 +798,60 @@ namespace Common
             }
             return Path;
         }
+
+
+        /// <summary>
+        /// 获取Excel数据
+        /// </summary>
+        /// <param name="XLSXPath">HttpPostedFileBase</param>
+        /// <returns></returns>
+        public static Result GetXLSXInfo(System.Web.HttpPostedFileBase XLSXPath)
+        {
+            Result result = new Result();
+            if (XLSXPath == null)
+            {
+                result.HasError = true;
+                result.Error = "参数值不鞥为NULL";
+                return result;
+            }
+          
+            DataTable dt = new DataTable();
+            //临时路径
+            string TemporarPath = GetTemporaryPath();
+            string TemporarPathMap = HttpContext.Current.Server.MapPath(TemporarPath);
+            string fileName = XLSXPath.FileName.GetFileSuffix();
+            //上传路径
+            string PATH = TemporarPathMap + "//" + DateTime.Now.ToString("yyyyMMddhhmmsss") + fileName;
+            //上传文件
+            XLSXPath.SaveAs(PATH);
+            string strConn = "Provider=Microsoft.Ace.OleDb.12.0;Data Source=" + PATH + ";Extended Properties='Excel 12.0;HDR=Yes;IMEX=1'";
+
+            OleDbDataAdapter da = new OleDbDataAdapter("SELECT *  FROM [Sheet1$]", strConn);
+            DataSet ds = new DataSet();
+
+            try
+            {
+                da.Fill(ds);
+                dt = ds.Tables[0];
+                result.Entity = dt;
+            }
+            catch(Exception ex)
+            {
+                result.HasError = true;
+                result.Error = ex.Message;
+                if (File.Exists(PATH))
+                {
+                    File.Delete(PATH);
+                }
+                return null;
+            }
+            if (File.Exists(PATH))
+            {
+                File.Delete(PATH);
+            }
+            return result;
+        }
+
+
     }
 }

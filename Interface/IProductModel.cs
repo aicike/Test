@@ -58,6 +58,15 @@ namespace Interface
         /// <param name="Release">发布状态 true 发布 false 不发布</param>
         /// <returns></returns>
         Result UPRelease(int PID, int AMID, bool Release);
+
+
+        /// <summary>
+        /// 增加或减少库存
+        /// </summary>
+        /// <param name="IncreaseOrReduce">增加或减少库存：0增加 1减少</param>
+        /// <param name="OrderID">订单ID</param>
+        /// <returns></returns>
+        Result HandleStock(int IncreaseOrReduce, int OrderID);
        
     }
 }

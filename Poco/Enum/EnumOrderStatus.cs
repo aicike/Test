@@ -12,7 +12,7 @@ namespace Poco.Enum
         /// </summary>
         Complete,        
         /// <summary>
-        /// 进行中 
+        /// 进行中/配送中
         /// </summary>
         Proceed,        
         /// <summary>
@@ -39,6 +39,9 @@ namespace Poco.Enum
         /// 待配送
         /// </summary>
         WaitDistribution
+
+       
+
 
     }
 }
