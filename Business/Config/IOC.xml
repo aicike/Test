@@ -112,6 +112,7 @@
 	<object id="Lottery_dish_detailModel" type="Business.Lottery_dish_detailModel" parent="EFModel" singleton="false"></object>
 	<object id="Lottery_UserModel" type="Business.Lottery_UserModel" parent="EFModel" singleton="false"></object>
 	<object id="Property_HouseModel" type="Business.Property_HouseModel" parent="EFModel" singleton="false"></object>
+	<object id="MicroSiteSetInfoModel" type="Business.MicroSiteSetInfoModel" parent="EFModel" singleton="false"></object>
 
 	
 

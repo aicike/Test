@@ -121,6 +121,7 @@
     <Compile Include="Lottery_UserModel.cs" />
     <Compile Include="MessageGroupChatModel.cs" />
     <Compile Include="MessageModel.cs" />
+    <Compile Include="MicroSiteSetInfoModel.cs" />
     <Compile Include="OrderDetailModel.cs" />
     <Compile Include="OrderMIntermediateModel.cs" />
     <Compile Include="OrderModel.cs" />

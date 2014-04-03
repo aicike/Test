@@ -578,6 +578,7 @@
     <Content Include="Scripts\ToolTip\jquery.tipTip.js" />
     <Content Include="Scripts\ToolTip\jquery.tipTip.minified.js" />
     <Content Include="Scripts\ToolTip\tipTip.css" />
+    <Content Include="Scripts\topbar\juery.topbar.js" />
     <Content Include="Scripts\treeview\ajax-loader.gif" />
     <Content Include="Scripts\treeview\file.gif" />
     <Content Include="Scripts\treeview\folder-closed.gif" />

@@ -6,7 +6,7 @@
     <script>
     </script>
 }
-@model PagedList<Poco.Product>
+@model Poco.MicroSiteSetInfo
 <div class="title">
     <div style="float: right">
         <a href="http://@ViewBag.WeiURL" target="_blank" style=" color:#00aec8">点击进入微商城</a></div>
@@ -15,21 +15,32 @@
     </div>
 </div>
 <div class="body">
-    @using (Ajax.BeginForm("Index", "MicroSiteSet", new { HostName = ViewBag.HostName },new AjaxOptions { UpdateTargetId = "alert" }))
+    @using (Ajax.BeginForm("Index", "MicroSiteSet", new { HostName = ViewBag.HostName }, new AjaxOptions { UpdateTargetId = "alert" }))
     {
         <fieldset style="border: 1px solid #E7E7E7;">
             <legend>电商设置</legend>
             <table>
                 <tr>
-                    <td >
-                        用户下单需要邮件通知
+                    <td>
+                        @Html.CheckBoxFor(a => a.IsNeedSendEmail_Order)<label for="IsNeedSendEmail_Order"
+                            style="vertical-align: top">
+                            用户下单邮件通知</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Html.HiddenFor(a => a.ID)
                     </td>
                     <td>
-                        <input  />
+                        @Html.CheckBoxFor(a => a.IsNeedSendEmail_Pay)<label for="IsNeedSendEmail_Pay" style="vertical-align: top">
+                            用户付款邮件通知</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td>
+                        @Html.CheckBoxFor(a => a.IsNeedSendEmail_CancelOrder)<label for="IsNeedSendEmail_CancelOrder"
+                            style="vertical-align: top">
+                            用户取消订单邮件通知</label>
                     </td>
                 </tr>
             </table>
         </fieldset>
+        <div class="action">
+            <input type="submit" class="button" value="保存" />
+        </div>
     }
 </div>
 <div style="clear: both">

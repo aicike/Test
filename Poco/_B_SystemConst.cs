@@ -261,6 +261,7 @@ namespace Poco
             public const string Lottery_UserModel = "Lottery_UserModel";
             public const string AppAdvertorialBrowseModel = "AppAdvertorialBrowseModel";
             public const string Property_HouseModel = "Property_HouseModel";
+            public const string MicroSiteSetInfoModel = "MicroSiteSetInfoModel";
 
             
         }

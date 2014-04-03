@@ -21,6 +21,15 @@
     eval(jqueryAlert);
 }
 
+function JMessage(msg, isError) {
+    $('#jmessage').html(msg);
+    if (isError != undefined && isError == true) {
+        $('#jmessage').showTopbarMessage({ background: "#f00", close: 2000 });
+    } else {
+        $('#jmessage').showTopbarMessage({ background: "#093", close: 2000 });
+    }
+}
+
 function AppDelete(msg, url, fun) {
     var f = "";
     if (fun && fun != null) {
