@@ -221,6 +221,7 @@
     <Compile Include="Controllers\WebRequest_AutoMessageController.cs" />
     <Compile Include="Controllers\WebRequest_MilkController.cs" />
     <Compile Include="Controllers\SSOServiceRedirectController.cs" />
+    <Compile Include="Controllers\HouseInfo_PropertyController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1010,6 +1011,9 @@
     <Content Include="Views\ActivityInfo\ActivityReport.cshtml" />
     <Content Include="Views\Default\LotteryDish.cshtml" />
     <Content Include="Views\PropertyHouse\Index.cshtml" />
+    <Content Include="Views\HouseInfo_Property\Add.cshtml" />
+    <Content Include="Views\HouseInfo_Property\Edit.cshtml" />
+    <Content Include="Views\HouseInfo_Property\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

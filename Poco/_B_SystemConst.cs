@@ -147,7 +147,8 @@ namespace Poco
             public const string AutoMessageReply = "AutoMessageReply";
             public const string LotteryDish = "LotteryDish";
             public const string PropertyHouse = "PropertyHouse";
-
+            public const string HouseInfo_Property = "HouseInfo_Property";
+            
 
 
             //Action

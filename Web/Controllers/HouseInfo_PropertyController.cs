@@ -10,7 +10,7 @@ using Controllers;
 
 namespace Web.Controllers
 {
-    public class HouseInfoController : ManageAccountController
+    public class HouseInfo_PropertyController : ManageAccountController
     {
         //单元管理
         // GET: /HouseInfo/
@@ -21,15 +21,10 @@ namespace Web.Controllers
         /// <param name="id"></param>
         /// <param name="index"></param>
         /// <returns></returns>
-        public ActionResult Index(int? id, int houseId)
+        public ActionResult Index(int? id)
         {
             var hounsesInfoModel = Factory.Get<IAccountMainHouseInfo>(SystemConst.IOC_Model.AccountMainHouseInfoModel);
-            ViewBag.HID = houseId;
-            var list = hounsesInfoModel.GetListByAccountMainHouseID(houseId).ToPagedList(id ?? 1, 15);
-            var hounsesModel = Factory.Get<IAccountMainHousesModel>(SystemConst.IOC_Model.AccountMainHousesModel);
-            var Hounse = hounsesModel.Get(houseId);
-            ViewBag.HostTitle = Hounse.HName;
-
+            var list = hounsesInfoModel.GetListByAccountMainID(LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 15);
             ViewBag.HostName = LoginAccount.HostName;
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "项目管理-单元管理", LoginAccount.CurrentAccountMainName, WebTitleRemark);
@@ -42,15 +37,11 @@ namespace Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Add(int id)
+        public ActionResult Add()
         {
             var hounsesModel = Factory.Get<IAccountMainHousesModel>(SystemConst.IOC_Model.AccountMainHousesModel);
-            var Hounse = hounsesModel.Get(id);
-            ViewBag.HostTitle = Hounse.HName;
             ViewBag.HostName = LoginAccount.HostName;
             AccountMainHouseInfo HounsesInfo = new AccountMainHouseInfo();
-            HounsesInfo.AccountMainHousessID = id;
-
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "项目管理-添加单元", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
@@ -66,12 +57,13 @@ namespace Web.Controllers
         public ActionResult Add(AccountMainHouseInfo MainHouseInfo)
         {
             var hounsesInfoModel = Factory.Get<IAccountMainHouseInfo>(SystemConst.IOC_Model.AccountMainHouseInfoModel);
+            MainHouseInfo.AccountMainID = LoginAccount.CurrentAccountMainID;
             var result = hounsesInfoModel.Add(MainHouseInfo);
             if (result.HasError)
             {
                 return JavaScript("isCommit = true;" + AlertJS_NoTag(new Dialog(result.Error)));
             }
-            return JavaScript("window.location.href='" + Url.Action("Index", "HouseInfo", new { HostName = LoginAccount.HostName, houseId = MainHouseInfo.AccountMainHousessID }) + "'");
+            return JavaScript("window.location.href='" + Url.Action("Index", "HouseInfo_Property", new { HostName = LoginAccount.HostName }) + "'");
         }
 
         /// <summary>
@@ -79,13 +71,11 @@ namespace Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Edit(int id, int hid)
+        public ActionResult Edit(int id)
         {
             var hounsesInfoModel = Factory.Get<IAccountMainHouseInfo>(SystemConst.IOC_Model.AccountMainHouseInfoModel);
             var HouseInfo = hounsesInfoModel.Get(id);
             var hounsesModel = Factory.Get<IAccountMainHousesModel>(SystemConst.IOC_Model.AccountMainHousesModel);
-            var Hounse = hounsesModel.Get(hid);
-            ViewBag.HostTitle = Hounse.HName;
             ViewBag.HostName = LoginAccount.HostName;
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "项目管理-修改单元", LoginAccount.CurrentAccountMainName, WebTitleRemark);
@@ -102,12 +92,13 @@ namespace Web.Controllers
         public ActionResult Edit(AccountMainHouseInfo MainHouseInfo)
         {
             var hounsesInfoModel = Factory.Get<IAccountMainHouseInfo>(SystemConst.IOC_Model.AccountMainHouseInfoModel);
+            MainHouseInfo.AccountMainID = LoginAccount.CurrentAccountMainID;
             var result = hounsesInfoModel.Edit(MainHouseInfo);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));
             }
-            return JavaScript("window.location.href='" + Url.Action("Index", "HouseInfo", new { HostName = LoginAccount.HostName, houseId = MainHouseInfo.AccountMainHousessID }) + "'");
+            return JavaScript("window.location.href='" + Url.Action("Index", "HouseInfo_Property", new { HostName = LoginAccount.HostName, houseId = MainHouseInfo.AccountMainHousessID }) + "'");
         }
 
         /// <summary>
@@ -115,7 +106,7 @@ namespace Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Delete(int id, int Hid)
+        public ActionResult Delete(int id)
         {
             var hounsesInfoModel = Factory.Get<IAccountMainHouseInfo>(SystemConst.IOC_Model.AccountMainHouseInfoModel);
             var result = hounsesInfoModel.DelteAll(id);
@@ -123,8 +114,7 @@ namespace Web.Controllers
             {
                 return Alert(new Dialog(result.Error));
             }
-
-            return JavaScript("window.location.href='" + Url.Action("Index", "HouseInfo", new { HostName = LoginAccount.HostName, houseId = Hid }) + "'");
+            return JavaScript("window.location.href='" + Url.Action("Index", "HouseInfo_Property", new { HostName = LoginAccount.HostName }) + "'");
         }
 
     }

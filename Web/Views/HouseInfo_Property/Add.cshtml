@@ -1,0 +1,83 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.HouseInfo_Property;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.HouseInfo;
+}
+@section head{
+    <script type="text/javascript">
+
+        var isCommit = true; //验证只能连续点击一次添加按钮
+
+        function BandSubmitClick() {
+
+            if (!isCommit) {
+                return false;
+            }
+            isCommit = false;
+        }
+    </script>
+}
+@model Poco.AccountMainHouseInfo
+<div class="title">
+    @Html.Partial("SitePath")
+</div>
+<div class="body">
+    @using (Ajax.BeginForm("Add", "HouseInfo_Property", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "BandSubmitClick()" }))
+    {
+        <fieldset>
+            <legend>基本信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 栋数
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Building)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Building)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 单元
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Cell)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Cell)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 层数
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.NumberOfLayers)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.NumberOfLayers)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 电梯数
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.NumberOfTheElevator)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.NumberOfTheElevator)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 户数
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.NumberOfFamily)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.NumberOfFamily)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+     
+     
+        <div class="action">
+            <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }
+</div>
