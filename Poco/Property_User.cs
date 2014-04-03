@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace Poco
 {
@@ -24,8 +25,17 @@ namespace Poco
         /// <summary>
         /// 用户信息
         /// </summary>
-        public int UserLoginInfoID { get; set; }
+        public int? UserLoginInfoID { get; set; }
 
         public virtual UserLoginInfo UserLoginInfo { get; set; }
+
+        [Display(Name = "业主姓名")]
+        [StringLength(10, ErrorMessage = "长度小于10")]
+        [Required]
+        public string UserName { get; set; }
+
+        [Display(Name = "业主电话")]
+        [StringLength(20, ErrorMessage = "长度小于20")]
+        public string Phone { get; set; }
     }
 }
