@@ -457,7 +457,7 @@ namespace Business
                         result.Error = "参数错误，请稍后重试！";
                         return result;
                     }
-
+                    result.Entity = order;
                 }
             }
             catch (Exception ex)
@@ -536,7 +536,8 @@ namespace Business
         {
             Result result = new Result();
             Order order = List().Where(a => a.AccountMainID == amid && a.ID == orderID).FirstOrDefault();
-            if (order == null) {
+            if (order == null)
+            {
                 result.Error = "无效的订单参数，无法操作。";
                 return result;
             }
@@ -556,6 +557,67 @@ namespace Business
             order.status = (int)EnumOrderStatus.Revoke;
             result = Edit(order);
             return result;
+        }
+
+        /// <summary>
+        /// 用户对订单相关操作，进行发送邮件通知管理员
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public void SendEmail(EnumOrderStatus status, Order order, string email)
+        {
+            string msg = null;
+            string subject = null;
+            switch (status)
+            {
+                case EnumOrderStatus.Revoke:
+                    subject = "ImTimely - 用户取消订单";
+                    msg = string.Format("用户取消订单，用户【{0}】-订单号【{1}】。", order.OrderUserInfo.Receiver, order.OrderNum);
+                    break;
+                case EnumOrderStatus.Payment:
+                    subject = "ImTimely - 用户已付款";
+                    msg = string.Format("用户已付款，用户【{0}】-订单号【{1}】。", order.OrderUserInfo.Receiver, order.OrderNum);
+                    break;
+            }
+            EmailInfo emailInfo = new EmailInfo();
+            emailInfo.To = email;
+            emailInfo.Subject = subject;
+            emailInfo.IsHtml = true;
+            emailInfo.UseSSL = true;
+            emailInfo.Body = msg;
+            try
+            {
+                Common.SendEmail.SendMailAsync(emailInfo);
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        /// <summary>
+        /// 用户下单时发送邮件通知管理员
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="order"></param>
+        /// <param name="email"></param>
+        public void SendEmail_Order(Order order, string email)
+        {
+            try
+            {
+                if (order != null)
+                {
+                    EmailInfo emailInfo = new EmailInfo();
+                    emailInfo.To = email;
+                    emailInfo.Subject = "ImTimely - 用户下单";
+                    emailInfo.IsHtml = true;
+                    emailInfo.UseSSL = true;
+                    emailInfo.Body = string.Format("用户下单，订单号【{0}】。", order.OrderNum);
+                    Common.SendEmail.SendMailAsync(emailInfo);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
         }
     }
 }

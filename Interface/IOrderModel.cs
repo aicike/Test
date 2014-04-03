@@ -78,5 +78,21 @@ namespace Interface
         /// <param name="orderID"></param>
         /// <returns></returns>
         Result CancelOrder(int amid,int orderID);
+
+        
+        /// <summary>
+        /// 用户对订单相关操作，进行发送邮件通知管理员
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        void SendEmail(EnumOrderStatus status, Order order, string email);
+
+        /// <summary>
+        /// 用户下单时发送邮件通知管理员
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="order"></param>
+        /// <param name="email"></param>
+        void SendEmail_Order(Order order, string email);
     }
 }

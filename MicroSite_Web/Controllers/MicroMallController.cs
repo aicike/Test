@@ -125,14 +125,14 @@ namespace MicroSite_Web.Controllers
                         }
                         if (product.ProductImg.FirstOrDefault() != null)
                         {
-                            row["ImgPath"] = Url.Content(product.ProductImg.FirstOrDefault().PImgMini,true);
+                            row["ImgPath"] = Url.Content(product.ProductImg.FirstOrDefault().PImgMini, true);
                         }
                         else
                         {
                             row["ImgPath"] = Url.Content("~/Images/nopicture.png");
                         }
                         row["Stock"] = product.Stock;
-                       
+
                     }
                     dt.Rows.Add(row);
                 }
@@ -246,6 +246,13 @@ namespace MicroSite_Web.Controllers
                 }
                 else
                 {
+                    //判断是否发送邮件通知管理员
+                    var mssim = Factory.Get<IMicroSiteSetInfoModel>(SystemConst.IOC_Model.MicroSiteSetInfoModel);
+                    var setInfo = mssim.GetByAccountMainID(AMID);
+                    if (setInfo != null && setInfo.IsNeedSendEmail_Order)
+                    {
+                        orderModel.SendEmail_Order(result.Entity as Order, "176534021@qq.com");
+                    }
                     //支付界面
                     return RedirectToAction("Index", "Center", new { AMID = AMID, userID = HuserID });
 
