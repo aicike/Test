@@ -193,5 +193,41 @@ namespace Business
             
             return result;
         }
+
+        /// <summary>
+        /// 增加或减少库存
+        /// </summary>
+        /// <param name="IncreaseOrReduce">增加或减少库存：0增加 1减少</param>
+        /// <param name="OrderID">订单ID</param>
+        /// <returns></returns>
+        public Result HandleStock(int IncreaseOrReduce, int OrderID)
+        {
+            Result result = new Result();
+            //获取订单
+            var orderdetailModel = Factory.Get<IOrderDetailModel>(SystemConst.IOC_Model.OrderDetailModel);
+            var orderdetail = orderdetailModel.GetOrderDetailByOrderID(OrderID);
+            string IR = "";
+            if (IncreaseOrReduce == 0)
+            {
+                IR = "+";
+            }
+            else
+            {
+                IR = "-";
+            }
+            string sql = "";
+            foreach (var item in orderdetail)
+            {
+                sql += string.Format(" update Product set stock = (stock {0} {1}) where ID = {2}",IR,item.Count,item.ProductID);
+            }
+            CommonModel commonModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+            int cnt = commonModel.SqlExecute(sql);
+            if (cnt <= 0)
+            {
+                result.HasError = true;
+                result.Error = "修改库存失败！";
+            }
+            return result;
+        }
     }
 }

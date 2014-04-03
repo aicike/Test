@@ -12,6 +12,7 @@ using Interface;
 using Injection;
 using System.Web;
 using Poco.Enum;
+using System.Configuration;
 
 namespace Business
 {
@@ -351,7 +352,7 @@ namespace Business
                                            id, UserID, UserType);
             }
 
-           
+
 
             return SqlQuery<int>(sql).FirstOrDefault().ToString();
         }
@@ -525,8 +526,36 @@ namespace Business
             }
         }
 
+        /// <summary>
+        ///  拷贝表格到数据库
+        /// </summary>
+        /// <param name="dt">dt</param>
+        /// <param name="DBTableName">要拷贝到的数据库中的表名</param>
+        /// <returns></returns>
+        public Result CopyDataTableToDB(DataTable dt, string DBTableName)
+        {
+            Result result = new Result();
 
-
+            string cString = ConfigurationManager.ConnectionStrings["Context"].ToString();
+            using (SqlConnection conn = new SqlConnection(cString))
+            {
+                conn.Open();
+                using (SqlBulkCopy bcp = new SqlBulkCopy(conn))
+                {
+                    bcp.DestinationTableName = DBTableName;
+                    try
+                    {
+                        bcp.WriteToServer(dt);
+                    }
+                    catch (Exception ex)
+                    {
+                        result.HasError = true;
+                        result.Error = ex.Message;
+                    }
+                }
+            }
+            return result;
+        }
 
     }
 }

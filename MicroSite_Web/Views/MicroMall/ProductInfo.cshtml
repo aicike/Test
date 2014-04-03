@@ -436,7 +436,15 @@
                         }
                     </div>
                     <div style="margin-top: 5px; font-size: 12px; text-shadow: none; color: #ffc5c5">
-                        运费：快递<span style="color: #fff">￥@Model.Freight</span>
+                        运费：
+                        @if (Model.Freight == 0)
+                        {
+                            @:免运费
+                        }
+                        else
+                        {
+                            @:快递<span style="color: #fff">￥@Model.Freight</span>
+                        }
                     </div>
                 </td>
             </tr>

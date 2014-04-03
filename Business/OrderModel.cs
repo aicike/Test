@@ -369,11 +369,11 @@ namespace Business
                                     return result;
                                 }
                                 //总价
-                                amount = amount + (item.Price * int.Parse(cnts[1]));
+                                amount = amount + (item.DiscountPrice.Value * int.Parse(cnts[1]));
                                 OrderDetail od = new OrderDetail();
                                 od.AccountMainID = AMID;
                                 od.Count = int.Parse(cnts[1]);
-                                od.Price = item.Price;
+                                od.Price = item.DiscountPrice.Value;
                                 od.ProductID = item.ID;
                                 od.ProductName = item.Name;
                                 od.ProductType = item.Classify.Name;
@@ -458,6 +458,8 @@ namespace Business
                         return result;
                     }
 
+                    //更改产品库存
+                    productModel.HandleStock(1, order.ID);
                 }
             }
             catch (Exception ex)
@@ -525,6 +527,8 @@ namespace Business
             }
             return list;
         }
+
+
 
     }
 }
