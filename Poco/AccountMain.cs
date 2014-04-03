@@ -250,5 +250,7 @@ namespace Poco
         public virtual ICollection<Lottery_dish> Lottery_dishs { get; set; }
 
         public virtual ICollection<AccountMainHouseInfo> AccountMainHouseInfos { get; set; }
+
+        public virtual ICollection<MicroSiteSetInfo> MicroSiteSetInfos { get; set; }
     }
 }

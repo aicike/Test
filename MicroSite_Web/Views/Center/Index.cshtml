@@ -4,6 +4,7 @@
     var amid = ViewBag.AMID;
     var proceedList = ViewBag.Proceed as PagedList<Poco.Order>;
     var completeList = ViewBag.Complete as PagedList<Poco.Order>;
+    var userID = ViewBag.UserID;
 }
 @model PagedList<Poco.Order>
 <script language="javascript">
@@ -234,10 +235,34 @@
         $("#center_order_1").click();
         //$("#cender_index_page").find("a").attr("data-ajax","false");
     });
+    //待收货地址
+    var url='@Html.Raw(Url.Action("Index", "Center", new { type = "1", amid = amid, userID = userID }))';
     function btnCancelOrder(orderID){
     var cancelOrderUrl = '@Url.Action("CancelOrder", "Center")';
         $.post(cancelOrderUrl,{amid:@amid,orderID:orderID},function(result){
-        
+            if(result!=null){
+                if(result.HasError==false){
+                    window.location.href=url;
+                }else{
+                    showError(result.Error);
+                }
+            }
+        },"json");
+    }
+
+    function showError(error) {
+        $('<div>').simpledialog2({
+            mode: 'button',
+            headerText: '消息',
+            headerClose: false,
+            buttonPrompt: error,
+            buttons: {
+                '确定': {
+                    click: function () {
+                        
+                    }
+                }
+            }
         });
     }
 </script>

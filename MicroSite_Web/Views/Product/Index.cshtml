@@ -20,7 +20,7 @@
             }
             $("#productID").val(PID);
             $("#Release").val(Release);
-            $("#pageID").val(id); 
+            $("#pageID").val(id);
             $("#btnRelease").click();
         }
     </script>
@@ -34,13 +34,6 @@
     </div>
 </div>
 <div class="body">
-@using (Html.BeginForm("Release", "Product", new { HostName = ViewBag.HostName }, FormMethod.Post))
-{
-    <input type="hidden" id="productID" name="productID" />
-    <input type="hidden" id="Release" name="Release" />
-    <input type="hidden" id="pageID" name="pageID" />
-    <input type="submit" id="btnRelease" style="visibility: hidden" />
-}
     <div class="option">@Html.ActionLink("添加", "Add", "Product", new { HostName = ViewBag.HostName }, null, true)</div>
     <table class="tableList" cellpadding="0" cellspacing="0">
         <tr>
@@ -53,7 +46,7 @@
             <th>
                 原价
             </th>
-            <th  style="width: 65px;" >
+            <th style="width: 65px;">
                 优惠类型
             </th>
             <th>
@@ -84,22 +77,21 @@
                     @item.Price
                 </td>
                 <td>
-                   
-                     @switch (item.EnumProductDiscountType)
-                     {
-                         case (int)Poco.Enum.EnumProductDiscountType.No:
+                    @switch (item.EnumProductDiscountType)
+                    {
+                        case (int)Poco.Enum.EnumProductDiscountType.No:
                         @:无
                             break;
-                         case (int)Poco.Enum.EnumProductDiscountType.Discount:
+                        case (int)Poco.Enum.EnumProductDiscountType.Discount:
                         @:折扣
                             break;
-                         case (int)Poco.Enum.EnumProductDiscountType.preferential:
+                        case (int)Poco.Enum.EnumProductDiscountType.preferential:
                         @:优惠
                         break;
-                         case (int)Poco.Enum.EnumProductDiscountType.Promotion:
+                        case (int)Poco.Enum.EnumProductDiscountType.Promotion:
                         @:促销
-                        break;
-                     }
+                                            break;
+                    }
                 </td>
                 <td>
                     @item.DiscountPrice
@@ -115,23 +107,22 @@
                             break;
                         case (int)Poco.Enum.EnumProductType.Shortages:
                         @:缺货
-                        break;
+                                            break;
                     }
                 </td>
                 <td>
-                
                 </td>
                 <td class="operation">
                     @if (item.IsRelease)
                     { 
-                         <label name="labCbFirst" title="点击撤销发布">
-                        <span onclick="UPRelease(@item.ID,false)" style=" cursor:pointer; color:#00A4BD">已发布</span>
+                        <label name="labCbFirst" title="点击撤销发布">
+                            <span onclick="UPRelease(@item.ID,false)" style=" cursor:pointer; color:#00A4BD">已发布</span>
                         </label>
                     }
                     else
                     { 
                         <label name="labCbFirst" title="点击发布产品">
-                        <span  onclick="UPRelease(@item.ID,true)" style=" cursor:pointer; color:red">未发布</span>
+                            <span  onclick="UPRelease(@item.ID,true)" style=" cursor:pointer; color:red">未发布</span>
                         </label>
                     }
                     @Html.ActionLink("修改", "Edit", "Product", new { HostName = ViewBag.HostName, id = item.ID }, new { }, true)
@@ -158,6 +149,13 @@
        ShowFirstLast = false
    })
     </div>
+    @using (Html.BeginForm("Release", "Product", new { HostName = ViewBag.HostName }, FormMethod.Post))
+    {
+        <input type="hidden" id="productID" name="productID" />
+        <input type="hidden" id="Release" name="Release" />
+        <input type="hidden" id="pageID" name="pageID" />
+        <input type="submit" id="btnRelease" style="visibility: hidden" />
+    }
 </div>
 <div style="clear: both">
 </div>

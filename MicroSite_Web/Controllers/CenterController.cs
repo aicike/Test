@@ -44,6 +44,8 @@ namespace MicroSite_Web.Controllers
             ViewBag.Proceed = list_proceed;
             //已结束
             ViewBag.Complete = list_complete;
+            //UserID
+            ViewBag.UserID = userID.Value;
             return View(list);
         }
 
@@ -147,10 +149,11 @@ namespace MicroSite_Web.Controllers
         /// <param name="orderID"></param>
         /// <returns></returns>
         [HttpPost]
-        public void CancelOrder(int amid,int orderID) {
-            var orderModel= Factory.Get<IOrderModel>(SystemConst.IOC_Model.OrderModel);
-            var result = orderModel.CancelOrder(amid,orderID);
-
+        public ActionResult CancelOrder(int amid, int orderID)
+        {
+            var orderModel = Factory.Get<IOrderModel>(SystemConst.IOC_Model.OrderModel);
+            var result = orderModel.CancelOrder(amid, orderID);
+            return Json(result);
         }
     }
 }

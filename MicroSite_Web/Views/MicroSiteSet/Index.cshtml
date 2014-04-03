@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.MicroSiteSet;
+}
+@section head{
+    <script>
+    </script>
+}
+@model PagedList<Poco.Product>
+<div class="title">
+    <div style="float: right">
+        <a href="http://@ViewBag.WeiURL" target="_blank" style=" color:#00aec8">点击进入微商城</a></div>
+    @Html.Partial("Menu3")
+    <div style="clear: both">
+    </div>
+</div>
+<div class="body">
+    @using (Ajax.BeginForm("Index", "MicroSiteSet", new { HostName = ViewBag.HostName },new AjaxOptions { UpdateTargetId = "alert" }))
+    {
+        <fieldset style="border: 1px solid #E7E7E7;">
+            <legend>电商设置</legend>
+            <table>
+                <tr>
+                    <td >
+                        用户下单需要邮件通知
+                    </td>
+                    <td>
+                        <input  />
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    }
+</div>
+<div style="clear: both">
+</div>

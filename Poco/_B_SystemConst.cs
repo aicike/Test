@@ -148,8 +148,9 @@ namespace Poco
             public const string LotteryDish = "LotteryDish";
             public const string PropertyHouse = "PropertyHouse";
             public const string HouseInfo_Property = "HouseInfo_Property";
+            public const string MicroSiteSet = "MicroSiteSet";
             
-
+            
 
             //Action
             public const string History = "History";

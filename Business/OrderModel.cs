@@ -555,10 +555,6 @@ namespace Business
             //更改订单状态为取消
             order.status = (int)EnumOrderStatus.Revoke;
             result = Edit(order);
-            //if (result.HasError)
-            //{
-            //    return result;
-            //}
             return result;
         }
     }

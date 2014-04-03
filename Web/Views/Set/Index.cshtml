@@ -186,9 +186,7 @@
                         }
                     });
                 }
-
             });
-
 
             $("form").submit(function () {
                 if ($(".validation-summary-errors").find("li[style!='display:none']").length == 0) {
@@ -197,7 +195,6 @@
                     $(".validation-summary-errors").find("li").remove();
                 }
             });
-
 
             $("#btnSubmit").click(function () {
                 if (!isTrue) {
@@ -273,8 +270,6 @@
                         }
                         else
                         { 
-                        
-                        
                         <div style="width: 120px; height: 120px; overflow: hidden;">
                             <img id="imgLogo" src="@Url.Content(Model.HeadImagePath ?? "~/Images/default_avatar.png")" style="width:120px; height:120px"/>
                         </div>

@@ -169,6 +169,7 @@
     <Compile Include="Controllers\MicroNewController.cs" />
     <Compile Include="Controllers\MicroOrderController.cs" />
     <Compile Include="Controllers\MicroSitePanorama.cs" />
+    <Compile Include="Controllers\MicroSiteSetController.cs" />
     <Compile Include="Controllers\MicroUserDeliveryAddressController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\OrderMTypeController.cs" />
@@ -686,6 +687,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="Views\MicroSiteSet\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
