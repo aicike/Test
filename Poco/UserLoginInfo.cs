@@ -66,5 +66,7 @@ namespace Poco
         public User CurrenRelatedUser { get; set; }
 
         public virtual ICollection<User> Users { get; set; }
+
+        public virtual ICollection<Property_User> Property_Users { get; set; }
     }
 }

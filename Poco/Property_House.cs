@@ -6,6 +6,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Poco
 {
+    /// <summary>
+    /// 房间信息
+    /// </summary>
     public class Property_House : IBaseEntity
     {
         public int ID { get; set; }
@@ -22,5 +25,7 @@ namespace Poco
         [Required(ErrorMessage = "请输入房间号")]
         [StringLength(50, ErrorMessage = "长度小于50")]
         public string RoomNumber { get; set; }
+
+        public virtual ICollection<Property_User> Property_Users { get; set; }
     }
 }
