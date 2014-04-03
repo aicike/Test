@@ -22,8 +22,22 @@ namespace Poco
 
         public virtual AccountMain AccountMain { get; set; }
 
-        [Display(Name = "楼层")]
-        public int Layer { get; set; }
+        /// <summary>
+        /// 楼号
+        /// </summary>
+        [Display(Name = "楼号")]
+        [Required(ErrorMessage = "请输入楼号")]
+        [StringLength(50, ErrorMessage = "长度小于50")]
+        public string BuildingNum { get; set; }
+
+        /// <summary>
+        /// 单元
+        /// </summary>
+        [Display(Name = "单元")]
+        [Required(ErrorMessage = "请输入单元")]
+        [StringLength(50, ErrorMessage = "长度小于50")]
+        public string CellNum { get; set; }
+
 
         [Display(Name = "房间号")]
         [Required(ErrorMessage = "请输入房间号")]

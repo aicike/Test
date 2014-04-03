@@ -843,7 +843,7 @@ namespace Common
                 {
                     File.Delete(PATH);
                 }
-                return null;
+                return result;
             }
             if (File.Exists(PATH))
             {
