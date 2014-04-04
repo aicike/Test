@@ -264,7 +264,7 @@ namespace Web.Controllers
             //已读用户
            
             var AppAdvertorialOperationModel = Factory.Get<IAppAdvertorialOperationModel>(SystemConst.IOC_Model.AppAdvertorialOperationModel);
-            var aaoperation = AppAdvertorialOperationModel.getAOlist(AID,type.Value,LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 15);
+            var aaoperation = AppAdvertorialOperationModel.getAOlist(AID,type.Value,LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1,15);
 
             ViewBag.AID = AID;
             ViewBag.AMID = AMID;

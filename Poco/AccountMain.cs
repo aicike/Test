@@ -256,5 +256,7 @@ namespace Poco
         public virtual ICollection<Property_House> Property_Houses { get; set; }
 
         public virtual ICollection<Property_User> Property_Users { get; set; }
+		
+		public virtual ICollection<PropertyFeeInfo> PropertyFeeInfo { get; set; }
     }
 }

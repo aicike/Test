@@ -1,0 +1,153 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.PropertyFeeInfo;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.PropertyFeeInfo;
+}
+@section head{
+    <script>
+        $(function () {
+            //            $("label[name=labCbFirst]").each(function () {
+            //                $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
+            //            });
+            $("#Date").val('@ViewBag.Date');
+            $("#Unit").val('@ViewBag.Unit');
+            $("#RoomNumber").val('@ViewBag.RoomNumber');
+            $("#OwnerName").val('@ViewBag.OwnerName');
+            $("#OwnerPhone").val('@ViewBag.OwnerPhone');
+        });
+
+    </script>
+}
+@model PagedList<Poco.PropertyFeeInfo>
+<div class="title">
+    @*@Html.Partial("Menu3")*@
+</div>
+<div class="body">
+    @using (Html.BeginForm("Index", "PropertyFeeInfo", new { HostName = ViewBag.HostName }, FormMethod.Get, new { enctype = "multipart/form-data" }))
+    {
+        <table style="width: 100%">
+            <tr>
+                <td>
+                    缴费日期：
+                </td>
+                <td>
+                    <input type="text" id="Date" name="Date" />
+                </td>
+                <td>
+                    单元：
+                </td>
+                <td>
+                    <input type="text" id="Unit" name="Unit" />
+                </td>
+                <td>
+                    房号
+                </td>
+                <td>
+                    <input type="text" id="RoomNumber" name="RoomNumber" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    业主姓名：
+                </td>
+                <td>
+                    <input type="text" id="OwnerName" name="OwnerName" />
+                </td>
+                <td>
+                    业主电话：
+                </td>
+                <td>
+                    <input type="text" id="OwnerPhone" name="OwnerPhone" />
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="submit" id="btnSubmit" value="查询" class="button" style="margin-left: 20px" />
+                </td>
+            </tr>
+        </table>
+    }
+    <div class="pages" style="margin-bottom: 5px; margin-top: 10px;">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+    <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
+        <tr>
+            <th>
+                业主姓名
+            </th>
+            <th>
+                业主电话
+            </th>
+            <th>
+                单元
+            </th>
+            <th>
+                房号
+            </th>
+            <th>
+                缴费月份
+            </th>
+            <th>
+                物业管理费
+            </th>
+            <th>
+                物业服务费
+            </th>
+            <th>
+                固定停车费
+            </th>
+            <th>
+                电梯费
+            </th>
+            <th>
+                水费
+            </th>
+            <th>
+                卫生费
+            </th>
+            <th>
+                其他费用
+            </th>
+            <th>
+                合计
+            </th>
+            <th>
+                备注
+            </th>
+        </tr>
+    </table>
+    <div class="pages" style="margin-bottom: 5px; margin-top: 10px;">
+        @Html.Pager(Model, new PagerOptions
+       {
+           PageIndexParameterName = "ID",
+           CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+           NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+           NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+           CssClass = "manage_pages pages",
+           SeparatorHtml = "&nbsp;",
+           AutoHide = false,
+           /*LastPageText = "Last",
+           FirstPageText = "First",
+           PrevPageText = "Back",
+           NextPageText = "Next",*/
+           PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+           ShowFirstLast = false
+       })
+    </div>
+</div>

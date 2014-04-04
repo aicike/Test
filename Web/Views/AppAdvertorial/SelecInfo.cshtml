@@ -44,8 +44,12 @@
     </style>
     <script>
         $(function () {
-
-            $("#type").val(@ViewBag.type);
+            $("#type").val('@ViewBag.type');
+            $("#type").change(function () {
+                var url = '@Url.Action("SelecInfo", "AppAdvertorial")';
+                url = url + "?AID=@(ViewBag.AID)&AMID=@(ViewBag.AMID)&type=" + $(this).val();
+                window.location.href = url;
+            });
         });
     </script>
 }
@@ -62,19 +66,13 @@
         </td>
     </tr>
 </table>
-@using (Html.BeginForm("SelecInfo", "AppAdvertorial", new { HostName = ViewBag.HostName, AID = ViewBag.AID, AMID = ViewBag.AMID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-
-    <div class="divList">
-        阅读状态：
-        <select id="type" name="type">
-            <option value="0">已读</option>
-            <option value="1">未读</option>
-        </select>
-        <input type="submit" id="btnSubmit" value="查看" class="button" style="margin-left: 20px;
-            height: 30px" />
-    </div>
-}
+<div class="divList">
+    阅读状态：
+    <select id="type" name="type">
+        <option value="0">已读</option>
+        <option value="1">未读</option>
+    </select>
+</div>
 <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
     <tr>
         <th>
@@ -128,7 +126,7 @@
                 else
                 {
                     @:未读
-                                            }
+                                                            }
             </td>
         </tr>
     }

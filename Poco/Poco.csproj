@@ -98,6 +98,7 @@
     <Compile Include="PropertyComplexEntity.cs" />
     <Compile Include="Property_House.cs" />
     <Compile Include="Property_User.cs" />
+    <Compile Include="PropertyFeeInfo.cs" />
     <Compile Include="ReportBody.cs" />
     <Compile Include="ReportFormPower.cs" />
     <Compile Include="SurveyAnswerUser.cs" />
