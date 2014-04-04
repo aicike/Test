@@ -129,31 +129,60 @@
                     </div>
                 </div>
                 <div style="padding: 9px 0px 0px 0px; font-size: 13px; color: #858585">
-                    <span style="float: left">待收货</span><span style="float: right">共计@(item.OrderDetail.Count)件商品&nbsp;&nbsp;&nbsp;总价：<span
+                    <span style="float: left">
+                        @switch (item.status)
+                        {
+                            case (int)Poco.Enum.EnumOrderStatus.Cancel:
+                            @:交易关闭
+                                break;
+                            case (int)Poco.Enum.EnumOrderStatus.Complete:
+                            @:已完成
+                                break;
+                            case (int)Poco.Enum.EnumOrderStatus.Payment:
+                            @:对方已付款
+                                break;
+                            case (int)Poco.Enum.EnumOrderStatus.Shipped:
+                            @:已发货
+                                break;
+                            case (int)Poco.Enum.EnumOrderStatus.WaitPayMent:
+                            @:等待付款
+                                break;
+                            case (int)Poco.Enum.EnumOrderStatus.WaitDistribution:
+                            @:待配送
+                                break;
+                            case (int)Poco.Enum.EnumOrderStatus.Proceed:
+                            @:配送中
+                                break;
+                            case (int)Poco.Enum.EnumOrderStatus.Revoke:
+                            @:已撤销
+                                                                                break;
+                        }
+                    </span><span style="float: right">共计@(item.OrderDetail.Count)件商品&nbsp;&nbsp;&nbsp;总价：<span
                         style="color: #FF3030; font-size: 14px;">@item.Price.ToString("C")</span></span>
                     <div style="clear: both">
                     </div>
                 </div>
                 <div>
-                    @*  <button data-mini="true" style="background-color: #FF3030; color: #fff; text-shadow: none;
-                        font-size: 14px;" onclick="CancelOrder(@item.ID)">
-                        取消</button>*@ <a href="#popupDialog" style="background-color: #FF3030; color: #fff;
-                            text-shadow: none; font-size: 14px;" data-role="button" data-position-to="window"
-                            data-transition="pop" data-rel="popup" data-corners="false" onclick="javascript:$('#center_order_1').click();">
+                    @if (item.status == (int)Poco.Enum.EnumOrderStatus.WaitDistribution)
+                    { 
+                        <a href="#popupDialog" style="background-color: #FF3030; color: #fff; text-shadow: none;
+                            font-size: 14px;" data-role="button" data-position-to="window" data-transition="pop"
+                            data-rel="popup" data-corners="false" onclick="javascript:$('#center_order_1').click();">
                             取消</a>
-                    <div id="popupDialog" style="width: 300px" data-role="popup" data-theme="b" data-overlay-theme="b"
-                        data-dismissible="false">
-                        <div class="ui-corner-bottom ui-content" data-role="content" data-theme="b">
-                            <div class="ui-content" style="text-align: center; min-height: 30px">
-                                确定要取消订单？
-                            </div>
-                            <a href="#" data-role="button" class="spanSize" style="font-weight: normal; width: 32%"
+                        <div id="popupDialog" style="width: 300px" data-role="popup" data-theme="b" data-overlay-theme="b"
+                            data-dismissible="false">
+                            <div class="ui-corner-bottom ui-content" data-role="content" data-theme="b">
+                                <div class="ui-content" style="text-align: center; min-height: 30px">
+                                    确定要取消订单？
+                                </div>
+                                <a href="#" data-role="button" class="spanSize" style="font-weight: normal; width: 32%"
                                     data-rel="back" data-theme="b" data-inline="true" data-corners="false" onclick="btnCancelOrder(@item.ID)">
-                                确定</a> <a href="#" data-role="button" class="spanSize" style="font-weight: normal;
-                                    width: 32%" data-rel="back" data-theme="b" data-inline="true" data-corners="false">
-                                    取消</a>
+                                    确定</a> <a href="#" data-role="button" class="spanSize" style="font-weight: normal;
+                                        width: 32%" data-rel="back" data-theme="b" data-inline="true" data-corners="false">
+                                        取消</a>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
         }
