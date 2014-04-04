@@ -48,10 +48,10 @@ namespace Web.Controllers
 
             var data = result.Entity as DataTable;
             /* Property_House 房间信息
-             * UserLoginInfo 用户信息
+             * Property_User 用户信息
              * 
              */
-            List<Property_House> Property_House_list = new List<Property_House>();
+            List<Property_User> Property_User_list = new List<Property_User>();
             foreach (DataRow item in data.Rows)
             {
                 var buildingNum = item["楼号"];
@@ -81,7 +81,12 @@ namespace Web.Controllers
                 ph.CellNum = cellNum_str;
                 ph.RoomNumber = houseNum_str;
                 ph.AccountMainID = LoginAccount.CurrentAccountMainID;
-                Property_House_list.Add(ph);
+                Property_User pu = new Property_User();
+                pu.AccountMainID = LoginAccount.CurrentAccountMainID;
+                pu.UserName = userName_str;
+                pu.Phone = userPhone_str;
+                pu.Property_House = ph;
+                Property_User_list.Add(pu);
             }
 
 
