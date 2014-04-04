@@ -249,5 +249,6 @@ namespace Poco
 
         public virtual ICollection<Lottery_dish> Lottery_dishs { get; set; }
 
+        public virtual ICollection<PropertyFeeInfo> PropertyFeeInfo { get; set; }
     }
 }

@@ -198,6 +198,7 @@
     <Compile Include="Controllers\MyTaskController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\OrderMTypeController.cs" />
+    <Compile Include="Controllers\PropertyFeeInfoController.cs" />
     <Compile Include="Controllers\SalesMessageController.cs" />
     <Compile Include="Controllers\SetController.cs" />
     <Compile Include="Controllers\SSOServiceController.cs" />
@@ -1009,6 +1010,7 @@
     <Content Include="Views\ActivityInfo\ActivityReport.cshtml" />
     <Content Include="Views\Default\LotteryDish.cshtml" />
     <Content Include="Views\Test\setexcel.cshtml" />
+    <Content Include="Views\PropertyFeeInfo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
