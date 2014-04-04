@@ -26,21 +26,21 @@
 
             //导入状态 1出错 2成功
             var IsErro = '@ViewBag.IsError';
-            var ErrorStr = '@ViewBag.ErrorStr'; 
+            var ErrorStr = '@ViewBag.ErrorStr';
             if (IsErro == 1) {
                 JAlert({
                     Message: ErrorStr,
                     DialogType: "Ok",
                     BtnOk: "确定"
                 });
-            } 
+            }
             else if (IsErro == 2) {
                 JAlert({
                     Message: "导入成功！",
                     DialogType: "Ok",
                     BtnOk: "确定"
-//                    BtnOkClick: "location.reload()" ,
-//                    BtnCancelClick: "$(this).dialog('close');"
+                    //                    BtnOkClick: "location.reload()" ,
+                    //                    BtnCancelClick: "$(this).dialog('close');"
                 });
             }
         });
@@ -59,19 +59,16 @@
                 }
             });
         }
-        
-        function CheckImport()
-        {
-            var ImExcel =$("#ImExcel").val();
-            if (ImExcel != null && ImExcel != undefined)
-            { 
-                if(ImExcel.length<=0)
-                {
-                    JMessage("请选择文件",true)
+
+        function CheckImport() {
+            var ImExcel = $("#ImExcel").val();
+            if (ImExcel != null && ImExcel != undefined) {
+                if (ImExcel.length <= 0) {
+                    JMessage("请选择文件", true)
                     return false;
                 }
-                else{
-                    
+                else {
+
                 }
             }
         }
@@ -85,7 +82,11 @@
 }
 @model PagedList<Poco.PropertyFeeInfo>
 <div class="title" style="width: 988px">
+    <div style="float: right">
+        <a href="/Download/Property/物业费导入模板.xlsx" target="_blank" style=" color:#00aec8">下载物业费导入模板</a></div>
     @Html.Partial("Menu3")
+    <div style="clear: both">
+    </div>
 </div>
 <div class="body" style="width: 988px">
     @using (Html.BeginForm("Index", "PropertyFeeInfo", new { HostName = ViewBag.HostName }, FormMethod.Get, new { enctype = "multipart/form-data" }))
@@ -128,7 +129,8 @@
                 </td>
                 <td>
                     <input type="submit" id="btnSubmit" value="查询" class="button" style="" />
-                    <input type="button" id="btnImport" value="导入" onclick="Showimport()" class="button" style="margin-left: 20px" />
+                    <input type="button" id="btnImport" value="导入" onclick="Showimport()" class="button"
+                        style="margin-left: 20px" />
                 </td>
             </tr>
         </table>
@@ -265,23 +267,26 @@
        })
     </div>
 </div>
-
 <div id="dialogimport" title="报名列表" style="display: none; padding: 0px">
-  @using (Html.BeginForm("ImportExcel", "PropertyFeeInfo", new { HostName = ViewBag.HostName, id = ViewBag.pageid }, FormMethod.Post, new { enctype = "multipart/form-data" }))
-  {
-    <table width="100%" style=" margin-top:30px">
-        <tr>
-            <td width="120px">请选择Excel文件：</td>
-            <td>
-                <input type="file" id="ImExcel" name="ImExcel" />
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>
-             <input type="submit" id="btnImportSubmit" onclick="return CheckImport()" value="导入" class="button" style="" />
-            </td>
-        </tr>
-    </table>
-  }
+    @using (Html.BeginForm("ImportExcel", "PropertyFeeInfo", new { HostName = ViewBag.HostName, id = ViewBag.pageid }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <table width="100%" style="margin-top: 30px">
+            <tr>
+                <td width="120px">
+                    请选择Excel文件：
+                </td>
+                <td>
+                    <input type="file" id="ImExcel" name="ImExcel" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <input type="submit" id="btnImportSubmit" onclick="return CheckImport()" value="导入"
+                        class="button" style="" />
+                </td>
+            </tr>
+        </table>
+    }
 </div>
