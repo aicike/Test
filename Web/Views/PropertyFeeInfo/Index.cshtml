@@ -1,10 +1,12 @@
 ﻿@{
-    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
     ViewBag.Menu2 = Poco.SystemConst.Menu.PropertyFeeInfo;
     ViewBag.Menu3 = Poco.SystemConst.Menu.PropertyFeeInfo;
 }
 @section head{
+    <script src="@Url.Content("~/Scripts/timepicker/jquery-ui-timepicker-addon.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/timepicker/jquery-ui-timepicker-zh-CN.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/timepicker/jquery.ui.datepicker-zh-CN.js.js")" type="text/javascript"></script>
     <script>
         $(function () {
             //            $("label[name=labCbFirst]").each(function () {
@@ -15,18 +17,80 @@
             $("#RoomNumber").val('@ViewBag.RoomNumber');
             $("#OwnerName").val('@ViewBag.OwnerName');
             $("#OwnerPhone").val('@ViewBag.OwnerPhone');
+
+            $("#Date").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'yy-mm'
+            });
+
+            //导入状态 1出错 2成功
+            var IsErro = '@ViewBag.IsError';
+            var ErrorStr = '@ViewBag.ErrorStr'; 
+            if (IsErro == 1) {
+                JAlert({
+                    Message: ErrorStr,
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+            }
+            else if (IsErro == 2) {
+                JAlert({
+                    Message: "导入成功！",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+//                    BtnOkClick: "location.reload()" ,
+//                    BtnCancelClick: "$(this).dialog('close');"
+                });
+            }
         });
 
+
+        //导入窗体
+        function Showimport() {
+            $("#dialogimport").dialog({
+                resizable: false,
+                height: 200,
+                width: 450,
+                modal: true,
+                draggable: false,
+                close: function (event, ui) {
+
+                }
+            });
+        }
+        
+        function CheckImport()
+        {
+            var ImExcel =$("#ImExcel").val();
+            if (ImExcel != null && ImExcel != undefined)
+            { 
+                if(ImExcel.length<=0)
+                {
+                    JMessage("请选择文件",true)
+                    return false;
+                }
+                else{
+                    
+                }
+            }
+        }
     </script>
+    <style>
+        .main
+        {
+            width: 1200px !important;
+        }
+    </style>
 }
 @model PagedList<Poco.PropertyFeeInfo>
-<div class="title">
-    @*@Html.Partial("Menu3")*@
+<div class="title" style="width: 988px">
+    @Html.Partial("Menu3")
 </div>
-<div class="body">
+<div class="body" style="width: 988px">
     @using (Html.BeginForm("Index", "PropertyFeeInfo", new { HostName = ViewBag.HostName }, FormMethod.Get, new { enctype = "multipart/form-data" }))
     {
-        <table style="width: 100%">
+        <table style="width: 800px">
             <tr>
                 <td>
                     缴费日期：
@@ -41,7 +105,7 @@
                     <input type="text" id="Unit" name="Unit" />
                 </td>
                 <td>
-                    房号
+                    房号:
                 </td>
                 <td>
                     <input type="text" id="RoomNumber" name="RoomNumber" />
@@ -63,7 +127,8 @@
                 <td>
                 </td>
                 <td>
-                    <input type="submit" id="btnSubmit" value="查询" class="button" style="margin-left: 20px" />
+                    <input type="submit" id="btnSubmit" value="查询" class="button" style="" />
+                    <input type="button" id="btnImport" value="导入" onclick="Showimport()" class="button" style="margin-left: 20px" />
                 </td>
             </tr>
         </table>
@@ -127,10 +192,59 @@
             <th>
                 合计
             </th>
-            <th>
+            <th style="width: 200px">
                 备注
             </th>
         </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.OwnerName
+                </td>
+                <td>
+                    @item.OwnerPhone
+                </td>
+                <td>
+                    @item.Unit
+                </td>
+                <td>
+                    @item.RoomNumber
+                </td>
+                <td>
+                    @item.PayDate
+                </td>
+                <td>
+                    @item.ManagerFee
+                </td>
+                <td>
+                    @item.ServiceFee
+                </td>
+                <td>
+                    @item.ParkingFee
+                </td>
+                <td>
+                    @item.ElevatorFee
+                </td>
+                <td>
+                    @item.WaterFee
+                </td>
+                <td>
+                    @item.HealthFee
+                </td>
+                <td>
+                    @item.OrterFee
+                </td>
+                <td>
+                    @item.Total
+                </td>
+                <td>
+                    <div style="width: 195px; word-break: keep-all;">
+                        @item.Remarks
+                    </div>
+                </td>
+            </tr>
+        }
     </table>
     <div class="pages" style="margin-bottom: 5px; margin-top: 10px;">
         @Html.Pager(Model, new PagerOptions
@@ -150,4 +264,24 @@
            ShowFirstLast = false
        })
     </div>
+</div>
+
+<div id="dialogimport" title="报名列表" style="display: none; padding: 0px">
+  @using (Html.BeginForm("ImportExcel", "PropertyFeeInfo", new { HostName = ViewBag.HostName, id = ViewBag.pageid }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+  {
+    <table width="100%" style=" margin-top:30px">
+        <tr>
+            <td width="120px">请选择Excel文件：</td>
+            <td>
+                <input type="file" id="ImExcel" name="ImExcel" />
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+             <input type="submit" id="btnImportSubmit" onclick="return CheckImport()" value="导入" class="button" style="" />
+            </td>
+        </tr>
+    </table>
+  }
 </div>
