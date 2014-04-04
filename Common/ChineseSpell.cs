@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 namespace Common
 {
     public static class ChineseSpell
-    {
+    { 
         private static int[] pyValue = new int[]
                 {
                 -20319,-20317,-20304,-20295,-20292,-20283,-20265,-20257,-20242,-20230,-20051,-20036,
