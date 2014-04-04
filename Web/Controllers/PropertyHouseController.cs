@@ -7,6 +7,8 @@ using Poco;
 using Controllers;
 using Common;
 using System.Data;
+using Injection;
+using Interface;
 
 namespace Web.Controllers
 {
@@ -14,8 +16,10 @@ namespace Web.Controllers
     {
         public ActionResult Index(int? id)
         {
-            List<PropertyComplexEntity> objs = new List<PropertyComplexEntity>();
-            var list = objs.AsQueryable().ToPagedList(id ?? 1, 100);
+            var propertyUserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
+            var list =propertyUserModel.GetListByAccountMainID(LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 100);
+            //List<PropertyComplexEntity> objs = new List<PropertyComplexEntity>();
+            //var list = objs.AsQueryable().ToPagedList(id ?? 1, 100);
 
             //提示消息
             if (TempData["Msg"] != null)
@@ -88,14 +92,16 @@ namespace Web.Controllers
                 pu.Property_House = ph;
                 Property_User_list.Add(pu);
             }
-
-
+            var propertyUserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
+            result = propertyUserModel.AddList(Property_User_list);
+            if (result.HasError)
+            {
+                TempData["Msg"] = string.Format("导入失败。[{0}]",result.Error);
+                TempData["HasError"] = 1;
+                return RedirectToAction("Index", "PropertyHouse", new { HostName = LoginAccount.HostName });
+            }
             #endregion
-
-
-
-
-            //TempData["HasError"] = 0;
+            TempData["HasError"] = 0;
             return RedirectToAction("Index", "PropertyHouse", new { HostName = LoginAccount.HostName });
         }
     }

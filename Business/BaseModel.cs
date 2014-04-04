@@ -7,13 +7,14 @@ namespace Business
 {
     public class BaseModel<T> : EFModel where T : class, IBaseEntity
     {
-        public IQueryable<T> List(bool isOrder=false)
+        public IQueryable<T> List(bool isOrder = false)
         {
             if (isOrder)
             {
                 return base.List<T>().OrderByDescending(a => a.ID);
             }
-            else {
+            else
+            {
                 return base.List<T>().OrderBy(a => a.ID);
             }
         }
@@ -24,6 +25,11 @@ namespace Business
         public Result Add(T entity)
         {
             return base.Add<T>(entity);
+        }
+
+        public Result AddList(List<T> list)
+        {
+            return base.AddList<T>(list);
         }
 
         public Result Edit(T entity)
@@ -51,7 +57,7 @@ namespace Business
             return Context.Database.SqlQuery<T>(sql).AsQueryable();
         }
 
-        public int SqlExecute(string sql,params object[] parameters)
+        public int SqlExecute(string sql, params object[] parameters)
         {
             return Context.Database.ExecuteSqlCommand(sql, parameters);
         }

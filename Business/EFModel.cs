@@ -38,6 +38,14 @@ namespace Business
             return SaveChanges();
         }
 
+        public Result AddList<T>(List<T> list) where T : class, IBaseEntity
+        {
+            Context.Configuration.AutoDetectChangesEnabled = false;
+            Context.Configuration.ValidateOnSaveEnabled = false;
+            Context.Set<T>().AddRange(list);
+            return SaveChanges();
+        }
+
         public Result Edit<T>(T entity) where T : class, IBaseEntity
         {
             ////方法1

@@ -12,6 +12,8 @@ namespace Interface
 
         Result Add(T entity);
 
+        Result AddList(List<T> list);
+
         Result Edit(T entity);
 
         Result Delete(int id);

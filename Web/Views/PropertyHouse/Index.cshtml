@@ -21,35 +21,35 @@
             if (hasError == "1" && msg.length > 0) {
                 JMessage(msg, true);
             } else if (hasError == "0") {
-                //JMessage("保存成功。");
+                JMessage("导入成功。");
             }
         });
     </script>
 }
-@model PagedList<Poco.PropertyComplexEntity>
+@model PagedList<Poco.Property_User>
 <div class="title">
     @Html.Partial("Menu3")
 </div>
 <div class="body">
     <div class="option">
-        @Html.ActionLink("添加", "Add", "PropertyHouse", new { HostName = ViewBag.HostName }, null, true)
+       @* @Html.ActionLink("添加", "Add", "PropertyHouse", new { HostName = ViewBag.HostName }, null, true)*@
         <a href="#" id="btnUpload" class="button">导入</a>
     </div>
     <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
         <tr>
-            <th style="width: 100px;">
+            <th style="width: 80px;">
                 楼号
             </th>
-            <th style="width: 100px;">
+            <th style="width: 80px;">
                 单元
             </th>
-            <th style="width: 100px;">
+            <th style="width: 80px;">
                 房号
             </th>
             <th>
                 业主名称
             </th>
-            <th style="width: 160px;">
+            <th style="width: 180px;">
                 电话
             </th>
             <th style="width: 150px;">
@@ -60,23 +60,23 @@
         {
             <tr>
                 <td>
-                    @item.BuildingNum
+                    @item.Property_House.BuildingNum
                 </td>
                 <td>
-                    @item.CellNum
+                    @item.Property_House.CellNum
                 </td>
                 <td>
-                    @item.HouseNum
+                    @item.Property_House.RoomNumber
                 </td>
                 <td>
                     @item.UserName
                 </td>
                 <td>
-                    @item.UserPhone
+                    @item.Phone
                 </td>
                 <td class="operation">
-                    @Html.ActionLink("修改", "Edit", "LotteryDish", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
-                    @Ajax.ActionLink("删除", "Delete", "LotteryDish", new { HostName = ViewBag.HostName, id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?删除此项将会删除其关联的所有数据！','" + Url.Action("Delete", "LotteryDish", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
+                    @*@Html.ActionLink("修改", "Edit", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
+                    @Ajax.ActionLink("删除", "Delete", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?删除此项将会删除其关联的所有数据！','" + Url.Action("Delete", "LotteryDish", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)*@
                 </td>
             </tr>
         }
