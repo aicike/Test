@@ -224,6 +224,7 @@ INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [C
 --二级
 --INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (57,'Token_House_I2', 0, N'楼号管理', N'楼号管理（物业）', NULL, N'HouseInfo_Property', N'Index', 1, 56,0,2)
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (57,'Token_Property_House', 0, N'房屋管理', N'房屋管理（物业）', NULL, N'PropertyHouse', N'Index',1, 56,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (58,'Token_Property_Fee', 0, N'物业费管理', N'物业费管理（物业）', NULL, N'PropertyFeeInfo', N'Index',2, 56,0,2)
 /*物业菜单结束*/
 SET IDENTITY_INSERT [dbo].[Menu] OFF
 
@@ -378,6 +379,8 @@ INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  (
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,54,'启用/禁用','SetStatus',5)
 
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,55,'设置','Index',1)
+
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,58,'列表','Index',1)
 
 --INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,57,'列表','Index',1)
 --INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,57,'添加','Add',2)

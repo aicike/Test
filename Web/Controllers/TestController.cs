@@ -220,8 +220,10 @@ namespace Web.Controllers
         {
             DataTable dt = new DataTable();
             Result retult = Tool.GetXLSXInfo(XLSXPath);
+            dt = retult.Entity as DataTable;
+            dt.Columns.Add("ID", typeof(int));
             CommonModel com = new CommonModel();
-            retult = com.CopyDataTableToDB(retult.Entity as DataTable, "cs");
+            retult = com.CopyDataTableToDB(dt, "cs");
             return View();
         }
 

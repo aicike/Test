@@ -852,6 +852,52 @@ namespace Common
             return result;
         }
 
+        /// <summary>
+        /// 获取Excel数据
+        /// </summary>
+        /// <param name="XLSXPath">HttpPostedFileBase</param>
+        /// <returns></returns>
+        public static Result GetXLSXInfo(System.Web.HttpPostedFileBase XLSXPath,DataTable dt)
+        {
+            Result result = new Result();
+            if (XLSXPath == null)
+            {
+                result.HasError = true;
+                result.Error = "参数值不鞥为NULL";
+                return result;
+            }
+            //临时路径
+            string TemporarPath = GetTemporaryPath();
+            string TemporarPathMap = HttpContext.Current.Server.MapPath(TemporarPath);
+            string fileName = XLSXPath.FileName.GetFileSuffix();
+            //上传路径
+            string PATH = TemporarPathMap + "//" + DateTime.Now.ToString("yyyyMMddhhmmsss") + fileName;
+            //上传文件
+            XLSXPath.SaveAs(PATH);
+            string strConn = "Provider=Microsoft.Ace.OleDb.12.0;Data Source=" + PATH + ";Extended Properties='Excel 12.0;HDR=Yes;IMEX=1'";
 
+            OleDbDataAdapter da = new OleDbDataAdapter("SELECT *  FROM [Sheet1$]", strConn);
+           
+            try
+            {
+                da.Fill(dt);
+                result.Entity = dt;
+            }
+            catch (Exception ex)
+            {
+                result.HasError = true;
+                result.Error = ex.Message;
+                if (File.Exists(PATH))
+                {
+                    File.Delete(PATH);
+                }
+                return result;
+            }
+            if (File.Exists(PATH))
+            {
+                File.Delete(PATH);
+            }
+            return result;
+        }
     }
 }

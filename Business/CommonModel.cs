@@ -542,6 +542,7 @@ namespace Business
                 conn.Open();
                 using (SqlBulkCopy bcp = new SqlBulkCopy(conn))
                 {
+                    bcp.BatchSize = 200000;
                     bcp.DestinationTableName = DBTableName;
                     try
                     {
