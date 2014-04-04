@@ -14,10 +14,24 @@ namespace Web.Controllers
 {
     public class PropertyHouseController : ManageAccountController
     {
-        public ActionResult Index(int? id)
+        public ActionResult Index(int? id, string houseNum, string userName, string userPhone)
         {
             var propertyUserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
-            var list =propertyUserModel.GetListByAccountMainID(LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 100);
+
+            var list = propertyUserModel.GetListByAccountMainID(LoginAccount.CurrentAccountMainID);//.ToPagedList(id ?? 1, 100);
+            if (string.IsNullOrEmpty(houseNum) == false && houseNum.Length > 0)
+            {
+                list = list.Where(a => a.Property_House.RoomNumber.Contains(houseNum));
+            }
+            if (string.IsNullOrEmpty(userName) == false && userName.Length > 0)
+            {
+                list = list.Where(a => a.UserName.Contains(userName));
+            }
+            if (string.IsNullOrEmpty(userPhone) == false && userPhone.Length > 0)
+            {
+                list = list.Where(a => a.Phone.Contains(userPhone));
+            }
+            var pageList= list.ToPagedList(id ?? 1, 100);
             //List<PropertyComplexEntity> objs = new List<PropertyComplexEntity>();
             //var list = objs.AsQueryable().ToPagedList(id ?? 1, 100);
 
@@ -32,7 +46,7 @@ namespace Web.Controllers
             {
                 ViewBag.HasError = TempData["HasError"].ToString();
             }
-            return View(list);
+            return View(pageList);
         }
 
         /// <summary>
@@ -96,7 +110,7 @@ namespace Web.Controllers
             result = propertyUserModel.AddList(Property_User_list);
             if (result.HasError)
             {
-                TempData["Msg"] = string.Format("导入失败。[{0}]",result.Error);
+                TempData["Msg"] = string.Format("导入失败。[{0}]", result.Error);
                 TempData["HasError"] = 1;
                 return RedirectToAction("Index", "PropertyHouse", new { HostName = LoginAccount.HostName });
             }

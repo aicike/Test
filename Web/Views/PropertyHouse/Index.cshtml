@@ -28,12 +28,66 @@
 }
 @model PagedList<Poco.Property_User>
 <div class="title">
+    <div style="float: right">
+        <a href="@Url.Content("~/Download/Property/物业用户信息导入模板.xlsx")" target="_blank" style=" color:#00aec8">
+            下载物业用户信息导入模板</a></div>
     @Html.Partial("Menu3")
+    <div style="clear: both">
+    </div>
 </div>
 <div class="body">
     <div class="option">
-       @* @Html.ActionLink("添加", "Add", "PropertyHouse", new { HostName = ViewBag.HostName }, null, true)*@
-        <a href="#" id="btnUpload" class="button">导入</a>
+        @* @Html.ActionLink("添加", "Add", "PropertyHouse", new { HostName = ViewBag.HostName }, null, true)*@
+       
+        @using (Html.BeginForm("Index", "PropertyHouse", new { HostName = ViewBag.HostName }, FormMethod.Get))
+        {
+            <table style="width: 100%">
+                <tr>
+                    <td colspan="7" style="text-align:right"> <a href="#" id="btnUpload" class="button" >导入</a></td>
+                </tr>
+                <tr>
+                    <td>
+                        房号：
+                    </td>
+                    <td>
+                        <input type="text" id="houseNum" name="houseNum" />
+                    </td>
+                    <td>
+                        业主姓名：
+                    </td>
+                    <td>
+                        <input type="text" id="userName" name="userName" />
+                    </td>
+                    <td>
+                        业主电话:
+                    </td>
+                    <td>
+                        <input type="text" id="userPhone" name="userPhone" />
+                    </td>
+                    <td style="text-align:right">
+                        <input type="submit" id="btnSubmit" value="查询" class="button" style="" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+    <div class="pages" style="margin-bottom: 10px;">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
     </div>
     <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
         <tr>
@@ -52,7 +106,7 @@
             <th style="width: 180px;">
                 电话
             </th>
-            <th style="width: 150px;">
+            <th style="width: 120px;">
                 操作
             </th>
         </tr>
@@ -75,6 +129,7 @@
                     @item.Phone
                 </td>
                 <td class="operation">
+
                     @*@Html.ActionLink("修改", "Edit", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
                     @Ajax.ActionLink("删除", "Delete", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?删除此项将会删除其关联的所有数据！','" + Url.Action("Delete", "LotteryDish", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)*@
                 </td>

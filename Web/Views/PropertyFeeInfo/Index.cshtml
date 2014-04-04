@@ -83,7 +83,8 @@
 @model PagedList<Poco.PropertyFeeInfo>
 <div class="title" style="width: 988px">
     <div style="float: right">
-        <a href="/Download/Property/物业费导入模板.xlsx" target="_blank" style=" color:#00aec8">下载物业费导入模板</a></div>
+        <a href="@Url.Content("~/Download/Property/物业费导入模板.xlsx")" target="_blank" style=" color:#00aec8">
+            下载物业费导入模板</a></div>
     @Html.Partial("Menu3")
     <div style="clear: both">
     </div>
@@ -135,7 +136,7 @@
             </tr>
         </table>
     }
-    <div class="pages" style="margin-bottom: 5px; margin-top: 10px;">
+    <div class="pages" style="margin-bottom: 5px; margin-top: 10px; margin-bottom:10px;">
         @Html.Pager(Model, new PagerOptions
    {
        PageIndexParameterName = "ID",
@@ -248,7 +249,7 @@
             </tr>
         }
     </table>
-    <div class="pages" style="margin-bottom: 5px; margin-top: 10px;">
+    <div class="pages" style="margin-bottom: 5px; ">
         @Html.Pager(Model, new PagerOptions
        {
            PageIndexParameterName = "ID",
