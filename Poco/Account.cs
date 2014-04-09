@@ -145,5 +145,8 @@ namespace Poco
         public virtual ICollection<Account_Role> Account_Roles { get; set; }
         public virtual ICollection<ActivityInfo> ActivityInfos { get; set; }
         public virtual ICollection<AutoMessage_Reply> AutoMessage_Replys { get; set; }
+
+        public virtual ICollection<RepairInfo> RepairInfo { get; set; }
+
     }
 }

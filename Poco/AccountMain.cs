@@ -258,5 +258,8 @@ namespace Poco
         public virtual ICollection<Property_User> Property_Users { get; set; }
 		
 		public virtual ICollection<PropertyFeeInfo> PropertyFeeInfo { get; set; }
+
+
+        public virtual ICollection<RepairInfo> RepairInfo { get; set; }
     }
 }

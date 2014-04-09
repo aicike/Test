@@ -89,6 +89,7 @@
     <Compile Include="IPushModel.cs" />
     <Compile Include="IPushMsgDetailModel.cs" />
     <Compile Include="IPushMsgModel.cs" />
+    <Compile Include="IRepairInfoModel.cs" />
     <Compile Include="IReportFormPowerModel.cs" />
     <Compile Include="IServiceModel.cs" />
     <Compile Include="ISurveyAnswerModel.cs" />

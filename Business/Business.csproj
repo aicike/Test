@@ -141,6 +141,7 @@
     <Compile Include="Push_Getui.cs" />
     <Compile Include="Push_IOS.cs" />
     <Compile Include="QrCodeModel.cs" />
+    <Compile Include="RepairInfoModel.cs" />
     <Compile Include="ReportFormPowerModel.cs" />
     <Compile Include="RoleModel.cs" />
     <Compile Include="Service References\Imtimely_ShortURL\Reference.cs">

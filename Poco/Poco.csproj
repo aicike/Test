@@ -80,6 +80,8 @@
     <Compile Include="Enum\EnumBrowseAdvertorialType.cs" />
     <Compile Include="Enum\EnumLotteryStatus.cs" />
     <Compile Include="Enum\EnumProductDiscountType.cs" />
+    <Compile Include="Enum\EnumRepairScore.cs" />
+    <Compile Include="Enum\EnumRepairStatus.cs" />
     <Compile Include="Enum\EnumReportForm.cs" />
     <Compile Include="Enum\EnumService.cs" />
     <Compile Include="Enum\EnumSocialType.cs" />
@@ -99,6 +101,8 @@
     <Compile Include="Property_House.cs" />
     <Compile Include="Property_User.cs" />
     <Compile Include="PropertyFeeInfo.cs" />
+    <Compile Include="RepairInfo.cs" />
+    <Compile Include="RepairOperation.cs" />
     <Compile Include="ReportBody.cs" />
     <Compile Include="ReportFormPower.cs" />
     <Compile Include="SurveyAnswerUser.cs" />

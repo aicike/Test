@@ -200,6 +200,7 @@
     <Compile Include="Controllers\OrderMTypeController.cs" />
     <Compile Include="Controllers\PropertyHouseController.cs" />
     <Compile Include="Controllers\PropertyFeeInfoController.cs" />
+    <Compile Include="Controllers\RepairInfoController.cs" />
     <Compile Include="Controllers\SalesMessageController.cs" />
     <Compile Include="Controllers\SetController.cs" />
     <Compile Include="Controllers\SSOServiceController.cs" />
@@ -1017,6 +1018,8 @@
     <Content Include="Views\HouseInfo_Property\Index.cshtml" />
     <Content Include="Views\Test\setexcel.cshtml" />
     <Content Include="Views\PropertyFeeInfo\Index.cshtml" />
+    <Content Include="Views\RepairInfo\Index.cshtml" />
+    <Content Include="Views\RepairInfo\ShowInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
