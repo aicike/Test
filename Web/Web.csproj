@@ -1018,6 +1018,8 @@
     <Content Include="Views\HouseInfo_Property\Index.cshtml" />
     <Content Include="Views\Test\setexcel.cshtml" />
     <Content Include="Views\PropertyFeeInfo\Index.cshtml" />
+    <Content Include="Views\PropertyHouse\Add.cshtml" />
+    <Content Include="Views\PropertyHouse\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

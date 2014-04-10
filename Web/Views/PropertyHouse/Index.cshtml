@@ -37,13 +37,13 @@
 </div>
 <div class="body">
     <div class="option">
-        @* @Html.ActionLink("添加", "Add", "PropertyHouse", new { HostName = ViewBag.HostName }, null, true)*@
-       
         @using (Html.BeginForm("Index", "PropertyHouse", new { HostName = ViewBag.HostName }, FormMethod.Get))
         {
             <table style="width: 100%">
                 <tr>
-                    <td colspan="7" style="text-align:right"> <a href="#" id="btnUpload" class="button" >导入</a></td>
+                    <td colspan="7" style="text-align: left">@Html.ActionLink("添加", "Add", "PropertyHouse", new { HostName = ViewBag.HostName }, null, true)<a
+                        href="#" id="btnUpload" class="button" style="margin:10px">导入</a>
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -64,7 +64,7 @@
                     <td>
                         <input type="text" id="userPhone" name="userPhone" />
                     </td>
-                    <td style="text-align:right">
+                    <td style="text-align: right">
                         <input type="submit" id="btnSubmit" value="查询" class="button" style="" />
                     </td>
                 </tr>
@@ -129,9 +129,8 @@
                     @item.Phone
                 </td>
                 <td class="operation">
-
-                    @*@Html.ActionLink("修改", "Edit", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
-                    @Ajax.ActionLink("删除", "Delete", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?删除此项将会删除其关联的所有数据！','" + Url.Action("Delete", "LotteryDish", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)*@
+                    @Html.ActionLink("修改", "Edit", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
+                    @Ajax.ActionLink("删除", "Delete", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID, phID = item.Property_HouseID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?删除此项将会删除其关联的所有数据！','" + Url.Action("Delete", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID, phID = item.Property_HouseID }) + "',null)" }, true)
                 </td>
             </tr>
         }

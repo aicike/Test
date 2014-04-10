@@ -123,7 +123,6 @@ namespace Web.Controllers
             {
                 return Alert(new Dialog(result.Error));
             }
-
             return JavaScript("window.location.href='" + Url.Action("Index", "HouseInfo", new { HostName = LoginAccount.HostName, houseId = Hid }) + "'");
         }
 

@@ -31,7 +31,7 @@ namespace Web.Controllers
             {
                 list = list.Where(a => a.Phone.Contains(userPhone));
             }
-            var pageList= list.ToPagedList(id ?? 1, 100);
+            var pageList = list.ToPagedList(id ?? 1, 100);
             //List<PropertyComplexEntity> objs = new List<PropertyComplexEntity>();
             //var list = objs.AsQueryable().ToPagedList(id ?? 1, 100);
 
@@ -67,7 +67,6 @@ namespace Web.Controllers
             var data = result.Entity as DataTable;
             /* Property_House 房间信息
              * Property_User 用户信息
-             * 
              */
             List<Property_User> Property_User_list = new List<Property_User>();
             foreach (DataRow item in data.Rows)
@@ -117,6 +116,82 @@ namespace Web.Controllers
             #endregion
             TempData["HasError"] = 0;
             return RedirectToAction("Index", "PropertyHouse", new { HostName = LoginAccount.HostName });
+        }
+
+        public ActionResult Add()
+        {
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "添加房屋信息", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
+            ViewBag.HostName = LoginAccount.HostName;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Add(Property_User property_User)
+        {
+            var propertyUserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
+            property_User.AccountMainID = LoginAccount.CurrentAccountMainID;
+            property_User.Property_House.AccountMainID = LoginAccount.CurrentAccountMainID;
+            var result = propertyUserModel.Add(property_User);
+            if (result.HasError)
+            {
+                return Alert(new Dialog(result.Error));
+            }
+            return JavaScript("window.location.href='" + Url.Action("Index", "PropertyHouse", new { HostName = LoginAccount.HostName})+"'");
+        }
+
+
+        /// <summary>
+        /// 修改界面
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult Edit(int id)
+        {
+            var propertyUserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
+            var propertyUser = propertyUserModel.Get(id);
+            ViewBag.HostName = LoginAccount.HostName;
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "修改房屋信息", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
+            return View(propertyUser);
+        }
+
+        /// <summary>
+        /// 修改信息
+        /// </summary>
+        /// <param name="MainHouseInfo"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Edit(Property_User property_User)
+        {
+            var propertyUserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
+            property_User.AccountMainID = LoginAccount.CurrentAccountMainID;
+            property_User.Property_House.AccountMainID = LoginAccount.CurrentAccountMainID;
+            property_User.Property_HouseID = property_User.Property_House.ID;
+            var result = propertyUserModel.Edit(property_User);
+            if (result.HasError)
+            {
+                return Alert(new Dialog(result.Error));
+            }
+            return JavaScript("window.location.href='" + Url.Action("Index", "PropertyHouse", new { HostName = LoginAccount.HostName }) + "'");
+        }
+
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult Delete(int id,int phID)
+        {
+            var propertyUserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
+            var result = propertyUserModel.Delete(id, phID);
+            if (result.HasError)
+            {
+                return Alert(new Dialog(result.Error));
+            }
+            return JavaScript("window.location.href='" + Url.Action("Index", "PropertyHouse", new { HostName = LoginAccount.HostName }) + "'");
         }
     }
 }

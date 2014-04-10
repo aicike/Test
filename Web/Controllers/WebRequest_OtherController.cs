@@ -429,6 +429,25 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
+        /// <summary>
+        /// 获取AMID对应的使用服务
+        /// </summary>
+        /// <param name="amid"></param>
+        /// <returns></returns>
+        public string GetAccountMainService(int amid)
+        {
+            var model = Factory.Get<IAccountMain_ServiceModel>(SystemConst.IOC_Model.AccountMain_ServiceModel);
+            var list = model.GetListByAccountMainID(amid);
+            if (list == null)
+            {
+                return null;
+            }
+            else
+            {
+                return list.Select(a => a.ServiceID).ToList().ConvertToString(",");
+            }
+        }
+
 
         /// <summary>
         ///  
