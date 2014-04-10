@@ -11,6 +11,10 @@ namespace Poco.Enum
     public enum EnumRepairScore
     {
         /// <summary>
+        /// 未评分
+        /// </summary>
+        NoScore,
+        /// <summary>
         /// 非常不满意
         /// </summary>
         VeryDissatisfied,

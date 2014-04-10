@@ -63,6 +63,8 @@
     <Compile Include="ICardInfoModel.cs" />
     <Compile Include="ICardPrefixModel.cs" />
     <Compile Include="IClassifyModel.cs" />
+    <Compile Include="IComplaintModel.cs" />
+    <Compile Include="IComplaintReplyModel.cs" />
     <Compile Include="IConversationDetailedModel.cs" />
     <Compile Include="IConversationModel.cs" />
     <Compile Include="IFeedbackModel.cs" />
@@ -90,6 +92,7 @@
     <Compile Include="IPushMsgDetailModel.cs" />
     <Compile Include="IPushMsgModel.cs" />
     <Compile Include="IRepairInfoModel.cs" />
+    <Compile Include="IRepairOperationModel.cs" />
     <Compile Include="IReportFormPowerModel.cs" />
     <Compile Include="IServiceModel.cs" />
     <Compile Include="ISurveyAnswerModel.cs" />

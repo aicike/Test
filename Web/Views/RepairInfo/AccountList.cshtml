@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "AccountList";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+@section head{
+    <script>
+        $(function () {
+            $("#accordion").accordion();
+            $(".ui-accordion-content").css("height", "auto");
+        });
+
+        function SetBgColor(td, AID, AName) {
+            $("td[name=tdBgcolor]").removeClass("BgColor");
+            $(td).addClass("BgColor");
+            $("#AID").val(AID);
+            $("#AName").val(AName);
+        }
+    </script>
+    <style>
+        .BgColor
+        {
+            background-color:#00aec8;
+            }
+    </style>
+}
+@model List<Poco.Role>
+<input type="hidden" id="AID" />
+<input type="hidden" id="AName" />
+ <div id="accordion">
+        @foreach (var item in Model)
+        {
+            <h3>
+                @item.Name</h3>
+            <div>
+                <table cellpadding="0" cellspacing="0" border="0" style="line-height: 20px;width:100%">
+                    @foreach (var Gitem in item.Account_Roles)
+                    {
+                        <tr>
+                            <td name="tdBgcolor" onclick="SetBgColor(this,@Gitem.AccountID,'@Gitem.Account.Name')" style=" cursor:pointer">
+                                @Gitem.Account.Name
+                            </td>
+                        </tr>   
+                    }
+                </table>
+            </div>
+        }
+</div>

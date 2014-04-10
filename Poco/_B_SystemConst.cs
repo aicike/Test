@@ -151,6 +151,7 @@ namespace Poco
             public const string MicroSiteSet = "MicroSiteSet";
             public const string PropertyFeeInfo = "PropertyFeeInfo";
             public const string RepairInfo = "RepairInfo";
+            public const string Complaint = "Complaint";
             //Action
             public const string History = "History";
             public const string Index = "Index";
@@ -261,6 +262,9 @@ namespace Poco
             public const string Property_UserModel = "Property_UserModel";
             public const string PropertyFeeInfoModel = "PropertyFeeInfoModel";
             public const string RepairInfoModel = "RepairInfoModel";
+            public const string RepairOperationModel = "RepairOperationModel";
+            public const string ComplaintModel = "ComplaintModel";
+            public const string ComplaintReplyModel = "ComplaintReplyModel";
 
             
             

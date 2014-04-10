@@ -50,6 +50,13 @@ namespace Poco
         public string RepairPhone { get; set; }
 
         /// <summary>
+        /// 报修人ID
+        /// </summary>
+        public int UserID { get; set; }
+        public virtual User User { get; set; }
+
+
+        /// <summary>
         /// 报修日期
         /// </summary>
         [Display(Name = "报修日期")]
@@ -81,7 +88,7 @@ namespace Poco
         public int EnumRepairScore { get; set; }
 
         /// <summary>
-        /// 报修分配人ID
+        /// 报修负责人ID
         /// </summary>
         public int? AccountID { get; set; }
         public virtual Account Account { get; set; }

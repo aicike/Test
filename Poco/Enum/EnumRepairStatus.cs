@@ -25,6 +25,10 @@ namespace Poco.Enum
         /// <summary>
         /// 驳回
         /// </summary>
-        Reject
+        Reject,
+        /// <summary>
+        /// 报修关闭
+        /// </summary>
+        Close
     }
 }

@@ -147,6 +147,7 @@ namespace Poco
         public virtual ICollection<AutoMessage_Reply> AutoMessage_Replys { get; set; }
 
         public virtual ICollection<RepairInfo> RepairInfo { get; set; }
+        public virtual ICollection<ComplaintReply> ComplaintReply { get; set; }
 
     }
 }
