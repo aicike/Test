@@ -554,6 +554,18 @@ namespace Business
         }
 
         /// <summary>
+        /// 根据AMID，检查电话是否存在
+        /// </summary>
+        public bool ExistPhone(int amid, string phone)
+        {
+            if (!string.IsNullOrEmpty(phone))
+            {
+                 return List().Any(a => a.Phone.Equals(phone, StringComparison.CurrentCultureIgnoreCase) && a.Users.Any(b=>b.AccountMainID==amid));
+            }
+            return false;
+        }
+
+        /// <summary>
         /// 找回密码
         /// </summary>
         public Result FindPwd(string email)

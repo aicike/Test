@@ -27,5 +27,14 @@ namespace Interface
         /// <param name="roomNum"></param>
         /// <returns></returns>
         List<Property_User> GetHouseByUserPhone(int amid, string userPhone);
+
+        /// <summary>
+        /// 修改业主所关联的账号信息
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <param name="amid"></param>
+        /// <param name="userLoginInfoID"></param>
+        /// <returns></returns>
+        Result EditUserLoginInfoID(string phone,int amid,int userLoginInfoID);
     }
 }

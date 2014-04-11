@@ -77,5 +77,21 @@ namespace Business
         {
             return GetListByAccountMainID(amid).Where(a => a.Phone == userPhone).ToList();
         }
+
+        [Transaction]
+        public Result EditUserLoginInfoID(string phone, int amid, int userLoginInfoID)
+        {
+            Result result = new Result();
+            try
+            {
+                string sql = string.Format("UPDATE dbo.Property_User SET UserLoginInfoID={0} WHERE Phone='{1}' AND AccountMainID={2}", userLoginInfoID, phone, amid);
+                base.SqlExecute(sql);
+            }
+            catch (Exception ex)
+            {
+                result.Error = ex.Message;
+            }
+            return result;
+        }
     }
 }

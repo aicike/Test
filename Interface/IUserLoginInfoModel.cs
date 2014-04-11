@@ -34,6 +34,11 @@ namespace Interface
 
         bool ExistPhone(string phone, int? userLoginInfoID = null);
 
+        /// <summary>
+        /// 根据AMID，检查电话是否存在
+        /// </summary>
+        bool ExistPhone(int amid, string phone);
+
         UserLoginInfo GetByUserID(int userID);
 
         UserLoginInfo GetByClientID(string clientID);
