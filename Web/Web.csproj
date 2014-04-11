@@ -1023,6 +1023,7 @@
     <Content Include="Views\RepairInfo\ShowInfo.cshtml" />
     <Content Include="Views\RepairInfo\AccountList.cshtml" />
     <Content Include="Views\Complaint\Index.cshtml" />
+    <Content Include="Views\Complaint\ShowInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
