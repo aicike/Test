@@ -116,6 +116,11 @@
 	<object id="Property_UserModel" type="Business.Property_UserModel" parent="EFModel" singleton="false"></object>
 
   <object id="PropertyFeeInfoModel" type="Business.PropertyFeeInfoModel" parent="EFModel" singleton="false"></object>
+  <object id="RepairInfoModel" type="Business.RepairInfoModel" parent="EFModel" singleton="false"></object>
+  <object id="RepairOperationModel" type="Business.RepairOperationModel" parent="EFModel" singleton="false"></object>
+  <object id="ComplaintModel" type="Business.ComplaintModel" parent="EFModel" singleton="false"></object>
+  <object id="ComplaintReplyModel" type="Business.ComplaintReplyModel" parent="EFModel" singleton="false"></object>
+
 
 	<!--<object id="UserModel" type="NightClubBooth.Business.UserModel" parent="EFModel" singleton="false">
 		<property name="LookupOptionModel" ref="LookupOptionModel"/>

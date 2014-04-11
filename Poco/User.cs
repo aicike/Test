@@ -101,6 +101,8 @@ namespace Poco
         public virtual ICollection<UserDeliveryAddress> UserDeliveryAddress { get; set; }
 
         public virtual ICollection<Lottery_User> Lottery_Users { get; set; }
+
+        public virtual ICollection<RepairInfo> RepairInfo { get; set; }
         
     }
 }

@@ -1,0 +1,143 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.RepairInfo;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.RepairInfo;
+}
+@section head{
+    <script>
+        $(function () {
+
+            $("label[name=labCbFirst]").each(function () {
+                $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
+            });
+        });
+
+        function ShowInfo(id) {
+            var src = '@Url.Action("ShowInfo", "RepairInfo")';
+            $("#iframeShow").attr("src", src + "?RID=" + id);
+            $("#dialogShow").dialog({
+                resizable: false,
+                height: 530,
+                width: 650,
+                modal: true,
+                draggable: false,
+                close: function (event, ui) {
+                    location.reload();
+                }
+            });
+
+        }
+    </script>
+}
+@model PagedList<Poco.RepairInfo>
+<div class="title">
+    @Html.Partial("Menu3")
+</div>
+<div class="body">
+    <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
+        <tr>
+            <th>
+                业主姓名
+            </th>
+            <th style="width: 120px">
+                业主电话
+            </th>
+            <th style="width: 200px">
+                报修内容
+            </th>
+            <th>
+                当前维修负责人
+            </th>
+            <th>
+                报修日期
+            </th>
+            <th>
+                状态
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.RepairName
+                </td>
+                <td>
+                    @item.RepairPhone
+                </td>
+                <td>
+                    <div style="width: 200px; word-break: keep-all; white-space: nowrap; overflow: hidden;
+                        text-overflow: ellipsis;">
+                        <label name="labCbFirst" title="@item.RepairContent">
+                            @item.RepairContent
+                        </label>
+                    </div>
+                </td>
+                <td>
+                    @if (item.AccountID != null)
+                    { 
+                        @item.Account.Name
+                    }
+                    else
+                    { 
+                        @:暂无负责人
+                    }
+                </td>
+                <td>
+                    @item.RepairDate.ToString("yyyy-MM-dd HH:mm")
+                </td>
+                <td>
+                    @if (item.EnumRepairStatus == (int)Poco.Enum.EnumRepairStatus.Allocated)
+                    { 
+                        @:已分配
+                    }
+                    else if (item.EnumRepairStatus == (int)Poco.Enum.EnumRepairStatus.Audit)
+                    {
+                        @:审核中
+                    }
+                    else if (item.EnumRepairStatus == (int)Poco.Enum.EnumRepairStatus.completed)
+                    {
+                        @:已完成
+                    }
+                    else if (item.EnumRepairStatus == (int)Poco.Enum.EnumRepairStatus.Reject)
+                    {
+                        @:驳回
+                    }
+                    else if (item.EnumRepairStatus == (int)Poco.Enum.EnumRepairStatus.Close)
+                    {
+                        @:报修关闭
+                    }
+                </td>
+                <td  class="operation">
+                    <a onclick="ShowInfo(@item.ID)">操作与详细</a>
+                </td>
+            </tr>
+        }
+    </table>
+        <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+            {
+                PageIndexParameterName = "ID",
+                CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+                NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+                NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+                CssClass = "manage_pages pages",
+                SeparatorHtml = "&nbsp;",
+                AutoHide = false,
+                /*LastPageText = "Last",
+                FirstPageText = "First",
+                PrevPageText = "Back",
+                NextPageText = "Next",*/
+                PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+                ShowFirstLast = false
+            })
+    </div>
+</div>
+
+
+<div id="dialogShow" title="报修详细信息" style="display: none; padding: 0px">
+    <iframe id="iframeShow" src="#" style="width: 640px; height: 480px; border: none;
+        overflow: auto"></iframe>
+</div>

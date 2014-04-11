@@ -1,0 +1,296 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+    var RepairOption = ViewBag.reairOperation as IQueryable<Poco.RepairOperation>;
+}
+@model Poco.RepairInfo
+<script>
+    function CloseRepair() {
+
+        $("#dialogShowClose").dialog({
+            resizable: false,
+            height: 200,
+            width: 400,
+            modal: true,
+            draggable: false,
+            close: function (event, ui) {
+            }
+        });
+    }
+    function checkClose() {
+        var content = $("#CloseContent").val();
+        if (content.length <= 0) {
+            JMessage("请输入关闭原因", true);
+            return false;
+        }
+    }
+
+    function selectAccount() {
+        var url = '@Url.Action("AccountList", "RepairInfo", new { Area = "", HostName = "" })';
+
+        $("#iframeShow").attr("src", url);
+        $("#dialogShowUpAccount").dialog({
+            resizable: false,
+            height: 430,
+            width: 265,
+            modal: true,
+            draggable: false,
+            buttons: {
+                "确定": function () {
+                    var subDocument = $(window.frames["iframeShow"].document);
+                    var AID = subDocument.find("#AID").val();
+                    var AName = subDocument.find("#AName").val(); 
+                    if (AID.length <= 0) {
+
+                        JMessage("请选择一个负责人", true);
+                        return;
+                    }
+                    var url = '@Url.Action("UpdAccount","RepairInfo")';
+
+                     $.post(url, { RID:@ViewBag.RID, AccountID:AID,AName: AName}, function (result) {
+
+                        if (result == "True") {
+                           $("#span_fzr").text(AName);
+                           JMessage("更改/分配成功");
+                        }
+                        else {
+                           JMessage("更改/分配成功", true);
+                        }
+                    });
+
+
+                    
+                    $("#iframeShow").attr("src", "");
+                    $(this).dialog("close");
+                },
+                "取消": function () {
+                    $("#iframeShow").attr("src", "");
+                    $(this).dialog("close");
+                }
+            }
+        });
+    }
+</script>
+<style>
+    .ListTab
+    {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        border-top: 1px solid #ebebeb;
+        border-left: 1px solid #ebebeb;
+    }
+    .ListTab th
+    {
+        font-size: 16px;
+        font-weight: inherit;
+        line-height: 35px;
+        background-color: #f6f6f6;
+    }
+    .ListTab td
+    {
+        font-size: 13px;
+        color: #6c6c6c;
+        padding-top: 7px;
+        padding-right: 5px;
+        padding-left: 5px;
+        padding-bottom: 7px;
+        border-bottom: 1px solid #ebebeb;
+        border-right: 1px solid #ebebeb;
+    }
+</style>
+<div style="margin-top: 10px; margin-left: 20px">
+    @if (Model.EnumRepairStatus == (int)Poco.Enum.EnumRepairStatus.Close || Model.EnumRepairStatus == (int)Poco.Enum.EnumRepairStatus.completed)
+    {
+
+    }
+    else
+    {
+        <button class="button" onclick="CloseRepair()">
+            关闭维修</button>
+    
+    }
+</div>
+<table align="center" cellpadding="0" cellspacing="0" class="ListTab" style="width: 95%">
+    <tr>
+        <th style="width: 120px">
+            报修人姓名：
+        </th>
+        <td>
+            @Model.RepairName
+        </td>
+        <th style="width: 120px">
+            报修类型：
+        </th>
+        <td>
+            @switch (Model.RepairType)
+            {
+                case 0:
+                @:室内
+                    break;
+                case 1:
+                @:公共区域
+                                break;
+
+            }
+        </td>
+        <th style="width: 100px">
+            状态：
+        </th>
+        <td>
+            @if (Model.EnumRepairStatus == (int)Poco.Enum.EnumRepairStatus.Allocated)
+            { 
+                @:已分配
+            }
+            else if (Model.EnumRepairStatus == (int)Poco.Enum.EnumRepairStatus.Audit)
+            {
+                @:审核中
+            }
+            else if (Model.EnumRepairStatus == (int)Poco.Enum.EnumRepairStatus.completed)
+            {
+                @:已完成
+            }
+            else if (Model.EnumRepairStatus == (int)Poco.Enum.EnumRepairStatus.Reject)
+            {
+                @:驳回
+            }
+            else if (Model.EnumRepairStatus == (int)Poco.Enum.EnumRepairStatus.Close)
+            {
+                @:报修关闭
+                                                                                    }
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 100px">
+            报修人电话：
+        </th>
+        <td>
+            @Model.RepairPhone
+        </td>
+        <th style="width: 120px">
+            单元：
+        </th>
+        <td>
+            @Model.Unit
+        </td>
+        <th style="width: 120px">
+            房号：
+        </th>
+        <td>
+            @Model.RoomNumber
+        </td>
+    </tr>
+     <tr>
+        <th style="width: 100px">
+            报修人评分：
+        </th>
+        <td colspan="5">
+            @switch(Model.EnumRepairScore)
+            {
+                case (int)Poco.Enum.EnumRepairScore.Dissatisfied:
+                        @:不满意
+                    break;
+                case (int)Poco.Enum.EnumRepairScore.General:
+                        @:一般
+                    break;
+                case (int)Poco.Enum.EnumRepairScore.NoScore:
+                        @:未评分
+                    break;
+                case (int)Poco.Enum.EnumRepairScore.Satisfied:
+                        @:满意
+                    break;
+                case (int)Poco.Enum.EnumRepairScore.VeryDissatisfied:
+                        @:非常不满意
+                    break;
+                case (int)Poco.Enum.EnumRepairScore.VerySatisfactory:
+                        @:非常满意
+                    break;   
+            }
+        </td>
+       
+    </tr>
+</table>
+<table align="center" cellpadding="0" cellspacing="0" class="ListTab" style="width: 95%;
+    margin-top: 10px">
+    <tr>
+        <th style="width: 120px">
+            当前负责人：
+        </th>
+        <td align="left" class="operation">
+            @if (Model.AccountID != null)
+            {
+                <span id="span_fzr">@Model.Account.Name</span>
+            }
+            else
+            {
+                <span id="span_fzr">暂无处理负责人</span>
+                                     }
+            @if (Model.EnumRepairStatus == (int)Poco.Enum.EnumRepairStatus.Close || Model.EnumRepairStatus == (int)Poco.Enum.EnumRepairStatus.completed)
+            {
+
+            }
+            else
+            { 
+                <a onclick="selectAccount()">更改/分配负责人</a>
+            }
+        </td>
+    </tr>
+</table>
+<table align="center" cellpadding="0" cellspacing="0" class="ListTab" style="width: 95%;
+    margin-top: 10px">
+    <tr>
+        <th style="width: 120px">
+            报修内容：
+        </th>
+        <td align="left">
+            @Html.Raw(Model.RepairContent)
+        </td>
+    </tr>
+</table>
+<table align="center" cellpadding="0" cellspacing="0" class="ListTab" style="width: 95%;
+    margin-top: 10px">
+    <tr>
+        <th style="width: 130px">
+            日期
+        </th>
+        <th>
+            操作与备注
+        </th>
+    </tr>
+    @foreach (var item in RepairOption)
+    {
+        <tr>
+            <td>
+                @item.OperationDate.ToString("yyyy-MM-dd HH:mm")
+            </td>
+            <td>
+                @item.Remarks
+            </td>
+        </tr>
+    }
+</table>
+<div id="dialogShowClose" title="关闭维修单" style="display: none; padding: 0px">
+    @using (Html.BeginForm("CloseRepairInfo", "RepairInfo", new { HostName = ViewBag.HostName, RID = ViewBag.RID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <table>
+            <tr>
+                <td>
+                    关闭原因
+                </td>
+                <td>
+                    <textarea style="width: 310px; height: 100px" id="CloseContent" name="CloseContent"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <button class="button" type="submit" onclick="return checkClose()">
+                        关闭维修</button>
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+<div id="dialogShowUpAccount" title="更改/分配负责人" style="display: none; padding: 0px">
+    <iframe id="iframeShow" src="#" style="width: 250px; height: 420px; border: none;
+        overflow: auto"></iframe>
+</div>

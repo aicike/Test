@@ -175,6 +175,7 @@
     <Compile Include="Controllers\BasisSetController.cs" />
     <Compile Include="Controllers\CardInfoController.cs" />
     <Compile Include="Controllers\CharacterController.cs" />
+    <Compile Include="Controllers\ComplaintController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ExitController.cs" />
     <Compile Include="Controllers\GuideController.cs" />
@@ -200,6 +201,7 @@
     <Compile Include="Controllers\OrderMTypeController.cs" />
     <Compile Include="Controllers\PropertyHouseController.cs" />
     <Compile Include="Controllers\PropertyFeeInfoController.cs" />
+    <Compile Include="Controllers\RepairInfoController.cs" />
     <Compile Include="Controllers\SalesMessageController.cs" />
     <Compile Include="Controllers\SetController.cs" />
     <Compile Include="Controllers\SSOServiceController.cs" />
@@ -1020,6 +1022,11 @@
     <Content Include="Views\PropertyFeeInfo\Index.cshtml" />
     <Content Include="Views\PropertyHouse\Add.cshtml" />
     <Content Include="Views\PropertyHouse\Edit.cshtml" />
+    <Content Include="Views\RepairInfo\Index.cshtml" />
+    <Content Include="Views\RepairInfo\ShowInfo.cshtml" />
+    <Content Include="Views\RepairInfo\AccountList.cshtml" />
+    <Content Include="Views\Complaint\Index.cshtml" />
+    <Content Include="Views\Complaint\ShowInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

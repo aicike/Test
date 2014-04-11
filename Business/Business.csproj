@@ -105,6 +105,8 @@
     <Compile Include="CommonModel.cs" />
     <Compile Include="BaseModel.cs" />
     <Compile Include="CityModel.cs" />
+    <Compile Include="ComplaintModel.cs" />
+    <Compile Include="ComplaintReplyModel.cs" />
     <Compile Include="ConversationDetailedModel.cs" />
     <Compile Include="ConversationModel.cs" />
     <Compile Include="DistrictModel.cs" />
@@ -141,6 +143,8 @@
     <Compile Include="Push_Getui.cs" />
     <Compile Include="Push_IOS.cs" />
     <Compile Include="QrCodeModel.cs" />
+    <Compile Include="RepairInfoModel.cs" />
+    <Compile Include="RepairOperationModel.cs" />
     <Compile Include="ReportFormPowerModel.cs" />
     <Compile Include="RoleModel.cs" />
     <Compile Include="Service References\Imtimely_ShortURL\Reference.cs">

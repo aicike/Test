@@ -1,0 +1,196 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+    var complainreply = ViewBag.complainreply as  IQueryable<Poco.ComplaintReply>;
+}
+@model Poco.Complaint
+<script>
+    function checkReply() {
+        var content = $("#ReplyContent").val();
+        if (content.length <= 0) {
+            JMessage("请输入答复内容", true);
+            return false;
+        }
+    }
+
+    function Reply() {
+
+        $("#dialogShowReply").dialog({
+            resizable: false,
+            height: 200,
+            width: 400,
+            modal: true,
+            draggable: false,
+            close: function (event, ui) {
+            }
+        });
+    }
+</script>
+<style>
+    .ListTab
+    {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        border-top: 1px solid #ebebeb;
+        border-left: 1px solid #ebebeb;
+    }
+    .ListTab th
+    {
+        font-size: 16px;
+        font-weight: inherit;
+        line-height: 35px;
+        background-color: #f6f6f6;
+    }
+    .ListTab td
+    {
+        font-size: 13px;
+        color: #6c6c6c;
+        padding-top: 7px;
+        padding-right: 5px;
+        padding-left: 5px;
+        padding-bottom: 7px;
+        border-bottom: 1px solid #ebebeb;
+        border-right: 1px solid #ebebeb;
+    }
+</style>
+<div style="margin-top: 10px; margin-left: 20px">
+    @if (Model.EnumComplaintStatus == (int)Poco.Enum.EnumComplaintStatus.Evaluation || Model.EnumComplaintStatus == (int)Poco.Enum.EnumComplaintStatus.completed)
+    {
+
+    }
+    else
+    {
+        <button class="button" onclick="Reply()">
+            答复</button>
+    
+    }
+</div>
+<table align="center" cellpadding="0" cellspacing="0" class="ListTab" style="width: 95%">
+    <tr>
+        <th style="width: 120px">
+            投诉人姓名：
+        </th>
+        <td>
+            @if (Model.IsAnonymous)
+            { 
+                @:匿名
+                    }
+            else
+            { 
+                @Model.User.Name
+            }
+        </td>
+        <th style="width: 120px">
+            投诉人电话：
+        </th>
+        <td>
+             @if (Model.IsAnonymous)
+            { 
+                @:无
+                    }
+            else
+            { 
+                @Model.User.Phone
+            }
+        </td>
+        <th style="width: 100px">
+            状态：
+        </th>
+        <td>
+             @switch (Model.EnumComplaintStatus)
+             {
+                 case (int)Poco.Enum.EnumComplaintStatus.Audit:
+                        @:审核中
+                        break;
+                 case (int)Poco.Enum.EnumComplaintStatus.completed:
+                        @:已处理
+                        break;
+                 case (int)Poco.Enum.EnumComplaintStatus.Evaluation:
+                        @:已评价
+                        break;
+             }
+        </td>
+    </tr>
+  
+    <tr>
+        <th style="width: 100px">
+            投诉人评分：
+        </th>
+        <td colspan="5">
+            @switch (Model.EnumRepairScore)
+            {
+                case (int)Poco.Enum.EnumRepairScore.Dissatisfied:
+                @:不满意
+                    break;
+                case (int)Poco.Enum.EnumRepairScore.General:
+                @:一般
+                    break;
+                case (int)Poco.Enum.EnumRepairScore.NoScore:
+                @:未评分
+                    break;
+                case (int)Poco.Enum.EnumRepairScore.Satisfied:
+                @:满意
+                    break;
+                case (int)Poco.Enum.EnumRepairScore.VeryDissatisfied:
+                @:非常不满意
+                    break;
+                case (int)Poco.Enum.EnumRepairScore.VerySatisfactory:
+                @:非常满意
+                                break;
+            }
+        </td>
+    </tr>
+</table>
+<table align="center" cellpadding="0" cellspacing="0" class="ListTab" style="width: 95%;
+    margin-top: 10px">
+    <tr>
+        <th style="width: 120px">
+            投诉内容：
+        </th>
+        <td align="left">
+            @Html.Raw(Model.ComplaintContetn)
+        </td>
+    </tr>
+</table>
+
+<table align="center" cellpadding="0" cellspacing="0" class="ListTab" style="width: 95%;
+    margin-top: 10px">
+    <tr>
+        <th style="width: 130px">
+            日期
+        </th>
+        <th>
+            答复
+        </th>
+    </tr>
+    @foreach (var item in complainreply)
+    {
+        <tr>
+            <td>
+                @item.ReplyDate.ToString("yyyy-MM-dd HH:mm")
+            </td>
+            <td>
+                @item.ReplyContent
+            </td>
+        </tr>
+    }
+</table>
+
+<div id="dialogShowReply" title="答复" style="display: none; padding: 0px">
+    @using (Html.BeginForm("ReplyCom", "Complaint", new { HostName = ViewBag.HostName, CID = ViewBag.CID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <table style=" width:95%" align="center">
+            <tr>
+             
+                <td>
+                    <textarea style="width: 100%; height: 100px" id="ReplyContent" name="ReplyContent"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="button" type="submit" onclick="return checkReply()">
+                        答复</button>
+                </td>
+            </tr>
+        </table>
+    }
+</div>

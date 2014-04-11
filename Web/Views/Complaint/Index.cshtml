@@ -1,0 +1,162 @@
+﻿@{
+    
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.Complaint;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.Complaint;
+}
+@section head{
+    <script>
+        $(function () {
+
+            $("label[name=labCbFirst]").each(function () {
+                $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
+            });
+        });
+
+
+        function ShowInfo(id) {
+            var src = '@Url.Action("ShowInfo", "Complaint")';
+            $("#iframeShow").attr("src", src + "?CID=" + id);
+            $("#dialogShow").dialog({
+                resizable: false,
+                height: 530,
+                width: 650,
+                modal: true,
+                draggable: false,
+                close: function (event, ui) {
+                    location.reload();
+                }
+            });
+
+        }
+    </script>
+}
+@model PagedList<Poco.Complaint>
+<div class="title">
+    @Html.Partial("Menu3")
+</div>
+<div class="body">
+    <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
+        <tr>
+            <th>
+                投诉人姓名
+            </th>
+            <th>
+                投诉人电话
+            </th>
+            <th style="width: 200px">
+                投诉内容
+            </th>
+            <th>
+                状态
+            </th>
+            <th>
+                用户评价
+            </th>
+            <th>
+                投诉日期
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (item.IsAnonymous)
+                    { 
+                        @:匿名
+                    }
+                    else
+                    { 
+                        @item.User.Name
+                    }
+                </td>
+                <td>
+                    @if (item.IsAnonymous)
+                    { 
+                        @:无
+                    }
+                    else
+                    { 
+                        @item.User.Phone
+                    }
+                </td>
+                <td>
+                    <div style="width: 200px; word-break: keep-all; white-space: nowrap; overflow: hidden;
+                        text-overflow: ellipsis;">
+                        <label name="labCbFirst" title="@item.ComplaintContetn">
+                            @item.ComplaintContetn
+                        </label>
+                    </div>
+                </td>
+                <td>
+                    @switch (item.EnumComplaintStatus)
+                    {
+                        case (int)Poco.Enum.EnumComplaintStatus.Audit:
+                        @:审核中
+                        break;
+                        case (int)Poco.Enum.EnumComplaintStatus.completed:
+                        @:已处理
+                        break;
+                        case (int)Poco.Enum.EnumComplaintStatus.Evaluation:
+                        @:已评价
+                        break;
+                    }
+                </td>
+                <td>
+                    @switch (item.EnumRepairScore)
+                    {
+                        case (int)Poco.Enum.EnumRepairScore.Dissatisfied:
+                        @:不满意
+                    break;
+                        case (int)Poco.Enum.EnumRepairScore.General:
+                        @:一般
+                    break;
+                        case (int)Poco.Enum.EnumRepairScore.NoScore:
+                        @:未评分
+                    break;
+                        case (int)Poco.Enum.EnumRepairScore.Satisfied:
+                        @:满意
+                    break;
+                        case (int)Poco.Enum.EnumRepairScore.VeryDissatisfied:
+                        @:非常不满意
+                    break;
+                        case (int)Poco.Enum.EnumRepairScore.VerySatisfactory:
+                        @:非常满意
+                        break;
+                    }
+                </td>
+                <td>
+                    @item.ComplaintDate.ToString("yyyy-MM-dd HH:mm")
+                </td>
+                <td class="operation">
+                    <a onclick="ShowInfo(@item.ID)">答复与详细</a>
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+            {
+                PageIndexParameterName = "ID",
+                CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+                NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+                NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+                CssClass = "manage_pages pages",
+                SeparatorHtml = "&nbsp;",
+                AutoHide = false,
+                /*LastPageText = "Last",
+                FirstPageText = "First",
+                PrevPageText = "Back",
+                NextPageText = "Next",*/
+                PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+                ShowFirstLast = false
+            })
+    </div>
+</div>
+<div id="dialogShow" title="答复与详细" style="display: none; padding: 0px">
+    <iframe id="iframeShow" src="#" style="width: 640px; height: 480px; border: none;
+        overflow: auto"></iframe>
+</div>
