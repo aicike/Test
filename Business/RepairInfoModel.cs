@@ -88,5 +88,20 @@ namespace Business
             }
             return result;
         }
+
+        /// <summary>
+        /// 根据用户ID获取报修信息 20条
+        /// </summary>
+        /// <param name="UserID"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public IQueryable<RepairInfo> GetListByUserID(int UserID,int AMID)
+        {
+            var list = List().Where(a=>a.UserID==UserID&&a.AccountMainID==AMID).OrderByDescending(a=>a.RepairDate).Take(20);
+            return list;
+        }
+
+      
+
     }
 }

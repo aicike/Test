@@ -22,5 +22,13 @@ namespace Interface
         /// <param name="EnumComplaintStatus">枚举</param>
         /// <returns></returns>
         Result UpdStatus(int CID, int EnumComplaintStatus);
+
+         /// <summary>
+        /// 获取用户投诉列表
+        /// </summary>
+        /// <param name="UserID"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        IQueryable<Complaint> GetListByUserID(int UserID, int AMID);
     }
 }
