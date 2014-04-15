@@ -62,7 +62,7 @@ namespace Web.Controllers
                     case (int)EnumMessageType.Voice:
 
                         chat.FileUrl = SystemConst.WebUrlIP + Url.Content(item.FileUrl ?? "");
-                        chat.FileUrlMP3 = SystemConst.WebUrlIP + Url.Content(item.FileUrl.Substring(0, item.FileUrl.LastIndexOf('.'))??"") + ".mp3";;
+                        chat.FileUrlMP3 = SystemConst.WebUrlIP + Url.Content(item.FileUrl.Substring(0, item.FileUrl.LastIndexOf('.')) ?? "") + ".mp3"; ;
                         chat.FL = String.IsNullOrEmpty(item.FileLength) ? "0" : item.FileLength;
                         break;
                     case (int)EnumMessageType.ImageText:
@@ -263,11 +263,92 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
+                result.Error = "图片上传失败。";
                 result.HasError = true;
                 result.Entity = new { URL = "", Token = Token };
                 return Newtonsoft.Json.JsonConvert.SerializeObject(result);
             }
         }
+
+        /// <summary>
+        /// 移动端上传文件(多文件上传)
+        /// </summary>
+        /// <param name="FileType">文件类型 5 物业报修图片</param>
+        /// <param name="UserID">发送人ID</param>
+        /// <param name="UserType">发送人类型 1，售楼人员，2用户</param>
+        /// <param name="UserAccountMainID">发送人所属售楼部ID</param>
+        /// <param name="FileBuffer">二进制文件</param>
+        /// <returns></returns>
+        [ValidateInput(false)]
+        public string UpLodeMultiFiles(int FileType, int UserType, int UserID, int UserAccountMainID, string Token)//byte[] FileBuffer
+        {
+            //路径
+            string UpFile = ConfigurationManager.AppSettings["UpLodeFile"].ToString();
+            //人员类型
+            string UpType = string.Empty;
+            //文件类型
+            string UpFileType = string.Empty;
+            //文件类型 参数
+            switch (FileType)
+            {
+                case 5:
+                    UpFileType = "Property_BX";
+                    break;
+            }
+            //发送人类型
+            if (UserType == 1)
+            {
+                UpType = "Account";
+            }
+            else if (UserType == 2)
+            {
+                UpType = "User";
+            }
+            //拼接路径
+            string UPFileHname = DateTime.Now.ToString("yyMMddhhmmss");
+            string Path = null;
+            switch (FileType)
+            {
+                case 5:
+                    Path = string.Format("{0}{1}.Property/{2}/{3}/{4}", UpFile, UserAccountMainID, UpType, UserID, UpFileType);
+                    break;
+            }
+            Result result = new Result();
+            List<dynamic> list = new List<dynamic>();
+            try
+            {
+                if (!System.IO.File.Exists(Server.MapPath(Path)))
+                {
+                    System.IO.Directory.CreateDirectory(Server.MapPath(Path));
+                }
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    var item = Request.Files[i];
+                    string hz = item.FileName.Substring(item.FileName.LastIndexOf('.'), item.FileName.Length - item.FileName.LastIndexOf('.'));
+
+                    long tick = DateTime.Now.Ticks;
+                    Random ran = new Random((int)(tick & 0xffffffffL) | (int)(tick >> 32));
+
+                    var savePath = Path + "/" + UPFileHname + "_" + ran.Next().ToString() + hz;
+                    //全路径
+                    string FilePath = Server.MapPath(savePath);
+
+                    item.SaveAs(FilePath);
+
+                    //返回路径
+                    var fileObj = new { URL = SystemConst.WebUrlIP + Url.Content(savePath ?? ""), Token = Token };
+                    list.Add(fileObj);
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Error = "图片上传失败。";
+                result.HasError = true;
+            }
+            result.Entity = list;
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
         #endregion
 
         /// <summary>
