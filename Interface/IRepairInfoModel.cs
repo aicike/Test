@@ -46,5 +46,13 @@ namespace Interface
         /// <param name="AccountID"></param>
         /// <returns></returns>
         Result UpdAccount(int RID, int AccountID);
+
+        /// <summary>
+        /// 根据用户ID获取报修信息 20条
+        /// </summary>
+        /// <param name="UserID"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        IQueryable<RepairInfo> GetListByUserID(int UserID, int AMID);
     }
 }

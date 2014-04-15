@@ -56,6 +56,12 @@ namespace Poco
         [Display(Name = "投诉时间")]
         public DateTime ComplaintDate { get; set; }
 
+        /// <summary>
+        /// 投诉图片 多张图片用|分割
+        /// </summary>
+        [Display(Name = "投诉图片")]
+        public string ImgPath { get; set; }
+
         public virtual ICollection<ComplaintReply> ComplaintReply { get; set; }
     }
 }

@@ -243,6 +243,22 @@
         <td align="left">
             @Html.Raw(Model.RepairContent)
         </td>
+        
+    </tr>
+    <tr>
+        <th style="width: 120px">
+            报修图片：
+        </th>
+        <td align="left">
+            @if (string.IsNullOrEmpty(Model.ImgPath))
+            {
+                var imgs = Model.ImgPath.Split('|');
+                foreach (string k in imgs)
+                {
+                    <img src="k" style=" max-width:95%"/>
+                }
+            }
+        </td>
     </tr>
 </table>
 <table align="center" cellpadding="0" cellspacing="0" class="ListTab" style="width: 95%;

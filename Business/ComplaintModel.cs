@@ -38,5 +38,17 @@ namespace Business
             }
             return result;
         }
+
+        /// <summary>
+        /// 获取用户投诉列表
+        /// </summary>
+        /// <param name="UserID"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public IQueryable<Complaint> GetListByUserID(int UserID, int AMID)
+        {
+            var list = List().Where(a => a.UserID == UserID && a.AccountMainID == AMID).OrderByDescending(a => a.ComplaintDate).Take(20);
+            return list;
+        }
     }
 }

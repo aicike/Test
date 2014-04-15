@@ -88,6 +88,12 @@ namespace Poco
         public int EnumRepairScore { get; set; }
 
         /// <summary>
+        /// 报修图片 多张图片用|分割
+        /// </summary>
+        [Display(Name = "报修图片")]
+        public string ImgPath { get; set; }
+
+        /// <summary>
         /// 报修负责人ID
         /// </summary>
         public int? AccountID { get; set; }
