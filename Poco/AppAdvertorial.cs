@@ -59,7 +59,7 @@ namespace Poco
         [Display(Name = "短链接")]
         public string ShortURL { get; set; }
 
-        [Display(Name = "资讯类型")]
+        [Display(Name = "资讯信息类型")]
         public int EnumAdverTorialType { get; set; }
 
         [Display(Name = "资讯URL类型")]
@@ -73,6 +73,9 @@ namespace Poco
 
         [Display(Name = "活动签到地址")]
         public string ActivitySignUrl { get; set; }
+
+        [Display(Name = "枚举 分类")]
+        public int EnumAdverClass { get; set; }
 
         public virtual ICollection<AppAdvertorialOperation> AppAdvertorialOperation { get; set; }
 

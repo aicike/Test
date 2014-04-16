@@ -15,7 +15,7 @@ namespace MicroSite_Web.Controllers
         public ActionResult Index(int AMID, int ID, int ListCnt)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var list = AppAdvertorialModel.GetList(AMID, (int)EnumAdvertorialUType.UserEnd);
+            var list = AppAdvertorialModel.GetList(AMID, (int)EnumAdvertorialUType.UserEnd, (int)EnumAdverClass.AdverTorial);
             PagedList<AppAdvertorial> RtitleImg = null;
             PagedList<AppAdvertorial> RListImg = null;
             if (ID == 0)
@@ -71,7 +71,7 @@ namespace MicroSite_Web.Controllers
         public string GetPage(int AMID, int ID, int ListCnt)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var list = AppAdvertorialModel.GetList(AMID, (int)EnumAdvertorialUType.UserEnd);
+            var list = AppAdvertorialModel.GetList(AMID, (int)EnumAdvertorialUType.UserEnd, (int)EnumAdverClass.AdverTorial);
             PagedList<AppAdvertorial> RtitleImg = null;
             PagedList<AppAdvertorial> RListImg = null;
             if (ID == 0)

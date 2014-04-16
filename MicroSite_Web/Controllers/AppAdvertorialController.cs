@@ -25,7 +25,7 @@ namespace Web.Controllers
             ViewBag.HostName = LoginAccount.HostName;
 
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd).ToPagedList(id ?? 1, 15);
+            var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd, (int)EnumAdverClass.AdverTorial).ToPagedList(id ?? 1, 15);
 
 
             string WebTitleRemark = SystemConst.WebTitleRemark;
@@ -66,6 +66,7 @@ namespace Web.Controllers
             appAdver.Sort = 0;
             appAdver.IssueDate = DateTime.Now;
             appAdver.EnumAdvertorialUType = (int)EnumAdvertorialUType.UserEnd;
+            appAdver.EnumAdverClass = (int)EnumAdverClass.AdverTorial;
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             Result result = AppAdvertorialModel.AddAppAdvertorial(appAdver, w, h, x1, y1, tw, th);
 
@@ -153,7 +154,7 @@ namespace Web.Controllers
         public string chickStick(int ID)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var AppAdvertorial = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd);
+            var AppAdvertorial = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd, (int)EnumAdverClass.AdverTorial);
             if (AppAdvertorial.Where(a => a.stick == 1).Count() >= 5)
             {
                 return "No";
@@ -171,7 +172,7 @@ namespace Web.Controllers
         public string chickUpdStick(int ID)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var AppAdvertorial = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd);
+            var AppAdvertorial = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd, (int)EnumAdverClass.AdverTorial);
             if (AppAdvertorial.Where(a => a.stick == 1 && a.ID != ID).Count() >= 5)
             {
                 return "No";
@@ -190,7 +191,7 @@ namespace Web.Controllers
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
 
-            AppAdvertorialModel.EditAppAdvertorialStick(AdvertorialID, isok, LoginAccount.CurrentAccountMainID, Sort, (int)EnumAdvertorialUType.UserEnd);
+            AppAdvertorialModel.EditAppAdvertorialStick(AdvertorialID, isok, LoginAccount.CurrentAccountMainID, Sort, (int)EnumAdvertorialUType.UserEnd, (int)EnumAdverClass.AdverTorial);
 
             return RedirectToAction("Index", "AppAdvertorial", new { HostName = LoginAccount.HostName });
         }
@@ -202,7 +203,7 @@ namespace Web.Controllers
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
 
-            AppAdvertorialModel.EditAppAdvertorialSort(AdvertorialID, LoginAccount.CurrentAccountMainID, Sort, Type, (int)EnumAdvertorialUType.UserEnd);
+            AppAdvertorialModel.EditAppAdvertorialSort(AdvertorialID, LoginAccount.CurrentAccountMainID, Sort, Type, (int)EnumAdvertorialUType.UserEnd, (int)EnumAdverClass.AdverTorial);
 
             return RedirectToAction("Index", "AppAdvertorial", new { HostName = LoginAccount.HostName });
         }
@@ -212,7 +213,7 @@ namespace Web.Controllers
         public ActionResult Preview()
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd);
+            var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd, (int)EnumAdverClass.AdverTorial);
             ViewBag.TitleImg = list.Where(a => a.stick == 1).ToPagedList(1, 5);
             ViewBag.ListImg = list.Where(a => a.stick == 0).ToPagedList(1, 5);
 

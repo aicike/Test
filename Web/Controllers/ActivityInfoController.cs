@@ -304,6 +304,7 @@ namespace Web.Controllers
             appRW.SystemStatus = 0;
             appRW.Title = main.Title;
             appRW.UrlID = main.ID;
+            appRW.EnumAdverClass = (int)EnumAdverClass.AdverTorial;
             appRW.ActivitySignUrl = ("http://" + SystemConst.WebUrl + "/default/ActivitySignIn?ActivityID=" + id).ConvertToShortURL();
 
             result = AdvertorialModel.Add(appRW);

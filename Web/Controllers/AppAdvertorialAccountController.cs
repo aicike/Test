@@ -25,7 +25,7 @@ namespace Web.Controllers
             ViewBag.HostName = LoginAccount.HostName;
 
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.AccountEnd).ToPagedList(id ?? 1, 15);
+            var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.AccountEnd, (int)EnumAdverClass.AdverTorial).ToPagedList(id ?? 1, 15);
 
             var AccountserverModel = Factory.Get<IAccountMain_ServiceModel>(SystemConst.IOC_Model.AccountMain_ServiceModel);
             var hasAPP = AccountserverModel.CheckService(EnumService.House_Service, LoginAccount.CurrentAccountMainID);
@@ -69,6 +69,7 @@ namespace Web.Controllers
             appAdver.IssueDate = DateTime.Now;
             appAdver.EnumAdvertorialUType = (int)EnumAdvertorialUType.AccountEnd;
             appAdver.BrowseCnt = 0;
+            appAdver.EnumAdverClass = (int)EnumAdverClass.AdverTorial;
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
             Result result = AppAdvertorialModel.AddAppAdvertorial(appAdver, w, h, x1, y1, tw, th);
             return RedirectToAction("Index", "AppAdvertorialAccount");
@@ -149,7 +150,7 @@ namespace Web.Controllers
         public string chickStick(int ID)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var AppAdvertorial = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.AccountEnd);
+            var AppAdvertorial = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.AccountEnd, (int)EnumAdverClass.AdverTorial);
             if (AppAdvertorial.Where(a => a.stick == 1).Count() >= 5)
             {
                 return "No";
@@ -167,7 +168,7 @@ namespace Web.Controllers
         public string chickUpdStick(int ID)
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var AppAdvertorial = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.AccountEnd);
+            var AppAdvertorial = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.AccountEnd, (int)EnumAdverClass.AdverTorial);
             if (AppAdvertorial.Where(a => a.stick == 1 && a.ID != ID).Count() >= 5)
             {
                 return "No";
@@ -186,7 +187,7 @@ namespace Web.Controllers
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
 
-            AppAdvertorialModel.EditAppAdvertorialStick(AdvertorialID, isok, LoginAccount.CurrentAccountMainID, Sort, (int)EnumAdvertorialUType.AccountEnd);
+            AppAdvertorialModel.EditAppAdvertorialStick(AdvertorialID, isok, LoginAccount.CurrentAccountMainID, Sort, (int)EnumAdvertorialUType.AccountEnd,(int)EnumAdverClass.AdverTorial);
 
             return RedirectToAction("Index", "AppAdvertorialAccount", new { HostName = LoginAccount.HostName });
         }
@@ -198,7 +199,7 @@ namespace Web.Controllers
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
 
-            AppAdvertorialModel.EditAppAdvertorialSort(AdvertorialID, LoginAccount.CurrentAccountMainID, Sort, Type, (int)EnumAdvertorialUType.AccountEnd);
+            AppAdvertorialModel.EditAppAdvertorialSort(AdvertorialID, LoginAccount.CurrentAccountMainID, Sort, Type, (int)EnumAdvertorialUType.AccountEnd, (int)EnumAdverClass.AdverTorial);
 
             return RedirectToAction("Index", "AppAdvertorialAccount", new { HostName = LoginAccount.HostName });
         }
@@ -208,7 +209,7 @@ namespace Web.Controllers
         public ActionResult Preview()
         {
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.AccountEnd);
+            var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.AccountEnd, (int)EnumAdverClass.AdverTorial);
             ViewBag.TitleImg = list.Where(a => a.stick == 1).ToPagedList(1, 5);
             ViewBag.ListImg = list.Where(a => a.stick == 0).ToPagedList(1, 5);
 

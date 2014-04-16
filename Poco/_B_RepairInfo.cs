@@ -23,6 +23,11 @@ namespace Poco
         public string status { get; set; }
 
         /// <summary>
+        /// 报修类型
+        /// </summary>
+        public string type { get; set; }
+
+        /// <summary>
         /// 处理人姓名
         /// </summary>
         public string AccountName { get; set; }

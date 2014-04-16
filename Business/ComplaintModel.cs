@@ -50,5 +50,17 @@ namespace Business
             var list = List().Where(a => a.UserID == UserID && a.AccountMainID == AMID).OrderByDescending(a => a.ComplaintDate).Take(20);
             return list;
         }
+
+        /// <summary>
+        /// 根据投诉ID 获取信息
+        /// </summary>
+        /// <param name="CID"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public Complaint GetComplaintInfo(int CID,int AMID)
+        {
+            var comp = List().Where(a=>a.AccountMainID==AMID&&a.ID==CID).FirstOrDefault();
+            return comp;
+        }
     }
 }

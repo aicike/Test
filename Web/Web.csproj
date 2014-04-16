@@ -165,6 +165,7 @@
     <Compile Include="Controllers\AccountMainController.cs" />
     <Compile Include="Controllers\AccountMainGuideController.cs" />
     <Compile Include="Controllers\ActivityInfoController.cs" />
+    <Compile Include="Controllers\AdvertisingController.cs" />
     <Compile Include="Controllers\AjaxController.cs" />
     <Compile Include="Controllers\AjaxReportController.cs" />
     <Compile Include="Controllers\AppAdvertorialAccountController.cs" />
@@ -267,6 +268,8 @@
     <Content Include="Images\ActivityInfo.jpg" />
     <Content Include="Images\ActivityInfo_MINI.jpg" />
     <Content Include="Images\ActivityInfo_show.jpg" />
+    <Content Include="Images\Advertising.jpg" />
+    <Content Include="Images\Advertising_show.jpg" />
     <Content Include="Images\android.png" />
     <Content Include="Images\AppDefault.png" />
     <Content Include="Images\AppLogo.png" />
@@ -1027,6 +1030,8 @@
     <Content Include="Views\RepairInfo\AccountList.cshtml" />
     <Content Include="Views\Complaint\Index.cshtml" />
     <Content Include="Views\Complaint\ShowInfo.cshtml" />
+    <Content Include="Views\Advertising\Index.cshtml" />
+    <Content Include="Views\Advertising\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
