@@ -277,10 +277,9 @@ namespace Web.Controllers
         /// <param name="UserID">发送人ID</param>
         /// <param name="UserType">发送人类型 1，售楼人员，2用户</param>
         /// <param name="UserAccountMainID">发送人所属售楼部ID</param>
-        /// <param name="FileBuffer">二进制文件</param>
         /// <returns></returns>
         [ValidateInput(false)]
-        public string UpLodeMultiFiles(int FileType, int UserType, int UserID, int UserAccountMainID, string Token)//byte[] FileBuffer
+        public string UpLodeMultiFiles(int FileType, int UserType, int UserID, int UserAccountMainID, string Token)
         {
             //路径
             string UpFile = ConfigurationManager.AppSettings["UpLodeFile"].ToString();
@@ -314,7 +313,7 @@ namespace Web.Controllers
                     break;
             }
             Result result = new Result();
-            List<dynamic> list = new List<dynamic>();
+            string imagePaths = "";
             try
             {
                 if (!System.IO.File.Exists(Server.MapPath(Path)))
@@ -336,8 +335,7 @@ namespace Web.Controllers
                     item.SaveAs(FilePath);
 
                     //返回路径
-                    var fileObj = new { URL = SystemConst.WebUrlIP + Url.Content(savePath ?? ""), Token = Token };
-                    list.Add(fileObj);
+                    imagePaths += SystemConst.WebUrlIP + Url.Content(savePath ?? "") + "|";
                 }
             }
             catch (Exception ex)
@@ -345,7 +343,10 @@ namespace Web.Controllers
                 result.Error = "图片上传失败。";
                 result.HasError = true;
             }
-            result.Entity = list;
+            if (imagePaths.Length > 0) {
+                imagePaths = imagePaths.Substring(0, imagePaths.Length - 1);
+            }
+            result.Entity = imagePaths;
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 

@@ -46,31 +46,28 @@ namespace Web.Controllers
             var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
             bool isExist = userLoginInfoModel.ExistPhone(amid, phone);
             Result result = new Result();
-            if (isExist)
+
+            result.Error = "该电话已经成为业主账号，请直接登录。";
+
+            var model = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
+            var list = model.GetHouseByUserPhone(amid, phone);
+            List<App_PropertyUser> objs = new List<App_PropertyUser>();
+            if (list != null)
             {
-                result.Error = "该电话已经成为业主账号，请直接登录。";
-            }
-            else
-            {
-                var model = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
-                var list = model.GetHouseByUserPhone(amid, phone);
-                List<App_PropertyUser> objs = new List<App_PropertyUser>();
-                if (list != null)
+                foreach (var item in list)
                 {
-                    foreach (var item in list)
-                    {
-                        App_PropertyUser ap = new App_PropertyUser();
-                        ap.PropertyUserID = item.ID;
-                        ap.Name = item.UserName;
-                        ap.Phone = item.Phone;
-                        ap.RoomNum = item.Property_House.RoomNumber;
-                        ap.BuildingNum = item.Property_House.BuildingNum;
-                        ap.CellNum = item.Property_House.CellNum;
-                        objs.Add(ap);
-                    }
+                    App_PropertyUser ap = new App_PropertyUser();
+                    ap.PropertyUserID = item.ID;
+                    ap.Name = item.UserName;
+                    ap.Phone = item.Phone;
+                    ap.RoomNum = item.Property_House.RoomNumber;
+                    ap.BuildingNum = item.Property_House.BuildingNum;
+                    ap.CellNum = item.Property_House.CellNum;
+                    objs.Add(ap);
                 }
-                result.Entity = objs;
             }
+            result.Entity = objs;
+
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
@@ -85,6 +82,14 @@ namespace Web.Controllers
             Result result = new Result();
             var um = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
             var user = um.Get(userID);
+            if (user == null)
+            {
+                result.Error = "请求错误，请稍后重试。";
+                return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            }
+            user.Name = userName;
+            user.Phone = phone;
+            result = um.Edit(user);
             if (user == null)
             {
                 result.Error = "请求错误，请稍后重试。";
@@ -201,7 +206,7 @@ namespace Web.Controllers
         /// <param name="AMID"></param>
         /// <param name="ImgPath">图片路径 多张图片用|分割</param>
         /// <returns></returns>
-        public string SubmitRepair(int UserID,string Unit,string  RoomNumber,string Content,int RepairType,int AMID,string ImgPath)
+        public string SubmitRepair(int UserID, string Unit, string RoomNumber, string Content, int RepairType, int AMID, string ImgPath)
         {
             Result result = new Result();
             var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
@@ -284,7 +289,7 @@ namespace Web.Controllers
             if (repair.RepairOperation != null)
             {
                 string remark = "";
-                foreach (var item in repair.RepairOperation )
+                foreach (var item in repair.RepairOperation)
                 {
                     remark = item.OperationDate.ToString("yyyy-MM-dd HH:mm") + " : " + item.Remarks;
                 }
@@ -338,7 +343,7 @@ namespace Web.Controllers
                         break;
                 }
                 switch (item.EnumComplaintStatus)
-                { 
+                {
                     case (int)EnumComplaintStatus.Audit:
                         bc.Status = "审核中";
                         break;
@@ -354,7 +359,7 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(objs);
         }
 
-        public string SubmitComplaint(int UserID, int AMID,bool IsAnonymous, string Content, string ImgPath)
+        public string SubmitComplaint(int UserID, int AMID, bool IsAnonymous, string Content, string ImgPath)
         {
             Complaint com = new Complaint();
             if (IsAnonymous)
