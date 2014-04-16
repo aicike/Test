@@ -152,6 +152,7 @@ namespace Poco
             public const string PropertyFeeInfo = "PropertyFeeInfo";
             public const string RepairInfo = "RepairInfo";
             public const string Complaint = "Complaint";
+            public const string Advertising = "Advertising";
             //Action
             public const string History = "History";
             public const string Index = "Index";

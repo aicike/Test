@@ -62,26 +62,39 @@ namespace Business
                 var imageminiPath = string.Format("{0}\\{1}", accountPath, imageminiName);
                 var imageshowName = string.Format("{0}_{1}_{2}", token, "show", LastName);
                 var imageshowPath = string.Format("{0}\\{1}", accountPath, imageshowName);
+                
                 var lsImgPath = appadvertorial.MainImagPath;
-                var lsImaFilePath = HttpContext.Current.Server.MapPath(lsImgPath);
-                Tool.SuperGetPicThumbnail(lsImaFilePath, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
-
-
-                Tool.SuperGetPicThumbnailJT(lsImaFilePath, imagePath2, 70, w, h, x1, y1, tw, th, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
-
-                Tool.SuperGetPicThumbnail(imagePath2, imageshowPath, 70, 480, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
-
-                if (File.Exists(imagePath2))
+                if (!string.IsNullOrEmpty(lsImgPath))
                 {
-                    File.Delete(imagePath2);
+                    var lsImaFilePath = HttpContext.Current.Server.MapPath(lsImgPath);
+                    Tool.SuperGetPicThumbnail(lsImaFilePath, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+
+
+                    Tool.SuperGetPicThumbnailJT(lsImaFilePath, imagePath2, 70, w, h, x1, y1, tw, th, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+
+                    Tool.SuperGetPicThumbnail(imagePath2, imageshowPath, 70, 480, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+
+                    if (File.Exists(imagePath2))
+                    {
+                        File.Delete(imagePath2);
+                    }
+
+                    //缩略图mini
+                    Tool.SuperGetPicThumbnail(imageshowPath, imageminiPath, 70, 200, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+
+                    appadvertorial.MainImagPath = path + imageName;
+                    appadvertorial.AppShowImagePath = path + imageshowName;
+                    appadvertorial.MinImagePath = path + imageminiName;
                 }
-
-                //缩略图mini
-                Tool.SuperGetPicThumbnail(imageshowPath, imageminiPath, 70, 200, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
-
-                appadvertorial.MainImagPath = path + imageName;
-                appadvertorial.AppShowImagePath = path + imageshowName;
-                appadvertorial.MinImagePath = path + imageminiName;
+                else
+                {
+                    if (appadvertorial.EnumAdverClass == (int)EnumAdverClass.Advertising)
+                    {
+                        appadvertorial.MainImagPath = "~/Images/Advertising.jpg";
+                        appadvertorial.AppShowImagePath = "~/Images/Advertising.jpg";
+                        appadvertorial.MinImagePath = "~/Images/Advertising_show.jpg";
+                    }
+                }
             }
             catch (Exception ex)
             {

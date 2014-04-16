@@ -146,6 +146,14 @@ namespace Web.Controllers
                     ri.AccountName = "暂无";
                     ri.AccountPhone = "暂无";
                 }
+                if (item.RepairType == 0)
+                {
+                    ri.type = "个人";
+                }
+                else
+                {
+                    ri.type = "公共";
+                }
                 switch (item.EnumRepairStatus)
                 {
                     case (int)EnumRepairStatus.Allocated:
@@ -242,6 +250,14 @@ namespace Web.Controllers
             br.date = repair.RepairDate.ToString("yyyy-MM-dd HH:mm");
             br.ID = repair.ID;
             br.ImgPaths = repair.ImgPath;
+            if (repair.RepairType == 0)
+            {
+                br.type = "个人";
+            }
+            else
+            {
+                br.type = "公共";
+            }
             switch (repair.EnumRepairScore)
             {
                 case (int)EnumRepairScore.Dissatisfied:

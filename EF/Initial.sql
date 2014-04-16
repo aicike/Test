@@ -227,6 +227,7 @@ INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [C
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (58,'Token_Property_Fee', 0, N'物业费管理', N'物业费管理（物业）', NULL, N'PropertyFeeInfo', N'Index',2, 56,0,2)
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (59,'Token_Property_Repair', 0, N'报修管理', N'报修管理（物业）', NULL, N'RepairInfo', N'Index',3, 56,0,2)
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (60,'Token_Property_Complain', 0, N'投诉管理', N'投诉管理（物业）', NULL, N'Complaint', N'Index',4, 56,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (61,'Token_Property_Advertising', 0, N'广而告之', N'广而告之（物业）', NULL, N'Advertising', N'Index',5, 56,0,2)
 /*物业菜单结束*/
 SET IDENTITY_INSERT [dbo].[Menu] OFF
 
@@ -391,6 +392,11 @@ INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  (
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,59,'报修列表','Index',1)
 
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,60,'投诉列表','Index',1)
+
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,61,'投诉列表','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,61,'新增','Add',2)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,61,'修改','Edit',3)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,61,'删除','Delete',4)
 
 --INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,57,'列表','Index',1)
 --INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,57,'添加','Add',2)

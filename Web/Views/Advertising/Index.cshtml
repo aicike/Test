@@ -1,0 +1,85 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.Advertising;
+}
+@model PagedList<Poco.AppAdvertorial>
+@section head{
+    <script>
+
+
+        $(function () {
+            $("label[name=labCbFirst]").each(function () {
+                $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
+            });
+        });
+    </script>
+}
+<div class="title">
+    @Html.Partial("Menu3")</div>
+<div class="body">
+    <div class="option">
+        @Html.ActionLink("添加", "Add", "Advertising", new { HostName = ViewBag.HostName }, null, true)
+    </div>
+    <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
+        <tr>
+            <th style="width: 160px">
+                展示图片
+            </th>
+            <th style="width: 230px; word-wrap: break-word; word-break: normal;">
+                标题
+            </th>
+            <th>
+                发布日期
+            </th>
+            <th>
+                浏览次数
+            </th>
+            <th style="width: 80px;">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img style="width: 150px; margin-top:5px;  cursor:pointer "  onclick="clickInfo(@item.ID)" src="@Url.Content(item.AppShowImagePath ?? "")" />
+                </td>
+                <td>
+                    <label name="labCbFirst" title="@item.Depict" onclick="clickInfo(@item.ID)" style=" cursor:pointer">
+                        <a>@item.Title</a>
+                    </label>
+                </td>
+                <td style="font-size: 12px; color: #696969">
+                    @item.IssueDate.ToString("yyyy-MM-dd")
+                </td>
+                <td>
+                    @item.BrowseCnt
+                </td>
+                <td>
+                 @Html.ActionLink("修改", "Edit", "Advertising", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:10px" }, true)
+                    @Ajax.ActionLink("删除", "Delete", "Advertising", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?！','" + Url.Action("Delete", "Advertising", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+       {
+           PageIndexParameterName = "ID",
+           CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+           NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+           NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+           CssClass = "manage_pages pages",
+           SeparatorHtml = "&nbsp;",
+           AutoHide = false,
+           /*LastPageText = "Last",
+           FirstPageText = "First",
+           PrevPageText = "Back",
+           NextPageText = "Next",*/
+           PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+           ShowFirstLast = false
+       })
+    </div>
+</div>
+<div style="clear: both">
+</div>
