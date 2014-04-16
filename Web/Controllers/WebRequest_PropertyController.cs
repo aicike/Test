@@ -201,11 +201,11 @@ namespace Web.Controllers
         /// <param name="AMID"></param>
         /// <param name="ImgPath">图片路径 多张图片用|分割</param>
         /// <returns></returns>
-        public string SubmitRepair(int UserID,string Unit,string  RoomNumber,string Content,int RepairType,int AMID,string ImgPath)
+        public string SubmitRepair(int UserID,string UName,string UPhone, string Unit, string RoomNumber, string Content, int RepairType, int AMID, string ImgPath)
         {
             Result result = new Result();
-            var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
-            var user = userModel.Get(UserID);
+            //var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+            //var user = userModel.Get(UserID);
             RepairInfo rpinfo = new RepairInfo();
             rpinfo.AccountMainID = AMID;
             rpinfo.EnumRepairScore = (int)EnumRepairScore.NoScore;
@@ -216,8 +216,8 @@ namespace Web.Controllers
             rpinfo.RoomNumber = RoomNumber;
             rpinfo.Unit = Unit;
             rpinfo.UserID = UserID;
-            rpinfo.RepairName = user.Name;
-            rpinfo.RepairPhone = user.Phone;
+            rpinfo.RepairName = UName;
+            rpinfo.RepairPhone = UPhone;
             rpinfo.ImgPath = ImgPath;
 
             var repairInfoModel = Factory.Get<IRepairInfoModel>(SystemConst.IOC_Model.RepairInfoModel);
@@ -284,11 +284,11 @@ namespace Web.Controllers
             if (repair.RepairOperation != null)
             {
                 string remark = "";
-                foreach (var item in repair.RepairOperation )
+                foreach (var item in repair.RepairOperation)
                 {
-                    remark = item.OperationDate.ToString("yyyy-MM-dd HH:mm") + " : " + item.Remarks;
+                    remark += item.OperationDate.ToString("yyyy-MM-dd HH:mm") + " : " + item.Remarks + "|";
                 }
-                br.Operation = remark;
+                br.Operation = remark.TrimEnd('|');
             }
 
             return Newtonsoft.Json.JsonConvert.SerializeObject(br);
@@ -338,7 +338,7 @@ namespace Web.Controllers
                         break;
                 }
                 switch (item.EnumComplaintStatus)
-                { 
+                {
                     case (int)EnumComplaintStatus.Audit:
                         bc.Status = "审核中";
                         break;
@@ -354,7 +354,16 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(objs);
         }
 
-        public string SubmitComplaint(int UserID, int AMID,bool IsAnonymous, string Content, string ImgPath)
+        /// <summary>
+        /// 提交投诉
+        /// </summary>
+        /// <param name="UserID">用户ID</param>
+        /// <param name="AMID">AMID</param>
+        /// <param name="IsAnonymous">bool 是否匿名</param>
+        /// <param name="Content">内容</param>
+        /// <param name="ImgPath">图片路径 多张图片用 | 分割</param>
+        /// <returns></returns>
+        public string SubmitComplaint(int UserID, int AMID, bool IsAnonymous, string Content, string ImgPath)
         {
             Complaint com = new Complaint();
             if (IsAnonymous)
@@ -368,8 +377,74 @@ namespace Web.Controllers
             com.EnumRepairScore = (int)EnumRepairScore.NoScore;
             com.ComplaintDate = DateTime.Now;
             com.AccountMainID = AMID;
-            return "";
+            var complaintModel = Factory.Get<IComplaintModel>(SystemConst.IOC_Model.ComplaintModel);
+            Result result = complaintModel.Add(com);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
+
+
+        /// <summary>
+        /// 获取用户投诉详细信息
+        /// </summary>
+        /// <param name="CID">投诉ID</param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public string GetComplainInfo(int CID, int AMID)
+        {
+            var complaintModel = Factory.Get<IComplaintModel>(SystemConst.IOC_Model.ComplaintModel);
+            var complaint = complaintModel.GetComplaintInfo(CID, AMID);
+            _B_Complaint bc = new _B_Complaint();
+            bc.ID = complaint.ID;
+            bc.Contetn = complaint.ComplaintContetn;
+            bc.Date = complaint.ComplaintDate.ToString("yyyy-MM-dd HH:mm");
+            bc.ImgPath = complaint.ImgPath;
+            bc.IsAnonymous = complaint.IsAnonymous;
+            switch (complaint.EnumRepairScore)
+            {
+                case (int)EnumRepairScore.Dissatisfied:
+                    bc.Score = "不满意";
+                    break;
+                case (int)Poco.Enum.EnumRepairScore.General:
+                    bc.Score = "一般";
+                    break;
+                case (int)Poco.Enum.EnumRepairScore.NoScore:
+                    bc.Score = "未评分";
+                    break;
+                case (int)Poco.Enum.EnumRepairScore.Satisfied:
+                    bc.Score = "满意";
+                    break;
+                case (int)Poco.Enum.EnumRepairScore.VeryDissatisfied:
+                    bc.Score = "非常不满意";
+                    break;
+                case (int)Poco.Enum.EnumRepairScore.VerySatisfactory:
+                    bc.Score = "非常满意";
+                    break;
+            }
+            switch (complaint.EnumComplaintStatus)
+            {
+                case (int)EnumComplaintStatus.Audit:
+                    bc.Status = "审核中";
+                    break;
+                case (int)EnumComplaintStatus.completed:
+                    bc.Status = "已处理";
+                    break;
+                case (int)EnumComplaintStatus.Evaluation:
+                    bc.Status = "已评价";
+                    break;
+            }
+            if (complaint.ComplaintReply != null)
+            {
+                string reply = "";
+                foreach (var item in complaint.ComplaintReply)
+                {
+                    reply += item.ReplyDate + " : " + item.ReplyContent + "|";
+                }
+                bc.Reply = reply.TrimEnd('|');
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(bc);
+        }
+
+
         #endregion
 
     }

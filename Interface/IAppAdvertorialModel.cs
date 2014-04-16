@@ -9,7 +9,7 @@ namespace Interface
 {
     public interface IAppAdvertorialModel : IBaseModel<AppAdvertorial>
     {
-        IQueryable<AppAdvertorial> GetList(int AccountMainID,int AdverTorialType);
+        IQueryable<AppAdvertorial> GetList(int AccountMainID, int AdverTorialType, int EnumAdverClass);
 
           /// <summary>
         /// 获取详细信息
@@ -19,15 +19,15 @@ namespace Interface
         /// <returns></returns>
         AppAdvertorial GetInfo(int AID, int AMID);
 
-        Result AddAppAdvertorial(AppAdvertorial appadvertorial, int w, int h, int x1, int y1, int tw, int th);
+        Result AddAppAdvertorial(AppAdvertorial appadvertorial,int w, int h, int x1, int y1, int tw, int th);
 
         Result DelAppAdvertorial(int ID, int AdverTorialType);
 
         Result EditAppAdvertorial(AppAdvertorial appadvertorial, int w, int h, int x1, int y1, int tw, int th);
 
-        int EditAppAdvertorialStick(int ID, int isok, int accoutMainID, int Sort, int AdverTorialType);
+        int EditAppAdvertorialStick(int ID, int isok, int accoutMainID, int Sort, int AdverTorialType, int EnumAdverClass);
 
-        int EditAppAdvertorialSort(int ID, int AccountMainID, int Sort, int type, int AdverTorialType);
+        int EditAppAdvertorialSort(int ID, int AccountMainID, int Sort, int type, int AdverTorialType, int EnumAdverClass);
 
         /// <summary>
         /// 更改阅读次数

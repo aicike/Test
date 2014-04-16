@@ -76,6 +76,7 @@
     <Compile Include="ComplaintReply.cs" />
     <Compile Include="Conversation.cs" />
     <Compile Include="ConversationDetailed.cs" />
+    <Compile Include="Enum\EnumAdverClass.cs" />
     <Compile Include="Enum\EnumAdverTorialType.cs" />
     <Compile Include="Enum\EnumAdvertorialUType.cs" />
     <Compile Include="Enum\EnumAdverURLType.cs" />

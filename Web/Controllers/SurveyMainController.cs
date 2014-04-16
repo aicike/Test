@@ -514,7 +514,7 @@ namespace Web.Controllers
             appRW.SystemStatus = 0;
             appRW.Title = main.SurveyTitle;
             appRW.UrlID = main.ID;
-
+            appRW.EnumAdverClass = (int)EnumAdverClass.AdverTorial;
             result = AdvertorialModel.Add(appRW);
 
             appRW.ShortURL = string.Format("http://{0}/Default/News?id_token={1}", SystemConst.WebUrl, appRW.ID.TokenEncrypt()).ConvertToShortURL();

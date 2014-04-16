@@ -30,5 +30,13 @@ namespace Interface
         /// <param name="AMID"></param>
         /// <returns></returns>
         IQueryable<Complaint> GetListByUserID(int UserID, int AMID);
+
+        /// <summary>
+        /// 根据投诉ID 获取信息
+        /// </summary>
+        /// <param name="CID"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        Complaint GetComplaintInfo(int CID, int AMID);
     }
 }

@@ -118,7 +118,7 @@ namespace Business
             //}
             //是否设置App资讯
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            var AppAdvertorial = AppAdvertorialModel.GetList(AccountMainID, (int)EnumAdvertorialUType.UserEnd);
+            var AppAdvertorial = AppAdvertorialModel.GetList(AccountMainID, (int)EnumAdvertorialUType.UserEnd,(int)EnumAdverClass.AdverTorial);
             if (AppAdvertorial != null)
             {
                 if (AppAdvertorial.Count() > 0)
