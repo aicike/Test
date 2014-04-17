@@ -86,9 +86,16 @@
         <div class="date">@Model.IssueDate.ToString("yyyy-MM-dd")</div>
         <div class="depict">
             备注：@Model.Depict</div>
-        <div class="image">
-            <img src="@Poco.SystemConst.WebUrlIP@Url.Content(Model.MainImagPath ?? "")" alt="@Model.Title" width="100%" />
-        </div>
+        @if (Model.EnumAdverClass == (int)Poco.Enum.EnumAdverClass.Advertising)
+        {
+
+        }
+        else
+        { 
+            <div class="image">
+                <img src="@Poco.SystemConst.WebUrlIP@Url.Content(Model.MainImagPath ?? "")" alt="@Model.Title" width="100%" />
+            </div>
+        }
         <div class="conter">
             @Html.Raw(Model.Content)
         </div>

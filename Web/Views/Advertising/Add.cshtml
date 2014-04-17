@@ -55,7 +55,8 @@
                     $('#imgSel').Jcrop({
                         onChange: updatePreview,
                         onSelect: updatePreview,
-                        aspectRatio: 1
+                        aspectRatio: 1,
+                        setSelect: [0, 0 ,100,100]
                     }, function () {
                         // Use the API to get the real image size
                         var bounds = this.getBounds();
@@ -66,12 +67,12 @@
                     });
                     Cnt = 1;
 
-
                 }
+                
             });
 
 
-
+           
             window.UEDITOR_HOME_URL = "/ueditor/";
             //实例化编辑器
             var options = {
@@ -120,11 +121,18 @@
                 $('#th').val($("#imgSel").height());
             };
 
-
+            $("form").submit(function () {
+                if ($(".validation-summary-errors").find("li[style!='display:none']").length == 0) {
+                    ShowLayout_Later("请稍后", "请稍后，正在努力为您上传数据中...");
+                } else {
+                    $(".validation-summary-errors").find("li").remove();
+                }
+            });
 
 
             $("#btn_bc").click(function OnSub() {
                 var title = $("#Title").val();
+                var Depict = $("#Depict").val();
                 if (Cnt > 0) {
                     if ($("#w").val() == "0") {
                         JAlert({
@@ -138,6 +146,14 @@
                 if (title.length <= 0) {
                     JAlert({
                         Message: "标题不能为空！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return false;
+                }
+                if (Depict.length <= 0) {
+                    JAlert({
+                        Message: "描述不能为空！",
                         DialogType: "Ok",
                         BtnOk: "确定"
                     });
@@ -253,6 +269,15 @@
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Title)
                         <div style="">@Html.ValidationSummary()</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 描述
+                    </td>
+                    <td class="tdField">@Html.TextAreaFor(a => a.Depict, new  { style="height:50px"})
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Depict)
                     </td>
                 </tr>
                 <tr id="zw" style="height: 300px">
