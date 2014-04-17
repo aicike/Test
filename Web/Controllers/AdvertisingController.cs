@@ -45,7 +45,6 @@ namespace Web.Controllers
         [ValidateInput(false)]
         public ActionResult Add(AppAdvertorial appAdver, int w, int h, int x1, int y1, int tw, int th)
         {
-            appAdver.Depict = "";
             appAdver.stick = 0;
             appAdver.EnumAdverTorialType = 0;
             appAdver.AccountMainID = LoginAccount.CurrentAccountMainID;

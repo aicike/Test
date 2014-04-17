@@ -38,6 +38,11 @@ namespace Poco
         public string AccountPhone { get; set; }
 
         /// <summary>
+        /// 报修内容
+        /// </summary>
+        public string Content { get; set; }
+
+        /// <summary>
         /// 评分
         /// </summary>
         public string Score { get; set; }

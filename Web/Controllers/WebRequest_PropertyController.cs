@@ -209,7 +209,7 @@ namespace Web.Controllers
         /// <param name="AMID"></param>
         /// <param name="ImgPath">图片路径 多张图片用|分割</param>
         /// <returns></returns>
-        public string SubmitRepair(int UserID,string UName,string UPhone, string Unit, string RoomNumber, string Content, int RepairType, int AMID, string ImgPath)
+        public string SubmitRepair(int UserID, string UName, string UPhone, string Unit, string RoomNumber, string Content, int RepairType, int AMID, string ImgPath)
         {
             Result result = new Result();
             //var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
@@ -245,11 +245,21 @@ namespace Web.Controllers
             var repairInfoModel = Factory.Get<IRepairInfoModel>(SystemConst.IOC_Model.RepairInfoModel);
             var repair = repairInfoModel.GetInfoByID(RID, AMID);
             _B_RepairInfo br = new _B_RepairInfo();
-            br.AccountName = repair.RepairName;
-            br.AccountPhone = repair.RepairPhone;
+            if (repair.AccountID.HasValue)
+            {
+                br.AccountName = repair.Account.Name;
+                br.AccountPhone = repair.Account.Phone;
+            }
+            else
+            {
+
+                br.AccountName = "暂无";
+                br.AccountPhone = "暂无";
+            }
             br.date = repair.RepairDate.ToString("yyyy-MM-dd HH:mm");
             br.ID = repair.ID;
             br.ImgPaths = repair.ImgPath;
+            br.Content = repair.RepairContent;
             if (repair.RepairType == 0)
             {
                 br.type = "个人";
@@ -308,6 +318,31 @@ namespace Web.Controllers
             }
 
             return Newtonsoft.Json.JsonConvert.SerializeObject(br);
+        }
+
+
+        /// <summary>
+        /// 评分 并结束报修
+        /// </summary>
+        /// <param name="RID">报修ID</param>
+        /// <param name="score">评分：1=非常不满意，2=不满意，3=一般，4=满意，5=非常满意</param>
+        /// <param name="Remarks">评价</param>
+        /// <returns></returns>
+        public string CompleteRepair(int RID, int score, string Remarks)
+        {
+            Result result = new Result();
+            var repairInfoModel = Factory.Get<IRepairInfoModel>(SystemConst.IOC_Model.RepairInfoModel);
+            result = repairInfoModel.UpdStatus(RID, (int)EnumRepairStatus.completed);
+            if (!result.HasError)
+            {
+                string content = "";
+                if (!string.IsNullOrEmpty(Remarks))
+                {
+                    content = "评价：" + Remarks;
+                }
+                repairInfoModel.AddRemark(RID, "报修完成" + content);
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
         #endregion
