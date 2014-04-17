@@ -331,7 +331,7 @@ namespace Web.Controllers
         /// 评分 并结束报修
         /// </summary>
         /// <param name="RID">报修ID</param>
-        /// <param name="score">评分：1=非常不满意，2=不满意，3=一般，4=满意，5=非常满意</param>
+        /// <param name="score">评分：1=非常满意，2=满意，3=一般，4=不满意，5=非常不满意</param>
         /// <param name="Remarks">评价</param>
         /// <returns></returns>
         public string CompleteRepair(int RID, int score, string Remarks)

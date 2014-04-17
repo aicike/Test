@@ -1032,6 +1032,7 @@
     <Content Include="Views\Complaint\ShowInfo.cshtml" />
     <Content Include="Views\Advertising\Index.cshtml" />
     <Content Include="Views\Advertising\Add.cshtml" />
+    <Content Include="Views\Advertising\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

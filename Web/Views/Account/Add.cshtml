@@ -19,8 +19,9 @@
 
 
             var jcrop_api, boundx, boundy;
-
+             var tempC;
             function updatePreview(c) {
+                 tempC = c;
                 if (parseInt(c.w) > 0) {
                     var rx = 120 / c.w;
                     var ry = 120 / c.h;
@@ -99,7 +100,8 @@
                     $('#imgSel').Jcrop({
                         onChange: updatePreview,
                         onSelect: updatePreview,
-                        aspectRatio: 1
+                        aspectRatio: 1,
+                        setSelect: [0, 0, 200, 200]
                     }, function () {
                         // Use the API to get the real image size
                         var bounds = this.getBounds();
@@ -107,6 +109,7 @@
                         boundy = bounds[1];
                         // Store the API in the jcrop_api variable
                         jcrop_api = this;
+                        updatePreview(tempC);
                     });
                     Cnt = 1;
 
