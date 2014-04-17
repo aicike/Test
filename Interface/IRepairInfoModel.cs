@@ -54,5 +54,13 @@ namespace Interface
         /// <param name="AMID"></param>
         /// <returns></returns>
         IQueryable<RepairInfo> GetListByUserID(int UserID, int AMID);
+
+        /// <summary>
+        /// 更改评分
+        /// </summary>
+        /// <param name="RID"></param>
+        /// <param name="EnumRepairScore"></param>
+        /// <returns></returns>
+        Result UpdScore(int RID, int EnumRepairScore);
     }
 }

@@ -74,15 +74,9 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(AppAdvertorial appadver, int AType, int w, int h, int x1, int y1, int tw, int th)
+        public ActionResult Edit(AppAdvertorial appadver,  int w, int h, int x1, int y1, int tw, int th)
         {
-            //if (HousShowImagePathFile != null)
-            //{
-            //    if (w <= 0)
-            //    {
-            //        return JavaScript(AlertJS_NoTag(new Dialog("请在图片上选择展示区域")));
-            //    }
-            //}
+            
             var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
 
             var appadvertorials = AppAdvertorialModel.Get(appadver.ID);
@@ -93,22 +87,7 @@ namespace Web.Controllers
                     return JavaScript(AlertJS_NoTag(new Dialog("请在图片上选择展示区域")));
                 }
             }
-            if (AType == (int)EnumAdverTorialType.url)
-            {
-                appadver.Content = "";
-                if (appadver.EnumAdverURLType.HasValue)
-                {
-
-                }
-                else
-                {
-                    appadver.EnumAdverURLType = (int)EnumAdverURLType.Ordinary;
-                }
-            }
-
-
-            appadver.EnumAdverTorialType = 0;
-            appadver.EnumAdvertorialUType = (int)EnumAdvertorialUType.UserEnd;
+        
             Result result = AppAdvertorialModel.EditAppAdvertorial(appadver, w, h, x1, y1, tw, th);
             if (result.HasError)
             {

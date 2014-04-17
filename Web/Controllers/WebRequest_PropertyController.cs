@@ -341,6 +341,7 @@ namespace Web.Controllers
                     content = "评价：" + Remarks;
                 }
                 repairInfoModel.AddRemark(RID, "报修完成" + content);
+                repairInfoModel.UpdScore(RID, score);
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }

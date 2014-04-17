@@ -14,7 +14,7 @@
     <script>
         var Cnt = 0;
         var UpImgUrl = '@Url.Action("UpImg", "Ajax", new { HostName = ViewBag.HostName })';
-        $(function(){
+        $(function () {
 
             window.UEDITOR_HOME_URL = "/ueditor/";
             //实例化编辑器
@@ -114,7 +114,7 @@
             });
         });
     </script>
-      <style type="text/css">
+    <style type="text/css">
         .middle-out
         {
             width: 320px;
@@ -126,7 +126,122 @@
         }
         .view p img
         {
-             max-width:100%;    
+            max-width: 100%;
         }
     </style>
 }
+<div class="title">
+    @Html.Partial("Menu3")
+</div>
+<div class="body">
+    @using (Html.BeginForm("Edit", "Advertising", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <fieldset style="font-size: 14px">
+            <legend>展示图片</legend>
+            <table style="line-height: 15px" width="100%">
+                <tr>
+                    <td style="width: 365px">
+                        <div class="middle-out">
+                            <div class="middle-in" style="margin: auto 0px">
+                                <img id="imgSel"  src="@Url.Content("~/Images/Advertising.jpg")"   style="max-height:320px; max-width:320px;" />
+                            </div>
+                        </div>
+                    </td>
+                    <td valign="top">
+                        <p>
+                            App列表页展示图
+                        </p>
+                        <div style="width: 120px; height: 120px; overflow: hidden;">
+                            <img id="imgLogo" src="@Url.Content("~/Images/Advertising_show.jpg")" style="width:120px; height:120px"/>
+                        </div>
+                        <span style="font-size: 12px; color: #979797">(160*160 缩略图)</span>
+                        <div style="width: 80px; height: 80px; overflow: hidden; margin-top: 17px">
+                            <img id="imgLogo2" src="@Url.Content("~/Images/Advertising_show.jpg")" style="width:80px; height:80px"/>
+                        </div>
+                        <span style="font-size: 12px; color: #979797">(60*60 缩略图)</span>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div style="color: Red">
+                            提示：请上传小于5MB的图片
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input id="file_upload" name="file_upload" type="file" multiple="false" />
+                        @Html.TextBoxFor(a => a.MainImagPath, new { style = "width:0px;display:none" })
+                        @Html.ValidationMessageFor(a => a.MainImagPath)
+                        <div style="display: none">
+                            X1
+                            <input type="text" size="4" id="x1" name="x1" value="0" />
+                            Y1
+                            <input type="text" size="4" id="y1" name="y1" value="0" />
+                            W
+                            <input type="text" size="4" id="w" name="w" value="0" />
+                            H
+                            <input type="text" size="4" id="h" name="h" value="0" />
+                            TW
+                            <input type="text" size="4" id="tw" name="tw" value="0" />
+                            TH
+                            <input type="text" size="4" id="th" name="th" value="0" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset style="font-size: 14px">
+            <legend>基本信息</legend>
+            <table class="tableForm" style="width: 100%">
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 资讯标题
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Title)
+                        @Html.HiddenFor(a => a.ID)
+                        @Html.HiddenFor(a => a.IssueDate)
+                        @Html.HiddenFor(a => a.Sort)
+                        @Html.HiddenFor(a => a.AppShowImagePath)
+                        @Html.HiddenFor(a => a.MinImagePath)
+                        @Html.HiddenFor(a => a.EnumAdverURLType)
+                        @Html.HiddenFor(a => a.BrowseCnt)
+                        @Html.HiddenFor(a => a.UrlID)
+                        @Html.HiddenFor(a => a.EnumAdverClass)
+                        @Html.HiddenFor(a => a.stick)
+                        @Html.HiddenFor(a => a.EnumAdvertorialUType)
+                        @Html.HiddenFor(a => a.EnumAdverTorialType)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Title)
+                        <div style="">@Html.ValidationSummary()</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 描述
+                    </td>
+                    <td class="tdField">@Html.TextAreaFor(a => a.Depict, new { style = "height:50px" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Depict)
+                    </td>
+                </tr>
+                <tr id="zw" style="height: 300px">
+                    <td class="tdTitle" valign="top">
+                        <span class="Identification">*</span> 正文
+                    </td>
+                    <td colspan="2" class="tdField">
+                        <script type="text/plain" id="editor" height="300px" width="330px" name="Content"></script>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="button" id="btn_bc" class="button" value="保存" style="margin-right: 20px" />
+            <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px;
+                display: none" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }
+</div>
+<div style="clear: both">
+</div>
