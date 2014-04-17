@@ -101,7 +101,24 @@ namespace Business
             return list;
         }
 
-      
+        /// <summary>
+        /// 更改评分
+        /// </summary>
+        /// <param name="RID"></param>
+        /// <param name="EnumRepairScore"></param>
+        /// <returns></returns>
+        public Result UpdScore(int RID, int EnumRepairScore)
+        {
+            Result result = new Result();
+            string sql = string.Format("update RepairInfo set Score={0} where ID = {1}", EnumRepairScore, RID);
+            int cnt = base.SqlExecute(sql);
+            if (cnt <= 0)
+            {
+                result.HasError = true;
+                result.Error = "修改评分";
+            }
+            return result;
+        }
 
     }
 }
