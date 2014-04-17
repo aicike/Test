@@ -71,7 +71,8 @@
                         $('#imgSel').Jcrop({
                             onChange: updatePreview,
                             onSelect: updatePreview,
-                            aspectRatio: 2
+                            aspectRatio: 2,
+                            setSelect: [0, 0, 200, 200]
                         }, function () {
                             // Use the API to get the real image size
                             var bounds = this.getBounds();
@@ -79,6 +80,7 @@
                             boundy = bounds[1];
                             // Store the API in the jcrop_api variable
                             jcrop_api = this;
+                            updatePreview(tempC);
                         });
                         Cnt = 1;
                 }
@@ -90,8 +92,9 @@
             $("#imgHousType").attr("src", "http://"+imgpath);
 
             var jcrop_api, boundx, boundy;
-
+             var tempC;
             function updatePreview(c) {
+             tempC = c;
                 if (parseInt(c.w) > 0) {
 
 
@@ -473,7 +476,7 @@
                     <td>
                     </td>
                 </tr>
-                <tr id="zw" style="height:300px">
+                <tr id="zw" style="height: 300px">
                     <td class="tdTitle" valign="top">
                         <span class="Identification">*</span> 正文
                     </td>

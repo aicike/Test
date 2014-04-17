@@ -15,25 +15,25 @@ namespace Poco.Enum
         /// </summary>
         NoScore,
         /// <summary>
-        /// 非常不满意
+        /// 非常满意
         /// </summary>
-        VeryDissatisfied,
-        /// <summary>
-        /// 不满意 
-        /// </summary>
-        Dissatisfied,
-        /// <summary>
-        /// 一般
-        /// </summary>
-        General,
+        VerySatisfactory,
         /// <summary>
         /// 满意
         /// </summary>
         Satisfied,
         /// <summary>
-        /// 非常满意
+        /// 一般
         /// </summary>
-        VerySatisfactory
+        General,
+        /// <summary>
+        /// 不满意 
+        /// </summary>
+        Dissatisfied,
+        /// <summary>
+        /// 非常不满意
+        /// </summary>
+        VeryDissatisfied
 
     }
 }
