@@ -134,7 +134,7 @@ namespace Web.Controllers
         public string GetRepairList(int UserID, int AMID)
         {
             var repairInfoModel = Factory.Get<IRepairInfoModel>(SystemConst.IOC_Model.RepairInfoModel);
-            var list = repairInfoModel.GetListByUserID(UserID, AMID);
+            var list = repairInfoModel.GetListByUserID(UserID, AMID).ToList();
             List<_B_RepairInfo> objs = new List<_B_RepairInfo>();
             foreach (var item in list)
             {
@@ -318,7 +318,7 @@ namespace Web.Controllers
                 string remark = "";
                 foreach (var item in repair.RepairOperation)
                 {
-                    remark += item.OperationDate.ToString("yyyy-MM-dd HH:mm") + " : " + item.Remarks + "|";
+                    remark += item.OperationDate.ToString("yyyy-MM-dd HH:mm") + "&" + item.Remarks + "|";
                 }
                 br.Operation = remark.TrimEnd('|');
             }
