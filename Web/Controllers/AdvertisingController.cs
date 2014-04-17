@@ -93,7 +93,19 @@ namespace Web.Controllers
             {
                 return JavaScript(" isCommit = true;" + AlertJS_NoTag(new Dialog(result.Error)));
             }
-            return RedirectToAction("Index", "AppAdvertorial");
+            return RedirectToAction("Index", "Advertising");
+        }
+
+        public ActionResult Delete(int RID)
+        {
+            var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
+            var result = AppAdvertorialModel.DelAppAdvertorial(RID, (int)EnumAdvertorialUType.UserEnd);
+            if (result.HasError)
+            {
+                return Alert(new Dialog(result.Error));
+            }
+
+            return JavaScript("window.location.href='" + Url.Action("Index", "Advertising", new { HostName = LoginAccount.HostName }) + "'");
         }
 
     }

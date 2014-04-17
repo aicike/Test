@@ -312,7 +312,7 @@ namespace Web.Controllers
                 string remark = "";
                 foreach (var item in repair.RepairOperation)
                 {
-                    remark += item.OperationDate.ToString("yyyy-MM-dd HH:mm") + " : " + item.Remarks + "|";
+                    remark += item.OperationDate.ToString("yyyy-MM-dd HH:mm") + "&" + item.Remarks + "|";
                 }
                 br.Operation = remark.TrimEnd('|');
             }
@@ -499,5 +499,90 @@ namespace Web.Controllers
 
         #endregion
 
+
+        #region-------------------广而告之接口---------------------------
+        /// <summary>
+        /// 广而告之显示列表
+        /// </summary>
+        /// <param name="AccountID">售楼部ID</param>
+        /// <param name="ID">显示开始ID 第一次打开传0</param>
+        /// <param name="ListCnt">返回列表的条数</param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public string GetAdvertorialList(int AMID, int ID, int ListCnt)
+        {
+            var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
+            var list = AppAdvertorialModel.GetList(AMID, (int)EnumAdvertorialUType.UserEnd, (int)EnumAdverClass.Advertising);
+            PagedList<AppAdvertorial> RtitleImg = null;
+            PagedList<AppAdvertorial> RListImg = null;
+            if (ID == 0)
+            {
+                RtitleImg = list.Where(a => a.stick == 1).ToPagedList(1, 5);
+                RListImg = list.Where(a => a.stick == 0).ToPagedList(1, ListCnt);
+            }
+            else
+            {
+                RListImg = list.Where(a => a.stick == 0 && a.ID < ID).ToPagedList(1, ListCnt);
+            }
+            List<_B_Advertorial> TitleShow = new List<_B_Advertorial>();
+            if (RtitleImg != null)
+            {
+                foreach (var item in RtitleImg)
+                {
+                    _B_Advertorial ADVERTORIAL = new _B_Advertorial();
+                    ADVERTORIAL.I = item.ID;
+                    ADVERTORIAL.T = item.Title;
+                    ADVERTORIAL.P = item.Depict;
+                    ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
+                    ADVERTORIAL.URL = SystemConst.WebUrlIP + "/Default/News?id_token=" + item.ID.TokenEncrypt();
+                    TitleShow.Add(ADVERTORIAL);
+                }
+            }
+            List<_B_Advertorial> ListShow = new List<_B_Advertorial>();
+            if (RListImg != null)
+            {
+                foreach (var item in RListImg)
+                {
+                    _B_Advertorial ADVERTORIAL = new _B_Advertorial();
+                    ADVERTORIAL.I = item.ID;
+                    ADVERTORIAL.T = item.Title;
+                    ADVERTORIAL.P = item.Depict;
+                    ADVERTORIAL.D = item.IssueDate.ToString("yyyy-MM-dd");
+                    ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
+                    ADVERTORIAL.F = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
+                    ADVERTORIAL.URL = SystemConst.WebUrlIP + "/Default/News?id_token=" + item.ID.TokenEncrypt();
+                    ListShow.Add(ADVERTORIAL);
+                }
+            }
+
+            var jsonStr = new { TitleImg = TitleShow, List = ListShow };
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(jsonStr);
+        }
+
+        
+
+        /// <summary>
+        /// 广而告之详细信息
+        /// </summary>
+        /// <param name="AccountID">售楼部ID</param>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public string GetAdvertorialInfo(int AMID, int ID)
+        {
+            var AppAdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
+            var list = AppAdvertorialModel.GetList(AMID, (int)EnumAdvertorialUType.UserEnd, (int)EnumAdverClass.Advertising);
+            var Info = list.Where(a => a.ID == ID).FirstOrDefault();
+            _B_Advertorial ADVERTORIAL = new _B_Advertorial();
+            ADVERTORIAL.I = Info.ID;
+            ADVERTORIAL.T = Info.Title;
+            ADVERTORIAL.D = Info.IssueDate.ToString("yyyy-MM-dd");
+            ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(Info.MainImagPath ?? "");
+            ADVERTORIAL.C = Info.Content;
+            return Newtonsoft.Json.JsonConvert.SerializeObject(ADVERTORIAL);
+        }
+
+        #endregion
     }
 }

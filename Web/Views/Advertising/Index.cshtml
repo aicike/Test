@@ -74,7 +74,7 @@
                 </td>
                 <td class="operation">
                  @Html.ActionLink("修改", "Edit", "Advertising", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:10px" }, true)
-                    @Ajax.ActionLink("删除", "Delete", "Advertising", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?！','" + Url.Action("Delete", "Advertising", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
+                    @Ajax.ActionLink("删除", "Delete", "Advertising", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?！','" + Url.Action("Delete", "Advertising", new { HostName = ViewBag.HostName, RID = item.ID }) + "',null)" }, true)
                 </td>
             </tr>
         }
