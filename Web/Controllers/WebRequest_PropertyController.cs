@@ -46,9 +46,10 @@ namespace Web.Controllers
             var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
             bool isExist = userLoginInfoModel.ExistPhone(amid, phone);
             Result result = new Result();
-
-            result.Error = "该电话已经成为业主账号，请直接登录。";
-
+            if (isExist)
+            {
+                result.Error = "该电话已经成为业主账号，请直接登录。";
+            }
             var model = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
             var list = model.GetHouseByUserPhone(amid, phone);
             List<App_PropertyUser> objs = new List<App_PropertyUser>();
@@ -214,7 +215,7 @@ namespace Web.Controllers
         /// <param name="AMID"></param>
         /// <param name="ImgPath">图片路径 多张图片用|分割</param>
         /// <returns></returns>
-        public string SubmitRepair(int UserID,string UName,string UPhone, string Unit, string RoomNumber, string Content, int RepairType, int AMID, string ImgPath)
+        public string SubmitRepair(int UserID, string UName, string UPhone, string Unit, string RoomNumber, string Content, int RepairType, int AMID, string ImgPath)
         {
             Result result = new Result();
             //var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
