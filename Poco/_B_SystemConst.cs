@@ -153,6 +153,7 @@ namespace Poco
             public const string RepairInfo = "RepairInfo";
             public const string Complaint = "Complaint";
             public const string Advertising = "Advertising";
+            public const string Repairchargeso = "Repairchargeso";
             //Action
             public const string History = "History";
             public const string Index = "Index";
@@ -266,7 +267,8 @@ namespace Poco
             public const string RepairOperationModel = "RepairOperationModel";
             public const string ComplaintModel = "ComplaintModel";
             public const string ComplaintReplyModel = "ComplaintReplyModel";
-
+            public const string RepairchargesoModel = "RepairchargesoModel";
+            
             
             
         }

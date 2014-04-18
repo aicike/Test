@@ -228,13 +228,13 @@ INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [C
 
 /*物业菜单开始*/
 --一级
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level],ServiceID) VALUES (58,'Token_Property', 0, N'物业管理', N'物业管理（物业）', NULL, NULL,NULL, 6, NULL,0,1,5)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level],ServiceID) VALUES (58,'Token_WUYE', 0, N'物业管理', N'物业管理（物业）', NULL, NULL,NULL, 6, NULL,0,1,5)
 --二级
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (59,'Token_Property_Fee', 0, N'物业费管理', N'物业费管理（物业）', NULL, N'PropertyFeeInfo', N'Index',2, 58,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (60,'Token_Property_Repair', 0, N'报修管理', N'报修管理（物业）', NULL, N'RepairInfo', N'Index',3, 58,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (61,'Token_Property_Complain', 0, N'投诉管理', N'投诉管理（物业）', NULL, N'Complaint', N'Index',4, 58,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (62,'Token_Property_Advertising', 0, N'广而告之', N'广而告之（物业）', NULL, N'Advertising', N'Index',5, 58,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (63,'Token_Property_Repaircharges', 0, N'收费维修', N'收费维修（物业）', NULL, N'Repaircharges', N'Index',6, 58,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (59,'Token_WUYE_Fee', 0, N'物业费管理', N'物业费管理（物业）', NULL, N'PropertyFeeInfo', N'Index',2, 58,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (60,'Token_WUYE_Repair', 0, N'报修管理', N'报修管理（物业）', NULL, N'RepairInfo', N'Index',3, 58,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (61,'Token_WUYE_Complain', 0, N'投诉管理', N'投诉管理（物业）', NULL, N'Complaint', N'Index',4, 58,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (62,'Token_WUYE_Advertising', 0, N'广而告之', N'广而告之（物业）', NULL, N'Advertising', N'Index',5, 58,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (63,'Token_WUYE_Repaircharges', 0, N'收费维修', N'收费维修（物业）', NULL, N'Repairchargeso', N'Index',6, 58,0,2)
 /*物业菜单结束*/
 SET IDENTITY_INSERT [dbo].[Menu] OFF
 

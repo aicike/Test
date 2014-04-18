@@ -105,6 +105,7 @@
     <Compile Include="Property_House.cs" />
     <Compile Include="Property_User.cs" />
     <Compile Include="PropertyFeeInfo.cs" />
+    <Compile Include="Repaircharges.cs" />
     <Compile Include="RepairInfo.cs" />
     <Compile Include="RepairOperation.cs" />
     <Compile Include="ReportBody.cs" />
@@ -243,6 +244,7 @@
     <Compile Include="_RoleOption.cs" />
     <Compile Include="XMPP_Body_SMS.cs" />
     <Compile Include="Lottery_egg.cs" />
+    <Compile Include="_B_Repairchargeso.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

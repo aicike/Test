@@ -202,6 +202,7 @@
     <Compile Include="Controllers\OrderMTypeController.cs" />
     <Compile Include="Controllers\PropertyHouseController.cs" />
     <Compile Include="Controllers\PropertyFeeInfoController.cs" />
+    <Compile Include="Controllers\RepairchargesoController.cs" />
     <Compile Include="Controllers\RepairInfoController.cs" />
     <Compile Include="Controllers\SalesMessageController.cs" />
     <Compile Include="Controllers\SetController.cs" />
@@ -1033,6 +1034,9 @@
     <Content Include="Views\Advertising\Index.cshtml" />
     <Content Include="Views\Advertising\Add.cshtml" />
     <Content Include="Views\Advertising\Edit.cshtml" />
+    <Content Include="Views\Repairchargeso\Index.cshtml" />
+    <Content Include="Views\Repairchargeso\Add.cshtml" />
+    <Content Include="Views\Repairchargeso\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

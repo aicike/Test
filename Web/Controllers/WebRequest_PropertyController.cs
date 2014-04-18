@@ -489,7 +489,7 @@ namespace Web.Controllers
                 string reply = "";
                 foreach (var item in complaint.ComplaintReply)
                 {
-                    reply += item.ReplyDate + " : " + item.ReplyContent + "|";
+                    reply += item.ReplyDate + "&" + item.ReplyContent + "|";
                 }
                 bc.Reply = reply.TrimEnd('|');
             }
@@ -581,6 +581,32 @@ namespace Web.Controllers
             ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(Info.MainImagPath ?? "");
             ADVERTORIAL.C = Info.Content;
             return Newtonsoft.Json.JsonConvert.SerializeObject(ADVERTORIAL);
+        }
+
+        #endregion
+
+
+        #region-------------------收费维修接口---------------------------
+
+        /// <summary>
+        /// 获取收费维修列表
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public string GetRepairchargesoList(int AMID)
+        {
+            var repairchargesoModel = Factory.Get<IRepairchargesoModel>(SystemConst.IOC_Model.RepairchargesoModel);
+            var repairchargeso = repairchargesoModel.GetList(AMID);
+            List<_B_Repairchargeso> brlist = new List<_B_Repairchargeso>();
+            foreach (var item in repairchargeso)
+            {
+                _B_Repairchargeso br = new _B_Repairchargeso();
+                br.id = item.ID;
+                br.pname = item.ProjectName;
+                br.price = item.Price;
+                brlist.Add(br);
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(brlist);
         }
 
         #endregion
