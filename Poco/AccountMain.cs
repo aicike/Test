@@ -263,6 +263,8 @@ namespace Poco
         public virtual ICollection<RepairInfo> RepairInfo { get; set; }
         public virtual ICollection<Complaint> Complaint { get; set; }
         public virtual ICollection<Repairchargeso> Repairchargeso { get; set; }
+        public virtual ICollection<RentalHouse> RentalHouse { get; set; }
+        
 
         
     }

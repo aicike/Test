@@ -105,6 +105,7 @@
     <Compile Include="Property_House.cs" />
     <Compile Include="Property_User.cs" />
     <Compile Include="PropertyFeeInfo.cs" />
+    <Compile Include="RentalHouse.cs" />
     <Compile Include="Repaircharges.cs" />
     <Compile Include="RepairInfo.cs" />
     <Compile Include="RepairOperation.cs" />
