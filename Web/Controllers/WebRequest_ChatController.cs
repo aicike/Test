@@ -273,7 +273,7 @@ namespace Web.Controllers
         /// <summary>
         /// 移动端上传文件(多文件上传)
         /// </summary>
-        /// <param name="FileType">文件类型 5 物业报修图片</param>
+        /// <param name="FileType">文件类型 5 物业报修图片, 6 物业投诉图片</param>
         /// <param name="UserID">发送人ID</param>
         /// <param name="UserType">发送人类型 1，售楼人员，2用户</param>
         /// <param name="UserAccountMainID">发送人所属售楼部ID</param>
@@ -292,6 +292,9 @@ namespace Web.Controllers
             {
                 case 5:
                     UpFileType = "Property_BX";
+                    break;
+                case 6:
+                    UpFileType = "Property_TS";
                     break;
             }
             //发送人类型
