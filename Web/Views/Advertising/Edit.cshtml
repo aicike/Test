@@ -16,6 +16,65 @@
         var UpImgUrl = '@Url.Action("UpImg", "Ajax", new { HostName = ViewBag.HostName })';
         $(function () {
 
+            $("#file_upload").uploadify({
+                height: 30,
+                swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
+                uploader: UpImgUrl,
+                width: 70,
+                fileSizeLimit: '5MB',
+                buttonText: '选择图片',
+                multi: false,
+                fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
+                onUploadSuccess: function (file, data, response) {
+
+                    if (data == "" || data == undefined || data == "false") {
+                        JAlert({
+                            Message: "上传失败请重新上传！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return;
+                    }
+
+                    if (Cnt > 0) {
+                        jcrop_api.destroy();
+                        $('#x1').val("0");
+                        $('#y1').val("0");
+                        $('#w').val("0");
+                        $('#h').val("0");
+                        $('#tw').val("0");
+                        $('#th').val("0");
+                    }
+                    $("#imgSel").attr('src', data);
+                    $("#imgLogo").attr('src', data);
+                    $("#imgLogo2").attr('src', data);
+
+
+                    $("#MainImagPath").val(data);
+
+                    $('#imgSel').Jcrop({
+                        onChange: updatePreview,
+                        onSelect: updatePreview,
+                        aspectRatio: 1,
+                        setSelect: [0, 0, 200, 200]
+                    }, function () {
+                        // Use the API to get the real image size
+                        var bounds = this.getBounds();
+                        boundx = bounds[0];
+                        boundy = bounds[1];
+                        // Store the API in the jcrop_api variable
+                        jcrop_api = this;
+                        updatePreview(tempC);
+                    });
+                    Cnt = 1;
+
+                }
+
+            });
+
+
+
+
             window.UEDITOR_HOME_URL = "/ueditor/";
             //实例化编辑器
             var options = {
@@ -30,7 +89,7 @@
 
             var ue = UE.getEditor('editor', options);
 
-
+            var jcrop_api, boundx, boundy;
             var tempC;
             function updatePreview(c) {
                 tempC = c;
@@ -111,6 +170,8 @@
                     });
                     return false;
                 }
+
+                $('#btnSubmit').click();
             });
         });
     </script>
@@ -143,7 +204,7 @@
                     <td style="width: 365px">
                         <div class="middle-out">
                             <div class="middle-in" style="margin: auto 0px">
-                                <img id="imgSel"  src="@Url.Content("~/Images/Advertising.jpg")"   style="max-height:320px; max-width:320px;" />
+                                <img id="imgSel"  src="@Url.Content(Model.MainImagPath)"   style="max-height:320px; max-width:320px;" />
                             </div>
                         </div>
                     </td>
@@ -152,11 +213,11 @@
                             App列表页展示图
                         </p>
                         <div style="width: 120px; height: 120px; overflow: hidden;">
-                            <img id="imgLogo" src="@Url.Content("~/Images/Advertising_show.jpg")" style="width:120px; height:120px"/>
+                            <img id="imgLogo" src="@Url.Content(Model.AppShowImagePath)" style="width:120px; height:120px"/>
                         </div>
                         <span style="font-size: 12px; color: #979797">(160*160 缩略图)</span>
                         <div style="width: 80px; height: 80px; overflow: hidden; margin-top: 17px">
-                            <img id="imgLogo2" src="@Url.Content("~/Images/Advertising_show.jpg")" style="width:80px; height:80px"/>
+                            <img id="imgLogo2" src="@Url.Content(Model.AppShowImagePath)" style="width:80px; height:80px"/>
                         </div>
                         <span style="font-size: 12px; color: #979797">(60*60 缩略图)</span>
                         <br />
@@ -212,6 +273,7 @@
                         @Html.HiddenFor(a => a.stick)
                         @Html.HiddenFor(a => a.EnumAdvertorialUType)
                         @Html.HiddenFor(a => a.EnumAdverTorialType)
+                        @Html.HiddenFor(a => a.AccountMainID)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Title)
                         <div style="">@Html.ValidationSummary()</div>
@@ -231,7 +293,7 @@
                         <span class="Identification">*</span> 正文
                     </td>
                     <td colspan="2" class="tdField">
-                        <script type="text/plain" id="editor" height="300px" width="330px" name="Content"></script>
+                        <script type="text/plain" id="editor" height="300px" width="330px" name="Content">@Html.Raw(Model.Content)</script>
                     </td>
                 </tr>
             </table>

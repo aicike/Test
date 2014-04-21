@@ -143,6 +143,7 @@
     <Compile Include="Push_Getui.cs" />
     <Compile Include="Push_IOS.cs" />
     <Compile Include="QrCodeModel.cs" />
+    <Compile Include="RepairchargesoModel.cs" />
     <Compile Include="RepairInfoModel.cs" />
     <Compile Include="RepairOperationModel.cs" />
     <Compile Include="ReportFormPowerModel.cs" />

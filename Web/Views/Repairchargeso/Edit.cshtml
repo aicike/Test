@@ -1,0 +1,52 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.Advertising;
+}
+@model Poco.Repairchargeso
+@section head{
+    <script>
+       
+    </script>
+}
+<div class="title">
+    @Html.Partial("Menu3")
+</div>
+<div class="body">
+    @using (Html.BeginForm("Edit", "Repairchargeso", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <fieldset style="font-size: 14px">
+            <legend>基本信息</legend>
+            <table class="tableForm" style="width: 100%">
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 收费项目
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.ProjectName)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.ProjectName)
+                        <div style="">@Html.ValidationSummary()</div>
+                        @Html.HiddenFor(a => a.AccountMainID)
+                        @Html.HiddenFor(a => a.ID)
+                        @Html.HiddenFor(a => a.GetDate)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 收费金额：
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Price)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Price)
+                        <div style="">@Html.ValidationSummary()</div>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px;/>
+            <input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }
+</div>
+<div style="clear: both">
+</div>
