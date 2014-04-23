@@ -126,6 +126,20 @@ namespace Business
             return list;
         }
 
+        /// <summary>
+        /// 全部菜单，无级别限制
+        /// </summary>
+        /// <param name="systemUserRoleID"></param>
+        /// <param name="parentSystemUserMenuID"></param>
+        /// <returns></returns>
+        public List<Menu> GetAllMenuByRoleIDs(List<int> roleIDs)
+        {
+            List<Menu> list = List_Cache();
+            list = list.Where(a => a.RoleMenus.Any(b => b.SystemStatus == (int)EnumSystemStatus.Active &&
+              roleIDs.Contains( b.RoleID))).OrderBy(a => a.Order).ToList();
+            return list;
+        }
+
         public List<Menu> MicroSite_GetAllMenuByRoleID()
         {
             List<Menu> list = List_Cache().OrderBy(a => a.Order).ToList();

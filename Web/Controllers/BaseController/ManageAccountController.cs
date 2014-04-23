@@ -166,13 +166,19 @@ namespace Controllers
                 var menu = menuModel.List_Cache().Where(a => a.Controller != null && a.Controller.Equals(controller, StringComparison.CurrentCultureIgnoreCase)
                     && a.Action != null && a.Action.Equals(action, StringComparison.CurrentCultureIgnoreCase)
                     && a.Level == 3).FirstOrDefault();
+                List<Menu> menuList = null;
                 if (menu != null)
                 {
-                    var menuList = menuModel.GetMenuByRoleID(LoginAccount.RoleIDs, menu.ParentMenuID);
+                    menuList = menuModel.GetMenuByRoleID(LoginAccount.RoleIDs, menu.ParentMenuID);
                     ViewBag.Menu3List = menuList;
                 }
+                else
+                {
+                    menuList = menuModel.GetAllMenuByRoleIDs(LoginAccount.RoleIDs);
+                }
+                var menuIds = menuList.Select(a => a.ID);
                 var menuOptionModel = Injection.Factory.Get<Interface.IMenuOptionModel>(Poco.SystemConst.IOC_Model.MenuOptionModel);
-                var option = menuOptionModel.List_Cache().Where(a => a.Menu.Controller != null && a.Menu.Controller.Equals(controller, StringComparison.CurrentCultureIgnoreCase)
+                var option = menuOptionModel.List_Cache().Where(a=>menuIds.Contains(a.MenuID)&& a.Menu.Controller != null && a.Menu.Controller.Equals(controller, StringComparison.CurrentCultureIgnoreCase)
                 && a.Action != null && a.Action.Equals(action, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
                 if (option != null)
                 {

@@ -17,11 +17,19 @@ namespace Interface
         /// <returns></returns>
         List<Menu> GetMenuBySuperAdmin();
         List<Menu> GetAllMenuByRoleID(int roleID);
+        /// <summary>
+        /// 全部菜单，无级别限制
+        /// </summary>
+        /// <param name="systemUserRoleID"></param>
+        /// <param name="parentSystemUserMenuID"></param>
+        /// <returns></returns>
+        List<Menu> GetAllMenuByRoleIDs(List<int> roleIDs);
         List<Menu> List_Cache();
         bool CheckHasPermissions(List<int> roleID, string action, string controller, string area);
         void ReSetCache();
 
         List<Menu> MicroSite_GetAllMenuByRoleID();
+
 
         /// <summary>
         /// 检查有没有相应的菜单权限

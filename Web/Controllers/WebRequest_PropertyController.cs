@@ -424,10 +424,7 @@ namespace Web.Controllers
         public string SubmitComplaint(int UserID, int AMID, bool IsAnonymous, string Content, string ImgPath)
         {
             Complaint com = new Complaint();
-            if (IsAnonymous)
-            {
-                com.UserID = UserID;
-            }
+            com.UserID = UserID;
             com.IsAnonymous = IsAnonymous;
             com.ComplaintContetn = Content;
             com.ImgPath = ImgPath;
