@@ -1,0 +1,149 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.RentalHouse;
+}
+@model PagedList<Poco.RentalHouse>
+@section head{
+    <script>
+
+
+        $(function () {
+            $("label[name=labCbFirst]").each(function () {
+                $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
+            });
+        });
+
+
+        function clickInfo(id) {
+
+            var src = '@Url.Action("ShowRentalHouse", "Default")';
+            $("#iframeShowInfo").attr("src", src + "?RID=" + id+"&AMID=@ViewBag.AMID");
+            $("#dialogShowInfo").dialog({
+                resizable: false,
+                height: 530,
+                width: 320,
+                modal: true,
+                draggable: false,
+                close: function (event, ui) {
+                    $("#iframeShowInfo").attr("src", "");
+                }
+            });
+        }
+    </script>
+}
+<div class="title">
+    @Html.Partial("Menu3")</div>
+<div class="body">
+    <div class="option">
+        @Html.ActionLink("添加", "Add", "RentalHouse", new { HostName = ViewBag.HostName }, null, true)
+    </div>
+    <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px;">
+        <tr>
+            <th style="width: 70px">
+                标题图片
+            </th>
+            <th style="width: 180px;">
+                标题
+            </th>
+            <th>
+                租赁方式
+            </th>
+            <th>
+                楼层
+            </th>
+            <th>
+                月租
+            </th>
+            <th>
+                户型
+            </th>
+            <th>
+                面积
+            </th>
+            <th>
+                状态
+            </th>
+            <th style="width: 100px;">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img style="width: 60px; margin-top:5px;  " src="@Url.Content(item.TitleShowImage ?? "")" />
+                </td>
+                <td class="operation">
+                    <div style="width: 180px; word-break: keep-all; white-space: nowrap; overflow: hidden;
+                        text-overflow: ellipsis;">
+                        <label name="labCbFirst" title="@item.Title">
+                           <a onclick="clickInfo(@item.ID)">@item.Title</a> 
+                        </label>
+                    </div>
+                </td>
+                <td>
+                    @if (item.Lease == 0)
+                    {
+                        @:合租
+                    }
+                    else
+                    { 
+                        @:整租
+                    }
+                </td>
+                <td>
+                    @item.Floor
+                </td>
+                <td style="font-size: 12px; color: #696969">
+                    @item.Price
+                </td>
+                <td>
+                        @item.HouseType
+
+                </td>
+                <td>
+                        @item.area㎡
+
+                </td>
+                <td>
+                    @if (item.Stauts == 0)
+                    {
+                        @:关闭
+                    }
+                    else
+                    { 
+                        @:已发布
+                                         }
+                </td>
+                <td class="operation">
+                    @Html.ActionLink("修改", "Edit", "RentalHouse", new { HostName = ViewBag.HostName, id = item.ID }, new { style = "padding-right:10px" }, true)
+                    @Ajax.ActionLink("删除", "Delete", "RentalHouse", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?！','" + Url.Action("Delete", "RentalHouse", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+       {
+           PageIndexParameterName = "ID",
+           CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+           NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+           NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+           CssClass = "manage_pages pages",
+           SeparatorHtml = "&nbsp;",
+           AutoHide = false,
+           /*LastPageText = "Last",
+           FirstPageText = "First",
+           PrevPageText = "Back",
+           NextPageText = "Next",*/
+           PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+           ShowFirstLast = false
+       })
+    </div>
+</div>
+<div style="clear: both">
+</div>
+<div id="dialogShowInfo" title="App详细预览" style="display: none; padding: 0px">
+    <iframe id="iframeShowInfo" src="#" style="width: 320px; height: 480px; border: none;
+        overflow: auto"></iframe>
+</div>

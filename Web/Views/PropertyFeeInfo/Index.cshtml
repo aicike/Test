@@ -76,12 +76,12 @@
     <style>
         .main
         {
-            width: 1200px !important;
+            width: 1300px !important;
         }
     </style>
 }
 @model PagedList<Poco.PropertyFeeInfo>
-<div class="title" style="width: 988px">
+<div class="title" style="width: 1088px">
     <div style="float: right">
         <a href="@Url.Content("~/Download/Property/物业费导入模板.xlsx")" target="_blank" style=" color:#00aec8">
             下载物业费导入模板</a></div>
@@ -89,13 +89,13 @@
     <div style="clear: both">
     </div>
 </div>
-<div class="body" style="width: 988px">
+<div class="body" style="width: 1088px">
     @using (Html.BeginForm("Index", "PropertyFeeInfo", new { HostName = ViewBag.HostName }, FormMethod.Get, new { enctype = "multipart/form-data" }))
     {
-        <table style="width: 800px">
+        <table style="width: 900px">
             <tr>
                 <td>
-                    缴费日期：
+                    费用月份：
                 </td>
                 <td>
                     <input type="text" id="Date" name="Date" />
@@ -169,7 +169,7 @@
                 房号
             </th>
             <th>
-                缴费月份
+                费用月份
             </th>
             <th>
                 物业管理费
@@ -194,6 +194,9 @@
             </th>
             <th>
                 合计
+            </th>
+            <th>
+                是否已缴费
             </th>
             <th style="width: 200px">
                 备注
@@ -240,6 +243,16 @@
                 </td>
                 <td>
                     @item.Total
+                </td>
+                <td>
+                    @if (item.IsPay)
+                    { 
+                        @:已缴费
+                    }
+                    else
+                    {
+                        <span style=" color:Red">未缴费</span>
+                    }
                 </td>
                 <td>
                     <div style="width: 195px; word-break: keep-all;">

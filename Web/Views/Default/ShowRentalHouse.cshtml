@@ -1,0 +1,183 @@
+﻿@{
+    ViewBag.Title = "ShowRentalHouse";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+@model Poco.RentalHouse
+@section head{
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <style>
+        .Title
+        {
+            width: 100%;
+            font-weight: bolder;
+            font-size: 1.25em;
+        }
+        .price
+        {
+            color: Orange;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        
+        .divTitile
+        {
+            border: 1px solid #bcbcbc;
+            font-size: 1em;
+            padding: 5px 10px 5px 10px;
+            background-color: #dbdbdb;
+        }
+        .depict
+        {
+            font-size: 0.75em;
+            line-height: 1.6em;
+            word-break: break-all;
+            word-wrap: break-word;
+            padding: 5px 10px 5px 10px;
+            border-right: 1px solid #bcbcbc;
+            border-left: 1px solid #bcbcbc;
+        }
+        .depict p
+        {
+            margin: 0px !important;
+        }
+        .depict img
+        {
+            max-width: 100%;
+        }
+        .div_ceng
+        {
+            width: 100%;
+            position: fixed;
+            bottom: 0px;
+            left: 0px;
+            height: 40px;
+        }
+    </style>
+}
+<div style="padding: 5px; background-color: #fff;">
+    <div style="width: 100%;">
+        <img  src="@Url.Content(Model.TitleImage)"  style="width:100%"/>
+    </div>
+    <div class="Title" style="">
+        @Model.Title
+    </div>
+    <div class="price">
+        @Model.Price.ToString("C")/月
+    </div>
+    <div class="divTitile">
+        房源描述
+    </div>
+    <div class="depict">
+        @Model.Description
+    </div>
+    <div class="divTitile">
+        房源详情
+    </div>
+    <div class="depict">
+        <table width="100%">
+            <tr>
+                <td width="40px">
+                    面积：
+                </td>
+                <td>
+                    @Model.area㎡
+                </td>
+                <td width="80px">
+                    租赁方式：
+                </td>
+                <td>
+                    @if (Model.Lease == 0)
+                    {
+                        @:合租
+                    }
+                    else
+                    { 
+                        @:整租
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    户型：
+                </td>
+                <td colspan="3">
+                    @Model.HouseType
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    装修：
+                </td>
+                <td>
+                    @switch (Model.EnumDecoration)
+                    {
+                        case (int)Poco.Enum.EnumDecoration.water:
+                        @:清水
+                            break;
+                        case (int)Poco.Enum.EnumDecoration.blank:
+                        @:毛坯
+                            break;
+                        case (int)Poco.Enum.EnumDecoration.paperback:
+                        @:简装
+                            break;
+                        case (int)Poco.Enum.EnumDecoration.hardcover:
+                        @:精装
+                            break;
+                    }
+                </td>
+                <td>
+                    楼层：
+                </td>
+                <td>
+                    @Model.Floor
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    单元：
+                </td>
+                <td>
+                    @Model.Unit
+                </td>
+                <td>
+                    房号：
+                </td>
+                <td>
+                    @Model.RoomNumber
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="divTitile">
+        房源配套
+    </div>
+    <div class="depict">
+        @Model.Matching
+    </div>
+    <div class="divTitile">
+        房源简介与图片
+    </div>
+    <div class="depict">
+        @Html.Raw(Model.Introduction)
+    </div>
+    <div style="height: 45px; border-top: 1px solid #dbdbdb">
+    </div>
+    <div class="div_ceng">
+        <table border="0" cellpadding="0" cellspacing="0" style="height: 40px; width: 100%">
+            <tr>
+                <td style="font-size: 14px; width: 70%; color: #fff; padding-left: 20px; line-height: 14px;
+                    background: url('/images/bg_black.png')">
+                    房东姓名：@Model.OwnerName
+                    </br> 房东电话：@Model.OwnerPhone
+                </td>
+                <td align="center" style="color: #fff; background: url('/images/bg_blue.png')">
+                    <a href="tel:@Model.OwnerPhone" style=" font-weight:bold">
+                        <div style="width: 100%">
+                            打电话
+                        </div>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -202,6 +202,7 @@
     <Compile Include="Controllers\OrderMTypeController.cs" />
     <Compile Include="Controllers\PropertyHouseController.cs" />
     <Compile Include="Controllers\PropertyFeeInfoController.cs" />
+    <Compile Include="Controllers\RentalHouseController.cs" />
     <Compile Include="Controllers\RepairchargesoController.cs" />
     <Compile Include="Controllers\RepairInfoController.cs" />
     <Compile Include="Controllers\SalesMessageController.cs" />
@@ -278,6 +279,8 @@
     <Content Include="Images\BG_1.jpg" />
     <Content Include="Images\BG_2.jpg" />
     <Content Include="Images\BG_3.jpg" />
+    <Content Include="Images\bg_black.png" />
+    <Content Include="Images\bg_blue.png" />
     <Content Include="Images\default_Avatar.png" />
     <Content Include="Images\down.png" />
     <Content Include="Images\ImgSH.gif" />
@@ -1037,6 +1040,10 @@
     <Content Include="Views\Repairchargeso\Index.cshtml" />
     <Content Include="Views\Repairchargeso\Add.cshtml" />
     <Content Include="Views\Repairchargeso\Edit.cshtml" />
+    <Content Include="Views\RentalHouse\Index.cshtml" />
+    <Content Include="Views\RentalHouse\Add.cshtml" />
+    <Content Include="Views\RentalHouse\Edit.cshtml" />
+    <Content Include="Views\Default\ShowRentalHouse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

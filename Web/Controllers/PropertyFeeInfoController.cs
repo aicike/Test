@@ -130,6 +130,7 @@ namespace Web.Controllers
             dttable.Columns.Add("合计", typeof(double));
             dttable.Columns.Add("备注");
             dttable.Columns.Add("importDate", typeof(DateTime));
+            dttable.Columns.Add("是否已缴费（是/否）");
             result = Tool.GetXLSXInfo(ImExcel, dttable);
             if (result.HasError)
             {
@@ -217,6 +218,32 @@ namespace Web.Controllers
                         TempData["IsError"] = 1;
                         TempData["ErrorStr"] = "单元不能为空";
                         return RedirectToAction("Index", "PropertyFeeInfo", new { id = id});
+                        //return JavaScript("window.location.href='" + Url.Action("Index", "PropertyFeeInfo", new { IsError = 1, ErrorStr = "单元不能为空" }) + "'");
+                    }
+                    try
+                    {
+                        if (string.IsNullOrEmpty(Row["是否已缴费（是/否）"].ToString()))
+                        {
+                            TempData["IsError"] = 1;
+                            TempData["ErrorStr"] = "是否已缴费不能为空";
+                            return RedirectToAction("Index", "PropertyFeeInfo", new { id = id });
+                            //return JavaScript("window.location.href='" + Url.Action("Index", "PropertyFeeInfo", new { IsError = 1, ErrorStr = "单元不能为空" }) + "'");
+                        }
+                        else {
+                            if (Row["是否已缴费（是/否）"].ToString() == "是")
+                            {
+                                Row["是否已缴费（是/否）"] = "True";
+                            }
+                            else {
+                                Row["是否已缴费（是/否）"] = "False";
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        TempData["IsError"] = 1;
+                        TempData["ErrorStr"] = "是否已缴费不能为空";
+                        return RedirectToAction("Index", "PropertyFeeInfo", new { id = id });
                         //return JavaScript("window.location.href='" + Url.Action("Index", "PropertyFeeInfo", new { IsError = 1, ErrorStr = "单元不能为空" }) + "'");
                     }
                     Row["importDate"] = DateTime.Now;

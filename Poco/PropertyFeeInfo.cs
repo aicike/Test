@@ -105,6 +105,14 @@ namespace Poco
         public double? Total { get; set; }
 
         /// <summary>
+        /// 是否已缴费
+        /// </summary>
+        [Display(Name = "是否已缴费")]
+        public bool IsPay { get; set; }
+
+
+
+        /// <summary>
         /// 备注
         /// </summary>
         [Display(Name = "备注")]

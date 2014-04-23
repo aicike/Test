@@ -499,7 +499,6 @@ namespace Web.Controllers
 
         #endregion
 
-
         #region-------------------广而告之接口---------------------------
         /// <summary>
         /// 广而告之显示列表
@@ -585,7 +584,6 @@ namespace Web.Controllers
 
         #endregion
 
-
         #region-------------------收费维修接口---------------------------
 
         /// <summary>
@@ -609,6 +607,41 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(brlist);
         }
 
+        #endregion
+
+        #region-------------------房屋租赁接口---------------------------
+        /// <summary>
+        /// 获取房屋租赁列表
+        /// </summary>
+        /// <param name="AMID">售楼部id</param>
+        /// <param name="ID">显示开始ID（获取的列表最后一条的ID） 第一次打开传0</param>
+        /// <param name="ListCnt"></param>
+        /// <returns></returns>
+        public string GetRentalHouseList(int AMID, int ID, int ListCnt)
+        {
+            var rentalhouseModel = Factory.Get<IRentalHouseModel>(SystemConst.IOC_Model.RentalHouseModel);
+            var list = rentalhouseModel.GetList(AMID).Where(a=>a.Stauts==1);
+            PagedList<RentalHouse> rh = null;
+            if (ID == 0)
+            {
+                rh = list.ToPagedList(1, ListCnt);
+            }
+            else
+            {
+                rh = list.Where(a => a.ID < ID).ToPagedList(1, ListCnt);
+            }
+            List<_B_RentalHouse> ListRH = new List<_B_RentalHouse>();
+            foreach (var item in rh)
+            {
+                _B_RentalHouse Brh = new _B_RentalHouse();
+                Brh.ID = item.ID;
+                Brh.Img = SystemConst.WebUrlIP + Url.Content(item.TitleShowImage ?? "");
+                Brh.price = item.Price;
+                Brh.Title = item.Title;
+                ListRH.Add(Brh);
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(ListRH);
+        }
         #endregion
     }
 }
