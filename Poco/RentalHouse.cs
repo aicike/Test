@@ -30,7 +30,12 @@ namespace Poco
         [Required(ErrorMessage = "请输入标题图片")]
         public string TitleImage { get; set; }
 
-
+        /// <summary>
+        /// 标题展示图片 小
+        /// </summary>
+        [Display(Name = "标题展示图片 小")]
+        public string TitleShowImage { get; set; }
+        
         /// <summary>
         /// 单元
         /// </summary>
@@ -54,10 +59,39 @@ namespace Poco
         public string RoomNumber { get; set; }
 
         /// <summary>
-        /// 价格/月
+        /// 面积
         /// </summary>
-        [Display(Name = "价格/月")]
-        [Required(ErrorMessage = "请输入价格")]
+        [Display(Name = "面积")]
+        [Required(ErrorMessage = "请输入面积")]
+        public  double area { get; set; }
+
+        /// <summary>
+        /// 户型
+        /// </summary>
+        [Display(Name = "户型")]
+        [Required(ErrorMessage = "请输入户型")]
+        public string HouseType { get; set; }
+
+        /// <summary>
+        /// 装修
+        /// </summary>
+        [Display(Name = "装修")]
+        [Required(ErrorMessage = "请输入装修")]
+        public int  EnumDecoration { get; set; }
+
+        /// <summary>
+        /// 租赁方式 0合租 1整租
+        /// </summary>
+        [Display(Name = "租赁方式 0合租 1整租")]
+        public int Lease { get; set; }
+        
+
+
+        /// <summary>
+        /// 月租
+        /// </summary>
+        [Display(Name = "月租")]
+        [Required(ErrorMessage = "请输入月租")]
         public decimal Price{ get; set; }
 
          /// <summary>
@@ -93,6 +127,12 @@ namespace Poco
         /// </summary>
         [Display(Name = "业主姓名")]
         public string OwnerPhone{ get; set; }
+
+        /// <summary>
+        /// 状态 0 关闭 1发布
+        /// </summary>
+        [Display(Name = "状态 0 关闭 1发布")]
+        public int Stauts { get; set; }
 
     }
 }

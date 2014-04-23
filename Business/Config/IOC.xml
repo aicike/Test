@@ -121,9 +121,12 @@
   <object id="ComplaintModel" type="Business.ComplaintModel" parent="EFModel" singleton="false"></object>
   <object id="ComplaintReplyModel" type="Business.ComplaintReplyModel" parent="EFModel" singleton="false"></object>
   <object id="RepairchargesoModel" type="Business.RepairchargesoModel" parent="EFModel" singleton="false"></object>
+  <object id="RentalHouseModel" type="Business.RentalHouseModel" parent="EFModel" singleton="false"></object>
 
 
-	<!--<object id="UserModel" type="NightClubBooth.Business.UserModel" parent="EFModel" singleton="false">
+  
+
+  <!--<object id="UserModel" type="NightClubBooth.Business.UserModel" parent="EFModel" singleton="false">
 		<property name="LookupOptionModel" ref="LookupOptionModel"/>
 		<property name="RoleModel" ref="RoleModel"/>
 		<property name="UserMappingModel" ref="UserMappingModel"/>

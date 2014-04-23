@@ -502,7 +502,6 @@ namespace Web.Controllers
 
         #endregion
 
-
         #region-------------------广而告之接口---------------------------
         /// <summary>
         /// 广而告之显示列表
@@ -563,7 +562,7 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(jsonStr);
         }
 
-        
+
 
         /// <summary>
         /// 广而告之详细信息
@@ -587,7 +586,6 @@ namespace Web.Controllers
         }
 
         #endregion
-
 
         #region-------------------收费维修接口---------------------------
 
@@ -613,5 +611,183 @@ namespace Web.Controllers
         }
 
         #endregion
+
+        #region-------------------房屋租赁接口---------------------------
+        /// <summary>
+        /// 获取房屋租赁列表
+        /// </summary>
+        /// <param name="AMID">售楼部id</param>
+        /// <param name="ID">显示开始ID（获取的列表最后一条的ID） 第一次打开传0</param>
+        /// <param name="ListCnt"></param>
+        /// <returns></returns>
+        public string GetRentalHouseList(int AMID, int ID, int ListCnt)
+        {
+            var rentalhouseModel = Factory.Get<IRentalHouseModel>(SystemConst.IOC_Model.RentalHouseModel);
+            var list = rentalhouseModel.GetList(AMID).Where(a => a.Stauts == 1);
+            PagedList<RentalHouse> rh = null;
+            if (ID == 0)
+            {
+                rh = list.ToPagedList(1, ListCnt);
+            }
+            else
+            {
+                rh = list.Where(a => a.ID < ID).ToPagedList(1, ListCnt);
+            }
+            List<_B_RentalHouse> ListRH = new List<_B_RentalHouse>();
+            foreach (var item in rh)
+            {
+                _B_RentalHouse Brh = new _B_RentalHouse();
+                Brh.ID = item.ID;
+                Brh.Img = SystemConst.WebUrlIP + Url.Content(item.TitleShowImage ?? "");
+                Brh.price = item.Price;
+                Brh.Title = item.Title;
+                Brh.area = item.area.ToString() + "㎡";
+                Brh.HouseType = item.HouseType;
+                switch (item.EnumDecoration)
+                {
+                    case (int)EnumDecoration.blank:
+                        Brh.Decoration = "毛坯";
+                        break;
+                    case (int)EnumDecoration.water:
+                        Brh.Decoration = "清水";
+                        break;
+                    case (int)EnumDecoration.hardcover:
+                        Brh.Decoration = "精装";
+                        break;
+                    case (int)EnumDecoration.paperback:
+                        Brh.Decoration = "简装";
+                        break;
+                }
+                ListRH.Add(Brh);
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(ListRH);
+        }
+        #endregion
+
+        #region-------------------物业费接口---------------------------
+
+        /// <summary>
+        /// 获取物业费列表
+        /// </summary>
+        /// <param name="RoomNumber">房号</param>
+        /// <param name="AMID">amid</param>
+        /// <param name="Year">年份 2014</param>
+        /// <returns></returns>
+        public string GetPropertyFeeList(string RoomNumber, int AMID, int Year)
+        {
+            var propertyfeemodel = Factory.Get<IPropertyFeeInfoModel>(SystemConst.IOC_Model.PropertyFeeInfoModel);
+            var list = propertyfeemodel.GetPropertyFeeInfo(AMID, RoomNumber, Year);
+            List<_B_PropertyFee> bpfs = new List<_B_PropertyFee>();
+            foreach (var item in list)
+            {
+                _B_PropertyFee pf = new _B_PropertyFee();
+                pf.AMID = item.AccountMainID;
+                pf.IsPay = item.IsPay;
+                pf.PayDate = item.PayDate;
+                pf.PID = item.ID;
+                if (item.Total.HasValue)
+                {
+                    pf.Total = item.Total.Value;
+                }
+                else
+                {
+                    pf.Total = 0;
+                }
+                bpfs.Add(pf);
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(bpfs);
+        }
+
+        /// <summary>
+        /// 获取物业费详细信息
+        /// </summary>
+        /// <param name="PID">物业费ID</param>
+        /// <param name="AMID">AMID</param>
+        /// <returns></returns>
+        public string GetPropertyFeeInfo(int PID, int AMID)
+        {
+            var propertyfeemodel = Factory.Get<IPropertyFeeInfoModel>(SystemConst.IOC_Model.PropertyFeeInfoModel);
+            var item = propertyfeemodel.GetInfoByID(PID, AMID);
+            _B_PropertyFee pf = new _B_PropertyFee();
+
+            pf.AMID = item.AccountMainID;
+            pf.IsPay = item.IsPay;
+            pf.PayDate = item.PayDate;
+            pf.PID = item.ID;
+            pf.Unit = item.Unit;
+            pf.RoomNumber = item.RoomNumber;
+            pf.Remarks = item.Remarks;
+            if (item.Total.HasValue)
+            {
+                pf.Total = item.Total.Value;
+            }
+            else
+            {
+                pf.Total = 0;
+            }
+
+            if (item.ManagerFee.HasValue)
+            {
+                pf.ManagerFee = item.ManagerFee.Value;
+            }
+            else
+            {
+                pf.ManagerFee = 0;
+            }
+            if (item.ServiceFee.HasValue)
+            {
+                pf.ServiceFee = item.ServiceFee.Value;
+            }
+            else
+            {
+                pf.ServiceFee = 0;
+            }
+            if (item.ParkingFee.HasValue)
+            {
+                pf.ParkingFee = item.ParkingFee.Value;
+            }
+            else
+            {
+                pf.ParkingFee = 0;
+            }
+            if (item.ElevatorFee.HasValue)
+            {
+                pf.ElevatorFee = item.ElevatorFee.Value;
+            }
+            else
+            {
+                pf.ElevatorFee = 0;
+            }
+            if (item.WaterFee.HasValue)
+            {
+                pf.WaterFee = item.WaterFee.Value;
+            }
+            else
+            {
+                pf.WaterFee = 0;
+            }
+            if (item.HealthFee.HasValue)
+            {
+                pf.HealthFee = item.HealthFee.Value;
+            }
+            else
+            {
+                pf.HealthFee = 0;
+            }
+            if (item.OrterFee.HasValue)
+            {
+                pf.OrterFee = item.OrterFee.Value;
+            }
+            else
+            {
+                pf.OrterFee = 0;
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(pf);
+        }
+
+        #endregion
+
+
+
     }
 }

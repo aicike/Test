@@ -91,6 +91,7 @@
     <Compile Include="IPushModel.cs" />
     <Compile Include="IPushMsgDetailModel.cs" />
     <Compile Include="IPushMsgModel.cs" />
+    <Compile Include="IRentalHouseModel.cs" />
     <Compile Include="IRepairchargesoModel.cs" />
     <Compile Include="IRepairInfoModel.cs" />
     <Compile Include="IRepairOperationModel.cs" />

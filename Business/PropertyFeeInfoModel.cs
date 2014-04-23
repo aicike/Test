@@ -21,7 +21,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<PropertyFeeInfo> GetPropertyFeeInfo(int AMID, string Date, string Unit, string RoomNumber, string OwnerName, string OwnerPhone)
         {
-            var list = List().Where(a=>a.AccountMainID==AMID);
+            var list = List().Where(a => a.AccountMainID == AMID);
             if (!string.IsNullOrEmpty(Date))
             {
                 list = list.Where(a => a.PayDate.Contains(Date));
@@ -43,6 +43,31 @@ namespace Business
                 list = list.Where(a => a.OwnerPhone.Contains(OwnerPhone.Trim()));
             }
             return list;
+        }
+
+        /// <summary>
+        /// 根据房号 获取年份物业费
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <param name="RoomNumber"></param>
+        /// <param name="Year"></param>
+        /// <returns></returns>
+        public List<PropertyFeeInfo> GetPropertyFeeInfo(int AMID, string RoomNumber, int Year)
+        {
+            var list = List().Where(a => a.AccountMainID == AMID && a.RoomNumber == RoomNumber && a.PayDate.Contains(Year.ToString())).ToList();
+            return list;
+        }
+
+        /// <summary>
+        /// 根据ID 获取详细信息
+        /// </summary>
+        /// <param name="RID"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public PropertyFeeInfo GetInfoByID(int RID, int AMID)
+        {
+            var item = List().Where(a => a.AccountMainID == AMID && a.ID == RID).FirstOrDefault();
+            return item;
         }
     }
 }

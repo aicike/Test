@@ -648,6 +648,20 @@ namespace Web.Controllers
         }
 
         /// <summary>
+        /// 房屋租赁展示界面
+        /// </summary>
+        /// <param name="RID"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public ActionResult ShowRentalHouse(int RID,int AMID) {
+            var rentalhouseModel = Factory.Get<IRentalHouseModel>(SystemConst.IOC_Model.RentalHouseModel);
+            var item = rentalhouseModel.GetInfo(RID,AMID);
+            ViewBag.Title = item.Title;
+            return View(item);
+        }
+
+
+        /// <summary>
         /// 大转盘抽奖
         /// </summary>
         /// <param name="type">类型</param>
