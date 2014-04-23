@@ -117,6 +117,7 @@
     <Compile Include="_B_ActivityOption.cs" />
     <Compile Include="_B_AdvertoriaOperation.cs" />
     <Compile Include="_B_Complaint.cs" />
+    <Compile Include="_B_PropertyFee.cs" />
     <Compile Include="_B_RentalHouse.cs" />
     <Compile Include="_B_RepairInfo.cs" />
     <Compile Include="_Service.cs" />
