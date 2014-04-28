@@ -42,5 +42,9 @@ namespace Poco
         /// </summary>
         public string Decoration { get; set; }
 
+        /// <summary>
+        /// 详细信息URL
+        /// </summary>
+        public string URL { get; set; }
     }
 }

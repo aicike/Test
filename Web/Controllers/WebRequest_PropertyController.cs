@@ -638,6 +638,7 @@ namespace Web.Controllers
                 Brh.Title = item.Title;
                 Brh.area = item.area.ToString() + "㎡";
                 Brh.HouseType = item.HouseType;
+                Brh.URL = SystemConst.WebUrlIP + "/Default/ShowRentalHouse?RID=" + item.ID + "&AMID=" + AMID;
                 switch (item.EnumDecoration)
                 {
                     case (int)EnumDecoration.blank:
