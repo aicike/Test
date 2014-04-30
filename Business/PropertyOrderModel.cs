@@ -31,6 +31,13 @@ namespace Business
             {
                 lock (Property_obj)
                 {
+                    var propertyorderdetailmodel = Factory.Get<IPropertyOrderDetailModel>(SystemConst.IOC_Model.PropertyOrderDetailModel);
+                    //查询是否已经提交订单
+                    result = propertyorderdetailmodel.GetProperIsUP(IDS, AMID);
+                    if (result.HasError)
+                    {
+                        return result;
+                    }
                     //获取订单号
                     string orderNumSql = "SELECT dbo.SetSerialNumber_Property('P',4," + AMID + ")";
                     CommonModel commonModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
@@ -54,7 +61,7 @@ namespace Business
                         return result;
                     }
                     //添加明细
-                    var propertyorderdetailmodel = Factory.Get<IPropertyOrderDetailModel>(SystemConst.IOC_Model.PropertyOrderDetailModel);
+                   
                     result = propertyorderdetailmodel.AddOrderDatail(IDS, AMID, po.ID);
                     if (!result.HasError)
                     {
@@ -68,6 +75,26 @@ namespace Business
                 result.Error = ex.Message;
             }
 
+            return result;
+        }
+
+        
+
+        /// <summary>
+        /// 修改订单状态
+        /// </summary>
+        /// <param name="orderNum"></param>
+        /// <param name="EnumOrderStatus"></param>
+        /// <returns></returns>
+        public Result UPdateStatus(string orderNum, int EnumOrderStatus)
+        {
+            Result result = new Result();
+            string sql = string.Format("update PropertyOrder set Status={0} where OrderNum='{1}'",EnumOrderStatus,orderNum);
+            int cnt = base.SqlExecute(sql);
+            if (cnt <= 0)
+            {
+                result.HasError = true;
+            }
             return result;
         }
     }

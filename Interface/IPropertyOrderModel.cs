@@ -17,5 +17,13 @@ namespace Interface
         /// <param name="Title"></param>
         /// <returns></returns>
         Result UpPropertyOrder(int[] IDS, int AMID, int UserID);
+
+         /// <summary>
+        /// 修改订单状态
+        /// </summary>
+        /// <param name="orderNum"></param>
+        /// <param name="EnumOrderStatus"></param>
+        /// <returns></returns>
+        Result UPdateStatus(string orderNum, int EnumOrderStatus);
     }
 }
