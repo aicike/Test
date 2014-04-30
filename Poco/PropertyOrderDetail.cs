@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Poco
 {
-    public class OrderDetail : IBaseEntity
+    public class PropertyOrderDetail : IBaseEntity
     {
 
         public int ID { get; set; }
@@ -15,30 +15,21 @@ namespace Poco
         public int AccountMainID { get; set; }
         public virtual AccountMain AccountMain { get; set; }
 
-
-        public int OrderID { get; set; }
-        public virtual Order Order { get; set; }
+        /// <summary>
+        /// 物业费ID
+        /// </summary>
+        public int? PropertyFeeInfoID { get; set; }
+        public virtual PropertyFeeInfo PropertyFeeInfo { get; set; }
 
         /// <summary>
-        /// 产品ID
+        /// 费用标题
         /// </summary>
-        public int ProductID { get; set; }
-        public virtual Product Product { get; set; } 
+        public string Title { get; set; }
 
         /// <summary>
-        /// 产品名称
+        /// 图片
         /// </summary>
-        public string ProductName { get; set; }
-
-        /// <summary>
-        /// 产品图片
-        /// </summary>
-        public string ProductImg { get; set; }
-
-        /// <summary>
-        /// 产品类型
-        /// </summary>
-        public string ProductType { get; set; } 
+        public string Img { get; set; }
 
         /// <summary>
         /// 价钱
@@ -49,10 +40,5 @@ namespace Poco
         /// 数量
         /// </summary>
         public int Count { get; set; }
-
-        /// <summary>
-        /// 规格
-        /// </summary>
-        public string Specification { get; set; }
     }
 }

@@ -805,6 +805,15 @@ namespace Web.Controllers
         }
 
 
+        #region--------------注册支付用到的界面----------------
+        public ActionResult registerPayment()
+        {
+            return Redirect("http://microsite.imtimely.com/MicroMall/ShopIndex?AMID=1");
+        }
+
+        #endregion
+
+
 
     }
 }

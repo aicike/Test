@@ -82,8 +82,10 @@
     <Compile Include="Enum\EnumAdverURLType.cs" />
     <Compile Include="Enum\EnumBrowseAdvertorialType.cs" />
     <Compile Include="Enum\EnumComplaintStatus.cs" />
+    <Compile Include="Enum\EnumExpressStatus.cs" />
     <Compile Include="Enum\EnumLotteryStatus.cs" />
     <Compile Include="Enum\EnumProductDiscountType.cs" />
+    <Compile Include="Enum\EnumPropertyOrderType.cs" />
     <Compile Include="Enum\EnumRepairScore.cs" />
     <Compile Include="Enum\EnumRepairStatus.cs" />
     <Compile Include="Enum\EnumReportForm.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="Enum\EnumTaskType.cs" />
     <Compile Include="Enum\EnumTroubleType.cs" />
     <Compile Include="Enum\EnumVIPOperate.cs" />
+    <Compile Include="ExpressCollection.cs" />
     <Compile Include="Feedback.cs" />
     <Compile Include="Lottery_dish.cs" />
     <Compile Include="Lottery_dish_detail.cs" />
@@ -102,6 +105,8 @@
     <Compile Include="Panorama.cs" />
     <Compile Include="ProductImg.cs" />
     <Compile Include="PropertyComplexEntity.cs" />
+    <Compile Include="PropertyOrder.cs" />
+    <Compile Include="PropertyOrderDetail.cs" />
     <Compile Include="Property_House.cs" />
     <Compile Include="Property_User.cs" />
     <Compile Include="PropertyFeeInfo.cs" />
@@ -117,6 +122,7 @@
     <Compile Include="_B_ActivityOption.cs" />
     <Compile Include="_B_AdvertoriaOperation.cs" />
     <Compile Include="_B_Complaint.cs" />
+    <Compile Include="_B_ExpressCollection.cs" />
     <Compile Include="_B_PropertyFee.cs" />
     <Compile Include="_B_RentalHouse.cs" />
     <Compile Include="_B_RepairInfo.cs" />

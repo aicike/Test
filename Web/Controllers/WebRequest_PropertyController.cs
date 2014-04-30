@@ -497,7 +497,7 @@ namespace Web.Controllers
 
         #endregion
 
-        #region-------------------广而告之接口---------------------------
+        #region-------------------广而告之接口-----------------------
         /// <summary>
         /// 广而告之显示列表
         /// </summary>
@@ -582,7 +582,7 @@ namespace Web.Controllers
 
         #endregion
 
-        #region-------------------收费维修接口---------------------------
+        #region-------------------收费维修接口-----------------------
 
         /// <summary>
         /// 获取收费维修列表
@@ -607,7 +607,7 @@ namespace Web.Controllers
 
         #endregion
 
-        #region-------------------房屋租赁接口---------------------------
+        #region-------------------房屋租赁接口-----------------------
         /// <summary>
         /// 获取房屋租赁列表
         /// </summary>
@@ -660,7 +660,7 @@ namespace Web.Controllers
         }
         #endregion
 
-        #region-------------------物业费接口---------------------------
+        #region-------------------物业费接口-------------------------
 
         /// <summary>
         /// 获取物业费列表
@@ -781,8 +781,96 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(pf);
         }
 
+        /// <summary>
+        /// 提交物业费
+        /// </summary>
+        /// <param name="PIDS">物业费ID 多个用“,”分割 例1,2,3</param>
+        /// <param name="UserID"></param>
+        /// <param name="AMID"></param>
+        /// <param name="Title"></param>
+        /// <returns></returns>
+        public string UPPropertyOrder(string PIDS, int UserID, int AMID)
+        {
+            var propertyordermodel = Factory.Get<IPropertyOrderModel>(SystemConst.IOC_Model.PropertyOrderModel);
+            int [] IDS = PIDS.ConvertToIntArray(',');
+            Result result = propertyordermodel.UpPropertyOrder(IDS, AMID, UserID);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+        /// <summary>
+        /// 支付宝交易后调用方法（物业）
+        /// </summary>
+        /// <returns></returns>
+        public void ReceiveAlipayInfo_Property()
+        {
+            //网站订单号
+            var out_trade_no = Request.Form["out_trade_no"].ToString();
+            //订单名称
+            var subject = Request.Form["subject"].ToString();
+            //支付宝交易号
+            var trade_no = Request.Form["trade_no"].ToString();
+            //交易状态
+            var rade_status = Request.Form["trade_no"].ToString();
+        }
+
         #endregion
 
+        #region-------------------快递代收接口-----------------------
+        /// <summary>
+        /// 查询快递
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <param name="OddNumber">单号</param>
+        /// <param name="Phone">电话</param>
+        /// <returns></returns>
+        public string GetExpress(int AMID, string OddNumber, string Phone)
+        {
+            var expresscollectionModel = Factory.Get<IExpressCollectionModel>(SystemConst.IOC_Model.ExpressCollectionModel);
+            var list = expresscollectionModel.GetExpress(AMID, OddNumber, Phone);
+            if (list != null)
+            {
+                List<_B_ExpressCollection> bes = new List<_B_ExpressCollection>();
+                foreach (var item in list)
+                {
+                    _B_ExpressCollection be = new _B_ExpressCollection();
+                    be.EntryDate = item.EntryDate.ToString("yyyy-MM-dd HH:mm");
+                    be.ID = item.ID;
+                    be.OddNumber = item.OddNumber;
+                    be.Phone = item.Phone;
+                    switch (item.EnumExpressStatus)
+                    {
+                        case (int)EnumExpressStatus.Havereceived:
+                            be.Status = "已领取";
+                            break;
+                        case (int)EnumExpressStatus.Not:
+                            be.Status = "未领取";
+                            break;
+                    }
+                    bes.Add(be);
+                }
+                return Newtonsoft.Json.JsonConvert.SerializeObject(bes);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 设置快递状态为已领取
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public string UpdStatus_Havereceived(int AMID, int ID)
+        {
+            Result result = new Result();
+            var expresscollectionModel = Factory.Get<IExpressCollectionModel>(SystemConst.IOC_Model.ExpressCollectionModel);
+            result = expresscollectionModel.UpdStatus(ID, AMID, (int)EnumExpressStatus.Havereceived);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+        #endregion
 
 
     }

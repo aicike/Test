@@ -37,5 +37,21 @@ namespace Interface
         /// <param name="AMID"></param>
         /// <returns></returns>
         PropertyFeeInfo GetInfoByID(int RID, int AMID);
+
+        /// <summary>
+        /// 根据IDS 获取列表
+        /// </summary>
+        /// <param name="IDS"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        List<PropertyFeeInfo> GetPropertyFeeByIDS(int[] IDS, int AMID);
+
+        /// <summary>
+        /// 根据IDS 获取总金额
+        /// </summary>
+        /// <param name="IDS"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        double GetPriceByIDS(int[] IDS, int AMID);
     }
 }

@@ -101,7 +101,7 @@ namespace Web.Controllers
             var propertyfee = propertyfeemodel.GetPropertyFeeInfo(LoginAccount.CurrentAccountMainID, Date, Unit, RoomNumber, OwnerName, OwnerPhone).ToPagedList(id ?? 1, 50);
 
             string WebTitleRemark = SystemConst.WebTitleRemark;
-            string webTitle = string.Format(SystemConst.Business.WebTitle, "项目管理-户型管理", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "物业管理-物业费管理", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
 
             return View(propertyfee);

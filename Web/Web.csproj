@@ -179,6 +179,7 @@
     <Compile Include="Controllers\ComplaintController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ExitController.cs" />
+    <Compile Include="Controllers\ExpressCollectionController.cs" />
     <Compile Include="Controllers\GuideController.cs" />
     <Compile Include="Controllers\HolidayController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1044,6 +1045,9 @@
     <Content Include="Views\RentalHouse\Add.cshtml" />
     <Content Include="Views\RentalHouse\Edit.cshtml" />
     <Content Include="Views\Default\ShowRentalHouse.cshtml" />
+    <Content Include="Views\ExpressCollection\Index.cshtml" />
+    <Content Include="Views\ExpressCollection\Add.cshtml" />
+    <Content Include="Views\ExpressCollection\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
