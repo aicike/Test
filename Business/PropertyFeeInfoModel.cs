@@ -70,5 +70,38 @@ namespace Business
             var item = List().Where(a => a.AccountMainID == AMID && a.ID == RID).FirstOrDefault();
             return item;
         }
+
+        /// <summary>
+        /// 根据IDS 获取列表
+        /// </summary>
+        /// <param name="IDS"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public List<PropertyFeeInfo> GetPropertyFeeByIDS(int[] IDS, int AMID)
+        {
+            var list = List().Where(a => a.AccountMainID == AMID && IDS.Contains(a.ID)).ToList();
+            return list;
+        }
+
+        /// <summary>
+        /// 根据IDS 获取总金额
+        /// </summary>
+        /// <param name="IDS"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public double GetPriceByIDS(int[] IDS, int AMID)
+        {
+            var Price = List().Where(a => a.AccountMainID == AMID && IDS.Contains(a.ID)).Sum(a => a.Total);
+            if (Price.HasValue)
+            {
+                return Price.Value;
+            }
+            else
+            {
+                return 0;
+            }
+
+        }
+
     }
 }

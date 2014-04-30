@@ -67,6 +67,7 @@
     <Compile Include="IComplaintReplyModel.cs" />
     <Compile Include="IConversationDetailedModel.cs" />
     <Compile Include="IConversationModel.cs" />
+    <Compile Include="IExpressCollectionModel.cs" />
     <Compile Include="IFeedbackModel.cs" />
     <Compile Include="IHolidayModel.cs" />
     <Compile Include="IKeywordAutoMessageModel.cs" />
@@ -84,6 +85,8 @@
     <Compile Include="IPendingMessagesModel.cs" />
     <Compile Include="IProductImgModel.cs" />
     <Compile Include="IProductModel.cs" />
+    <Compile Include="IPropertyOrderDetailModel.cs" />
+    <Compile Include="IPropertyOrderModel.cs" />
     <Compile Include="IProperty_HouseModel.cs" />
     <Compile Include="IProperty_UserModel.cs" />
     <Compile Include="IPropertyFeeInfoModel.cs" />

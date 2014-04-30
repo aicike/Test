@@ -155,6 +155,8 @@ namespace Poco
             public const string Advertising = "Advertising";
             public const string Repairchargeso = "Repairchargeso";
             public const string RentalHouse = "RentalHouse";
+            public const string ExpressCollection = "ExpressCollection";
+            
             
             //Action
             public const string History = "History";
@@ -271,6 +273,9 @@ namespace Poco
             public const string ComplaintReplyModel = "ComplaintReplyModel";
             public const string RepairchargesoModel = "RepairchargesoModel";
             public const string RentalHouseModel = "RentalHouseModel";
+            public const string ExpressCollectionModel = "ExpressCollectionModel";
+            public const string PropertyOrderModel = "PropertyOrderModel";
+            public const string PropertyOrderDetailModel = "PropertyOrderDetailModel";
             
             
             

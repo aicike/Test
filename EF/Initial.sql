@@ -231,6 +231,7 @@ INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [C
 
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (63,'Token_Property_I', 0, N'物业信息', N'物业信息', NULL, N'BasisSet', N'Index', 1, 56,0,2)
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (64,'Token_WUYE_Rental', 0, N'房屋租赁', N'房屋租赁（物业）', NULL, N'RentalHouse', N'Index',8, 56,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (65,'Token_WUYE_ExpressCollection', 0, N'快递代收', N'快递代收（物业）', NULL, N'ExpressCollection', N'Index',9, 56,0,2)
 /*物业菜单结束*/
 SET IDENTITY_INSERT [dbo].[Menu] OFF
 
@@ -414,6 +415,11 @@ INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  (
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,64,'新增','Add',2)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,64,'修改','Edit',3)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,64,'删除','Delete',4)
+
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,65,'列表','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,65,'新增','Add',2)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,65,'修改','Edit',3)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,65,'删除','Delete',4)
 
 
 
@@ -733,6 +739,58 @@ begin
 end
 
 GO
+
+Create function SetSerialNumber_Property(@prefix varchar(10),@digit int,@AccountMainID int)
+returns varchar(100)
+as
+begin
+	declare @predate varchar(12)= convert(varchar(50),getdate(),112)
+	declare @Number varchar(100) = UPPER(@prefix)+@predate
+
+	declare @Prefixcnt int = DATALENGTH(@prefix)
+	declare @MaxNumber varchar(100) 
+	select @MaxNumber =Max(OrderNum) from dbo.PropertyOrder where AccountMainID= @AccountMainID and OrderNum like '%'+@Number+'%'  
+	
+	declare @lasNum varchar(50)='0'
+	if(@MaxNumber is null)
+		begin
+			declare @i int = 1
+			while @i<@digit
+				begin
+					if(@i=@digit-1)
+						begin
+							set @lasNum =@lasNum+'1'
+						end
+					else
+						begin
+							set @lasNum =@lasNum+'0'
+						end
+					
+					set @i=@i+1
+				end
+			set @Number = @Number+@lasNum
+		end
+	else
+		begin
+			declare @lastNumber int = replace(@MaxNumber,@Number,'')
+			set @lastNumber = @lastNumber+1
+			declare @l int = 1
+			while @l<(@digit-DATALENGTH(convert(varchar(10),@lastNumber)))
+				begin
+					set @lasNum ='0'+@lasNum
+					set @l=@l+1
+				end
+			set @Number = @Number+@lasNum+convert(varchar(10),@lastNumber)
+		end
+
+	return @Number
+end
+
+GO
+
+
+
+
 
 
 

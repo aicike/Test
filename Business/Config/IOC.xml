@@ -122,6 +122,8 @@
   <object id="ComplaintReplyModel" type="Business.ComplaintReplyModel" parent="EFModel" singleton="false"></object>
   <object id="RepairchargesoModel" type="Business.RepairchargesoModel" parent="EFModel" singleton="false"></object>
   <object id="RentalHouseModel" type="Business.RentalHouseModel" parent="EFModel" singleton="false"></object>
+  <object id="ExpressCollectionModel" type="Business.ExpressCollectionModel" parent="EFModel" singleton="false"></object>
+  <object id="PropertyOrderModel" type="Business.PropertyOrderModel" parent="EFModel" singleton="false"></object>
 
 
   
