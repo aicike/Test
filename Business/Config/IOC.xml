@@ -124,6 +124,7 @@
   <object id="RentalHouseModel" type="Business.RentalHouseModel" parent="EFModel" singleton="false"></object>
   <object id="ExpressCollectionModel" type="Business.ExpressCollectionModel" parent="EFModel" singleton="false"></object>
   <object id="PropertyOrderModel" type="Business.PropertyOrderModel" parent="EFModel" singleton="false"></object>
+  <object id="PropertyOrderDetailModel" type="Business.PropertyOrderDetailModel" parent="EFModel" singleton="false"></object>
 
 
   
