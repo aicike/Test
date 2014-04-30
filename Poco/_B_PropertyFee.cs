@@ -32,8 +32,6 @@ namespace Poco
         /// </summary>
         public bool IsPay { get; set; }
 
-
-
         /// <summary>
         /// 单元
         /// </summary>
