@@ -201,6 +201,7 @@
     <Compile Include="Controllers\MyTaskController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\OrderMTypeController.cs" />
+    <Compile Include="Controllers\ParkingFeeController.cs" />
     <Compile Include="Controllers\PropertyHouseController.cs" />
     <Compile Include="Controllers\PropertyFeeInfoController.cs" />
     <Compile Include="Controllers\RentalHouseController.cs" />
@@ -891,6 +892,7 @@
     <Content Include="Areas\System\Views\Report\Index.cshtml" />
     <Content Include="Areas\System\Views\Feedback\Index.cshtml" />
     <Content Include="Areas\System\Views\Feedback\GetInfo.cshtml" />
+    <None Include="Download\Property\物业停车费导入模板.xlsx" />
     <None Include="Download\Property\物业用户信息导入模板.xlsx" />
     <None Include="Download\Property\物业费导入模板.xlsx" />
     <None Include="Scripts\nivoSlider\dark\.DS_Store" />
@@ -1048,6 +1050,7 @@
     <Content Include="Views\ExpressCollection\Index.cshtml" />
     <Content Include="Views\ExpressCollection\Add.cshtml" />
     <Content Include="Views\ExpressCollection\Edit.cshtml" />
+    <Content Include="Views\ParkingFee\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

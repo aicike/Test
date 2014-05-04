@@ -33,7 +33,6 @@ namespace Poco
         public bool IsPay { get; set; }
 
 
-
         /// <summary>
         /// 单元
         /// </summary>
@@ -58,7 +57,6 @@ namespace Poco
         /// 停车费
         /// </summary>
         public double ParkingFee { get; set; }
-
         /// <summary>
         /// 电梯费
         /// </summary>

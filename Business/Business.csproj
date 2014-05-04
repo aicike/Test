@@ -130,6 +130,7 @@
     <Compile Include="OrderModel.cs" />
     <Compile Include="OrderMTypeModel.cs" />
     <Compile Include="PanoramaModel.cs" />
+    <Compile Include="ParkingFeeModel.cs" />
     <Compile Include="PendingMessagesModel.cs" />
     <Compile Include="ProductImgModel.cs" />
     <Compile Include="ProductModel.cs" />

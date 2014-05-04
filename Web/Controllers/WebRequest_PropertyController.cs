@@ -738,14 +738,6 @@ namespace Web.Controllers
             {
                 pf.ServiceFee = 0;
             }
-            if (item.ParkingFee.HasValue)
-            {
-                pf.ParkingFee = item.ParkingFee.Value;
-            }
-            else
-            {
-                pf.ParkingFee = 0;
-            }
             if (item.ElevatorFee.HasValue)
             {
                 pf.ElevatorFee = item.ElevatorFee.Value;
@@ -878,6 +870,108 @@ namespace Web.Controllers
 
         #endregion
 
+        #region-------------------停车费接口-------------------------
 
-    }
+        /// <summary>
+        /// 获取停车费列表
+        /// </summary>
+        /// <param name="RoomNumber">房号</param>
+        /// <param name="AMID">amid</param>
+        /// <param name="Year">年份 2014</param>
+        /// <returns></returns>
+        public string GetParkingFeeList(string RoomNumber, int AMID, int Year)
+        {
+            var propertyfeemodel = Factory.Get<IParkingFeeModel>(SystemConst.IOC_Model.ParkingFeeModel);
+            var list = propertyfeemodel.GetPropertyFeeInfo(AMID, RoomNumber, Year);
+            List<_B_PropertyFee> bpfs = new List<_B_PropertyFee>();
+            foreach (var item in list)
+            {
+                _B_PropertyFee pf = new _B_PropertyFee();
+                pf.AMID = item.AccountMainID;
+                pf.IsPay = item.IsPay;
+                pf.PayDate = item.PayDate;
+                pf.PID = item.ID;
+                if (item.ParkingFees!=null)
+                {
+                    pf.ParkingFee = item.ParkingFees;
+                }
+                else
+                {
+                    pf.ParkingFee = 0;
+                }
+                bpfs.Add(pf);
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(bpfs);
+        }
+
+        /// <summary>
+        /// 获取停车费详细信息
+        /// </summary>
+        /// <param name="PID">物业费ID</param>
+        /// <param name="AMID">AMID</param>
+        /// <returns></returns>
+        public string GetParkingFeeInfo(int PID, int AMID)
+        {
+            var propertyfeemodel = Factory.Get<IParkingFeeModel>(SystemConst.IOC_Model.ParkingFeeModel);
+            var item = propertyfeemodel.GetInfoByID(PID, AMID);
+            _B_PropertyFee pf = new _B_PropertyFee();
+
+            pf.AMID = item.AccountMainID;
+            pf.IsPay = item.IsPay;
+            pf.PayDate = item.PayDate;
+            pf.PID = item.ID;
+            pf.Unit = item.Unit;
+            pf.RoomNumber = item.RoomNumber;
+            pf.Remarks = item.Remarks;
+            if (item.ParkingFees!=null)
+            {
+                pf.ParkingFee = item.ParkingFees;
+            }
+            else
+            {
+                pf.ParkingFee = 0;
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(pf);
+        }
+
+        /// <summary>
+        /// 提交停车费
+        /// </summary>
+        /// <param name="PIDS">停车费ID 多个用“,”分割 例1,2,3</param>
+        /// <param name="UserID"></param>
+        /// <param name="AMID"></param>
+        /// <param name="Title"></param>
+        /// <returns></returns>
+        public string UPParkingOrder(string PIDS, int UserID, int AMID)
+        {
+            var propertyordermodel = Factory.Get<IPropertyOrderModel>(SystemConst.IOC_Model.PropertyOrderModel);
+            int[] IDS = PIDS.ConvertToIntArray(',');
+            Result result = propertyordermodel.UpParkingFeeOrder(IDS, AMID, UserID);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+        /// <summary>
+        /// 支付宝交易后调用方法（停车费）
+        /// </summary>
+        /// <returns></returns>
+        public void ReceiveAlipayInfo_Parking()
+        {
+            //网站订单号
+            var out_trade_no = Request.Form["out_trade_no"].ToString();
+            //订单名称
+            var subject = Request.Form["subject"].ToString();
+            //支付宝交易号
+            var trade_no = Request.Form["trade_no"].ToString();
+            //交易状态
+            var rade_status = Request.Form["trade_no"].ToString();
+            //交易成功
+            if (rade_status == "TRADE_FINISHED" || rade_status == "TRADE_SUCCESS")
+            {
+                var propertyordermodel = Factory.Get<IPropertyOrderModel>(SystemConst.IOC_Model.PropertyOrderModel);
+                propertyordermodel.UPdateStatus(out_trade_no, (int)EnumOrderStatus.Payment);
+            }
+        }
+
+        #endregion
+    } 
 }

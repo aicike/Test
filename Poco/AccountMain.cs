@@ -267,7 +267,8 @@ namespace Poco
         public virtual ICollection<ExpressCollection> ExpressCollection { get; set; }
         public virtual ICollection<PropertyOrderDetail> PropertyOrderDetail { get; set; }
         public virtual ICollection<PropertyOrder> PropertyOrder { get; set; }
-        
+
+        public virtual ICollection<ParkingFee> ParkingFee { get; set; }
        
         
         
