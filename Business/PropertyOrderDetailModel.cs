@@ -41,5 +41,30 @@ namespace Business
             return result;
         }
 
+        /// <summary>
+        /// 根据物业费id查询是否已经提交过交过订单
+        /// </summary>
+        /// <param name="IDS"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public Result GetProperIsUP(int[] IDS, int AMID)
+        {
+            Result result = new Result();
+            var list = List().Where(a=>a.AccountMainID==AMID&&IDS.Contains(a.PropertyFeeInfoID.Value));
+            if (list != null)
+            {
+                if (list.Count() > 0)
+                {
+                    result.HasError = true;
+                    foreach (var item in list)
+                    {
+                        result.Error += item.Title+",";
+                    }
+
+                    result.Error = result.Error.TrimEnd(','); 
+                }
+            }
+            return result;
+        }
     }
 }

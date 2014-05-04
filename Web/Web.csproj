@@ -891,6 +891,7 @@
     <Content Include="Areas\System\Views\Report\Index.cshtml" />
     <Content Include="Areas\System\Views\Feedback\Index.cshtml" />
     <Content Include="Areas\System\Views\Feedback\GetInfo.cshtml" />
+    <None Include="Download\Property\物业停车费导入模板.xlsx" />
     <None Include="Download\Property\物业用户信息导入模板.xlsx" />
     <None Include="Download\Property\物业费导入模板.xlsx" />
     <None Include="Scripts\nivoSlider\dark\.DS_Store" />
@@ -1075,7 +1076,7 @@
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://tllhs.imtimely.com/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>True</UseCustomServer>
+          <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>http://192.168.1.138</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>

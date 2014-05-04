@@ -816,6 +816,12 @@ namespace Web.Controllers
             var trade_no = Request.Form["trade_no"].ToString();
             //交易状态
             var rade_status = Request.Form["trade_no"].ToString();
+            //交易成功
+            if (rade_status == "TRADE_FINISHED" || rade_status == "TRADE_SUCCESS")
+            {
+                var propertyordermodel = Factory.Get<IPropertyOrderModel>(SystemConst.IOC_Model.PropertyOrderModel);
+                propertyordermodel.UPdateStatus(out_trade_no,(int)EnumOrderStatus.Payment);
+            }
         }
 
         #endregion
