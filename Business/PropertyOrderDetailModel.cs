@@ -25,10 +25,10 @@ namespace Business
             //获取物业费详细
             var propertyfeemodel = Factory.Get<IPropertyFeeInfoModel>(SystemConst.IOC_Model.PropertyFeeInfoModel);
             var ProPertyList = propertyfeemodel.GetPropertyFeeByIDS(IDS, AMID);
-            StringBuilder stringBuilderSql = new StringBuilder("INSERT INTO dbo.PropertyOrderDetail( SystemStatus ,AccountMainID ,PropertyFeeInfoID ,Title,Price,Count) ");
+            StringBuilder stringBuilderSql = new StringBuilder("INSERT INTO dbo.PropertyOrderDetail( SystemStatus ,AccountMainID ,PropertyFeeInfoID ,Title,Price,Count,PropertyOrderID) ");
             foreach (var item in ProPertyList)
             {
-                stringBuilderSql.AppendFormat(" SELECT 0,{0},{1},'{2}',{3},1 UNION ALL", AMID, PID, item.PayDate + "物业费", item.Total);
+                stringBuilderSql.AppendFormat(" SELECT 0,{0},{1},'{2}',{3},1,{4} UNION ALL", AMID, item.ID, item.PayDate + "物业费", item.Total, PID);
             }
             var OptionSql = stringBuilderSql.ToString();
             OptionSql = OptionSql.Remove(OptionSql.Length - " UNION ALL".Length);

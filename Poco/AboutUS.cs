@@ -19,7 +19,10 @@ namespace Poco
         public int AccountMainID { get; set; }
         public virtual AccountMain AccountMain { get; set; }
 
-
+        /// <summary>
+        /// 内容
+        /// </summary>
+        public string Content { get; set; }
 
     }
 }

@@ -57,6 +57,7 @@ namespace Business
                     var price = propertyfeemodel.GetPriceByIDS(IDS, AMID);
                     po.Price = price;
                     po.status = (int)EnumOrderStatus.WaitPayMent;
+                  
                     result = base.Add(po);
                     if (result.HasError)
                     {
@@ -65,6 +66,7 @@ namespace Business
                     //添加明细
 
                     result = propertyorderdetailmodel.AddOrderDatail(IDS, AMID, po.ID);
+
                     if (!result.HasError)
                     {
                         var entity = new { OrderNum = orderNum, OrderName = "物业费", Price = price };
@@ -133,12 +135,12 @@ namespace Business
                 lock (Parking_obj)
                 {
                     var propertyorderdetailmodel = Factory.Get<IPropertyOrderDetailModel>(SystemConst.IOC_Model.PropertyOrderDetailModel);
-                    //查询是否已经提交订单
-                    result = propertyorderdetailmodel.GetProperIsUP_ParkingFeeID(IDS, AMID);
-                    if (result.HasError)
-                    {
-                        return result;
-                    }
+                    ////查询是否已经提交订单
+                    //result = propertyorderdetailmodel.GetProperIsUP_ParkingFeeID(IDS, AMID);
+                    //if (result.HasError)
+                    //{
+                    //    return result;
+                    //}
                     //获取订单号
                     string orderNumSql = "SELECT dbo.SetSerialNumber_Property('C',4," + AMID + ")";
                     CommonModel commonModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;

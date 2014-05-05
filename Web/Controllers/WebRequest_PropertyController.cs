@@ -849,6 +849,7 @@ namespace Web.Controllers
                     var propertyordermodel = Factory.Get<IPropertyOrderModel>(SystemConst.IOC_Model.PropertyOrderModel);
                     propertyordermodel.UPdateStatus(out_trade_no, (int)EnumOrderStatus.Payment);
                 }
+                
             }
             catch (Exception ex)
             {
@@ -867,8 +868,6 @@ namespace Web.Controllers
         {
             try
             {
-
-
                 string fileName = DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
                 string filePath ="D:\\website"+ "\\log";
                 if (!Directory.Exists(filePath))

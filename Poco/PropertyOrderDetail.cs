@@ -16,6 +16,13 @@ namespace Poco
         public virtual AccountMain AccountMain { get; set; }
 
         /// <summary>
+        /// 订单表ID
+        /// </summary>
+        public int PropertyOrderID { get; set; }
+        public virtual PropertyOrder PropertyOrder { get; set; }
+
+
+        /// <summary>
         /// 物业费ID
         /// </summary>
         public int? PropertyFeeInfoID { get; set; }
