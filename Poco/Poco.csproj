@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutUS.cs" />
     <Compile Include="Account.cs" />
     <Compile Include="AccountMain.cs" />
     <Compile Include="AccountMainHouseInfo.cs" />
