@@ -842,7 +842,7 @@ namespace Web.Controllers
                 //支付宝交易号
                 var trade_no = Request.Form["trade_no"].ToString();
                 //交易状态
-                var rade_status = Request.Form["trade_no"].ToString();
+                var rade_status = Request.Form["trade_status"].ToString();
                 //交易成功
                 if (rade_status == "TRADE_FINISHED" || rade_status == "TRADE_SUCCESS")
                 {
