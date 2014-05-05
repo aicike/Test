@@ -269,7 +269,9 @@ namespace Poco
         public virtual ICollection<PropertyOrder> PropertyOrder { get; set; }
 
         public virtual ICollection<ParkingFee> ParkingFee { get; set; }
-       
+
+
+        public virtual ICollection<AboutUS> AboutUS { get; set; }
         
         
     }
