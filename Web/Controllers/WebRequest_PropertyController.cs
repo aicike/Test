@@ -803,6 +803,7 @@ namespace Web.Controllers
         {
             try
             {
+                SetLog(null, Request.Form.ToString());
                 //网站订单号
                 var out_trade_no = Request.Form["out_trade_no"].ToString();
                 //订单名称
@@ -817,6 +818,7 @@ namespace Web.Controllers
                     var propertyordermodel = Factory.Get<IPropertyOrderModel>(SystemConst.IOC_Model.PropertyOrderModel);
                     propertyordermodel.UPdateStatus(out_trade_no, (int)EnumOrderStatus.Payment);
                 }
+                
             }
             catch (Exception ex)
             {
@@ -835,8 +837,6 @@ namespace Web.Controllers
         {
             try
             {
-
-
                 string fileName = DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
                 string filePath = System.AppDomain.CurrentDomain.BaseDirectory + "\\log";
                 if (!Directory.Exists(filePath))
@@ -855,7 +855,7 @@ namespace Web.Controllers
                 }
                 else
                 {
-                    sw.WriteLine("【未处理异常】：" + ex.StackTrace);
+                    //sw.WriteLine("【未处理异常】：" + ex.StackTrace);
                 }
                 sw.WriteLine("【request form】：" + form);
                 sw.WriteLine("************************************************************");
