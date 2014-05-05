@@ -851,7 +851,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                SetLog(ex);
+                SetLog(ex, Request.Form.ToString());
             }
         }
 
@@ -862,14 +862,14 @@ namespace Web.Controllers
         /// <param name="ex">异常对象</param>
         /// <param name="backStr">备用异常消息：当ex为null时有效</param>
         /// <returns>异常字符串文本</returns>
-        public static void SetLog(Exception ex)
+        public static void SetLog(Exception ex, string form)
         {
             try
             {
 
 
                 string fileName = DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
-                string filePath = Environment.CurrentDirectory + "\\log";
+                string filePath = System.AppDomain.CurrentDomain.BaseDirectory + "\\log";
                 if (!Directory.Exists(filePath))
                 {
                     Directory.CreateDirectory(filePath);
@@ -888,6 +888,7 @@ namespace Web.Controllers
                 {
                     sw.WriteLine("【未处理异常】：" + ex.StackTrace);
                 }
+                sw.WriteLine("【request form】：" + form);
                 sw.WriteLine("************************************************************");
                 sw.Close();
                 aFile.Close();
