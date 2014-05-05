@@ -1,7 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
-    ViewBag.Menu2 = Poco.SystemConst.Menu.PropertyFeeInfo;
-    ViewBag.Menu3 = Poco.SystemConst.Menu.PropertyFeeInfo;
+    ViewBag.Menu2 = Poco.SystemConst.Menu.ParkingFee;
 }
 @section head{
     <script src="@Url.Content("~/Scripts/timepicker/jquery-ui-timepicker-addon.js")" type="text/javascript"></script>
@@ -44,8 +43,6 @@
                 });
             }
         });
-
-
         //导入窗体
         function Showimport() {
             $("#dialogimport").dialog({
@@ -73,26 +70,20 @@
             }
         }
     </script>
-    <style>
-        .main
-        {
-            width: 1300px !important;
-        }
-    </style>
 }
-@model PagedList<Poco.PropertyFeeInfo>
-<div class="title" style="width: 1088px">
+@model PagedList<Poco.ParkingFee>
+<div class="title">
     <div style="float: right">
-        <a href="@Url.Content("~/Download/Property/物业费导入模板.xlsx")" target="_blank" style=" color:#00aec8">
-            下载物业费导入模板</a></div>
+        <a href="@Url.Content("~/Download/Property/物业停车费导入模板.xlsx")" target="_blank" style=" color:#00aec8">
+            下载物业停车费导入模板</a></div>
     @Html.Partial("Menu3")
     <div style="clear: both">
     </div>
 </div>
-<div class="body" style="width: 1088px">
-    @using (Html.BeginForm("Index", "PropertyFeeInfo", new { HostName = ViewBag.HostName }, FormMethod.Get, new { enctype = "multipart/form-data" }))
+<div class="body">
+    @using (Html.BeginForm("Index", "ParkingFee", new { HostName = ViewBag.HostName }, FormMethod.Get, new { enctype = "multipart/form-data" }))
     {
-        <table style="width: 900px">
+        <table>
             <tr>
                 <td>
                     费用月份：
@@ -136,9 +127,9 @@
             </tr>
         </table>
     }
-    <div class="pages" style="margin-bottom: 5px; margin-top: 10px; margin-bottom:10px;">
+    <div class="pages" style="margin-bottom: 5px; margin-top: 10px; margin-bottom: 10px;">
         @Html.Pager(Model, new PagerOptions
-   {
+        {
        PageIndexParameterName = "ID",
        CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
        NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
@@ -152,9 +143,9 @@
        NextPageText = "Next",*/
        PageIndexOutOfRangeErrorMessage = "Page index out of range.",
        ShowFirstLast = false
-   })
+        })
     </div>
-    <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
+        <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
         <tr>
             <th>
                 业主姓名
@@ -172,27 +163,10 @@
                 费用月份
             </th>
             <th>
-                物业管理费
+                固定停车费
             </th>
-            <th>
-                物业服务费
-            </th>
-            <th>
-                电梯费
-            </th>
-            <th>
-                水费
-            </th>
-            <th>
-                卫生费
-            </th>
-            <th>
-                其他费用
-            </th>
-            <th>
-                合计
-            </th>
-            <th>
+          
+            <th style="width:85px">
                 是否已缴费
             </th>
             <th style="width: 200px">
@@ -218,25 +192,7 @@
                     @item.PayDate
                 </td>
                 <td>
-                    @item.ManagerFee
-                </td>
-                <td>
-                    @item.ServiceFee
-                </td>
-                <td>
-                    @item.ElevatorFee
-                </td>
-                <td>
-                    @item.WaterFee
-                </td>
-                <td>
-                    @item.HealthFee
-                </td>
-                <td>
-                    @item.OrterFee
-                </td>
-                <td>
-                    @item.Total
+                    @item.ParkingFees
                 </td>
                 <td>
                     @if (item.IsPay)
@@ -274,9 +230,11 @@
            ShowFirstLast = false
        })
     </div>
+
+
 </div>
 <div id="dialogimport" title="报名列表" style="display: none; padding: 0px">
-    @using (Html.BeginForm("ImportExcel", "PropertyFeeInfo", new { HostName = ViewBag.HostName, id = ViewBag.pageid }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("ImportExcel", "ParkingFee", new { HostName = ViewBag.HostName, id = ViewBag.pageid }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <table width="100%" style="margin-top: 30px">
             <tr>

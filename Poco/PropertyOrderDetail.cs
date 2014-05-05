@@ -22,6 +22,13 @@ namespace Poco
         public virtual PropertyFeeInfo PropertyFeeInfo { get; set; }
 
         /// <summary>
+        /// 停车费ID
+        /// </summary>
+        public int? ParkingFeeID { get; set; }
+        public virtual ParkingFee ParkingFee { get; set; }
+
+
+        /// <summary>
         /// 费用标题
         /// </summary>
         public string Title { get; set; }

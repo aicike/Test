@@ -103,6 +103,7 @@
     <Compile Include="Lottery_User.cs" />
     <Compile Include="MicroSiteSetInfo.cs" />
     <Compile Include="Panorama.cs" />
+    <Compile Include="ParkingFee.cs" />
     <Compile Include="ProductImg.cs" />
     <Compile Include="PropertyComplexEntity.cs" />
     <Compile Include="PropertyOrder.cs" />

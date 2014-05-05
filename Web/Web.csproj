@@ -201,6 +201,7 @@
     <Compile Include="Controllers\MyTaskController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\OrderMTypeController.cs" />
+    <Compile Include="Controllers\ParkingFeeController.cs" />
     <Compile Include="Controllers\PropertyHouseController.cs" />
     <Compile Include="Controllers\PropertyFeeInfoController.cs" />
     <Compile Include="Controllers\RentalHouseController.cs" />
@@ -1049,6 +1050,7 @@
     <Content Include="Views\ExpressCollection\Index.cshtml" />
     <Content Include="Views\ExpressCollection\Add.cshtml" />
     <Content Include="Views\ExpressCollection\Edit.cshtml" />
+    <Content Include="Views\ParkingFee\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

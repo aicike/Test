@@ -232,6 +232,8 @@ INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [C
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (63,'Token_Property_I', 0, N'物业信息', N'物业信息', NULL, N'BasisSet', N'Index', 1, 56,0,2)
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (64,'Token_WUYE_Rental', 0, N'房屋租赁', N'房屋租赁（物业）', NULL, N'RentalHouse', N'Index',8, 56,0,2)
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (65,'Token_WUYE_ExpressCollection', 0, N'快递代收', N'快递代收（物业）', NULL, N'ExpressCollection', N'Index',9, 56,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (66,'Token_WUYE_ParkingFee', 0, N'停车费', N'停车费（物业）', NULL, N'ParkingFee', N'Index',10, 56,0,2)
+
 /*物业菜单结束*/
 SET IDENTITY_INSERT [dbo].[Menu] OFF
 
@@ -420,6 +422,8 @@ INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  (
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,65,'新增','Add',2)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,65,'修改','Edit',3)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,65,'删除','Delete',4)
+
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,66,'停车费列表','Index',1)
 
 
 

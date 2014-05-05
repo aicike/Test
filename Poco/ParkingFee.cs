@@ -7,9 +7,9 @@ using System.ComponentModel.DataAnnotations;
 namespace Poco
 {
     /// <summary>
-    /// 物业费信息
+    /// 停车费
     /// </summary>
-    public class PropertyFeeInfo : IBaseEntity
+    public class ParkingFee : IBaseEntity
     {
         public int ID { get; set; }
 
@@ -57,55 +57,16 @@ namespace Poco
         public string PayDate { get; set; }
 
         /// <summary>
-        /// 管理费
+        /// 停车费
         /// </summary>
-        [Display(Name = "管理费")]
-        public double? ManagerFee { get; set; }
-
-        /// <summary>
-        /// 服务费
-        /// </summary>
-        [Display(Name = "服务费")]
-        public double? ServiceFee { get; set; }
-
-        
-
-        /// <summary>
-        /// 电梯费
-        /// </summary>
-        [Display(Name = "电梯费")]
-        public double? ElevatorFee { get; set; }
-
-        /// <summary>
-        /// 水费
-        /// </summary>
-        [Display(Name = "水费")]
-        public double? WaterFee { get; set; }
-
-        /// <summary>
-        /// 卫生费
-        /// </summary>
-        [Display(Name = "卫生费")]
-        public double? HealthFee { get; set; }
-
-        /// <summary>
-        /// 其他费用
-        /// </summary>
-        [Display(Name = "其他费用")]
-        public double? OrterFee { get; set; }
-
-        /// <summary>
-        /// 合计金额
-        /// </summary>
-        [Display(Name = "合计金额")]
-        public double? Total { get; set; }
+        [Display(Name = "停车费")]
+        public double ParkingFees { get; set; }
 
         /// <summary>
         /// 是否已缴费
         /// </summary>
         [Display(Name = "是否已缴费")]
         public bool IsPay { get; set; }
-
 
 
         /// <summary>
@@ -120,8 +81,9 @@ namespace Poco
         [Display(Name = "导入日期")]
         public DateTime importDate { get; set; }
 
-
-
+        
         public virtual ICollection<PropertyOrderDetail> PropertyOrderDetail { get; set; }
+
+
     }
 }

@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Controllers;
 using Injection;
 using Interface;
 using Poco;
-using Common;
+using Controllers;
 using System.Data;
+using Common;
 using Business;
 
 namespace Web.Controllers
 {
-    public class PropertyFeeInfoController : ManageAccountController
+    public class ParkingFeeController : ManageAccountController
     {
         //
-        // GET: /PropertyFeeInfo/
+        // GET: /ParkingFee/
         /// <summary>
         /// 首页
         /// </summary>
@@ -26,8 +26,6 @@ namespace Web.Controllers
         /// <param name="RoomNumber">房号</param>
         /// <param name="OwnerName">业主姓名</param>
         /// <param name="OwnerPhone">业主电话</param>
-        /// <param name="IsError">导入状态 1出错 2成功 </param>
-        /// <param name="ErrorStr">消息内容</param>
         /// <returns></returns>
         public ActionResult Index(int? id, string Date, string Unit, string RoomNumber, string OwnerName, string OwnerPhone)
         {
@@ -39,10 +37,10 @@ namespace Web.Controllers
             {
                 ViewBag.pageid = 1;
             }
-            if (TempData["IsError"] !=null)
+            if (TempData["IsError"] != null)
             {
                 ViewBag.IsError = TempData["IsError"].ToString();
-               
+
             }
             else
             {
@@ -97,15 +95,16 @@ namespace Web.Controllers
             {
                 ViewBag.OwnerPhone = "";
             }
-            var propertyfeemodel = Factory.Get<IPropertyFeeInfoModel>(SystemConst.IOC_Model.PropertyFeeInfoModel);
-            var propertyfee = propertyfeemodel.GetPropertyFeeInfo(LoginAccount.CurrentAccountMainID, Date, Unit, RoomNumber, OwnerName, OwnerPhone).ToPagedList(id ?? 1, 50);
+            var parkingpropertyfeemodel = Factory.Get<IParkingFeeModel>(SystemConst.IOC_Model.ParkingFeeModel);
+            var propertyfee = parkingpropertyfeemodel.GetParkingFeeInfo(LoginAccount.CurrentAccountMainID, Date, Unit, RoomNumber, OwnerName, OwnerPhone).ToPagedList(id ?? 1, 50);
 
             string WebTitleRemark = SystemConst.WebTitleRemark;
-            string webTitle = string.Format(SystemConst.Business.WebTitle, "物业管理-物业费管理", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "物业管理-停车费管理", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
 
             return View(propertyfee);
         }
+
 
         [HttpPost]
         public ActionResult ImportExcel(System.Web.HttpPostedFileBase ImExcel,int id)
@@ -120,16 +119,10 @@ namespace Web.Controllers
             dttable.Columns.Add("单元");
             dttable.Columns.Add("房号");
             dttable.Columns.Add("缴费月份");
-            dttable.Columns.Add("物业管理费", typeof(double));
-            dttable.Columns.Add("物业服务费", typeof(double));
-            dttable.Columns.Add("电梯费", typeof(double));
-            dttable.Columns.Add("水费", typeof(double));
-            dttable.Columns.Add("卫生费", typeof(double));
-            dttable.Columns.Add("其他费用", typeof(double));
-            dttable.Columns.Add("合计", typeof(double));
+            dttable.Columns.Add("停车费", typeof(double));
+            dttable.Columns.Add("是否已缴费（是/否）");
             dttable.Columns.Add("备注");
             dttable.Columns.Add("importDate", typeof(DateTime));
-            dttable.Columns.Add("是否已缴费（是/否）");
             result = Tool.GetXLSXInfo(ImExcel, dttable);
             if (result.HasError)
             {
@@ -250,20 +243,19 @@ namespace Web.Controllers
                     Row["SystemStatus"] = 0;
                 }
                 CommonModel com = new CommonModel();
-                result = com.CopyDataTableToDB(dt, "PropertyFeeInfo");
+                result = com.CopyDataTableToDB(dt, "ParkingFee");
                 if (result.HasError)
                 {
                     TempData["IsError"] = 1;
                     TempData["ErrorStr"] = result.Error;
-                    return RedirectToAction("Index", "PropertyFeeInfo", new { id = id });
+                    return RedirectToAction("Index", "ParkingFee", new { id = id });
                 }
             }
 
             TempData["IsError"] = 2;
             TempData["ErrorStr"] = "导入成功";
-            return RedirectToAction("Index", "PropertyFeeInfo", new { id = id});
+            return RedirectToAction("Index", "ParkingFee", new { id = id });
             //return  JavaScript("window.location.href='" + Url.Action("Index", "PropertyFeeInfo", new { IsError = 2, ErrorStr = "导入成功" }) + "'");
         }
-
     }
 }
