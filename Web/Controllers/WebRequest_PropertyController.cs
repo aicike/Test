@@ -830,7 +830,7 @@ namespace Web.Controllers
         /// 支付宝交易后调用方法（物业）
         /// </summary>
         /// <returns></returns>
-        public void ReceiveAlipayInfo_Property()
+        public string ReceiveAlipayInfo_Property()
         {
             try
             {
@@ -855,6 +855,7 @@ namespace Web.Controllers
             {
                 SetLog(ex, Request.Form.ToString());
             }
+            return "success";
         }
 
 
@@ -1039,7 +1040,7 @@ namespace Web.Controllers
         /// 支付宝交易后调用方法（停车费）
         /// </summary>
         /// <returns></returns>
-        public void ReceiveAlipayInfo_Parking()
+        public string ReceiveAlipayInfo_Parking()
         {
             //网站订单号
             var out_trade_no = Request.Form["out_trade_no"].ToString();
@@ -1055,6 +1056,7 @@ namespace Web.Controllers
                 var propertyordermodel = Factory.Get<IPropertyOrderModel>(SystemConst.IOC_Model.PropertyOrderModel);
                 propertyordermodel.UPdateStatus(out_trade_no, (int)EnumOrderStatus.Payment);
             }
+            return "success";
         }
 
         #endregion
