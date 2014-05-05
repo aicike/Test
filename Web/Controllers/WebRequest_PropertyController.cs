@@ -834,6 +834,7 @@ namespace Web.Controllers
         {
             try
             {
+                SetLog(null, Request.Form.ToString());
                 //网站订单号
                 var out_trade_no = Request.Form["out_trade_no"].ToString();
                 //订单名称
@@ -869,7 +870,7 @@ namespace Web.Controllers
 
 
                 string fileName = DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
-                string filePath = System.AppDomain.CurrentDomain.BaseDirectory + "\\log";
+                string filePath ="D:\\website"+ "\\log";
                 if (!Directory.Exists(filePath))
                 {
                     Directory.CreateDirectory(filePath);
@@ -886,7 +887,7 @@ namespace Web.Controllers
                 }
                 else
                 {
-                    sw.WriteLine("【未处理异常】：" + ex.StackTrace);
+                    //sw.WriteLine("【未处理异常】：" + ex.StackTrace);
                 }
                 sw.WriteLine("【request form】：" + form);
                 sw.WriteLine("************************************************************");

@@ -34,12 +34,12 @@ namespace Business
                 lock (Property_obj)
                 {
                     var propertyorderdetailmodel = Factory.Get<IPropertyOrderDetailModel>(SystemConst.IOC_Model.PropertyOrderDetailModel);
-                    //查询是否已经提交订单
-                    result = propertyorderdetailmodel.GetProperIsUP(IDS, AMID);
-                    if (result.HasError)
-                    {
-                        return result;
-                    }
+                    ////查询是否已经提交订单
+                    //result = propertyorderdetailmodel.GetProperIsUP(IDS, AMID);
+                    //if (result.HasError)
+                    //{
+                    //    return result;
+                    //}
                     //获取订单号
                     string orderNumSql = "SELECT dbo.SetSerialNumber_Property('P',4," + AMID + ")";
                     CommonModel commonModel = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
