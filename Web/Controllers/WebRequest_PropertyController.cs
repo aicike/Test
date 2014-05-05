@@ -10,6 +10,7 @@ using Poco.WebAPI_Poco;
 using Business;
 using Common;
 using Poco.Enum;
+using System.IO;
 
 namespace Web.Controllers
 {
@@ -784,7 +785,7 @@ namespace Web.Controllers
         public string UPPropertyOrder(string PIDS, int UserID, int AMID)
         {
             var propertyordermodel = Factory.Get<IPropertyOrderModel>(SystemConst.IOC_Model.PropertyOrderModel);
-            int [] IDS = PIDS.ConvertToIntArray(',');
+            int[] IDS = PIDS.ConvertToIntArray(',');
             Result result = propertyordermodel.UpPropertyOrder(IDS, AMID, UserID);
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
@@ -795,20 +796,67 @@ namespace Web.Controllers
         /// <returns></returns>
         public void ReceiveAlipayInfo_Property()
         {
-            //网站订单号
-            var out_trade_no = Request.Form["out_trade_no"].ToString();
-            //订单名称
-            var subject = Request.Form["subject"].ToString();
-            //支付宝交易号
-            var trade_no = Request.Form["trade_no"].ToString();
-            //交易状态
-            var rade_status = Request.Form["trade_no"].ToString();
-            //交易成功
-            if (rade_status == "TRADE_FINISHED" || rade_status == "TRADE_SUCCESS")
+            try
             {
-                var propertyordermodel = Factory.Get<IPropertyOrderModel>(SystemConst.IOC_Model.PropertyOrderModel);
-                propertyordermodel.UPdateStatus(out_trade_no,(int)EnumOrderStatus.Payment);
+                //网站订单号
+                var out_trade_no = Request.Form["out_trade_no"].ToString();
+                //订单名称
+                var subject = Request.Form["subject"].ToString();
+                //支付宝交易号
+                var trade_no = Request.Form["trade_no"].ToString();
+                //交易状态
+                var rade_status = Request.Form["trade_no"].ToString();
+                //交易成功
+                if (rade_status == "TRADE_FINISHED" || rade_status == "TRADE_SUCCESS")
+                {
+                    var propertyordermodel = Factory.Get<IPropertyOrderModel>(SystemConst.IOC_Model.PropertyOrderModel);
+                    propertyordermodel.UPdateStatus(out_trade_no, (int)EnumOrderStatus.Payment);
+                }
             }
+            catch (Exception ex)
+            {
+                SetLog(ex);
+            }
+        }
+
+
+        /// <summary>
+        /// 生成自定义异常消息
+        /// </summary>
+        /// <param name="ex">异常对象</param>
+        /// <param name="backStr">备用异常消息：当ex为null时有效</param>
+        /// <returns>异常字符串文本</returns>
+        public static void SetLog(Exception ex)
+        {
+            try
+            {
+
+
+                string fileName = DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
+                string filePath = Environment.CurrentDirectory + "\\log";
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+                FileStream aFile = new FileStream(filePath + "\\" + fileName, FileMode.Append);
+                StreamWriter sw = new StreamWriter(aFile);
+                sw.WriteLine("*************************异常文本****************************");
+                sw.WriteLine("【出现时间】：" + DateTime.Now.ToString());
+                if (ex != null)
+                {
+                    sw.WriteLine("【异常类型】：" + ex.GetType().Name);
+                    sw.WriteLine("【异常信息】：" + ex.Message);
+                    sw.WriteLine("【堆栈调用】：" + ex.StackTrace);
+                }
+                else
+                {
+                    sw.WriteLine("【未处理异常】：" + ex.StackTrace);
+                }
+                sw.WriteLine("************************************************************");
+                sw.Close();
+                aFile.Close();
+            }
+            catch { }
         }
 
         #endregion
@@ -891,7 +939,7 @@ namespace Web.Controllers
                 pf.IsPay = item.IsPay;
                 pf.PayDate = item.PayDate;
                 pf.PID = item.ID;
-                if (item.ParkingFees!=null)
+                if (item.ParkingFees != null)
                 {
                     pf.ParkingFee = item.ParkingFees;
                 }
@@ -923,7 +971,7 @@ namespace Web.Controllers
             pf.Unit = item.Unit;
             pf.RoomNumber = item.RoomNumber;
             pf.Remarks = item.Remarks;
-            if (item.ParkingFees!=null)
+            if (item.ParkingFees != null)
             {
                 pf.ParkingFee = item.ParkingFees;
             }
@@ -973,5 +1021,5 @@ namespace Web.Controllers
         }
 
         #endregion
-    } 
+    }
 }

@@ -161,6 +161,7 @@
     <Compile Include="Areas\System\Controllers\SystemUserRoleController.cs" />
     <Compile Include="Areas\System\Controllers\SystemUserController.cs" />
     <Compile Include="Areas\System\SystemAreaRegistration.cs" />
+    <Compile Include="Controllers\AboutUSController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountMainController.cs" />
     <Compile Include="Controllers\AccountMainGuideController.cs" />
