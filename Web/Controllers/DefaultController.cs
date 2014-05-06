@@ -813,7 +813,21 @@ namespace Web.Controllers
 
         #endregion
 
+        #region---------------关于我们----------------------
+        /// <summary>
+        /// 关于我们
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public ActionResult AboutUS(int AMID)
+        {
+            var model = Factory.Get<IAboutUSModel>(SystemConst.IOC_Model.AboutUSModel);
+            var item = model.GetAboutUS(AMID);
 
+            return View(item);
+
+        }
+        #endregion
 
     }
 }

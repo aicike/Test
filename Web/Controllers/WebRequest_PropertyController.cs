@@ -803,7 +803,6 @@ namespace Web.Controllers
         {
             try
             {
-                SetLog(null, Request.Form.ToString());
                 //网站订单号
                 var out_trade_no = Request.Form["out_trade_no"].ToString();
                 //订单名称
@@ -946,6 +945,7 @@ namespace Web.Controllers
                 pf.IsPay = item.IsPay;
                 pf.PayDate = item.PayDate;
                 pf.PID = item.ID;
+                pf.plates = item.plates;
                 if (item.ParkingFees != null)
                 {
                     pf.ParkingFee = item.ParkingFees;
@@ -978,6 +978,7 @@ namespace Web.Controllers
             pf.Unit = item.Unit;
             pf.RoomNumber = item.RoomNumber;
             pf.Remarks = item.Remarks;
+            pf.plates = item.plates;
             if (item.ParkingFees != null)
             {
                 pf.ParkingFee = item.ParkingFees;

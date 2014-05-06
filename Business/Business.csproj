@@ -77,6 +77,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutUSModel.cs" />
     <Compile Include="AccountMainGuideModel.cs" />
     <Compile Include="AccountMainHouseInfoDetailModel.cs" />
     <Compile Include="AccountMainHouseInfoModel.cs" />

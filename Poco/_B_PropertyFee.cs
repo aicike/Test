@@ -81,6 +81,10 @@ namespace Poco
         /// </summary>
         public string Remarks { get; set; }
 
+        /// <summary>
+        /// 车牌号
+        /// </summary>
+        public string plates { get; set; }
 
     }
 }

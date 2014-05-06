@@ -81,6 +81,10 @@ namespace Poco
         [Display(Name = "导入日期")]
         public DateTime importDate { get; set; }
 
+        /// <summary>
+        /// 车牌号
+        /// </summary>
+        public string plates { get; set; }
         
         public virtual ICollection<PropertyOrderDetail> PropertyOrderDetail { get; set; }
 

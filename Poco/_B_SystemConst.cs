@@ -157,7 +157,9 @@ namespace Poco
             public const string RentalHouse = "RentalHouse";
             public const string ExpressCollection = "ExpressCollection";
             public const string ParkingFee = "ParkingFee";
-
+            
+            public const string AboutUS = "AboutUS";
+            
 
             //Action
             public const string History = "History";
@@ -279,6 +281,9 @@ namespace Poco
             public const string PropertyOrderDetailModel = "PropertyOrderDetailModel";
             public const string ParkingFeeModel = "ParkingFeeModel";
 
+            public const string AboutUSModel = "AboutUSModel";
+
+            
 
         }
     }
