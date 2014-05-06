@@ -823,10 +823,9 @@ namespace Web.Controllers
         {
             var model = Factory.Get<IAboutUSModel>(SystemConst.IOC_Model.AboutUSModel);
             var item = model.GetAboutUS(AMID);
-
             return View(item);
-
         }
+      
         #endregion
 
     }

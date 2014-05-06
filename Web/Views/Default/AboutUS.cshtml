@@ -3,6 +3,7 @@
     Layout = "~/Views/Shared/_LayoutBase.cshtml";
 }
 @section head{
+<meta name='viewport' content='width=device-width, user-scalable=no' />
     <style>
         body
         {
@@ -10,15 +11,17 @@
         }
         .main
         {
-            
-            }
-             .main img
+        }
+        .main img
         {
-             max-width:98% !important;
-            }
+            max-width: 98% !important;
+        }
     </style>
 }
 @model Poco.AboutUS
-<div  class="main" style=" width:100%; background-color:#fff">
-    @Html.Raw(Model.Content)
+<div class="main" style="width: 100%; background-color: #fff">
+    @if (Model != null && Model.Content != null)
+    { 
+        @Html.Raw(Model.Content)
+    }
 </div>

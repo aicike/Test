@@ -24,7 +24,7 @@
                 imageManagerUrl: UEDITOR_HOME_URL + "net/imageManager_LibraryImageText.ashx",
                 imageManagerPath: "",
                 initialContent: ""
-              
+
             };
             var ue = UE.getEditor('editor', options);
 
@@ -59,13 +59,14 @@
     @using (Html.BeginForm("Index", "AboutUS", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <fieldset style="border: 1px solid #E7E7E7;">
-          
             <table style="width: 100%">
                 <tr>
                     <td>
-                        <script type="text/plain" id="editor" height="300px" name="Content">@Html.Raw(Model.Content)</script>
-                        @Html.HiddenFor(a=>a.AccountMainID)
-                        @Html.HiddenFor(a=>a.ID)
+                        <script type="text/plain" id="editor" height="300px" name="Content">    @if (Model != null && Model.Content != null)
+                                                                                                { @Html.Raw(Model.Content)
+                                                                                                }</script>
+                        @Html.HiddenFor(a => a.AccountMainID)
+                        @Html.HiddenFor(a => a.ID)
                     </td>
                 </tr>
             </table>

@@ -11,6 +11,7 @@ using Business;
 using Common;
 using Poco.Enum;
 using System.IO;
+using System.Text;
 
 namespace Web.Controllers
 {
@@ -1058,6 +1059,26 @@ namespace Web.Controllers
                 propertyordermodel.UPdateStatus(out_trade_no, (int)EnumOrderStatus.Payment);
             }
             return "success";
+        }
+
+        #endregion
+
+        #region 关于我们
+
+        /// <summary>
+        /// 关于我们
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public string GetAboutUS(int AMID)
+        {
+            var model = Factory.Get<IAboutUSModel>(SystemConst.IOC_Model.AboutUSModel);
+            var item = model.GetAboutUS(AMID);
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<html><head><meta name='viewport' content='width=device-width, user-scalable=no' />");
+            sb.Append("<style>.main img{max-width: 98% !important;}</style></head>");
+            sb.AppendFormat("<body><div class='main' style='width: 100%; background-color: #fff'>{0}</div></body></html>", item.Content);
+            return sb.ToString(); ;
         }
 
         #endregion
