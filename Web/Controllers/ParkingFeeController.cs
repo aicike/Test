@@ -123,6 +123,7 @@ namespace Web.Controllers
             dttable.Columns.Add("是否已缴费（是/否）");
             dttable.Columns.Add("备注");
             dttable.Columns.Add("importDate", typeof(DateTime));
+            dttable.Columns.Add("车牌号");
             result = Tool.GetXLSXInfo(ImExcel, dttable);
             if (result.HasError)
             {

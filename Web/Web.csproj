@@ -531,9 +531,10 @@
     <Content Include="ueditor\themes\default\images\word.gif" />
     <Content Include="ueditor\themes\default\images\wordpaste.png" />
     <Content Include="ueditor\themes\iframe.css" />
-    <Content Include="ueditor\ueditor.all.js" />
     <Content Include="ueditor\ueditor.all.min.js" />
+    <Content Include="ueditor\ueditor.all.js" />
     <Content Include="ueditor\ueditor.config.js" />
+    <Content Include="ueditor\ueditor.config_about.js" />
     <Content Include="ueditor\ueditor.parse.js" />
     <Content Include="Scripts\uploadify\jquery.uploadify.js" />
     <Content Include="Scripts\uploadify\jquery.uploadify.min.js" />
@@ -1052,6 +1053,8 @@
     <Content Include="Views\ExpressCollection\Add.cshtml" />
     <Content Include="Views\ExpressCollection\Edit.cshtml" />
     <Content Include="Views\ParkingFee\Index.cshtml" />
+    <Content Include="Views\AboutUS\Index.cshtml" />
+    <Content Include="Views\Default\AboutUS.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

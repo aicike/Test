@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "关于我们";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+@section head{
+    <style>
+        body
+        {
+            padding: 5px;
+        }
+        .main
+        {
+            
+            }
+             .main img
+        {
+             max-width:98% !important;
+            }
+    </style>
+}
+@model Poco.AboutUS
+<div  class="main" style=" width:100%; background-color:#fff">
+    @Html.Raw(Model.Content)
+</div>

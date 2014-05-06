@@ -127,6 +127,7 @@
   <object id="PropertyOrderDetailModel" type="Business.PropertyOrderDetailModel" parent="EFModel" singleton="false"></object>
   <object id="ParkingFeeModel" type="Business.ParkingFeeModel" parent="EFModel" singleton="false"></object>
 
+  <object id="AboutUSModel" type="Business.AboutUSModel" parent="EFModel" singleton="false"></object>
 
   
 

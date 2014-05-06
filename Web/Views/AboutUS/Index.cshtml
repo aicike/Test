@@ -1,0 +1,77 @@
+﻿@{
+    
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+
+    ViewBag.Menu2 = Poco.SystemConst.Menu.AboutUS;
+}
+@model Poco.AboutUS
+@section head{
+    <script src="@Url.Content("/ueditor/ueditor.config_about.js")" type="text/javascript"></script>
+    <script src="@Url.Content("/ueditor/ueditor.all.js")" type="text/javascript"></script>
+    <script>
+        var msg = '@ViewBag.Msg';
+        var hasError = '@ViewBag.HasError';
+
+        $(function () {
+
+            window.UEDITOR_HOME_URL = "/ueditor/";
+            //实例化编辑器
+            var options = {
+                initialFrameWidth: '100%',
+                initialFrameHeight: 300,
+                imageUrl: UEDITOR_HOME_URL + "net/imageUp_Advertorial.ashx",
+                imagePath: "",
+                imageManagerUrl: UEDITOR_HOME_URL + "net/imageManager_LibraryImageText.ashx",
+                imageManagerPath: "",
+                initialContent: ""
+              
+            };
+            var ue = UE.getEditor('editor', options);
+
+
+            //提交校验
+            $("#btnSubmit").click(function () {
+
+                if (ue.getContent().length == 0) {
+                    JAlert({
+                        Message: "内容不能为空！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return false;
+                }
+            });
+
+            if (hasError == "1" && msg.length > 0) {
+                JMessage(msg, true);
+            } else if (hasError == "0") {
+
+                JMessage("保存成功。");
+            }
+
+        })
+    </script>
+}
+<div class="title">
+    @Html.Partial("Menu3")
+</div>
+<div class="body" style="font-size: 14px">
+    @using (Html.BeginForm("Index", "AboutUS", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <fieldset style="border: 1px solid #E7E7E7;">
+          
+            <table style="width: 100%">
+                <tr>
+                    <td>
+                        <script type="text/plain" id="editor" height="300px" name="Content">@Html.Raw(Model.Content)</script>
+                        @Html.HiddenFor(a=>a.AccountMainID)
+                        @Html.HiddenFor(a=>a.ID)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="submit" value="保存" id="btnSubmit" class="button" />
+        </div>
+    }
+</div>

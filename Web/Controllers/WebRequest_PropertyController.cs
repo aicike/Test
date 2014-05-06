@@ -964,10 +964,10 @@ namespace Web.Controllers
         /// <param name="AMID">amid</param>
         /// <param name="Year">年份 2014</param>
         /// <returns></returns>
-        public string GetParkingFeeList(string RoomNumber, int AMID, int Year)
+        public string GetParkingFeeList(string PhoneNum, int AMID, int Year)
         {
             var propertyfeemodel = Factory.Get<IParkingFeeModel>(SystemConst.IOC_Model.ParkingFeeModel);
-            var list = propertyfeemodel.GetPropertyFeeInfo(AMID, RoomNumber, Year);
+            var list = propertyfeemodel.GetPropertyFeeInfo(AMID, PhoneNum, Year);
             List<_B_PropertyFee> bpfs = new List<_B_PropertyFee>();
             foreach (var item in list)
             {
@@ -976,13 +976,14 @@ namespace Web.Controllers
                 pf.IsPay = item.IsPay;
                 pf.PayDate = item.PayDate;
                 pf.PID = item.ID;
+                pf.plates = item.plates;
                 if (item.ParkingFees != 0)
                 {
-                    pf.ParkingFee = item.ParkingFees;
+                    pf.Total = item.ParkingFees;
                 }
                 else
                 {
-                    pf.ParkingFee = 0;
+                    pf.Total = 0;
                 }
                 bpfs.Add(pf);
             }
@@ -1008,13 +1009,14 @@ namespace Web.Controllers
             pf.Unit = item.Unit;
             pf.RoomNumber = item.RoomNumber;
             pf.Remarks = item.Remarks;
+            pf.plates = item.plates;
             if (item.ParkingFees != 0)
             {
-                pf.ParkingFee = item.ParkingFees;
+                pf.Total = item.ParkingFees;
             }
             else
             {
-                pf.ParkingFee = 0;
+                pf.Total = 0;
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(pf);
         }
