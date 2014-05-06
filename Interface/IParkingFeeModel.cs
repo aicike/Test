@@ -31,7 +31,7 @@ namespace Interface
         /// <param name="RoomNumber"></param>
         /// <param name="Year"></param>
         /// <returns></returns>
-        List<ParkingFee> GetPropertyFeeInfo(int AMID, string RoomNumber, int Year);
+        List<ParkingFee> GetPropertyFeeInfo(int AMID, string PhoneNum, int Year);
 
 
          /// <summary>

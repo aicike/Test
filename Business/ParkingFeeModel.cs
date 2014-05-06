@@ -55,10 +55,10 @@ namespace Business
         /// <param name="RoomNumber"></param>
         /// <param name="Year"></param>
         /// <returns></returns>
-        public List<ParkingFee> GetPropertyFeeInfo(int AMID, string RoomNumber, int Year)
+        public List<ParkingFee> GetPropertyFeeInfo(int AMID, string PhoneNum, int Year)
         {
             string year = Year.ToString();
-            var list = List().Where(a => a.AccountMainID == AMID && a.RoomNumber == RoomNumber && a.PayDate.Contains(year)).ToList();
+            var list = List().Where(a => a.AccountMainID == AMID && a.OwnerPhone == PhoneNum && a.PayDate.Contains(year)).ToList();
             return list;
         }
 
