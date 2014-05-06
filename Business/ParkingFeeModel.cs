@@ -57,7 +57,8 @@ namespace Business
         /// <returns></returns>
         public List<ParkingFee> GetPropertyFeeInfo(int AMID, string RoomNumber, int Year)
         {
-            var list = List().Where(a => a.AccountMainID == AMID && a.RoomNumber == RoomNumber && a.PayDate.Contains(Year.ToString())).ToList();
+            string year_str = Year.ToString();
+            var list = List().Where(a => a.AccountMainID == AMID && a.RoomNumber == RoomNumber && a.PayDate.Contains(year_str)).ToList();
             return list;
         }
 
