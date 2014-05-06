@@ -948,11 +948,11 @@ namespace Web.Controllers
                 pf.plates = item.plates;
                 if (item.ParkingFees != null)
                 {
-                    pf.ParkingFee = item.ParkingFees;
+                    pf.Total = item.ParkingFees;
                 }
                 else
                 {
-                    pf.ParkingFee = 0;
+                    pf.Total = 0;
                 }
                 bpfs.Add(pf);
             }
@@ -981,11 +981,11 @@ namespace Web.Controllers
             pf.plates = item.plates;
             if (item.ParkingFees != null)
             {
-                pf.ParkingFee = item.ParkingFees;
+                pf.Total = item.ParkingFees;
             }
             else
             {
-                pf.ParkingFee = 0;
+                pf.Total = 0;
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(pf);
         }
