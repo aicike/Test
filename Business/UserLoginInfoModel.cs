@@ -369,7 +369,22 @@ namespace Business
                     result.Error = "账号不可用。";
                     return result;
                 }
+                //判断有没有ClientInfo表数据，没有则创建(创建ClientInfo)
                 var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
+                var hasUserTable = clientInfoModel.List().Any(a => a.ClientID == app_UserLoginInfo.ClientID && a.EntityID == user.ID);
+                if (hasUserTable == false)
+                {
+                    //创建ClientInfo
+                    ClientInfo ci=new ClientInfo();
+                    int enumClientSystemTypeID = LookupFactory.GetLookupOptionIdByToken((EnumClientSystemType)app_UserLoginInfo.EnumClientSystemType);
+                    int enumClientUserTypeID = LookupFactory.GetLookupOptionIdByToken(EnumClientUserType.User);
+                    ci.EnumClientSystemTypeID=enumClientSystemTypeID;
+                    ci.ClientID = app_UserLoginInfo.ClientID;
+                    ci.SetupTiem=DateTime.Now;
+                    ci.EnumClientUserTypeID=enumClientUserTypeID;
+                    ci.EntityID=user.ID;
+                    result= clientInfoModel.Add(ci);
+                }
             }
             App_User appuser = new App_User();
             appuser.ID = user.ID;
@@ -560,7 +575,7 @@ namespace Business
         {
             if (!string.IsNullOrEmpty(phone))
             {
-                 return List().Any(a => a.Phone.Equals(phone, StringComparison.CurrentCultureIgnoreCase) && a.Users.Any(b=>b.AccountMainID==amid));
+                return List().Any(a => a.Phone.Equals(phone, StringComparison.CurrentCultureIgnoreCase) && a.Users.Any(b => b.AccountMainID == amid));
             }
             return false;
         }

@@ -21,7 +21,7 @@ namespace Web.Controllers
         public string UserLogin(string email, string loginPwd, int accountMainID, string clientID)
         {
             var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
-            var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email, Phone = email, Pwd = loginPwd, AccountMainID = accountMainID, ClientID = clientID });
+            var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email, Phone = email, Pwd = loginPwd, AccountMainID = accountMainID, ClientID = clientID,EnumClientSystemType=(int)EnumClientSystemType.Android });
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
@@ -42,7 +42,7 @@ namespace Web.Controllers
         public string UserLoginIOS(string email, string loginPwd, int accountMainID, string clientID)
         {
             var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
-            var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email,Phone=email, Pwd = loginPwd, AccountMainID = accountMainID, ClientID = clientID });
+            var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email, Phone = email, Pwd = loginPwd, AccountMainID = accountMainID, ClientID = clientID, EnumClientSystemType = (int)EnumClientSystemType.IOS });
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
