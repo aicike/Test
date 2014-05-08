@@ -99,6 +99,7 @@
     <Compile Include="Enum\EnumVIPOperate.cs" />
     <Compile Include="ExpressCollection.cs" />
     <Compile Include="Feedback.cs" />
+    <Compile Include="LifeSkill.cs" />
     <Compile Include="Lottery_dish.cs" />
     <Compile Include="Lottery_dish_detail.cs" />
     <Compile Include="Lottery_User.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Property_House.cs" />
     <Compile Include="Property_User.cs" />
     <Compile Include="PropertyFeeInfo.cs" />
+    <Compile Include="Recipes.cs" />
     <Compile Include="RentalHouse.cs" />
     <Compile Include="Repaircharges.cs" />
     <Compile Include="RepairInfo.cs" />
@@ -119,6 +121,7 @@
     <Compile Include="ReportBody.cs" />
     <Compile Include="ReportFormPower.cs" />
     <Compile Include="SurveyAnswerUser.cs" />
+    <Compile Include="Tutor.cs" />
     <Compile Include="UserTag.cs" />
     <Compile Include="WebAPI_Poco\App_PropertyUser.cs" />
     <Compile Include="_B_ActivityOption.cs" />

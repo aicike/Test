@@ -118,6 +118,7 @@
     <Compile Include="HolidayModel.cs" />
     <Compile Include="KeywordAutoMessageModel.cs" />
     <Compile Include="KeywordModel.cs" />
+    <Compile Include="LifeSkillModel.cs" />
     <Compile Include="LookupFactory.cs" />
     <Compile Include="LookupOptionModel.cs" />
     <Compile Include="Lottery_dishModel.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Push_Getui.cs" />
     <Compile Include="Push_IOS.cs" />
     <Compile Include="QrCodeModel.cs" />
+    <Compile Include="RecipesModel.cs" />
     <Compile Include="RentalHouseModel.cs" />
     <Compile Include="RepairchargesoModel.cs" />
     <Compile Include="RepairInfoModel.cs" />
@@ -180,6 +182,7 @@
     <Compile Include="RoleOptionModel.cs" />
     <Compile Include="TaskModel.cs" />
     <Compile Include="TemporayInstantMesModel.cs" />
+    <Compile Include="TutorModel.cs" />
     <Compile Include="UserDeliveryAddressModel.cs" />
     <Compile Include="UserModel.cs" />
     <Compile Include="UserLoginInfoModel.cs" />

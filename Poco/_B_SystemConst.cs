@@ -52,6 +52,7 @@ namespace Poco
             public const string ThumbnailImage_Width = "1000";
             public const string TimeFomatFull = "yyyy-MM-dd HH:mm:ss";
             public const string WebTitle = "{0} {1} {2}";
+            public const string PlatformFile = "~/File/PlatformFile/";
 
         }
 
@@ -108,6 +109,10 @@ namespace Poco
             public const string Role = "Role";
             public const string SystemUser = "SystemUser";
             public const string SystemUserRole = "SystemUserRole";
+            public const string Tutor = "Tutor";
+            public const string LifeSkill = "LifeSkill";
+            public const string Recipes = "Recipes";
+
 
             //售楼部
             public const string Home = "Home";
@@ -283,7 +288,10 @@ namespace Poco
 
             public const string AboutUSModel = "AboutUSModel";
 
-            
+
+            public const string TutorModel = "TutorModel";
+            public const string LifeSkillModel = "LifeSkillModel";
+            public const string RecipesModel = "RecipesModel";
 
         }
     }

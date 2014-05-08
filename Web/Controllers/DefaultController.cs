@@ -829,5 +829,32 @@ namespace Web.Controllers
         }
         #endregion
 
+        #region---------------生活技巧----------------------
+
+        public ActionResult LifeSkill(int LID)
+        {
+            var LifeSkillModel = Factory.Get<ILifeSkillModel>(SystemConst.IOC_Model.LifeSkillModel);
+            var lifeskill = LifeSkillModel.GetInfo(LID);
+       
+            //更改浏览次数
+            LifeSkillModel.BrowseCntADD(LID);
+            return View(lifeskill);
+        }
+
+        #endregion
+
+        #region---------------每日食谱----------------------
+
+        public ActionResult Recipes(int RID)
+        {
+            var recipesModel = Factory.Get<IRecipesModel>(SystemConst.IOC_Model.RecipesModel);
+            var recipes = recipesModel.GetInfo(RID);
+
+            //更改浏览次数
+            recipesModel.BrowseCntADD(RID);
+            return View(recipes);
+        }
+
+        #endregion
     }
 }

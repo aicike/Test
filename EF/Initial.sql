@@ -18,6 +18,9 @@ INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action
 INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 6,0,'账号管理','System','AccountManage','Index',2,2)
 INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 7,0,'报表管理','System','Report','Index',3,2)
 INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 8,0,'问题反馈','System','Feedback','Index',5,NULL)
+INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 9,0,'每日食谱','System','Recipes','Index',6,NULL)
+INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 10,0,'生活技巧','System','LifeSkill','Index',7,NULL)
+
 --INSERT INTO dbo.SystemUserMenu ( [ID], SystemStatus, NAME,Area,Controller,Action,[Order],ParentMenuID ) VALUES  ( 7,0,'设置','System','SystemSet','Index',6,NULL)
 SET IDENTITY_INSERT [dbo].SystemUserMenu OFF
 
@@ -60,6 +63,16 @@ INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION
 INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,7,'报表设置','Index',1)
 INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,8,'问题反馈','Index',1)
 --INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,7,'设置','Index',1)
+
+INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,9,'列表','Index',1)
+INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,9,'添加','Add',2)
+INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,9,'修改','Edit',3)
+INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,9,'删除','Delete',4)
+
+INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,10,'列表','Index',1)
+INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,10,'添加','Add',2)
+INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,10,'修改','Edit',3)
+INSERT INTO dbo.SystemUserMenuOption (SystemStatus, SystemUserMenuID,Name,ACTION,[Order] ) VALUES  ( 0,10,'删除','Delete',4)
 
 
 -----------------------------SystemUserRole--------------------------

@@ -154,6 +154,8 @@
     <Compile Include="Areas\System\Controllers\AccountMainManageController.cs" />
     <Compile Include="Areas\System\Controllers\AccountManageController.cs" />
     <Compile Include="Areas\System\Controllers\FeedbackController.cs" />
+    <Compile Include="Areas\System\Controllers\LifeSkillController.cs" />
+    <Compile Include="Areas\System\Controllers\RecipesController.cs" />
     <Compile Include="Areas\System\Controllers\ReportController.cs" />
     <Compile Include="Areas\System\Controllers\RoleController.cs" />
     <Compile Include="Areas\System\Controllers\SystemSetController.cs" />
@@ -222,6 +224,7 @@
     <Compile Include="Controllers\VipInfoController.cs" />
     <Compile Include="Controllers\WebRequest_ChatController.cs" />
     <Compile Include="Controllers\WebRequest_OtherController.cs" />
+    <Compile Include="Controllers\WebRequest_PlatformController.cs" />
     <Compile Include="Controllers\WebRequest_ProductController.cs" />
     <Compile Include="Controllers\WebRequest_PropertyController.cs" />
     <Compile Include="Controllers\WebRequest_TaskController.cs" />
@@ -247,6 +250,9 @@
     </Compile>
     <Compile Include="ueditor\net\imageUp_Advertorial.ashx.cs">
       <DependentUpon>imageUp_Advertorial.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ueditor\net\imageUp_Platform.ashx.cs">
+      <DependentUpon>imageUp_Platform.ashx</DependentUpon>
     </Compile>
     <Compile Include="ueditor\net\Uploader_Advertorial.cs" />
     <Content Include="App_Data\ffmpeg.exe" />
@@ -657,6 +663,7 @@
     <Folder Include="File\1\Account\" />
     <Folder Include="File\1\Base\" />
     <Folder Include="File\1\FileLibrary\" />
+    <Folder Include="File\PlatformFile\" />
     <Folder Include="File\Temporary\" />
   </ItemGroup>
   <ItemGroup>
@@ -894,11 +901,18 @@
     <Content Include="Areas\System\Views\Report\Index.cshtml" />
     <Content Include="Areas\System\Views\Feedback\Index.cshtml" />
     <Content Include="Areas\System\Views\Feedback\GetInfo.cshtml" />
+    <Content Include="Areas\System\Views\Recipes\Index.cshtml" />
+    <Content Include="Areas\System\Views\Recipes\Add.cshtml" />
+    <Content Include="Areas\System\Views\Recipes\Edit.cshtml" />
+    <Content Include="Areas\System\Views\LifeSkill\Index.cshtml" />
+    <Content Include="Areas\System\Views\LifeSkill\Add.cshtml" />
+    <Content Include="Areas\System\Views\LifeSkill\Edit.cshtml" />
     <None Include="Download\Property\物业停车费导入模板.xlsx" />
     <None Include="Download\Property\物业用户信息导入模板.xlsx" />
     <None Include="Download\Property\物业费导入模板.xlsx" />
     <None Include="Scripts\nivoSlider\dark\.DS_Store" />
     <Content Include="ueditor\net\imageUp_Advertorial.ashx" />
+    <Content Include="ueditor\net\imageUp_Platform.ashx" />
     <None Include="video-js\font\vjs.eot" />
     <None Include="video-js\font\vjs.ttf" />
     <None Include="video-js\font\vjs.woff" />
@@ -1055,6 +1069,8 @@
     <Content Include="Views\ParkingFee\Index.cshtml" />
     <Content Include="Views\AboutUS\Index.cshtml" />
     <Content Include="Views\Default\AboutUS.cshtml" />
+    <Content Include="Views\Default\LifeSkill.cshtml" />
+    <Content Include="Views\Default\Recipes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
