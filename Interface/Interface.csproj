@@ -74,6 +74,7 @@
     <Compile Include="IKeywordAutoMessageModel.cs" />
     <Compile Include="IKeywordModel.cs" />
     <Compile Include="ILibraryModel.cs" />
+    <Compile Include="ILifeSkillModel.cs" />
     <Compile Include="ILookupOptionModel.cs" />
     <Compile Include="ILottery_dishModel.cs" />
     <Compile Include="IMessageGroupChatModel.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="IPushModel.cs" />
     <Compile Include="IPushMsgDetailModel.cs" />
     <Compile Include="IPushMsgModel.cs" />
+    <Compile Include="IRecipesModel.cs" />
     <Compile Include="IRentalHouseModel.cs" />
     <Compile Include="IRepairchargesoModel.cs" />
     <Compile Include="IRepairInfoModel.cs" />
@@ -111,6 +113,7 @@
     <Compile Include="ISystemUserRoleModel.cs" />
     <Compile Include="ISystemUserRole_SystemUserMenuModel.cs" />
     <Compile Include="ITemporayInstantMesModel.cs" />
+    <Compile Include="ITutorModel.cs" />
     <Compile Include="IUserDeliveryAddressModel.cs" />
     <Compile Include="IUserLoginInfoModel.cs" />
     <Compile Include="IUserModel.cs" />

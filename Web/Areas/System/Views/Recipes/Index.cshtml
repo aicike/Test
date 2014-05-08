@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "每日食谱";
+    Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.Recipes;
+}
+@model PagedList<Poco.Recipes>
+@section head{
+    <script>
+        $(function () {
+
+            $("label[name=labCbFirst]").each(function () {
+                $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
+            });
+        });
+
+        function UPRelease(RID, Recipes) {
+            var Url = '@Url.Action("UpSatausByID", "Recipes")';
+            var release = true;
+            if (Recipes == "True") {
+                release = false;
+            }
+            $.post(Url, { RID: RID, Release: release }, function (result) {
+
+                location.reload();
+
+            });
+        }
+
+        function showInfo(id) {
+            var src = '@Url.Action("Recipes", "Default",new {Area=""})';
+            src = src + "?RID=" + id;
+            $("#iframeShow").attr("src", src);
+            $("#dialogShow").dialog({
+                resizable: false,
+                height: 570,
+                width: 350,
+                modal: true,
+                draggable: false
+            });
+        }
+    </script>
+}
+<div class="title">
+    每日食谱</div>
+<div class="body">
+    <div class="option">@Html.ActionLink("添加", "Add", "Recipes", new { Area = "System", AccountMainID = ViewBag.AccountMainID }, null, true)</div>
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th style="width: 160px">
+                展示图片
+            </th>
+            <th style="width: 230px; word-wrap: break-word; word-break: normal;">
+                食谱标题
+            </th>
+            <th>
+                录入日期
+            </th>
+            <th>
+                状态
+            </th>
+            <th>
+                浏览次数
+            </th>
+            <th style="width: 250px;">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img style="width: 150px; margin-top:5px;  cursor:pointer "  onclick="showInfo(@item.ID)" src="@Url.Content(item.AppShowImagePath ?? "")" />
+                </td>
+                <td style="font-size: 14px" class="operation">
+                    <label name="labCbFirst" title="@item.Depict" onclick="showInfo(@item.ID)" style=" cursor:pointer">
+                        <a>@item.Title</a>
+                    </label>
+                </td>
+                <td>
+                    @item.IssueDate.ToString("yyyy-MM-dd HH:mm")
+                </td>
+                <td class="operation">
+                    @if (item.IsRelease)
+                    {
+                        <label name="labCbFirst" title="点击取消发布" onclick="UPRelease(@item.ID,'True')" style=" cursor:pointer">
+                            <a  >已发布</a>
+                        </label>
+                    }
+                    else
+                    {
+                        <label name="labCbFirst" title="点击发布" onclick="UPRelease(@item.ID,'False')" style=" cursor:pointer">
+                            <a  style="color: Red">未发布</a>
+                        </label>
+                    }
+                </td>
+                <td>
+                    @item.BrowseCnt
+                </td>
+                <td class="operation">
+                    @Html.ActionLink("修改", "Edit", "Recipes", new { HostName = ViewBag.HostName, RID = item.ID }, new { style = "padding-right:10px" }, true)
+                    @Ajax.ActionLink("删除", "Delete", "Recipes", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?！','" + Url.Action("Delete", "Recipes", new { HostName = ViewBag.HostName, RID = item.ID }) + "',null)" }, true)
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
+<div style="clear: both">
+</div>
+<div id="dialogShow" title="预览" style="display: none; padding: 0px">
+    <iframe id="iframeShow" src="#" style="width: 350px; height: 520px; border: none;
+        overflow: auto"></iframe>
+</div>
