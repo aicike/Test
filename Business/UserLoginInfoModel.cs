@@ -309,6 +309,11 @@ namespace Business
         public Result App_Login(Poco.WebAPI_Poco.App_UserLoginInfo app_UserLoginInfo)
         {
             Result result = new Result();
+            if (string.IsNullOrEmpty(app_UserLoginInfo.Phone) || string.IsNullOrEmpty(app_UserLoginInfo.Pwd))
+            {
+                result.Error = "账号或密码错误，登录失败。";
+                return result;
+            }
             var pwd = DESEncrypt.Encrypt(app_UserLoginInfo.Pwd);
             var accountStatus = EnumAccountStatus.Enabled.ToString();
 
@@ -350,7 +355,7 @@ namespace Business
             {
                 var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
                 userLoginInfo = userLoginInfoModel.List().Where(a => (a.Email.Equals(app_UserLoginInfo.Email, StringComparison.CurrentCultureIgnoreCase) == true && a.LoginPwd == pwd) ||
-                    (a.Phone.Equals(app_UserLoginInfo.Phone, StringComparison.CurrentCultureIgnoreCase) == true && a.LoginPwd == pwd)).FirstOrDefault();
+                    (a.Phone.Equals(app_UserLoginInfo.Phone, StringComparison.CurrentCultureIgnoreCase) == true && a.LoginPwd == pwd)&&a.Users.Any(b=>b.AccountMainID==app_UserLoginInfo.AccountMainID)).FirstOrDefault();
                 if (userLoginInfo == null)
                 {
                     result.Error = "账号或密码错误，登录失败。";
@@ -375,15 +380,15 @@ namespace Business
                 if (hasUserTable == false)
                 {
                     //创建ClientInfo
-                    ClientInfo ci=new ClientInfo();
+                    ClientInfo ci = new ClientInfo();
                     int enumClientSystemTypeID = LookupFactory.GetLookupOptionIdByToken((EnumClientSystemType)app_UserLoginInfo.EnumClientSystemType);
                     int enumClientUserTypeID = LookupFactory.GetLookupOptionIdByToken(EnumClientUserType.User);
-                    ci.EnumClientSystemTypeID=enumClientSystemTypeID;
+                    ci.EnumClientSystemTypeID = enumClientSystemTypeID;
                     ci.ClientID = app_UserLoginInfo.ClientID;
-                    ci.SetupTiem=DateTime.Now;
-                    ci.EnumClientUserTypeID=enumClientUserTypeID;
-                    ci.EntityID=user.ID;
-                    result= clientInfoModel.Add(ci);
+                    ci.SetupTiem = DateTime.Now;
+                    ci.EnumClientUserTypeID = enumClientUserTypeID;
+                    ci.EntityID = user.ID;
+                    result = clientInfoModel.Add(ci);
                 }
             }
             App_User appuser = new App_User();
@@ -573,11 +578,27 @@ namespace Business
         /// </summary>
         public bool ExistPhone(int amid, string phone)
         {
+            bool has = false;
             if (!string.IsNullOrEmpty(phone))
             {
-                return List().Any(a => a.Phone.Equals(phone, StringComparison.CurrentCultureIgnoreCase) && a.Users.Any(b => b.AccountMainID == amid));
+                var userLoginInfos = List().Where(a => a.Phone.Equals(phone, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                if (userLoginInfos == null)
+                {
+                    has = false;
+                }
+                else
+                {
+                    foreach (var item in userLoginInfos)
+                    {
+                        if (item.Users.Any(a => a.AccountMainID == amid))
+                        {
+                            has = true;
+                            break;
+                        }
+                    }
+                }
             }
-            return false;
+            return has;
         }
 
         /// <summary>

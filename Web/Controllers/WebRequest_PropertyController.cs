@@ -131,14 +131,15 @@ namespace Web.Controllers
             }
             var ulim = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
             var userLoginInfo = ulim.Get(user.UserLoginInfoID);
-            CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
-            var isOk = model.CheckIsUnique("UserLoginInfo", "Phone", phone, userLoginInfo.ID);
-            if (isOk == false)
-            {
-                result.Error = "该电话已被其他账号使用。";
-                result.HasError = true;
-                return Newtonsoft.Json.JsonConvert.SerializeObject(result);
-            }
+            
+            //CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+            //var isOk = model.CheckIsUnique("UserLoginInfo", "Phone", phone, userLoginInfo.ID);
+            //if (isOk == false)
+            //{
+            //    result.Error = "该电话已被其他账号使用。";
+            //    result.HasError = true;
+            //    return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            //}
             userLoginInfo.Name = userName;
             userLoginInfo.Phone = phone;
             userLoginInfo.LoginPwd = DESEncrypt.Encrypt(pwd);
