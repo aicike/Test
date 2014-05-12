@@ -124,6 +124,7 @@
     <Compile Include="Lottery_dishModel.cs" />
     <Compile Include="Lottery_dish_detailModel.cs" />
     <Compile Include="Lottery_UserModel.cs" />
+    <Compile Include="MerchantModel.cs" />
     <Compile Include="MessageGroupChatModel.cs" />
     <Compile Include="MessageModel.cs" />
     <Compile Include="MicroSiteSetInfoModel.cs" />

@@ -83,6 +83,8 @@ namespace Poco
 
             public const string LoginAccount = "LoginAccount";
 
+            public const string LoginMerchant = "LoginMerchant";
+
             //public const string LoginAccountOrganization = "LoginAccountOrganization";
 
 
@@ -292,6 +294,10 @@ namespace Poco
             public const string TutorModel = "TutorModel";
             public const string LifeSkillModel = "LifeSkillModel";
             public const string RecipesModel = "RecipesModel";
+
+            public const string MerchantModel = "MerchantModel";
+            
+
 
         }
     }

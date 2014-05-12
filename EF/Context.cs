@@ -38,6 +38,9 @@ namespace EF
         public DbSet<Property_User> Property_User { get; set; }
         public DbSet<Recipes> Recipes { get; set; }
         public DbSet<LifeSkill> LifeSkill { get; set; }
+        public DbSet<Merchant> Merchant { get; set; }
+        
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

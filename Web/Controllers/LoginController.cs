@@ -82,6 +82,11 @@ namespace Web.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 登陆
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult SystemLogin(SystemUser user)
         {
