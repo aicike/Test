@@ -1,0 +1,57 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section head{
+    @RenderSection("head", required: false)
+    <script type="text/javascript">
+
+        //展示请稍后信息提示
+        function ShowLayout_Later(Title, Text) {
+            $("#Laypit_LaterText").text(Text);
+            $("#Layout_Later").dialog({
+                resizable: false,
+                height: 100,
+                width: 260,
+                modal: true,
+                draggable: false,
+                title: Title,
+                position: "center"
+            });
+            $(".ui-dialog-titlebar").hide();
+        }
+        //关闭请稍后信息提示
+        function CloseLayout_Later() {
+            $("#Layout_Later").dialog("close");
+            $(".ui-dialog-titlebar").show();
+        }
+      
+    </script>
+}
+@{
+    var account = Session[Poco.SystemConst.Session.LoginAccount] as Poco.Account;
+}
+@Html.Partial("_head")
+<div class="main">
+    <div style="width: 190px; float: left;">
+        @Html.Partial("Menu")
+    </div>
+    <div style="width: 810px; float: left">
+        @RenderBody()
+    </div>
+    <div style="clear: both">
+    </div>
+</div>
+<div id="Layout_Later" title="" style="display: none; background-color: #fafafa">
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 5px;">
+        <tr id="trImg" align="center" style="">
+            <td>
+                <img src="/Images/ImgSH2.gif" />
+            </td>
+        </tr>
+        <tr align="center">
+            <td>
+                <span style="color: #606060; font-weight: bold" id="Laypit_LaterText"></span>
+            </td>
+        </tr>
+    </table>
+</div>
