@@ -8,6 +8,7 @@ using System.Data;
 using Injection;
 using Poco;
 using Interface;
+using Common;
 
 namespace Web.Controllers
 {
@@ -50,10 +51,10 @@ namespace Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult MerchantLogin(Merchant merchant)
+        public ActionResult MerchantLogin(string phone_email, string password)
         {
             var merchantModel = Factory.Get<IMerchantModel>(SystemConst.IOC_Model.MerchantModel);
-            var result = merchantModel.Login(merchant.Phone, merchant.LoginPwdPage);
+            var result = merchantModel.Login(phone_email, password);
             if (result.HasError)
             {
                 return JavaScript("LandWaitFor('login','WaitImg',2);" + AlertJS_NoTag(new Dialog(result.Error)));
@@ -65,14 +66,42 @@ namespace Web.Controllers
         /// <summary>
         /// 商户注册界面
         /// </summary>
+        /// Iserror  0 正常 1错误
         /// <returns></returns>
-        public ActionResult Register(string BackUrl)
+        public ActionResult Register(int? Iserror,string Error)
         {
-
+            if (Iserror.HasValue)
+            {
+                ViewBag.IsError = Iserror.Value;
+                ViewBag.Error = Error;
+            }
+            else
+            {
+                ViewBag.IsError = 0;
+            }
 
             return View();
         }
-
+        /// <summary>
+        /// 商户注册界面
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Register(Merchant merchant)
+        {
+            merchant.LogoImagePath = "~/Images/logo.png";
+            merchant.LogoShow = "~/Images/logo.png";
+            merchant.LoginPwd = DESEncrypt.Encrypt(merchant.LoginPwd);
+            merchant.LoginPwdPage = DESEncrypt.Encrypt(merchant.LoginPwdPage);
+            
+            var merchantModel = Factory.Get<IMerchantModel>(SystemConst.IOC_Model.MerchantModel);
+            var result = merchantModel.Add(merchant);
+            if (result.HasError)
+            {
+                return RedirectToAction("Register", "MerchantLand", new { Iserror = 1, Error = result.Error });
+            }
+            return View();
+        }
 
     }
 }

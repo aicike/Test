@@ -151,6 +151,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Merchant\Controllers\MerchantHomeController.cs" />
     <Compile Include="Areas\Merchant\MerchantAreaRegistration.cs" />
     <Compile Include="Areas\System\Controllers\AccountMainManageController.cs" />
     <Compile Include="Areas\System\Controllers\AccountManageController.cs" />
@@ -661,7 +662,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Merchant\Controllers\" />
     <Folder Include="Areas\Merchant\Models\" />
     <Folder Include="Areas\Merchant\Views\Shared\" />
     <Folder Include="Areas\System\Models\" />
@@ -1081,6 +1081,8 @@
     <Content Include="Views\Default\Recipes.cshtml" />
     <Content Include="Views\MerchantLand\Index.cshtml" />
     <Content Include="Views\MerchantLand\Register.cshtml" />
+    <Content Include="Views\Shared\_MerchantHead.cshtml" />
+    <Content Include="Views\Shared\_LayoutMerchant.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />
