@@ -151,6 +151,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Merchant\MerchantAreaRegistration.cs" />
     <Compile Include="Areas\System\Controllers\AccountMainManageController.cs" />
     <Compile Include="Areas\System\Controllers\AccountManageController.cs" />
     <Compile Include="Areas\System\Controllers\FeedbackController.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Controllers\AppWaitImgController.cs" />
     <Compile Include="Controllers\AutoMessageReplyController.cs" />
     <Compile Include="Controllers\BaseController\BaseController.cs" />
+    <Compile Include="Controllers\BaseController\ManageMerchantController.cs" />
     <Compile Include="Controllers\BasisSetController.cs" />
     <Compile Include="Controllers\CardInfoController.cs" />
     <Compile Include="Controllers\CharacterController.cs" />
@@ -199,6 +201,7 @@
     <Compile Include="Controllers\BaseController\ManageAccountController.cs" />
     <Compile Include="Controllers\BaseController\ManageSystemUserController.cs" />
     <Compile Include="Controllers\LotteryDishController.cs" />
+    <Compile Include="Controllers\MerchantLandController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\LibraryTextController.cs" />
     <Compile Include="Controllers\MyTaskController.cs" />
@@ -271,6 +274,7 @@
     <Content Include="Content\userStyle.css" />
     <Content Include="File\LoginPageShow\Client\363609.jpg" />
     <Content Include="File\LoginPageShow\Default\Default.jpg" />
+    <Content Include="File\LoginPageShow\Merchant\363609.jpg" />
     <Content Include="File\LoginPageShow\System\347327.jpg" />
     <Content Include="File\LoginPageShow\System\5.jpg" />
     <Content Include="File\LoginPageShow\System\6.jpg" />
@@ -657,6 +661,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Merchant\Controllers\" />
+    <Folder Include="Areas\Merchant\Models\" />
+    <Folder Include="Areas\Merchant\Views\Shared\" />
     <Folder Include="Areas\System\Models\" />
     <Folder Include="Areas\System\Views\Shared\" />
     <Folder Include="File\1.Message\" />
@@ -907,6 +914,7 @@
     <Content Include="Areas\System\Views\LifeSkill\Index.cshtml" />
     <Content Include="Areas\System\Views\LifeSkill\Add.cshtml" />
     <Content Include="Areas\System\Views\LifeSkill\Edit.cshtml" />
+    <Content Include="Areas\Merchant\Views\Web.config" />
     <None Include="Download\Property\物业停车费导入模板.xlsx" />
     <None Include="Download\Property\物业用户信息导入模板.xlsx" />
     <None Include="Download\Property\物业费导入模板.xlsx" />
@@ -1071,6 +1079,8 @@
     <Content Include="Views\Default\AboutUS.cshtml" />
     <Content Include="Views\Default\LifeSkill.cshtml" />
     <Content Include="Views\Default\Recipes.cshtml" />
+    <Content Include="Views\MerchantLand\Index.cshtml" />
+    <Content Include="Views\MerchantLand\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

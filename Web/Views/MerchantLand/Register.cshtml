@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "商户注册-ImTimely";
+    Layout = "~/Views/Shared/_LayoutDefault.cshtml";
+}
+@model Poco.Merchant
+<div class="main">
+    <div class="title">
+        ImTimely - 商户注册
+    </div>
+    <div class="body">
+        <fieldset style="border: 1px solid #E7E7E7;">
+            <legend>Logo</legend>
+            <table style="line-height: 15px">
+                <tr>
+                    <td style="width: 365px">
+                        <div class="middle-out">
+                            <div class="middle-in" style="margin: auto 0px">
+                                <img id="imgSel"  src="@Url.Content("~/Images/SelImg.jpg")"   style="max-height:320px; max-width:320px;" />
+                            </div>
+                        </div>
+                    </td>
+                    <td valign="top">
+                        <div style="width: 120px; height: 120px; overflow: hidden;">
+                            <img id="imgLogo" src="@Url.Content("/Images/default_Avatar.png")" style="width:120px; height:120px"/>
+                        </div>
+                        <span style="font-size: 12px; color: #979797">(120*120)</span>
+                        <div style="width: 80px; height: 80px; overflow: hidden; margin-top: 17px">
+                            <img id="imgLogo2" src="@Url.Content("/Images/default_Avatar.png")" style="width:80px; height:80px"/>
+                        </div>
+                        <span style="font-size: 12px; color: #979797">(80*80)</span>
+                        <div style="width: 32px; height: 32px; overflow: hidden; margin-top: 17px">
+                            <img id="imgLogo3" src="@Url.Content("/Images/default_Avatar.png")" style="width:32px; height:32px"/>
+                        </div>
+                        <span style="font-size: 12px; color: #979797">(32*32)</span>
+                        <div style="color: Red; font-size: 14px">
+                            提示：请上传小于5MB的图片
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input id="file_upload" name="file_upload" type="file" multiple="false" />
+                        @Html.HiddenFor(a => a.LogoImagePath)
+                        @Html.ValidationMessageFor(a => a.LogoImagePath)
+                        <div style="display: none">
+                            X1
+                            <input type="text" size="4" id="x1" name="x1" value="0" />
+                            Y1
+                            <input type="text" size="4" id="y1" name="y1" value="0" />
+                            W
+                            <input type="text" size="4" id="w" name="w" value="0" />
+                            H
+                            <input type="text" size="4" id="h" name="h" value="0" />
+                            TW
+                            <input type="text" size="4" id="tw" name="tw" value="0" />
+                            TH
+                            <input type="text" size="4" id="th" name="th" value="0" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>账号信息</legend>
+            <table>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 商户名称
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Name)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="Identification">*</span> 电话（登陆用）
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.Phone)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Phone)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="Identification">*</span> 邮箱
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.Email)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Email)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="Identification">*</span> 电话（登陆用）
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.Phone)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Phone)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="Identification">*</span> 电话（登陆用）
+                    </td>
+                    <td>@Html.TextBoxFor(a => a.Phone)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Phone)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+</div>

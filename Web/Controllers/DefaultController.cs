@@ -831,13 +831,14 @@ namespace Web.Controllers
 
         #region---------------生活技巧----------------------
 
-        public ActionResult LifeSkill(int LID)
+        public ActionResult LifeSkill(string LID)
         {
+            var id = LID.TokenDecrypt();
             var LifeSkillModel = Factory.Get<ILifeSkillModel>(SystemConst.IOC_Model.LifeSkillModel);
-            var lifeskill = LifeSkillModel.GetInfo(LID);
+            var lifeskill = LifeSkillModel.GetInfo(id);
        
             //更改浏览次数
-            LifeSkillModel.BrowseCntADD(LID);
+            LifeSkillModel.BrowseCntADD(id);
             return View(lifeskill);
         }
 
@@ -845,13 +846,14 @@ namespace Web.Controllers
 
         #region---------------每日食谱----------------------
 
-        public ActionResult Recipes(int RID)
+        public ActionResult Recipes(string  RID)
         {
+            var id = RID.TokenDecrypt();
             var recipesModel = Factory.Get<IRecipesModel>(SystemConst.IOC_Model.RecipesModel);
-            var recipes = recipesModel.GetInfo(RID);
+            var recipes = recipesModel.GetInfo(id);
 
             //更改浏览次数
-            recipesModel.BrowseCntADD(RID);
+            recipesModel.BrowseCntADD(id);
             return View(recipes);
         }
 
