@@ -15,6 +15,8 @@ namespace Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("{resource}.apk/{*pathInfo}");
+            routes.IgnoreRoute("{resource}.xml/{*pathInfo}");
+
 
             //routes.MapRoute(
             //    name: "User",

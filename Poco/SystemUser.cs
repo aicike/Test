@@ -69,5 +69,7 @@ namespace Poco
         public virtual SystemUserRole SystemUserRole { get; set; }
 
         public virtual ICollection<AccountMain> AccountMains { get; set; }
+
+        public virtual ICollection<M_TakeOut> M_TakeOuts { get; set; }
     }
 }

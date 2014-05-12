@@ -48,5 +48,7 @@ namespace Poco
         [StringLength(20, MinimumLength = 6, ErrorMessage = "长度大于6小于20")]
         [RegularExpression("^[a-zA-Z0-9_\u4E00-\u9FA5]*$", ErrorMessage = "请输入有效的密码")]
         public string LoginPwdPage { get; set; }
+
+        public virtual ICollection<M_TakeOut> M_TakeOuts { get; set; }
     }
 }
