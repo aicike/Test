@@ -10,6 +10,7 @@ namespace Poco
     /// <summary>
     /// 商户
     /// </summary>
+    [Serializable]
     public class Merchant : IBaseEntity
     {
         public int ID { get; set; }
@@ -52,7 +53,6 @@ namespace Poco
         [Display(Name = "密码")]
         [Required(ErrorMessage = "请输入密码")]
         [StringLength(20, MinimumLength = 6, ErrorMessage = "长度大于6小于20")]
-        [RegularExpression("^[a-zA-Z0-9_\u4E00-\u9FA5]*$", ErrorMessage = "请输入有效的密码")]
         [Compare("LoginPwd", ErrorMessage = "密码不一致")]
         public string LoginPwdPage { get; set; }
 

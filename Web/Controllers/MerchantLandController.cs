@@ -59,7 +59,7 @@ namespace Web.Controllers
             {
                 return JavaScript("LandWaitFor('login','WaitImg',2);" + AlertJS_NoTag(new Dialog(result.Error)));
             }
-            var url = Url.RouteUrl("Default", new { action = "Index", controller = "SystemUserHome" });
+            var url = Url.RouteUrl("Merchant", new { action = "Index", controller = "MerchantHome" });
             return JavaScript("window.location.href='" + url + "'");
         }
 
@@ -111,7 +111,7 @@ namespace Web.Controllers
             entity.Phone = merchant.Phone;
             entity.Address = merchant.Address;
             Session[SystemConst.Session.LoginMerchant] = entity;
-            return RedirectToAction("Index", "MerchantHome");
+            return RedirectToAction("Index", "MerchantHome", new { Area = "Merchant" });
         }
 
     }
