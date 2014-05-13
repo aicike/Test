@@ -915,6 +915,7 @@
     <Content Include="Areas\System\Views\LifeSkill\Add.cshtml" />
     <Content Include="Areas\System\Views\LifeSkill\Edit.cshtml" />
     <Content Include="Areas\Merchant\Views\Web.config" />
+    <Content Include="Areas\Merchant\Views\MerchantHome\Index.cshtml" />
     <None Include="Download\Property\物业停车费导入模板.xlsx" />
     <None Include="Download\Property\物业用户信息导入模板.xlsx" />
     <None Include="Download\Property\物业费导入模板.xlsx" />

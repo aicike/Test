@@ -100,7 +100,7 @@ namespace Web.Controllers
             {
                 return RedirectToAction("Register", "MerchantLand", new { Iserror = 1, Error = result.Error });
             }
-            return View();
+            return RedirectToAction("Index", "MerchantHome");
         }
 
     }
