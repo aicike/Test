@@ -10,7 +10,7 @@ namespace Poco.MerchantPoco
     /// <summary>
     /// 周边外卖主表
     /// </summary>
-    public class M_TakeOut:IBaseEntity
+    public class M_TakeOut : IBaseEntity
     {
         public int ID { get; set; }
 
@@ -20,7 +20,7 @@ namespace Poco.MerchantPoco
 
         public virtual Merchant Merchant { get; set; }
 
-        public int SystemUserID { get; set; }
+        public int? SystemUserID { get; set; }
 
         public virtual SystemUser SystemUser { get; set; }
 
@@ -36,6 +36,11 @@ namespace Poco.MerchantPoco
         [Required(ErrorMessage = "请输入送餐费")]
         [RegularExpression(@"^(\d+(.\d{1,2})|\d+)$", ErrorMessage = "请输入有效的金额")]
         public decimal TakeOutPrice { get; set; }
+
+        [Display(Name = "订餐电话")]
+        [Required(ErrorMessage = "请输入订餐电话")]
+        [StringLength(50, ErrorMessage = "长度小于50")]
+        public string Phone { get; set; }
 
         /// <summary>
         /// 是否发布商品
@@ -55,6 +60,8 @@ namespace Poco.MerchantPoco
         /// <summary>
         /// 发布时间（审核通过时间）
         /// </summary>
-        public DateTime PublishDate { get; set; }
+        public DateTime? PublishDate { get; set; }
+
+        public virtual ICollection<M_CommunityMapping> M_CommunityMappings { get; set; }
     }
 }

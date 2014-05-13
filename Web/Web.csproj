@@ -151,6 +151,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Merchant\Controllers\MerchantHomeController.cs" />
     <Compile Include="Areas\Merchant\Controllers\M_TakeOutController.cs" />
     <Compile Include="Areas\Merchant\MerchantAreaRegistration.cs" />
     <Compile Include="Areas\System\Controllers\AccountMainManageController.cs" />
@@ -1072,6 +1073,7 @@
     <Content Include="Areas\Merchant\Views\Web.config" />
     <Content Include="Areas\Merchant\Views\MerchantHome\Index.cshtml" />
     <Content Include="Areas\Merchant\Views\M_TakeOut\Index.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_TakeOut\Add.cshtml" />
     <None Include="Download\Property\物业停车费导入模板.xlsx" />
     <None Include="Download\Property\物业用户信息导入模板.xlsx" />
     <None Include="Download\Property\物业费导入模板.xlsx" />
@@ -1249,6 +1251,7 @@
     <Content Include="Views\MerchantLand\Register.cshtml" />
     <Content Include="Views\Shared\_LayoutMerchant.cshtml" />
     <Content Include="Views\Shared\_MerchantHead.cshtml" />
+    <Content Include="Views\Shared\CommunitySelect.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

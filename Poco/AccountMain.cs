@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using System.Text.RegularExpressions;
+using Poco.MerchantPoco;
 
 namespace Poco
 {
@@ -256,8 +257,8 @@ namespace Poco
         public virtual ICollection<Property_House> Property_Houses { get; set; }
 
         public virtual ICollection<Property_User> Property_Users { get; set; }
-		
-		public virtual ICollection<PropertyFeeInfo> PropertyFeeInfo { get; set; }
+
+        public virtual ICollection<PropertyFeeInfo> PropertyFeeInfo { get; set; }
 
 
         public virtual ICollection<RepairInfo> RepairInfo { get; set; }
@@ -272,7 +273,9 @@ namespace Poco
 
 
         public virtual ICollection<AboutUS> AboutUS { get; set; }
-        
-        
+
+        public virtual ICollection<M_CommunityMapping> M_CommunityMappings { get; set; }
+
+
     }
 }

@@ -85,6 +85,7 @@
     <Compile Include="Enum\EnumComplaintStatus.cs" />
     <Compile Include="Enum\EnumExpressStatus.cs" />
     <Compile Include="Enum\EnumLotteryStatus.cs" />
+    <Compile Include="Enum\EnumMerchantMenu.cs" />
     <Compile Include="Enum\EnumProductDiscountType.cs" />
     <Compile Include="Enum\EnumPropertyOrderType.cs" />
     <Compile Include="Enum\EnumRepairScore.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Lottery_dish_detail.cs" />
     <Compile Include="Lottery_User.cs" />
     <Compile Include="Merchant.cs" />
+    <Compile Include="MerchantPoco\M_CommunityMapping.cs" />
     <Compile Include="MerchantPoco\M_TakeOutDetail.cs" />
     <Compile Include="MicroSiteSetInfo.cs" />
     <Compile Include="MerchantPoco\M_TakeOut.cs" />

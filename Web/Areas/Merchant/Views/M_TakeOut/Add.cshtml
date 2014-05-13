@@ -1,0 +1,60 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutMerchant.cshtml";
+}
+@section head{
+    <script type="text/javascript">
+    </script>
+}
+@model Poco.MerchantPoco.M_TakeOut
+<div class="title">
+    @ViewBag.Title
+</div>
+<div class="body">
+    @using (Ajax.BeginForm("Add", "M_TakeOut", new { Area = "Merchant" }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {
+        <fieldset>
+            <legend>基本信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 标题
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Title)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Title)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 送餐费(元)
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.TakeOutPrice)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.TakeOutPrice) (0元表示免送餐费)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 订餐电话
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Phone)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Phone)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 绑定小区
+                    </td>
+                    <td class="tdField" colspan="2">
+                        @Html.Partial("CommunitySelect")
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+     
+        <div class="action">
+            <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }
+</div>

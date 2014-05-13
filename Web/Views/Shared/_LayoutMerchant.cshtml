@@ -27,9 +27,6 @@
       
     </script>
 }
-@{
-    var account = Session[Poco.SystemConst.Session.LoginAccount] as Poco.Account;
-}
 @Html.Partial("_MerchantHead")
 <div class="main">
     <div style="width: 190px; float: left;">
@@ -40,11 +37,11 @@
                 <ul class="submenu">
                     @if (ViewBag.Menu == 1)
                     {
-                        <li class="select"><a href="">周边外卖 </a></li>
+                        <li class="select"><a href="@(Url.Action("Index", "M_TakeOut", new { Area = "Merchant" }, null))">周边外卖</a></li>
                     }
                     else
                     {
-                        <li><a href="">周边外卖 </a></li>
+                        <li><a href="@(Url.Action("Index", "M_TakeOut", new { Area = "Merchant" }, null))">周边外卖</a></li>
                     }
                     @if (ViewBag.Menu == 2)
                     {

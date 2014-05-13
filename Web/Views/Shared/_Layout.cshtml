@@ -47,11 +47,12 @@
 </head>
 <body>
     @RenderBody()
-    <div style="background-color: #727171; height: 80px;min-width: 960px;">
+    <div style="background-color: #727171; height: 80px; min-width: 960px;">
         <div style="width: 960px; margin: 0px auto 0px auto;">
             <div class="bottom">
-                <a target="_blank" href="@Url.Action("ContactUs", "Default", new { v = "aboutus" ,Area="" })">关于 ImTimely</a>&nbsp;|&nbsp;<a target="_blank" href="@Url.Action("ContactUs", "Default", new { v = "agreement", Area = "" })">服务协议</a>&nbsp;|&nbsp;<a target="_blank" href="@Url.Action("ContactUs", "Default", new { Area=""})">联系我们</a>&nbsp;|&nbsp;<span>Copyright
-                    © 2012-2013 ImTimely. All Rights Reserved.</span>
+                <a target="_blank" href="@Url.Action("ContactUs", "Default", new { v = "aboutus", Area = "" })">
+                    关于 ImTimely</a>&nbsp;|&nbsp;<a target="_blank" href="@Url.Action("ContactUs", "Default", new { v = "agreement", Area = "" })">服务协议</a>&nbsp;|&nbsp;<a target="_blank" href="@Url.Action("ContactUs", "Default", new { Area = "" })">联系我们</a>&nbsp;|&nbsp;<span>Copyright
+                        © 2012-2013 ImTimely. All Rights Reserved.</span>
             </div>
         </div>
     </div>
@@ -60,7 +61,9 @@
     <div id="alert">
     </div>
     <div id="jmessage" style="display: none;">
-	</div>
-
+    </div>
+    <!-- WPA Button Begin -->
+    <script charset="utf-8" type="text/javascript" src="http://wpa.b.qq.com/cgi/wpa.php?key=XzgwMDA0NjI2M18xMzg1ODdfODAwMDQ2MjYzXw"></script>
+    <!-- WPA Button End -->
 </body>
 </html>

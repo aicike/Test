@@ -136,8 +136,8 @@
   <object id="MerchantModel" type="Business.MerchantModel" parent="EFModel" singleton="false"></object>
 
 
-  <object id="M_TakeOutModel" type="Business.M_TakeOutModel" parent="EFModel" singleton="false"></object>
-  <object id="M_TakeOutDetailModel" type="Business.M_TakeOutDetailModel" parent="EFModel" singleton="false"></object>
+  <object id="M_TakeOutModel" type="Business.MerchantBusiness.M_TakeOutModel" parent="EFModel" singleton="false"></object>
+  <object id="M_TakeOutDetailModel" type="Business.MerchantBusiness.M_TakeOutDetailModel" parent="EFModel" singleton="false"></object>
 
   
 
