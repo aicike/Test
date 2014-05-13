@@ -8,5 +8,6 @@ namespace Interface.MerchantInterface
 {
     public interface IM_TakeOutModel : IBaseModel<M_TakeOut>
     {
+        IQueryable<M_TakeOut> ListByMerchantID(int merchantID);
     }
 }

@@ -296,6 +296,9 @@ namespace Poco
             public const string RecipesModel = "RecipesModel";
 
             public const string MerchantModel = "MerchantModel";
+
+            public const string M_TakeOutModel = "M_TakeOutModel";
+            public const string M_TakeOutDetailModel = "M_TakeOutDetailModel";
             
 
 

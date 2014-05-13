@@ -77,120 +77,122 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutUSModel.cs" />
-    <Compile Include="AccountMainGuideModel.cs" />
-    <Compile Include="AccountMainHouseInfoDetailModel.cs" />
-    <Compile Include="AccountMainHouseInfoModel.cs" />
-    <Compile Include="AccountMainHousesModel.cs" />
-    <Compile Include="AccountMainHouseTypeModel.cs" />
-    <Compile Include="AccountMainModel.cs" />
-    <Compile Include="AccountMain_ServiceModel.cs" />
-    <Compile Include="AccountModel.cs" />
-    <Compile Include="AccountRoleModel.cs" />
-    <Compile Include="Account_UserModel.cs" />
-    <Compile Include="ActivityInfoModel.cs" />
-    <Compile Include="ActivityInfoParticipatorModel.cs" />
-    <Compile Include="ActivityInfoSignInModel.cs" />
-    <Compile Include="AppAdvertorialBrowseModel.cs" />
-    <Compile Include="AppAdvertorialModel.cs" />
-    <Compile Include="AppAdvertorialOperationModel.cs" />
-    <Compile Include="AppWaitImgModel.cs" />
-    <Compile Include="App_AutoMessageReplyContentModel.cs" />
-    <Compile Include="AutoMessage_ReplyModel.cs">
+    <Compile Include="SellBusiness\AboutUSModel.cs" />
+    <Compile Include="SellBusiness\AccountMainGuideModel.cs" />
+    <Compile Include="SellBusiness\AccountMainHouseInfoDetailModel.cs" />
+    <Compile Include="SellBusiness\AccountMainHouseInfoModel.cs" />
+    <Compile Include="SellBusiness\AccountMainHousesModel.cs" />
+    <Compile Include="SellBusiness\AccountMainHouseTypeModel.cs" />
+    <Compile Include="SellBusiness\AccountMainModel.cs" />
+    <Compile Include="SellBusiness\AccountMain_ServiceModel.cs" />
+    <Compile Include="SellBusiness\AccountModel.cs" />
+    <Compile Include="SellBusiness\AccountRoleModel.cs" />
+    <Compile Include="SellBusiness\Account_UserModel.cs" />
+    <Compile Include="SellBusiness\ActivityInfoModel.cs" />
+    <Compile Include="SellBusiness\ActivityInfoParticipatorModel.cs" />
+    <Compile Include="SellBusiness\ActivityInfoSignInModel.cs" />
+    <Compile Include="SellBusiness\AppAdvertorialBrowseModel.cs" />
+    <Compile Include="SellBusiness\AppAdvertorialModel.cs" />
+    <Compile Include="SellBusiness\AppAdvertorialOperationModel.cs" />
+    <Compile Include="SellBusiness\AppWaitImgModel.cs" />
+    <Compile Include="SellBusiness\App_AutoMessageReplyContentModel.cs" />
+    <Compile Include="SellBusiness\AutoMessage_ReplyModel.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AutoMessage_UserModel.cs" />
-    <Compile Include="CardInfoModel.cs" />
-    <Compile Include="CardPrefixModel.cs" />
-    <Compile Include="ClassifyModel.cs" />
-    <Compile Include="CommonModel.cs" />
-    <Compile Include="BaseModel.cs" />
-    <Compile Include="CityModel.cs" />
-    <Compile Include="ComplaintModel.cs" />
-    <Compile Include="ComplaintReplyModel.cs" />
-    <Compile Include="ConversationDetailedModel.cs" />
-    <Compile Include="ConversationModel.cs" />
-    <Compile Include="DistrictModel.cs" />
-    <Compile Include="EFModel.cs" />
-    <Compile Include="ExpandMethod.cs" />
-    <Compile Include="ExpressCollectionModel.cs" />
-    <Compile Include="FeedbackModel.cs" />
-    <Compile Include="HolidayModel.cs" />
-    <Compile Include="KeywordAutoMessageModel.cs" />
-    <Compile Include="KeywordModel.cs" />
-    <Compile Include="LifeSkillModel.cs" />
-    <Compile Include="LookupFactory.cs" />
-    <Compile Include="LookupOptionModel.cs" />
-    <Compile Include="Lottery_dishModel.cs" />
-    <Compile Include="Lottery_dish_detailModel.cs" />
-    <Compile Include="Lottery_UserModel.cs" />
-    <Compile Include="MerchantModel.cs" />
-    <Compile Include="MessageGroupChatModel.cs" />
-    <Compile Include="MessageModel.cs" />
-    <Compile Include="MicroSiteSetInfoModel.cs" />
-    <Compile Include="OrderDetailModel.cs" />
-    <Compile Include="OrderMIntermediateModel.cs" />
-    <Compile Include="OrderModel.cs" />
-    <Compile Include="OrderMTypeModel.cs" />
-    <Compile Include="PanoramaModel.cs" />
-    <Compile Include="ParkingFeeModel.cs" />
-    <Compile Include="PendingMessagesModel.cs" />
-    <Compile Include="ProductImgModel.cs" />
-    <Compile Include="ProductModel.cs" />
+    <Compile Include="SellBusiness\AutoMessage_UserModel.cs" />
+    <Compile Include="SellBusiness\CardInfoModel.cs" />
+    <Compile Include="SellBusiness\CardPrefixModel.cs" />
+    <Compile Include="SellBusiness\ClassifyModel.cs" />
+    <Compile Include="SystemBusiness\CommonModel.cs" />
+    <Compile Include="SystemBusiness\BaseModel.cs" />
+    <Compile Include="SystemBusiness\CityModel.cs" />
+    <Compile Include="SellBusiness\ComplaintModel.cs" />
+    <Compile Include="SellBusiness\ComplaintReplyModel.cs" />
+    <Compile Include="SellBusiness\ConversationDetailedModel.cs" />
+    <Compile Include="SellBusiness\ConversationModel.cs" />
+    <Compile Include="SystemBusiness\DistrictModel.cs" />
+    <Compile Include="SystemBusiness\EFModel.cs" />
+    <Compile Include="SellBusiness\ExpandMethod.cs" />
+    <Compile Include="SellBusiness\ExpressCollectionModel.cs" />
+    <Compile Include="SellBusiness\FeedbackModel.cs" />
+    <Compile Include="SellBusiness\HolidayModel.cs" />
+    <Compile Include="SellBusiness\KeywordAutoMessageModel.cs" />
+    <Compile Include="SellBusiness\KeywordModel.cs" />
+    <Compile Include="SellBusiness\LifeSkillModel.cs" />
+    <Compile Include="SystemBusiness\LookupFactory.cs" />
+    <Compile Include="SystemBusiness\LookupOptionModel.cs" />
+    <Compile Include="SellBusiness\Lottery_dishModel.cs" />
+    <Compile Include="SellBusiness\Lottery_dish_detailModel.cs" />
+    <Compile Include="SellBusiness\Lottery_UserModel.cs" />
+    <Compile Include="MerchantBusiness\M_TakeOutDetailModel.cs" />
+    <Compile Include="MerchantBusiness\M_TakeOutModel.cs" />
+    <Compile Include="SellBusiness\MerchantModel.cs" />
+    <Compile Include="SellBusiness\MessageGroupChatModel.cs" />
+    <Compile Include="SellBusiness\MessageModel.cs" />
+    <Compile Include="SellBusiness\MicroSiteSetInfoModel.cs" />
+    <Compile Include="SellBusiness\OrderDetailModel.cs" />
+    <Compile Include="SellBusiness\OrderMIntermediateModel.cs" />
+    <Compile Include="SellBusiness\OrderModel.cs" />
+    <Compile Include="SellBusiness\OrderMTypeModel.cs" />
+    <Compile Include="SellBusiness\PanoramaModel.cs" />
+    <Compile Include="SellBusiness\ParkingFeeModel.cs" />
+    <Compile Include="SellBusiness\PendingMessagesModel.cs" />
+    <Compile Include="SellBusiness\ProductImgModel.cs" />
+    <Compile Include="SellBusiness\ProductModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PropertyOrderDetailModel.cs" />
-    <Compile Include="PropertyOrderModel.cs" />
-    <Compile Include="Property_HouseModel.cs" />
-    <Compile Include="Property_UserModel.cs" />
-    <Compile Include="PropertyFeeInfoModel.cs" />
-    <Compile Include="ProvinceModel.cs" />
-    <Compile Include="PushModel.cs" />
-    <Compile Include="PushMsgDetailModel.cs" />
-    <Compile Include="PushMsgModel.cs" />
-    <Compile Include="Push_Getui.cs" />
-    <Compile Include="Push_IOS.cs" />
-    <Compile Include="QrCodeModel.cs" />
-    <Compile Include="RecipesModel.cs" />
-    <Compile Include="RentalHouseModel.cs" />
-    <Compile Include="RepairchargesoModel.cs" />
-    <Compile Include="RepairInfoModel.cs" />
-    <Compile Include="RepairOperationModel.cs" />
-    <Compile Include="ReportFormPowerModel.cs" />
-    <Compile Include="RoleModel.cs" />
+    <Compile Include="SellBusiness\PropertyOrderDetailModel.cs" />
+    <Compile Include="SellBusiness\PropertyOrderModel.cs" />
+    <Compile Include="SellBusiness\Property_HouseModel.cs" />
+    <Compile Include="SellBusiness\Property_UserModel.cs" />
+    <Compile Include="SellBusiness\PropertyFeeInfoModel.cs" />
+    <Compile Include="SystemBusiness\ProvinceModel.cs" />
+    <Compile Include="SystemBusiness\PushModel.cs" />
+    <Compile Include="SystemBusiness\PushMsgDetailModel.cs" />
+    <Compile Include="SystemBusiness\PushMsgModel.cs" />
+    <Compile Include="SystemBusiness\Push_Getui.cs" />
+    <Compile Include="SystemBusiness\Push_IOS.cs" />
+    <Compile Include="SellBusiness\QrCodeModel.cs" />
+    <Compile Include="SellBusiness\RecipesModel.cs" />
+    <Compile Include="SellBusiness\RentalHouseModel.cs" />
+    <Compile Include="SellBusiness\RepairchargesoModel.cs" />
+    <Compile Include="SellBusiness\RepairInfoModel.cs" />
+    <Compile Include="SellBusiness\RepairOperationModel.cs" />
+    <Compile Include="SellBusiness\ReportFormPowerModel.cs" />
+    <Compile Include="SystemBusiness\RoleModel.cs" />
     <Compile Include="Service References\Imtimely_ShortURL\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="ServiceModel.cs" />
-    <Compile Include="SMS_Model.cs" />
-    <Compile Include="SurveyAnswerModel.cs" />
-    <Compile Include="SurveyAnswerUserModel.cs" />
-    <Compile Include="SurveyMainModel.cs" />
-    <Compile Include="SurveyOptionModel.cs" />
-    <Compile Include="SurveyTroubleModel.cs" />
-    <Compile Include="SystemUserModel.cs" />
-    <Compile Include="Account_AccountMainModel.cs" />
-    <Compile Include="ActivateEmailModel.cs" />
-    <Compile Include="SystemUserRoleModel.cs" />
-    <Compile Include="SystemUserMenuModel.cs" />
-    <Compile Include="SystemUserMenuOptionModel.cs" />
-    <Compile Include="SystemUserRole_OptionModel.cs" />
-    <Compile Include="SystemUserRole_SystemUserMenuModel.cs" />
-    <Compile Include="RoleMenuModel.cs" />
-    <Compile Include="MenuModel.cs" />
-    <Compile Include="MenuOptionModel.cs" />
-    <Compile Include="RoleOptionModel.cs" />
-    <Compile Include="TaskModel.cs" />
-    <Compile Include="TemporayInstantMesModel.cs" />
-    <Compile Include="TutorModel.cs" />
-    <Compile Include="UserDeliveryAddressModel.cs" />
-    <Compile Include="UserModel.cs" />
-    <Compile Include="UserLoginInfoModel.cs" />
-    <Compile Include="OrderUserInfoModel.cs" />
-    <Compile Include="UserTagModel.cs" />
-    <Compile Include="VIPInfoExpenseDetailModel.cs" />
-    <Compile Include="VipInfoModel.cs" />
+    <Compile Include="SellBusiness\ServiceModel.cs" />
+    <Compile Include="SellBusiness\SMS_Model.cs" />
+    <Compile Include="SellBusiness\SurveyAnswerModel.cs" />
+    <Compile Include="SellBusiness\SurveyAnswerUserModel.cs" />
+    <Compile Include="SellBusiness\SurveyMainModel.cs" />
+    <Compile Include="SellBusiness\SurveyOptionModel.cs" />
+    <Compile Include="SellBusiness\SurveyTroubleModel.cs" />
+    <Compile Include="SystemBusiness\SystemUserModel.cs" />
+    <Compile Include="SellBusiness\Account_AccountMainModel.cs" />
+    <Compile Include="SellBusiness\ActivateEmailModel.cs" />
+    <Compile Include="SystemBusiness\SystemUserRoleModel.cs" />
+    <Compile Include="SystemBusiness\SystemUserMenuModel.cs" />
+    <Compile Include="SystemBusiness\SystemUserMenuOptionModel.cs" />
+    <Compile Include="SystemBusiness\SystemUserRole_OptionModel.cs" />
+    <Compile Include="SystemBusiness\SystemUserRole_SystemUserMenuModel.cs" />
+    <Compile Include="SystemBusiness\RoleMenuModel.cs" />
+    <Compile Include="SystemBusiness\MenuModel.cs" />
+    <Compile Include="SystemBusiness\MenuOptionModel.cs" />
+    <Compile Include="SystemBusiness\RoleOptionModel.cs" />
+    <Compile Include="SellBusiness\TaskModel.cs" />
+    <Compile Include="SellBusiness\TemporayInstantMesModel.cs" />
+    <Compile Include="SellBusiness\TutorModel.cs" />
+    <Compile Include="SellBusiness\UserDeliveryAddressModel.cs" />
+    <Compile Include="SellBusiness\UserModel.cs" />
+    <Compile Include="SellBusiness\UserLoginInfoModel.cs" />
+    <Compile Include="SellBusiness\OrderUserInfoModel.cs" />
+    <Compile Include="SellBusiness\UserTagModel.cs" />
+    <Compile Include="SellBusiness\VIPInfoExpenseDetailModel.cs" />
+    <Compile Include="SellBusiness\VipInfoModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
@@ -228,34 +230,34 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LibraryImageModel.cs" />
+    <Compile Include="SellBusiness\LibraryImageModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LibraryImageTextModel.cs" />
+    <Compile Include="SellBusiness\LibraryImageTextModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LibraryTextModel.cs" />
+    <Compile Include="SellBusiness\LibraryTextModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LibraryVideoModel.cs" />
+    <Compile Include="SellBusiness\LibraryVideoModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LibraryVoiceModel.cs" />
+    <Compile Include="SellBusiness\LibraryVoiceModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SystemMessageModel.cs" />
+    <Compile Include="SellBusiness\SystemMessageModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoMessage_AddModel.cs" />
+    <Compile Include="SellBusiness\AutoMessage_AddModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoMessage_KeywordModel.cs" />
+    <Compile Include="SellBusiness\AutoMessage_KeywordModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientInfoModel.cs" />
+    <Compile Include="SellBusiness\ClientInfoModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GroupModel.cs" />
+    <Compile Include="SellBusiness\GroupModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Scripting">
@@ -278,7 +280,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TaskDetailModel.cs" />
+    <Compile Include="SellBusiness\TaskDetailModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -314,6 +316,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

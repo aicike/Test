@@ -122,6 +122,8 @@
     <Compile Include="IVIPInfoExpenseDetailModel.cs" />
     <Compile Include="IVipInfoModel.cs" />
     <Compile Include="IParkingFeeModel.cs" />
+    <Compile Include="MerchantInterface\IM_TakeOutDetailModel.cs" />
+    <Compile Include="MerchantInterface\IM_TakeOutModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ICityModel.cs" />
     <Compile Include="IDistrictModel.cs" />
@@ -176,6 +178,7 @@
   <ItemGroup>
     <Compile Include="ILottery_UserModel.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

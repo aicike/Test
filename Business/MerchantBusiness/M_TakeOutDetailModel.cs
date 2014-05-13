@@ -9,5 +9,6 @@ namespace Business.MerchantBusiness
 {
     public class M_TakeOutDetailModel : BaseModel<M_TakeOutDetail>, IM_TakeOutDetailModel
     {
+        
     }
 }

@@ -151,6 +151,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Merchant\Controllers\M_TakeOutController.cs" />
     <Compile Include="Areas\Merchant\MerchantAreaRegistration.cs" />
     <Compile Include="Areas\System\Controllers\AccountMainManageController.cs" />
     <Compile Include="Areas\System\Controllers\AccountManageController.cs" />
@@ -240,6 +241,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ExpandMethod.cs" />
     <Compile Include="SSO\CacheManager.cs" />
     <Compile Include="Models\HtmlExtensions.cs" />
     <Compile Include="Models\JsonpResult.cs" />
@@ -830,7 +832,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Merchant\Controllers\" />
     <Folder Include="Areas\Merchant\Models\" />
     <Folder Include="Areas\Merchant\Views\Shared\" />
     <Folder Include="Areas\System\Models\" />
@@ -1070,6 +1071,7 @@
     <Content Include="Areas\System\Views\LifeSkill\Edit.cshtml" />
     <Content Include="Areas\Merchant\Views\Web.config" />
     <Content Include="Areas\Merchant\Views\MerchantHome\Index.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_TakeOut\Index.cshtml" />
     <None Include="Download\Property\物业停车费导入模板.xlsx" />
     <None Include="Download\Property\物业用户信息导入模板.xlsx" />
     <None Include="Download\Property\物业费导入模板.xlsx" />

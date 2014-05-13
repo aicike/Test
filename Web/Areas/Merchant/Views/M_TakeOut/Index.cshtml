@@ -1,3 +1,63 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
+@model PagedList<Poco.MerchantPoco.M_TakeOut>
+<div class="title">
+    @Html.Partial("SitePath")</div>
+<div class="body">
+    <div class="option">@Html.ActionLink("添加", "Add", "M_TakeOut", new { Area = "Merchant" }, null, true)</div>
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th>
+                标题
+            </th>
+            <th>
+                送餐费
+            </th>
+            <th>
+                审核状态
+            </th>
+            <th>
+                发布状态
+            </th>
+            <th style="width: 200px;">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    @item.TakeOutPrice.ToString("C")
+                </td>
+                <td>
+                    @item.EnumDataStatus.EnumDataStatusGetValue();
+                </td>
+                <td class="operation">
+                    @item.IsPublish==true?"已发布":"未发布"
+                </td>
+                <td class="operation">
+                    @Html.ActionLink("修改", "Edit", "M_TakeOut", new { Area = "Merchant", id = item.ID, }, new { style = "padding-right:15px" }, true)
+                    @Ajax.ActionLink("删除", "Delete", "M_TakeOut", new { Area = "Merchant", id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?删除此项将会删除其关联的所有数据！','" + Url.Action("Delete", "Merchant", new { Area = "Merchant", id = item.ID }) + "',null)" }, true)
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
