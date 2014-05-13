@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
+using Poco.Enum;
 
 namespace Poco.MerchantPoco
 {
@@ -22,7 +24,37 @@ namespace Poco.MerchantPoco
 
         public virtual SystemUser SystemUser { get; set; }
 
-        public virtual M_TakeOutDetail M_TakeOutDetails { get; set; }
+        public virtual ICollection<M_TakeOutDetail> M_TakeOutDetails { get; set; }
 
+        [Display(Name = "标题")]
+        [Required(ErrorMessage = "请输入标题")]
+        [StringLength(50, ErrorMessage = "长度小于50")]
+        public string Title { get; set; }
+
+
+        [Display(Name = "送餐费")]
+        [Required(ErrorMessage = "请输入送餐费")]
+        [RegularExpression(@"^(\d+(.\d{1,2})|\d+)$", ErrorMessage = "请输入有效的金额")]
+        public decimal TakeOutPrice { get; set; }
+
+        /// <summary>
+        /// 是否发布商品
+        /// </summary>
+        public bool IsPublish { get; set; }
+
+        /// <summary>
+        /// 审核状态 
+        /// </summary>
+        public int EnumDataStatus { get; set; }
+
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CreatDate { get; set; }
+
+        /// <summary>
+        /// 发布时间（审核通过时间）
+        /// </summary>
+        public DateTime PublishDate { get; set; }
     }
 }

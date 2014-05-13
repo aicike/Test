@@ -104,7 +104,9 @@
     <Compile Include="Lottery_dish_detail.cs" />
     <Compile Include="Lottery_User.cs" />
     <Compile Include="Merchant.cs" />
+    <Compile Include="MerchantPoco\M_TakeOutDetail.cs" />
     <Compile Include="MicroSiteSetInfo.cs" />
+    <Compile Include="MerchantPoco\M_TakeOut.cs" />
     <Compile Include="Panorama.cs" />
     <Compile Include="ParkingFee.cs" />
     <Compile Include="ProductImg.cs" />
