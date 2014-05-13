@@ -100,7 +100,18 @@ namespace Web.Controllers
             {
                 return RedirectToAction("Register", "MerchantLand", new { Iserror = 1, Error = result.Error });
             }
-            return View();
+
+            Merchant entity = new Merchant();
+            entity.ID = merchant.ID;
+            entity.SystemStatus = merchant.SystemStatus;
+            entity.Name = merchant.Name;
+            entity.Email = merchant.Email;
+            entity.LoginPwd = merchant.LoginPwd;
+            entity.LogoImagePath = merchant.LogoImagePath;
+            entity.Phone = merchant.Phone;
+            entity.Address = merchant.Address;
+            Session[SystemConst.Session.LoginMerchant] = entity;
+            return RedirectToAction("Index", "MerchantHome");
         }
 
     }

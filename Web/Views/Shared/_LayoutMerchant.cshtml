@@ -33,7 +33,111 @@
 @Html.Partial("_MerchantHead")
 <div class="main">
     <div style="width: 190px; float: left;">
-        @Html.Partial("Menu")
+        <ul class="menu">
+            <li><a class="menu1">商户服务
+                <img style=" float:right; width:14px ;margin-right:10px; margin-top:14px" t_val="0" src="@Url.Content("/images/zhankai_2.png")" />
+            </a>
+                <ul class="submenu">
+                    @if (ViewBag.Menu == 1)
+                    {
+                        <li class="select"><a href="">周边外卖 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="">周边外卖 </a></li>
+                    }
+                    @if (ViewBag.Menu == 2)
+                    {
+                        <li class="select"><a href="">周边团购 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="">周边团购 </a></li>
+                    }
+                    @if (ViewBag.Menu == 3)
+                    {
+                        <li class="select"><a href="">商家促销 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="">商家促销 </a></li>
+                    }
+                    @if (ViewBag.Menu == 4)
+                    {
+                        <li class="select"><a href="">家教 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="">家教 </a></li>
+                    }
+                    @if (ViewBag.Menu == 5)
+                    {
+                        <li class="select"><a href="">干洗服务 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="">干洗服务 </a></li>
+                    }
+                    @if (ViewBag.Menu == 6)
+                    {
+                        <li class="select"><a href="">教育培训 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="">教育培训 </a></li>
+                    }
+                    @if (ViewBag.Menu == 7)
+                    {
+                        <li class="select"><a href="">宠物医院 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="">宠物医院 </a></li>
+                    }
+                    @if (ViewBag.Menu == 8)
+                    {
+                        <li class="select"><a href="">家电维修 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="">家电维修 </a></li>
+                    }
+                    @if (ViewBag.Menu == 9)
+                    {
+                        <li class="select"><a href="">家政服务 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="">家政服务 </a></li>
+                    }
+                    @if (ViewBag.Menu == 10)
+                    {
+                        <li class="select"><a href="">开锁换锁 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="">开锁换锁 </a></li>
+                    }
+                    @if (ViewBag.Menu == 11)
+                    {
+                        <li class="select"><a href="">搬家 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="">搬家 </a></li>
+                    }
+                    @if (ViewBag.Menu == 12)
+                    {
+                        <li class="select"><a href="">管道疏通 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="">管道疏通 </a></li>
+                    }
+                    
+                </ul>
+            </li>
+        </ul>
     </div>
     <div style="width: 810px; float: left">
         @RenderBody()
@@ -55,3 +159,23 @@
         </tr>
     </table>
 </div>
+<script>
+    $(function () {
+        $(".menu1").click(function () {
+            $(this).next(".submenu").slideToggle('fast');
+            var iszk = $(this).find("img").attr("t_val"); //0合并 1展开
+            if (iszk == 0) {
+                $(this).find("img").attr("src", '@Url.Content("/images/shouqi_2.png")');
+                $(this).find("img").attr("t_val", "1");
+            } else {
+                $(this).find("img").attr("src", '@Url.Content("/images/zhankai_2.png")');
+                $(this).find("img").attr("t_val", "0");
+            }
+        });
+
+        $(".menu").attr("style", "min-height:" + $(".main").height() + "px");
+        $(".menu1").click();
+    });
+
+
+</script>

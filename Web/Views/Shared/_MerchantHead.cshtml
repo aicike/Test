@@ -42,11 +42,11 @@
                 
                 @if (Merchant != null && Merchant.LogoShow != null && Merchant.LogoShow.Length > 0)
                 { 
-                <a href="@Url.Action("Index", "Home")"><img src="@Url.Content(Merchant.LogoShow, "/Images/logo.png")" /></a>
+                <a href="@Url.Action("Index", "MerchantHome")"><img src="@Url.Content(Merchant.LogoShow, "/Images/logo.png")" /></a>
                 }
                 else
                 { 
-                <a href="@Url.Action("Index", "Home")"><img alt="" src="@Url.Content("/Images/logo.png")" /></a>
+                <a href="@Url.Action("Index", "MerchantHome")"><img alt="" src="@Url.Content("/Images/logo.png")" /></a>
                 }
         </div>
         <div style="float: right; margin-top: 35px;">
