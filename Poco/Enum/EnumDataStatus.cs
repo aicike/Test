@@ -10,7 +10,21 @@ namespace Poco.Enum
     /// </summary>
     public enum EnumDataStatus
     {
+        /// <summary>
+        /// 未提交审核
+        /// </summary>
+        None,
+        /// <summary>
+        /// 审核未通过
+        /// </summary>
+        Disabled,
+        /// <summary>
+        /// 等待付款
+        /// </summary>
+        WaitPayMent,  
+        /// <summary>
+        /// 已付款，审核通过
+        /// </summary>
         Enabled,
-        Disabled
     }
 }
