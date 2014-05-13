@@ -1244,6 +1244,8 @@
     <Content Include="Views\Default\Recipes.cshtml" />
     <Content Include="Views\MerchantLand\Index.cshtml" />
     <Content Include="Views\MerchantLand\Register.cshtml" />
+    <Content Include="Views\Shared\_LayoutMerchant.cshtml" />
+    <Content Include="Views\Shared\_MerchantHead.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

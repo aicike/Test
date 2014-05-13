@@ -97,6 +97,7 @@
     <Compile Include="Enum\EnumTaskType.cs" />
     <Compile Include="Enum\EnumTroubleType.cs" />
     <Compile Include="Enum\EnumVIPOperate.cs" />
+    <Compile Include="Enum\EnumDataStatus.cs" />
     <Compile Include="ExpressCollection.cs" />
     <Compile Include="Feedback.cs" />
     <Compile Include="LifeSkill.cs" />
