@@ -296,8 +296,12 @@ namespace Poco
             public const string RecipesModel = "RecipesModel";
 
             public const string MerchantModel = "MerchantModel";
-            
 
+            public const string M_MoveModel = "M_MoveModel";
+            public const string M_UnlockModel = "M_UnlockModel";
+            public const string M_PipelineDredgeModel = "M_PipelineDredgeModel";
+
+            
 
         }
     }

@@ -59,7 +59,7 @@ namespace Web.Controllers
             {
                 return JavaScript("LandWaitFor('login','WaitImg',2);" + AlertJS_NoTag(new Dialog(result.Error)));
             }
-            var url = Url.RouteUrl("Merchant", new { action = "Index", controller = "MerchantHome" });
+            var url = Url.RouteUrl("Merchant_default", new { action = "Index", controller = "MerchantHome" });
             return JavaScript("window.location.href='" + url + "'");
         }
 

@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "开锁换锁 - ImTimely";
+    Layout = "~/Views/Shared/_LayoutMerchant.cshtml";
+    ViewBag.Menu = 10;
+}
+@section head{
+}
+@model PagedList<Poco.MerchantPoco.M_Unlock>
+<div class="title">
+    开锁换锁
+</div>
+<div class="body">
+    <div class="option">
+        @Html.ActionLink("发布信息", "Add", "M_Unlock", new { HostName = ViewBag.HostName }, null, false)
+    </div>
+    <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
+        <tr>
+            <th style="width: 180px">
+                标题
+            </th>
+            <th>
+                联系电话
+            </th>
+            <th>
+                创建日期
+            </th>
+            <th>
+                审核状态
+            </th>
+            <th>
+                发布日期
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <div style="width: 180px; word-break: keep-all; white-space: nowrap; overflow: hidden;
+                        text-overflow: ellipsis;">
+                        @item.Title
+                    </div>
+                </td>
+                <td>
+                    @item.Phone
+                </td>
+                <td>
+                    @item.CreatDate.ToString("yyyy-MM-dd HH:mm")
+                </td>
+                <td>
+                    @switch(item.EnumDataStatus)
+                    {
+                        case (int)Poco.Enum.EnumDataStatus.None:
+                            @:未提交审核
+                            break;
+                        case (int)Poco.Enum.EnumDataStatus.Disabled:
+                            @:审核未通过
+                            break;
+                        case (int)Poco.Enum.EnumDataStatus.WaitPayMent:
+                            @:审核中
+                            break;
+                        case (int)Poco.Enum.EnumDataStatus.Enabled:
+                            @:审核以通过
+                            break;
+                    }
+                </td>
+                <td>
+                    @item.PublishDate
+                </td>
+                <td>
+                 @Html.ActionLink("修改", "Edit", "M_Unlock", new { HostName = ViewBag.HostName, ID = item.ID }, new { style = "padding-right:5px" }, true)
+                    @Ajax.ActionLink("删除", "Delete", "M_Unlock", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('此操作会删除该活动下的所有报名人信息。<br/>“确定删除?”','" + Url.Action("Delete", "M_Unlock", new { HostName = ViewBag.HostName, ID = item.ID }) + "',null)" }, true)
+
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
+<div style="clear: both">
+</div>

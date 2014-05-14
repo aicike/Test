@@ -151,6 +151,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Merchant\Controllers\MerchantHomeController.cs" />
+    <Compile Include="Areas\Merchant\Controllers\M_TakeOutController.cs" />
+    <Compile Include="Areas\Merchant\Controllers\M_UnlockController.cs" />
     <Compile Include="Areas\Merchant\MerchantAreaRegistration.cs" />
     <Compile Include="Areas\System\Controllers\AccountMainManageController.cs" />
     <Compile Include="Areas\System\Controllers\AccountManageController.cs" />
@@ -830,7 +833,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Merchant\Controllers\" />
     <Folder Include="Areas\Merchant\Models\" />
     <Folder Include="Areas\Merchant\Views\Shared\" />
     <Folder Include="Areas\System\Models\" />
@@ -1070,6 +1072,9 @@
     <Content Include="Areas\System\Views\LifeSkill\Edit.cshtml" />
     <Content Include="Areas\Merchant\Views\Web.config" />
     <Content Include="Areas\Merchant\Views\MerchantHome\Index.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_TakeOut\Index.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_Unlock\Index.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_Unlock\Add.cshtml" />
     <None Include="Download\Property\物业停车费导入模板.xlsx" />
     <None Include="Download\Property\物业用户信息导入模板.xlsx" />
     <None Include="Download\Property\物业费导入模板.xlsx" />
@@ -1268,13 +1273,13 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>16123</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://tllhs.imtimely.com/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
+          <UseCustomServer>True</UseCustomServer>
           <CustomServerUrl>http://192.168.1.138</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>

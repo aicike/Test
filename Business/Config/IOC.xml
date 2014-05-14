@@ -135,8 +135,13 @@
 
   <object id="MerchantModel" type="Business.MerchantModel" parent="EFModel" singleton="false"></object>
 
-  
 
+
+  <object id="M_MoveModel" type="Business.MerchantBusiness.M_MoveModel" parent="EFModel" singleton="false"></object>
+  <object id="M_UnlockModel" type="Business.MerchantBusiness.M_UnlockModel" parent="EFModel" singleton="false"></object>
+  <object id="M_PipelineDredgeModel" type="Business.MerchantBusiness.M_PipelineDredgeModel" parent="EFModel" singleton="false"></object>
+
+  
   <!--<object id="UserModel" type="NightClubBooth.Business.UserModel" parent="EFModel" singleton="false">
 		<property name="LookupOptionModel" ref="LookupOptionModel"/>
 		<property name="RoleModel" ref="RoleModel"/>
