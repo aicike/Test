@@ -82,5 +82,11 @@ namespace Interface
         /// </summary>
         /// <returns></returns>
         IQueryable<AccountMain> ListForOrganization(int organization_accountMainID);
+
+        /// <summary>
+        /// 商户获取小区列表
+        /// </summary>
+        /// <returns></returns>
+        List<AccountMain> GetCommunityList();
     }
 }

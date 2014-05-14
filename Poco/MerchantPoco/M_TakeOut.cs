@@ -10,7 +10,7 @@ namespace Poco.MerchantPoco
     /// <summary>
     /// 周边外卖主表
     /// </summary>
-    public class M_TakeOut : IBaseEntity
+    public class M_TakeOut:IBaseEntity
     {
         public int ID { get; set; }
 
@@ -41,7 +41,6 @@ namespace Poco.MerchantPoco
         [Required(ErrorMessage = "请输入订餐电话")]
         [StringLength(50, ErrorMessage = "长度小于50")]
         public string Phone { get; set; }
-
         /// <summary>
         /// 是否发布商品
         /// </summary>

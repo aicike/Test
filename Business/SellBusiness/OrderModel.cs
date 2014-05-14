@@ -585,7 +585,7 @@ namespace Business
             emailInfo.To = email;
             emailInfo.Subject = subject;
             emailInfo.IsHtml = true;
-            emailInfo.UseSSL = true;
+            emailInfo.UseSSL = false;
             emailInfo.Body = msg;
             try
             {
@@ -612,7 +612,7 @@ namespace Business
                     emailInfo.To = email;
                     emailInfo.Subject = "ImTimely - 用户下单";
                     emailInfo.IsHtml = true;
-                    emailInfo.UseSSL = true;
+                    emailInfo.UseSSL = false;
                     emailInfo.Body = string.Format("用户下单，订单号【{0}】。", order.OrderNum);
                     Common.SendEmail.SendMailAsync(emailInfo);
                 }

@@ -2,7 +2,24 @@
     Layout = "~/Views/Shared/_LayoutMerchant.cshtml";
 }
 @section head{
-    <script type="text/javascript">
+    <script>
+        $(function () {
+            $("#btnSubmit").click(function () {
+                var cids = GetCommunity();
+                if (cids == undefined || cids.length == 0) {
+                    JAlert({
+                        Message: "请选择小区。",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    $("#hidCommunity").val("");
+                    return false;
+                } else {
+                    $("#hidCommunity").val(cids);
+                    return true;
+                }
+            });
+        });
     </script>
 }
 @model Poco.MerchantPoco.M_TakeOut
@@ -12,6 +29,7 @@
 <div class="body">
     @using (Ajax.BeginForm("Add", "M_TakeOut", new { Area = "Merchant" }, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
+
         <fieldset>
             <legend>基本信息</legend>
             <table class="tableForm">
@@ -47,12 +65,14 @@
                         <span class="Identification">*</span> 绑定小区
                     </td>
                     <td class="tdField" colspan="2">
-                        @Html.Partial("CommunitySelect")
+                        @Html.Partial("Community")
                     </td>
                 </tr>
             </table>
         </fieldset>
-     
+
+        <input type="hidden" name="hidCommunity" id="hidCommunity" />
+
         <div class="action">
             <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
         </div>

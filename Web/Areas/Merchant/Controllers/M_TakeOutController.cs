@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Controllers;
-using Interface.MerchantInterface;
+﻿using Interface.MerchantInterface;
 using Injection;
 using Poco;
 using Poco.MerchantPoco;
 using Poco.Enum;
+using System.Web.Mvc;
+using Controllers;
+using System;
+using System.Web;
 
 namespace Web.Areas.Merchant.Controllers
 {
@@ -17,7 +15,9 @@ namespace Web.Areas.Merchant.Controllers
         public ActionResult Index(int? id)
         {
             var takeOutModel = Factory.Get<IM_TakeOutModel>(SystemConst.IOC_Model.M_TakeOutModel);
+
             var list = takeOutModel.ListByMerchantID(LoginMerchant.ID).ToPagedList(id ?? 1, 15);
+
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "周边外卖", "", WebTitleRemark);
             ViewBag.Title = webTitle;
@@ -52,7 +52,14 @@ namespace Web.Areas.Merchant.Controllers
             M_TakeOut.EnumDataStatus = (int)EnumDataStatus.None;
             M_TakeOut.IsPublish = false;
             M_TakeOut.MerchantID = LoginMerchant.ID;
-            var result = takeOutModel.Add(M_TakeOut);
+
+            string hidCommunity = Request.Form["hidCommunity"];
+            if (hidCommunity == null || hidCommunity.Length == 0)
+            {
+                return JavaScript("isCommit = true;" + AlertJS_NoTag(new Dialog("请选择小区。")));
+            }
+            var ids= hidCommunity.ConvertToIntArray(',');
+            var result = takeOutModel.Add(M_TakeOut, ids);
             if (result.HasError)
             {
                 return JavaScript("isCommit = true;" + AlertJS_NoTag(new Dialog(result.Error)));

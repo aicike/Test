@@ -1251,7 +1251,7 @@
     <Content Include="Views\MerchantLand\Register.cshtml" />
     <Content Include="Views\Shared\_LayoutMerchant.cshtml" />
     <Content Include="Views\Shared\_MerchantHead.cshtml" />
-    <Content Include="Views\Shared\CommunitySelect.cshtml" />
+    <Content Include="Views\Shared\Community.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\InstallAppReply\Index.cshtml" />

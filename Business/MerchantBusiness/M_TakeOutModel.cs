@@ -5,6 +5,7 @@ using System.Text;
 using Poco.MerchantPoco;
 using Interface.MerchantInterface;
 using Poco;
+using Injection.Transaction;
 
 namespace Business.MerchantBusiness
 {
@@ -18,6 +19,12 @@ namespace Business.MerchantBusiness
         public new Result Delete(int id)
         {
             return base.CompleteDelete(id);
+        }
+
+        [Transaction]
+        public Result Add(M_TakeOut entity, int[] communityIDs)
+        {
+            throw new NotImplementedException();
         }
     }
 }

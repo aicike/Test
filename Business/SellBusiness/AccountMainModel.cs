@@ -1101,6 +1101,14 @@ namespace Business
             return list;
         }
 
-
+        /// <summary>
+        /// 商户获取小区列表
+        /// </summary>
+        /// <returns></returns>
+        public List<AccountMain> GetCommunityList()
+        {
+            string accountStatus = EnumAccountStatus.Enabled.ToString();
+            return List().Where(a => a.AccountStatus.Token.Equals(accountStatus)).ToList();
+        }
     }
 }

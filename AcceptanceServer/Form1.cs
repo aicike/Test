@@ -104,7 +104,7 @@ namespace AcceptanceServer
                     emailInfo.To = "shuangqi.wu@imtimely.com";
                     emailInfo.Subject = "ImTimely - 聊天服务出错！请速检查（5222）";
                     emailInfo.IsHtml = true;
-                    emailInfo.UseSSL = true;
+                    emailInfo.UseSSL = false;
 
 
                     if (this == null)
