@@ -104,8 +104,8 @@
     <Compile Include="SellBusiness\CardInfoModel.cs" />
     <Compile Include="SellBusiness\CardPrefixModel.cs" />
     <Compile Include="SellBusiness\ClassifyModel.cs" />
+    <Compile Include="SellBusiness\QrCodeModel.cs" />
     <Compile Include="SystemBusiness\CommonModel.cs" />
-    <Compile Include="SystemBusiness\BaseModel.cs" />
     <Compile Include="SystemBusiness\CityModel.cs" />
     <Compile Include="SellBusiness\ComplaintModel.cs" />
     <Compile Include="SellBusiness\ComplaintReplyModel.cs" />
@@ -125,8 +125,6 @@
     <Compile Include="SellBusiness\Lottery_dishModel.cs" />
     <Compile Include="SellBusiness\Lottery_dish_detailModel.cs" />
     <Compile Include="SellBusiness\Lottery_UserModel.cs" />
-    <Compile Include="MerchantBusiness\M_TakeOutDetailModel.cs" />
-    <Compile Include="MerchantBusiness\M_TakeOutModel.cs" />
     <Compile Include="SellBusiness\MerchantModel.cs" />
     <Compile Include="SellBusiness\MessageGroupChatModel.cs" />
     <Compile Include="SellBusiness\MessageModel.cs" />
@@ -141,25 +139,11 @@
     <Compile Include="SellBusiness\ProductImgModel.cs" />
     <Compile Include="SellBusiness\ProductModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SellBusiness\PropertyOrderDetailModel.cs" />
-    <Compile Include="SellBusiness\PropertyOrderModel.cs" />
-    <Compile Include="SellBusiness\Property_HouseModel.cs" />
-    <Compile Include="SellBusiness\Property_UserModel.cs" />
-    <Compile Include="SellBusiness\PropertyFeeInfoModel.cs" />
-    <Compile Include="SystemBusiness\ProvinceModel.cs" />
-    <Compile Include="SystemBusiness\PushModel.cs" />
-    <Compile Include="SystemBusiness\PushMsgDetailModel.cs" />
-    <Compile Include="SystemBusiness\PushMsgModel.cs" />
-    <Compile Include="SystemBusiness\Push_Getui.cs" />
-    <Compile Include="SystemBusiness\Push_IOS.cs" />
-    <Compile Include="SellBusiness\QrCodeModel.cs" />
-    <Compile Include="SellBusiness\RecipesModel.cs" />
-    <Compile Include="SellBusiness\RentalHouseModel.cs" />
-    <Compile Include="SellBusiness\RepairchargesoModel.cs" />
-    <Compile Include="SellBusiness\RepairInfoModel.cs" />
-    <Compile Include="SellBusiness\RepairOperationModel.cs" />
-    <Compile Include="SellBusiness\ReportFormPowerModel.cs" />
-    <Compile Include="SystemBusiness\RoleModel.cs" />
+    <Compile Include="MerchantBusiness\M_MoveModel.cs" />
+    <Compile Include="MerchantBusiness\M_PipelineDredgeModel.cs" />
+    <Compile Include="MerchantBusiness\M_TakeOutDetailModel.cs" />
+    <Compile Include="MerchantBusiness\M_TakeOutModel.cs" />
+    <Compile Include="MerchantBusiness\M_UnlockModel.cs" />
     <Compile Include="Service References\Imtimely_ShortURL\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -172,6 +156,9 @@
     <Compile Include="SellBusiness\SurveyMainModel.cs" />
     <Compile Include="SellBusiness\SurveyOptionModel.cs" />
     <Compile Include="SellBusiness\SurveyTroubleModel.cs" />
+    <Compile Include="SystemBusiness\PushModel.cs" />
+    <Compile Include="SystemBusiness\Push_Getui.cs" />
+    <Compile Include="SystemBusiness\Push_IOS.cs" />
     <Compile Include="SystemBusiness\SystemUserModel.cs" />
     <Compile Include="SellBusiness\Account_AccountMainModel.cs" />
     <Compile Include="SellBusiness\ActivateEmailModel.cs" />
@@ -194,6 +181,7 @@
     <Compile Include="SellBusiness\UserTagModel.cs" />
     <Compile Include="SellBusiness\VIPInfoExpenseDetailModel.cs" />
     <Compile Include="SellBusiness\VipInfoModel.cs" />
+    <Compile Include="SystemBusiness\BaseModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

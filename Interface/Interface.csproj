@@ -123,8 +123,11 @@
     <Compile Include="IVipInfoModel.cs" />
     <Compile Include="IParkingFeeModel.cs" />
     <Compile Include="MerchantInterface\IM_CommunityMappingModel.cs" />
+    <Compile Include="MerchantInterface\IM_MoveModel.cs" />
+    <Compile Include="MerchantInterface\IM_PipelineDredgeModel.cs" />
     <Compile Include="MerchantInterface\IM_TakeOutDetailModel.cs" />
     <Compile Include="MerchantInterface\IM_TakeOutModel.cs" />
+    <Compile Include="MerchantInterface\IM_UnlockModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ICityModel.cs" />
     <Compile Include="IDistrictModel.cs" />

@@ -106,7 +106,10 @@
     <Compile Include="Lottery_User.cs" />
     <Compile Include="Merchant.cs" />
     <Compile Include="MerchantPoco\M_CommunityMapping.cs" />
+    <Compile Include="MerchantPoco\M_Move.cs" />
+    <Compile Include="MerchantPoco\M_PipelineDredge.cs" />
     <Compile Include="MerchantPoco\M_TakeOutDetail.cs" />
+    <Compile Include="MerchantPoco\M_Unlock .cs" />
     <Compile Include="MicroSiteSetInfo.cs" />
     <Compile Include="MerchantPoco\M_TakeOut.cs" />
     <Compile Include="Panorama.cs" />
