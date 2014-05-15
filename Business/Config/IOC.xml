@@ -138,6 +138,9 @@
 
   <object id="M_TakeOutModel" type="Business.MerchantBusiness.M_TakeOutModel" parent="EFModel" singleton="false"></object>
   <object id="M_TakeOutDetailModel" type="Business.MerchantBusiness.M_TakeOutDetailModel" parent="EFModel" singleton="false"></object>
+object id="M_MoveModel" type="Business.MerchantBusiness.M_MoveModel" parent="EFModel" singleton="false"></object>
+  <object id="M_UnlockModel" type="Business.MerchantBusiness.M_UnlockModel" parent="EFModel" singleton="false"></object>
+  <object id="M_PipelineDredgeModel" type="Business.MerchantBusiness.M_PipelineDredgeModel" parent="EFModel" singleton="false"></object>
 
   
 

@@ -58,5 +58,10 @@ namespace Poco
         public string LoginPwdPage { get; set; }
 
         public virtual ICollection<M_TakeOut> M_TakeOuts { get; set; }
+
+
+        public virtual ICollection<M_Move> M_Move { get; set; }
+        public virtual ICollection<M_Unlock> M_Unlock { get; set; }
+        public virtual ICollection<M_PipelineDredge> M_PipelineDredge { get; set; }
     }
 }

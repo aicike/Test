@@ -53,6 +53,7 @@ namespace Poco
             public const string TimeFomatFull = "yyyy-MM-dd HH:mm:ss";
             public const string WebTitle = "{0} {1} {2}";
             public const string PlatformFile = "~/File/PlatformFile/";
+            public const string MerchantFile = "~/File/Merchant/{0}/";
 
         }
 
@@ -299,8 +300,10 @@ namespace Poco
 
             public const string M_TakeOutModel = "M_TakeOutModel";
             public const string M_TakeOutDetailModel = "M_TakeOutDetailModel";
+            public const string M_MoveModel = "M_MoveModel";
+            public const string M_UnlockModel = "M_UnlockModel";
+            public const string M_PipelineDredgeModel = "M_PipelineDredgeModel";
             
-
 
         }
     }

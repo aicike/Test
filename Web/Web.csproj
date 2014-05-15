@@ -153,6 +153,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Merchant\Controllers\MerchantHomeController.cs" />
     <Compile Include="Areas\Merchant\Controllers\M_TakeOutController.cs" />
+    <Compile Include="Areas\Merchant\Controllers\M_UnlockController.cs" />
     <Compile Include="Areas\Merchant\MerchantAreaRegistration.cs" />
     <Compile Include="Areas\System\Controllers\AccountMainManageController.cs" />
     <Compile Include="Areas\System\Controllers\AccountManageController.cs" />
@@ -257,6 +258,9 @@
     <Compile Include="ueditor\net\Config.cs" />
     <Compile Include="ueditor\net\imageUp_Advertorial.ashx.cs">
       <DependentUpon>imageUp_Advertorial.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ueditor\net\imageUp_Merchant.ashx.cs">
+      <DependentUpon>imageUp_Merchant.ashx</DependentUpon>
     </Compile>
     <Compile Include="ueditor\net\imageUp_Platform.ashx.cs">
       <DependentUpon>imageUp_Platform.ashx</DependentUpon>
@@ -848,6 +852,7 @@
     <Folder Include="File\1\Account\" />
     <Folder Include="File\1\Base\" />
     <Folder Include="File\1\FileLibrary\" />
+    <Folder Include="File\Merchant\" />
     <Folder Include="File\PlatformFile\" />
     <Folder Include="File\Temporary\" />
     <Folder Include="ueditor\net\upload\" />
@@ -1083,6 +1088,9 @@
     <Content Include="Areas\Merchant\Views\M_TakeOut\Index.cshtml" />
     <Content Include="Areas\Merchant\Views\M_TakeOut\Add.cshtml" />
     <Content Include="Areas\Merchant\Views\M_TakeOut\Edit.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_Unlock\Index.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_Unlock\Add.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_Unlock\Edit.cshtml" />
     <None Include="Download\Property\物业停车费导入模板.xlsx" />
     <None Include="Download\Property\物业用户信息导入模板.xlsx" />
     <None Include="Download\Property\物业费导入模板.xlsx" />
@@ -1099,6 +1107,7 @@
     <Content Include="ueditor\net\imageUp_Advertorial.ashx" />
     <Content Include="ueditor\net\imageUp_LibraryImageText.ashx" />
     <Content Include="ueditor\net\imageUp_Platform.ashx" />
+    <Content Include="ueditor\net\imageUp_Merchant.ashx" />
     <None Include="ueditor\third-party\video-js\font\vjs.eot" />
     <None Include="ueditor\third-party\video-js\font\vjs.ttf" />
     <None Include="ueditor\third-party\video-js\font\vjs.woff" />
@@ -1286,13 +1295,13 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>16123</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://tllhs.imtimely.com/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
+          <UseCustomServer>True</UseCustomServer>
           <CustomServerUrl>http://192.168.1.138</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
