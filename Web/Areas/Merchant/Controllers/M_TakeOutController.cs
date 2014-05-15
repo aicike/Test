@@ -1,12 +1,14 @@
-﻿using Interface.MerchantInterface;
-using Injection;
-using Poco;
-using Poco.MerchantPoco;
-using Poco.Enum;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using Controllers;
-using System;
-using System.Web;
+using Poco;
+using Poco.MerchantPoco;
+using Injection;
+using Interface.MerchantInterface;
+using Poco.Enum;
 
 namespace Web.Areas.Merchant.Controllers
 {
@@ -56,68 +58,74 @@ namespace Web.Areas.Merchant.Controllers
             string hidCommunity = Request.Form["hidCommunity"];
             if (hidCommunity == null || hidCommunity.Length == 0)
             {
-                return JavaScript("isCommit = true;" + AlertJS_NoTag(new Dialog("请选择小区。")));
+                return Alert(new Dialog("请选择小区。"));
             }
-            var ids= hidCommunity.ConvertToIntArray(',');
+            var ids = hidCommunity.ConvertToIntArray(',');
             var result = takeOutModel.Add(M_TakeOut, ids);
-            if (result.HasError)
-            {
-                return JavaScript("isCommit = true;" + AlertJS_NoTag(new Dialog(result.Error)));
-            }
-            return JavaScript("window.location.href='" + Url.Action("Index", "M_TakeOut", new { Area = "Merchant" }) + "'");
-        }
-
-        ///// <summary>
-        ///// 修改界面
-        ///// </summary>
-        ///// <param name="id"></param>
-        ///// <returns></returns>
-        //public ActionResult Edit(int id, int hid)
-        //{
-        //    var hounsesInfoModel = Factory.Get<IAccountMainHouseInfo>(SystemConst.IOC_Model.AccountMainHouseInfoModel);
-        //    var HouseInfo = hounsesInfoModel.Get(id);
-        //    var hounsesModel = Factory.Get<IAccountMainHousesModel>(SystemConst.IOC_Model.AccountMainHousesModel);
-        //    var Hounse = hounsesModel.Get(hid);
-        //    ViewBag.HostTitle = Hounse.HName;
-        //    ViewBag.HostName = LoginAccount.HostName;
-        //    string WebTitleRemark = SystemConst.WebTitleRemark;
-        //    string webTitle = string.Format(SystemConst.Business.WebTitle, "项目管理-修改单元", LoginAccount.CurrentAccountMainName, WebTitleRemark);
-        //    ViewBag.Title = webTitle;
-        //    return View(HouseInfo);
-        //}
-
-        ///// <summary>
-        ///// 修改信息
-        ///// </summary>
-        ///// <param name="MainHouseInfo"></param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public ActionResult Edit(AccountMainHouseInfo MainHouseInfo)
-        //{
-        //    var hounsesInfoModel = Factory.Get<IAccountMainHouseInfo>(SystemConst.IOC_Model.AccountMainHouseInfoModel);
-        //    var result = hounsesInfoModel.Edit(MainHouseInfo);
-        //    if (result.HasError)
-        //    {
-        //        return Alert(new Dialog(result.Error));
-        //    }
-        //    return JavaScript("window.location.href='" + Url.Action("Index", "HouseInfo", new { HostName = LoginAccount.HostName, houseId = MainHouseInfo.AccountMainHousessID }) + "'");
-        //}
-
-        /// <summary>
-        /// 删除数据
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public ActionResult Delete(int id, int Hid)
-        {
-            var takeOutModel = Factory.Get<IM_TakeOutModel>(SystemConst.IOC_Model.M_TakeOutModel);
-            var result = takeOutModel.Delete(id);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));
             }
             return JavaScript("window.location.href='" + Url.Action("Index", "M_TakeOut", new { Area = "Merchant" }) + "'");
         }
+
+        /// <summary>
+        /// 修改界面
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult Edit(int id)
+        {
+            var takeOutModel = Factory.Get<IM_TakeOutModel>(SystemConst.IOC_Model.M_TakeOutModel);
+            var takeOut = takeOutModel.Get(id);
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "周边外卖-修改", "", WebTitleRemark);
+            ViewBag.Title = webTitle;
+            ViewBag.Menu = 1;
+
+            ViewBag.Community = takeOut.M_CommunityMappings.Select(a => a.AccountMainID).ToArray();
+
+            return View(takeOut);
+        }
+
+        /// <summary>
+        /// 修改信息
+        /// </summary>
+        /// <param name="MainHouseInfo"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Edit(M_TakeOut M_TakeOut)
+        {
+            var takeOutModel = Factory.Get<IM_TakeOutModel>(SystemConst.IOC_Model.M_TakeOutModel);
+            string hidCommunity = Request.Form["hidCommunity"];
+            if (hidCommunity == null || hidCommunity.Length == 0)
+            {
+                return Alert(new Dialog("请选择小区。"));
+            }
+            var ids = hidCommunity.ConvertToIntArray(',');
+            var result = takeOutModel.Edit(M_TakeOut, ids);
+            if (result.HasError)
+            {
+                return Alert(new Dialog(result.Error));
+            }
+            return JavaScript("window.location.href='" + Url.Action("Index", "M_TakeOut", new { Area = "Merchant" }) + "'");
+        }
+
+        ///// <summary>
+        ///// 删除数据
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <returns></returns>
+        //public ActionResult Delete(int id, int Hid)
+        //{
+        //    var takeOutModel = Factory.Get<IM_TakeOutModel>(SystemConst.IOC_Model.M_TakeOutModel);
+        //    var result = takeOutModel.Delete(id);
+        //    if (result.HasError)
+        //    {
+        //        return Alert(new Dialog(result.Error));
+        //    }
+        //    return JavaScript("window.location.href='" + Url.Action("Index", "M_TakeOut", new { Area = "Merchant" }) + "'");
+        //}
 
     }
 }

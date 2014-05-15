@@ -54,9 +54,11 @@ namespace Injection.Transaction
                     return result;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw ex;
+                Result r = new Result();
+                r.Error = ex.Message;
+                return r;
             }
         }
     }

@@ -6,6 +6,7 @@ using Poco.MerchantPoco;
 using Interface.MerchantInterface;
 using Poco;
 using Injection.Transaction;
+using System.Data.Entity;
 
 namespace Business.MerchantBusiness
 {
@@ -24,7 +25,48 @@ namespace Business.MerchantBusiness
         [Transaction]
         public Result Add(M_TakeOut entity, int[] communityIDs)
         {
-            throw new NotImplementedException();
+            List<M_CommunityMapping> list = new List<M_CommunityMapping>();
+            foreach (var item in communityIDs)
+            {
+                M_CommunityMapping mm = new M_CommunityMapping();
+                mm.AccountMainID = item;
+                list.Add(mm);
+            }
+            entity.M_CommunityMappings = list;
+            //保存商户发布信息和小区映射表
+            Result result = base.Add(entity);
+            return result;
+        }
+
+        [Transaction]
+        public Result Edit(M_TakeOut entity, int[] communityIDs)
+        {
+            var newEntity = List().Where(a => a.ID == entity.ID).AsNoTracking().FirstOrDefault();
+            newEntity.Title = entity.Title;
+            newEntity.TakeOutPrice = entity.TakeOutPrice;
+            newEntity.Phone = entity.Phone;
+            string sql = "DELETE dbo.M_CommunityMapping WHERE M_TakeOutID=" + entity.ID;
+            base.SqlExecute(sql);
+            Result result = base.Edit(newEntity);
+
+            StringBuilder sql_add = new StringBuilder();
+            sql_add.Append("INSERT INTO dbo.M_CommunityMapping( SystemStatus , AccountMainID , M_TakeOutID )");
+
+
+            List<M_CommunityMapping> list = new List<M_CommunityMapping>();
+            for (int i = 0; i < communityIDs.Length; i++)
+            {
+                if (i + 1 == communityIDs.Length)
+                {
+                    sql_add.AppendFormat("SELECT 0,{0},{1} ", communityIDs[i],newEntity.ID);
+                }
+                else
+                {
+                    sql_add.AppendFormat("SELECT 0,{0},{1} UNION ALL ", communityIDs[i], newEntity.ID);
+                }
+            }
+            base.SqlExecute(sql_add.ToString());
+            return result;
         }
     }
 }

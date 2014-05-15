@@ -3,28 +3,37 @@
     var list = accountMainModel.GetCommunityList();
     
 }
+@model int[]
 <div style="width: 100%;">
     @foreach (var item in list)
     {
         <div style="width: 180px; float: left;">
-            <input type="checkbox" id="c_cb_@item.ID" class="c_cb_Community" v_id="@item.ID" /><label for="c_cb_@item.ID">@item.Name</label>
+            @if (Model == null || Model.Length == 0)
+            { 
+                <input type="checkbox" id="c_cb_@item.ID" class="c_cb_Community" v_id="@item.ID" /><label for="c_cb_@item.ID">@item.Name</label>
+            }
+            else
+            {
+                if (Model.Contains(item.ID))
+                { 
+                <input type="checkbox" id="c_cb_@item.ID" class="c_cb_Community" v_id="@item.ID" checked="checked" /><label for="c_cb_@item.ID">@item.Name</label>
+                }
+                else
+                { 
+                <input type="checkbox" id="c_cb_@item.ID" class="c_cb_Community" v_id="@item.ID" /><label for="c_cb_@item.ID">@item.Name</label>
+                }
+            }
         </div>
     }
     <div style="clear: both">
     </div>
-    <input type="hidden" id="c_hid_values" />
 </div>
 <script>
-    $(function () {
-        $(".c_cb_Community").change(function () {
-            var values = "";
-            $(".c_cb_Community:checked").each(function (i, n) {
-                values += $(n).attr("v_id") + ",";
-            });
-            $("#c_hid_values").val(values);
-        });
-    });
     function GetCommunity() {
-        return $("#c_hid_values").val();
+        var values = "";
+        $(".c_cb_Community:checked").each(function (i, n) {
+            values += $(n).attr("v_id") + ",";
+        });
+        return values;
     }
 </script>

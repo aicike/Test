@@ -255,7 +255,14 @@
       <DependentUpon>TokenService.svc</DependentUpon>
     </Compile>
     <Compile Include="ueditor\net\Config.cs" />
+    <Compile Include="ueditor\net\imageUp_Advertorial.ashx.cs">
+      <DependentUpon>imageUp_Advertorial.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ueditor\net\imageUp_Platform.ashx.cs">
+      <DependentUpon>imageUp_Platform.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ueditor\net\Uploader.cs" />
+    <Compile Include="ueditor\net\Uploader_Advertorial.cs" />
     <Content Include="App_Data\ffmpeg.exe" />
     <Content Include="Content\blue.css" />
     <Content Include="Content\Icon\Icon.css" />
@@ -843,6 +850,7 @@
     <Folder Include="File\1\FileLibrary\" />
     <Folder Include="File\PlatformFile\" />
     <Folder Include="File\Temporary\" />
+    <Folder Include="ueditor\net\upload\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1074,6 +1082,7 @@
     <Content Include="Areas\Merchant\Views\MerchantHome\Index.cshtml" />
     <Content Include="Areas\Merchant\Views\M_TakeOut\Index.cshtml" />
     <Content Include="Areas\Merchant\Views\M_TakeOut\Add.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_TakeOut\Edit.cshtml" />
     <None Include="Download\Property\物业停车费导入模板.xlsx" />
     <None Include="Download\Property\物业用户信息导入模板.xlsx" />
     <None Include="Download\Property\物业费导入模板.xlsx" />
@@ -1086,6 +1095,10 @@
     <Content Include="ueditor\net\imageUp.ashx" />
     <Content Include="ueditor\net\scrawlUp.ashx" />
     <Content Include="ueditor\net\Web.config" />
+    <Content Include="ueditor\net\imageManager_LibraryImageText.ashx" />
+    <Content Include="ueditor\net\imageUp_Advertorial.ashx" />
+    <Content Include="ueditor\net\imageUp_LibraryImageText.ashx" />
+    <Content Include="ueditor\net\imageUp_Platform.ashx" />
     <None Include="ueditor\third-party\video-js\font\vjs.eot" />
     <None Include="ueditor\third-party\video-js\font\vjs.ttf" />
     <None Include="ueditor\third-party\video-js\font\vjs.woff" />
