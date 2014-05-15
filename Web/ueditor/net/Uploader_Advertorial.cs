@@ -9,7 +9,7 @@ using Common;
     /// <summary>
     /// UEditor编辑器通用上传类
     /// </summary>
-    public class Uploader
+    public class Uploader_Advertorial
     {
         string state = "SUCCESS";
 

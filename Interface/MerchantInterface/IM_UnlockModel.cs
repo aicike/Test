@@ -14,5 +14,13 @@ namespace Interface.MerchantInterface
         /// <param name="MID"></param>
         /// <returns></returns>
         IQueryable<M_Unlock> GetListByMID(int MID);
+
+         /// <summary>
+        /// 根据ID获取详细信息
+        /// </summary>
+        /// <param name="MID"></param>
+        /// <param name="UID"></param>
+        /// <returns></returns>
+        M_Unlock GetInfoByID(int MID, int UID);
     }
 }

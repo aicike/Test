@@ -69,9 +69,9 @@
                 <td>
                     @item.PublishDate
                 </td>
-                <td>
-                 @Html.ActionLink("修改", "Edit", "M_Unlock", new { HostName = ViewBag.HostName, ID = item.ID }, new { style = "padding-right:5px" }, true)
-                    @Ajax.ActionLink("删除", "Delete", "M_Unlock", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('此操作会删除该活动下的所有报名人信息。<br/>“确定删除?”','" + Url.Action("Delete", "M_Unlock", new { HostName = ViewBag.HostName, ID = item.ID }) + "',null)" }, true)
+                <td class="operation">
+                 @Html.ActionLink("修改", "Edit", "M_Unlock", new { HostName = ViewBag.HostName, ID = item.ID }, new { style = "padding-right:5px" }, false)
+                    @Ajax.ActionLink("删除", "Delete", "M_Unlock", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('此操作会删除该活动下的所有报名人信息。<br/>“确定删除?”','" + Url.Action("Delete", "M_Unlock", new { HostName = ViewBag.HostName, ID = item.ID }) + "',null)" }, false)
 
                 </td>
             </tr>

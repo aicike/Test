@@ -62,7 +62,7 @@ namespace Poco.MerchantPoco
         /// <summary>
         /// 发布时间（审核通过时间）
         /// </summary>
-        public DateTime PublishDate { get; set; }
+        public DateTime? PublishDate { get; set; }
 
 
     }
