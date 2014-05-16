@@ -17,11 +17,6 @@ namespace Business.MerchantBusiness
             return List().Where(a => a.MerchantID == merchantID).OrderByDescending(a => a.CreatDate);
         }
 
-        public new Result Delete(int id)
-        {
-            return base.CompleteDelete(id);
-        }
-
         [Transaction]
         public Result Add(M_TakeOut entity, int[] communityIDs)
         {
@@ -58,7 +53,7 @@ namespace Business.MerchantBusiness
             {
                 if (i + 1 == communityIDs.Length)
                 {
-                    sql_add.AppendFormat("SELECT 0,{0},{1} ", communityIDs[i],newEntity.ID);
+                    sql_add.AppendFormat("SELECT 0,{0},{1} ", communityIDs[i], newEntity.ID);
                 }
                 else
                 {
@@ -68,5 +63,18 @@ namespace Business.MerchantBusiness
             base.SqlExecute(sql_add.ToString());
             return result;
         }
+
+        [Transaction]
+        public new Result Delete(int id)
+        {
+            string sql1 = "DELETE dbo.M_CommunityMapping WHERE M_TakeOutID=" + id;//删除所有小区映射
+            string sql2 = "SELECT * FROM dbo.M_TakeOutDetail WHERE M_TakeOutID=" + id;//删除子表
+            string sql3 = "";//删除订单等
+            base.SqlExecute(sql1);
+            base.SqlExecute(sql2);
+            var result = base.CompleteDelete(id);
+            return result;
+        }
+
     }
 }

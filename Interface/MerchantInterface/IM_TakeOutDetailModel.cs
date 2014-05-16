@@ -8,5 +8,6 @@ namespace Interface.MerchantInterface
 {
     public interface IM_TakeOutDetailModel : IBaseModel<M_TakeOutDetail>
     {
+        List<M_TakeOutDetail> List(int takeOutID, int merchantID);
     }
 }

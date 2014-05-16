@@ -98,7 +98,7 @@
 <div style="margin: 0px auto 0px auto; position: absolute; top: 15%; right: 12%;
     z-index: 100">
     <div class="homelogin">
-        @using (Ajax.BeginForm("UserLogin", "Login", new { BackUrl=ViewBag.BackUrl }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "LandWaitFor('login','WaitImg',1)" }, null))
+        @using (Ajax.BeginForm("UserLogin", "Login", new { BackUrl = ViewBag.BackUrl }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "LandWaitFor('login','WaitImg',1)" }, null))
         { 
             <div>
                 <input name="phone_email" id="phone_email" type="text" class="inputLogin" placeholder="电话或邮箱"
@@ -109,13 +109,12 @@
                     style="background-color: #faffbd" />
             </div>
             <div>
-                <input id="login"  type="submit" value="登录" class="button2" />
+                <input id="login" type="submit" value="登录" class="button2" />
                 <img id="WaitImg" src="@Url.Content("~/Images/LandWaitFor.gif")" style="display: none" />
             </div>
         }
     </div>
 </div>
-
-   <!-- WPA Button Begin -->
-<script charset="utf-8" type="text/javascript" src="http://wpa.b.qq.com/cgi/wpa.php?key=XzgwMDA0NjI2M18xMzg2MTNfODAwMDQ2MjYzXw"></script>
+<!-- WPA Button Begin -->
+<!--  <script charset="utf-8" type="text/javascript" src="http://wpa.b.qq.com/cgi/wpa.php?key=XzgwMDA0NjI2M18xMzg2MTNfODAwMDQ2MjYzXw"></script>-->
 <!-- WPA Button End -->

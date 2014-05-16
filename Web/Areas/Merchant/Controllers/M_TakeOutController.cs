@@ -78,6 +78,8 @@ namespace Web.Areas.Merchant.Controllers
         {
             var takeOutModel = Factory.Get<IM_TakeOutModel>(SystemConst.IOC_Model.M_TakeOutModel);
             var takeOut = takeOutModel.Get(id);
+            (takeOut.MerchantID == LoginMerchant.ID).NotAuthorizedPage();
+
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "周边外卖-修改", "", WebTitleRemark);
             ViewBag.Title = webTitle;
@@ -111,21 +113,38 @@ namespace Web.Areas.Merchant.Controllers
             return JavaScript("window.location.href='" + Url.Action("Index", "M_TakeOut", new { Area = "Merchant" }) + "'");
         }
 
-        ///// <summary>
-        ///// 删除数据
-        ///// </summary>
-        ///// <param name="id"></param>
-        ///// <returns></returns>
-        //public ActionResult Delete(int id, int Hid)
-        //{
-        //    var takeOutModel = Factory.Get<IM_TakeOutModel>(SystemConst.IOC_Model.M_TakeOutModel);
-        //    var result = takeOutModel.Delete(id);
-        //    if (result.HasError)
-        //    {
-        //        return Alert(new Dialog(result.Error));
-        //    }
-        //    return JavaScript("window.location.href='" + Url.Action("Index", "M_TakeOut", new { Area = "Merchant" }) + "'");
-        //}
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult Delete(int id)
+        {
+            var takeOutModel = Factory.Get<IM_TakeOutModel>(SystemConst.IOC_Model.M_TakeOutModel);
+            var obj = takeOutModel.Get(id);
+            (obj != null).NotAuthorizedPage();
+            var result = takeOutModel.Delete(id);
+            if (result.HasError)
+            {
+                return Alert(new Dialog(result.Error));
+            }
+            return JavaScript("window.location.href='" + Url.Action("Index", "M_TakeOut", new { Area = "Merchant" }) + "'");
+        }
 
+        public ActionResult Detail(int id)
+        {
+            var takeOutDetailModel = Factory.Get<IM_TakeOutDetailModel>(SystemConst.IOC_Model.M_TakeOutDetailModel);
+            var list = takeOutDetailModel.List(id, LoginMerchant.ID);
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "周边外卖-商品信息", "", WebTitleRemark);
+            ViewBag.Title = webTitle;
+            ViewBag.Menu = 1;
+
+            if (list.Count == 0)
+            {
+                list.Add(new M_TakeOutDetail() { });
+            }
+            return View(list);
+        }
     }
 }

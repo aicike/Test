@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutMerchant.cshtml";
+}
+@section head{
+    <script src="@Url.Content("/ueditor/ueditor.config.js")" type="text/javascript"></script>
+    <script src="@Url.Content("/ueditor/ueditor.all.js")" type="text/javascript"></script>
+    <script>
+        var ue;
+        $(function () {
+
+            window.UEDITOR_HOME_URL = "/ueditor/";
+            //实例化编辑器
+            var options = {
+                initialFrameWidth: '100%',
+                initialFrameHeight: 200,
+                imageUrl: UEDITOR_HOME_URL + "net/imageUp_Advertorial.ashx",
+                imagePath: "",
+                imageManagerUrl: UEDITOR_HOME_URL + "net/imageManager_LibraryImageText.ashx",
+                imageManagerPath: "",
+                initialContent: ""
+            };
+
+            ue = UE.getEditor('editor1', options);
+
+            $("#btnInsert").click(function () {
+                $("#div_content").append('<div style="height: 30px; line-height: 30px;"><label>商品名称&nbsp;&nbsp;</label><input type="text" value="" style="width:200px" /> <label>价格(元)&nbsp;&nbsp;</label><input type="text" value="" style="width:40px; margin-right:20px;" /><a style="float: right">删除该项</a></div>');
+            });
+        });
+    </script>
+}
+@model List<Poco.MerchantPoco.M_TakeOutDetail>
+<div class="title">
+    @ViewBag.Title
+</div>
+<div class="body">
+    @using (Ajax.BeginForm("DetailAdd", "M_TakeOut", new { Area = "Merchant" }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {
+        <div style="height: 30px; margin-top: 10px">
+            <a class="button" id="btnInsert">新增商品</a>
+        </div>
+        <div style="border: 1px solid #d1d1d1; padding: 10px;" id="div_content">
+            @foreach (var item in Model)
+            {
+                <div style="height: 30px; line-height: 30px;">
+                    <label>
+                        商品名称&nbsp;&nbsp;</label><input type="text" value="@item.Title" style="width:200px" />
+                    <label>
+                        价格(元)&nbsp;&nbsp;</label><input type="text" value="@item.Price" style="width:40px; margin-right:20px;" /><a
+                            style="float: right">删除该项</a>
+                    <div style="clear: both">
+                    </div>
+                </div>
+            }
+        </div>
+        <div style="margin: 15px 0px 10px 0px;">
+            商品描述
+        </div>
+
+        <script type="text/plain" id="editor1" height="200px" width="100%" name="Content"></script>
+        
+
+        <input type="hidden" name="hidCommunity" id="hidCommunity" />
+
+        <div class="action">
+            <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }
+</div>
