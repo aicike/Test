@@ -53,11 +53,11 @@ namespace Business.MerchantBusiness
             {
                 if (i + 1 == communityIDs.Length)
                 {
-                    sql_add.AppendFormat("SELECT 0,{0},{1} ", communityIDs[i], newEntity.ID);
+                    sql_add.AppendFormat(" SELECT 0,{0},{1} ", communityIDs[i], newEntity.ID);
                 }
                 else
                 {
-                    sql_add.AppendFormat("SELECT 0,{0},{1} UNION ALL ", communityIDs[i], newEntity.ID);
+                    sql_add.AppendFormat(" SELECT 0,{0},{1} UNION ALL ", communityIDs[i], newEntity.ID);
                 }
             }
             base.SqlExecute(sql_add.ToString());
@@ -76,5 +76,38 @@ namespace Business.MerchantBusiness
             return result;
         }
 
+        [Transaction]
+        public Result AddDetail(int id, int LoginMerchantID, List<M_TakeOutDetail> list, string content)
+        {
+            Result result = new Result();
+            var newEntity = List().Where(a => a.ID == id && a.MerchantID == LoginMerchantID).AsNoTracking().FirstOrDefault();
+            if (newEntity == null)
+            {
+                result.Error = "参数错误，操作失败。";
+                return result;
+            }
+            newEntity.Content = content;
+            result = Edit(newEntity);
+            if (result.HasError)
+            {
+                return result;
+            }
+            //添加商品详细
+            StringBuilder sql = new StringBuilder();
+            sql.AppendFormat("DELETE M_TakeOutDetail WHERE M_TakeOutID={0} INSERT INTO dbo.M_TakeOutDetail(SystemStatus ,M_TakeOutID ,Title ,Price) ", id);
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (i + 1 == list.Count)
+                {
+                    sql.AppendFormat("SELECT 0,{0},'{1}',{2} ", id, list[i].Title, list[i].Price);
+                }
+                else
+                {
+                    sql.AppendFormat("SELECT 0,{0},'{1}',{2} UNION ALL ", id, list[i].Title, list[i].Price);
+                }
+            }
+            base.SqlExecute(sql.ToString());
+            return result;
+        }
     }
 }

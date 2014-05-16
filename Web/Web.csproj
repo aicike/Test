@@ -184,6 +184,7 @@
     <Compile Include="Controllers\BasisSetController.cs" />
     <Compile Include="Controllers\CardInfoController.cs" />
     <Compile Include="Controllers\CharacterController.cs" />
+    <Compile Include="Controllers\ClassifyController.cs" />
     <Compile Include="Controllers\ComplaintController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ExitController.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\OrderMTypeController.cs" />
     <Compile Include="Controllers\ParkingFeeController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\PropertyHouseController.cs" />
     <Compile Include="Controllers\PropertyFeeInfoController.cs" />
     <Compile Include="Controllers\RentalHouseController.cs" />
@@ -370,6 +372,11 @@
     <Content Include="Scripts\popup\jquery.popup.js" />
     <Content Include="Scripts\popup\jquery.popup.min.js" />
     <Content Include="Scripts\popup\popup.css" />
+    <Content Include="Scripts\timepicker\demos.css" />
+    <Content Include="Scripts\timepicker\jquery-ui-timepicker-addon.css" />
+    <Content Include="Scripts\timepicker\jquery-ui-timepicker-addon.js" />
+    <Content Include="Scripts\timepicker\jquery-ui-timepicker-zh-CN.js" />
+    <Content Include="Scripts\timepicker\jquery.ui.datepicker-zh-CN.js.js" />
     <Content Include="Scripts\topbar\juery.topbar.js" />
     <Content Include="Scripts\nivoSlider\bar\arrows.png" />
     <Content Include="Scripts\nivoSlider\bar\bar.css" />

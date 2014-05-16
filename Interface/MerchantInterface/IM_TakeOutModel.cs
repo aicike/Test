@@ -14,5 +14,7 @@ namespace Interface.MerchantInterface
         Result Add(M_TakeOut entity, int[] communityIDs);
 
         Result Edit(M_TakeOut entity, int[] communityIDs);
+
+        Result AddDetail(int id, int LoginMerchantID, List<M_TakeOutDetail> list, string content);
     }
 }

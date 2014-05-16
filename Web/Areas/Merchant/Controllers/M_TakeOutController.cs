@@ -133,6 +133,11 @@ namespace Web.Areas.Merchant.Controllers
 
         public ActionResult Detail(int id)
         {
+            var takeOutModel = Factory.Get<IM_TakeOutModel>(SystemConst.IOC_Model.M_TakeOutModel);
+            var takeOut = takeOutModel.Get(id);
+            (takeOut.MerchantID == LoginMerchant.ID).NotAuthorizedPage();
+            ViewBag.Content = takeOut.Content??"";
+
             var takeOutDetailModel = Factory.Get<IM_TakeOutDetailModel>(SystemConst.IOC_Model.M_TakeOutDetailModel);
             var list = takeOutDetailModel.List(id, LoginMerchant.ID);
             string WebTitleRemark = SystemConst.WebTitleRemark;
@@ -144,7 +149,26 @@ namespace Web.Areas.Merchant.Controllers
             {
                 list.Add(new M_TakeOutDetail() { });
             }
+            ViewBag.ID = id;
             return View(list);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Detail(int hidId, string hidItems, string Content)
+        {
+            var takeOutModel = Factory.Get<IM_TakeOutModel>(SystemConst.IOC_Model.M_TakeOutModel);
+            var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<M_TakeOutDetail>>(hidItems);
+            Result result = new Result();
+            if (list == null || list.Count == 0)
+            {
+                result.Error = "至少添加一条商品信息。";
+            }
+            else
+            {
+                result = takeOutModel.AddDetail(hidId, LoginMerchant.ID, list, Content);
+            }
+            return Json(result);
         }
     }
 }
