@@ -47,7 +47,14 @@ namespace Web.Areas.Merchant.Controllers
                 m_unlock.EnumDataStatus = (int)EnumDataStatus.None;
             }
             m_unlock.CreatDate = DateTime.Now;
-            var result = m_unlockModel.Add(m_unlock);
+
+            string hidCommunity = Request.Form["hidCommunity"];
+            if (hidCommunity == null || hidCommunity.Length == 0)
+            {
+                return JavaScript(AlertJS_NoTag(new Dialog("请选择小区。")));
+            }
+            var ids = hidCommunity.ConvertToIntArray(',');
+            var result = m_unlockModel.AddInfo(m_unlock, ids);
 
             if (result.HasError)
             {
@@ -61,6 +68,7 @@ namespace Web.Areas.Merchant.Controllers
         {
             var m_unlockModel = Factory.Get<IM_UnlockModel>(SystemConst.IOC_Model.M_UnlockModel);
             var item = m_unlockModel.GetInfoByID(LoginMerchant.ID, id);
+            ViewBag.Community = item.M_CommunityMappings.Select(a => a.AccountMainID).ToArray();
             return View(item);
         }
 
@@ -69,6 +77,7 @@ namespace Web.Areas.Merchant.Controllers
         public ActionResult Edit(M_Unlock m_unlock)
         {
             var m_unlockModel = Factory.Get<IM_UnlockModel>(SystemConst.IOC_Model.M_UnlockModel);
+            m_unlock.MerchantID = LoginMerchant.ID;
             if (m_unlock.IsPublish)
             {
                 m_unlock.EnumDataStatus = (int)EnumDataStatus.WaitPayMent;
@@ -79,13 +88,31 @@ namespace Web.Areas.Merchant.Controllers
                 m_unlock.PublishDate = null;
             }
 
-            return View();
+            string hidCommunity = Request.Form["hidCommunity"];
+            if (hidCommunity == null || hidCommunity.Length == 0)
+            {
+                return JavaScript(AlertJS_NoTag(new Dialog("请选择小区。")));
+            }
+            var ids = hidCommunity.ConvertToIntArray(',');
+            var result = m_unlockModel.EditInfo(m_unlock, ids);
+            if (result.HasError)
+            {
+                return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
+            }
+
+            return JavaScript("window.location.href='" + Url.Action("Index", "M_Unlock", new { Area = "Merchant" }) + "'");
         }
 
         public ActionResult Delete(int id)
         {
             var m_unlockModel = Factory.Get<IM_UnlockModel>(SystemConst.IOC_Model.M_UnlockModel);
-            return View();
+
+            var result = m_unlockModel.DeleteInfo(id, LoginMerchant.ID);
+            if (result.HasError)
+            {
+                return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
+            }
+            return JavaScript("window.location.href='" + Url.Action("Index", "M_Unlock", new { Area = "Merchant" }) + "'");
         }
     }
 }

@@ -62,5 +62,7 @@ namespace Poco.MerchantPoco
         /// 发布时间（审核通过时间）
         /// </summary>
         public DateTime? PublishDate { get; set; }
+
+        public virtual ICollection<M_CommunityMapping> M_CommunityMappings { get; set; }
     }
 }

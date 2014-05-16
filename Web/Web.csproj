@@ -151,7 +151,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Manager\ManagerAreaRegistration.cs" />
     <Compile Include="Areas\Merchant\Controllers\MerchantHomeController.cs" />
+    <Compile Include="Areas\Merchant\Controllers\M_MoveController.cs" />
+    <Compile Include="Areas\Merchant\Controllers\M_PipelineDredgeController.cs" />
     <Compile Include="Areas\Merchant\Controllers\M_TakeOutController.cs" />
     <Compile Include="Areas\Merchant\Controllers\M_UnlockController.cs" />
     <Compile Include="Areas\Merchant\MerchantAreaRegistration.cs" />
@@ -370,6 +373,11 @@
     <Content Include="Scripts\popup\jquery.popup.js" />
     <Content Include="Scripts\popup\jquery.popup.min.js" />
     <Content Include="Scripts\popup\popup.css" />
+    <Content Include="Scripts\timepicker\demos.css" />
+    <Content Include="Scripts\timepicker\jquery-ui-timepicker-addon.css" />
+    <Content Include="Scripts\timepicker\jquery-ui-timepicker-addon.js" />
+    <Content Include="Scripts\timepicker\jquery-ui-timepicker-zh-CN.js" />
+    <Content Include="Scripts\timepicker\jquery.ui.datepicker-zh-CN.js.js" />
     <Content Include="Scripts\topbar\juery.topbar.js" />
     <Content Include="Scripts\nivoSlider\bar\arrows.png" />
     <Content Include="Scripts\nivoSlider\bar\bar.css" />
@@ -844,6 +852,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Manager\Controllers\" />
+    <Folder Include="Areas\Manager\Models\" />
+    <Folder Include="Areas\Manager\Views\Shared\" />
     <Folder Include="Areas\Merchant\Models\" />
     <Folder Include="Areas\Merchant\Views\Shared\" />
     <Folder Include="Areas\System\Models\" />
@@ -1091,6 +1102,13 @@
     <Content Include="Areas\Merchant\Views\M_Unlock\Index.cshtml" />
     <Content Include="Areas\Merchant\Views\M_Unlock\Add.cshtml" />
     <Content Include="Areas\Merchant\Views\M_Unlock\Edit.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_PipelineDredge\Index.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_PipelineDredge\Add.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_PipelineDredge\Edit.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_Move\Index.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_Move\Add.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_Move\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\Web.config" />
     <None Include="Download\Property\物业停车费导入模板.xlsx" />
     <None Include="Download\Property\物业用户信息导入模板.xlsx" />
     <None Include="Download\Property\物业费导入模板.xlsx" />
