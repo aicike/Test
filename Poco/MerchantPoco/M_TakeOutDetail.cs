@@ -27,11 +27,6 @@ namespace Poco.MerchantPoco
         [StringLength(50, ErrorMessage = "长度小于50")]
         public string Title { get; set; }
 
-        /// <summary>
-        /// 详细内容
-        /// </summary>
-        [Display(Name = "内容")]
-        public string Content { get; set; }
 
         /// <summary>
         /// 单价
