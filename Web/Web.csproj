@@ -686,6 +686,7 @@
     <Content Include="ueditor\ueditor.parse.js" />
     <Content Include="ueditor\ueditor.parse.min.js" />
     <Content Include="Content\Style.css" />
+    <Content Include="Views\Shared\SystemMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\IOC.xml" />
