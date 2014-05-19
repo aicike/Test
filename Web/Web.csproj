@@ -151,6 +151,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Manager\Controllers\M_TakeOutController.cs" />
     <Compile Include="Areas\Manager\ManagerAreaRegistration.cs" />
     <Compile Include="Areas\Merchant\Controllers\MerchantHomeController.cs" />
     <Compile Include="Areas\Merchant\Controllers\M_MoveController.cs" />
@@ -681,6 +682,7 @@
     <Content Include="ueditor\third-party\video-js\video.dev.js" />
     <Content Include="ueditor\third-party\video-js\video.js" />
     <Content Include="ueditor\ueditor.all.js" />
+    <Content Include="Areas\Manager\Views\M_TakeOut\Index.cshtml" />
     <None Include="ueditor\ueditor.all.js2" />
     <Content Include="ueditor\ueditor.all.min.js" />
     <Content Include="ueditor\ueditor.config22.js" />
@@ -856,7 +858,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Manager\Controllers\" />
     <Folder Include="Areas\Manager\Models\" />
     <Folder Include="Areas\Manager\Views\Shared\" />
     <Folder Include="Areas\Merchant\Models\" />

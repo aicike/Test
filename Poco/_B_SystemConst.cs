@@ -173,6 +173,8 @@ namespace Poco
             //Action
             public const string History = "History";
             public const string Index = "Index";
+
+            public const string MerchantManager = "Manager";
         }
 
         public class IOC_Model
