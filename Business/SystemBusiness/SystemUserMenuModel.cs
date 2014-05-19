@@ -14,11 +14,13 @@ namespace Business
     {
         public List<SystemUserMenu> List_Cache()
         {
+            /*
+             * 屏蔽缓存
             var obj = CacheModel.GetCache<List<SystemUserMenu>>(SystemConst.Cache.SystemUserMenu);
             if (obj != null)
             {
                 return obj;
-            }
+            }*/
             var list = base.List(true).ToList();
             CacheModel.SetCache(SystemConst.Cache.SystemUserMenu, list);
             return list;

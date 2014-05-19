@@ -14,6 +14,8 @@ namespace Business
     {
         public List<Menu> List_Cache()
         {
+            /*
+             * 屏蔽缓存
             var obj = CacheModel.GetCache<List<Menu>>(SystemConst.Cache.Menu);
             if (obj != null)
             {
@@ -42,9 +44,11 @@ namespace Business
                     };
                 }));
                 return newList;
-            }
+            } 
+             */
             var list = base.List(true).ToList();
             CacheModel.SetCache(SystemConst.Cache.Menu, list);
+
             return list;
         }
 
@@ -136,7 +140,7 @@ namespace Business
         {
             List<Menu> list = List_Cache();
             list = list.Where(a => a.RoleMenus.Any(b => b.SystemStatus == (int)EnumSystemStatus.Active &&
-              roleIDs.Contains( b.RoleID))).OrderBy(a => a.Order).ToList();
+              roleIDs.Contains(b.RoleID))).OrderBy(a => a.Order).ToList();
             return list;
         }
 

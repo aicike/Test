@@ -20,11 +20,13 @@ namespace Business
 
         public List<MenuOption> List_Cache()
         {
+            /*
+             * 屏蔽缓存
             var obj = CacheModel.GetCache<List<MenuOption>>(SystemConst.Cache.MenuOption);
             if (obj != null)
             {
                 return obj;
-            }
+            }*/
             var list = base.List().ToList();
             CacheModel.SetCache(SystemConst.Cache.MenuOption, list);
             return list;

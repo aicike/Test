@@ -17,7 +17,7 @@
             {
                 if (ViewBag.Menu == item.Controller)
                 {
-            <li class="select"><a href="http://www.@(Poco.SystemConst.WebUrl)@(Url.Action(item.Action, item.Controller, new { Area = item.Area }, null))">
+            <li><a href="http://www.@(Poco.SystemConst.WebUrl)@(Url.Action(item.Action, item.Controller, new { Area = item.Area }, null))">
                 @item.Name
             </a>
                 <script>
