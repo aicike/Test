@@ -1,12 +1,11 @@
 ﻿@{
-
     Layout = "~/Views/Shared/_LayoutMerchant.cshtml";
-    ViewBag.Menu = 10;
+    ViewBag.Menu = 11;
 }
 @section head{
     <script>
     function updateInfo(id) {
-        var URL = "@Url.Action("Edit", "M_Unlock")"
+        var URL = "@Url.Action("Edit", "M_Move")"
         URL += "?id=" + id;
         JAlert({
             Message: "修改数据后会重新审核，您确定修改吗？",
@@ -25,13 +24,13 @@
     }
     </script>
 }
-@model PagedList<Poco.MerchantPoco.M_Unlock>
+@model PagedList<Poco.MerchantPoco.M_Move>
 <div class="title">
-    开锁换锁
+    搬家
 </div>
 <div class="body">
     <div class="option">
-        @Html.ActionLink("发布信息", "Add", "M_Unlock", new { HostName = ViewBag.HostName }, null, false)
+        @Html.ActionLink("发布信息", "Add", "M_Move", new { HostName = ViewBag.HostName }, null, false)
     </div>
     <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
         <tr>
@@ -90,8 +89,8 @@
                     @item.PublishDate
                 </td>
                 <td class="operation">
-                    @Html.ActionLink("修改", "Edit", "M_Unlock", new { HostName = ViewBag.HostName, ID = item.ID }, new { style = "padding-right:5px", onclick = "return updateInfo(" + item.ID + ")" }, false)
-                    @Ajax.ActionLink("删除", "Delete", "M_Unlock", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('“确定删除?”','" + Url.Action("Delete", "M_Unlock", new { HostName = ViewBag.HostName, ID = item.ID }) + "',null)" }, false)
+                    @Html.ActionLink("修改", "Edit", "M_Move", new { HostName = ViewBag.HostName, ID = item.ID }, new { style = "padding-right:5px", onclick = "return updateInfo(" + item.ID + ")" }, false)
+                    @Ajax.ActionLink("删除", "Delete", "M_Move", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('“确定删除?”','" + Url.Action("Delete", "M_Move", new { HostName = ViewBag.HostName, ID = item.ID }) + "',null)" }, false)
                 </td>
             </tr>
         }

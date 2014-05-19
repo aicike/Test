@@ -636,11 +636,11 @@ namespace Business
 
             EmailInfo emailInfo = new EmailInfo();
             emailInfo.To = email;
-            emailInfo.Subject = "IMtimely - 找回密码";
+            emailInfo.Subject = SystemConst.PlatformName+" - 找回密码";
             emailInfo.IsHtml = true;
             emailInfo.UseSSL = false;
             emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您在{0}提交了邮箱找回密码请求，请点击&nbsp;<a href='{1}' target='_blank'>此处</a>&nbsp;修改密码。", time1, url) +
-                string.Format("为了保证您的帐号安全，该链接有效期为24小时，并且点击一次后失效！<br/><br/>ImTimely<br/><br/>{0}", time2);
+                string.Format("为了保证您的帐号安全，该链接有效期为24小时，并且点击一次后失效！<br/><br/>{1}<br/><br/>{0}", time2, SystemConst.PlatformName);
             try
             {
                 SendEmail.SendMailAsync(emailInfo);

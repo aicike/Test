@@ -79,6 +79,7 @@ namespace Web.Controllers
             {
                 ViewBag.IsError = 0;
             }
+            ViewBag.Title = "商户注册-" + SystemConst.PlatformName;
 
             return View();
         }

@@ -64,6 +64,6 @@ namespace Poco.MerchantPoco
         /// </summary>
         public DateTime? PublishDate { get; set; }
 
-
+        public virtual ICollection<M_CommunityMapping> M_CommunityMappings { get; set; }
     }
 }

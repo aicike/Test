@@ -186,6 +186,7 @@ namespace Web.Controllers
         public ActionResult AppQrCode(int AMID)
         {
             ViewBag.AMID = AMID;
+            ViewBag.Title = "二维码扫描 - " + SystemConst.PlatformName+ " - 沟通零距离";
             return View();
         }
         /// <summary>
@@ -240,6 +241,8 @@ namespace Web.Controllers
             var AccountModel = AccountMainModel.Get(AMID);
             if (AccountModel.AndroidDownloadPath != null)
                 AccountModel.AndroidDownloadPath = "http://" + SystemConst.WebUrl + Url.Content(AccountModel.AndroidDownloadPath ?? "");
+
+            ViewBag.Title = "用户端二维码 - " + SystemConst.PlatformName + " - 沟通零距离";
             return View(AccountModel);
         }
 
@@ -253,6 +256,7 @@ namespace Web.Controllers
             var AccountModel = AccountMainModel.Get(AMID);
             if (AccountModel.AndroidSellDownloadPath != null)
                 AccountModel.AndroidSellDownloadPath = "http://" + SystemConst.WebUrl + Url.Content(AccountModel.AndroidSellDownloadPath ?? "");
+            ViewBag.Title = "销售端二维码 - " + SystemConst.PlatformName + " - 沟通零距离";
             return View(AccountModel);
         }
 

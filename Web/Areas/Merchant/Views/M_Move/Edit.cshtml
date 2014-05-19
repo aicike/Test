@@ -1,13 +1,13 @@
 ﻿@{
-
+   
     Layout = "~/Views/Shared/_LayoutMerchant.cshtml";
 
-    ViewBag.Menu = 10;
+    ViewBag.Menu = 11;
+    int[] Community = ViewBag.Community;
 }
 @section head{
     <script src="@Url.Content("/ueditor/ueditor.config.js")" type="text/javascript"></script>
     <script src="@Url.Content("/ueditor/ueditor.all.js")" type="text/javascript"></script>
-
     <script>
         $(function () {
             window.UEDITOR_HOME_URL = "/ueditor/";
@@ -23,6 +23,9 @@
             };
 
             var ue = UE.getEditor('editor', options);
+
+            var IsPublish = "@Model.IsPublish";
+            $("#IsPublish").val(IsPublish);
 
             $("#btnSubmit").click(function () {
                 var cids = GetCommunity();
@@ -49,17 +52,16 @@
             });
         });
     </script>
-
 }
-@model Poco.MerchantPoco.M_Unlock
+@model Poco.MerchantPoco.M_Move
 <div class="title">
-    开锁换锁 - 创建信息
+    搬家 - 修改信息
 </div>
 <div class="body">
-    @using (Ajax.BeginForm("Add", "M_Unlock", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    @using (Ajax.BeginForm("Edit", "M_Move", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
         <fieldset style="font-size: 14px">
-            <legend>创建信息</legend>
+            <legend>修改信息</legend>
             <table style="width: 100%;">
                 <tr>
                     <td class="tdTitle" style="width: 150px">
@@ -68,6 +70,12 @@
                     <td class="tdField">@Html.TextBoxFor(a => a.Title, new { style = "width:300px" })
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Title)
+                    @Html.HiddenFor(a=>a.ID)
+                    @Html.HiddenFor(a=>a.MerchantID)
+                    @Html.HiddenFor(a=>a.CreatDate)
+                    @Html.HiddenFor(a=>a.PublishDate)
+                    @Html.HiddenFor(a=>a.EnumDataStatus)
+                   
                     </td>
                 </tr>
                 <tr>
@@ -101,13 +109,12 @@
                     <td>
                     </td>
                 </tr>
-                <tr>
+                 <tr>
                     <td class="tdTitle">
                         <span class="Identification">*</span> 绑定小区
                     </td>
                     <td class="tdField" colspan="2">
-                        @Html.Partial("Community")
-                        <input type="hidden" name="hidCommunity" id="hidCommunity" />
+                        @Html.Partial("Community", Community)
                     </td>
                 </tr>
                 <tr style="height: 300px">
@@ -115,12 +122,14 @@
                         <span class="Identification">*</span> 内容简介
                     </td>
                     <td class="tdField" colspan="2">
-                        <script type="text/plain" id="editor" height="300px" name="Content"></script>
+                        <script type="text/plain" id="editor" height="300px" name="Content">@Html.Raw(Model.Content)</script>
+                         <input type="hidden" name="hidCommunity" id="hidCommunity" />
                     </td>
                 </tr>
             </table>
         </fieldset>
-          <div class="action">
+        
+        <div class="action">
             <input type="submit" id="btnSubmit" value="保存" class="button" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
         </div>
     }

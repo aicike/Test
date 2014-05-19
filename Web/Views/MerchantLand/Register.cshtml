@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "商户注册-ImTimely";
+
     Layout = "~/Views/Shared/_LayoutDefault.cshtml";
 }
 @section head{
@@ -52,7 +52,7 @@
 @model Poco.Merchant
 <div class="main">
     <div class="title">
-        ImTimely - 商户注册
+        商户注册
     </div>
     <div class="body">
         @using (Html.BeginForm("Register", "MerchantLand", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
