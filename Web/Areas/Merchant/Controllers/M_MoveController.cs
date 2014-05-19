@@ -21,11 +21,14 @@ namespace Web.Areas.Merchant.Controllers
         {
             var m_moveModel = Factory.Get<IM_MoveModel>(SystemConst.IOC_Model.M_MoveModel);
             var m_move = m_moveModel.GetListByMID(LoginMerchant.ID).ToPagedList(id ?? 1, 15);
+            ViewBag.Title = "搬家 - " + SystemConst.PlatformName;
             return View(m_move);
         }
 
         public ActionResult Add()
         {
+
+            ViewBag.Title = "搬家 - 添加信息- " + SystemConst.PlatformName;
             return View();
         }
 
@@ -66,6 +69,7 @@ namespace Web.Areas.Merchant.Controllers
             var m_moveModel = Factory.Get<IM_MoveModel>(SystemConst.IOC_Model.M_MoveModel);
             var item = m_moveModel.GetInfoByID(LoginMerchant.ID, id);
             ViewBag.Community = item.M_CommunityMappings.Select(a => a.AccountMainID).ToArray();
+            ViewBag.Title = "搬家 - 修改信息- " + SystemConst.PlatformName; ;
             return View(item);
         }
 

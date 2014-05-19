@@ -24,11 +24,13 @@ namespace Web.Areas.Merchant.Controllers
         {
             var m_unlockModel = Factory.Get<IM_UnlockModel>(SystemConst.IOC_Model.M_UnlockModel);
             var m_unlock = m_unlockModel.GetListByMID(LoginMerchant.ID).ToPagedList(id ?? 1, 15);
+            ViewBag.Title = "开锁换锁 - " + SystemConst.PlatformName;
             return View(m_unlock);
         }
 
         public ActionResult Add()
         {
+            ViewBag.Title = "开锁换锁 - 添加信息- " + SystemConst.PlatformName;
             return View();
         }
 
@@ -69,6 +71,7 @@ namespace Web.Areas.Merchant.Controllers
             var m_unlockModel = Factory.Get<IM_UnlockModel>(SystemConst.IOC_Model.M_UnlockModel);
             var item = m_unlockModel.GetInfoByID(LoginMerchant.ID, id);
             ViewBag.Community = item.M_CommunityMappings.Select(a => a.AccountMainID).ToArray();
+            ViewBag.Title = "开锁换锁 - 修改信息- " + SystemConst.PlatformName;
             return View(item);
         }
 

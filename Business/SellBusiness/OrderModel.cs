@@ -573,11 +573,11 @@ namespace Business
             switch (status)
             {
                 case EnumOrderStatus.Revoke:
-                    subject = "ImTimely - 用户取消订单";
+                    subject = SystemConst.PlatformName+" - 用户取消订单";
                     msg = string.Format("用户取消订单，用户【{0}】-订单号【{1}】。", order.OrderUserInfo.Receiver, order.OrderNum);
                     break;
                 case EnumOrderStatus.Payment:
-                    subject = "ImTimely - 用户已付款";
+                    subject = SystemConst.PlatformName + " - 用户已付款";
                     msg = string.Format("用户已付款，用户【{0}】-订单号【{1}】。", order.OrderUserInfo.Receiver, order.OrderNum);
                     break;
             }
@@ -610,7 +610,7 @@ namespace Business
                 {
                     EmailInfo emailInfo = new EmailInfo();
                     emailInfo.To = email;
-                    emailInfo.Subject = "ImTimely - 用户下单";
+                    emailInfo.Subject = SystemConst.PlatformName + " - 用户下单";
                     emailInfo.IsHtml = true;
                     emailInfo.UseSSL = false;
                     emailInfo.Body = string.Format("用户下单，订单号【{0}】。", order.OrderNum);

@@ -21,11 +21,13 @@ namespace Web.Areas.Merchant.Controllers
         {
             var m_pipelineModel = Factory.Get<IM_PipelineDredgeModel>(SystemConst.IOC_Model.M_PipelineDredgeModel);
             var m_pipelinedredg = m_pipelineModel.GetListByMID(LoginMerchant.ID).ToPagedList(id ?? 1, 15);
+            ViewBag.Title = "管道疏通 - " + SystemConst.PlatformName;
             return View(m_pipelinedredg);
         }
 
         public ActionResult Add()
         {
+            ViewBag.Title = "管道疏通 - 添加信息 - " + SystemConst.PlatformName;
             return View();
         }
 
@@ -66,6 +68,7 @@ namespace Web.Areas.Merchant.Controllers
             var m_pipelineModel = Factory.Get<IM_PipelineDredgeModel>(SystemConst.IOC_Model.M_PipelineDredgeModel);
             var item = m_pipelineModel.GetInfoByID(LoginMerchant.ID, id);
             ViewBag.Community = item.M_CommunityMappings.Select(a => a.AccountMainID).ToArray();
+            ViewBag.Title = "管道疏通 - 修改信息- " + SystemConst.PlatformName;
             return View(item);
         }
 

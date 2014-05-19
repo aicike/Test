@@ -169,6 +169,7 @@ namespace Web.Controllers
         public ActionResult AppQrCode(int AMID)
         {
             ViewBag.AMID = AMID;
+            ViewBag.Title = "二维码扫描 - " + SystemConst.PlatformName + " - 沟通零距离";
             return View();
         }
 
