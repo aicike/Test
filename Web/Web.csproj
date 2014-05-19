@@ -677,8 +677,8 @@
     <Content Include="ueditor\third-party\video-js\video-js.swf" />
     <Content Include="ueditor\third-party\video-js\video.dev.js" />
     <Content Include="ueditor\third-party\video-js\video.js" />
-    <None Include="ueditor\ueditor.all.js1" />
     <Content Include="ueditor\ueditor.all.js" />
+    <None Include="ueditor\ueditor.all.js2" />
     <Content Include="ueditor\ueditor.all.min.js" />
     <Content Include="ueditor\ueditor.config22.js" />
     <Content Include="ueditor\ueditor.config.js" />
