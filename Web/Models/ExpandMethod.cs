@@ -29,7 +29,7 @@ namespace System
                     value = "未提交审核";
                     break;
                 case Poco.Enum.EnumDataStatus.WaitPayMent:
-                    value = "等待付款";
+                    value = "审核中";
                     break;
             }
             return value;

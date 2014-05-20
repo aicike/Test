@@ -11,22 +11,22 @@
     </div>
     <table class="tableList" cellpadding="0" cellspacing="0">
         <tr>
-            <th style="width: 50px;">
+            <th style="width: 150px;">
                 商户
             </th>
-            <th style="width: 90px;">
+            <th style="width: 150px;">
                 标题
             </th>
-            <th style="width: 90px;">
+            <th>
                 商品名称
             </th>
-            <th style="width: 200px;">
+            <th style="width: 80px;">
                 审核状态
             </th>
-            <th style="width: 150px;">
+            <th style="width: 80px;">
                 发布状态
             </th>
-            <th style="width: 200px;">
+            <th style="width: 100px;">
                 操作
             </th>
         </tr>
@@ -39,41 +39,47 @@
                     @item.Title
                 </td>
                 <td>
-                    @foreach (var detail in item.M_TakeOutDetails)
+                    @{var details = item.M_TakeOutDetails.ToList();}
+                    @for (int i = 0; i < details.Count; i++)
                     {
-                        <div>
-                            detail.Title</div>
+                        if (i + 1 == details.Count)
+                        { 
+ @details[i].Title
+                        }
+                        else
+                        { 
+ @details[i].Title @:,
+                                                                }
                     }
                 </td>
                 <td>
                     @item.EnumDataStatus.EnumDataStatusGetValue()
                 </td>
                 <td>
-                    @item.IsPublish==true?"已发布":"未发布"
+                    @(item.IsPublish == true ? "已发布" : "未发布")
                 </td>
                 <td class="operation" style="line-height: 20px">
                     @Html.ActionLink("详细", "Detail", "M_TakeOut", new { Area = "Manager", id = item.ID }, null, true)
-                    @Html.ActionLink("修改状态", "Edit", "M_TakeOut", new { Area = "Manager", id = item.ID }, null, true)
                 </td>
             </tr>
         }
     </table>
     <div class="pages">
         @Html.Pager(Model, new PagerOptions
-           {
-               PageIndexParameterName = "ID",
-               CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
-               NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
-               NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
-               CssClass = "manage_pages pages",
-               SeparatorHtml = "&nbsp;",
-               AutoHide = false,
-               /*LastPageText = "Last",
-               FirstPageText = "First",
-               PrevPageText = "Back",
-               NextPageText = "Next",*/
-               PageIndexOutOfRangeErrorMessage = "Page index out of range.",
-               ShowFirstLast = false
-           })
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
     </div>
 </div>

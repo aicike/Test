@@ -1,0 +1,82 @@
+﻿﻿@{
+   ViewBag.Title = "周边外卖";
+   Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
+   ViewBag.Menu = Poco.SystemConst.Menu.MerchantManager;
+}
+@section head{
+   <script>
+       $(".btnSub").click(function () {
+           var status = $(this).attr("status");
+           $("#hidStatus").val(status);
+       });
+   </script>
+}
+@model Poco.MerchantPoco.M_TakeOut
+<div class="title">
+   周边外卖</div>
+<div class="body">
+   @using (Ajax.BeginForm("Detail", "M_TakeOut", new { Area = "Manager" }, new AjaxOptions() { UpdateTargetId = "alert" }))
+   {
+       <table style="width: 100%" class="tableForm">
+           <tr>
+               <td colspan="2">
+                   审核状态：@Model.EnumDataStatus.EnumDataStatusGetValue()
+               </td>
+               <td style="width: 33%">
+                   发布状态：@(Model.IsPublish == true ? "已发布" : "未发布")
+               </td>
+           </tr>
+           <tr>
+               <td colspan="2">
+                   名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：@Model.Title （订餐电话：@Model.Phone）
+               </td>
+               <td style="width: 33%">
+                   送&nbsp;&nbsp;餐&nbsp;&nbsp;费：@(Model.TakeOutPrice == 0 ? "免费" : Model.TakeOutPrice.ToString("C"))
+               </td>
+           </tr>
+           <tr>
+               <td colspan="3">
+                   发布小区：@foreach (var item in Model.M_CommunityMappings)
+                        {<label style="margin-right: 10px;">@item.AccountMain.Name</label>
+                        }
+               </td>
+           </tr>
+           <tr>
+               <td colspan="3">
+                   <div style="float: left">
+                       商品名称：</div>
+                   <div style="float: left">
+                       @foreach (var item in Model.M_TakeOutDetails)
+                       {
+                           <div style="margin-bottom: 5px;">
+                               <div style="width: 400px; float: left">@item.Title</div>
+                               <div style="float: left">@item.Price.ToString("C")</div>
+                               <div style="clear: both">
+                               </div>
+                           </div>
+                       }
+                   </div>
+                   <div style="clear: both">
+                   </div>
+               </td>
+           </tr>
+           <tr>
+               <td colspan="3" style="vertical-align: middle">
+                   <div>
+                       商品详细：</div>
+                   <div style="padding: 10px; border: 1px solid #d1d1d1; margin-top: 8px;">
+                       @if (Model.Content != null)
+                       { 
+                           @Html.Raw(Model.Content);
+                       }
+                   </div>
+               </td>
+           </tr>
+       </table>
+       @Html.HiddenFor(a=>a.ID)
+       <input type="hidden" id="hidStatus" name="hidStatus"/>
+       <div class="action">
+           <input type="submit" id="btnSubmit1" value="审核通过" class="button btnSub" status="1" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" id="btnSubmit2" value="审核不通过" class="button btnSub" status="0" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="返回" onclick="location.href='@ViewBag.RawUrl'" class="button" />
+       </div>
+   }
+</div>

@@ -47,7 +47,19 @@
             });
 
             $("#btnSubmit").click(function () {
-                var isOk = true;
+               JAlert({
+                   Message: "修改后需要重新提交审核，是否确定修改？",
+                   DialogType: "confirm",
+                   BtnOk: "确定",
+                   BtnOkClick: "$(this).dialog('close'); postData();",
+                   BtnCancel: "取消",
+                   BtnCancelClick: "$(this).dialog('close');return false;"
+               });
+           });
+       });
+
+       function postData() {
+          var isOk = true;
                 $(":text").each(function (i, n) {
                     if ($(n).val().length == 0) {
                         isOk = false;
@@ -94,8 +106,7 @@
                         }
                     },"json");
                 }
-            });
-        });
+                }
     </script>
 }
 @model List<Poco.MerchantPoco.M_TakeOutDetail>

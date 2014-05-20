@@ -104,6 +104,9 @@ namespace Web.Areas.Merchant.Controllers
             {
                 return Alert(new Dialog("请选择小区。"));
             }
+            //判断之前的状态，如果是已审核或正在审核，修改后变为等待审核
+            M_TakeOut.EnumDataStatus = (int)EnumDataStatus.None;
+            M_TakeOut.IsPublish = false;
             var ids = hidCommunity.ConvertToIntArray(',');
             var result = takeOutModel.Edit(M_TakeOut, ids);
             if (result.HasError)
@@ -136,7 +139,7 @@ namespace Web.Areas.Merchant.Controllers
             var takeOutModel = Factory.Get<IM_TakeOutModel>(SystemConst.IOC_Model.M_TakeOutModel);
             var takeOut = takeOutModel.Get(id);
             (takeOut.MerchantID == LoginMerchant.ID).NotAuthorizedPage();
-            ViewBag.Content = takeOut.Content??"";
+            ViewBag.Content = takeOut.Content ?? "";
 
             var takeOutDetailModel = Factory.Get<IM_TakeOutDetailModel>(SystemConst.IOC_Model.M_TakeOutDetailModel);
             var list = takeOutDetailModel.List(id, LoginMerchant.ID);
@@ -158,6 +161,8 @@ namespace Web.Areas.Merchant.Controllers
         public ActionResult Detail(int hidId, string hidItems, string Content)
         {
             var takeOutModel = Factory.Get<IM_TakeOutModel>(SystemConst.IOC_Model.M_TakeOutModel);
+            var takeOut = takeOutModel.Get(hidId);
+            (takeOut.MerchantID == LoginMerchant.ID).NotAuthorizedPage();
             var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<M_TakeOutDetail>>(hidItems);
             Result result = new Result();
             if (list == null || list.Count == 0)
@@ -169,6 +174,41 @@ namespace Web.Areas.Merchant.Controllers
                 result = takeOutModel.AddDetail(hidId, LoginMerchant.ID, list, Content);
             }
             return Json(result);
+        }
+
+
+        public ActionResult Check(int id)
+        {
+            var takeOutModel = Factory.Get<IM_TakeOutModel>(SystemConst.IOC_Model.M_TakeOutModel);
+            var obj = takeOutModel.Get(id);
+            (obj != null).NotAuthorizedPage();
+            obj.EnumDataStatus = (int)EnumDataStatus.WaitPayMent;
+            var result = takeOutModel.Edit(obj);
+            if (result.HasError)
+            {
+                return Alert(new Dialog(result.Error));
+            }
+            return JavaScript("window.location.href='" + Url.Action("Index", "M_TakeOut", new { Area = "Merchant" }) + "'");
+        }
+
+        public ActionResult Publish(int id, int status)
+        {
+            var takeOutModel = Factory.Get<IM_TakeOutModel>(SystemConst.IOC_Model.M_TakeOutModel);
+            var obj = takeOutModel.Get(id);
+            (obj != null).NotAuthorizedPage();
+            if (obj.EnumDataStatus != (int)EnumDataStatus.Enabled)
+            {
+                false.NotAuthorizedPage();
+            }
+            obj.IsPublish = status == 0 ? false : true;
+            obj.PublishDate = DateTime.Now;
+            var result = takeOutModel.Edit(obj);
+            if (result.HasError)
+            {
+                return Alert(new Dialog(result.Error));
+            }
+            return JavaScript("window.location.href='" + Url.Action("Index", "M_TakeOut", new { Area = "Merchant" }) + "'");
+
         }
     }
 }

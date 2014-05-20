@@ -5,22 +5,33 @@
 @section head{
     <script>
         $(function () {
-            $("#btnSubmit").click(function () {
-                var cids = GetCommunity();
-                if (cids == undefined || cids.length == 0) {
-                    JAlert({
-                        Message: "请选择小区。",
-                        DialogType: "Ok",
-                        BtnOk: "确定"
-                    });
-                    $("#hidCommunity").val("");
-                    return false;
-                } else {
-                    $("#hidCommunity").val(cids);
-                    return true;
-                }
+            $("#btnSubmit2").click(function () {
+                JAlert({
+                    Message: "修改后需要重新提交审核，是否确定修改？",
+                    DialogType: "confirm",
+                    BtnOk: "确定",
+                    BtnOkClick: " postData();",
+                    BtnCancel: "取消",
+                    BtnCancelClick: "$(this).dialog('close');return false;"
+                });
             });
         });
+        function postData() {
+            var cids = GetCommunity();
+            if (cids == undefined || cids.length == 0) {
+                JAlert({
+                    Message: "请选择小区。",
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+                $("#hidCommunity").val("");
+                return false;
+            } else {
+                $("#hidCommunity").val(cids);
+                $("#btnSubmit").click();
+                return true;
+            }
+        }
     </script>
 }
 @model Poco.MerchantPoco.M_TakeOut
@@ -75,7 +86,8 @@
         <input type="hidden" name="hidCommunity" id="hidCommunity" />
 
         <div class="action">
-            <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+            <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px;display:none"/>
+           <input type="button" id="btnSubmit2" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
         </div>
     }
 </div>
