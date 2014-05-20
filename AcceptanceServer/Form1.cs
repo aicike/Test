@@ -101,7 +101,7 @@ namespace AcceptanceServer
                 {
 
                     EmailInfo emailInfo = new EmailInfo();
-                    emailInfo.To = "shuangqi.wu@imtimely.com";
+                    emailInfo.To = "176534021@qq.com";
                     emailInfo.Subject = "ImTimely - 聊天服务出错！请速检查（5222）";
                     emailInfo.IsHtml = true;
                     emailInfo.UseSSL = false;

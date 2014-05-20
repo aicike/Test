@@ -219,7 +219,7 @@ namespace Web.Areas.System.Controllers
                 emailInfo.Subject = SystemConst.PlatformName+" - 密码重置成功";
                 emailInfo.IsHtml = true;
                 emailInfo.UseSSL = false;
-                emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您的{1}账号密码重置成功,<a href='http://{0}.ImTimely.com' target='_blank'>请点击此处</a>&nbsp;登录。", account.Account_AccountMains.FirstOrDefault().AccountMain.HostName, SystemConst.PlatformName) +
+                emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您的{1}账号密码重置成功,<a href='http://{0}.{2}' target='_blank'>请点击此处</a>&nbsp;登录。", account.Account_AccountMains.FirstOrDefault().AccountMain.HostName, SystemConst.PlatformName, SystemConst.WebUrl) +
                                  string.Format("登录名为您当前邮箱账号。<br/> 密码：{0}<br/>", LoginPwd) +
                                  string.Format("<br/>为了保证您的帐号安全，请尽快更改你的密码！(登录后点击设置更改)<br/><br/>{1}<br/><br/>{0}", DateTime.Now.ToString("yyyy-MM-dd"), SystemConst.PlatformName);
                 try

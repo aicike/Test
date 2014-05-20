@@ -16,7 +16,9 @@ namespace ShortURL.WCF
             URLMapModel model = new URLMapModel();
             string shrotURL = null;
             string error = model.SaveShorUrl(fullUrl, out shrotURL);
-            shrotURL = "http://url.imtimely.com/" + shrotURL;
+            string url = System.Configuration.ConfigurationManager.AppSettings["WebUrl"];
+            shrotURL = string.Format("http://url.{0}/{1}", url, shrotURL);
+
             return new string[] { error, shrotURL };
         }
 
