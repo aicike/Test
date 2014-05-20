@@ -16,6 +16,9 @@
         var isTrue = true;
         var Cnt = 0;
         var UpImgUrl = '@Url.Action("UpImg", "Ajax", new { HostName = ViewBag.HostName })';
+        $.ajaxSetup({ 
+           async: false 
+        }); 
         $(function () {
               var jcrop_api, boundx, boundy;
               var tempC;
@@ -159,10 +162,14 @@
             });
 
             $("#btnSubmit").click(function () {
-                if (checkEmail() == false) {
+               checkEmail();
+                if (EmailRight== false) {
+                    EmailRight = true;
                     return false;
                 }
-                if (checkPhone() == false) {
+                checkPhone();
+                if ( PhoneRight== false) {
+                    PhoneRight = true;
                     return false;
                 }
                 var roleidlength = $(".checkbox_roleid:checked").length;
@@ -234,14 +241,15 @@
             });
         });
 
-        
+       var PhoneRight = false;
+       var EmailRight = false;
         function checkEmail() {
             var values = $("#Email").val();
             if (values != "" && values != undefined) {
                 var YZUrl = '@Url.Action("OnlyValidation", "Ajax", new { Area = "", HostName = "" })';
                 $.post(YZUrl, { tableName: "Account", field: "Email", value: values }, function (result) {
                     if (result == "True") {
-                        return true;
+                        EmailRight = true;
                     }
                     else {
                         JAlert({
@@ -249,7 +257,7 @@
                             DialogType: "Ok",
                             BtnOk: "确定"
                         });
-                        return false;
+                          EmailRight = false;
                     }
                 });
             }
@@ -262,7 +270,7 @@
                 var YZUrl = '@Url.Action("OnlyValidation", "Ajax", new { Area = "", HostName = "" })';
                 $.post(YZUrl, { tableName: "Account", field: "Phone", value: values }, function (result) {
                     if (result == "True") {
-                        return true;
+                        PhoneRight = true;
                     }
                     else {
                         JAlert({
@@ -270,7 +278,7 @@
                             DialogType: "Ok",
                             BtnOk: "确定"
                         });
-                        return false;
+                        PhoneRight = false;
                     }
                 });
             }

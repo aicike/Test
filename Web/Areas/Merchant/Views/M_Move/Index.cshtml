@@ -69,21 +69,7 @@
                     @item.CreatDate.ToString("yyyy-MM-dd HH:mm")
                 </td>
                 <td>
-                    @switch (item.EnumDataStatus)
-                    {
-                        case (int)Poco.Enum.EnumDataStatus.None:
-                        @:未提交审核
-                            break;
-                        case (int)Poco.Enum.EnumDataStatus.Disabled:
-                        @:审核未通过
-                            break;
-                        case (int)Poco.Enum.EnumDataStatus.WaitPayMent:
-                        @:审核中
-                            break;
-                        case (int)Poco.Enum.EnumDataStatus.Enabled:
-                        @:审核以通过
-                                                break;
-                    }
+                   @item.EnumDataStatus.EnumDataStatusGetValue()
                 </td>
                 <td>
                     @item.PublishDate

@@ -151,6 +151,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Manager\Controllers\MoveController.cs" />
+    <Compile Include="Areas\Manager\Controllers\PipelineDredgeController.cs" />
+    <Compile Include="Areas\Manager\Controllers\UnlockController.cs" />
     <Compile Include="Areas\Manager\ManagerAreaRegistration.cs" />
     <Compile Include="Areas\Merchant\Controllers\MerchantHomeController.cs" />
     <Compile Include="Areas\Merchant\Controllers\M_MoveController.cs" />
@@ -681,6 +684,10 @@
     <Content Include="ueditor\third-party\video-js\video.dev.js" />
     <Content Include="ueditor\third-party\video-js\video.js" />
     <Content Include="ueditor\ueditor.all.js" />
+    <Content Include="Areas\Manager\Views\Unlock\Index.cshtml" />
+    <Content Include="Areas\Manager\Views\Move\Index.cshtml" />
+    <Content Include="Areas\Manager\Views\PipelineDredge\Index.cshtml" />
+    <Content Include="Areas\Manager\Views\Unlock\UnlockInfo.cshtml" />
     <None Include="ueditor\ueditor.all.js2" />
     <Content Include="ueditor\ueditor.all.min.js" />
     <Content Include="ueditor\ueditor.config22.js" />
@@ -856,7 +863,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Manager\Controllers\" />
     <Folder Include="Areas\Manager\Models\" />
     <Folder Include="Areas\Manager\Views\Shared\" />
     <Folder Include="Areas\Merchant\Models\" />
@@ -1318,13 +1324,13 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>16123</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://tllhs.imtimely.com/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
+          <UseCustomServer>True</UseCustomServer>
           <CustomServerUrl>http://192.168.1.138</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>

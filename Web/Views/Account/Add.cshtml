@@ -14,6 +14,9 @@
         var isCommit = true; //验证只能连续点击一次添加按钮
         var Cnt = 0;
         var UpImgUrl = '@Url.Action("UpImg", "Ajax", new { HostName = ViewBag.HostName })';
+        $.ajaxSetup({ 
+           async: false 
+        }); 
         $(function () {
             var CheckIsExistAdminUrl = '@Url.Action("CheckIsExistAdmin", "Account")';
 
@@ -152,12 +155,17 @@
                     }
                 });
             });
+             
 
             $("#btnSubmit").click(function () {
-                if (checkEmail() == false) {
+                checkEmail();
+                if (EmailRight== false) {
+                    EmailRight = true;
                     return false;
                 }
-                if (checkPhone() == false) {
+                checkPhone();
+                if ( PhoneRight== false) {
+                    PhoneRight = true;
                     return false;
                 }
                 var roleidlength = $(".checkbox_roleid:checked").length;
@@ -229,13 +237,15 @@
                 $(":radio").attr("checked", false)
             });
         });
+       var PhoneRight = false;
+       var EmailRight = false;
         function checkEmail() {
             var values = $("#Account_Email").val();
             if (values != "" && values != undefined) {
                 var YZUrl = '@Url.Action("OnlyValidation", "Ajax", new { Area = "", HostName = "" })';
                 $.post(YZUrl, { tableName: "Account", field: "Email", value: values }, function (result) {
                     if (result == "True") {
-                        return true;
+                        EmailRight = true;
                     }
                     else {
                         JAlert({
@@ -243,7 +253,7 @@
                             DialogType: "Ok",
                             BtnOk: "确定"
                         });
-                        return false;
+                        EmailRight = false;
                     }
                 });
             }
@@ -251,12 +261,13 @@
 
         function checkPhone() {
             var values = $("#Account_Phone").val();
-
+          
             if (values != "" && values != undefined) {
                 var YZUrl = '@Url.Action("OnlyValidation", "Ajax", new { Area = "", HostName = "" })';
                 $.post(YZUrl, { tableName: "Account", field: "Phone", value: values }, function (result) {
+               
                     if (result == "True") {
-                        return true;
+                        PhoneRight = true;
                     }
                     else {
                         JAlert({
@@ -264,7 +275,8 @@
                             DialogType: "Ok",
                             BtnOk: "确定"
                         });
-                        return false;
+                        
+                        PhoneRight = false;
                     }
                 });
             }

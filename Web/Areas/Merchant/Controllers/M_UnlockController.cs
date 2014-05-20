@@ -25,6 +25,14 @@ namespace Web.Areas.Merchant.Controllers
             var m_unlockModel = Factory.Get<IM_UnlockModel>(SystemConst.IOC_Model.M_UnlockModel);
             var m_unlock = m_unlockModel.GetListByMID(LoginMerchant.ID).ToPagedList(id ?? 1, 15);
             ViewBag.Title = "开锁换锁 - " + SystemConst.PlatformName;
+            if (id.HasValue)
+            {
+                ViewBag.pageID = id.Value;
+            }
+            else
+            {
+                ViewBag.pageID = 1;
+            }
             return View(m_unlock);
         }
 
@@ -40,14 +48,10 @@ namespace Web.Areas.Merchant.Controllers
         {
             var m_unlockModel = Factory.Get<IM_UnlockModel>(SystemConst.IOC_Model.M_UnlockModel);
             m_unlock.MerchantID = LoginMerchant.ID;
-            if (m_unlock.IsPublish)
-            {
-                m_unlock.EnumDataStatus = (int)EnumDataStatus.WaitPayMent;
-            }
-            else
-            {
-                m_unlock.EnumDataStatus = (int)EnumDataStatus.None;
-            }
+            m_unlock.IsPublish = false;
+
+            m_unlock.EnumDataStatus = (int)EnumDataStatus.None;
+
             m_unlock.CreatDate = DateTime.Now;
 
             string hidCommunity = Request.Form["hidCommunity"];
@@ -81,15 +85,9 @@ namespace Web.Areas.Merchant.Controllers
         {
             var m_unlockModel = Factory.Get<IM_UnlockModel>(SystemConst.IOC_Model.M_UnlockModel);
             m_unlock.MerchantID = LoginMerchant.ID;
-            if (m_unlock.IsPublish)
-            {
-                m_unlock.EnumDataStatus = (int)EnumDataStatus.WaitPayMent;
-            }
-            else
-            {
-                m_unlock.EnumDataStatus = (int)EnumDataStatus.None;
-                m_unlock.PublishDate = null;
-            }
+            m_unlock.IsPublish = false;
+            m_unlock.EnumDataStatus = (int)EnumDataStatus.None;
+
 
             string hidCommunity = Request.Form["hidCommunity"];
             if (hidCommunity == null || hidCommunity.Length == 0)
@@ -116,6 +114,36 @@ namespace Web.Areas.Merchant.Controllers
                 return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
             }
             return JavaScript("window.location.href='" + Url.Action("Index", "M_Unlock", new { Area = "Merchant" }) + "'");
+        }
+
+        /// <summary>
+        /// 更是否发布信息
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="ISPush"></param>
+        /// <param name="PageID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult UpPush(int ID, bool ISPush,int PageID)
+        {
+            var m_unlockModel = Factory.Get<IM_UnlockModel>(SystemConst.IOC_Model.M_UnlockModel);
+            m_unlockModel.UpdatePush(ID,ISPush);
+            return JavaScript("window.location.href='" + Url.Action("Index", "M_Unlock", new { Area = "Merchant", id = PageID }) + "'");
+        }
+
+        /// <summary>
+        /// 提交审核
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="ISPush"></param>
+        /// <param name="PageID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult UpStatus(int ID, int PageID)
+        {
+            var m_unlockModel = Factory.Get<IM_UnlockModel>(SystemConst.IOC_Model.M_UnlockModel);
+            m_unlockModel.UpdateStatus(ID,(int)EnumDataStatus.WaitPayMent);
+            return JavaScript("window.location.href='" + Url.Action("Index", "M_Unlock", new { Area = "Merchant", id = PageID }) + "'");
         }
     }
 }
