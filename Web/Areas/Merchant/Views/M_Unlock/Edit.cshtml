@@ -75,6 +75,8 @@
                     @Html.HiddenFor(a=>a.CreatDate)
                     @Html.HiddenFor(a=>a.PublishDate)
                     @Html.HiddenFor(a=>a.EnumDataStatus)
+                    @Html.HiddenFor(a => a.IsPublish)
+                   
                    
                     </td>
                 </tr>
@@ -94,19 +96,6 @@
                     <td class="tdField">@Html.TextBoxFor(a => a.Price, new { style = "width:300px" })
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Price)
-                    </td>
-                </tr>
-                <tr>
-                    <td class="tdTitle" style="width: 150px">
-                        <span class="Identification">*</span> 是否发布
-                    </td>
-                    <td class="tdField">
-                        <select id="IsPublish" name="IsPublish">
-                            <option value="True">发布</option>
-                            <option value="False">不发布</option>
-                        </select>
-                    </td>
-                    <td>
                     </td>
                 </tr>
                  <tr>

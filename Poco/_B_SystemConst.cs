@@ -116,6 +116,11 @@ namespace Poco
             public const string Tutor = "Tutor";
             public const string LifeSkill = "LifeSkill";
             public const string Recipes = "Recipes";
+            public const string Unlock = "Unlock";
+            public const string Move = "Move";
+            public const string PipelineDredge = "PipelineDredge";
+
+
 
 
             //售楼部
