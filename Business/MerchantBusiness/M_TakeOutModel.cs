@@ -7,6 +7,7 @@ using Interface.MerchantInterface;
 using Poco;
 using Injection.Transaction;
 using System.Data.Entity;
+using Poco.Enum;
 
 namespace Business.MerchantBusiness
 {
@@ -39,6 +40,7 @@ namespace Business.MerchantBusiness
             var newEntity = List().Where(a => a.ID == entity.ID).AsNoTracking().FirstOrDefault();
             newEntity.Title = entity.Title;
             newEntity.TakeOutPrice = entity.TakeOutPrice;
+            newEntity.EnumDataStatus = entity.EnumDataStatus;
             newEntity.Phone = entity.Phone;
             string sql = "DELETE dbo.M_CommunityMapping WHERE M_TakeOutID=" + entity.ID;
             base.SqlExecute(sql);
@@ -87,6 +89,8 @@ namespace Business.MerchantBusiness
                 return result;
             }
             newEntity.Content = content;
+            newEntity.EnumDataStatus = (int)EnumDataStatus.None;
+            newEntity.IsPublish = false;
             result = Edit(newEntity);
             if (result.HasError)
             {
