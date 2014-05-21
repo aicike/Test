@@ -1,8 +1,8 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
-    ViewBag.Menu = Poco.SystemConst.Menu.Unlock;
+    ViewBag.Menu = Poco.SystemConst.Menu.Move;
 }
-@model Poco.MerchantPoco.M_Unlock
+@model Poco.MerchantPoco.M_Move
 @section head{
     <script>
         function UpStatus(Status) {
@@ -35,9 +35,9 @@
     </style>
 }
 <div class="title">
-    开锁换锁 - 评审</div>
+    搬家 - 评审</div>
 <div class="body">
-    @using (Ajax.BeginForm("UnlockInfo", "Unlock", new { HostName = ViewBag.HostName, Area = "Manager" }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    @using (Ajax.BeginForm("UnlockInfo", "Move", new { HostName = ViewBag.HostName, Area = "Manager" }, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
         <input  type="hidden" id="UID" name="UID" value="@ViewBag.UID"/>
         <input type="hidden" id="Status" name="Status" />
@@ -98,6 +98,6 @@
     <div class="action">
         <input type="button"  value="审批通过" onclick="UpStatus('@((int)Poco.Enum.EnumDataStatus.Enabled)')" class="button" style="margin-right: 20px" />
         <input type="button"  onclick="UpStatus('@((int)Poco.Enum.EnumDataStatus.Disabled)')"  value="审批不通过" class="button" style="margin-right: 20px" />
-        <input type="button" value="返回"  class="button" onclick="location.href='@Url.Action("Index", "Unlock", new { id = ViewBag.PageID })'" />
+        <input type="button" value="返回"  class="button" onclick="location.href='@Url.Action("Index", "Move", new { id= ViewBag.PageID })'" />
     </div>
 </div>

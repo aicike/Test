@@ -21,6 +21,34 @@ namespace Business.MerchantBusiness
             var list = List().Where(a => a.MerchantID == MID).OrderByDescending(a => a.CreatDate);
             return list;
         }
+        /// <summary>
+        /// 查询数据 审核数据
+        /// </summary>
+        /// <param name="EnumDataStatus"></param>
+        /// <param name="CreatDate"></param>
+        /// <param name="MName"></param>
+        /// <returns></returns>
+        public IQueryable<M_PipelineDredge> GetListByStatus(int? EnumDataStatus, string CreatDate, string MName)
+        {
+            var list = List().Where(a => a.EnumDataStatus != (int)Poco.Enum.EnumDataStatus.None);
+            if (EnumDataStatus.HasValue)
+            {
+                list = list.Where(a => a.EnumDataStatus == EnumDataStatus.Value);
+            }
+            if (!string.IsNullOrEmpty(CreatDate))
+            {
+                list = list.Where(a => CreatDate.Contains(a.CreatDate.ToString("yyyy-MM-dd")));
+            }
+            if (!string.IsNullOrEmpty(MName))
+            {
+                list = list.Where(a => MName.Contains(a.Merchant.Name));
+            }
+
+            return list.OrderByDescending(a => a.CreatDate);
+        }
+
+
+
 
         /// <summary>
         /// 添加信息
@@ -113,5 +141,49 @@ namespace Business.MerchantBusiness
             return result;
 
         }
+
+        /// <summary>
+        /// 修改状态
+        /// </summary>
+        /// <param name="UID"></param>
+        /// <param name="EnumDataStatus"></param>
+        /// <returns></returns>
+        public Result UpdateStatus(int UID, int EnumDataStatus)
+        {
+            Result result = new Result();
+            string sql = string.Format("update M_PipelineDredge set EnumDataStatus= {0} where ID = {1}", EnumDataStatus, UID);
+            if (EnumDataStatus == (int)Poco.Enum.EnumDataStatus.Disabled)
+            {
+                sql = string.Format("update M_PipelineDredge set EnumDataStatus= {0} and IsPublish='False' where ID = {1}", EnumDataStatus, UID);
+            }
+            int cnt = base.SqlExecute(sql);
+            if (cnt <= 0)
+            {
+                result.HasError = true;
+                result.Error = "修改失败 请稍后再试！";
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 修改是否发布
+        /// </summary>
+        /// <param name="UID"></param>
+        /// <param name="push"></param>
+        /// <returns></returns>
+        public Result UpdatePush(int UID, bool push)
+        {
+            Result result = new Result();
+            string sql = string.Format("update M_PipelineDredge set IsPublish= '{0}' where ID = {1}", push, UID);
+
+            int cnt = base.SqlExecute(sql);
+            if (cnt <= 0)
+            {
+                result.HasError = true;
+                result.Error = "修改失败 请稍后再试！";
+            }
+            return result;
+        }
+
     }
 }

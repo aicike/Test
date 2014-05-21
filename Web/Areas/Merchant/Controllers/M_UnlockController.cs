@@ -104,7 +104,7 @@ namespace Web.Areas.Merchant.Controllers
             return JavaScript("window.location.href='" + Url.Action("Index", "M_Unlock", new { Area = "Merchant" }) + "'");
         }
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id,int PageID)
         {
             var m_unlockModel = Factory.Get<IM_UnlockModel>(SystemConst.IOC_Model.M_UnlockModel);
 
@@ -113,7 +113,7 @@ namespace Web.Areas.Merchant.Controllers
             {
                 return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
             }
-            return JavaScript("window.location.href='" + Url.Action("Index", "M_Unlock", new { Area = "Merchant" }) + "'");
+            return JavaScript("window.location.href='" + Url.Action("Index", "M_Unlock", new { Area = "Merchant", id = PageID }) + "'");
         }
 
         /// <summary>

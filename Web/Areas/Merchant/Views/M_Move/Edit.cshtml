@@ -24,8 +24,7 @@
 
             var ue = UE.getEditor('editor', options);
 
-            var IsPublish = "@Model.IsPublish";
-            $("#IsPublish").val(IsPublish);
+
 
             $("#btnSubmit").click(function () {
                 var cids = GetCommunity();
@@ -75,7 +74,7 @@
                     @Html.HiddenFor(a=>a.CreatDate)
                     @Html.HiddenFor(a=>a.PublishDate)
                     @Html.HiddenFor(a=>a.EnumDataStatus)
-                   
+                    @Html.HiddenFor(a => a.IsPublish)
                     </td>
                 </tr>
                 <tr>

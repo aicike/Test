@@ -154,7 +154,7 @@ namespace Business.MerchantBusiness
             string sql = string.Format("update M_Unlock set EnumDataStatus= {0} where ID = {1}", EnumDataStatus, UID);
             if (EnumDataStatus == (int)Poco.Enum.EnumDataStatus.Disabled)
             {
-                sql = string.Format("update M_Unlock set EnumDataStatus= {0} and IsPublish='False' where ID = {1}", EnumDataStatus, UID);
+                sql = string.Format("update M_Unlock set EnumDataStatus= {0}, IsPublish='False' where ID = {1}", EnumDataStatus, UID);
             }
             int cnt = base.SqlExecute(sql);
             if (cnt <= 0)
