@@ -238,6 +238,7 @@
     <Compile Include="Controllers\LibraryImageTextController.cs" />
     <Compile Include="Controllers\VipInfoController.cs" />
     <Compile Include="Controllers\WebRequest_ChatController.cs" />
+    <Compile Include="Controllers\WebRequest_MerchantController.cs" />
     <Compile Include="Controllers\WebRequest_OtherController.cs" />
     <Compile Include="Controllers\WebRequest_PlatformController.cs" />
     <Compile Include="Controllers\WebRequest_ProductController.cs" />
@@ -1327,13 +1328,13 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>16123</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://tllhs.imtimely.com/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>True</UseCustomServer>
+          <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>http://192.168.1.138</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
