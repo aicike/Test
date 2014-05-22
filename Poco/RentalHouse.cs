@@ -66,7 +66,6 @@ namespace Poco
         /// 面积
         /// </summary>
         [Display(Name = "面积")]
-        [StringLength(10, ErrorMessage = "长度小于10")]
         [Required(ErrorMessage = "请输入面积")]
         public  double area { get; set; }
 
@@ -82,7 +81,6 @@ namespace Poco
         /// 装修
         /// </summary>
         [Display(Name = "装修")]
-        [StringLength(10, ErrorMessage = "长度小于10")]
         [Required(ErrorMessage = "请输入装修")]
         public int  EnumDecoration { get; set; }
 
@@ -98,7 +96,6 @@ namespace Poco
         /// 月租
         /// </summary>
         [Display(Name = "月租")]
-        [StringLength(10, ErrorMessage = "长度小于10")]
         [Required(ErrorMessage = "请输入月租")]
         public decimal Price{ get; set; }
 
@@ -131,16 +128,15 @@ namespace Poco
         /// </summary>
         [Display(Name = "业主姓名")]
         [StringLength(10, ErrorMessage = "长度小于10")]
-        [Required(ErrorMessage = "业主姓名")]
+        [Required(ErrorMessage = "请输入业主姓名")]
         public string OwnerName { get; set; }
 
         /// <summary>
-        /// 业主姓名
+        /// 业主电话
         /// </summary>
         [Display(Name = "业主电话")]
-        [StringLength(10, ErrorMessage = "长度小于10")]
-        [Required(ErrorMessage = "业主电话")]
-        public string OwnerPhone{ get; set; }
+        [Required(ErrorMessage = "请输入业主电话")]
+        public int OwnerPhone{ get; set; }
 
         /// <summary>
         /// 状态 0 关闭 1发布
