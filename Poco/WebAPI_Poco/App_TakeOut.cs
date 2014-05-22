@@ -20,5 +20,22 @@ namespace Poco.WebAPI_Poco
 
         //送餐费
         public decimal TakeOutPrice { get; set; }
+
+        //商家ID
+        public int MerchantID { get; set; }
+
+        //商家名称 
+        public string MerchantName { get; set; }
+
+        public List<App_TakeOutItem> ItemList { get; set; }
+    }
+
+    public class App_TakeOutItem
+    {
+        public int ID { get; set; }
+
+        public string Title { get; set; }
+
+        public decimal Price { get; set; }
     }
 }
