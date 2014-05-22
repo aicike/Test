@@ -132,6 +132,7 @@
     <Compile Include="Tutor.cs" />
     <Compile Include="UserTag.cs" />
     <Compile Include="WebAPI_Poco\App_PropertyUser.cs" />
+    <Compile Include="WebAPI_Poco\App_TakeOut.cs" />
     <Compile Include="_B_ActivityOption.cs" />
     <Compile Include="_B_AdvertoriaOperation.cs" />
     <Compile Include="_B_Complaint.cs" />
