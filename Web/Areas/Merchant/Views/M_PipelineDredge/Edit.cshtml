@@ -24,8 +24,6 @@
 
             var ue = UE.getEditor('editor', options);
 
-            var IsPublish = "@Model.IsPublish";
-            $("#IsPublish").val(IsPublish);
 
             $("#btnSubmit").click(function () {
                 var cids = GetCommunity();
@@ -75,6 +73,7 @@
                     @Html.HiddenFor(a=>a.CreatDate)
                     @Html.HiddenFor(a=>a.PublishDate)
                     @Html.HiddenFor(a=>a.EnumDataStatus)
+                    @Html.HiddenFor(a => a.IsPublish)
                    
                     </td>
                 </tr>
@@ -96,19 +95,7 @@
                     <td>@Html.ValidationMessageFor(a => a.Price)
                     </td>
                 </tr>
-                <tr>
-                    <td class="tdTitle" style="width: 150px">
-                        <span class="Identification">*</span> 是否发布
-                    </td>
-                    <td class="tdField">
-                        <select id="IsPublish" name="IsPublish">
-                            <option value="True">发布</option>
-                            <option value="False">不发布</option>
-                        </select>
-                    </td>
-                    <td>
-                    </td>
-                </tr>
+
                  <tr>
                     <td class="tdTitle">
                         <span class="Identification">*</span> 绑定小区

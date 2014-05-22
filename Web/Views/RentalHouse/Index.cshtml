@@ -9,7 +9,7 @@
 
         $(function () {
             $("label[name=labCbFirst]").each(function () {
-                $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
+                $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "left" });
             });
         });
 
@@ -108,7 +108,7 @@
                 <td>
                     @if (item.Stauts == 0)
                     {
-                        @:关闭
+                        @:未发布
                     }
                     else
                     { 

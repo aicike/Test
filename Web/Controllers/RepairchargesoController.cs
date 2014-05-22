@@ -28,6 +28,9 @@ namespace Web.Controllers
 
         public ActionResult Add()
         {
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "物业管理-收费维修-添加信息", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View();
         }
         [HttpPost]
@@ -45,6 +48,9 @@ namespace Web.Controllers
         {
             var repairchargesoModel = Factory.Get<IRepairchargesoModel>(SystemConst.IOC_Model.RepairchargesoModel);
             var repairchargeso = repairchargesoModel.Getinfo(ID,LoginAccount.CurrentAccountMainID);
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "物业管理-收费维修-修改信息", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             return View(repairchargeso);
         }
 

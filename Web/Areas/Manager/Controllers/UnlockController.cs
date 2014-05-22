@@ -78,7 +78,7 @@ namespace Web.Areas.Manager.Controllers
         /// <param name="UID"></param>
         /// <param name="Error">1:成功 2失败</param>
         /// <returns></returns>
-        public ActionResult UnlockInfo(int UID, int? Error)
+        public ActionResult UnlockInfo(int UID, int PageID, int? Error)
         {
             var m_unlockModel = Factory.Get<IM_UnlockModel>(SystemConst.IOC_Model.M_UnlockModel);
             var unlock = m_unlockModel.Get(UID);
@@ -90,6 +90,7 @@ namespace Web.Areas.Manager.Controllers
                 ViewBag.Error = 0;
             }
             ViewBag.UID = UID;
+            ViewBag.PageID = PageID;
             ViewBag.Title = unlock.Title + " - 开锁换锁 - 评审 -" + SystemConst.PlatformName;
             return View(unlock);
         }
@@ -100,11 +101,11 @@ namespace Web.Areas.Manager.Controllers
             var result = m_unlockModel.UpdateStatus(UID, Status);
             if (result.HasError)
             {
-                return JavaScript("window.location.href='" + Url.Action("Index", "Unlock", new { Error = 2 }) + "'");
+                return JavaScript("window.location.href='" + Url.Action("UnlockInfo", "Unlock", new { UID = UID, Error = 2 }) + "'");
             }
             else
             {
-                return JavaScript("window.location.href='" + Url.Action("Index", "Unlock", new { Error = 1 }) + "'");
+                return JavaScript("window.location.href='" + Url.Action("UnlockInfo", "Unlock", new { UID = UID, Error = 1 }) + "'");
             }
 
         }
@@ -118,7 +119,7 @@ namespace Web.Areas.Manager.Controllers
         {
             var m_unlockModel = Factory.Get<IM_UnlockModel>(SystemConst.IOC_Model.M_UnlockModel);
             m_unlockModel.UpdateStatus(ID, (int)EnumDataStatus.Disabled);
-            return JavaScript("window.location.href='" + Url.Action("Index", "Unlock", new { Area = "Merchant", id = PageID }) + "'");  
+            return JavaScript("window.location.href='" + Url.Action("Index", "Unlock", new { Area = "Manager", id = PageID }) + "'");  
         }
 
 

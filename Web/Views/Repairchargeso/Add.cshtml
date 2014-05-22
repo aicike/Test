@@ -13,7 +13,7 @@
     @Html.Partial("Menu3")
 </div>
 <div class="body">
-    @using (Html.BeginForm("Add", "Repairchargeso", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Ajax.BeginForm("Add", "Repairchargeso", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
         <fieldset style="font-size: 14px">
             <legend>基本信息</legend>
@@ -25,7 +25,6 @@
                     <td class="tdField">@Html.TextBoxFor(a => a.ProjectName)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.ProjectName)
-                        <div style="">@Html.ValidationSummary()</div>
                     </td>
                 </tr>
                 <tr>
@@ -35,13 +34,12 @@
                     <td class="tdField">@Html.TextBoxFor(a => a.Price)
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Price)
-                        <div style="">@Html.ValidationSummary()</div>
                     </td>
                 </tr>
             </table>
         </fieldset>
         <div class="action">
-            <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px;/>
+            <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px;" />
             <input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
         </div>
     }

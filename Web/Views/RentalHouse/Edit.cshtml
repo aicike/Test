@@ -213,6 +213,7 @@
                         <br />
                         <div style="color: Red">
                             提示：请上传小于5MB的图片
+                            <div style=" display:none">@Html.ValidationSummary()</div>
                         </div>
                     </td>
                 </tr>
@@ -380,7 +381,7 @@
                     <td class="tdField">
                         <select id="Stauts" name="Stauts">
                             <option value="1">发布</option>
-                            <option value="0">关闭</option>
+                            <option value="0">不发布</option>
                         </select>
                     </td>
                     <td>

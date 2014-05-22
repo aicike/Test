@@ -692,6 +692,8 @@
     <Content Include="Areas\Manager\Views\Move\Index.cshtml" />
     <Content Include="Areas\Manager\Views\PipelineDredge\Index.cshtml" />
     <Content Include="Areas\Manager\Views\Unlock\UnlockInfo.cshtml" />
+    <Content Include="Areas\Manager\Views\Move\UnlockInfo.cshtml" />
+    <Content Include="Areas\Manager\Views\PipelineDredge\UnlockInfo.cshtml" />
     <None Include="ueditor\ueditor.all.js2" />
     <Content Include="ueditor\ueditor.all.min.js" />
     <Content Include="ueditor\ueditor.config22.js" />

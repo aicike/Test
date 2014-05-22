@@ -92,7 +92,7 @@
                     <div style="width: 180px; word-break: keep-all; white-space: nowrap; overflow: hidden;
                         text-overflow: ellipsis;">
                         <label name="labCbFirst" title="查看详细">
-                            <a href="@Url.Action("UnlockInfo", "Unlock", new { UID = item.ID, Area = "Manager" })">@item.Title</a>
+                            <a href="@Url.Action("UnlockInfo", "Unlock", new { UID = item.ID, PageID = ViewBag.pageID, Area = "Manager" })">@item.Title</a>
                         </label>
                     </div>
                 </td>

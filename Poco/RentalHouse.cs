@@ -20,6 +20,7 @@ namespace Poco
         /// 标题
         /// </summary>
         [Display(Name = "标题")]
+        [StringLength(25, ErrorMessage = "长度小于25")]
         [Required(ErrorMessage = "请输入标题")]
         public string Title { get; set; }
 
@@ -40,6 +41,7 @@ namespace Poco
         /// 单元
         /// </summary>
         [Display(Name = "单元")]
+        [StringLength(10, ErrorMessage = "长度小于10")]
         [Required(ErrorMessage = "请输入单元")]
         public string Unit { get; set; }
 
@@ -48,6 +50,7 @@ namespace Poco
         /// 楼层
         /// </summary>
         [Display(Name = "楼层")]
+        [StringLength(10, ErrorMessage = "长度小于10")]
         [Required(ErrorMessage = "请输入楼层")]
         public string Floor { get; set; }
         
@@ -55,6 +58,7 @@ namespace Poco
         /// 房号
         /// </summary>
         [Display(Name = "房号")]
+        [StringLength(10, ErrorMessage = "长度小于10")]
         [Required(ErrorMessage = "请输入房号")]
         public string RoomNumber { get; set; }
 
@@ -69,6 +73,7 @@ namespace Poco
         /// 户型
         /// </summary>
         [Display(Name = "户型")]
+        [StringLength(10, ErrorMessage = "长度小于10")]
         [Required(ErrorMessage = "请输入户型")]
         public string HouseType { get; set; }
 
@@ -98,6 +103,7 @@ namespace Poco
         /// 描述
         /// </summary>
         [Display(Name = "描述")]
+        [StringLength(200, ErrorMessage = "长度小于200")]
         public string Description { get; set; }
         
 
@@ -105,6 +111,7 @@ namespace Poco
         /// 房屋配套
         /// </summary>
         [Display(Name = "房屋配套")]
+        [StringLength(200, ErrorMessage = "长度小于200")]
         [Required(ErrorMessage = "请输入房屋配套")]
         public string Matching { get; set; }
 
@@ -120,18 +127,21 @@ namespace Poco
         /// 业主姓名
         /// </summary>
         [Display(Name = "业主姓名")]
+        [StringLength(10, ErrorMessage = "长度小于10")]
+        [Required(ErrorMessage = "请输入业主姓名")]
         public string OwnerName { get; set; }
 
         /// <summary>
         /// 业主姓名
         /// </summary>
-        [Display(Name = "业主姓名")]
-        public string OwnerPhone{ get; set; }
+        [Display(Name = "业主电话")]
+        [Required(ErrorMessage = "请输入业主电话")]
+        public int OwnerPhone{ get; set; }
 
         /// <summary>
         /// 状态 0 关闭 1发布
         /// </summary>
-        [Display(Name = "状态 0 关闭 1发布")]
+        [Display(Name = "状态 0 不发布 1发布")]
         public int Stauts { get; set; }
 
     }

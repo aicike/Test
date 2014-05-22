@@ -21,11 +21,11 @@
     <MetadataSource Address="http://url.goldwg.com/WCF/ShortURLService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ShortURLService1.wsdl" MetadataType="Wsdl" ID="07766e86-5118-496b-b91f-0a786bbe4d72" SourceId="1" SourceUrl="http://url.goldwg.com/WCF/ShortURLService.svc?wsdl" />
-    <MetadataFile FileName="ShortURLService3.xsd" MetadataType="Schema" ID="0cdc518c-44c2-4441-a421-ceb487b69403" SourceId="1" SourceUrl="http://url.goldwg.com/WCF/ShortURLService.svc?xsd=xsd0" />
-    <MetadataFile FileName="ShortURLService1.disco" MetadataType="Disco" ID="3facdf5e-2232-4d91-9d31-943aba37e210" SourceId="1" SourceUrl="http://url.goldwg.com/WCF/ShortURLService.svc?disco" />
-    <MetadataFile FileName="ShortURLService31.xsd" MetadataType="Schema" ID="57a3a454-4bde-429a-b79e-2e40db1515b3" SourceId="1" SourceUrl="http://url.goldwg.com/WCF/ShortURLService.svc?xsd=xsd2" />
-    <MetadataFile FileName="ShortURLService32.xsd" MetadataType="Schema" ID="90ce3aec-75ab-4596-b93a-e9f36dfef87d" SourceId="1" SourceUrl="http://url.goldwg.com/WCF/ShortURLService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ShortURLService1.wsdl" MetadataType="Wsdl" ID="26144f26-c658-4e42-87d2-8912c0ed04d3" SourceId="1" SourceUrl="http://url.goldwg.com/WCF/ShortURLService.svc?wsdl" />
+    <MetadataFile FileName="ShortURLService3.xsd" MetadataType="Schema" ID="b466ac8b-3a15-4642-86d8-ec2558ecf242" SourceId="1" SourceUrl="http://url.goldwg.com/WCF/ShortURLService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ShortURLService1.disco" MetadataType="Disco" ID="1bfcc48e-a87e-4acd-8a3b-0b34a639f2f0" SourceId="1" SourceUrl="http://url.goldwg.com/WCF/ShortURLService.svc?disco" />
+    <MetadataFile FileName="ShortURLService31.xsd" MetadataType="Schema" ID="8dae14cc-532e-4704-8193-2638e8a4ea3b" SourceId="1" SourceUrl="http://url.goldwg.com/WCF/ShortURLService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ShortURLService32.xsd" MetadataType="Schema" ID="0f086f56-4bb1-4486-9bee-d6a6d66e857d" SourceId="1" SourceUrl="http://url.goldwg.com/WCF/ShortURLService.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

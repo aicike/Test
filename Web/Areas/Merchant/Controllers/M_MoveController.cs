@@ -22,6 +22,14 @@ namespace Web.Areas.Merchant.Controllers
             var m_moveModel = Factory.Get<IM_MoveModel>(SystemConst.IOC_Model.M_MoveModel);
             var m_move = m_moveModel.GetListByMID(LoginMerchant.ID).ToPagedList(id ?? 1, 15);
             ViewBag.Title = "搬家 - " + SystemConst.PlatformName;
+            if (id.HasValue)
+            {
+                ViewBag.pageID = id.Value;
+            }
+            else
+            {
+                ViewBag.pageID = 1;
+            }
             return View(m_move);
         }
 
@@ -38,14 +46,9 @@ namespace Web.Areas.Merchant.Controllers
         {
             var m_moveModel = Factory.Get<IM_MoveModel>(SystemConst.IOC_Model.M_MoveModel);
             m_move.MerchantID = LoginMerchant.ID;
-            if (m_move.IsPublish)
-            {
-                m_move.EnumDataStatus = (int)EnumDataStatus.WaitPayMent;
-            }
-            else
-            {
-                m_move.EnumDataStatus = (int)EnumDataStatus.None;
-            }
+            m_move.IsPublish = false;
+
+            m_move.EnumDataStatus = (int)EnumDataStatus.None;
             m_move.CreatDate = DateTime.Now;
 
             string hidCommunity = Request.Form["hidCommunity"];
@@ -79,15 +82,9 @@ namespace Web.Areas.Merchant.Controllers
         {
             var m_moveModel = Factory.Get<IM_MoveModel>(SystemConst.IOC_Model.M_MoveModel);
             m_move.MerchantID = LoginMerchant.ID;
-            if (m_move.IsPublish)
-            {
-                m_move.EnumDataStatus = (int)EnumDataStatus.WaitPayMent;
-            }
-            else
-            {
-                m_move.EnumDataStatus = (int)EnumDataStatus.None;
-                m_move.PublishDate = null;
-            }
+            m_move.IsPublish = false;
+            m_move.EnumDataStatus = (int)EnumDataStatus.None;
+
 
             string hidCommunity = Request.Form["hidCommunity"];
             if (hidCommunity == null || hidCommunity.Length == 0)
@@ -104,7 +101,7 @@ namespace Web.Areas.Merchant.Controllers
             return JavaScript("window.location.href='" + Url.Action("Index", "M_Move", new { Area = "Merchant" }) + "'");
         }
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id, int PageID)
         {
             var m_moveModel = Factory.Get<IM_MoveModel>(SystemConst.IOC_Model.M_MoveModel);
 
@@ -113,8 +110,38 @@ namespace Web.Areas.Merchant.Controllers
             {
                 return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
             }
-            return JavaScript("window.location.href='" + Url.Action("Index", "M_Move", new { Area = "Merchant" }) + "'");
+            return JavaScript("window.location.href='" + Url.Action("Index", "M_Move", new { Area = "Merchant", id = PageID }) + "'");
         }
 
+
+        /// <summary>
+        /// 更是否发布信息
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="ISPush"></param>
+        /// <param name="PageID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult UpPush(int ID, bool ISPush, int PageID)
+        {
+            var m_moveModel = Factory.Get<IM_MoveModel>(SystemConst.IOC_Model.M_MoveModel);
+            m_moveModel.UpdatePush(ID, ISPush);
+            return JavaScript("window.location.href='" + Url.Action("Index", "M_Move", new { Area = "Merchant", id = PageID }) + "'");
+        }
+
+        /// <summary>
+        /// 提交审核
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="ISPush"></param>
+        /// <param name="PageID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult UpStatus(int ID, int PageID)
+        {
+            var m_moveModel = Factory.Get<IM_MoveModel>(SystemConst.IOC_Model.M_MoveModel);
+            m_moveModel.UpdateStatus(ID, (int)EnumDataStatus.WaitPayMent);
+            return JavaScript("window.location.href='" + Url.Action("Index", "M_Move", new { Area = "Merchant", id = PageID }) + "'");
+        }
     }
 }

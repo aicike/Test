@@ -1,6 +1,148 @@
 ﻿@{
-    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.PipelineDredge;
 }
+@model PagedList<Poco.MerchantPoco.M_PipelineDredge>
+@section head{
+    <script>
+        $(function () {
 
-<h2>Index</h2>
+            $("#strCreatdDate").val("@ViewBag.strCreatdDate");
+
+            $("#Mname").val("@ViewBag.Mname");
+
+            $("#selEnumStatus").val("@ViewBag.selEnumStatus");
+
+
+            $("label[name=labCbFirst]").each(function () {
+                $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
+            });
+
+        });
+    </script>
+}
+<div class="title">
+    管道疏通 - 评审</div>
+<div class="body">
+    @using (Html.BeginForm("Index", "PipelineDredge", new { HostName = ViewBag.HostName, Area = "Manager" }, FormMethod.Get, new { enctype = "multipart/form-data" }))
+    {
+        <table style="width: 100%">
+            <tr>
+                <td>
+                    日期：
+                </td>
+                <td>
+                    <input type="text" id="strCreatdDate" name="strCreatdDate" />
+                </td>
+                <td>
+                    商户名称：
+                </td>
+                <td>
+                    <input type="text" id="Mname" name="Mname" />
+                </td>
+                <td>
+                    状态：
+                </td>
+                <td>
+                    <select id="selEnumStatus" name="selEnumStatus">
+                        <option value="all">全部</option>
+                        <option value="@((int)Poco.Enum.EnumDataStatus.Disabled)">审核未通过</option>
+                        <option value="@((int)Poco.Enum.EnumDataStatus.Enabled)">审核通过</option>
+                        <option value="@((int)Poco.Enum.EnumDataStatus.WaitPayMent)">待审核</option>
+                    </select>
+                </td>
+                <td width="100px">
+                    <input type="submit" id="btnSubmit" value="查询" class="button" style="margin-left: 20px" />
+                </td>
+            </tr>
+        </table>
+               
+    }
+    <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
+        <tr>
+            <th>
+                商户名称
+            </th>
+            <th style="width: 180px">
+                标题
+            </th>
+            <th>
+                联系电话
+            </th>
+            <th>
+                创建日期
+            </th>
+            <th>
+                审核状态
+            </th>
+            <th>
+                是否发布
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Merchant.Name
+                </td>
+                <td class="operation">
+                    <div style="width: 180px; word-break: keep-all; white-space: nowrap; overflow: hidden;
+                        text-overflow: ellipsis;">
+                        <label name="labCbFirst" title="查看详细">
+                            <a href="@Url.Action("UnlockInfo", "PipelineDredge", new { UID = item.ID, PageID = ViewBag.pageID, Area = "Manager" })">@item.Title</a>
+                        </label>
+                    </div>
+                </td>
+                <td>
+                    @item.Phone
+                </td>
+                <td>
+                    @item.CreatDate.ToString("yyyy-MM-dd HH:mm")
+                </td>
+                <td>
+                    @item.EnumDataStatus.EnumDataStatusGetValue()
+                </td>
+                <td>
+                   @if (item.IsPublish)
+                    {
+                        @:已发布
+                    }
+                    else
+                    { 
+                        @:未发布
+                                                            }
+                </td>
+                <td class="operation">
+                    @if (item.EnumDataStatus == (int)Poco.Enum.EnumDataStatus.Enabled)
+                    { 
+                          @Ajax.ActionLink("取消审核", "UpStatus", "PipelineDredge", new { HostName = ViewBag.HostName, Area = "Manager" }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('“确定取消审核?”','" + Url.Action("UpStatus", "PipelineDredge", new { HostName = ViewBag.HostName, ID = item.ID, PageID = ViewBag.pageID, Area = "Manager" }) + "',null)" }, false)
+                       
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
+<div style="clear: both">
+</div>
