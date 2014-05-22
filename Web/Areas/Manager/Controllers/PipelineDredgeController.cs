@@ -96,17 +96,17 @@ namespace Web.Areas.Manager.Controllers
             return View(unlock);
         }
         [HttpPost]
-        public ActionResult UnlockInfo(int UID, int Status)
+        public ActionResult UnlockInfo(int UID, int Status, int PageID)
         {
             var m_pipelinedredgeModel = Factory.Get<IM_PipelineDredgeModel>(SystemConst.IOC_Model.M_PipelineDredgeModel);
             var result = m_pipelinedredgeModel.UpdateStatus(UID, Status);
             if (result.HasError)
             {
-                return JavaScript("window.location.href='" + Url.Action("UnlockInfo", "PipelineDredge", new { UID = UID, Error = 2 }) + "'");
+                return JavaScript("window.location.href='" + Url.Action("UnlockInfo", "PipelineDredge", new { UID = UID, PageID = PageID, Error = 2 }) + "'");
             }
             else
             {
-                return JavaScript("window.location.href='" + Url.Action("UnlockInfo", "PipelineDredge", new { UID = UID, Error = 1 }) + "'");
+                return JavaScript("window.location.href='" + Url.Action("UnlockInfo", "PipelineDredge", new { UID = UID, PageID = PageID, Error = 1 }) + "'");
             }
 
         }

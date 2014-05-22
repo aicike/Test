@@ -27,7 +27,7 @@ namespace Poco
         [StringLength(200, ErrorMessage = "长度小于200")]
         public string Address { get; set; }
 
-       [Display(Name = "电话（用于登录）")]
+        [Display(Name = "电话（用于登录）")]
         [StringLength(20, ErrorMessage = "长度小于20")]
         [Required(ErrorMessage = "请输入电话")]
         public string Phone { get; set; }
@@ -39,7 +39,8 @@ namespace Poco
         [Display(Name = "显示logo")]
         public string LogoShow { get; set; }
 
-
+        [Display(Name = "简介")]
+        public string Introduction { get; set; }
 
         [Display(Name = "邮箱")]
         [StringLength(50, ErrorMessage = "长度小于50")]

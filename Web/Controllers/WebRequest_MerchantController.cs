@@ -8,6 +8,7 @@ using Interface.MerchantInterface;
 using Poco;
 using Poco.WebAPI_Poco;
 using Poco.Enum;
+using Interface;
 
 namespace Web.Controllers
 {
@@ -36,5 +37,107 @@ namespace Web.Controllers
             var obj = new { LastID = newID, List = list };
             return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
         }
+
+
+
+        #region-----------------管道疏通----------------------------
+        /// <summary>
+        /// 获取管道疏通商户列表
+        /// </summary>
+        /// <param name="amid"></param>
+        /// <param name="PageIndex">要显示的页 第一页传0  之后的传ListPageIndex</param>
+        /// <param name="ListCnt">没页显示的数目</param>
+        /// <returns></returns>
+        public string GetMerchantList_PipelineDredge(int amid, int PageIndex, int ListCnt)
+        {
+            int status = (int)EnumDataStatus.Enabled;
+            var pipelineDredgeModel = Factory.Get<IM_PipelineDredgeModel>(SystemConst.IOC_Model.M_PipelineDredgeModel);
+
+            var list = pipelineDredgeModel.List().Where(a => a.M_CommunityMappings.Any(b => b.AccountMainID == amid) && a.EnumDataStatus == status && a.IsPublish)
+                .OrderByDescending(a => a.PublishDate)
+                .Skip(PageIndex).Take(ListCnt).GroupBy(a => a.MerchantID).ToList()
+                .Select(a => new App_Merchant { 
+                    ID=a.FirstOrDefault().MerchantID,
+                    Name = a.FirstOrDefault().Merchant.Name,
+                    Address = a.FirstOrDefault().Merchant.Address,
+                    Logo = "www."+SystemConst.WebUrl + a.FirstOrDefault().Merchant.LogoShow.Replace("~",""),
+                    Phone = a.FirstOrDefault().Merchant.Phone,
+                    Introduction = a.FirstOrDefault().Merchant.Introduction
+                }).ToList();
+            var newPageIndex = PageIndex + ListCnt;
+            var obj = new { ListPageIndex = newPageIndex, List = list };
+            return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+        }
+        #endregion
+
+
+        #region-----------------开锁换锁----------------------------
+        /// <summary>
+        /// 获取开锁换锁商户列表
+        /// </summary>
+        /// <param name="amid"></param>
+        /// <param name="PageIndex">要显示的页 第一页传0  之后的传ListPageIndex</param>
+        /// <param name="ListCnt">没页显示的数目</param>
+        /// <returns></returns>
+        public string GetMerchantList_Unlock(int amid, int PageIndex, int ListCnt)
+        {
+            int status = (int)EnumDataStatus.Enabled;
+            var unlockModel = Factory.Get<IM_UnlockModel>(SystemConst.IOC_Model.M_UnlockModel);
+
+            var list = unlockModel.List().Where(a => a.M_CommunityMappings.Any(b => b.AccountMainID == amid) && a.EnumDataStatus == status && a.IsPublish)
+                .OrderByDescending(a => a.PublishDate)
+                .Skip(PageIndex).Take(ListCnt).GroupBy(a => a.MerchantID).ToList()
+                .Select(a => new App_Merchant
+                {
+                    ID = a.FirstOrDefault().MerchantID,
+                    Name = a.FirstOrDefault().Merchant.Name,
+                    Address = a.FirstOrDefault().Merchant.Address,
+                    Logo = "www." + SystemConst.WebUrl + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
+                    Phone = a.FirstOrDefault().Merchant.Phone,
+                    Introduction = a.FirstOrDefault().Merchant.Introduction
+                }).ToList();
+            var newPageIndex = PageIndex + ListCnt;
+            var obj = new { ListPageIndex = newPageIndex, List = list };
+            return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+        }
+
+
+        #endregion
+        
+        
+
+        #region-----------------搬家----------------------------
+        /// <summary>
+        /// 获取搬家商户列表
+        /// </summary>
+        /// <param name="amid"></param>
+        /// <param name="PageIndex">要显示的页 第一页传0  之后的传ListPageIndex</param>
+        /// <param name="ListCnt">没页显示的数目</param>
+        /// <returns></returns>
+        public string GetMerchantList_Move(int amid, int PageIndex, int ListCnt)
+        {
+            int status = (int)EnumDataStatus.Enabled;
+            var moveModel = Factory.Get<IM_MoveModel>(SystemConst.IOC_Model.M_MoveModel);
+
+            var list = moveModel.List().Where(a => a.M_CommunityMappings.Any(b => b.AccountMainID == amid) && a.EnumDataStatus == status && a.IsPublish)
+                .OrderByDescending(a => a.PublishDate)
+                .Skip(PageIndex).Take(ListCnt).GroupBy(a => a.MerchantID).ToList()
+                .Select(a => new App_Merchant
+                {
+                    ID = a.FirstOrDefault().MerchantID,
+                    Name = a.FirstOrDefault().Merchant.Name,
+                    Address = a.FirstOrDefault().Merchant.Address,
+                    Logo = "www." + SystemConst.WebUrl + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
+                    Phone = a.FirstOrDefault().Merchant.Phone,
+                    Introduction = a.FirstOrDefault().Merchant.Introduction
+                }).ToList();
+            var newPageIndex = PageIndex + ListCnt;
+            var obj = new { ListPageIndex = newPageIndex, List = list };
+            return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+        }
+
+
+        #endregion
+        
     }
 }

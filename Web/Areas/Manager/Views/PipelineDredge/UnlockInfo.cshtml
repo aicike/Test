@@ -37,7 +37,7 @@
 <div class="title">
     管道疏通 - 评审</div>
 <div class="body">
-    @using (Ajax.BeginForm("UnlockInfo", "PipelineDredge", new { HostName = ViewBag.HostName, Area = "Manager" }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    @using (Ajax.BeginForm("UnlockInfo", "PipelineDredge", new { HostName = ViewBag.HostName, PageID = ViewBag.PageID, Area = "Manager" }, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
         <input  type="hidden" id="UID" name="UID" value="@ViewBag.UID"/>
         <input type="hidden" id="Status" name="Status" />

@@ -450,6 +450,7 @@
     <Content Include="Scripts\ToolTip\jquery.tipTip.js" />
     <Content Include="Scripts\ToolTip\jquery.tipTip.minified.js" />
     <Content Include="Scripts\ToolTip\tipTip.css" />
+    <Content Include="Scripts\uploadify\crossdomain.xml" />
     <Content Include="Scripts\uploadify\uploadify-cancel.png" />
     <Content Include="Scripts\waterfall\jquery.infinitescroll.min.js" />
     <Content Include="Scripts\waterfall\jquery.masonry.js" />
@@ -694,6 +695,7 @@
     <Content Include="Areas\Manager\Views\Unlock\UnlockInfo.cshtml" />
     <Content Include="Areas\Manager\Views\Move\UnlockInfo.cshtml" />
     <Content Include="Areas\Manager\Views\PipelineDredge\UnlockInfo.cshtml" />
+    <Content Include="Areas\Merchant\Views\MerchantHome\MerchantsInfo.cshtml" />
     <None Include="ueditor\ueditor.all.js2" />
     <Content Include="ueditor\ueditor.all.min.js" />
     <Content Include="ueditor\ueditor.config22.js" />
@@ -1330,13 +1332,13 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>16123</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://tllhs.imtimely.com/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
+          <UseCustomServer>True</UseCustomServer>
           <CustomServerUrl>http://192.168.1.138</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>

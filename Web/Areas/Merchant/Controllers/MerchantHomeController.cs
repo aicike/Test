@@ -19,5 +19,15 @@ namespace Web.Areas.Merchant.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 商户信息界面
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult MerchantsInfo()
+        {
+            ViewBag.Title = "商户平台 - 商户信息 -" + SystemConst.PlatformName;
+            return View();
+        }
+
     }
 }
