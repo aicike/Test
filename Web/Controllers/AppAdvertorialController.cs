@@ -230,8 +230,8 @@ namespace Web.Controllers
                 var token = DateTime.Now.ToString("yyyyMMddHHmmss");
                 var LastName = token + com.CreateRandom("", 5) + Request.Files[0].FileName.GetFileSuffix();
                 //图片显示界面
-                var ImagePath = Path + "\\" + LastName;
-                var mapePath = Server.MapPath(Path) + "\\" + LastName;
+                var ImagePath = Path + "/" + LastName;
+                var mapePath = Server.MapPath(Path) + "/" + LastName;
                 int dataLengthToRead = (int)Request.Files[0].InputStream.Length;//获取下载的文件总大小
                 byte[] buffer = new byte[dataLengthToRead];
 

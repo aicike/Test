@@ -95,17 +95,17 @@ namespace Web.Areas.Manager.Controllers
             return View(unlock);
         }
         [HttpPost]
-        public ActionResult UnlockInfo(int UID, int Status)
+        public ActionResult UnlockInfo(int UID, int Status,int PageID)
         {
             var m_unlockModel = Factory.Get<IM_UnlockModel>(SystemConst.IOC_Model.M_UnlockModel);
             var result = m_unlockModel.UpdateStatus(UID, Status);
             if (result.HasError)
             {
-                return JavaScript("window.location.href='" + Url.Action("UnlockInfo", "Unlock", new { UID = UID, Error = 2 }) + "'");
+                return JavaScript("window.location.href='" + Url.Action("UnlockInfo", "Unlock", new { UID = UID, PageID = PageID, Error = 2 }) + "'");
             }
             else
             {
-                return JavaScript("window.location.href='" + Url.Action("UnlockInfo", "Unlock", new { UID = UID, Error = 1 }) + "'");
+                return JavaScript("window.location.href='" + Url.Action("UnlockInfo", "Unlock", new { UID = UID, PageID = PageID, Error = 1 }) + "'");
             }
 
         }

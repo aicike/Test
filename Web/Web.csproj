@@ -455,6 +455,7 @@
     <Content Include="Scripts\uploadify\jquery.uploadify.js" />
     <Content Include="Scripts\uploadify\jquery.uploadify.min.js" />
     <Content Include="Scripts\uploadify\license.txt" />
+    <Content Include="Scripts\uploadify\crossdomain.xml" />
     <Content Include="Scripts\uploadify\uploadify-cancel.png" />
     <Content Include="Scripts\uploadify\uploadify.css" />
     <Content Include="Scripts\uploadify\uploadify.swf" />
@@ -704,6 +705,7 @@
     <None Include="Scripts\uploadify\check-exists.php" />
     <None Include="Scripts\uploadify\index.php" />
     <None Include="Scripts\uploadify\uploadify.php" />
+    <Content Include="Areas\Merchant\Views\MerchantHome\MerchantsInfo.cshtml" />
     <None Include="ueditor\ueditor.all.js2" />
     <Content Include="ueditor\ueditor.all.min.js" />
     <Content Include="ueditor\ueditor.config22.js" />
@@ -1340,13 +1342,13 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>16123</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://tllhs.imtimely.com/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
+          <UseCustomServer>True</UseCustomServer>
           <CustomServerUrl>http://192.168.1.138</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>

@@ -132,7 +132,7 @@ namespace Poco
         public string OwnerName { get; set; }
 
         /// <summary>
-        /// 业主姓名
+        /// 业主电话
         /// </summary>
         [Display(Name = "业主电话")]
         [Required(ErrorMessage = "请输入业主电话")]

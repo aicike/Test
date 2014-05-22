@@ -11,11 +11,16 @@ namespace Poco.WebAPI_Poco
 
         //商户名称
         public string Name { get; set; }
-        
         //商户地址
         public string Address { get; set; }
 
         //电话
         public string Phone { get; set; }
+
+        //商家LOGO
+        public string Logo{ get; set; }
+
+        //简介
+        public string Introduction { get; set; }
     }
 }
