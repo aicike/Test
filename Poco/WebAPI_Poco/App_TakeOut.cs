@@ -27,6 +27,9 @@ namespace Poco.WebAPI_Poco
         //商家名称 
         public string MerchantName { get; set; }
 
+        //商品明细，富文本
+        public string Content { get; set; }
+
         public List<App_TakeOutItem> ItemList { get; set; }
     }
 

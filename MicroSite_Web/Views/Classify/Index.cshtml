@@ -395,7 +395,7 @@
                         <tr>
                             <td colspan="2">
                                 <input type="submit" id="btnAdd" value="添加" class="button" style="display: none" />
-                                <div class="option">@Html.ActionLink("添加子类", "Add", "Classify", new { HostName = ViewBag.HostName }, new { onclick = "return ckAdd()", id = "AddUrl" }, true)</div>
+                                <div class="option">@Html.ActionLink("添加子类", "Add", "Classify", new { HostName = ViewBag.HostName }, new { onclick = "return ckAdd()", id = "AddUrl" })</div>
                             </td>
                         </tr>
                     </table>
@@ -479,10 +479,10 @@
                 <table cellpadding="0" cellspacing="0" class="tabList">
                     <tr>
                         <td>
-                            <div class="option">@Html.ActionLink("保存", "Edit", "Classify", new { HostName = ViewBag.HostName }, new { onclick = "ckEdit()", id = "EditUrl" }, true)</div>
+                            <div class="option">@Html.ActionLink("保存", "Edit", "Classify", new { HostName = ViewBag.HostName }, new { onclick = "ckEdit()", id = "EditUrl" })</div>
                         </td>
                         <td>
-                            <div class="option">@Html.ActionLink("删除", "Delete", "Classify", new { HostName = ViewBag.HostName }, new { onclick = "ckDelete()", id = "DeleteUrl", style = "margin-left:20px" }, true)</div>
+                            <div class="option">@Html.ActionLink("删除", "Delete", "Classify", new { HostName = ViewBag.HostName }, new { onclick = "ckDelete()", id = "DeleteUrl", style = "margin-left:20px" })</div>
                         </td>
                     </tr>
                 </table>

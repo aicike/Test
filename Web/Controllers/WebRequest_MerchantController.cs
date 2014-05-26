@@ -9,6 +9,7 @@ using Poco;
 using Poco.WebAPI_Poco;
 using Poco.Enum;
 using Interface;
+using System.Text;
 
 namespace Web.Controllers
 {
@@ -52,6 +53,7 @@ namespace Web.Controllers
                 Summary = obj.M_TakeOutDetails.Select(c => c.Title).ToList().ConvertToString(","),
                 Price = obj.M_TakeOutDetails.Sum(b => b.Price),
                 TakeOutPrice = obj.TakeOutPrice,
+                MerchantID = obj.MerchantID,
                 ItemList = obj.M_TakeOutDetails.Select(a => new App_TakeOutItem
                 {
                     ID = a.ID,
@@ -59,11 +61,18 @@ namespace Web.Controllers
                     Price = a.Price
                 }).ToList()
             };
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<html><head><meta name='viewport' content='width=device-width, user-scalable=no' />");
+            sb.Append("<style>.main img{max-width: 98% !important;}</style></head>");
+            sb.AppendFormat("<body style=' background-color: #F8F8F8'><div class='main' style='width: 100%;'>{0}</div></body></html>", obj.Content ?? "");
+            entity.Content = sb.ToString();
+
             return Newtonsoft.Json.JsonConvert.SerializeObject(entity);
         }
 
         /// <summary>
-        /// 
+        /// 根据商家ID获取商家信息
         /// </summary>
         /// <param name="id">商家ID</param>
         /// <returns></returns>
@@ -76,11 +85,13 @@ namespace Web.Controllers
                 ID = obj.ID,
                 Name = obj.Name,
                 Address = obj.Address,
-                Phone = obj.Phone
+                Phone = obj.Phone,
+                Introduction=obj.Introduction
             };
             return Newtonsoft.Json.JsonConvert.SerializeObject(app_Merchant);
         }
-   #region-----------------管道疏通----------------------------
+
+        #region-----------------管道疏通----------------------------
         /// <summary>
         /// 获取管道疏通商户列表
         /// </summary>
@@ -96,11 +107,12 @@ namespace Web.Controllers
             var list = pipelineDredgeModel.List().Where(a => a.M_CommunityMappings.Any(b => b.AccountMainID == amid) && a.EnumDataStatus == status && a.IsPublish)
                 .OrderByDescending(a => a.PublishDate)
                 .Skip(PageIndex).Take(ListCnt).GroupBy(a => a.MerchantID).ToList()
-                .Select(a => new App_Merchant { 
-                    ID=a.FirstOrDefault().MerchantID,
+                .Select(a => new App_Merchant
+                {
+                    ID = a.FirstOrDefault().MerchantID,
                     Name = a.FirstOrDefault().Merchant.Name,
                     Address = a.FirstOrDefault().Merchant.Address,
-                    Logo = "www."+SystemConst.WebUrl + a.FirstOrDefault().Merchant.LogoShow.Replace("~",""),
+                    Logo = "www." + SystemConst.WebUrl + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
                     Phone = a.FirstOrDefault().Merchant.Phone,
                     Introduction = a.FirstOrDefault().Merchant.Introduction
                 }).ToList();
@@ -143,8 +155,8 @@ namespace Web.Controllers
 
 
         #endregion
-        
-        
+
+
 
         #region-----------------搬家----------------------------
         /// <summary>

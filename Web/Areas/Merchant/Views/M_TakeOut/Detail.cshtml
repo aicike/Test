@@ -23,8 +23,8 @@
             //实例化编辑器
             var options = {
                 initialFrameWidth: '100%',
-                initialFrameHeight: 200,
-                imageUrl: UEDITOR_HOME_URL + "net/imageUp_Advertorial.ashx",
+                initialFrameHeight: 400,
+                imageUrl: UEDITOR_HOME_URL + "net/imageUp_Merchant.ashx",
                 imagePath: "",
                 imageManagerUrl: UEDITOR_HOME_URL + "net/imageManager_LibraryImageText.ashx",
                 imageManagerPath: "",
@@ -131,7 +131,7 @@
     <div style="margin: 15px 0px 10px 0px;">
         商品描述
     </div>
-    <script type="text/plain" id="editor1" height="200px" width="100%" name="Content">@Html.Raw(ViewBag.Content)</script>
+    <script type="text/plain" id="editor1" height="400px" width="100%" name="Content">@Html.Raw(ViewBag.Content)</script>
     <div class="action">
         <input type="button" id="btnSubmit" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
     </div>

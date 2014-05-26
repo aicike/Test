@@ -9,7 +9,7 @@ using Injection;
 using Interface;
 using Poco.Enum;
 
-namespace Web.Controllers
+namespace MicroSite_Web.Controllers
 {
     public class ProductController : ManageAccountController
     {

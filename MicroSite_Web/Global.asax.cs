@@ -8,8 +8,9 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using EF;
 using System.Data.Entity;
+using Web;
 
-namespace Web
+namespace MicroSite_Web
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801

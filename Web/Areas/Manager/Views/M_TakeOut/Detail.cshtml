@@ -10,6 +10,12 @@
            $("#hidStatus").val(status);
        });
    </script>
+   <style>
+    .divContent *
+    {
+        max-width:700px;
+        }
+   </style>
 }
 @model Poco.MerchantPoco.M_TakeOut
 <div class="title">
@@ -64,7 +70,7 @@
                <td colspan="3" style="vertical-align: middle">
                    <div>
                        商品详细：</div>
-                   <div style="padding: 10px; border: 1px solid #d1d1d1; margin-top: 8px;">
+                   <div style="padding: 10px; border: 1px solid #d1d1d1; margin-top: 8px;width:700px;" class="divContent">
                        @if (Model.Content != null)
                        { 
                            @Html.Raw(Model.Content);

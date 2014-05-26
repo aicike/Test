@@ -34,7 +34,7 @@
     </div>
 </div>
 <div class="body">
-    <div class="option">@Html.ActionLink("添加", "Add", "Product", new { HostName = ViewBag.HostName }, null, true)</div>
+    <div class="option">@Html.ActionLink("添加", "Add", "Product", new { HostName = ViewBag.HostName }, null)</div>
     <table class="tableList" cellpadding="0" cellspacing="0">
         <tr>
             <th style="width: 180px; word-wrap: break-word; word-break: normal;">
@@ -125,8 +125,8 @@
                             <span  onclick="UPRelease(@item.ID,true)" style=" cursor:pointer; color:red">未发布</span>
                         </label>
                     }
-                    @Html.ActionLink("修改", "Edit", "Product", new { HostName = ViewBag.HostName, id = item.ID }, new { }, true)
-                    @Ajax.ActionLink("删除", "Delete", "Product", new { HostName = ViewBag.HostName, id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "Product", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
+                    @Html.ActionLink("修改", "Edit", "Product", new { HostName = ViewBag.HostName, id = item.ID }, new { })
+                    @Ajax.ActionLink("删除", "Delete", "Product", new { HostName = ViewBag.HostName, id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?','" + Url.Action("Delete", "Product", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" })
                 </td>
             </tr>
         }

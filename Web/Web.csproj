@@ -191,7 +191,6 @@
     <Compile Include="Controllers\BasisSetController.cs" />
     <Compile Include="Controllers\CardInfoController.cs" />
     <Compile Include="Controllers\CharacterController.cs" />
-    <Compile Include="Controllers\ClassifyController.cs" />
     <Compile Include="Controllers\ComplaintController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ExitController.cs" />
@@ -219,7 +218,6 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\OrderMTypeController.cs" />
     <Compile Include="Controllers\ParkingFeeController.cs" />
-    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\PropertyHouseController.cs" />
     <Compile Include="Controllers\PropertyFeeInfoController.cs" />
     <Compile Include="Controllers\RentalHouseController.cs" />
@@ -450,12 +448,9 @@
     <Content Include="Scripts\ToolTip\jquery.tipTip.js" />
     <Content Include="Scripts\ToolTip\jquery.tipTip.minified.js" />
     <Content Include="Scripts\ToolTip\tipTip.css" />
-    <Content Include="Scripts\uploadify2\uploadify-cancel.png" />
-    <Content Include="Scripts\uploadify\Change Log.txt" />
+    <Content Include="Scripts\uploadify\crossdomain.xml" />
     <Content Include="Scripts\uploadify\jquery.uploadify.js" />
     <Content Include="Scripts\uploadify\jquery.uploadify.min.js" />
-    <Content Include="Scripts\uploadify\license.txt" />
-    <Content Include="Scripts\uploadify\crossdomain.xml" />
     <Content Include="Scripts\uploadify\uploadify-cancel.png" />
     <Content Include="Scripts\uploadify\uploadify.css" />
     <Content Include="Scripts\uploadify\uploadify.swf" />
@@ -702,9 +697,6 @@
     <Content Include="Areas\Manager\Views\Unlock\UnlockInfo.cshtml" />
     <Content Include="Areas\Manager\Views\Move\UnlockInfo.cshtml" />
     <Content Include="Areas\Manager\Views\PipelineDredge\UnlockInfo.cshtml" />
-    <None Include="Scripts\uploadify\check-exists.php" />
-    <None Include="Scripts\uploadify\index.php" />
-    <None Include="Scripts\uploadify\uploadify.php" />
     <Content Include="Areas\Merchant\Views\MerchantHome\MerchantsInfo.cshtml" />
     <None Include="ueditor\ueditor.all.js2" />
     <Content Include="ueditor\ueditor.all.min.js" />
@@ -766,10 +758,6 @@
     <Content Include="Scripts\MediaElement\mediaelementplayer.min.js" />
     <Content Include="Scripts\MediaElement\mejs-skins.css" />
     <Content Include="Scripts\MediaElement\silverlightmediaelement.xap" />
-    <Content Include="Scripts\uploadify2\jquery.uploadify.js" />
-    <Content Include="Scripts\uploadify2\jquery.uploadify.min.js" />
-    <Content Include="Scripts\uploadify2\uploadify.css" />
-    <Content Include="Scripts\uploadify2\uploadify.swf" />
     <Content Include="Scripts\treeview\ajax-loader.gif" />
     <Content Include="Scripts\treeview\file.gif" />
     <Content Include="Scripts\treeview\folder-closed.gif" />
@@ -1342,13 +1330,13 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>16123</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://tllhs.imtimely.com/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>True</UseCustomServer>
+          <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>http://192.168.1.138</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>

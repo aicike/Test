@@ -605,13 +605,13 @@
     <Content Include="Scripts\waterfall\jquery.infinitescroll.min.js" />
     <Content Include="Scripts\waterfall\jquery.masonry.js" />
     <Content Include="Scripts\_references.js" />
-    <None Include="Service References\RefPassport\TokenService.disco" />
     <None Include="Service References\RefPassport\configuration91.svcinfo" />
     <None Include="Service References\RefPassport\configuration.svcinfo" />
     <None Include="Service References\RefPassport\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\RefPassport\TokenService1.disco" />
     <Content Include="ueditor\dialogs\image\image.css" />
     <Content Include="ueditor\dialogs\image\image.html" />
     <Content Include="ueditor\dialogs\image\image.js" />
@@ -672,13 +672,6 @@
     <Content Include="ueditor\ueditor.all.min.js" />
     <Content Include="ueditor\ueditor.config.js" />
     <Content Include="ueditor\ueditor.parse.js" />
-    <None Include="Service References\RefPassport\TokenService.wsdl" />
-    <None Include="Service References\RefPassport\TokenService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\RefPassport\TokenService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -689,6 +682,13 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\MicroSiteSet\Index.cshtml" />
+    <None Include="Service References\RefPassport\TokenService1.wsdl" />
+    <None Include="Service References\RefPassport\TokenService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RefPassport\TokenService21.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

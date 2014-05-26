@@ -8,7 +8,7 @@ using Injection;
 using Interface;
 using Poco;
 
-namespace Web.Controllers
+namespace MicroSite_Web.Controllers
 {
     public class ClassifyController : ManageAccountController
     {
