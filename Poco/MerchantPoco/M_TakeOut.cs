@@ -31,6 +31,9 @@ namespace Poco.MerchantPoco
         [StringLength(50, ErrorMessage = "长度小于50")]
         public string Title { get; set; }
 
+        [Display(Name = "图片")]
+        public string ImagePath { get; set; }
+
 
         [Display(Name = "送餐费")]
         [Required(ErrorMessage = "请输入送餐费")]

@@ -47,8 +47,13 @@ namespace Web.Areas.Merchant.Controllers
         /// <param name="MainHouseInfo"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Add(M_TakeOut M_TakeOut)
+        public ActionResult Add(M_TakeOut M_TakeOut, int w, int h, int x1, int y1, int tw, int th)
         {
+            if (w <= 0)
+            {
+                return JavaScript(AlertJS_NoTag(new Dialog("请在图片上选择展示区域")));
+            }
+
             var takeOutModel = Factory.Get<IM_TakeOutModel>(SystemConst.IOC_Model.M_TakeOutModel);
             M_TakeOut.CreatDate = DateTime.Now;
             M_TakeOut.EnumDataStatus = (int)EnumDataStatus.None;
@@ -61,7 +66,7 @@ namespace Web.Areas.Merchant.Controllers
                 return Alert(new Dialog("请选择小区。"));
             }
             var ids = hidCommunity.ConvertToIntArray(',');
-            var result = takeOutModel.Add(M_TakeOut, ids);
+            var result = takeOutModel.Add(M_TakeOut, ids, w, h, x1, y1, tw, th);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));

@@ -3,7 +3,13 @@
     int[] Community = ViewBag.Community;
 }
 @section head{
+    <script src="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/uploadify/uploadify.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/uploadify/jquery.uploadify.js")" type="text/javascript"></script>
     <script>
+        var Cnt = 0;
+        var UpImgUrl = '@Url.Action("UpImg", "Ajak", new { Area = "", HostName = ViewBag.HostName })';
         $(function () {
             $("#btnSubmit2").click(function () {
                 JAlert({
@@ -14,6 +20,57 @@
                     BtnCancel: "取消",
                     BtnCancelClick: "$(this).dialog('close');return false;"
                 });
+            });
+
+            $("#file_upload").uploadify({
+                height: 30,
+                swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
+                uploader: UpImgUrl,
+                width: 70,
+                fileSizeLimit: '5MB',
+                buttonText: '选择图片',
+                multi: false,
+                fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
+                onUploadSuccess: function (file, data, response) {
+
+                    if (data == "" || data == undefined || data == "false") {
+                        JAlert({
+                            Message: "上传失败请重新上传！",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return;
+                    }
+                    if (Cnt > 0) {
+                        jcrop_api.destroy();
+                        $('#x1').val("0");
+                        $('#y1').val("0");
+                        $('#w').val("0");
+                        $('#h').val("0");
+                        $('#tw').val("0");
+                        $('#th').val("0");
+                    }
+                    $("#imgSel").attr('src', data);
+                    $("#imgLogo").attr('src', data);
+                    $("#imgLogo2").attr('src', data);
+
+                    $("#ImagePath").val(data);
+                    $('#imgSel').Jcrop({
+                        onChange: updatePreview,
+                        onSelect: updatePreview,
+                        aspectRatio: 2,
+                        setSelect: [0, 0, 200, 200]
+                    }, function () {
+                        // Use the API to get the real image size
+                        var bounds = this.getBounds();
+                        boundx = bounds[0];
+                        boundy = bounds[1];
+                        // Store the API in the jcrop_api variable
+                        jcrop_api = this;
+                        updatePreview(tempC);
+                    });
+                    Cnt = 1;
+                }
             });
         });
         function postData() {
@@ -32,6 +89,40 @@
                 return true;
             }
         }
+
+        var jcrop_api, boundx, boundy;
+        var tempC;
+        function updatePreview(c) {
+            tempC = c;
+            if (parseInt(c.w) > 0) {
+
+
+                var rx2 = 200 / c.w;
+                var ry2 = 100 / c.h;
+                $('#imgLogo').css({
+                    width: Math.round(rx2 * boundx) + 'px',
+                    height: Math.round(ry2 * boundy) + 'px',
+                    marginLeft: '-' + Math.round(rx2 * c.x) + 'px',
+                    marginTop: '-' + Math.round(ry2 * c.y) + 'px'
+                });
+
+                var rx3 = 120 / c.w;
+                var ry3 = 60 / c.h;
+                $('#imgLogo2').css({
+                    width: Math.round(rx3 * boundx) + 'px',
+                    height: Math.round(ry3 * boundy) + 'px',
+                    marginLeft: '-' + Math.round(rx3 * c.x) + 'px',
+                    marginTop: '-' + Math.round(ry3 * c.y) + 'px'
+                });
+            }
+            $('#x1').val(c.x);
+            $('#y1').val(c.y);
+            $('#w').val(c.w);
+            $('#h').val(c.h);
+            //获取当前显示图片高宽
+            $('#tw').val($("#imgSel").width());
+            $('#th').val($("#imgSel").height());
+        };
     </script>
 }
 @model Poco.MerchantPoco.M_TakeOut
@@ -41,7 +132,63 @@
 <div class="body">
     @using (Ajax.BeginForm("Edit", "M_TakeOut", new { Area = "Merchant" }, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
-
+        <fieldset>
+            <legend>展示图片</legend>
+            <table style="line-height: 15px" width="100%">
+                <tr>
+                    <td style="width: 365px">
+                        <div class="middle-out">
+                            <div class="middle-in" style="margin: auto 0px">
+                                <img id="imgSel"  src="@Url.Content(Model.ImagePath ?? "")"   style="max-height:320px; max-width:320px;" />
+                            </div>
+                        </div>
+                    </td>
+                    <td valign="top">
+                        <p>
+                            App列表页展示图
+                        </p>
+                        <div style="width: 200px; height: 100px; overflow: hidden;">
+                            <img id="imgLogo" src="@Url.Content(Model.ImagePath ?? "")" style="width:200px; height:100px"/>
+                        </div>
+                        <span style="font-size: 12px; color: #979797">(320*160 缩略图)</span>
+                        <div style="width: 120px; height: 60px; overflow: hidden; margin-top: 17px">
+                            <img id="imgLogo2" src="@Url.Content(Model.ImagePath ?? "")" style="width:120px; height:60px"/>
+                        </div>
+                        <span style="font-size: 12px; color: #979797">(120*60 缩略图)</span>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div style="color: Red">
+                            提示：请上传小于5MB的图片
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input id="file_upload" name="file_upload" type="file" multiple="false" />
+                        @Html.TextBoxFor(a => a.ImagePath, new { style = "width:0px;display:none" })
+                        @Html.ValidationMessageFor(a => a.ImagePath)
+                        <div style="font-size: 12px; color: Red">
+                            <div style="display: none">
+                                X1
+                                <input type="text" size="4" id="x1" name="x1" value="0" />
+                                Y1
+                                <input type="text" size="4" id="y1" name="y1" value="0" />
+                                W
+                                <input type="text" size="4" id="w" name="w" value="0" />
+                                H
+                                <input type="text" size="4" id="h" name="h" value="0" />
+                                TW
+                                <input type="text" size="4" id="tw" name="tw" value="0" />
+                                TH
+                                <input type="text" size="4" id="th" name="th" value="0" />
+                            </div>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
         <fieldset>
             <legend>基本信息</legend>
             <table class="tableForm">
@@ -86,8 +233,9 @@
         <input type="hidden" name="hidCommunity" id="hidCommunity" />
 
         <div class="action">
-            <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px;display:none"/>
-           <input type="button" id="btnSubmit2" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+            <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px;
+                display: none" />
+            <input type="button" id="btnSubmit2" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
         </div>
     }
 </div>

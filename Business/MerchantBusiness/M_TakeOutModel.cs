@@ -8,6 +8,9 @@ using Poco;
 using Injection.Transaction;
 using System.Data.Entity;
 using Poco.Enum;
+using System.Web;
+using Common;
+using System.IO;
 
 namespace Business.MerchantBusiness
 {
@@ -19,8 +22,53 @@ namespace Business.MerchantBusiness
         }
 
         [Transaction]
-        public Result Add(M_TakeOut entity, int[] communityIDs)
+        public Result Add(M_TakeOut entity, int[] communityIDs,int w, int h, int x1, int y1, int tw, int th)
         {
+            try
+            {
+                var path = string.Format(SystemConst.Business.MerchantFile, entity.MerchantID);
+                var accountPath = HttpContext.Current.Server.MapPath(path);
+                var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                CommonModel com = new CommonModel();
+                var LastName = com.CreateRandom("", 5) + entity.ImagePath.GetFileSuffix();
+                var imageName = string.Format("{0}_{1}", token, LastName);
+                var imagePath = string.Format("{0}\\{1}", accountPath, imageName);
+                var imageName2 = string.Format("{0}Y_{1}", token, LastName);
+                var imagePath2 = string.Format("{0}\\{1}", accountPath, imageName2);
+                var imageminiName = string.Format("{0}_{1}_{2}", token, "mini", LastName);
+                var imageminiPath = string.Format("{0}\\{1}", accountPath, imageminiName);
+                var imageshowName = string.Format("{0}_{1}_{2}", token, "show", LastName);
+                var imageshowPath = string.Format("{0}\\{1}", accountPath, imageshowName);
+
+                var lsImgPath = entity.ImagePath;
+                if (!string.IsNullOrEmpty(lsImgPath))
+                {
+                    var lsImaFilePath = HttpContext.Current.Server.MapPath(lsImgPath);
+                    Tool.SuperGetPicThumbnail(lsImaFilePath, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+
+
+                    Tool.SuperGetPicThumbnailJT(lsImaFilePath, imagePath2, 70, w, h, x1, y1, tw, th, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+
+                    Tool.SuperGetPicThumbnail(imagePath2, imageshowPath, 70, 480, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+
+                    if (File.Exists(imagePath2))
+                    {
+                        File.Delete(imagePath2);
+                    }
+
+                    //缩略图mini
+                    Tool.SuperGetPicThumbnail(imageshowPath, imageminiPath, 70, 200, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic);
+
+                    entity.ImagePath= path + imageshowName;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+
             List<M_CommunityMapping> list = new List<M_CommunityMapping>();
             foreach (var item in communityIDs)
             {

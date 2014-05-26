@@ -11,7 +11,7 @@ namespace Interface.MerchantInterface
     {
         IQueryable<M_TakeOut> ListByMerchantID(int merchantID);
 
-        Result Add(M_TakeOut entity, int[] communityIDs);
+        Result Add(M_TakeOut entity, int[] communityIDs, int w, int h, int x1, int y1, int tw, int th);
 
         Result Edit(M_TakeOut entity, int[] communityIDs);
 
