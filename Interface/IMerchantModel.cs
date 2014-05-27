@@ -15,5 +15,12 @@ namespace Interface
         /// <param name="PWD"></param>
         /// <returns></returns>
         Result Login(string Phone, string PWD);
+
+         /// <summary>
+        /// 修改数据
+        /// </summary>
+        /// <param name="merchant"></param>
+        /// <returns></returns>
+        Result EditInfo(Merchant merchant, System.Web.HttpPostedFileBase LogoImagePathFile);
     }
 }

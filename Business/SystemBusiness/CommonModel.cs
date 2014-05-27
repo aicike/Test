@@ -558,5 +558,34 @@ namespace Business
             return result;
         }
 
+
+
+
+        /// <summary>
+        /// 验证唯一（商户端）返回false，说明已存在该值
+        /// </summary>
+        public bool CheckIsUnique_Merchant(string tableName, string field, string value, int? id = null)
+        {
+            string sql = null;
+            value = value.Trim();
+            if (id.HasValue && id.Value > 0)
+            {
+                sql = string.Format("SELECT ID FROM {0} WHERE {1}='{2}' AND SystemStatus=0 AND ID<>{3}", tableName, field, value, id.Value);
+            }
+            else
+            {
+                sql = string.Format("SELECT ID FROM {0} WHERE {1}='{2}' AND SystemStatus=0 ", tableName, field, value);
+            }
+            var result = SqlQuery<int>(sql).ToList();
+            if (result.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
     }
 }

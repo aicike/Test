@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Menu2 = Poco.SystemConst.Menu.Payment;
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@section head{
+    <script>
+
+        $(function () {
+            var IsusePay = "@ViewBag.IsusePay";
+            $("#IsusePay").val(IsusePay);
+        });
+    </script>
+}
+@model Poco.PayInfo
+<div class="title">
+    @Html.Partial("Menu3")
+</div>
+<div class="body">
+    @using (Html.BeginForm("Add", "Payment", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <fieldset style="font-size: 14px">
+            <legend>支付宝信息</legend>
+            <table style="width: 100%;">
+                <tr>
+                    <td class="tdTitle" style="width: 150px">
+                        <span class="Identification">*</span> 是否启用支付宝
+                    </td>
+                    <td class="tdField">
+                        <select id="IsusePay" name="IsusePay">
+                            <option value="False">不启用</option>
+                            <option value="True">启用</option>
+                        </select>
+                    </td>
+                    <td>
+                        @Html.HiddenFor(a=>a.ID)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle" style="width: 150px">
+                        <span class="Identification">*</span> 合作者身份ID
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.IdentityID, new { style = "width:300px" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.IdentityID)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle" style="width: 150px">
+                        <span class="Identification">*</span> 支付宝账号
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.PayAccount, new { style = "width:300px" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.PayAccount)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle" style="width: 150px">
+                        <span class="Identification">*</span> 商户私钥
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.MerchantRivateKey, new { style = "width:300px" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.MerchantRivateKey)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle" style="width: 150px">
+                        <span class="Identification">*</span> 支付宝公钥
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.PayPublicKey, new { style = "width:300px" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.PayPublicKey)
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <input type="submit" id="btnSubmit" value="保存支付宝信息" class="button" style="margin-right: 20px" />
+        </fieldset>
+    }
+</div>

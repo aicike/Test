@@ -173,6 +173,7 @@ namespace Poco
             public const string ParkingFee = "ParkingFee";
             
             public const string AboutUS = "AboutUS";
+            public const string Payment = "Payment";
             
 
             //Action
@@ -311,8 +312,9 @@ namespace Poco
             public const string M_MoveModel = "M_MoveModel";
             public const string M_UnlockModel = "M_UnlockModel";
             public const string M_PipelineDredgeModel = "M_PipelineDredgeModel";
+            public const string PaymentModel = "PaymentModel";
             
-
+            
         }
     }
 }
