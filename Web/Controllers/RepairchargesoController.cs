@@ -41,7 +41,8 @@ namespace Web.Controllers
             repairchargeso.GetDate = DateTime.Now;
             repairchargeso.AccountMainID = LoginAccount.CurrentAccountMainID;
             repairchargesoModel.Add(repairchargeso);
-            return RedirectToAction("Index", "Repairchargeso");
+            return JavaScript("window.location.href='" + Url.Action("Index", "Repairchargeso", new { HostName = LoginAccount.HostName }) + "'");
+
         }
 
         public ActionResult Edit(int ID)

@@ -88,5 +88,13 @@ namespace Interface
         /// </summary>
         /// <returns></returns>
         List<AccountMain> GetCommunityList();
+
+         /// <summary>
+        /// 修改支付是否启用
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <param name="IsUsePay"></param>
+        /// <returns></returns>
+        Result UpdPayIsUse(int AMID, bool IsUsePay);
     }
 }

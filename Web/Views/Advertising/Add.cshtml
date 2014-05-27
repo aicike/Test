@@ -171,14 +171,8 @@
                     });
                     return false;
                 }
-                JAlert({
-                    Message: "保存后将会给所有用户发送通知，您确定保存吗？",
-                    DialogType: "confirm",
-                    BtnOk: "确定",
-                    BtnOkClick: "$('#btnSubmit').click()",
-                    BtnCancel: "取消",
-                    BtnCancelClick: "$(this).dialog('close');"
-                });
+                $('#btnSubmit').click();
+
             });
         });
 

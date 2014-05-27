@@ -5,8 +5,9 @@ using System.Text;
 
 namespace Poco.WebAPI_Poco
 {
-    public class App_PipelineDredge
+    public class App_Unlock
     {
+
         /// <summary>
         /// ID
         /// </summary>
@@ -31,8 +32,8 @@ namespace Poco.WebAPI_Poco
         /// <summary>
         /// 价格
         /// </summary>
-        public string Price { get; set; }   
-   
+        public string Price { get; set; }
+
         /// <summary>
         /// 发布时间
         /// </summary>

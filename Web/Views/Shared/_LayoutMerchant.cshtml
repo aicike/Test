@@ -37,7 +37,17 @@
             <li><a class="menu1">商户服务
                 <img style=" float:right; width:14px ;margin-right:10px; margin-top:14px" t_val="0" src="@Url.Content("/images/zhankai_2.png")" />
             </a>
-                <ul class="submenu">
+                @if (ViewBag.Menu >= 1 && ViewBag.Menu <= 12)
+                { 
+                    <script>
+                        $(function () {
+                            $('#submenu_1').prev("a").find("img").attr("src", '@Url.Content("/images/shouqi_2.png")');
+                            $('#submenu_1').prev("a").find("img").attr("t_val", "1");
+                            $('#submenu_1').show();
+                        }); 
+                    </script>
+                }
+                <ul class="submenu" id="submenu_1">
                     @if (ViewBag.Menu == 1)
                     {
                         <li class="select"><a href="@(Url.Action("Index", "M_TakeOut", new { Area = "Merchant" }, null))">
@@ -137,6 +147,27 @@
                     }
                 </ul>
             </li>
+            <li><a class="menu1">基本信息
+                <img style=" float:right; width:14px ;margin-right:10px; margin-top:14px" t_val="0" src="@Url.Content("/images/zhankai_2.png")" />
+            </a>
+                <ul class="submenu" id="submenu_2">
+                    @if (ViewBag.Menu == 13)
+                    {
+                        <li class="select"><a href="/Merchant/MerchantHome/MerchantsInfo">基本信息 </a></li>
+                        <script>
+                            $(function () {
+                                $('#submenu_2').prev("a").find("img").attr("src", '@Url.Content("/images/shouqi_2.png")');
+                                $('#submenu_2').prev("a").find("img").attr("t_val", "1");
+                                $('#submenu_2').show();
+                            }); 
+                        </script>
+                    }
+                    else
+                    {
+                        <li><a href="/Merchant/MerchantHome/MerchantsInfo">基本信息 </a></li>
+                    }
+                </ul>
+            </li>
         </ul>
     </div>
     <div style="width: 810px; float: left">@RenderBody()
@@ -173,6 +204,6 @@
         });
 
         $(".menu").attr("style", "min-height:" + $(".main").height() + "px");
-        $(".menu1").click();
+        //        $(".menu1").click();
     });
 </script>

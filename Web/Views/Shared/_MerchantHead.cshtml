@@ -41,7 +41,8 @@
                 
                 @if (Merchant != null && Merchant.LogoShow != null && Merchant.LogoShow.Length > 0)
                 { 
-                <a href="@Url.Action("Index", "MerchantHome")"><img src="@Url.Content(Merchant.LogoShow, "/Images/logo.png")" /></a>
+                    
+                <a href="@Url.Action("Index", "MerchantHome")"><img src="@Url.Content(Merchant.LogoShow, "/Images/logo.png")" style=" height:58px"/></a>
                 }
                 else
                 { 

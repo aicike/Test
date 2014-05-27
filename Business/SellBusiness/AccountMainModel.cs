@@ -1110,5 +1110,24 @@ namespace Business
             string accountStatus = EnumAccountStatus.Enabled.ToString();
             return List().Where(a => a.AccountStatus.Token.Equals(accountStatus)).ToList();
         }
+
+        /// <summary>
+        /// 修改支付是否启用
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <param name="IsUsePay"></param>
+        /// <returns></returns>
+        public Result UpdPayIsUse(int AMID, bool IsUsePay)
+        {
+            Result result = new Result();
+            string sql = string.Format("update AccountMain set IsusePay = {0} where ID = {1}",IsUsePay,AMID);
+            int cnt = base.SqlExecute(sql);
+            if (cnt <= 0)
+            {
+                result.HasError = true;
+                result.Error = "更改支付宝信息失败！";
+            }
+            return result;
+        }
     }
 }

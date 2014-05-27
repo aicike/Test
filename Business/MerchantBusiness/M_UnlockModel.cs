@@ -174,8 +174,16 @@ namespace Business.MerchantBusiness
         public Result UpdatePush(int UID, bool push)
         {
             Result result = new Result();
-            string sql = string.Format("update M_Unlock set IsPublish= '{0}' where ID = {1}", push, UID);
-            
+            string sql = "";
+            if (push)
+            {
+                sql = string.Format("update M_Unlock set IsPublish= '{0}',publishdate='{1}' where ID = {2}", push, DateTime.Now.ToString(), UID);
+            }
+            else
+            {
+                sql = string.Format("update M_Unlock set IsPublish= '{0}',publishdate=null  where ID = {1}", push, UID);
+            }
+             
             int cnt = base.SqlExecute(sql);
             if (cnt <= 0)
             {

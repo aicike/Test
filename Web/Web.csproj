@@ -219,6 +219,7 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\OrderMTypeController.cs" />
     <Compile Include="Controllers\ParkingFeeController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\PropertyHouseController.cs" />
     <Compile Include="Controllers\PropertyFeeInfoController.cs" />
@@ -705,6 +706,7 @@
     <Content Include="ueditor\ueditor.parse.min.js" />
     <Content Include="Content\Style.css" />
     <Content Include="Views\Shared\SystemMenu.cshtml" />
+    <Content Include="Views\Payment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\IOC.xml" />

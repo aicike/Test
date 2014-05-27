@@ -137,6 +137,11 @@ namespace Poco
         [StringLength(50, ErrorMessage = "长度小于50")]
         public string RandomCode { get; set; }
 
+        /// <summary>
+        ///  是否使用支付宝
+        /// </summary>
+        [Display(Name = "是否使用支付宝")]
+        public bool IsusePay { get; set; }
 
         /// <summary>
         /// 数据更新信息
@@ -273,8 +278,10 @@ namespace Poco
 
 
         public virtual ICollection<AboutUS> AboutUS { get; set; }
-        
+
         public virtual ICollection<M_CommunityMapping> M_CommunityMappings { get; set; }
+
+        public virtual ICollection<PayInfo> PayInfo { get; set; }
         
         
     }

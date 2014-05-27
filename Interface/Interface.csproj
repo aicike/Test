@@ -85,6 +85,7 @@
     <Compile Include="IOrderMIntermediateModel.cs" />
     <Compile Include="IOrderModel.cs" />
     <Compile Include="IOrderMTypeModel.cs" />
+    <Compile Include="IPaymentModel.cs" />
     <Compile Include="IPendingMessagesModel.cs" />
     <Compile Include="IProductImgModel.cs" />
     <Compile Include="IProductModel.cs" />

@@ -9,6 +9,7 @@ using Injection;
 using Poco;
 using Interface;
 using Common;
+using Business;
 
 namespace Web.Controllers
 {
@@ -114,6 +115,19 @@ namespace Web.Controllers
             Session[SystemConst.Session.LoginMerchant] = entity;
             return RedirectToAction("Index", "MerchantHome", new { Area = "Merchant" });
         }
+
+        /// <summary>
+        /// 唯一验证
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public string ChickUnique(string phone)
+        {
+            CommonModel com = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+            return com.CheckIsUnique_Merchant("Merchant", "Phone", phone.Trim()).ToString(); ;
+        }
+            
 
     }
 }
