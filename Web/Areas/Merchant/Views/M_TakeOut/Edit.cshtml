@@ -9,7 +9,8 @@
     <script src="@Url.Content("~/Scripts/uploadify/jquery.uploadify.js")" type="text/javascript"></script>
     <script>
         var Cnt = 0;
-        var UpImgUrl = '@Url.Action("UpImg", "Ajak", new { Area = "", HostName = ViewBag.HostName })';
+        var UpImgUrl = '@Url.Action("UpImg", "Ajax", new { Area = "", HostName = ViewBag.HostName })';
+        var swfurl = '@Url.Content("/Scripts/uploadify/uploadify.swf")' + "?var=" + (new Date()).getTime();
         $(function () {
             $("#btnSubmit2").click(function () {
                 JAlert({
@@ -24,7 +25,7 @@
 
             $("#file_upload").uploadify({
                 height: 30,
-                swf: '@Url.Content("~/Scripts/uploadify/uploadify.swf")',
+                swf: swfurl,
                 uploader: UpImgUrl,
                 width: 70,
                 fileSizeLimit: '5MB',

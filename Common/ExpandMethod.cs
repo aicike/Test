@@ -54,14 +54,21 @@ namespace System
         /// </summary>
         public static string ConvertToString<T>(this IList<T> list, string split)
         {
-            StringBuilder str = new StringBuilder();
-            foreach (var item in list)
+            if (list != null)
             {
-                str.AppendFormat("{0}{1}", item, split);
+                StringBuilder str = new StringBuilder();
+                foreach (var item in list)
+                {
+                    str.AppendFormat("{0}{1}", item, split);
+                }
+                string value = str.ToString();
+                if (value.Length > 0)
+                {
+                    value = value.Remove(value.Length - split.Length);
+                }
+                return value;
             }
-            string value = str.ToString();
-            value = value.Remove(value.Length - split.Length);
-            return value;
+            return "";
         }
 
         public static int[] ConvertToIntArray(this string value, char split)
@@ -164,7 +171,7 @@ namespace System
             }
             else
             {
-                return path.Substring(path.LastIndexOf("\\")+1);
+                return path.Substring(path.LastIndexOf("\\") + 1);
             }
         }
 

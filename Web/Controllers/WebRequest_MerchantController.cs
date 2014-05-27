@@ -34,7 +34,8 @@ namespace Web.Controllers
                     Price = a.M_TakeOutDetails.Sum(b => b.Price),
                     TakeOutPrice = a.TakeOutPrice,
                     MerchantID = a.MerchantID,
-                    MerchantName = a.Merchant.Name
+                    MerchantName = a.Merchant.Name,
+                    ImagePath = SystemConst.WebUrlIP + Url.Content(a.ImagePath ?? "")
                 }).ToList();
             var newID = ID + ListCnt;
             var obj = new { LastID = newID, List = list };
@@ -86,7 +87,7 @@ namespace Web.Controllers
                 Name = obj.Name,
                 Address = obj.Address,
                 Phone = obj.Phone,
-                Introduction=obj.Introduction
+                Introduction = obj.Introduction
             };
             return Newtonsoft.Json.JsonConvert.SerializeObject(app_Merchant);
         }

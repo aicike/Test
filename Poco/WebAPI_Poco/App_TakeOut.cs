@@ -31,6 +31,8 @@ namespace Poco.WebAPI_Poco
         public string Content { get; set; }
 
         public List<App_TakeOutItem> ItemList { get; set; }
+
+        public string ImagePath { get; set; }
     }
 
     public class App_TakeOutItem

@@ -101,7 +101,7 @@ namespace Web.Areas.Merchant.Controllers
         /// <param name="MainHouseInfo"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Edit(M_TakeOut M_TakeOut)
+        public ActionResult Edit(M_TakeOut M_TakeOut, int w, int h, int x1, int y1, int tw, int th)
         {
             var takeOutModel = Factory.Get<IM_TakeOutModel>(SystemConst.IOC_Model.M_TakeOutModel);
             string hidCommunity = Request.Form["hidCommunity"];
@@ -113,7 +113,7 @@ namespace Web.Areas.Merchant.Controllers
             M_TakeOut.EnumDataStatus = (int)EnumDataStatus.None;
             M_TakeOut.IsPublish = false;
             var ids = hidCommunity.ConvertToIntArray(',');
-            var result = takeOutModel.Edit(M_TakeOut, ids);
+            var result = takeOutModel.Edit(M_TakeOut, ids, w, h, x1, y1, tw, th);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));
