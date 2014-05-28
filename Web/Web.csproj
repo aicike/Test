@@ -219,7 +219,6 @@
     <Compile Include="Controllers\OrderMTypeController.cs" />
     <Compile Include="Controllers\ParkingFeeController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
-    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\PropertyHouseController.cs" />
     <Compile Include="Controllers\PropertyFeeInfoController.cs" />
     <Compile Include="Controllers\RentalHouseController.cs" />
