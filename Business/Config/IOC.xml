@@ -142,6 +142,12 @@
   <object id="M_UnlockModel" type="Business.MerchantBusiness.M_UnlockModel" parent="EFModel" singleton="false"></object>
   <object id="M_PipelineDredgeModel" type="Business.MerchantBusiness.M_PipelineDredgeModel" parent="EFModel" singleton="false"></object>
 
+  <object id="M_DomesticModel" type="Business.MerchantBusiness.M_DomesticModel" parent="EFModel" singleton="false"></object>
+  <object id="M_DryCleaningModel" type="Business.MerchantBusiness.M_DryCleaningModel" parent="EFModel" singleton="false"></object>
+  <object id="M_EducationTrainModel" type="Business.MerchantBusiness.M_EducationTrainModel" parent="EFModel" singleton="false"></object>
+  <object id="M_PetHospitalModel" type="Business.MerchantBusiness.M_PetHospitalModel" parent="EFModel" singleton="false"></object>
+  <object id="M_TutorModel" type="Business.MerchantBusiness.M_TutorModel" parent="EFModel" singleton="false"></object>
+
 
   <object id="PaymentModel" type="Business.SellBusiness.PaymentModel" parent="EFModel" singleton="false"></object>
 

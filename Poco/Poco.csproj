@@ -106,9 +106,14 @@
     <Compile Include="Lottery_User.cs" />
     <Compile Include="Merchant.cs" />
     <Compile Include="MerchantPoco\M_CommunityMapping.cs" />
+    <Compile Include="MerchantPoco\M_Domestic.cs" />
+    <Compile Include="MerchantPoco\M_DryCleaning.cs" />
+    <Compile Include="MerchantPoco\M_EducationTrain.cs" />
     <Compile Include="MerchantPoco\M_Move.cs" />
+    <Compile Include="MerchantPoco\M_PetHospital.cs" />
     <Compile Include="MerchantPoco\M_PipelineDredge.cs" />
     <Compile Include="MerchantPoco\M_TakeOutDetail.cs" />
+    <Compile Include="MerchantPoco\M_Tutor.cs" />
     <Compile Include="MerchantPoco\M_Unlock .cs" />
     <Compile Include="MicroSiteSetInfo.cs" />
     <Compile Include="MerchantPoco\M_TakeOut.cs" />
@@ -134,6 +139,8 @@
     <Compile Include="UserTag.cs" />
     <Compile Include="WebAPI_Poco\App_Merchant.cs" />
     <Compile Include="WebAPI_Poco\App_Move.cs" />
+    <Compile Include="WebAPI_Poco\App_Pay.cs" />
+    <Compile Include="WebAPI_Poco\App_PaymentMethods.cs" />
     <Compile Include="WebAPI_Poco\App_PipelineDredge.cs" />
     <Compile Include="WebAPI_Poco\App_PropertyUser.cs" />
     <Compile Include="WebAPI_Poco\App_TakeOut.cs" />

@@ -234,6 +234,7 @@
                         <input id="file_upload" name="file_upload" type="file" multiple="false" />
                         @Html.TextBoxFor(a => a.MainImagPath, new { style = "width:0px;display:none" })
                         @Html.ValidationMessageFor(a => a.MainImagPath)
+                          <div style=" display:none">@Html.ValidationSummary()</div>
                         <div style="display: none">
                             X1
                             <input type="text" size="4" id="x1" name="x1" value="0" />

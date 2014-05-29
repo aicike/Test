@@ -131,7 +131,7 @@ namespace Web.Controllers
             }
             var ulim = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
             var userLoginInfo = ulim.Get(user.UserLoginInfoID);
-            
+
             //CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
             //var isOk = model.CheckIsUnique("UserLoginInfo", "Phone", phone, userLoginInfo.ID);
             //if (isOk == false)
@@ -850,7 +850,7 @@ namespace Web.Controllers
                     var propertyordermodel = Factory.Get<IPropertyOrderModel>(SystemConst.IOC_Model.PropertyOrderModel);
                     propertyordermodel.UPdateStatus(out_trade_no, (int)EnumOrderStatus.Payment);
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -871,7 +871,7 @@ namespace Web.Controllers
             try
             {
                 string fileName = DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
-                string filePath ="D:\\website"+ "\\log";
+                string filePath = "D:\\website" + "\\log";
                 if (!Directory.Exists(filePath))
                 {
                     Directory.CreateDirectory(filePath);
@@ -1078,10 +1078,60 @@ namespace Web.Controllers
             StringBuilder sb = new StringBuilder();
             sb.Append("<html><head><meta name='viewport' content='width=device-width, user-scalable=no' />");
             sb.Append("<style>.main img{max-width: 98% !important;}</style></head>");
-            sb.AppendFormat("<body><div class='main' style='width: 100%; background-color: #fff'>{0}</div></body></html>", item.Content??"");
+            sb.AppendFormat("<body><div class='main' style='width: 100%; background-color: #fff'>{0}</div></body></html>", item.Content ?? "");
             return sb.ToString(); ;
         }
 
         #endregion
+
+        #region-------------------支付宝信息-------------------------
+
+        /// <summary>
+        /// 查询支持的支付方式
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public string GetAccountMainIsUsePay(int AMID)
+        {
+            App_PaymentMethods apm = new App_PaymentMethods();
+            var accountmainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
+            var accountmain = accountmainModel.Get(AMID);
+            apm.SupportPay = accountmain.IsusePay;
+            return Newtonsoft.Json.JsonConvert.SerializeObject(apm); 
+        }
+
+        /// <summary>
+        /// 获取支付宝信息
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public string GetPayInfo(int AMID)
+        {
+            Result result = new Result();
+            //支付宝信息
+            var paymentModel = Factory.Get<IPaymentModel>(SystemConst.IOC_Model.PaymentModel);
+            var payment = paymentModel.GetInfoByAMID(AMID);
+            App_Pay a_pay = new App_Pay();
+            if (payment != null)
+            {
+                a_pay.ID = payment.ID;
+                a_pay.IdentityID = payment.IdentityID;
+                a_pay.MerchantRivateKey = payment.MerchantRivateKey;
+                a_pay.PayAccount = payment.PayAccount;
+                a_pay.PayPublicKey = payment.PayPublicKey;
+                result.Entity = a_pay;
+            }
+            else
+            {
+                result.HasError = true;
+                result.Error = "未配置支付宝账号";
+            }
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+        #endregion
+
+
+
     }
 }

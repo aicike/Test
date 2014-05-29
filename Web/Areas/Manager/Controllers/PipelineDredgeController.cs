@@ -12,6 +12,9 @@ using Poco.Enum;
 
 namespace Web.Areas.Manager.Controllers
 {
+    /// <summary>
+    /// 管道疏通
+    /// </summary>
     public class PipelineDredgeController : ManageSystemUserController
     {
         //
@@ -68,7 +71,7 @@ namespace Web.Areas.Manager.Controllers
             {
                 ViewBag.pageID = 1;
             }
-            ViewBag.Title = "开锁换锁 - 评审 -" + SystemConst.PlatformName;
+            ViewBag.Title = "管道疏通 - 评审 -" + SystemConst.PlatformName;
             return View(pipelinedredge);
         }
 

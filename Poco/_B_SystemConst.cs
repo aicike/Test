@@ -119,6 +119,10 @@ namespace Poco
             public const string Unlock = "Unlock";
             public const string Move = "Move";
             public const string PipelineDredge = "PipelineDredge";
+            public const string Domestic = "Domestic";
+            public const string DryCleaning = "DryCleaning";
+            public const string EducationTrain = "EducationTrain";
+            public const string PetHospital = "PetHospital";
 
 
 
@@ -313,6 +317,12 @@ namespace Poco
             public const string M_UnlockModel = "M_UnlockModel";
             public const string M_PipelineDredgeModel = "M_PipelineDredgeModel";
             public const string PaymentModel = "PaymentModel";
+
+            public const string M_DomesticModel = "M_DomesticModel";
+            public const string M_DryCleaningModel = "M_DryCleaningModel";
+            public const string M_EducationTrainModel = "M_EducationTrainModel";
+            public const string M_PetHospitalModel = "M_PetHospitalModel";
+            public const string M_TutorModel = "M_TutorModel";
             
             
         }

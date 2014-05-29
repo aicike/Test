@@ -12,6 +12,9 @@ using Poco.Enum;
 
 namespace Web.Areas.Manager.Controllers
 {
+    /// <summary>
+    /// 搬家
+    /// </summary>
     public class MoveController : ManageSystemUserController
     {
         //

@@ -27,21 +27,21 @@ namespace Poco
         /// 合作者身份ID
         /// </summary>
         [Display(Name = "合作者身份ID")]
-        [Required(ErrorMessage = "合作者身份ID")]
+        [Required(ErrorMessage = "请输入合作者身份ID")]
         public string IdentityID { get; set; }
 
         /// <summary>
         /// 商户私钥
         /// </summary>
         [Display(Name = "商户私钥")]
-        [Required(ErrorMessage = "商户私钥")]
+        [Required(ErrorMessage = "请输入商户私钥")]
         public string MerchantRivateKey { get; set; }
 
         /// <summary>
         /// 支付宝公钥
         /// </summary>
         [Display(Name = "支付宝公钥")]
-        [Required(ErrorMessage = "支付宝公钥")]
+        [Required(ErrorMessage = "请输入支付宝公钥")]
         public string PayPublicKey { get; set; }
     }
 }

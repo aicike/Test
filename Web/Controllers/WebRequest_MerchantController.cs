@@ -61,7 +61,7 @@ namespace Web.Controllers
                     ID = a.FirstOrDefault().MerchantID,
                     Name = a.FirstOrDefault().Merchant.Name,
                     Address = a.FirstOrDefault().Merchant.Address,
-                    Logo = "www." + SystemConst.WebUrl + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
+                    Logo = "www." + SystemConst.WebUrlIP + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
                     Phone = a.FirstOrDefault().Merchant.Phone,
                     Introduction = a.FirstOrDefault().Merchant.Introduction
                 }).ToList();
@@ -144,7 +144,7 @@ namespace Web.Controllers
                     ID = a.FirstOrDefault().MerchantID,
                     Name = a.FirstOrDefault().Merchant.Name,
                     Address = a.FirstOrDefault().Merchant.Address,
-                    Logo = "www." + SystemConst.WebUrl + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
+                    Logo = "www." + SystemConst.WebUrlIP + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
                     Phone = a.FirstOrDefault().Merchant.Phone,
                     Introduction = a.FirstOrDefault().Merchant.Introduction
                 }).ToList();
@@ -229,7 +229,7 @@ namespace Web.Controllers
                     ID = a.FirstOrDefault().MerchantID,
                     Name = a.FirstOrDefault().Merchant.Name,
                     Address = a.FirstOrDefault().Merchant.Address,
-                    Logo = "www." + SystemConst.WebUrl + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
+                    Logo = "www." + SystemConst.WebUrlIP + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
                     Phone = a.FirstOrDefault().Merchant.Phone,
                     Introduction = a.FirstOrDefault().Merchant.Introduction
                 }).ToList();

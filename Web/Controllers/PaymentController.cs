@@ -69,13 +69,22 @@ namespace Web.Controllers
             var result = accountmainModel.UpdPayIsUse(LoginAccount.CurrentAccountMainID, IsusePay);
             if (!result.HasError)
             {
-
+                payInfo.AccountMainID = LoginAccount.CurrentAccountMainID;
+                var payment = paymentModel.GetInfoByAMID(LoginAccount.CurrentAccountMainID);
+                if (payment != null)
+                {
+                    paymentModel.Edit(payInfo);
+                }
+                else
+                {
+                    paymentModel.Add(payInfo);
+                }
+                return RedirectToAction("Index", "Payment", new { Error = 1, Type = 1 });
             }
             else
             {
                 return RedirectToAction("Index", "Payment", new { Error = 2, Type = 1 });
             }
-            return View();
         }
 
     }

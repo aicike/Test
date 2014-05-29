@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Poco;
 using Interface;
+using System.Data.Entity;
 
 namespace Business.SellBusiness
 {
@@ -16,7 +17,7 @@ namespace Business.SellBusiness
         /// <returns></returns>
         public PayInfo GetInfoByAMID(int AMID)
         {
-            var item = List().Where(a=>a.AccountMainID ==AMID).FirstOrDefault();
+            var item = List().Where(a=>a.AccountMainID ==AMID).AsNoTracking().FirstOrDefault();
             return item;
         }
     }

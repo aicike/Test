@@ -12,6 +12,9 @@ using Poco.Enum;
 
 namespace Web.Areas.Merchant.Controllers
 {
+    /// <summary>
+    /// 管道疏通
+    /// </summary>
     public class M_PipelineDredgeController : ManageMerchantController
     {
         //
