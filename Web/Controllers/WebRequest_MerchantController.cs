@@ -174,7 +174,6 @@ namespace Web.Controllers
 
         #endregion
 
-
         #region-----------------开锁换锁----------------------------
         /// <summary>
         /// 获取开锁换锁商户列表
@@ -257,9 +256,7 @@ namespace Web.Controllers
         }
 
         #endregion
-
-
-
+        
         #region-----------------搬家----------------------------
         /// <summary>
         /// 获取搬家商户列表
