@@ -68,6 +68,7 @@
                     <td class="tdField">@Html.TextBoxFor(a => a.Title, new { style = "width:300px" })
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Title)
+                    <div style=" display:none">@Html.ValidationSummary()</div>
                     </td>
                 </tr>
                 <tr>

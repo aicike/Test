@@ -7,6 +7,9 @@
     <script src="@Url.Content("/ueditor/ueditor.config.js")" type="text/javascript"></script>
     <script src="@Url.Content("/ueditor/ueditor.all.js")" type="text/javascript"></script>
     <script>
+        $.ajaxSetup({
+            async: false
+        });
         $(function () {
             window.UEDITOR_HOME_URL = "/ueditor/";
             //实例化编辑器
@@ -75,6 +78,7 @@
                     });
                     return false;
                 }
+                return true;
             });
 
             //唯一验证
@@ -87,6 +91,15 @@
                 checkPhone();
             });
 
+            var error = "@ViewBag.Error";
+            if (error == "1") {
+                JMessage("保存成功");
+            }
+            else if (error == "2") {
+                JMessage("保存失败，请稍后再试！", true);
+            }
+
+
 
         });
         var PhoneRight = false;
@@ -95,7 +108,7 @@
             var values = $("#Email").val();
             if (values != "" && values != undefined) {
                 var YZUrl = '@Url.Action("ChickUniqueEmail", "MerchantHome", new { Area = "", HostName = "" })';
-                $.post(YZUrl, { tableName: "Account", field: "Email", value: values }, function (result) {
+                $.post(YZUrl, { email: values }, function (result) {
                     if (result == "True") {
                         EmailRight = true;
                     }
@@ -116,7 +129,7 @@
 
             if (values != "" && values != undefined) {
                 var YZUrl = '@Url.Action("ChickUniquePhone", "MerchantHome", new { Area = "", HostName = "" })';
-                $.post(YZUrl, { tableName: "Account", field: "Phone", value: values }, function (result) {
+                $.post(YZUrl, { phone: values }, function (result) {
 
                     if (result == "True") {
                         PhoneRight = true;

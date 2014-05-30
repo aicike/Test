@@ -25,12 +25,23 @@ namespace Web.Areas.Merchant.Controllers
         /// <summary>
         /// 商户信息界面
         /// </summary>
+        /// Error 1 ：成功 2：失败
         /// <returns></returns>
         public ActionResult MerchantsInfo(int ?Error)
         {
             ViewBag.Title = "商户平台 - 商户信息 -" + SystemConst.PlatformName;
             var merchantModel = Factory.Get<IMerchantModel>(SystemConst.IOC_Model.MerchantModel);
             var merchant = merchantModel.Get(LoginMerchant.ID);
+            if (Error.HasValue)
+            {
+                ViewBag.Error = Error.Value;
+            }
+            else {
+                ViewBag.Error = "0";
+            }
+
+
+
             return View(merchant);
         }
 
@@ -44,7 +55,17 @@ namespace Web.Areas.Merchant.Controllers
         {
             var merchantModel = Factory.Get<IMerchantModel>(SystemConst.IOC_Model.MerchantModel);
             var result = merchantModel.EditInfo(merchant, LogoImagePathFile);
-            return View();
+            if (result.HasError)
+            {
+
+                return RedirectToAction("MerchantsInfo", "MerchantHome", new { Error = "2" });
+            }
+            else
+            {
+
+                return RedirectToAction("MerchantsInfo", "MerchantHome", new { Error = "1" });
+            }
+
         }
 
         /// <summary>
@@ -56,7 +77,7 @@ namespace Web.Areas.Merchant.Controllers
         public string ChickUniquePhone(string phone)
         {
             CommonModel com = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
-            return com.CheckIsUnique_Merchant("Merchant", "Phone", phone.Trim()).ToString(); ;
+            return com.CheckIsUnique_Merchant("Merchant", "Phone", phone.Trim(),LoginMerchant.ID).ToString(); ;
         }
 
         /// <summary>
@@ -68,7 +89,7 @@ namespace Web.Areas.Merchant.Controllers
         public string ChickUniqueEmail(string email)
         {
             CommonModel com = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
-            return com.CheckIsUnique_Merchant("Merchant", "Email", email.Trim()).ToString(); ;
+            return com.CheckIsUnique_Merchant("Merchant", "Email", email.Trim(), LoginMerchant.ID).ToString(); ;
         }
     }
 }
