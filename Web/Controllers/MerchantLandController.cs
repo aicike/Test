@@ -102,6 +102,14 @@ namespace Web.Controllers
             {
                 return RedirectToAction("Register", "MerchantLand", new { Iserror = 1, Error = result.Error });
             }
+            var path = string.Format(SystemConst.Business.MerchantFile, merchant.ID);
+            var accountPath = Server.MapPath(path);
+            //判断目录是否存在
+            if (Directory.Exists(accountPath))
+            {
+                Directory.CreateDirectory(accountPath);
+            }
+
 
             Merchant entity = new Merchant();
             entity.ID = merchant.ID;

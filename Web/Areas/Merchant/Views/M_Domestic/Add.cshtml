@@ -124,19 +124,27 @@
             var ue = UE.getEditor('editor', options);
 
             $("#btnSubmit").click(function () {
+
+                if (Cnt == 0) {
+                    JMessage("请选择一张图片", true);
+                    return false;
+                }
+                if ($("#w").val() == "0") {
+
+                    JMessage("请选择App列表展示区域！", true);
+                    return false;
+                }
                 var cids = GetCommunity();
                 if (cids == undefined || cids.length == 0) {
-                    JAlert({
-                        Message: "请选择小区。",
-                        DialogType: "Ok",
-                        BtnOk: "确定"
-                    });
+
+                    JMessage("请选择小区！", true);
                     $("#hidCommunity").val("");
                     return false;
                 } else {
                     $("#hidCommunity").val(cids);
-                    
+
                 }
+
             });
 
             $("form").submit(function () {
@@ -146,6 +154,8 @@
                     $(".validation-summary-errors").find("li").remove();
                 }
             });
+
+            $("#PriceRemark").val("月");
         });
     </script>
         <style type="text/css">
@@ -173,7 +183,7 @@
     家政服务 - 创建信息
 </div>
 <div class="body">
-    @using (Ajax.BeginForm("Add", "M_Move", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    @using (Ajax.BeginForm("Add", "M_Domestic", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
         <fieldset style="font-size: 14px">
             <legend>展示图片</legend>
@@ -213,7 +223,7 @@
                         <input id="file_upload" name="file_upload" type="file" multiple="false" />
                         @Html.TextBoxFor(a => a.MainImage, new { style = "width:0px;display:none" })
                         @Html.ValidationMessageFor(a => a.MainImage)
-                          <div style=" display:none">@Html.ValidationSummary()</div>
+                          <div style=" ">@Html.ValidationSummary()</div>
                         <div style="display: none">
                             X1
                             <input type="text" size="4" id="x1" name="x1" value="0" />
@@ -242,6 +252,15 @@
                     <td class="tdField">@Html.TextBoxFor(a => a.Title, new { style = "width:300px" })
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.Title)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle" style="width: 150px">
+                        <span class="Identification">*</span> 备注/描述
+                    </td>
+                    <td class="tdField">@Html.TextAreaFor(a => a.Remark, new { style = "width:300px;height:50px" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Remark)
                     </td>
                 </tr>
                 <tr>

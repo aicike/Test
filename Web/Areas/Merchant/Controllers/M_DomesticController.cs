@@ -40,12 +40,13 @@ namespace Web.Areas.Merchant.Controllers
         {
 
             ViewBag.Title = "家政服务 - 添加信息- " + SystemConst.PlatformName;
+           
             return View();
         }
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Add(M_Domestic m_domestic)
+        public ActionResult Add(M_Domestic m_domestic, int x1, int y1, int w, int h, int tw, int th)
         {
             var m_domesticModel = Factory.Get<IM_DomesticModel>(SystemConst.IOC_Model.M_DomesticModel);
             m_domestic.MerchantID = LoginMerchant.ID;
@@ -60,11 +61,11 @@ namespace Web.Areas.Merchant.Controllers
                 return JavaScript(AlertJS_NoTag(new Dialog("请选择小区。")));
             }
             var ids = hidCommunity.ConvertToIntArray(',');
-            var result = m_domesticModel.AddInfo(m_domestic, ids);
+            var result = m_domesticModel.AddInfo(m_domestic, ids, x1, y1, w, h, tw, th);
 
             if (result.HasError)
             {
-                return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
+                return JavaScript("CloseLayout_Later();" + AlertJS_NoTag(new Dialog(result.Error)));
             }
 
             return JavaScript("window.location.href='" + Url.Action("Index", "M_Domestic", new { Area = "Merchant" }) + "'");

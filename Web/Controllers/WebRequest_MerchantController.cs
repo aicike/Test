@@ -86,13 +86,12 @@ namespace Web.Controllers
                 .OrderByDescending(a => a.PublishDate).Skip(PageIndex).Take(ListCnt).ToList()
                 .Select(a => new App_PipelineDredge
                 {
-                    ID = a.MerchantID,
+                    ID = a.ID,
                     Title = a.Title,
                     Phone = a.Phone,
                     Price = a.Price.ToString("C"),
                     PublishDate = a.PublishDate.ToString(),
-                    MID = a.MerchantID,
-                    MName = a.Merchant.Name
+                    Content = a.Content
                 }).ToList();
             var newPageIndex = PageIndex + ListCnt;
             var obj = new { ListPageIndex = newPageIndex, List = list };
@@ -170,13 +169,12 @@ namespace Web.Controllers
                 .OrderByDescending(a => a.PublishDate).Skip(PageIndex).Take(ListCnt).ToList()
                 .Select(a => new App_Unlock
                 {
-                    ID = a.MerchantID,
+                    ID = a.ID,
                     Title = a.Title,
                     Phone = a.Phone,
                     Price = a.Price.ToString("C"),
                     PublishDate = a.PublishDate.ToString(),
-                    MID = a.MerchantID,
-                    MName = a.Merchant.Name
+                    Content = a.Content
                 }).ToList();
             var newPageIndex = PageIndex + ListCnt;
             var obj = new { ListPageIndex = newPageIndex, List = list };
@@ -256,13 +254,12 @@ namespace Web.Controllers
                 .OrderByDescending(a => a.PublishDate).Skip(PageIndex).Take(ListCnt).ToList()
                 .Select(a => new App_Move
                 {
-                    ID = a.MerchantID,
+                    ID = a.ID,
                     Title = a.Title,
                     Phone = a.Phone,
                     Price = a.Price.ToString("C"),
                     PublishDate = a.PublishDate.ToString(),
-                    MID = a.MerchantID,
-                    MName = a.Merchant.Name
+                    Content = a.Content
                 }).ToList();
             var newPageIndex = PageIndex + ListCnt;
             var obj = new { ListPageIndex = newPageIndex, List = list };

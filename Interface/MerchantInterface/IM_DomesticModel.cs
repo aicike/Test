@@ -26,6 +26,6 @@ namespace Interface.MerchantInterface
         /// <param name="m_unlock"></param>
         /// <param name="communityIDs"></param>
         /// <returns></returns>
-        Result AddInfo(M_Domestic m_domestic, int[] communityIDs);
+        Result AddInfo(M_Domestic m_domestic, int[] communityIDs, int x1, int y1, int width, int height, int Twidth, int Theight);
     }
 }
