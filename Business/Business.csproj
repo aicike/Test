@@ -78,6 +78,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MerchantBusiness\M_CommunityMappingModel.cs" />
+    <Compile Include="MerchantBusiness\M_DomesticModel.cs" />
+    <Compile Include="MerchantBusiness\M_DryCleaningModel.cs" />
+    <Compile Include="MerchantBusiness\M_EducationTrainModel.cs" />
+    <Compile Include="MerchantBusiness\M_PetHospitalModel.cs" />
+    <Compile Include="MerchantBusiness\M_TutorModel.cs" />
     <Compile Include="SellBusiness\AboutUSModel.cs" />
     <Compile Include="SellBusiness\AccountMainGuideModel.cs" />
     <Compile Include="SellBusiness\AccountMainHouseInfoDetailModel.cs" />

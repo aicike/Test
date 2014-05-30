@@ -1,0 +1,127 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutMerchant.cshtml";
+    ViewBag.Menu = 6;
+}
+@section head{
+    <script>
+        $(function () {
+
+            $("label[name=labCbFirst]").each(function () {
+                $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "left" });
+            });
+        });
+    </script>
+}
+@model PagedList<Poco.MerchantPoco.M_EducationTrain>
+<div class="title">
+    教育培训
+</div>
+<div class="body">
+    <div class="option">
+        @Html.ActionLink("添加信息", "Add", "M_EducationTrain", new { HostName = ViewBag.HostName }, null, false)
+    </div>
+    <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
+        <tr>
+            <th style="width: 170px">
+                列表图片
+            </th>
+            <th style="width: 180px">
+                标题
+            </th>
+            <th>
+                价格
+            </th>
+            <th>
+                创建日期
+            </th>
+            <th>
+                审核状态
+            </th>
+            <th>
+                发布日期
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@Url.Content(item.ShowImage)" style=" width:160px" />
+                </td>
+                <td>
+                    <div style="width: 180px; word-break: keep-all; white-space: nowrap; overflow: hidden;
+                        text-overflow: ellipsis;">
+                        <label name="labCbFirst" title="@item.Remark" onclick="UPRelease(@item.ID,'True')" style=" cursor:pointer">
+                            @item.Title
+                        </label>
+                    </div>
+                </td>
+                <td>
+                    @(item.Price)/@item.PriceRemark
+                </td>
+                <td>
+                    @item.CreatDate.ToString("yyyy-MM-dd HH:mm")
+                </td>
+                <td>
+                    @item.EnumDataStatus.EnumDataStatusGetValue()
+                </td>
+                <td>
+                    @item.PublishDate
+                </td>
+                <td class="operation">
+                    @Html.ActionLink("修改", "Edit", "M_EducationTrain", new { HostName = ViewBag.HostName, ID = item.ID }, new { style = "padding-right:5px", onclick = "return updateInfo(" + item.ID + ")" }, false)
+                    @Ajax.ActionLink("删除", "Delete", "M_EducationTrain", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('“确定删除?”','" + Url.Action("Delete", "M_EducationTrain", new { HostName = ViewBag.HostName, ID = item.ID }) + "',null)" }, false)
+                    <br />
+                    @switch (item.EnumDataStatus)
+                    {
+                        case (int)Poco.Enum.EnumDataStatus.Disabled:
+
+                            break;
+                        case (int)Poco.Enum.EnumDataStatus.Enabled:
+
+                            if (item.IsPublish)
+                            {
+                        @Ajax.ActionLink("取消发布信息", "UpPush", "M_EducationTrain", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('“确定取消发布信息?”','" + Url.Action("UpPush", "M_EducationTrain", new { HostName = ViewBag.HostName, ID = item.ID, ISPush = false, PageID = ViewBag.pageID }) + "',null)" }, false)
+                            }
+                            else
+                            { 
+                        @Ajax.ActionLink("发布信息", "UpPush", "M_EducationTrain", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('“确定发布信息?”','" + Url.Action("UpPush", "M_EducationTrain", new { HostName = ViewBag.HostName, ID = item.ID, ISPush = true, PageID = ViewBag.pageID }) + "',null)" }, false)
+                            }
+
+
+                            break;
+                        case (int)Poco.Enum.EnumDataStatus.None:  
+                        @Ajax.ActionLink("提交审核", "UpStatus", "M_EducationTrain", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('“确定提交审核?”','" + Url.Action("UpStatus", "M_EducationTrain", new { HostName = ViewBag.HostName, ID = item.ID, PageID = ViewBag.pageID }) + "',null)" }, false)
+                      
+                   break;
+                        case (int)Poco.Enum.EnumDataStatus.WaitPayMent:
+
+                   break;
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>
+<div style="clear: both">
+</div>

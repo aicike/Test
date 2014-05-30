@@ -12,6 +12,9 @@ using Poco.MerchantPoco;
 
 namespace Web.Areas.Manager.Controllers
 {
+    /// <summary>
+    /// 开锁换锁
+    /// </summary>
     public class UnlockController : ManageSystemUserController
     {
         //

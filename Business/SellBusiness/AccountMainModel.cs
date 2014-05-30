@@ -1120,7 +1120,7 @@ namespace Business
         public Result UpdPayIsUse(int AMID, bool IsUsePay)
         {
             Result result = new Result();
-            string sql = string.Format("update AccountMain set IsusePay = {0} where ID = {1}",IsUsePay,AMID);
+            string sql = string.Format("update AccountMain set IsusePay = '{0}' where ID = {1}",IsUsePay,AMID);
             int cnt = base.SqlExecute(sql);
             if (cnt <= 0)
             {

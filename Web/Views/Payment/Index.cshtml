@@ -8,7 +8,50 @@
         $(function () {
             var IsusePay = "@ViewBag.IsusePay";
             $("#IsusePay").val(IsusePay);
+
+            var error = "@ViewBag.Error";
+            var type = "@ViewBag.Type"
+            if (error == "1") {
+                if (type == "1") {
+                    JMessage("支付宝信息保存成功！");
+                }
+                
+            }
+            else if (error == "2") {
+                if (type == "1") {
+                    JMessage("支付宝信息保存失败！",true);
+                }
+            }
         });
+        //支付宝验证
+        function PaychickInfo()
+        {
+            var IsusePay = $("#IsusePay").val();
+            if (IsusePay == "True")
+            {
+                var IdentityID = $("#IdentityID").val();
+                var PayAccount = $("#PayAccount").val();
+                var MerchantRivateKey = $("#MerchantRivateKey").val();
+                var PayPublicKey = $("#PayPublicKey").val();
+                if (IdentityID == undefined || IdentityID.trim()=="")
+                {
+                    JMessage("合作者身份ID不能为空！", true);
+                    return false;
+                }
+                if (PayAccount == undefined || PayAccount.trim() == "") {
+                    JMessage("支付宝账号不能为空！", true);
+                    return false;
+                }
+                if (MerchantRivateKey == undefined || MerchantRivateKey.trim() == "") {
+                    JMessage("商户私钥不能为空！", true);
+                    return false;
+                }
+                if (PayPublicKey == undefined || PayPublicKey.trim() == "") {
+                    JMessage("支付宝公钥不能为空！", true);
+                    return false;
+                }
+            }
+        }
     </script>
 }
 @model Poco.PayInfo
@@ -16,7 +59,7 @@
     @Html.Partial("Menu3")
 </div>
 <div class="body">
-    @using (Html.BeginForm("Add", "Payment", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("PreservePay", "Payment", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <fieldset style="font-size: 14px">
             <legend>支付宝信息</legend>
@@ -73,7 +116,7 @@
                 </tr>
             </table>
             <br />
-            <input type="submit" id="btnSubmit" value="保存支付宝信息" class="button" style="margin-right: 20px" />
+            <input type="submit" onclick="return PaychickInfo()" id="btnSubmit" value="保存支付宝信息" class="button" style="margin-right: 20px" />
         </fieldset>
     }
 </div>

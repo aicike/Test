@@ -12,6 +12,9 @@ using Poco.Enum;
 
 namespace Web.Areas.Merchant.Controllers
 {
+    /// <summary>
+    /// 搬家
+    /// </summary>
     public class M_MoveController : ManageMerchantController
     {
         //

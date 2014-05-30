@@ -47,5 +47,35 @@ namespace Poco.MerchantPoco
        /// </summary>
        public int? M_UnlockID { get; set; }
        public virtual M_Unlock M_Unlock { get; set; }
+
+       /// <summary>
+       /// 家政服务
+       /// </summary>
+       public int? M_DomesticID { get; set; }
+       public virtual M_Domestic M_Domestic { get; set; }
+
+       /// <summary>
+       /// 宠物医院
+       /// </summary>
+       public int? M_PetHospitalID { get; set; }
+       public virtual M_PetHospital M_PetHospital { get; set; }
+
+       /// <summary>
+       /// 教育培训
+       /// </summary>
+       public int? M_EducationTrainID { get; set; }
+       public virtual M_EducationTrain M_EducationTrain { get; set; }
+
+       /// <summary>
+       /// 干洗服务
+       /// </summary>
+       public int? M_DryCleaningID { get; set; }
+       public virtual M_DryCleaning M_DryCleaning { get; set; }
+
+       /// <summary>
+       /// 家教
+       /// </summary>
+       public int? M_TutorID { get; set; }
+       public virtual M_Tutor M_Tutor { get; set; }
    }
 }
