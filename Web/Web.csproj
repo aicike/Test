@@ -728,6 +728,9 @@
     <Content Include="ueditor\ueditor.parse.js" />
     <Content Include="ueditor\ueditor.parse.min.js" />
     <Content Include="Content\Style.css" />
+    <Content Include="Views\Default\ContactUs.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Views\Shared\SystemMenu.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
   </ItemGroup>
@@ -1196,7 +1199,6 @@
     <Content Include="Views\AccountMainGuide\Index.cshtml" />
     <Content Include="Views\LibraryImageText\MoreAdd.cshtml" />
     <Content Include="Views\LibraryImageText\MoreEdit.cshtml" />
-    <Content Include="Views\Default\ContactUs.cshtml" />
     <Content Include="Views\Shared\_LayoutDefault.cshtml" />
     <Content Include="Views\Shared\_head.cshtml" />
     <Content Include="Views\LibraryImageText\ShowImagetext.cshtml" />

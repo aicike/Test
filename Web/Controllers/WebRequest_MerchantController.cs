@@ -81,13 +81,15 @@ namespace Web.Controllers
         {
             var merchantModel = Factory.Get<IMerchantModel>(SystemConst.IOC_Model.MerchantModel);
             var obj = merchantModel.Get(MerchantID);
+            string str1 = "<html><head><meta name='viewport' content='width=device-width, user-scalable=no' /><style>.main img{max-width: 98% !important;}</style></head><body style='background-color: #F8F8F8'><div style='width: 100%;'>";
+            string str2 = "</div></body></html>";
             var app_Merchant = new App_Merchant
             {
                 ID = obj.ID,
                 Name = obj.Name,
                 Address = obj.Address,
                 Phone = obj.Phone,
-                Introduction = obj.Introduction
+                Introduction = str1 + obj.Introduction + str2
             };
             return Newtonsoft.Json.JsonConvert.SerializeObject(app_Merchant);
         }
@@ -105,6 +107,11 @@ namespace Web.Controllers
             int status = (int)EnumDataStatus.Enabled;
             var pipelineDredgeModel = Factory.Get<IM_PipelineDredgeModel>(SystemConst.IOC_Model.M_PipelineDredgeModel);
 
+
+            string str1 = "<html><head><meta name='viewport' content='width=device-width, user-scalable=no' /><style>.main img{max-width: 98% !important;}</style></head><body style='background-color:#F8F8F8'><div style='width: 100%;'>";
+            string str2 = "</div></body></html>";
+
+
             var list = pipelineDredgeModel.List().Where(a => a.M_CommunityMappings.Any(b => b.AccountMainID == amid) && a.EnumDataStatus == status && a.IsPublish)
                 .OrderByDescending(a => a.PublishDate)
                 .Skip(PageIndex).Take(ListCnt).GroupBy(a => a.MerchantID).ToList()
@@ -113,9 +120,9 @@ namespace Web.Controllers
                     ID = a.FirstOrDefault().MerchantID,
                     Name = a.FirstOrDefault().Merchant.Name,
                     Address = a.FirstOrDefault().Merchant.Address,
-                    Logo = "www." + SystemConst.WebUrlIP + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
+                    Logo =SystemConst.WebUrlIP + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
                     Phone = a.FirstOrDefault().Merchant.Phone,
-                    Introduction = a.FirstOrDefault().Merchant.Introduction
+                    Introduction = str1 + a.FirstOrDefault().Merchant.Introduction + str2
                 }).ToList();
             var newPageIndex = PageIndex + ListCnt;
             var obj = new { ListPageIndex = newPageIndex, List = list };
@@ -185,6 +192,9 @@ namespace Web.Controllers
         {
             int status = (int)EnumDataStatus.Enabled;
             var unlockModel = Factory.Get<IM_UnlockModel>(SystemConst.IOC_Model.M_UnlockModel);
+            
+            string str1 = "<html><head><meta name='viewport' content='width=device-width, user-scalable=no' /><style>.main img{max-width: 98% !important;}</style></head><body style='background-color:#F8F8F8'><div style='width: 100%;'>";
+            string str2 = "</div></body></html>";
 
             var list = unlockModel.List().Where(a => a.M_CommunityMappings.Any(b => b.AccountMainID == amid) && a.EnumDataStatus == status && a.IsPublish)
                 .OrderByDescending(a => a.PublishDate)
@@ -194,9 +204,9 @@ namespace Web.Controllers
                     ID = a.FirstOrDefault().MerchantID,
                     Name = a.FirstOrDefault().Merchant.Name,
                     Address = a.FirstOrDefault().Merchant.Address,
-                    Logo = "www." + SystemConst.WebUrlIP + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
+                    Logo = SystemConst.WebUrlIP + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
                     Phone = a.FirstOrDefault().Merchant.Phone,
-                    Introduction = a.FirstOrDefault().Merchant.Introduction
+                    Introduction = str1 + a.FirstOrDefault().Merchant.Introduction + str2
                 }).ToList();
             var newPageIndex = PageIndex + ListCnt;
             var obj = new { ListPageIndex = newPageIndex, List = list };
@@ -212,7 +222,7 @@ namespace Web.Controllers
         /// <param name="PageIndex">要显示的页 第一页传0  之后的传ListPageIndex</param>
         /// <param name="ListCnt">没页显示的数目</param>
         /// <returns></returns>
-        public string GeUnlockList(int AMID, int MID, int PageIndex, int ListCnt)
+        public string GetUnlockList(int AMID, int MID, int PageIndex, int ListCnt)
         {
             int status = (int)EnumDataStatus.Enabled;
             var unlockModel = Factory.Get<IM_UnlockModel>(SystemConst.IOC_Model.M_UnlockModel);
@@ -254,7 +264,7 @@ namespace Web.Controllers
         }
 
         #endregion
-        
+
         #region-----------------搬家----------------------------
         /// <summary>
         /// 获取搬家商户列表
@@ -268,6 +278,9 @@ namespace Web.Controllers
             int status = (int)EnumDataStatus.Enabled;
             var moveModel = Factory.Get<IM_MoveModel>(SystemConst.IOC_Model.M_MoveModel);
 
+            string str1 = "<html><head><meta name='viewport' content='width=device-width, user-scalable=no' /><style>.main img{max-width: 98% !important;}</style></head><body style='background-color:#F8F8F8'><div style='width: 100%;'>";
+            string str2 = "</div></body></html>";
+
             var list = moveModel.List().Where(a => a.M_CommunityMappings.Any(b => b.AccountMainID == amid) && a.EnumDataStatus == status && a.IsPublish)
                 .OrderByDescending(a => a.PublishDate)
                 .Skip(PageIndex).Take(ListCnt).GroupBy(a => a.MerchantID).ToList()
@@ -276,9 +289,9 @@ namespace Web.Controllers
                     ID = a.FirstOrDefault().MerchantID,
                     Name = a.FirstOrDefault().Merchant.Name,
                     Address = a.FirstOrDefault().Merchant.Address,
-                    Logo = "www." + SystemConst.WebUrlIP + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
+                    Logo = SystemConst.WebUrlIP + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
                     Phone = a.FirstOrDefault().Merchant.Phone,
-                    Introduction = a.FirstOrDefault().Merchant.Introduction
+                    Introduction = str1 + a.FirstOrDefault().Merchant.Introduction + str2
                 }).ToList();
             var newPageIndex = PageIndex + ListCnt;
             var obj = new { ListPageIndex = newPageIndex, List = list };
