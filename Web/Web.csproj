@@ -718,6 +718,15 @@
     <Content Include="Areas\Merchant\Views\M_PetHospital\Index.cshtml" />
     <Content Include="Areas\Merchant\Views\M_Tutor\Index.cshtml" />
     <Content Include="Areas\Merchant\Views\M_Domestic\Add.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_DryCleaning\Add.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_EducationTrain\Add.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_PetHospital\Add.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_Tutor\Add.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_Domestic\Edit.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_DryCleaning\Edit.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_EducationTrain\Edit.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_PetHospital\Edit.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_Tutor\Edit.cshtml" />
     <None Include="ueditor\ueditor.all.js2" />
     <Content Include="ueditor\ueditor.all.min.js" />
     <Content Include="ueditor\ueditor.config22.js" />

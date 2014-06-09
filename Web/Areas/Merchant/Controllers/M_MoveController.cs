@@ -64,7 +64,7 @@ namespace Web.Areas.Merchant.Controllers
 
             if (result.HasError)
             {
-                return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
+                return JavaScript("CloseLayout_Later();" + AlertJS_NoTag(new Dialog(result.Error)));
             }
 
             return JavaScript("window.location.href='" + Url.Action("Index", "M_Move", new { Area = "Merchant" }) + "'");
@@ -92,13 +92,13 @@ namespace Web.Areas.Merchant.Controllers
             string hidCommunity = Request.Form["hidCommunity"];
             if (hidCommunity == null || hidCommunity.Length == 0)
             {
-                return JavaScript(AlertJS_NoTag(new Dialog("请选择小区。")));
+                return JavaScript("CloseLayout_Later();" + AlertJS_NoTag(new Dialog("请选择小区。")));
             }
             var ids = hidCommunity.ConvertToIntArray(',');
             var result = m_moveModel.EditInfo(m_move, ids);
             if (result.HasError)
             {
-                return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
+                return JavaScript("CloseLayout_Later();" + AlertJS_NoTag(new Dialog(result.Error)));
             }
 
             return JavaScript("window.location.href='" + Url.Action("Index", "M_Move", new { Area = "Merchant" }) + "'");
@@ -111,7 +111,7 @@ namespace Web.Areas.Merchant.Controllers
             var result = m_moveModel.DeleteInfo(id, LoginMerchant.ID);
             if (result.HasError)
             {
-                return JavaScript(AlertJS_NoTag(new Dialog(result.Error)));
+                return JavaScript("CloseLayout_Later();" + AlertJS_NoTag(new Dialog(result.Error)));
             }
             return JavaScript("window.location.href='" + Url.Action("Index", "M_Move", new { Area = "Merchant", id = PageID }) + "'");
         }

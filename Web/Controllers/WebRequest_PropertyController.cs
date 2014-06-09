@@ -708,10 +708,10 @@ namespace Web.Controllers
         /// <param name="AMID">amid</param>
         /// <param name="Year">年份 2014</param>
         /// <returns></returns>
-        public string GetPropertyFeeList(string RoomNumber, int AMID, int Year)
+        public string GetPropertyFeeList(string RoomNumber, string Phone, int AMID, int Year)
         {
             var propertyfeemodel = Factory.Get<IPropertyFeeInfoModel>(SystemConst.IOC_Model.PropertyFeeInfoModel);
-            var list = propertyfeemodel.GetPropertyFeeInfo(AMID, RoomNumber, Year);
+            var list = propertyfeemodel.GetPropertyFeeInfo(AMID, RoomNumber, Phone, Year);
             List<_B_PropertyFee> bpfs = new List<_B_PropertyFee>();
             foreach (var item in list)
             {
@@ -1097,7 +1097,7 @@ namespace Web.Controllers
             var accountmainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             var accountmain = accountmainModel.Get(AMID);
             apm.SupportPay = accountmain.IsusePay;
-            return Newtonsoft.Json.JsonConvert.SerializeObject(apm); 
+            return Newtonsoft.Json.JsonConvert.SerializeObject(apm);
         }
 
         /// <summary>

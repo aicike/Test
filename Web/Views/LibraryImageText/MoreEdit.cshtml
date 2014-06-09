@@ -159,7 +159,7 @@
                 width: 64,
                 fileSizeLimit: '5MB',
                 multi: false,
-                fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
+                fileTypeExts: '*.jpg;*.jpge;*.gif;*.bmp',
                 onUploadSuccess: function (file, data, response) {
                     if (currentIndex == -1) {
                         $("#imgCoverPreview").attr('src', data);
@@ -190,7 +190,6 @@
                 switch (suffix) {
                     case ".jpg":
                     case ".jpeg":
-                    case ".png":
                     case ".gif":
                     case ".bmp":
                         break;

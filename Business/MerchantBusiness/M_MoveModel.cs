@@ -37,13 +37,15 @@ namespace Business.MerchantBusiness
             {
                 list = list.Where(a => a.EnumDataStatus == EnumDataStatus.Value);
             }
-            if (!string.IsNullOrEmpty(CreatDate))
-            {
-                list = list.Where(a => CreatDate.Contains(a.CreatDate.ToString("yyyy-MM-dd")));
-            }
             if (!string.IsNullOrEmpty(MName))
             {
-                list = list.Where(a => MName.Contains(a.Merchant.Name));
+                list = list.Where(a => a.Merchant.Name.Contains(MName));
+            }
+            if (!string.IsNullOrEmpty(CreatDate))
+            {
+                var Createdate1 = Convert.ToDateTime(CreatDate);
+                var Createdate2 = Createdate1.AddDays(1);
+                list = list.Where(a => a.CreatDate >= Createdate1 && a.CreatDate < Createdate2);
             }
 
             return list.OrderByDescending(a => a.CreatDate);
