@@ -112,6 +112,7 @@
     <Compile Include="MerchantPoco\M_Move.cs" />
     <Compile Include="MerchantPoco\M_PetHospital.cs" />
     <Compile Include="MerchantPoco\M_PipelineDredge.cs" />
+    <Compile Include="MerchantPoco\M_Product.cs" />
     <Compile Include="MerchantPoco\M_TakeOutDetail.cs" />
     <Compile Include="MerchantPoco\M_Tutor.cs" />
     <Compile Include="MerchantPoco\M_Unlock .cs" />

@@ -64,5 +64,6 @@ namespace Poco
         public virtual ICollection<M_Move> M_Move { get; set; }
         public virtual ICollection<M_Unlock> M_Unlock { get; set; }
         public virtual ICollection<M_PipelineDredge> M_PipelineDredge { get; set; }
+        public virtual ICollection<M_Product> M_Products { get; set; }
     }
 }
