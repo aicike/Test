@@ -324,6 +324,7 @@ namespace Poco
             public const string M_EducationTrainModel = "M_EducationTrainModel";
             public const string M_PetHospitalModel = "M_PetHospitalModel";
             public const string M_TutorModel = "M_TutorModel";
+            public const string M_ProductModel = "M_ProductModel";
             
             
         }

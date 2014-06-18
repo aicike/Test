@@ -1,0 +1,76 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutMerchant.cshtml";
+}
+@model PagedList<Poco.MerchantPoco.M_Product>
+<div class="title">@Html.Partial("SitePath")</div>
+<div class="body">
+    <div class="option">@Html.ActionLink("添加", "Add", "M_Product", new { Area = "Merchant" }, null, false)</div>
+    <table class="tableList" cellpadding="0" cellspacing="0">
+        <tr>
+            <th style="width: 200px">
+                标题
+            </th>
+            <th style="width: 120px">
+                费用
+            </th>
+            <th style="width: 120px">
+                审核状态
+            </th>
+            <th style="width: 120px">
+                发布状态
+            </th>
+            <th style="width: 120px;">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    @item.Price.ToString("C")
+                </td>
+                <td>
+                    @item.EnumDataStatus.EnumDataStatusGetValue()
+                </td>
+                <td class="operation">@(item.IsPublish == true ? "已发布" : "未发布")
+                </td>
+                <td class="operation">
+                    @Html.ActionLink("修改", "Edit", "M_Product", new { Area = "Merchant", id = item.ID, }, new { }, false)
+                    @Ajax.ActionLink("删除", "Delete", "M_Product", new { Area = "Merchant", id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?删除此项将会删除其关联的所有数据！','" + Url.Action("Delete", "M_Product", new { Area = "Merchant", id = item.ID }) + "',null)" }, false)<br />
+                    @if (item.EnumDataStatus == (int)Poco.Enum.EnumDataStatus.None || item.EnumDataStatus == (int)Poco.Enum.EnumDataStatus.Disabled)
+                    { 
+ @Ajax.ActionLink("提交审核", "Check", "M_Product", new { Area = "Merchant", id = item.ID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定提交审核？','" + Url.Action("Check", "M_Product", new { Area = "Merchant", id = item.ID }) + "',null)" }, false)
+                    }
+                    @if (item.EnumDataStatus == (int)Poco.Enum.EnumDataStatus.Enabled)
+                    {
+                        if (item.IsPublish)
+                        { 
+ @Ajax.ActionLink("取消发布", "Publish", "M_Product", new { Area = "Merchant", id = item.ID, status = 0 }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定取消发布？','" + Url.Action("Publish", "M_Product", new { Area = "Merchant", id = item.ID, status = 0 }) + "',null)" }, false)
+                        }
+                        else
+                        { 
+ @Ajax.ActionLink("发布", "Publish", "M_Product", new { Area = "Merchant", id = item.ID, status = 1 }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定发布？','" + Url.Action("Publish", "M_Product", new { Area = "Merchant", id = item.ID, status = 1 }) + "',null)" }, false)
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pages">
+        @Html.Pager(Model, new PagerOptions
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
+    </div>
+</div>

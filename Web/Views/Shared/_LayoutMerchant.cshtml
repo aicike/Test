@@ -67,11 +67,12 @@
                     }
                     @if (ViewBag.Menu == 3)
                     {
-                        <li class="select"><a href="">商家促销 </a></li>
+                        <li class="select"><a href="@(Url.Action("Index", "M_Product", new { Area = "Merchant" }, null))">
+                            商家促销</a></li>
                     }
                     else
                     {
-                        <li><a href="">商家促销 </a></li>
+                        <li><a href="@(Url.Action("Index", "M_Product", new { Area = "Merchant" }, null))">商家促销</a></li>
                     }
                     @if (ViewBag.Menu == 4)
                     {

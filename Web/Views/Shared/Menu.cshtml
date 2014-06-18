@@ -43,10 +43,21 @@
         {
             if (item.IsAppMenu == false)
             {
-            <li><a class="menu1">
-                @item.Name
-                <img style=" float:right; width:14px ;margin-right:10px; margin-top:14px" t_val="0" src="@Url.Content("/images/zhankai_2.png")" />
-            </a>
+            <li>
+                @if (item.Controller != null)
+                {            
+                    <a class="menu1" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(item.Action, item.Controller, new { Area = item.Area }, null))">
+                        @item.Name
+                        <img style=" float:right; width:14px ;margin-right:10px; margin-top:14px" t_val="0" src="@Url.Content("/images/zhankai_2.png")" />
+                    </a>
+                }
+                else
+                {                
+                    <a class="menu1">
+                        @item.Name
+                        <img style=" float:right; width:14px ;margin-right:10px; margin-top:14px" t_val="0" src="@Url.Content("/images/zhankai_2.png")" />
+                    </a>
+                }
                 <ul class="submenu" id="submenu_@item.ID">
                     @{var menu2s = item.Menus.OrderBy(a => a.Order);}
                     @foreach (var menu2 in menu2s)

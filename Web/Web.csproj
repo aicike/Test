@@ -168,6 +168,7 @@
     <Compile Include="Areas\Merchant\Controllers\M_MoveController.cs" />
     <Compile Include="Areas\Merchant\Controllers\M_PetHospitalController.cs" />
     <Compile Include="Areas\Merchant\Controllers\M_PipelineDredgeController.cs" />
+    <Compile Include="Areas\Merchant\Controllers\M_ProductController.cs" />
     <Compile Include="Areas\Merchant\Controllers\M_TakeOutController.cs" />
     <Compile Include="Areas\Merchant\Controllers\M_TutorController.cs" />
     <Compile Include="Areas\Merchant\Controllers\M_UnlockController.cs" />
@@ -720,6 +721,8 @@
     <Content Include="Areas\Merchant\Views\M_PetHospital\Index.cshtml" />
     <Content Include="Areas\Merchant\Views\M_Tutor\Index.cshtml" />
     <Content Include="Areas\Merchant\Views\M_Domestic\Add.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_Product\Index.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_Product\Add.cshtml" />
     <None Include="ueditor\ueditor.all.js2" />
     <Content Include="ueditor\ueditor.all.min.js" />
     <Content Include="ueditor\ueditor.config22.js" />

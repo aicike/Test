@@ -77,5 +77,11 @@ namespace Poco.MerchantPoco
        /// </summary>
        public int? M_TutorID { get; set; }
        public virtual M_Tutor M_Tutor { get; set; }
+       
+       /// <summary>
+       /// 商家促销
+       /// </summary>
+       public int? M_ProductID { get; set; }
+       public virtual M_Product M_Product { get; set; }
    }
 }

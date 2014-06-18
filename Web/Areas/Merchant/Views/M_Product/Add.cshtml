@@ -2,17 +2,33 @@
     Layout = "~/Views/Shared/_LayoutMerchant.cshtml";
 }
 @section head{
+    <script src="@Url.Content("/ueditor/ueditor.config.js")" type="text/javascript"></script>
+    <script src="@Url.Content("/ueditor/ueditor.all.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.js")" type="text/javascript"></script>
     <link href="@Url.Content("~/Scripts/Jcrop/jquery.Jcrop.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("/Scripts/uploadify/uploadify.css")" rel="stylesheet" type="text/css" />
     <script src="@Url.Content("/Scripts/uploadify/jquery.uploadify.js")" type="text/javascript"></script>
     <script>
 
-        var UpImgUrl = '@Url.Action("UpImg", "Ajax", new { Area="", HostName = ViewBag.HostName })'
+        var UpImgUrl = '@Url.Action("UpImg", "Ajax", new { Area = "", HostName = ViewBag.HostName })'
         var swfurl = '@Url.Content("/Scripts/uploadify/uploadify.swf")' + "?var=" + (new Date()).getTime();
         var Cnt = 0;
         $(function () {
 
+
+            window.UEDITOR_HOME_URL = "/ueditor/";
+            //实例化编辑器
+            var options = {
+                initialFrameWidth: '100%',
+                initialFrameHeight: 400,
+                imageUrl: UEDITOR_HOME_URL + "net/imageUp_Merchant.ashx",
+                imagePath: "",
+                imageManagerUrl: UEDITOR_HOME_URL + "net/imageManager_LibraryImageText.ashx",
+                imageManagerPath: "",
+                initialContent: ""
+            };
+
+            ue = UE.getEditor('editor1', options);
             $("#btnSubmit").click(function () {
                 var cids = GetCommunity();
                 if (cids == undefined || cids.length == 0) {
@@ -29,7 +45,7 @@
                 }
             });
 
-             $("#file_upload").uploadify({
+            $("#file_upload").uploadify({
                 height: 30,
                 swf: swfurl,
                 uploader: UpImgUrl,
@@ -129,12 +145,12 @@
         }
     </style>
 }
-@model Poco.MerchantPoco.M_TakeOut
+@model Poco.MerchantPoco.M_Product
 <div class="title">
     @ViewBag.Title
 </div>
 <div class="body">
-    @using (Ajax.BeginForm("Add", "M_TakeOut", new { Area = "Merchant" }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    @using (Ajax.BeginForm("Add", "M_Product", new { Area = "Merchant" }, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
         <fieldset>
             <legend>展示图片</legend>
@@ -206,20 +222,11 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        <span class="Identification">*</span> 送餐费(元)
+                        <span class="Identification">*</span> 价格(元)
                     </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.TakeOutPrice)
+                    <td class="tdField">@Html.TextBoxFor(a => a.Price)
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.TakeOutPrice) (0元表示免送餐费)
-                    </td>
-                </tr>
-                <tr>
-                    <td class="tdTitle">
-                        <span class="Identification">*</span> 订餐电话
-                    </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.Phone)
-                    </td>
-                    <td>@Html.ValidationMessageFor(a => a.Phone)
+                    <td>@Html.ValidationMessageFor(a => a.Price) (0元表示免送餐费)
                     </td>
                 </tr>
                 <tr>
@@ -228,6 +235,14 @@
                     </td>
                     <td class="tdField" colspan="2">
                         @Html.Partial("Community")
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 详细内容
+                    </td>
+                    <td class="tdField" colspan="2">
+                        <script type="text/plain" id="editor1" height="400px" width="100%" name="Content">@Html.Raw(ViewBag.Content)</script>
                     </td>
                 </tr>
             </table>

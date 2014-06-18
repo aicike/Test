@@ -31,7 +31,7 @@ namespace Poco.MerchantPoco
         /// <summary>
         /// 价格
         /// </summary>
-        public string Price { get; set; }
+        public decimal Price { get; set; }
 
         /// <summary>
         /// 是否发布商品
@@ -56,5 +56,7 @@ namespace Poco.MerchantPoco
         public int MerchantID { get; set; }
 
         public virtual Merchant Merchant { get; set; }
+
+        public virtual ICollection<M_CommunityMapping> M_CommunityMappings { get; set; }
     }
 }
