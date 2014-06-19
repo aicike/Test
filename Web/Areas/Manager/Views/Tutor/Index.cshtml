@@ -132,7 +132,7 @@
                           @Ajax.ActionLink("取消审核", "UpStatus", "Unlock", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('“确定取消审核?”','" + Url.Action("UpStatus", "Unlock", new { HostName = ViewBag.HostName, ID = item.ID, PageID = ViewBag.pageID }) + "',null)" }, false)
 
                     }*@
-                    <a href="@Url.Action("UnlockInfo", "Unlock", new { UID = item.ID, PageID = ViewBag.pageID, Area = "Manager" })">查看</a>
+                    <a href="@Url.Action("TutorInfo", "Tutor", new { TID = item.ID, PageID = ViewBag.pageID, Area = "Manager" })">查看</a>
                 </td>
             </tr>
         }

@@ -74,5 +74,43 @@ namespace Web.Areas.Manager.Controllers
             return View(domestic);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UID"></param>
+        /// <param name="Error">1:成功 2失败</param>
+        /// <returns></returns>
+        public ActionResult DomesticInfo(int DID, int PageID, int? Error)
+        {
+            var m_domesticModel = Factory.Get<IM_DomesticModel>(SystemConst.IOC_Model.M_DomesticModel);
+            var domestic = m_domesticModel.Get(DID);
+            if (Error.HasValue)
+            {
+                ViewBag.Error = Error.Value;
+            }
+            else
+            {
+                ViewBag.Error = 0;
+            }
+            ViewBag.UID = DID;
+            ViewBag.PageID = PageID;
+            ViewBag.Title = domestic.Title + " - 家政服务 - 评审 -" + SystemConst.PlatformName;
+            return View(domestic);
+        }
+
+        [HttpPost]
+        public ActionResult DomesticInfo(int DID, int Status, int PageID)
+        {
+            var m_domesticModel = Factory.Get<IM_DomesticModel>(SystemConst.IOC_Model.M_DomesticModel);
+            var result = m_domesticModel.UpdateStatus(DID, Status);
+            if (result.HasError)
+            {
+                return JavaScript("window.location.href='" + Url.Action("DomesticInfo", "Domestic", new { DID = DID, PageID = PageID, Error = 2 }) + "'");
+            }
+            else
+            {
+                return JavaScript("window.location.href='" + Url.Action("DomesticInfo", "Domestic", new { DID = DID, PageID = PageID, Error = 1 }) + "'");
+            }
+        }
     }
 }

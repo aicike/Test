@@ -74,5 +74,45 @@ namespace Web.Areas.Manager.Controllers
             return View(drcleaning);
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UID"></param>
+        /// <param name="Error">1:成功 2失败</param>
+        /// <returns></returns>
+        public ActionResult DryCleaningInfo(int DID, int PageID, int? Error)
+        {
+            var m_drcleaningModel = Factory.Get<IM_DryCleaningModel>(SystemConst.IOC_Model.M_DryCleaningModel);
+            var drcleaning = m_drcleaningModel.Get(DID);
+            if (Error.HasValue)
+            {
+                ViewBag.Error = Error.Value;
+            }
+            else
+            {
+                ViewBag.Error = 0;
+            }
+            ViewBag.DID = DID;
+            ViewBag.PageID = PageID;
+            ViewBag.Title = drcleaning.Title + " - 干洗服务 - 评审 -" + SystemConst.PlatformName;
+            return View(drcleaning);
+        }
+
+        [HttpPost]
+        public ActionResult DryCleaningInfo(int DID, int Status, int PageID)
+        {
+            var m_drcleaningModel = Factory.Get<IM_DryCleaningModel>(SystemConst.IOC_Model.M_DryCleaningModel);
+            var result = m_drcleaningModel.UpdateStatus(DID, Status);
+            if (result.HasError)
+            {
+                return JavaScript("window.location.href='" + Url.Action("DryCleaningInfo", "DryCleaning", new { DID = DID, PageID = PageID, Error = 2 }) + "'");
+            }
+            else
+            {
+                return JavaScript("window.location.href='" + Url.Action("DryCleaningInfo", "DryCleaning", new { DID = DID, PageID = PageID, Error = 1 }) + "'");
+            }
+        }
+
     }
 }

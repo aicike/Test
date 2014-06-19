@@ -192,14 +192,14 @@
                     @if (item.ISGenerateUserAdvisory == 0)
                     { 
                     <label name="labCbFirst" title="生成用户端咨讯">
-                        <a onclick="ShowAddress(@item.ID,@((int)Poco.Enum.EnumAdvertorialUType.UserEnd),'是否要生成用户端资讯?')"  style=" font-size:12px">生成用户端咨讯</a>
+                        <a onclick="ShowAddress(@item.ID,@((int)Poco.Enum.EnumAdvertorialUType.UserEnd),'是否要生成用户端资讯?')"  style=" font-size:12px">生成咨讯</a>
                     </label>
                     }
                     else
                     { 
-                        <span style=" font-size:12px">生成用户端咨讯</span>
+                        <span style=" font-size:12px">生成咨讯</span>
                     }
-                    <br />
+                   @* <br />
                     @if (item.ISGenerateSaleAdvisory == 0)
                     { 
                     <label name="labCbFirst" title="生成销售端咨讯">
@@ -209,7 +209,7 @@
                     else
                     { 
                         <span style=" font-size:12px">生成销售端咨讯</span>
-                    }
+                    }*@
                 </td>
                 <td class="operation" width="80px">
                   

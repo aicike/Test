@@ -74,5 +74,45 @@ namespace Web.Areas.Manager.Controllers
             return View(pethospital);
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UID"></param>
+        /// <param name="Error">1:成功 2失败</param>
+        /// <returns></returns>
+        public ActionResult PetHospitalInfo(int PID, int PageID, int? Error)
+        {
+            var m_pethospitalModel = Factory.Get<IM_PetHospitalModel>(SystemConst.IOC_Model.M_PetHospitalModel);
+            var pethospital = m_pethospitalModel.Get(PID);
+            if (Error.HasValue)
+            {
+                ViewBag.Error = Error.Value;
+            }
+            else
+            {
+                ViewBag.Error = 0;
+            }
+            ViewBag.PID = PID;
+            ViewBag.PageID = PageID;
+            ViewBag.Title = pethospital.Title + " - 宠物医院 - 评审 -" + SystemConst.PlatformName;
+            return View(pethospital);
+        }
+
+        [HttpPost]
+        public ActionResult PetHospitalInfo(int PID, int Status, int PageID)
+        {
+            var m_pethospitalModel = Factory.Get<IM_PetHospitalModel>(SystemConst.IOC_Model.M_PetHospitalModel);
+            var result = m_pethospitalModel.UpdateStatus(PID, Status);
+            if (result.HasError)
+            {
+                return JavaScript("window.location.href='" + Url.Action("PetHospitalInfo", "PetHospital", new { PID = PID, PageID = PageID, Error = 2 }) + "'");
+            }
+            else
+            {
+                return JavaScript("window.location.href='" + Url.Action("PetHospitalInfo", "PetHospital", new { PID = PID, PageID = PageID, Error = 1 }) + "'");
+            }
+        }
+
     }
 }

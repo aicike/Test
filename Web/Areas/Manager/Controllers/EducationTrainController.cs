@@ -73,5 +73,44 @@ namespace Web.Areas.Manager.Controllers
             ViewBag.Title = "教育培训 - 评审 -" + SystemConst.PlatformName;
             return View(educationtrain);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UID"></param>
+        /// <param name="Error">1:成功 2失败</param>
+        /// <returns></returns>
+        public ActionResult EducationTrainInfo(int EID, int PageID, int? Error)
+        {
+            var m_educationtrainModel = Factory.Get<IM_EducationTrainModel>(SystemConst.IOC_Model.M_EducationTrainModel);
+            var educationtrain = m_educationtrainModel.Get(EID);
+            if (Error.HasValue)
+            {
+                ViewBag.Error = Error.Value;
+            }
+            else
+            {
+                ViewBag.Error = 0;
+            }
+            ViewBag.EID = EID;
+            ViewBag.PageID = PageID;
+            ViewBag.Title = educationtrain.Title + " - 教育培训 - 评审 -" + SystemConst.PlatformName;
+            return View(educationtrain);
+        }
+
+        [HttpPost]
+        public ActionResult EducationTrainInfo(int EID, int Status, int PageID)
+        {
+            var m_educationtrainModel = Factory.Get<IM_EducationTrainModel>(SystemConst.IOC_Model.M_EducationTrainModel);
+            var result = m_educationtrainModel.UpdateStatus(EID, Status);
+            if (result.HasError)
+            {
+                return JavaScript("window.location.href='" + Url.Action("EducationTrainInfo", "EducationTrain", new { EID = EID, PageID = PageID, Error = 2 }) + "'");
+            }
+            else
+            {
+                return JavaScript("window.location.href='" + Url.Action("EducationTrainInfo", "EducationTrain", new { EID = EID, PageID = PageID, Error = 1 }) + "'");
+            }
+        }
     }
 }

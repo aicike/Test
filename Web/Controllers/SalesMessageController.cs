@@ -18,7 +18,11 @@ namespace Web.Controllers
         public ActionResult Index()
         {
             var AccountModel = Factory.Get<IAccountModel>(SystemConst.IOC_Model.AccountModel);
-            var AccountList = AccountModel.GetAccountListNoAdminByAccountMain(LoginAccount.CurrentAccountMainID);
+            //所有售楼人员(不含管理员)
+            //var AccountList = AccountModel.GetAccountListNoAdminByAccountMain(LoginAccount.CurrentAccountMainID);
+            //所有售楼人员
+            var AccountList = AccountModel.GetAccountListByAccountMain(LoginAccount.CurrentAccountMainID).ToList();
+
             ViewBag.HostName = LoginAccount.HostName;
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "用户管理-销售与客户管理", LoginAccount.CurrentAccountMainName, WebTitleRemark);
@@ -41,8 +45,11 @@ namespace Web.Controllers
             var group = groupModel.Get(GruopID);
             ViewBag.GroupName = group.GroupName;
 
+            //所有售楼人员(不含管理员)
+            //var AccountList = AccountModel.GetAccountListNoAdminByAccountMain(LoginAccount.CurrentAccountMainID);
             //所有售楼人员
-            var AccountList = AccountModel.GetAccountListNoAdminByAccountMain(LoginAccount.CurrentAccountMainID);
+            var AccountList = AccountModel.GetAccountListByAccountMain(LoginAccount.CurrentAccountMainID).ToList();
+
             ViewBag.AccountList = AccountList;
 
             ViewBag.AccountID = accountID;
