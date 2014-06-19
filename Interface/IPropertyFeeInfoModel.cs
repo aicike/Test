@@ -22,13 +22,13 @@ namespace Interface
 
 
         /// <summary>
-        /// 根据房号 获取年份物业费
+        /// 根据电话 获取年份物业费
         /// </summary>
         /// <param name="AMID"></param>
         /// <param name="RoomNumber"></param>
         /// <param name="Year"></param>
         /// <returns></returns>
-        List<PropertyFeeInfo> GetPropertyFeeInfo(int AMID, string RoomNumber, int Year);
+        List<PropertyFeeInfo> GetPropertyFeeInfo(int AMID, string RoomNumber, string Phone, int Year);
 
         /// <summary>
         /// 根据ID 获取详细信息

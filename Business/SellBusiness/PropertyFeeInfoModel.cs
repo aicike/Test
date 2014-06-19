@@ -46,16 +46,16 @@ namespace Business
         }
 
         /// <summary>
-        /// 根据房号 获取年份物业费
+        /// 根据电话 获取年份物业费
         /// </summary>
         /// <param name="AMID"></param>
-        /// <param name="RoomNumber"></param>
+        /// <param name="RoomNumber">电话</param>
         /// <param name="Year"></param>
         /// <returns></returns>
-        public List<PropertyFeeInfo> GetPropertyFeeInfo(int AMID, string RoomNumber, int Year)
+        public List<PropertyFeeInfo> GetPropertyFeeInfo(int AMID,string RoomNumber, string Phone, int Year)
         {
             string year_str = Year.ToString();
-            var list = List().Where(a => a.AccountMainID == AMID && a.RoomNumber == RoomNumber && a.PayDate.Contains(year_str)).ToList();
+            var list = List().Where(a => a.AccountMainID == AMID && a.OwnerPhone == Phone &&a.RoomNumber==RoomNumber && a.PayDate.Contains(year_str)).ToList();
             return list;
         }
 

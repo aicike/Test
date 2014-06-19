@@ -1,0 +1,113 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutSystemUser.cshtml";
+    ViewBag.Menu = Poco.SystemConst.Menu.PetHospital;
+}
+
+
+@model Poco.MerchantPoco.M_PetHospital
+@section head{
+    <script>
+        function UpStatus(Status) {
+            $("#Status").val(Status);
+
+            $("#btnSubmit").click();
+
+        }
+
+        $(function () {
+            var error = "@ViewBag.Error";
+            switch (error) {
+                case "0":
+                    break;
+                case "1":
+                    JMessage("成功。");
+                    break;
+                case "2":
+                    JMessage("失败。请稍后再试", true);
+                    break;
+
+            }
+        });
+    </script>
+    <style>
+        .cnt *
+        {
+            max-width: 100% !important;
+        }
+    </style>
+}
+<div class="title">
+    教育培训 - 评审</div>
+<div class="body">
+    @using (Ajax.BeginForm("PetHospitalInfo", "PetHospital", new { HostName = ViewBag.HostName, PageID = ViewBag.PageID, Area = "Manager" }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {
+        <input  type="hidden" id="PID" name="PID" value="@ViewBag.PID"/>
+        <input type="hidden" id="Status" name="Status" />
+        <input type="submit" id="btnSubmit" value="保存" class="button" style="display: none" />
+    }
+    <fieldset style="font-size: 14px">
+        <legend>基本信息</legend>
+        <table style="line-height: 20px">
+             <tr>
+                <td>
+                    展示图片：
+                </td>
+                <td><img  src="@Url.Content(Model.ShowImage)" style =" max-width:200px"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100px;">
+                    标题：
+                </td>
+                <td>@Model.Title
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    备注：
+                </td>
+                <td>@Model.Remark
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    当前状态：
+                </td>
+                <td>@Model.EnumDataStatus.EnumDataStatusGetValue()
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    价格：
+                </td>
+                <td>@(Model.Price.ToString("C"))/@Model.PriceRemark
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    绑定小区：
+                </td>
+                <td>
+                    @foreach (var item in Model.M_CommunityMappings)
+                    {
+                        @(item.AccountMain.Name)@:、
+                                                                }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    内容简介:
+                </td>
+                <td class="cnt">
+                    @Html.Raw(Model.Content)
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <div class="action">
+        <input type="button"  value="审批通过" onclick="UpStatus('@((int)Poco.Enum.EnumDataStatus.Enabled)')" class="button" style="margin-right: 20px" />
+        <input type="button"  onclick="UpStatus('@((int)Poco.Enum.EnumDataStatus.Disabled)')"  value="审批不通过" class="button" style="margin-right: 20px" />
+        <input type="button" value="返回"  class="button" onclick="location.href='@Url.Action("Index", "Tutor", new { id = ViewBag.PageID })'" />
+    </div>
+</div>
+

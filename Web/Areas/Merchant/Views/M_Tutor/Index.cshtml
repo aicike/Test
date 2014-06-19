@@ -72,7 +72,7 @@
                 </td>
                 <td class="operation">
                     @Html.ActionLink("修改", "Edit", "M_Tutor", new { HostName = ViewBag.HostName, ID = item.ID }, new { style = "padding-right:5px", onclick = "return updateInfo(" + item.ID + ")" }, false)
-                    @Ajax.ActionLink("删除", "Delete", "M_Tutor", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('“确定删除?”','" + Url.Action("Delete", "M_Tutor", new { HostName = ViewBag.HostName, ID = item.ID }) + "',null)" }, false)
+                    @Ajax.ActionLink("删除", "Delete", "M_Tutor", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('“确定删除?”','" + Url.Action("Delete", "M_Tutor", new { HostName = ViewBag.HostName, ID = item.ID, PageID = ViewBag.pageID }) + "',null)" }, false)
                     <br />
                     @switch (item.EnumDataStatus)
                     {

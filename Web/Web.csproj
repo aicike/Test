@@ -724,6 +724,20 @@
     <Content Include="Areas\Merchant\Views\M_Domestic\Add.cshtml" />
     <Content Include="Areas\Merchant\Views\M_Product\Index.cshtml" />
     <Content Include="Areas\Merchant\Views\M_Product\Add.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_DryCleaning\Add.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_EducationTrain\Add.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_PetHospital\Add.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_Tutor\Add.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_Domestic\Edit.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_DryCleaning\Edit.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_EducationTrain\Edit.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_PetHospital\Edit.cshtml" />
+    <Content Include="Areas\Merchant\Views\M_Tutor\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\Tutor\TutorInfo.cshtml" />
+    <Content Include="Areas\Manager\Views\Domestic\DomesticInfo.cshtml" />
+    <Content Include="Areas\Manager\Views\DryCleaning\DryCleaningInfo.cshtml" />
+    <Content Include="Areas\Manager\Views\EducationTrain\EducationTrainInfo.cshtml" />
+    <Content Include="Areas\Manager\Views\PetHospital\PetHospitalInfo.cshtml" />
     <None Include="ueditor\ueditor.all.js2" />
     <Content Include="ueditor\ueditor.all.min.js" />
     <Content Include="ueditor\ueditor.config22.js" />
@@ -900,7 +914,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Manager\Models\" />
-    <Folder Include="Areas\Manager\Views\Shared\" />
+    <Folder Include="Areas\Manager\Views\PipelineDredge\Shared\" />
     <Folder Include="Areas\Merchant\Models\" />
     <Folder Include="Areas\Merchant\Views\Shared\" />
     <Folder Include="Areas\System\Models\" />

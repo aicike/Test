@@ -834,9 +834,9 @@ namespace Web.Controllers
 
         #region---------------生活技巧----------------------
 
-        public ActionResult LifeSkill(string LID)
+        public ActionResult LifeSkill(int LID)
         {
-            var id = LID.TokenDecrypt();
+            var id = LID;
             var LifeSkillModel = Factory.Get<ILifeSkillModel>(SystemConst.IOC_Model.LifeSkillModel);
             var lifeskill = LifeSkillModel.GetInfo(id);
        
@@ -849,9 +849,9 @@ namespace Web.Controllers
 
         #region---------------每日食谱----------------------
 
-        public ActionResult Recipes(string  RID)
+        public ActionResult Recipes(int  RID)
         {
-            var id = RID.TokenDecrypt();
+            var id = RID;
             var recipesModel = Factory.Get<IRecipesModel>(SystemConst.IOC_Model.RecipesModel);
             var recipes = recipesModel.GetInfo(id);
 

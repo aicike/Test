@@ -850,17 +850,25 @@ namespace Business
                     var lsImaFilePath = HttpContext.Current.Server.MapPath(lsImgPath);
 
 
+                    if (accountMain.LogoImagePath.GetFileSuffix() == ".png" || accountMain.LogoImagePath.GetFileSuffix() == ".PNG")
+                    {
+                        File.Copy(lsImaFilePath, imagePath);
+                        accountMain.LogoImagePath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
+
+                        accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
+                    }
+                    else
+                    {
+
+                        Tool.SuperGetPicThumbnail(lsImaFilePath, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                        //缩略图
+                        Tool.SuperGetPicThumbnail(imagePath, imageThumbnailPath, 70, 0, 58, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
 
 
-                    Tool.SuperGetPicThumbnail(lsImaFilePath, imagePath, 70, 640, 0, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
-                    //缩略图
-                    Tool.SuperGetPicThumbnail(imagePath, imageThumbnailPath, 70, 0, 58, System.Drawing.Drawing2D.SmoothingMode.HighQuality, System.Drawing.Drawing2D.CompositingQuality.HighQuality, System.Drawing.Drawing2D.InterpolationMode.High);
+                        accountMain.LogoImagePath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
 
-
-                    accountMain.LogoImagePath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
-
-                    accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageThumbnailName;
-
+                        accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageThumbnailName;
+                    }
 
                     result = Edit(accountMain);
                 }
@@ -1120,7 +1128,7 @@ namespace Business
         public Result UpdPayIsUse(int AMID, bool IsUsePay)
         {
             Result result = new Result();
-            string sql = string.Format("update AccountMain set IsusePay = '{0}' where ID = {1}",IsUsePay,AMID);
+            string sql = string.Format("update AccountMain set IsusePay = '{0}' where ID = {1}", IsUsePay, AMID);
             int cnt = base.SqlExecute(sql);
             if (cnt <= 0)
             {

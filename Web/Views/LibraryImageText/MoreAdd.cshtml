@@ -158,7 +158,7 @@
                 fileSizeLimit: '5MB',
                 buttonText: '选择图片',
                 multi: false,
-                fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
+                fileTypeExts: '*.jpg;*.jpge;*.gif;*.bmp',
                 onUploadSuccess: function (file, data, response) {
                     if (currentIndex == -1) {
                         $("#imgCoverPreview").attr('src', data);
@@ -189,13 +189,12 @@
                 switch (suffix) {
                     case ".jpg":
                     case ".jpeg":
-                    case ".png":
                     case ".gif":
                     case ".bmp":
                         break;
                     default:
                         JAlert({
-                            Message: "格式限制：jpg, jpge, gif, png, bmp",
+                            Message: "格式限制：jpg, jpge, gif, bmp",
                             DialogType: "Ok",
                             BtnOk: "确定"
                         });

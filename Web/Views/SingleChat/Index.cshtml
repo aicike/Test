@@ -151,7 +151,7 @@
                 buttonText :'本地上传',
                 fileSizeLimit: '5MB',
                 multi: false,
-                fileTypeExts: '*.jpg;*.jpge;*.gif;*.png;*.bmp',
+                fileTypeExts: '*.jpg;*.jpge;*.gif;*.bmp',
                 onUploadSuccess: function (file, data, response) {
 
                     if (data == "" || data == undefined || data == "false") {
@@ -183,12 +183,11 @@
                 switch (suffix) {
                     case ".jpg":
                     case ".jpeg":
-                    case ".png":
                     case ".gif":
                     case ".bmp":
                         break;
                     default:
-                        $("span[data-valmsg-for='HouseTypeImagePath']").text("支持下列图片格式：.jpg|.jpeg|.png|.gif|.bmp").attr("class", "field-validation-error");
+                        $("span[data-valmsg-for='HouseTypeImagePath']").text("支持下列图片格式：.jpg|.jpeg|.gif|.bmp").attr("class", "field-validation-error");
                         break;
                 }
                 var input = this;

@@ -76,14 +76,13 @@
                 switch (suffix) {
                     case ".jpg":
                     case ".jpeg":
-                    case ".png":
                     case ".gif":
                     case ".bmp":
                         isOk=true;
                         break;
                     default:
                         $("#HeadImagePathFile").val("");
-                        $("span[data-valmsg-for='Account_HeadImagePath']").text("支持下列图片格式：.jpg|.jpeg|.png|.gif|.bmp").attr("class", "field-validation-error");
+                        $("span[data-valmsg-for='Account_HeadImagePath']").text("支持下列图片格式：.jpg|.jpeg|.gif|.bmp").attr("class", "field-validation-error");
                         break;
                 }
                 if(isOk){
