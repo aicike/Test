@@ -54,13 +54,13 @@
                     <li>
                         @if (item.Controller != null)
                         {            
-                            <a class="menu1" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(item.Action, item.Controller, new { Area = item.Area }, null))">
+                            <a class="menu1 menu_link" menuID="@item.ID" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(item.Action, item.Controller, new { Area = item.Area }, null))">
                                 @item.Name
                             </a>
                         }
                         else
                         {                
-                            <a class="menu1">
+                            <a class="menu1 menu_link" menuID="@item.ID">
                                 @item.Name
                             </a>
                         }
@@ -73,13 +73,13 @@
                                 <li class="select">
                                     @if (menu2.ParentMenu != null && menu2.ParentMenu.Service != null && menu2.ParentMenu.Service.IsIndependentSite)
                                     {
-                                        <a href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
                                             @menu2.Name
                                         </a>
                                     }
                                     else
                                     { 
-                                        <a href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
                                             @menu2.Name
                                         </a>
                                     }
@@ -95,13 +95,13 @@
                                 <li>
                                     @if (menu2.ParentMenu != null && menu2.ParentMenu.Service != null && menu2.ParentMenu.Service.IsIndependentSite)
                                     {
-                                        <a href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
                                             @menu2.Name
                                         </a>
                                     }
                                     else
                                     { 
-                                        <a href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
                                             @menu2.Name
                                         </a>
                                     }
@@ -125,13 +125,13 @@
                     <li>
                         @if (item.Controller != null)
                         {            
-                            <a class="menu1" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(item.Action, item.Controller, new { Area = item.Area }, null))">
+                            <a class="menu1 menu_link" menuID="@item.ID" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(item.Action, item.Controller, new { Area = item.Area }, null))">
                                 @item.Name
                             </a>
                         }
                         else
                         {                
-                            <a class="menu1">
+                            <a class="menu1 menu_link" menuID="@item.ID">
                                 @item.Name
                             </a>
                         }
@@ -144,13 +144,13 @@
                                 <li class="select">
                                     @if (menu2.ParentMenu != null && menu2.ParentMenu.Service != null && menu2.ParentMenu.Service.IsIndependentSite)
                                     {
-                                        <a href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
                                             @menu2.Name
                                         </a>
                                     }
                                     else
                                     { 
-                                        <a href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
                                             @menu2.Name
                                         </a>
                                     }
@@ -166,13 +166,13 @@
                                 <li>
                                     @if (menu2.ParentMenu != null && menu2.ParentMenu.Service != null && menu2.ParentMenu.Service.IsIndependentSite)
                                     {
-                                        <a href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
                                             @menu2.Name
                                         </a>
                                     }
                                     else
                                     { 
-                                        <a href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
                                             @menu2.Name
                                         </a>
                                     }
@@ -196,13 +196,13 @@
                     <li>
                         @if (item.Controller != null)
                         {            
-                            <a class="menu1" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(item.Action, item.Controller, new { Area = item.Area }, null))">
+                            <a class="menu1 menu_link" menuID="@item.ID" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(item.Action, item.Controller, new { Area = item.Area }, null))">
                                 @item.Name
                             </a>
                         }
                         else
                         {                
-                            <a class="menu1">
+                            <a class="menu1 menu_link" menuID="@item.ID">
                                 @item.Name
                             </a>
                         }
@@ -215,13 +215,13 @@
                                 <li class="select">
                                     @if (menu2.ParentMenu != null && menu2.ParentMenu.Service != null && menu2.ParentMenu.Service.IsIndependentSite)
                                     {
-                                        <a href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
                                             @menu2.Name
                                         </a>
                                     }
                                     else
                                     { 
-                                        <a href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
                                             @menu2.Name
                                         </a>
                                     }
@@ -237,13 +237,13 @@
                                 <li>
                                     @if (menu2.ParentMenu != null && menu2.ParentMenu.Service != null && menu2.ParentMenu.Service.IsIndependentSite)
                                     {
-                                        <a href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
                                             @menu2.Name
                                         </a>
                                     }
                                     else
                                     { 
-                                        <a href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
                                             @menu2.Name
                                         </a>
                                     }
@@ -281,6 +281,13 @@
         margin-left: 10px;
         margin-bottom: 5px;
     }
+    .notice
+    {
+        width: 8px;
+        height: 8px;
+        float: right;
+        margin-top: 14px;
+    }
 </style>
 <script>
     $(function () {
@@ -291,7 +298,35 @@
             var obj = parseInt($(this).attr("jquerymenu"));
             $(".jquerymenu[jquerymenu!=" + obj + "]").menu("collapseAll", null, true);
         });
+        GetWebNotice();
+        window.setInterval(GetWebNotice,5000);
     });
+
+    var getWebNoticeUrl = '@Url.Action("GetWebNoticeByAccountMainID", "Ajax")';
+
+    function GetWebNotice() {
+        $.get(getWebNoticeUrl, {accountMainID:@account.CurrentAccountMainID},function(noticeMenuIDs){
+            $(".menu_link").find("img").remove();
+            $(".menu_link").each(function (m, n) {
+                var obj = $(this);
+                if (noticeMenuIDs != null) {
+                    var menuID = obj.attr("menuID")
+                    $.each(noticeMenuIDs, function (i, j) {
+                        if (menuID == j) {
+                            obj.find("img").remove();
+                            obj.append('<img class="notice" src="/Images/web_notice.png" />');
+                            var parent = $(".menu1").parent().has(".menu_link[menuID='" + menuID + "']").find(".menu1");
+                            parent.find("img").remove();
+                            parent.append('<img class="notice" src="/Images/web_notice.png" />');
+                            return;
+                        }
+                    });
+                } else {
+                    return;
+                }
+            });
+        },"json");
+    }
 
 
 </script>

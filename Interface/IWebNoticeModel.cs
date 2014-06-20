@@ -8,5 +8,7 @@ namespace Interface
 {
     public interface IWebNoticeModel : IBaseModel<WebNotice>
     {
+        Result Add(int menuID, int accountMainID);
+        List<int> GetMenuIDByAccountMainID(int accountMainID);
     }
 }

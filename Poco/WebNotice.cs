@@ -19,5 +19,9 @@ namespace Poco
         public virtual Menu Menu { get; set; }
 
         public int Count { get; set; }
+
+        public int AccountMainID { get; set; }
+
+        public virtual AccountMain AccountMain { get; set; }
     }
 }

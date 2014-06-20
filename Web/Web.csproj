@@ -360,6 +360,7 @@
     <Content Include="Images\Unread.png" />
     <Content Include="Images\m1.png" />
     <Content Include="Images\up.png" />
+    <Content Include="Images\web_notice.png" />
     <Content Include="Images\zhankai.png" />
     <Content Include="Images\zhankai_2.png" />
     <Content Include="Scripts\blocksit.js" />

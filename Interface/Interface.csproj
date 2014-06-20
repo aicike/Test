@@ -123,6 +123,7 @@
     <Compile Include="IVIPInfoExpenseDetailModel.cs" />
     <Compile Include="IVipInfoModel.cs" />
     <Compile Include="IParkingFeeModel.cs" />
+    <Compile Include="IWebNoticeModel.cs" />
     <Compile Include="MerchantInterface\IM_CommunityMappingModel.cs" />
     <Compile Include="MerchantInterface\IM_DomesticModel.cs" />
     <Compile Include="MerchantInterface\IM_DryCleaningModel.cs" />
