@@ -749,8 +749,8 @@
     <Content Include="Views\Default\ContactUs.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\Shared\SystemMenu.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
+    <Content Include="Views\Shared\SystemMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\IOC.xml" />

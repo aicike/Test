@@ -43,8 +43,10 @@
 }
 @{
     <ul class="mainMenu">
-        <li><div>功能</div>
-            <ul class="menu jquerymenu">
+        <li>
+            <div>
+                功能</div>
+            <ul class="menu jquerymenu" jquerymenu="1">
                 @foreach (var item in list1)
                 {
                     if (item.IsAppMenu == false)
@@ -112,8 +114,10 @@
                 }
             </ul>
         </li>
-        <li><div>管理</div>
-            <ul class="menu jquerymenu">
+        <li>
+            <div>
+                管理</div>
+            <ul class="menu jquerymenu" jquerymenu="2">
                 @foreach (var item in list2)
                 {
                     if (item.IsAppMenu == false)
@@ -181,8 +185,10 @@
                 }
             </ul>
         </li>
-        <li><div>设置</div>
-            <ul class="menu jquerymenu">
+        <li>
+            <div>
+                设置</div>
+            <ul class="menu jquerymenu" jquerymenu="3">
                 @foreach (var item in list3)
                 {
                     if (item.IsAppMenu == false)
@@ -273,13 +279,18 @@
     .mainMenu li > div
     {
         margin-left: 10px;
-        margin-bottom:5px;
+        margin-bottom: 5px;
     }
 </style>
 <script>
     $(function () {
         $(".jquerymenu").menu();
         $(".mainMenu").attr("style", "min-height:" + $(".main").height() + "px");
+
+        $(".jquerymenu").mouseover(function () {
+            var obj = parseInt($(this).attr("jquerymenu"));
+            $(".jquerymenu[jquerymenu!=" + obj + "]").menu("collapseAll", null, true);
+        });
     });
 
 
