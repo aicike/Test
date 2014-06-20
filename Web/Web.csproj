@@ -360,6 +360,7 @@
     <Content Include="Images\Unread.png" />
     <Content Include="Images\m1.png" />
     <Content Include="Images\up.png" />
+    <Content Include="Images\web_notice.png" />
     <Content Include="Images\zhankai.png" />
     <Content Include="Images\zhankai_2.png" />
     <Content Include="Scripts\blocksit.js" />
@@ -749,9 +750,9 @@
     <Content Include="Views\Default\ContactUs.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\Shared\SystemMenu.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\UserManage\AllUser.cshtml" />
+    <Content Include="Views\Shared\SystemMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\IOC.xml" />

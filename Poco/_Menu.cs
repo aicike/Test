@@ -68,5 +68,7 @@ namespace Poco
         public virtual ICollection<MenuOption> MenuOptions { get; set; }
 
         public virtual ICollection<RoleMenu> RoleMenus { get; set; }
+
+        public virtual ICollection<WebNotice> WebNotices { get; set; }
     }
 }

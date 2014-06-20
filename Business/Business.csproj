@@ -204,6 +204,7 @@
     <Compile Include="SellBusiness\VIPInfoExpenseDetailModel.cs" />
     <Compile Include="SellBusiness\VipInfoModel.cs" />
     <Compile Include="SystemBusiness\BaseModel.cs" />
+    <Compile Include="SystemBusiness\WebNoticeModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

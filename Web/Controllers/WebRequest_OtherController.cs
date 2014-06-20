@@ -487,6 +487,10 @@ namespace Web.Controllers
 
         }
 
-
+        public void SetWebNotice(int menuID, int amid)
+        {
+            var model = Factory.Get<IWebNoticeModel>(SystemConst.IOC_Model.WebNoticeModel);
+            model.Add(menuID, amid);
+        }
     }
 }

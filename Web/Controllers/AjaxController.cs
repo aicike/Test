@@ -145,16 +145,16 @@ namespace Web.Controllers
         /// <param name="id">id</param>
         /// <returns> false 代表已存在</returns>
         [HttpPost]
-        public string OnlyValidation( string tableName, string field, string value, int? id = null)
+        public string OnlyValidation(string tableName, string field, string value, int? id = null)
         {
             CommonModel cm = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
             if (id.HasValue)
             {
-                return cm.CheckIsUnique( tableName, field, value, id).ToString();
+                return cm.CheckIsUnique(tableName, field, value, id).ToString();
             }
             else
             {
-                return cm.CheckIsUnique( tableName, field, value).ToString();
+                return cm.CheckIsUnique(tableName, field, value).ToString();
             }
         }
 
@@ -230,6 +230,14 @@ namespace Web.Controllers
             {
                 return "false";
             }
+        }
+
+        //获取web网站通知
+        public string GetWebNoticeByAccountMainID(int accountMainID)
+        {
+            var noticeModel = Injection.Factory.Get<Interface.IWebNoticeModel>(Poco.SystemConst.IOC_Model.WebNoticeModel);
+            var noticeMenuIDs = noticeModel.GetMenuIDByAccountMainID(accountMainID).ObjectToJson();
+            return noticeMenuIDs;
         }
     }
 }
