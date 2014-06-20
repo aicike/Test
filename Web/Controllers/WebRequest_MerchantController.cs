@@ -350,5 +350,176 @@ namespace Web.Controllers
         }
         #endregion
 
+        #region-----------------家教----------------------------
+        /// <summary>
+        /// 获取家教列表
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <param name="PageIndex">要显示的页 第一页传0  之后的传ListPageIndex</param>
+        /// <param name="ListCnt">没页显示的数目</param>
+        /// <returns></returns>
+        public string GetTutorList(int AMID, int PageIndex, int ListCnt)
+        {
+            int status = (int)EnumDataStatus.Enabled;
+            var m_tutorModel = Factory.Get<IM_TutorModel>(SystemConst.IOC_Model.M_TutorModel);
+
+            var list =m_tutorModel.List().Where(a => a.M_CommunityMappings.Any(b => b.AccountMainID == AMID) && a.EnumDataStatus == status && a.IsPublish)
+                .OrderByDescending(a => a.PublishDate).Skip(PageIndex).Take(ListCnt).ToList()
+                .Select(a => new App_Tutor
+                {
+                    ID = a.ID,
+                    Title = a.Title,
+                    Price = a.Price.ToString("C") + "/" + a.PriceRemark,
+                    PublishDate = a.PublishDate.ToString(),
+                    ShowImage = SystemConst.WebUrlIP +a.ShowImage.Replace("~",""),
+                    Remark = a.Remark,
+                    MID=a.MerchantID,
+                    MName=a.Merchant.Name
+                }).ToList();
+
+            var newPageIndex = PageIndex + ListCnt;
+            var obj = new { ListPageIndex = newPageIndex, List = list };
+            return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+            
+        }
+        #endregion
+
+        #region-----------------干洗服务----------------------------
+        /// <summary>
+        /// 获取干洗服务列表
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <param name="PageIndex">要显示的页 第一页传0  之后的传ListPageIndex</param>
+        /// <param name="ListCnt">没页显示的数目</param>
+        /// <returns></returns>
+        public string GetDryCleaningList(int AMID, int PageIndex, int ListCnt)
+        {
+            int status = (int)EnumDataStatus.Enabled;
+            var m_drcleaningModel = Factory.Get<IM_DryCleaningModel>(SystemConst.IOC_Model.M_DryCleaningModel);
+
+            var list = m_drcleaningModel.List().Where(a => a.M_CommunityMappings.Any(b => b.AccountMainID == AMID) && a.EnumDataStatus == status && a.IsPublish)
+                .OrderByDescending(a => a.PublishDate).Skip(PageIndex).Take(ListCnt).ToList()
+                .Select(a => new App_DryCleaning
+                {
+                    ID = a.ID,
+                    Title = a.Title,
+                    Price = a.Price.ToString("C") + "/" + a.PriceRemark,
+                    PublishDate = a.PublishDate.ToString(),
+                    ShowImage = SystemConst.WebUrlIP + a.ShowImage.Replace("~", ""),
+                    Remark = a.Remark,
+                    MID = a.MerchantID,
+                    MName = a.Merchant.Name
+                }).ToList();
+
+            var newPageIndex = PageIndex + ListCnt;
+            var obj = new { ListPageIndex = newPageIndex, List = list };
+            return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+
+        }
+        #endregion
+
+        #region-----------------教育培训----------------------------
+        /// <summary>
+        /// 获取教育培训列表
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <param name="PageIndex">要显示的页 第一页传0  之后的传ListPageIndex</param>
+        /// <param name="ListCnt">没页显示的数目</param>
+        /// <returns></returns>
+        public string GetEducationTrainList(int AMID, int PageIndex, int ListCnt)
+        {
+            int status = (int)EnumDataStatus.Enabled;
+            var m_educationtrainModel = Factory.Get<IM_EducationTrainModel>(SystemConst.IOC_Model.M_EducationTrainModel);
+
+            var list = m_educationtrainModel.List().Where(a => a.M_CommunityMappings.Any(b => b.AccountMainID == AMID) && a.EnumDataStatus == status && a.IsPublish)
+                .OrderByDescending(a => a.PublishDate).Skip(PageIndex).Take(ListCnt).ToList()
+                .Select(a => new App_EducationTrain
+                {
+                    ID = a.ID,
+                    Title = a.Title,
+                    Price = a.Price.ToString("C") + "/" + a.PriceRemark,
+                    PublishDate = a.PublishDate.ToString(),
+                    ShowImage = SystemConst.WebUrlIP + a.ShowImage.Replace("~", ""),
+                    Remark = a.Remark,
+                    MID = a.MerchantID,
+                    MName = a.Merchant.Name
+                }).ToList();
+
+            var newPageIndex = PageIndex + ListCnt;
+            var obj = new { ListPageIndex = newPageIndex, List = list };
+            return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+
+        }
+        #endregion
+
+        #region-----------------宠物医院----------------------------
+        /// <summary>
+        /// 获取宠物医院列表
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <param name="PageIndex">要显示的页 第一页传0  之后的传ListPageIndex</param>
+        /// <param name="ListCnt">没页显示的数目</param>
+        /// <returns></returns>
+        public string GetPetHospitalList(int AMID, int PageIndex, int ListCnt)
+        {
+            int status = (int)EnumDataStatus.Enabled;
+            var m_pethospitalModel = Factory.Get<IM_PetHospitalModel>(SystemConst.IOC_Model.M_PetHospitalModel);
+
+            var list = m_pethospitalModel.List().Where(a => a.M_CommunityMappings.Any(b => b.AccountMainID == AMID) && a.EnumDataStatus == status && a.IsPublish)
+                .OrderByDescending(a => a.PublishDate).Skip(PageIndex).Take(ListCnt).ToList()
+                .Select(a => new App_PetHospital
+                {
+                    ID = a.ID,
+                    Title = a.Title,
+                    Price = a.Price.ToString("C") + "/" + a.PriceRemark,
+                    PublishDate = a.PublishDate.ToString(),
+                    ShowImage = SystemConst.WebUrlIP + a.ShowImage.Replace("~", ""),
+                    Remark = a.Remark,
+                    MID = a.MerchantID,
+                    MName = a.Merchant.Name
+                }).ToList();
+
+            var newPageIndex = PageIndex + ListCnt;
+            var obj = new { ListPageIndex = newPageIndex, List = list };
+            return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+
+        }
+        #endregion
+
+        #region-----------------家政服务----------------------------
+        /// <summary>
+        /// 获取家政服务列表
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <param name="PageIndex">要显示的页 第一页传0  之后的传ListPageIndex</param>
+        /// <param name="ListCnt">没页显示的数目</param>
+        /// <returns></returns>
+        public string GetDomesticList(int AMID, int PageIndex, int ListCnt)
+        {
+            int status = (int)EnumDataStatus.Enabled;
+            var m_domesticModel = Factory.Get<IM_DomesticModel>(SystemConst.IOC_Model.M_DomesticModel);
+
+            var list = m_domesticModel.List().Where(a => a.M_CommunityMappings.Any(b => b.AccountMainID == AMID) && a.EnumDataStatus == status && a.IsPublish)
+                .OrderByDescending(a => a.PublishDate).Skip(PageIndex).Take(ListCnt).ToList()
+                .Select(a => new App_Domestic
+                {
+                    ID = a.ID,
+                    Title = a.Title,
+                    Price = a.Price.ToString("C") + "/" + a.PriceRemark,
+                    PublishDate = a.PublishDate.ToString(),
+                    ShowImage = SystemConst.WebUrlIP + a.ShowImage.Replace("~", ""),
+                    Remark = a.Remark,
+                    MID = a.MerchantID,
+                    MName = a.Merchant.Name
+                }).ToList();
+
+            var newPageIndex = PageIndex + ListCnt;
+            var obj = new { ListPageIndex = newPageIndex, List = list };
+            return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+
+        }
+        #endregion
+
+
     }
 }

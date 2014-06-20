@@ -24,6 +24,14 @@ namespace Interface
         List<User> GetUserListByAccountID(int accountMainID, int accountID);
 
 
+
         User getUserByLoginID(int AccountMainID, int LoginID);
+
+        /// <summary>
+        /// 获取全部用户
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        IQueryable<User> GetAllUser(int AMID);
     }
 }

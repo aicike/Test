@@ -40,5 +40,17 @@ namespace Business
         {
             return List().Where(a => a.AccountMainID == AccountMainID && a.UserLoginInfoID == LoginID).FirstOrDefault();
         }
+
+        /// <summary>
+        /// 获取全部用户
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public IQueryable<User> GetAllUser(int AMID)
+        { 
+            var list = List().Where(a=>a.AccountMainID==AMID);
+            return list;
+        }
+
     }
 }

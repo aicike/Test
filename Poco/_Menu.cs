@@ -61,7 +61,7 @@ namespace Poco
         /// <summary>
         /// 功能：1  管理：2 设置：3
         /// </summary>
-        public int Type { get; set; }
+        public int? Type { get; set; }
 
         public virtual ICollection<Menu> Menus { get; set; }
 

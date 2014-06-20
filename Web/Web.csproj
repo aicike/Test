@@ -751,6 +751,7 @@
     </Content>
     <Content Include="Views\Shared\SystemMenu.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
+    <Content Include="Views\UserManage\AllUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\IOC.xml" />
@@ -1373,7 +1374,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>16123</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
