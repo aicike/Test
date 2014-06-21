@@ -136,5 +136,21 @@ namespace Web.Controllers
             ViewBag.Title = webTitle;
             return View(user);
         }
+
+        /// <summary>
+        /// 查看所有用户
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AllUser(int ?id)
+        {
+            var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+            var userList = userModel.GetAllUser(LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 15);
+
+
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "用户管理-全部用户", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
+            return View(userList);
+        }
     }
 }

@@ -179,7 +179,7 @@ namespace Poco
             
             public const string AboutUS = "AboutUS";
             public const string Payment = "Payment";
-            
+            public const string AllUser = "AllUser";
 
             //Action
             public const string History = "History";
