@@ -34,9 +34,9 @@ namespace Web.Controllers
         public ActionResult Index(int id, int userID)
         {
             //判断是否与当前用户有聊天权限
-            var AccountUserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
-            bool isOk = AccountUserModel.ChickUserInAccount(LoginAccount.ID, userID);
-            isOk.NotAuthorizedPage();
+            //var AccountUserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
+            //bool isOk = AccountUserModel.ChickUserInAccount(LoginAccount.ID, userID);
+            //isOk.NotAuthorizedPage();
             //获取会话ID
             var ConversationModel = Factory.Get<IConversationModel>(SystemConst.IOC_Model.ConversationModel);
             var Conver = ConversationModel.GetCID(LoginAccount.CurrentAccountMainID.ToString(), LoginAccount.ID.ToString(), userID.ToString(), "0");
@@ -62,9 +62,9 @@ namespace Web.Controllers
         public ActionResult HistoryMes(int? id, int userID)
         {
             //判断是否与当前用户有聊天权限
-            var AccountUserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
-            bool isOk = AccountUserModel.ChickUserInAccount(LoginAccount.ID, userID);
-            isOk.NotAuthorizedPage();
+            //var AccountUserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
+            //bool isOk = AccountUserModel.ChickUserInAccount(LoginAccount.ID, userID);
+            //isOk.NotAuthorizedPage();
 
             //客户姓名
             var UserModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);

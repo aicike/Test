@@ -10,8 +10,10 @@
         HostName = account.HostName;
     }
     var accountMainModel = Injection.Factory.Get<Interface.IAccountMainModel>(Poco.SystemConst.IOC_Model.AccountMainModel);
+    var accountMainID = 0;
     if (account != null)
     {
+        accountMainID = account.CurrentAccountMainID;
         var accountMain = accountMainModel.Get(account.CurrentAccountMainID);
         if (accountMain != null && accountMain.IsOrganization.HasValue && accountMain.IsOrganization.Value)
         {
@@ -305,27 +307,29 @@
     var getWebNoticeUrl = '@Url.Action("GetWebNoticeByAccountMainID", "Ajax")';
 
     function GetWebNotice() {
-        $.get(getWebNoticeUrl, {accountMainID:@account.CurrentAccountMainID},function(noticeMenuIDs){
-            $(".menu_link").find("img").remove();
-            $(".menu_link").each(function (m, n) {
-                var obj = $(this);
-                if (noticeMenuIDs != null) {
-                    var menuID = obj.attr("menuID")
-                    $.each(noticeMenuIDs, function (i, j) {
-                        if (menuID == j) {
-                            obj.find("img").remove();
-                            obj.append('<img class="notice" src="/Images/web_notice.png" />');
-                            var parent = $(".menu1").parent().has(".menu_link[menuID='" + menuID + "']").find(".menu1");
-                            parent.find("img").remove();
-                            parent.append('<img class="notice" src="/Images/web_notice.png" />');
-                            return;
-                        }
-                    });
-                } else {
-                    return;
-                }
-            });
-        },"json");
+            
+            $.get(getWebNoticeUrl, {accountMainID:@accountMainID},function(noticeMenuIDs){
+                $(".menu_link").find("img").remove();
+                $(".menu_link").each(function (m, n) {
+                    var obj = $(this);
+                    if (noticeMenuIDs != null) {
+                        var menuID = obj.attr("menuID")
+                        $.each(noticeMenuIDs, function (i, j) {
+                            if (menuID == j) {
+                                obj.find("img").remove();
+                                obj.append('<img class="notice" src="/Images/web_notice.png" />');
+                                var parent = $(".menu1").parent().has(".menu_link[menuID='" + menuID + "']").find(".menu1");
+                                parent.find("img").remove();
+                                parent.append('<img class="notice" src="/Images/web_notice.png" />');
+                                return;
+                            }
+                        });
+                    } else {
+                        return;
+                    }
+                });
+            },"json");
+        
     }
 
 
