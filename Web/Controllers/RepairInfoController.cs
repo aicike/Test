@@ -20,11 +20,12 @@ namespace Web.Controllers
         {
             var repairInfoModel = Factory.Get<IRepairInfoModel>(SystemConst.IOC_Model.RepairInfoModel);
             var repairinfo = repairInfoModel.GetInfo(LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 20);
-
-
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "物业管理-报修管理", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
+
+            var webNoticeModel = Factory.Get<IWebNoticeModel>(SystemConst.IOC_Model.WebNoticeModel);
+            webNoticeModel.ClearWebNotice(LoginAccount.CurrentAccountMainID, "Token_WUYE_Repair");
             return View(repairinfo);
         }
 

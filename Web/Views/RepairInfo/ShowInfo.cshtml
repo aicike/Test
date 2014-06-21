@@ -250,7 +250,7 @@
             报修图片：
         </th>
         <td align="left">
-            @if (string.IsNullOrEmpty(Model.ImgPath))
+            @if (!string.IsNullOrEmpty(Model.ImgPath))
             {
                 var imgs = Model.ImgPath.Split('|');
                 foreach (string k in imgs)

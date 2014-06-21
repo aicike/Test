@@ -38,6 +38,7 @@ namespace Interface
         /// <param name="menuToken">菜单token</param>
         /// <returns></returns>
         bool CheckHasPermissions(List<int> roleIDs, string menuToken);
-        
+
+        int GetMenuIDByToken(string token);
     }
 }

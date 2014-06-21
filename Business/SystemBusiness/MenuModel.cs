@@ -220,6 +220,14 @@ namespace Business
             CacheModel.SetCache(SystemConst.Cache.Menu, list);
         }
 
-
+        /// <summary>
+        /// 根据Token获取MenuID
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public int GetMenuIDByToken(string token)
+        {
+            return List_Cache().Where(a => a.Token == token).Select(a=>a.ID).FirstOrDefault();
+        }
     }
 }

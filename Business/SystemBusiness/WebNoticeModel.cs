@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Poco;
 using Interface;
+using Injection;
 
 namespace Business.SystemBusiness
 {
@@ -37,6 +38,23 @@ namespace Business.SystemBusiness
         public List<int> GetMenuIDByAccountMainID(int accountMainID)
         {
             return List().Where(a => a.AccountMainID == accountMainID && a.Count > 0).Select(a => a.MenuID.Value).ToList();
+        }
+
+
+        public void ClearWebNotice(int accountMainID,string menuToken)
+        {
+            var menuModel = Factory.Get<IMenuModel>(SystemConst.IOC_Model.MenuModel);
+            var menuID = menuModel.GetMenuIDByToken(menuToken);
+
+            string sql = "DELETE dbo.WebNotice WHERE AccountMainID=" + accountMainID + " AND MenuID=" + menuID;
+            base.SqlExecute(sql);
+        }
+
+
+        public int GetMenuIDByToken(string token)
+        {
+            var menuModel = Factory.Get<IMenuModel>(SystemConst.IOC_Model.MenuModel);
+            return menuModel.GetMenuIDByToken(token);
         }
     }
 }

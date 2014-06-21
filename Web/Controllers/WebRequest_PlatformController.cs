@@ -46,7 +46,7 @@ namespace Web.Controllers
                     ADVERTORIAL.D = item.IssueDate.ToString("yyyy-MM-dd");
                     ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
                     ADVERTORIAL.F = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
-                    ADVERTORIAL.URL = SystemConst.WebUrlIP + "/Default/Recipes?RID=" + item.ID.TokenEncrypt();
+                    ADVERTORIAL.URL = SystemConst.WebUrlIP + "/Default/Recipes?RID=" + item.ID;
                     ListShow.Add(ADVERTORIAL);
                 }
             }
@@ -92,7 +92,7 @@ namespace Web.Controllers
                     ADVERTORIAL.D = item.IssueDate.ToString("yyyy-MM-dd");
                     ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
                     ADVERTORIAL.F = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
-                    ADVERTORIAL.URL = SystemConst.WebUrlIP + "/Default/LifeSkill?LID=" + item.ID.TokenEncrypt();
+                    ADVERTORIAL.URL = SystemConst.WebUrlIP + "/Default/LifeSkill?LID=" + item.ID;
                     ListShow.Add(ADVERTORIAL);
                 }
             }

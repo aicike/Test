@@ -85,6 +85,7 @@
     <Compile Include="Enum\EnumComplaintStatus.cs" />
     <Compile Include="Enum\EnumExpressStatus.cs" />
     <Compile Include="Enum\EnumLotteryStatus.cs" />
+    <Compile Include="Enum\EnumMenu.cs" />
     <Compile Include="Enum\EnumProductDiscountType.cs" />
     <Compile Include="Enum\EnumPropertyOrderType.cs" />
     <Compile Include="Enum\EnumRepairScore.cs" />
