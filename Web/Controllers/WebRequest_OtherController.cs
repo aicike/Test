@@ -487,6 +487,11 @@ namespace Web.Controllers
 
         }
 
+        /// <summary>
+        /// 弃用，App中不直接使用该方法，尽量用服务端代码调用此方法
+        /// </summary>
+        /// <param name="menuID"></param>
+        /// <param name="amid"></param>
         public void SetWebNotice(int menuID, int amid)
         {
             var model = Factory.Get<IWebNoticeModel>(SystemConst.IOC_Model.WebNoticeModel);

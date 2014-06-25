@@ -24,6 +24,9 @@ namespace Web.Controllers
             string webTitle = string.Format(SystemConst.Business.WebTitle, "物业管理-投诉管理", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
 
+            var webNoticeModel = Factory.Get<IWebNoticeModel>(SystemConst.IOC_Model.WebNoticeModel);
+            webNoticeModel.ClearWebNotice(LoginAccount.CurrentAccountMainID, "Token_WUYE_Complain");
+
             return View(complaint);
         }
 

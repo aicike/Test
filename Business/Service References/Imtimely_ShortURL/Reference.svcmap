@@ -18,14 +18,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://url.goldwg.com/WCF/ShortURLService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://url.imtimely.com/WCF/ShortURLService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ShortURLService1.wsdl" MetadataType="Wsdl" ID="7dc4bf56-72f8-468b-94ff-f92fe6106670" SourceId="1" SourceUrl="http://url.goldwg.com/WCF/ShortURLService.svc?wsdl" />
-    <MetadataFile FileName="ShortURLService3.xsd" MetadataType="Schema" ID="ee448dde-c4db-4b61-9c03-40e2ab08f4c0" SourceId="1" SourceUrl="http://url.goldwg.com/WCF/ShortURLService.svc?xsd=xsd0" />
-    <MetadataFile FileName="ShortURLService1.disco" MetadataType="Disco" ID="0c1cd58b-bc63-40fd-aea6-593f617d308e" SourceId="1" SourceUrl="http://url.goldwg.com/WCF/ShortURLService.svc?disco" />
-    <MetadataFile FileName="ShortURLService31.xsd" MetadataType="Schema" ID="df306da8-baf2-4e6f-a963-2ab3fbec491c" SourceId="1" SourceUrl="http://url.goldwg.com/WCF/ShortURLService.svc?xsd=xsd2" />
-    <MetadataFile FileName="ShortURLService32.xsd" MetadataType="Schema" ID="bb40987a-f5f0-43e9-9735-7b19ec162b17" SourceId="1" SourceUrl="http://url.goldwg.com/WCF/ShortURLService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ShortURLService.xsd" MetadataType="Schema" ID="86ba45ff-df60-4091-aab9-d9ac96572646" SourceId="1" SourceUrl="http://url.imtimely.com/WCF/ShortURLService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ShortURLService1.xsd" MetadataType="Schema" ID="d3bc3304-4166-4c92-95bf-14145f517670" SourceId="1" SourceUrl="http://url.imtimely.com/WCF/ShortURLService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ShortURLService2.xsd" MetadataType="Schema" ID="6f1106f2-0086-4aa3-a08c-35071825ce16" SourceId="1" SourceUrl="http://url.imtimely.com/WCF/ShortURLService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ShortURLService.wsdl" MetadataType="Wsdl" ID="29fd47f6-a20c-452b-b561-858aeb5759e1" SourceId="1" SourceUrl="http://url.imtimely.com/WCF/ShortURLService.svc?wsdl" />
+    <MetadataFile FileName="ShortURLService.disco" MetadataType="Disco" ID="cdc8a9a5-f46b-4b46-a2fa-4ace9756b7ae" SourceId="1" SourceUrl="http://url.imtimely.com/WCF/ShortURLService.svc?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

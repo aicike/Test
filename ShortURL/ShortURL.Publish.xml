@@ -1,65 +1,65 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
-  <publishProfile publishUrl="C:\Users\Wu\Desktop\ShortURL" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="配置文件1" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
-    <file relUrl="bin/ShortURL.dll" publishTime="05/12/2014 18:01:35" />
-    <file relUrl="bin/Newtonsoft.Json.dll" publishTime="05/30/2013 02:48:02" />
-    <file relUrl="bin/System.Web.Http.xml" publishTime="05/30/2013 02:48:02" />
-    <file relUrl="bin/System.Web.Helpers.xml" publishTime="05/30/2013 02:48:02" />
+  <publishProfile publishUrl="C:\Users\Wu\Desktop\发布信息\短域名" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="配置文件1" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+    <file relUrl="bin/System.Web.Http.dll" publishTime="05/30/2013 02:48:02" />
+    <file relUrl="bin/zh-Hans/System.Web.WebPages.Deployment.resources.dll" publishTime="01/14/2014 10:14:02" />
+    <file relUrl="bin/zh-Hans/System.Net.Http.Formatting.resources.dll" publishTime="01/14/2014 10:14:03" />
+    <file relUrl="Web.config" publishTime="06/24/2014 12:50:52" />
+    <file relUrl="bin/System.Web.Http.WebHost.dll" publishTime="05/30/2013 02:48:02" />
     <file relUrl="Global.asax" publishTime="03/14/2014 10:04:22" />
     <file relUrl="bin/EntityFramework.xml" publishTime="01/13/2014 12:02:47" />
     <file relUrl="Views/_ViewStart.cshtml" publishTime="03/14/2014 10:04:22" />
     <file relUrl="bin/EntityFramework.SqlServer.dll" publishTime="01/13/2014 12:02:47" />
     <file relUrl="bin/System.Net.Http.WebRequest.xml" publishTime="05/30/2013 02:48:02" />
     <file relUrl="bin/System.Web.Providers.dll" publishTime="05/30/2013 02:48:02" />
-    <file relUrl="bin/zh-Hans/System.Net.Http.Formatting.resources.dll" publishTime="01/14/2014 10:14:03" />
-    <file relUrl="bin/zh-Hans/EntityFramework.resources.dll" publishTime="03/14/2014 10:40:35" />
-    <file relUrl="bin/System.Web.Http.dll" publishTime="05/30/2013 02:48:02" />
-    <file relUrl="bin/Antlr3.Runtime.dll" publishTime="05/30/2013 02:48:02" />
-    <file relUrl="bin/EntityFramework.SqlServer.xml" publishTime="01/13/2014 12:02:47" />
+    <file relUrl="bin/zh-Hans/System.Web.Razor.resources.dll" publishTime="01/14/2014 10:14:01" />
+    <file relUrl="Views/Shared/_Layout.cshtml" publishTime="03/14/2014 10:04:22" />
+    <file relUrl="bin/zh-Hans/System.Web.Providers.resources.dll" publishTime="01/14/2014 11:16:41" />
+    <file relUrl="bin/System.Web.Http.WebHost.xml" publishTime="05/30/2013 02:48:02" />
+    <file relUrl="bin/System.Web.Razor.dll" publishTime="05/30/2013 02:48:02" />
+    <file relUrl="bin/System.Web.Mvc.xml" publishTime="05/30/2013 02:48:02" />
     <file relUrl="bin/System.Net.Http.dll" publishTime="05/30/2013 02:48:02" />
     <file relUrl="bin/System.Net.Http.Formatting.dll" publishTime="05/30/2013 02:48:02" />
     <file relUrl="Views/Shared/Error.cshtml" publishTime="03/14/2014 10:04:22" />
     <file relUrl="bin/zh-Hans/System.Net.Http.WebRequest.resources.dll" publishTime="01/14/2014 10:14:04" />
+    <file relUrl="bin/zh-Hans/EntityFramework.SqlServer.resources.dll" publishTime="03/14/2014 10:40:35" />
     <file relUrl="bin/Newtonsoft.Json.xml" publishTime="05/30/2013 02:48:02" />
     <file relUrl="bin/zh-Hans/System.Net.Http.resources.dll" publishTime="01/14/2014 10:14:04" />
     <file relUrl="bin/WebGrease.dll" publishTime="05/30/2013 02:48:02" />
-    <file relUrl="bin/System.Net.Http.Formatting.xml" publishTime="05/30/2013 02:48:02" />
-    <file relUrl="bin/System.Web.WebPages.Razor.dll" publishTime="05/30/2013 02:48:02" />
+    <file relUrl="bin/EntityFramework.dll" publishTime="01/13/2014 12:02:47" />
     <file relUrl="bin/System.Web.WebPages.Deployment.xml" publishTime="05/30/2013 02:48:02" />
+    <file relUrl="bin/zh-Hans/System.Web.Http.WebHost.resources.dll" publishTime="01/14/2014 10:14:03" />
     <file relUrl="bin/zh-Hans/System.Web.Helpers.resources.dll" publishTime="01/14/2014 10:14:02" />
     <file relUrl="bin/System.Web.Helpers.dll" publishTime="05/30/2013 02:48:02" />
     <file relUrl="bin/System.Web.WebPages.dll" publishTime="05/30/2013 02:48:02" />
     <file relUrl="packages.config" publishTime="03/14/2014 10:40:36" />
-    <file relUrl="bin/System.Web.Mvc.xml" publishTime="05/30/2013 02:48:02" />
-    <file relUrl="bin/System.Web.WebPages.Razor.xml" publishTime="05/30/2013 02:48:02" />
-    <file relUrl="bin/zh-Hans/EntityFramework.SqlServer.resources.dll" publishTime="03/14/2014 10:40:35" />
-    <file relUrl="bin/System.Web.Http.WebHost.xml" publishTime="05/30/2013 02:48:02" />
+    <file relUrl="bin/System.Web.Http.xml" publishTime="05/30/2013 02:48:02" />
     <file relUrl="bin/System.Web.Razor.xml" publishTime="05/30/2013 02:48:02" />
     <file relUrl="bin/zh-Hans/System.Web.Optimization.resources.dll" publishTime="01/14/2014 10:14:04" />
     <file relUrl="bin/System.Web.WebPages.xml" publishTime="05/30/2013 02:48:02" />
-    <file relUrl="bin/System.Web.Mvc.dll" publishTime="05/30/2013 02:48:02" />
-    <file relUrl="bin/ShortURL.pdb" publishTime="05/12/2014 18:01:35" />
-    <file relUrl="bin/zh-Hans/System.Web.WebPages.Deployment.resources.dll" publishTime="01/14/2014 10:14:02" />
-    <file relUrl="bin/System.Web.Optimization.dll" publishTime="05/30/2013 02:48:02" />
-    <file relUrl="Views/Shared/_Layout.cshtml" publishTime="03/14/2014 10:04:22" />
-    <file relUrl="bin/System.Net.Http.WebRequest.dll" publishTime="05/30/2013 02:48:02" />
-    <file relUrl="bin/zh-Hans/System.Web.WebPages.Razor.resources.dll" publishTime="01/14/2014 10:14:02" />
+    <file relUrl="bin/Antlr3.Runtime.dll" publishTime="05/30/2013 02:48:02" />
+    <file relUrl="bin/Newtonsoft.Json.dll" publishTime="05/30/2013 02:48:02" />
+    <file relUrl="bin/System.Web.WebPages.Razor.xml" publishTime="05/30/2013 02:48:02" />
+    <file relUrl="Views/Default/Index.cshtml" publishTime="03/14/2014 16:41:43" />
+    <file relUrl="bin/ShortURL.dll" publishTime="06/24/2014 12:49:27" />
+    <file relUrl="bin/EntityFramework.SqlServer.xml" publishTime="01/13/2014 12:02:47" />
+    <file relUrl="bin/ShortURL.pdb" publishTime="06/24/2014 12:49:27" />
+    <file relUrl="bin/zh-Hans/System.Web.WebPages.resources.dll" publishTime="01/14/2014 10:14:02" />
     <file relUrl="bin/zh-Hans/System.Web.Http.resources.dll" publishTime="01/14/2014 10:14:03" />
-    <file relUrl="bin/System.Web.Razor.dll" publishTime="05/30/2013 02:48:02" />
-    <file relUrl="bin/zh-Hans/System.Web.Mvc.resources.dll" publishTime="01/14/2014 10:14:02" />
+    <file relUrl="bin/System.Web.Mvc.dll" publishTime="05/30/2013 02:48:02" />
+    <file relUrl="bin/zh-Hans/System.Web.WebPages.Razor.resources.dll" publishTime="01/14/2014 10:14:02" />
     <file relUrl="bin/System.Web.WebPages.Deployment.dll" publishTime="05/30/2013 02:48:02" />
-    <file relUrl="bin/System.Web.Http.WebHost.dll" publishTime="05/30/2013 02:48:02" />
+    <file relUrl="bin/System.Web.Helpers.xml" publishTime="05/30/2013 02:48:02" />
     <file relUrl="bin/System.Net.Http.xml" publishTime="05/30/2013 02:48:02" />
     <file relUrl="bin/Microsoft.Web.Infrastructure.dll" publishTime="05/30/2013 02:48:02" />
-    <file relUrl="Web.config" publishTime="05/12/2014 18:06:31" />
-    <file relUrl="Views/Default/Index.cshtml" publishTime="03/14/2014 16:41:43" />
-    <file relUrl="bin/EntityFramework.dll" publishTime="01/13/2014 12:02:47" />
+    <file relUrl="bin/zh-Hans/EntityFramework.resources.dll" publishTime="03/14/2014 10:40:35" />
+    <file relUrl="bin/System.Net.Http.Formatting.xml" publishTime="05/30/2013 02:48:02" />
     <file relUrl="favicon.ico" publishTime="03/14/2014 10:04:22" />
     <file relUrl="WCF/ShortURLService.svc" publishTime="03/14/2014 14:18:02" />
-    <file relUrl="bin/zh-Hans/System.Web.Http.WebHost.resources.dll" publishTime="01/14/2014 10:14:03" />
-    <file relUrl="bin/zh-Hans/System.Web.Providers.resources.dll" publishTime="01/14/2014 11:16:41" />
+    <file relUrl="bin/System.Web.Optimization.dll" publishTime="05/30/2013 02:48:02" />
+    <file relUrl="bin/zh-Hans/System.Web.Mvc.resources.dll" publishTime="01/14/2014 10:14:02" />
+    <file relUrl="bin/System.Net.Http.WebRequest.dll" publishTime="05/30/2013 02:48:02" />
     <file relUrl="Views/Web.config" publishTime="03/14/2014 10:04:22" />
-    <file relUrl="bin/zh-Hans/System.Web.Razor.resources.dll" publishTime="01/14/2014 10:14:01" />
-    <file relUrl="bin/zh-Hans/System.Web.WebPages.resources.dll" publishTime="01/14/2014 10:14:02" />
+    <file relUrl="bin/System.Web.WebPages.Razor.dll" publishTime="05/30/2013 02:48:02" />
   </publishProfile>
 </publishData>

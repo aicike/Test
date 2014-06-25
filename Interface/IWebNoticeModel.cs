@@ -9,6 +9,7 @@ namespace Interface
     public interface IWebNoticeModel : IBaseModel<WebNotice>
     {
         Result Add(int menuID, int accountMainID);
+        Result Add(string menuToken, int accountMainID);
         List<int> GetMenuIDByAccountMainID(int accountMainID);
         void ClearWebNotice(int accountMainID, string menuToken);
         int GetMenuIDByToken(string token);

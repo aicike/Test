@@ -30,6 +30,12 @@ namespace Business.SystemBusiness
             return result;
         }
 
+        public Result Add(string menuToken, int accountMainID)
+        {
+            var menuID = GetMenuIDByToken(menuToken);
+            return Add(menuID, accountMainID);
+        }
+
         public WebNotice GetByMenuID(int menuID, int accountMainID)
         {
             return List().Where(a => a.MenuID == menuID && a.AccountMainID == accountMainID).FirstOrDefault();
@@ -41,7 +47,7 @@ namespace Business.SystemBusiness
         }
 
 
-        public void ClearWebNotice(int accountMainID,string menuToken)
+        public void ClearWebNotice(int accountMainID, string menuToken)
         {
             var menuModel = Factory.Get<IMenuModel>(SystemConst.IOC_Model.MenuModel);
             var menuID = menuModel.GetMenuIDByToken(menuToken);

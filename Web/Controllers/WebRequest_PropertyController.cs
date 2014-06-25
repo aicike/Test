@@ -271,6 +271,12 @@ namespace Web.Controllers
             var repairInfoModel = Factory.Get<IRepairInfoModel>(SystemConst.IOC_Model.RepairInfoModel);
             result = repairInfoModel.Add(rpinfo);
 
+            if (result.HasError == false)
+            {
+                var model = Factory.Get<IWebNoticeModel>(SystemConst.IOC_Model.WebNoticeModel);
+                model.Add("Token_WUYE_Repair", AMID);
+            }
+
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
@@ -468,6 +474,13 @@ namespace Web.Controllers
             com.AccountMainID = AMID;
             var complaintModel = Factory.Get<IComplaintModel>(SystemConst.IOC_Model.ComplaintModel);
             Result result = complaintModel.Add(com);
+
+            if (result.HasError == false)
+            {
+                var model = Factory.Get<IWebNoticeModel>(SystemConst.IOC_Model.WebNoticeModel);
+                model.Add("Token_WUYE_Complain", AMID);
+            }
+
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
@@ -825,6 +838,7 @@ namespace Web.Controllers
             var propertyordermodel = Factory.Get<IPropertyOrderModel>(SystemConst.IOC_Model.PropertyOrderModel);
             int[] IDS = PIDS.ConvertToIntArray(',');
             Result result = propertyordermodel.UpPropertyOrder(IDS, AMID, UserID);
+
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
