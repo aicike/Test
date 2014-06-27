@@ -41,7 +41,42 @@
                     //                    BtnOkClick: "location.reload()" ,
                     //                    BtnCancelClick: "$(this).dialog('close');"
                 });
+            } else if (IsErro == 3) {
+                JAlert({
+                    Message: ErrorStr,
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                    //                    BtnOkClick: "location.reload()" ,
+                    //                    BtnCancelClick: "$(this).dialog('close');"
+                });
             }
+
+            //选择事件
+            $("#ckbAll").change(function () {
+                if ($(this).attr("checked") == "checked") {
+                    $("input[name=ckbOK]").attr("checked", $(this).attr("checked"));
+                }
+                else {
+                    $("input[name=ckbOK]").removeAttr("checked");
+                }
+
+            });
+
+
+            $("#btnclear").click(function () {
+                var cnt = $("input[name='ckbOK']:checked").length;
+                if (cnt > 0) {
+                    if (confirm("你确定删除吗?")) {
+                        $("#dell").click();
+                    }
+                }
+                else {
+                    JMessage("请至少选择一项！", true);
+                }
+            });
+
+
+
         });
         //导入窗体
         function Showimport() {
@@ -58,21 +93,34 @@
         }
 
         function CheckImport() {
+
             var ImExcel = $("#ImExcel").val();
+            var month = $("#Month").val();
+
             if (ImExcel != null && ImExcel != undefined) {
                 if (ImExcel.length <= 0) {
                     JMessage("请选择文件", true)
                     return false;
                 }
-                else {
-
-                }
+            }
+            else {
+                JMessage("请选择文件", true)
+                return false
+            }
+            if (month == 0) {
+                JMessage("请选择月份", true)
             }
         }
     </script>
+   <style>
+        .main
+        {
+            width: 1111px !important;
+        }
+    </style>
 }
 @model PagedList<Poco.ParkingFee>
-<div class="title">
+<div class="title"  style="width: 900px">
     <div style="float: right">
         <a href="@Url.Content("~/Download/Property/物业停车费导入模板.xlsx")" target="_blank" style=" color:#00aec8">
             下载物业停车费导入模板</a></div>
@@ -80,10 +128,10 @@
     <div style="clear: both">
     </div>
 </div>
-<div class="body">
+<div class="body"  style="width: 900px">
     @using (Html.BeginForm("Index", "ParkingFee", new { HostName = ViewBag.HostName }, FormMethod.Get, new { enctype = "multipart/form-data" }))
     {
-        <table>
+        <table width="800px">
             <tr>
                 <td>
                     费用月份：
@@ -121,15 +169,112 @@
                 </td>
                 <td>
                     <input type="submit" id="btnSubmit" value="查询" class="button" style="" />
-                    <input type="button" id="btnImport" value="导入" onclick="Showimport()" class="button"
-                        style="margin-left: 20px" />
                 </td>
             </tr>
         </table>
     }
-    <div class="pages" style="margin-bottom: 5px; margin-top: 10px; margin-bottom: 10px;">
+    <table style="width: 900px">
+        <tr>
+            <td  class="option">
+                @Html.ActionLink("添加", "Add", "ParkingFee", new { HostName = ViewBag.HostName }, null, true)
+                <input type="button" id="btnImport" value="导入" onclick="Showimport()" class="button"
+                    style="margin-left: 20px" />
+                <input type="button" id="btnclear" value="批量删除" class="button" style="margin-left: 20px" />
+            </td>
+        </tr>
+    </table>
+    @using (Html.BeginForm("DellInfo", "PropertyFeeInfo", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="submit" id="dell" name="dell" style=" display:none" />
+        <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
+            <tr>
+                <th width="50px">
+                    选择
+                    <input type="checkbox" id="ckbAll" name="ckbAll" />
+                </th>
+                <th>
+                    业主姓名
+                </th>
+                <th>
+                    业主电话
+                </th>
+                <th>
+                    楼号
+                </th>
+                <th>
+                    单元
+                </th>
+                <th>
+                    房号
+                </th>
+                <th>
+                    车牌号
+                </th>
+                <th>
+                    费用月份
+                </th>
+                <th>
+                    固定停车费
+                </th>
+                <th style="width: 85px">
+                    是否已缴费
+                </th>
+                <th style="width: 150px">
+                    备注
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" id="ckbOK" name="ckbOK" value="@item.ID" />
+                    </td>
+                    <td>
+                        @item.OwnerName
+                    </td>
+                    <td>
+                        @item.OwnerPhone
+                    </td>
+                    <td>
+                        @item.BuildingNum
+                    </td>
+                    <td>
+                        @item.Unit
+                    </td>
+                    <td>
+                        @item.RoomNumber
+                    </td>
+                    <td>
+                        @item.plates
+                    </td>
+                    <td>
+                        @item.PayDate
+                    </td>
+                    <td>
+                        @item.ParkingFees
+                    </td>
+                    <td>
+                        @if (item.IsPay)
+                        { 
+                            @:已缴费
+                    }
+                        else
+                        {
+                            <span style="color: Red">未缴费</span>
+                        }
+                    </td>
+                    <td>
+                        <div style="width: 150px; word-break: keep-all;">
+                            @item.Remarks
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    <div class="pages" style="margin-bottom: 5px;">
         @Html.Pager(Model, new PagerOptions
-        {
+   {
        PageIndexParameterName = "ID",
        CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
        NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
@@ -143,112 +288,41 @@
        NextPageText = "Next",*/
        PageIndexOutOfRangeErrorMessage = "Page index out of range.",
        ShowFirstLast = false
-        })
+   })
     </div>
-        <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
-        <tr>
-            <th>
-                业主姓名
-            </th>
-            <th>
-                业主电话
-            </th>
-            <th>
-                单元
-            </th>
-            <th>
-                房号
-            </th>
-            <th>
-                车牌号
-            </th>
-            <th>
-                费用月份
-            </th>
-            <th>
-                固定停车费
-            </th>
-          
-            <th style="width:85px">
-                是否已缴费
-            </th>
-            <th style="width: 200px">
-                备注
-            </th>
-        </tr>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @item.OwnerName
-                </td>
-                <td>
-                    @item.OwnerPhone
-                </td>
-                <td>
-                    @item.Unit
-                </td>
-                <td>
-                    @item.RoomNumber
-                </td>
-                <td>
-                    @item.plates
-                </td>
-                <td>
-                    @item.PayDate
-                </td>
-                <td>
-                    @item.ParkingFees
-                </td>
-                <td>
-                    @if (item.IsPay)
-                    { 
-                        @:已缴费
-                    }
-                    else
-                    {
-                        <span style=" color:Red">未缴费</span>
-                    }
-                </td>
-                <td>
-                    <div style="width: 195px; word-break: keep-all;">
-                        @item.Remarks
-                    </div>
-                </td>
-            </tr>
-        }
-    </table>
-    <div class="pages" style="margin-bottom: 5px; ">
-        @Html.Pager(Model, new PagerOptions
-       {
-           PageIndexParameterName = "ID",
-           CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
-           NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
-           NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
-           CssClass = "manage_pages pages",
-           SeparatorHtml = "&nbsp;",
-           AutoHide = false,
-           /*LastPageText = "Last",
-           FirstPageText = "First",
-           PrevPageText = "Back",
-           NextPageText = "Next",*/
-           PageIndexOutOfRangeErrorMessage = "Page index out of range.",
-           ShowFirstLast = false
-       })
-    </div>
-
-
 </div>
 <div id="dialogimport" title="报名列表" style="display: none; padding: 0px">
     @using (Html.BeginForm("ImportExcel", "ParkingFee", new { HostName = ViewBag.HostName, id = ViewBag.pageid }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <table width="100%" style="margin-top: 30px">
             <tr>
-                <td width="120px">
-                    请选择Excel文件：
+                <td width="80px">
+                    请选择模板：
                 </td>
                 <td>
                     <input type="file" id="ImExcel" name="ImExcel" />
+                </td>
+            </tr>
+            <tr>
+                <td width="80px">
+                    导入月份：
+                </td>
+                <td>
+                    <select id="Month" name="Month">
+                        <option value="0">请选择...</option>
+                        <option value="1">1月份</option>
+                        <option value="2">2月份</option>
+                        <option value="3">3月份</option>
+                        <option value="4">4月份</option>
+                        <option value="5">5月份</option>
+                        <option value="6">6月份</option>
+                        <option value="7">7月份</option>
+                        <option value="8">8月份</option>
+                        <option value="9">9月份</option>
+                        <option value="10">10月份</option>
+                        <option value="11">11月份</option>
+                        <option value="12">12月份</option>
+                    </select>
                 </td>
             </tr>
             <tr>

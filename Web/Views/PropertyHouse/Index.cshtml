@@ -42,7 +42,7 @@
             <table style="width: 100%">
                 <tr>
                     <td colspan="7" style="text-align: left">@Html.ActionLink("添加", "Add", "PropertyHouse", new { HostName = ViewBag.HostName }, null, true)<a
-                        href="#" id="btnUpload" class="button" style="margin:10px">导入</a>
+                        href="#" id="btnUpload" class="button" style="margin: 10px">导入</a>
                     </td>
                 </tr>
                 <tr>
@@ -91,6 +91,12 @@
     </div>
     <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
         <tr>
+            <th>
+                业主名称
+            </th>
+            <th style="width: 180px;">
+                业主电话
+            </th>
             <th style="width: 80px;">
                 楼号
             </th>
@@ -100,12 +106,6 @@
             <th style="width: 80px;">
                 房号
             </th>
-            <th>
-                业主名称
-            </th>
-            <th style="width: 180px;">
-                电话
-            </th>
             <th style="width: 120px;">
                 操作
             </th>
@@ -113,6 +113,12 @@
         @foreach (var item in Model)
         {
             <tr>
+                 <td>
+                    @item.UserName
+                </td>
+                <td>
+                    @item.Phone
+                </td>
                 <td>
                     @item.Property_House.BuildingNum
                 </td>
@@ -122,12 +128,7 @@
                 <td>
                     @item.Property_House.RoomNumber
                 </td>
-                <td>
-                    @item.UserName
-                </td>
-                <td>
-                    @item.Phone
-                </td>
+               
                 <td class="operation">
                     @Html.ActionLink("修改", "Edit", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
                     @Ajax.ActionLink("删除", "Delete", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID, phID = item.Property_HouseID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?删除此项将会删除其关联的所有数据！','" + Url.Action("Delete", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID, phID = item.Property_HouseID }) + "',null)" }, true)

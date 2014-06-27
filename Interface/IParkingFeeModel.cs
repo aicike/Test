@@ -60,6 +60,34 @@ namespace Interface
         /// <param name="AMID"></param>
         /// <returns></returns>
         double GetPriceByIDS(int[] IDS, int AMID);
+
+        /// <summary>
+        /// 批量删除
+        /// </summary>
+        /// <param name="IDS"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        Result delAll(string IDS, int AMID);
         
+
+        /// <summary>
+        /// 数据导入验证
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <param name="Name"></param>
+        /// <param name="Phone"></param>
+        /// <param name="LH"></param>
+        /// <param name="DY"></param>
+        /// <param name="FH"></param>
+        /// <returns></returns>
+        Result DBImportCheck(int AMID, string PayDate, string Name, string Phone, string LH, string DY, string FH);
+
+        /// <summary>
+        /// 获取一个月的数据
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <param name="PayDate"></param>
+        /// <returns></returns>
+        List<ParkingFee> GetAllByPayDay(int AMID, string PayDate);
     }
 }

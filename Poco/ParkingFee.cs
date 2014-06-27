@@ -85,6 +85,14 @@ namespace Poco
         /// 车牌号
         /// </summary>
         public string plates { get; set; }
+
+
+        /// <summary>
+        /// 楼号
+        /// </summary>
+        [Display(Name = "楼号")]
+        [Required(ErrorMessage = "请输入楼号")]
+        public string BuildingNum { get; set; }
         
         public virtual ICollection<PropertyOrderDetail> PropertyOrderDetail { get; set; }
 

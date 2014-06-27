@@ -103,5 +103,62 @@ namespace Business
 
         }
 
+        /// <summary>
+        /// 批量删除
+        /// </summary>
+        /// <param name="IDS"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public Result delAll(string IDS, int AMID)
+        {
+            string sql = "delete PropertyFeeInfo where id in("+IDS+") and AccountMainID="+AMID;
+            var cnt = base.SqlExecute(sql);
+            Result result = new Result();
+            if (cnt <= 0)
+            {
+                result.HasError = true;
+                result.Error = "删除失败 请稍后再试！";
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 数据导入验证
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <param name="Name"></param>
+        /// <param name="Phone"></param>
+        /// <param name="LH"></param>
+        /// <param name="DY"></param>
+        /// <param name="FH"></param>
+        /// <returns></returns>
+        public Result DBImportCheck(int AMID,string PayDate,string Name,string Phone,string LH,string DY,string FH)
+        {
+            Result result = new Result();
+            string sql = string.Format("select count(ID) from PropertyFeeInfo where AccountMainID={0} and PayDate='{1}' and OwnerName='{2}'and OwnerPhone='{3}'and BuildingNum='{4}'and Unit='{5}'and RoomNumber='{6}'",
+                                      AMID, PayDate,Name,Phone,LH,DY,FH);
+
+            var cnt = Context.Database.SqlQuery<int>(sql).FirstOrDefault();
+
+            if (cnt > 0)
+            {
+                result.HasError = true;
+                result.Error = "用户：" + Name + " 电话：" + Phone + " 楼号：" + LH + " 单元：" + DY + " 房号：" + FH + "在" + PayDate + "中的的数据已存在。请删除后再次导入。";
+            }
+            
+            return result;
+        }
+
+        /// <summary>
+        /// 获取一个月的数据
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <param name="PayDate"></param>
+        /// <returns></returns>
+        public List<PropertyFeeInfo> GetAllByPayDay(int AMID, string PayDate)
+        {
+            var list = List().Where(a=>a.AccountMainID==AMID&&a.PayDate==PayDate).ToList();
+            return list;
+        }
     }
 }

@@ -82,5 +82,9 @@ namespace Poco
         /// </summary>
         public string plates { get; set; }
 
+        /// <summary>
+        /// 楼号
+        /// </summary>
+        public string BuildingNum { get; set; }
     }
 }
