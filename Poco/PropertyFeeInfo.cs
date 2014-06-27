@@ -62,13 +62,6 @@ namespace Poco
         [Display(Name = "管理费")]
         public double? ManagerFee { get; set; }
 
-        /// <summary>
-        /// 服务费
-        /// </summary>
-        [Display(Name = "服务费")]
-        public double? ServiceFee { get; set; }
-
-        
 
         /// <summary>
         /// 电梯费
@@ -120,6 +113,12 @@ namespace Poco
         [Display(Name = "导入日期")]
         public DateTime importDate { get; set; }
 
+        /// <summary>
+        /// 楼号
+        /// </summary>
+        [Display(Name = "楼号")]
+        [Required(ErrorMessage = "请输入楼号")]
+        public string BuildingNum { get; set; }
 
 
         public virtual ICollection<PropertyOrderDetail> PropertyOrderDetail { get; set; }

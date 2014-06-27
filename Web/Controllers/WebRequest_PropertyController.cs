@@ -752,6 +752,7 @@ namespace Web.Controllers
             pf.Unit = item.Unit;
             pf.RoomNumber = item.RoomNumber;
             pf.Remarks = item.Remarks;
+            pf.BuildingNum = item.BuildingNum;
             if (item.Total.HasValue)
             {
                 pf.Total = item.Total.Value;
@@ -769,14 +770,7 @@ namespace Web.Controllers
             {
                 pf.ManagerFee = 0;
             }
-            if (item.ServiceFee.HasValue)
-            {
-                pf.ServiceFee = item.ServiceFee.Value;
-            }
-            else
-            {
-                pf.ServiceFee = 0;
-            }
+            
             if (item.ElevatorFee.HasValue)
             {
                 pf.ElevatorFee = item.ElevatorFee.Value;
@@ -1012,6 +1006,7 @@ namespace Web.Controllers
             pf.RoomNumber = item.RoomNumber;
             pf.Remarks = item.Remarks;
             pf.plates = item.plates;
+            pf.BuildingNum = item.BuildingNum;
             if (item.ParkingFees != 0)
             {
                 pf.Total = item.ParkingFees;

@@ -1,0 +1,193 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.PropertyFeeInfo;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.PropertyFeeInfo;
+}
+@section head{
+    <script src="@Url.Content("~/Scripts/timepicker/jquery-ui-timepicker-addon.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/timepicker/jquery-ui-timepicker-zh-CN.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/timepicker/jquery.ui.datepicker-zh-CN.js.js")" type="text/javascript"></script>
+    <script>
+        $(function () {
+            //            $("label[name=labCbFirst]").each(function () {
+            //                $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
+            //            });
+
+
+            $("#Date").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'yy-mm'
+            });
+            var IsErro = '@ViewBag.IsError';
+            var ErrorStr = '@ViewBag.ErrorStr';
+            if (IsErro == 1) {
+                JAlert({
+                    Message: ErrorStr,
+                    DialogType: "Ok",
+                    BtnOk: "确定"
+                });
+            }
+        });
+    </script>
+}
+@model Poco.PropertyFeeInfo
+<div class="title">
+    物业费管理-添加物业费
+</div>
+<div class="body">
+    @using (Ajax.BeginForm("Add", "PropertyFeeInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    {
+        <fieldset style="font-size: 14px">
+            <legend>添加物业费</legend>
+            <table style="width: 100%;">
+                <tr>
+                    <td class="tdTitle" style="width: 150px">
+                        <span class="Identification">*</span> 业主姓名
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.OwnerName, new { style = "width:300px" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.OwnerName)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle" style="width: 150px">
+                        <span class="Identification">*</span> 业主电话
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.OwnerPhone, new { style = "width:300px" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.OwnerPhone)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 费用月份
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.PayDate)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.PayDate)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 楼号
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.BuildingNum)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.BuildingNum)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 单元
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.Unit)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Unit)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 房号
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.RoomNumber)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.RoomNumber)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        物业管理费
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.ManagerFee)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.ManagerFee)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        电梯费
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.ElevatorFee)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.ElevatorFee)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        水费
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.WaterFee)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.WaterFee)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        卫生费
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.HealthFee)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.HealthFee)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        其他费用
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.OrterFee)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.OrterFee)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 合计
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.Total)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Total)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        是否已缴费
+                    </td>
+                    <td>
+                        <select id="IsPay" name="IsPay">
+                            <option value="False">否</option>
+                            <option value="True">是</option>
+                        </select>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle" valign="top">
+                        备注
+                    </td>
+                    <td>
+                        @Html.TextAreaFor(a => a.Remarks, new { style = "width:300px" })
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Remarks)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="submit" id="btnSubmit" value="保存" class="button" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@Url.Action("Index", "PropertyFeeInfo")'" />
+        </div>
+    }
+</div>
+<div style="clear: both">
+</div>

@@ -16,7 +16,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<ExpressCollection> GetListByAMID(int AMID)
         {
-            var list = List().Where(a=>a.AccountMainID==AMID);
+            var list = List(true).Where(a=>a.AccountMainID==AMID);
             return list;
         }
 
@@ -29,7 +29,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<ExpressCollection> GetListByAMID(int AMID ,string OddNumber, string phone)
         {
-            var list = List().Where(a=>a.AccountMainID==AMID);
+            var list = List(true).Where(a => a.AccountMainID == AMID);
             if (!string.IsNullOrEmpty(OddNumber))
             {
                 list = list.Where(a => a.OddNumber.Contains(OddNumber.Trim()));

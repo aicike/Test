@@ -243,11 +243,12 @@
 
        var PhoneRight = false;
        var EmailRight = false;
+       var AID = "@Model.ID";
         function checkEmail() {
             var values = $("#Email").val();
             if (values != "" && values != undefined) {
                 var YZUrl = '@Url.Action("OnlyValidation", "Ajax", new { Area = "", HostName = "" })';
-                $.post(YZUrl, { tableName: "Account", field: "Email", value: values }, function (result) {
+                $.post(YZUrl, { tableName: "Account", field: "Email", value: values ,id:AID}, function (result) {
                     if (result == "True") {
                         EmailRight = true;
                     }
@@ -268,7 +269,7 @@
 
             if (values != "" && values != undefined) {
                 var YZUrl = '@Url.Action("OnlyValidation", "Ajax", new { Area = "", HostName = "" })';
-                $.post(YZUrl, { tableName: "Account", field: "Phone", value: values }, function (result) {
+                $.post(YZUrl, { tableName: "Account", field: "Phone", value: values ,id:AID}, function (result) {
                     if (result == "True") {
                         PhoneRight = true;
                     }

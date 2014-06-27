@@ -753,6 +753,8 @@
     <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\UserManage\AllUser.cshtml" />
     <Content Include="Views\Shared\SystemMenu.cshtml" />
+    <Content Include="Views\PropertyFeeInfo\Add.cshtml" />
+    <Content Include="Views\ParkingFee\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\IOC.xml" />
