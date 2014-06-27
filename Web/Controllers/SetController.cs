@@ -49,6 +49,7 @@ namespace Web.Controllers
             }
             else
             {
+                LoginAccount.HeadImagePath = account.HeadImagePath;
                 TempData["EditStatus"] = "true|";
             }
             return RedirectToAction("Index", "set", new { HostName = LoginAccount.HostName });
