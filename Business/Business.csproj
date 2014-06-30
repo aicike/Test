@@ -301,14 +301,14 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Imtimely_ShortURL\ShortURLService.wsdl" />
-    <None Include="Service References\Imtimely_ShortURL\ShortURLService.xsd">
+    <None Include="Service References\Imtimely_ShortURL\ShortURLService1.wsdl" />
+    <None Include="Service References\Imtimely_ShortURL\ShortURLService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Imtimely_ShortURL\ShortURLService1.xsd">
+    <None Include="Service References\Imtimely_ShortURL\ShortURLService31.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Imtimely_ShortURL\ShortURLService2.xsd">
+    <None Include="Service References\Imtimely_ShortURL\ShortURLService32.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -328,7 +328,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\Imtimely_ShortURL\ShortURLService.disco" />
+    <None Include="Service References\Imtimely_ShortURL\ShortURLService1.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
