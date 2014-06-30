@@ -28,40 +28,42 @@
         </tr>
         @foreach (var item in Model)
         {
-            <td>
-                @if (!string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath))
-                { 
-                    <img id="imgLogo" style="max-width:80px;max-height:80px;"
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath))
+                    { 
+                        <img id="imgLogo" style="max-width:80px;max-height:80px;"
                 src="@Url.Content(item.UserLoginInfo.HeadImagePath)" />
-                }
-                else
-                { 
-                    <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
+                    }
+                    else
+                    { 
+                        <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
                             
-                }
-            </td>
-            <td class="operation">
-                <label name="labCbFirst" title="沟通开始">
-                    <a  href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.ID })" target="_blank">
-                        @item.UserLoginInfo.Name
-                        @if (string.IsNullOrEmpty(item.Name) == false)
-                        {
-                            @:(@item.Name)
-                         }
-                    </a>
-                </label>
-            </td>
-            <td>
-                @item.Phone
-            </td>
-            <td class="operation">
+                    }
+                </td>
+                <td class="operation">
+                    <label name="labCbFirst" title="沟通开始">
+                        <a  href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.ID })" target="_blank">
+                            @item.UserLoginInfo.Name
+                            @if (string.IsNullOrEmpty(item.Name) == false)
+                            {
+                                @:(@item.Name)
+                                                                             }
+                        </a>
+                    </label>
+                </td>
+                <td>
+                    @item.Phone
+                </td>
+                <td class="operation">
                     @Html.ActionLink("详细", "ViewUser", "UserManage", new { userID = item.ID }, null)
                     <br />
                     <label name="labCbFirst" title="该用户与之前的销售代表聊天记录">
-                        <a href="@Url.Action("HistoryMes", "SingleChat", new {  userID = item.ID })" style=" margin-left:-5px" target="_blank" title="">
+                        <a href="@Url.Action("HistoryMes", "SingleChat", new { userID = item.ID })" style=" margin-left:-5px" target="_blank" title="">
                             聊天历史</a>
                     </label>
                 </td>
+            </tr>
         }
     </table>
 </div>

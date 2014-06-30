@@ -16,7 +16,7 @@ namespace Business
         /// <returns></returns>
         public IQueryable<Complaint> GetList(int AMID)
         {
-            var list = List().Where(a=>a.AccountMainID==AMID);
+            var list = List(true).Where(a=>a.AccountMainID==AMID);
             return list;
         }
 
