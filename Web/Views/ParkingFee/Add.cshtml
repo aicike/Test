@@ -13,7 +13,7 @@
             //            });
 
 
-            $("#Date").datepicker({
+            $("#PayDate").datepicker({
                 changeMonth: true,
                 changeYear: true,
                 dateFormat: 'yy-mm'
@@ -35,8 +35,9 @@
     停车费管理-添加停车费
 </div>
 <div class="body">
-    @using (Ajax.BeginForm("Add", "ParkingFee", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+@using (Html.BeginForm("Add", "ParkingFee", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
+
         <fieldset style="font-size: 14px">
             <legend>添加物业费</legend>
             <table style="width: 100%;">

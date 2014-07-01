@@ -244,7 +244,22 @@
             {
                 <tr>
                     <td>
-                        <input type="checkbox" id="ckbOK" name="ckbOK" value="@item.ID" />
+                        @if (item.PropertyOrderDetail.FirstOrDefault() != null)
+                        {
+                            if (item.PropertyOrderDetail.FirstOrDefault().PropertyOrder.status != (int)Poco.Enum.EnumOrderStatus.Revoke && item.PropertyOrderDetail.FirstOrDefault().PropertyOrder.status != (int)Poco.Enum.EnumOrderStatus.Cancel)
+                            { 
+                             <input type="checkbox" id="ckbOK2" name="ckbOK2"  disabled="disabled"/>
+                            }
+                            else
+                            { 
+                                <input type="checkbox" id="ckbOK" name="ckbOK" value="@item.ID" />
+                            }
+                        }
+                        else
+                        { 
+                            <input type="checkbox" id="ckbOK" name="ckbOK" value="@item.ID" />
+                        }
+                        
                     </td>
                     <td>
                         @item.OwnerName
@@ -303,21 +318,21 @@
     }
     <div class="pages" style="margin-bottom: 5px;">
         @Html.Pager(Model, new PagerOptions
-       {
-           PageIndexParameterName = "ID",
-           CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
-           NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
-           NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
-           CssClass = "manage_pages pages",
-           SeparatorHtml = "&nbsp;",
-           AutoHide = false,
-           /*LastPageText = "Last",
-           FirstPageText = "First",
-           PrevPageText = "Back",
-           NextPageText = "Next",*/
-           PageIndexOutOfRangeErrorMessage = "Page index out of range.",
-           ShowFirstLast = false
-       })
+   {
+       PageIndexParameterName = "ID",
+       CurrentPagerItemWrapperFormatString = "<span class=\"pagenum_selected\"><a>{0}</a></span>",
+       NumericPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       NavigationPagerItemWrapperFormatString = "<span class=\"pagenum\">{0}</span>",
+       CssClass = "manage_pages pages",
+       SeparatorHtml = "&nbsp;",
+       AutoHide = false,
+       /*LastPageText = "Last",
+       FirstPageText = "First",
+       PrevPageText = "Back",
+       NextPageText = "Next",*/
+       PageIndexOutOfRangeErrorMessage = "Page index out of range.",
+       ShowFirstLast = false
+   })
     </div>
 </div>
 <div id="dialogimport" title="报名列表" style="display: none; padding: 0px">
