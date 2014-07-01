@@ -14,7 +14,7 @@
             //            });
 
 
-            $("#Date").datepicker({
+            $("#PayDate").datepicker({
                 changeMonth: true,
                 changeYear: true,
                 dateFormat: 'yy-mm'
@@ -36,7 +36,7 @@
     物业费管理-添加物业费
 </div>
 <div class="body">
-    @using (Ajax.BeginForm("Add", "PropertyFeeInfo", new { HostName = ViewBag.HostName }, new AjaxOptions() { UpdateTargetId = "alert" }))
+    @using (Html.BeginForm("Add", "PropertyFeeInfo", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <fieldset style="font-size: 14px">
             <legend>添加物业费</legend>

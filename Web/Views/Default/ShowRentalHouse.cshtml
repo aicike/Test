@@ -166,11 +166,12 @@
             <tr>
                 <td style="font-size: 14px; width: 70%; color: #fff; padding-left: 20px; line-height: 14px;
                     background: url('/images/bg_black.png')">
-                    房东姓名：@Model.OwnerName
-                    </br> 房东电话：@Model.OwnerPhone
+                    @*房东姓名：@Model.OwnerName
+                    </br> 房东电话：@Model.OwnerPhone*@
+                     物业电话：@Model.AccountMain.SalePhone
                 </td>
                 <td align="center" style="color: #fff; background: url('/images/bg_blue.png')">
-                    <a href="tel:@Model.OwnerPhone" style=" font-weight:bold">
+                    <a href="tel:@Model.AccountMain.SalePhone" style=" font-weight:bold">
                         <div style="width: 100%">
                             打电话
                         </div>
