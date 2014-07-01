@@ -41,8 +41,10 @@ namespace Poco
         [Display(Name = "地址")]
         [StringLength(200, ErrorMessage = "长度小于200")]
         public string Address { get; set; }
-        
-        
+
+        [Display(Name = "邮箱")]
+        [StringLength(50, ErrorMessage = "长度小于50")]
+        public string Email { get; set; }
 
         /// <summary>
         /// 账号类型，启用禁用

@@ -183,10 +183,10 @@ namespace Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Delete(int id,int phID)
+        public ActionResult Delete(int id,int phID,int userloginInfoID)
         {
             var propertyUserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
-            var result = propertyUserModel.Delete(id, phID);
+            var result = propertyUserModel.Delete(id,userloginInfoID, phID);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));

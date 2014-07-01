@@ -292,10 +292,10 @@ namespace Web.Controllers
         /// <summary>
         /// 找回密码
         /// </summary>
-        public string FindPwd(string email)
+        public string FindPwd(string phone)
         {
             var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
-            var result = userLoginInfoModel.FindPwd(email);
+            var result = userLoginInfoModel.FindPwd(phone);
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 

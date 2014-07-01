@@ -136,7 +136,7 @@
                 </td>
                 <td class="operation">
                     @Html.ActionLink("修改", "Edit", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
-                    @Ajax.ActionLink("删除", "Delete", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID, phID = item.Property_HouseID }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?删除此项将会删除其关联的所有数据！','" + Url.Action("Delete", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID, phID = item.Property_HouseID }) + "',null)" }, true)
+                    @Ajax.ActionLink("删除", "Delete", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID, phID = item.Property_HouseID, userloginInfoID = item.UserLoginInfoID ?? 0 }, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?删除此项将会删除其关联的所有数据！','" + Url.Action("Delete", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID, phID = item.Property_HouseID, userloginInfoID = item.UserLoginInfoID ?? 0 }) + "',null)" }, true)
                 </td>
             </tr>
         }

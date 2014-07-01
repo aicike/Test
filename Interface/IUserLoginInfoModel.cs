@@ -46,7 +46,7 @@ namespace Interface
         /// <summary>
         /// 找回密码
         /// </summary>
-        Result FindPwd(string email);
+        Result FindPwd(string phone);
 
         /// <summary>
         /// 找回密码_检查激活码

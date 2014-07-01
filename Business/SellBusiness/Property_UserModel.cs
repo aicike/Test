@@ -33,7 +33,7 @@ namespace Business
         }
 
         [Transaction]
-        public Result Delete(int property_UserID, int propertyHouseID)
+        public Result Delete(int property_UserID,int userLoginInfo, int propertyHouseID)
         {
             Result result = new Result();
             try
@@ -44,7 +44,7 @@ namespace Business
                     int i = base.SqlExecute(sql);
                     if (i > 0 && propertyHouseID > 0)
                     {
-                        sql = "DELETE dbo.Property_House WHERE ID=" + propertyHouseID;
+                        sql = "DELETE dbo.Property_House WHERE ID=" + propertyHouseID + " UPDATE dbo.UserLoginInfo SET Phone=NULL ,Email =NULL WHERE ID=" + propertyHouseID;
                         base.SqlExecute(sql);
                     }
                 }

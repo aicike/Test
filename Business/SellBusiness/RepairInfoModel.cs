@@ -110,7 +110,7 @@ namespace Business
         public Result UpdScore(int RID, int EnumRepairScore)
         {
             Result result = new Result();
-            string sql = string.Format("update RepairInfo set Score={0} where ID = {1}", EnumRepairScore, RID);
+            string sql = string.Format("update RepairInfo set EnumRepairScore={0} where ID = {1}", EnumRepairScore, RID);
             int cnt = base.SqlExecute(sql);
             if (cnt <= 0)
             {

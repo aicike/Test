@@ -111,7 +111,7 @@ namespace Web.Controllers
         /// <param name="userID"></param>
         /// <param name="field"></param>
         /// <param name="value"></param>
-        public string Register(int userID, string userName, string phone, string pwd)
+        public string Register(int userID, string userName, string phone, string pwd,string email)
         {
             Result result = new Result();
             var um = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
@@ -123,6 +123,7 @@ namespace Web.Controllers
             }
             user.Name = userName;
             user.Phone = phone;
+            user.Email = email;
             result = um.Edit(user);
             if (user == null)
             {
@@ -144,6 +145,7 @@ namespace Web.Controllers
             userLoginInfo.Phone = phone;
             userLoginInfo.LoginPwd = DESEncrypt.Encrypt(pwd);
             userLoginInfo.LoginPwdPage = "000000";
+            userLoginInfo.Email = email;
             result = ulim.Edit(userLoginInfo);
             if (result.HasError)
             {
@@ -173,7 +175,7 @@ namespace Web.Controllers
             foreach (var item in list)
             {
                 _B_RepairInfo ri = new _B_RepairInfo();
-                ri.date = item.RepairDate.ToString("yyyy-MM-dd");
+                ri.date = item.RepairDate.ToString("MM-dd HH:mm");
                 ri.ImgPaths = item.ImgPath;
                 ri.ID = item.ID;
                 if (item.AccountID.HasValue)
@@ -302,7 +304,7 @@ namespace Web.Controllers
                 br.AccountName = "暂无";
                 br.AccountPhone = "暂无";
             }
-            br.date = repair.RepairDate.ToString("yyyy-MM-dd HH:mm");
+            br.date = repair.RepairDate.ToString("MM-dd HH:mm");
             br.ID = repair.ID;
             br.ImgPaths = repair.ImgPath;
             br.Content = repair.RepairContent;
@@ -358,7 +360,7 @@ namespace Web.Controllers
                 string remark = "";
                 foreach (var item in repair.RepairOperation)
                 {
-                    remark += item.OperationDate.ToString("yyyy-MM-dd HH:mm") + "&" + item.Remarks + "|";
+                    remark += item.OperationDate.ToString("MM-dd HH:mm") + "&" + item.Remarks + "|";
                 }
                 br.Operation = remark.TrimEnd('|');
             }
@@ -411,7 +413,7 @@ namespace Web.Controllers
             {
                 _B_Complaint bc = new _B_Complaint();
                 bc.Contetn = item.ComplaintContetn;
-                bc.Date = item.ComplaintDate.ToString("yyyy-MM-dd HH:ss");
+                bc.Date = item.ComplaintDate.ToString("MM-dd HH:ss");
                 bc.ID = item.ID;
                 bc.IsAnonymous = item.IsAnonymous;
                 switch (item.EnumRepairScore)
@@ -498,7 +500,7 @@ namespace Web.Controllers
             _B_Complaint bc = new _B_Complaint();
             bc.ID = complaint.ID;
             bc.Contetn = complaint.ComplaintContetn;
-            bc.Date = complaint.ComplaintDate.ToString("yyyy-MM-dd HH:mm");
+            bc.Date = complaint.ComplaintDate.ToString("MM-dd HH:mm");
             bc.ImgPath = complaint.ImgPath;
             bc.IsAnonymous = complaint.IsAnonymous;
             switch (complaint.EnumRepairScore)
@@ -596,7 +598,7 @@ namespace Web.Controllers
                     ADVERTORIAL.I = item.ID;
                     ADVERTORIAL.T = item.Title;
                     ADVERTORIAL.P = item.Depict;
-                    ADVERTORIAL.D = item.IssueDate.ToString("yyyy-MM-dd");
+                    ADVERTORIAL.D = item.IssueDate.ToString("MM-dd");
                     ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
                     ADVERTORIAL.F = SystemConst.WebUrlIP + Url.Content(item.AppShowImagePath ?? "");
                     ADVERTORIAL.URL = SystemConst.WebUrlIP + "/Default/News?id_token=" + item.ID.TokenEncrypt();
@@ -626,7 +628,7 @@ namespace Web.Controllers
             _B_Advertorial ADVERTORIAL = new _B_Advertorial();
             ADVERTORIAL.I = Info.ID;
             ADVERTORIAL.T = Info.Title;
-            ADVERTORIAL.D = Info.IssueDate.ToString("yyyy-MM-dd");
+            ADVERTORIAL.D = Info.IssueDate.ToString("MM-dd");
             ADVERTORIAL.S = SystemConst.WebUrlIP + Url.Content(Info.MainImagPath ?? "");
             ADVERTORIAL.C = Info.Content;
             return Newtonsoft.Json.JsonConvert.SerializeObject(ADVERTORIAL);
@@ -926,7 +928,7 @@ namespace Web.Controllers
                 foreach (var item in list)
                 {
                     _B_ExpressCollection be = new _B_ExpressCollection();
-                    be.EntryDate = item.EntryDate.ToString("yyyy-MM-dd HH:mm");
+                    be.EntryDate = item.EntryDate.ToString("MM-dd HH:mm");
                     be.ID = item.ID;
                     be.OddNumber = item.OddNumber;
                     be.Phone = item.Phone;

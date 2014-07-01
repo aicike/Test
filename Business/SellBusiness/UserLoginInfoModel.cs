@@ -355,7 +355,7 @@ namespace Business
             {
                 var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
                 userLoginInfo = userLoginInfoModel.List().Where(a => (a.Email.Equals(app_UserLoginInfo.Email, StringComparison.CurrentCultureIgnoreCase) == true && a.LoginPwd == pwd) ||
-                    (a.Phone.Equals(app_UserLoginInfo.Phone, StringComparison.CurrentCultureIgnoreCase) == true && a.LoginPwd == pwd)&&a.Users.Any(b=>b.AccountMainID==app_UserLoginInfo.AccountMainID)).FirstOrDefault();
+                    (a.Phone.Equals(app_UserLoginInfo.Phone, StringComparison.CurrentCultureIgnoreCase) == true && a.LoginPwd == pwd) && a.Users.Any(b => b.AccountMainID == app_UserLoginInfo.AccountMainID)).FirstOrDefault();
                 if (userLoginInfo == null)
                 {
                     result.Error = "账号或密码错误，登录失败。";
@@ -604,43 +604,54 @@ namespace Business
         /// <summary>
         /// 找回密码
         /// </summary>
-        public Result FindPwd(string email)
+        public Result FindPwd(string phone)
         {
             Result result = new Result();
-            var userLoginInfo = List().Where(a => a.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+            var userLoginInfo = List().Where(a => a.Phone.Equals(phone, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
             if (userLoginInfo == null)
             {
-                result.Error = "该邮箱不能存在，请重新输入。";
+                result.Error = "该手机号码不存在，请重新输入。";
                 return result;
             }
-            //生成激活码
-            Random random = new Random();
-            int r = random.Next(100, 999);
-            string code = userLoginInfo.ID + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + r;
-            code = DESEncrypt.Encrypt(code);
-            userLoginInfo.FindPwdCode = code;
-            userLoginInfo.FindPwdTime = DateTime.Now;
-            userLoginInfo.FindPwdValidity = true;
-            userLoginInfo.LoginPwdPage = "000000";
-            result = base.Edit(userLoginInfo);
-            if (result.HasError)
-            {
-                result.Error = "操作失败，请稍后重试。";
-                return result;
-            }
-            string url = SystemConst.WebUrlIP + "/Default/FindPwd?code=" + HttpContext.Current.Server.UrlEncode(code);
+            ////生成激活码
+            //Random random = new Random();
+            //int r = random.Next(100, 999);
+            //string code = userLoginInfo.ID + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + r;
+            //code = DESEncrypt.Encrypt(code);
+            //userLoginInfo.FindPwdCode = code;
+            //userLoginInfo.FindPwdTime = DateTime.Now;
+            //userLoginInfo.FindPwdValidity = true;
+            //userLoginInfo.LoginPwdPage = "000000";
+            //result = base.Edit(userLoginInfo);
+            //if (result.HasError)
+            //{
+            //    result.Error = "操作失败，请稍后重试。";
+            //    return result;
+            //}
+            //string url = SystemConst.WebUrlIP + "/Default/FindPwd?code=" + HttpContext.Current.Server.UrlEncode(code);
 
-            //发送激活邮件
-            string time1 = DateTime.Now.ToString("yyyy年MM月dd日 hh:mm:ss");
-            string time2 = DateTime.Now.ToString("yyyy年MM月dd日");
+            ////发送激活邮件
+            //string time1 = DateTime.Now.ToString("yyyy年MM月dd日 hh:mm:ss");
+            //string time2 = DateTime.Now.ToString("yyyy年MM月dd日");
+
+            //EmailInfo emailInfo = new EmailInfo();
+            //emailInfo.To = userLoginInfo.Email;
+            //emailInfo.Subject = SystemConst.PlatformName+" - 找回密码";
+            //emailInfo.IsHtml = true;
+            //emailInfo.UseSSL = false;
+            //emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您在{0}提交了邮箱找回密码请求，请点击&nbsp;<a href='{1}' target='_blank'>此处</a>&nbsp;修改密码。", time1, url) +
+            //    string.Format("为了保证您的帐号安全，该链接有效期为24小时，并且点击一次后失效！<br/><br/>{1}<br/><br/>{0}", time2, SystemConst.PlatformName);
+
+
 
             EmailInfo emailInfo = new EmailInfo();
-            emailInfo.To = email;
-            emailInfo.Subject = SystemConst.PlatformName+" - 找回密码";
+            emailInfo.To = userLoginInfo.Email;
+            emailInfo.Subject = SystemConst.PlatformName + " - 找回密码";
             emailInfo.IsHtml = true;
             emailInfo.UseSSL = false;
-            emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您在{0}提交了邮箱找回密码请求，请点击&nbsp;<a href='{1}' target='_blank'>此处</a>&nbsp;修改密码。", time1, url) +
-                string.Format("为了保证您的帐号安全，该链接有效期为24小时，并且点击一次后失效！<br/><br/>{1}<br/><br/>{0}", time2, SystemConst.PlatformName);
+            emailInfo.Body = string.Format("亲爱的用户:<br/><br/>您好！<br/><br/>您的账号密码重置成功。") +
+                             string.Format("密码：{0}<br/>", DESEncrypt.Decrypt(userLoginInfo.LoginPwd)) +
+                             string.Format("<br/>为了保证您的帐号安全，请尽快更改你的密码！<br/><br/>{1}<br/><br/>{0}", DateTime.Now.ToString("yyyy-MM-dd"), SystemConst.PlatformName);
             try
             {
                 SendEmail.SendMailAsync(emailInfo);
