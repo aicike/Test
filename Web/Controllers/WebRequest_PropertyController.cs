@@ -549,6 +549,32 @@ namespace Web.Controllers
         }
 
 
+        /// <summary>
+        /// 评分 并结束报修
+        /// </summary>
+        /// <param name="RID">报修ID</param>
+        /// <param name="score">评分：1=非常满意，2=满意，3=一般，4=不满意，5=非常不满意</param>
+        /// <param name="Remarks">评价</param>
+        /// <returns></returns>
+        public string CompleteComplaint(int CID, int score, string Remarks)
+        {
+            Result result = new Result();
+
+            var complaintModel = Factory.Get<IComplaintModel>(SystemConst.IOC_Model.ComplaintModel);
+            result = complaintModel.UpdStatus(CID, (int)EnumComplaintStatus.Evaluation);
+            if (!result.HasError)
+            {
+                string content = "";
+                if (!string.IsNullOrEmpty(Remarks))
+                {
+                    content = "评价：" + Remarks;
+                }
+                complaintModel.AddRemark(CID, "投诉完成" + content);
+                complaintModel.UpdScore(CID, score);
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
         #endregion
 
         #region-------------------广而告之接口-----------------------

@@ -38,5 +38,21 @@ namespace Interface
         /// <param name="AMID"></param>
         /// <returns></returns>
         Complaint GetComplaintInfo(int CID, int AMID);
+
+        /// <summary>
+        /// 更改评分
+        /// </summary>
+        /// <param name="RID"></param>
+        /// <param name="EnumRepairScore"></param>
+        /// <returns></returns>
+        Result UpdScore(int RID, int EnumRepairScore);
+
+         /// <summary>
+        /// 添加操作备注
+        /// </summary>
+        /// <param name="RID"></param>
+        /// <param name="Content"></param>
+        /// <returns></returns>
+        Result AddRemark(int RID, string Content);
     }
 }

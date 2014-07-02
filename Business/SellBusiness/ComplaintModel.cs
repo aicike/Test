@@ -62,5 +62,43 @@ namespace Business
             var comp = List().Where(a=>a.AccountMainID==AMID&&a.ID==CID).FirstOrDefault();
             return comp;
         }
+
+        /// <summary>
+        /// 更改评分
+        /// </summary>
+        /// <param name="RID"></param>
+        /// <param name="EnumRepairScore"></param>
+        /// <returns></returns>
+        public Result UpdScore(int RID, int EnumRepairScore)
+        {
+            Result result = new Result();
+            string sql = string.Format("update Complaint set EnumRepairScore={0} where ID = {1}", EnumRepairScore, RID);
+            int cnt = base.SqlExecute(sql);
+            if (cnt <= 0)
+            {
+                result.HasError = true;
+                result.Error = "修改评分";
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 添加操作备注
+        /// </summary>
+        /// <param name="RID"></param>
+        /// <param name="Content"></param>
+        /// <returns></returns>
+        public Result AddRemark(int RID, string Content)
+        {
+            Result result = new Result();
+            string sql = string.Format("insert into ComplaintReply(SystemStatus,ComplaintID,ReplyDate,ReplyContent) values(0,{0},getDate(),'{1}')", RID, Content);
+            int cnt = base.SqlExecute(sql);
+            if (cnt <= 0)
+            {
+                result.HasError = true;
+                result.Error = "添加操作备注失败！";
+            }
+            return result;
+        }
     }
 }
