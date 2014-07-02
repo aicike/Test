@@ -21,7 +21,7 @@ namespace Web.Controllers
         public string UserLogin(string email, string loginPwd, int accountMainID, string clientID)
         {
             var userLoginInfoModel = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
-            var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email, Phone = email, Pwd = loginPwd, AccountMainID = accountMainID, ClientID = clientID,EnumClientSystemType=(int)EnumClientSystemType.Android });
+            var result = userLoginInfoModel.App_Login(new App_UserLoginInfo() { Email = email, Phone = email, Pwd = loginPwd, AccountMainID = accountMainID, ClientID = clientID, EnumClientSystemType = (int)EnumClientSystemType.Android });
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
@@ -72,7 +72,7 @@ namespace Web.Controllers
         /// </summary>
         [HttpPost]
         [ValidateInput(false)]
-        public string PostClientID(string clientID, int accountMainID, int? userID,int systemType=1)
+        public string PostClientID(string clientID, int accountMainID, int? userID, int systemType = 1)
         {
             var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
             var result = clientInfoModel.PostClientID(clientID, accountMainID, userID, (EnumClientSystemType)systemType);
@@ -140,7 +140,7 @@ namespace Web.Controllers
                 HeadImagePath = a.HeadImagePath,
                 Email = a.Email,
                 Phone = a.Phone,
-                Role = "销售代表"/*a.Role.Name*/,
+                Role = a.Account_Roles.FirstOrDefault().Role.Name,
                 AutoMessage = a.AutoMessage_Replys.FirstOrDefault() == null ? "" : a.AutoMessage_Replys.FirstOrDefault().Content
             }).ToList();
             foreach (var item in accountList)
