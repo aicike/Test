@@ -569,7 +569,7 @@ namespace Web.Controllers
                 {
                     content = "评价：" + Remarks;
                 }
-                complaintModel.AddRemark(CID, "投诉完成" + content);
+                //complaintModel.AddRemark(CID, "投诉完成" + content);
                 complaintModel.UpdScore(CID, score);
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);

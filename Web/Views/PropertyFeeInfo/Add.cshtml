@@ -28,7 +28,99 @@
                     BtnOk: "确定"
                 });
             }
+
+            $("#btnSubmit").click(function () {
+                var total = $("#Total").val();
+                if (total != undefined && total != null && total != "") {
+                    if (total > 0) {
+
+                    }
+                    else {
+
+                        JAlert({
+                            Message: "合计费用不能等于0",
+                            DialogType: "Ok",
+                            BtnOk: "确定"
+                        });
+                        return false;
+                    }
+                }
+                else {
+                    JAlert({
+                        Message: "费用不能为空！",
+                        DialogType: "Ok",
+                        BtnOk: "确定"
+                    });
+                    return false;
+                }
+            });
+
+            $("#ManagerFee").blur(function () {
+                blurTotal();
+            });
+
+            $("#ManagerFee").keyup(function () {
+                blurTotal();
+            });
+       
+            $("#ElevatorFee").blur(function () {
+                blurTotal();
+            });
+
+            $("#ElevatorFee").keyup(function () {
+                blurTotal();
+            });
+
+            $("#WaterFee").blur(function () {
+                blurTotal();
+            });
+            $("#WaterFee").keyup(function () {
+                blurTotal();
+            });
+            $("#HealthFee").blur(function () {
+                blurTotal();
+            });
+            $("#HealthFee").keyup(function () {
+                blurTotal();
+            });
+            $("#OrterFee").blur(function () {
+                blurTotal();
+            });
+            $("#OrterFee").keyup(function () {
+                blurTotal();
+            });
         });
+
+        //计算合计
+        function blurTotal() {
+            var ManagerFee = 0; //物业费
+            var ElevatorFee = 0; //电梯费
+            var WaterFee = 0;   //水费
+            var HealthFee = 0;  //卫生费
+            var OrterFee = 0;   //其他费用
+            if ($("#ManagerFee").val() != undefined && $("#ManagerFee").val() != null&& $("#ManagerFee").val() !="") {
+                ManagerFee = $("#ManagerFee").val();
+            }
+            if ($("#ElevatorFee").val() != undefined && $("#ElevatorFee").val() != null && $("#ElevatorFee").val() != "") {
+                ElevatorFee = $("#ElevatorFee").val();
+            }
+            if ($("#WaterFee").val() != undefined && $("#WaterFee").val() != null && $("#WaterFee").val() != "") {
+                WaterFee = $("#WaterFee").val();
+            }
+            if ($("#HealthFee").val() != undefined && $("#HealthFee").val() != null && $("#HealthFee").val() != "") {
+                HealthFee = $("#HealthFee").val();
+            }
+            if ($("#OrterFee").val() != undefined && $("#OrterFee").val() != null && $("#OrterFee").val() != "") {
+                ManagerFee = $("#OrterFee").val();
+            }
+
+
+            $("#Total").val(parseInt(ManagerFee) + parseInt(ElevatorFee) + parseInt(WaterFee) + parseInt(HealthFee) + parseInt(OrterFee));
+
+
+        }
+
+        
     </script>
 }
 @model Poco.PropertyFeeInfo
