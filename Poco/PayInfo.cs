@@ -37,11 +37,11 @@ namespace Poco
         [Required(ErrorMessage = "请输入商户私钥")]
         public string MerchantRivateKey { get; set; }
 
-        /// <summary>
-        /// 支付宝公钥
-        /// </summary>
-        [Display(Name = "支付宝公钥")]
-        [Required(ErrorMessage = "请输入支付宝公钥")]
-        public string PayPublicKey { get; set; }
+        ///// <summary>
+        ///// 支付宝公钥
+        ///// </summary>
+        //[Display(Name = "支付宝公钥")]
+        //[Required(ErrorMessage = "请输入支付宝公钥")]
+        //public string PayPublicKey { get; set; }
     }
 }
