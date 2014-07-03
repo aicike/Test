@@ -84,7 +84,7 @@ namespace Business
             StringBuilder stringBuilderSql = new StringBuilder("INSERT INTO dbo.PropertyOrderDetail( SystemStatus ,AccountMainID ,ParkingFeeID ,Title,Price,Count,PropertyOrderID) ");
             foreach (var item in ProPertyList)
             {
-                stringBuilderSql.AppendFormat(" SELECT 0,{0},{1},'{2}',{3},1 UNION ALL", AMID, item.ID, item.PayDate + "物业费", item.Total, PID);
+                stringBuilderSql.AppendFormat(" SELECT 0,{0},{1},'{2}',{3},1,{4} UNION ALL", AMID, item.ID, item.PayDate + "物业费", item.Total, PID);
             }
             var OptionSql = stringBuilderSql.ToString();
             OptionSql = OptionSql.Remove(OptionSql.Length - " UNION ALL".Length);

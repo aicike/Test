@@ -1155,7 +1155,7 @@ namespace Web.Controllers
                 a_pay.IdentityID = payment.IdentityID;
                 a_pay.MerchantRivateKey = payment.MerchantRivateKey;
                 a_pay.PayAccount = payment.PayAccount;
-                a_pay.PayPublicKey = payment.PayPublicKey;
+                //a_pay.PayPublicKey = payment.PayPublicKey;
                 result.Entity = a_pay;
             }
             else

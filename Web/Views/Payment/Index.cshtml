@@ -32,7 +32,6 @@
                 var IdentityID = $("#IdentityID").val();
                 var PayAccount = $("#PayAccount").val();
                 var MerchantRivateKey = $("#MerchantRivateKey").val();
-                var PayPublicKey = $("#PayPublicKey").val();
                 if (IdentityID == undefined || IdentityID.trim()=="")
                 {
                     JMessage("合作者身份ID不能为空！", true);
@@ -46,10 +45,7 @@
                     JMessage("商户私钥不能为空！", true);
                     return false;
                 }
-                if (PayPublicKey == undefined || PayPublicKey.trim() == "") {
-                    JMessage("支付宝公钥不能为空！", true);
-                    return false;
-                }
+                
             }
         }
     </script>
@@ -100,18 +96,9 @@
                     <td class="tdTitle" style="width: 150px">
                         <span class="Identification">*</span> 商户私钥
                     </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.MerchantRivateKey, new { style = "width:300px" })
+                    <td class="tdField">@Html.TextAreaFor(a => a.MerchantRivateKey, new { style = "width:300px;height:150px" })
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.MerchantRivateKey)
-                    </td>
-                </tr>
-                <tr>
-                    <td class="tdTitle" style="width: 150px">
-                        <span class="Identification">*</span> 支付宝公钥
-                    </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.PayPublicKey, new { style = "width:300px" })
-                    </td>
-                    <td>@Html.ValidationMessageFor(a => a.PayPublicKey)
                     </td>
                 </tr>
             </table>
