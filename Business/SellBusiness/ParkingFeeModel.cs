@@ -27,7 +27,25 @@ namespace Business
             var list = List().Where(a => a.AccountMainID == AMID);
             if (!string.IsNullOrEmpty(Date))
             {
-                list = list.Where(a => a.PayDate.Contains(Date));
+                string year = Date.Split('-')[0];
+                string day = Date.Split('-')[1];
+                string Date2 = "";
+                if (day.Length > 1)
+                {
+                    if (day.Substring(0, 1) == "0")
+                    {
+                        Date2 = year + "-" + day.Substring(1, 1);
+                    }
+                    else
+                    {
+                        Date2 = Date;
+                    }
+                }
+                else
+                {
+                    Date2 = year + "-0" + day.Substring(1, 1);
+                }
+                list = list.Where(a => a.PayDate == Date || a.PayDate == Date2);
             }
             if (!string.IsNullOrEmpty(Unit))
             {
