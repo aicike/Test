@@ -14,6 +14,7 @@ using System.Security.Policy;
 using System.Resources;
 using System.Configuration;
 using System.Text;
+using Interface.MerchantInterface;
 
 namespace Web.Controllers
 {
@@ -186,7 +187,7 @@ namespace Web.Controllers
         public ActionResult AppQrCode(int AMID)
         {
             ViewBag.AMID = AMID;
-            ViewBag.Title = "二维码扫描 - " + SystemConst.PlatformName+ " - 沟通零距离";
+            ViewBag.Title = "二维码扫描 - " + SystemConst.PlatformName + " - 沟通零距离";
             return View();
         }
         /// <summary>
@@ -657,9 +658,10 @@ namespace Web.Controllers
         /// <param name="RID"></param>
         /// <param name="AMID"></param>
         /// <returns></returns>
-        public ActionResult ShowRentalHouse(int RID,int AMID) {
+        public ActionResult ShowRentalHouse(int RID, int AMID)
+        {
             var rentalhouseModel = Factory.Get<IRentalHouseModel>(SystemConst.IOC_Model.RentalHouseModel);
-            var item = rentalhouseModel.GetInfo(RID,AMID);
+            var item = rentalhouseModel.GetInfo(RID, AMID);
             ViewBag.Title = item.Title;
             return View(item);
         }
@@ -829,7 +831,7 @@ namespace Web.Controllers
             var item = model.GetAboutUS(AMID);
             return View(item);
         }
-      
+
         #endregion
 
         #region---------------生活技巧----------------------
@@ -839,7 +841,7 @@ namespace Web.Controllers
             var id = LID;
             var LifeSkillModel = Factory.Get<ILifeSkillModel>(SystemConst.IOC_Model.LifeSkillModel);
             var lifeskill = LifeSkillModel.GetInfo(id);
-       
+
             //更改浏览次数
             LifeSkillModel.BrowseCntADD(id);
             return View(lifeskill);
@@ -849,7 +851,7 @@ namespace Web.Controllers
 
         #region---------------每日食谱----------------------
 
-        public ActionResult Recipes(int  RID)
+        public ActionResult Recipes(int RID)
         {
             var id = RID;
             var recipesModel = Factory.Get<IRecipesModel>(SystemConst.IOC_Model.RecipesModel);
@@ -858,6 +860,116 @@ namespace Web.Controllers
             //更改浏览次数
             recipesModel.BrowseCntADD(id);
             return View(recipes);
+        }
+
+        #endregion
+
+        #region---------------物业其他信息展示----------------------
+        /// <summary>
+        /// 物业其他信息展示
+        /// </summary>
+        /// <param name="TypeID">1=家教，2=干洗服务，3=宠物医院，4=家政服务，5=教育培训</param>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public ActionResult OtherInfo(int TypeID, int ID)
+        {
+            var id = ID;
+            switch (TypeID)
+            {
+                case 1://家教
+                    var m_tutorModel = Factory.Get<IM_TutorModel>(SystemConst.IOC_Model.M_TutorModel);
+                    var tutor = m_tutorModel.Get(id);
+                    ViewBag.Title = tutor.Title;
+                    if (tutor.IsPublish)
+                    {
+                        ViewBag.PublishDate = tutor.PublishDate.Value.ToString("YYYY-MM-HH");
+                    }
+                    else
+                    {
+                        ViewBag.PublishDate = tutor.PublishDate;
+                    }
+                    ViewBag.Depict = tutor.Remark;
+                    ViewBag.IMG = tutor.MainImage.Substring(1);
+                    ViewBag.Content = tutor.Content;
+                    ViewBag.Price = tutor.Price.ToString("C");
+                    ViewBag.PriceRem = tutor.PriceRemark;
+                    break;
+                case 2://干洗服务
+                    var m_drcleaningModel = Factory.Get<IM_DryCleaningModel>(SystemConst.IOC_Model.M_DryCleaningModel);
+                    var drcleaningM = m_drcleaningModel.Get(id);
+                    ViewBag.Title = drcleaningM.Title;
+                    if (drcleaningM.IsPublish)
+                    {
+                        ViewBag.PublishDate = drcleaningM.PublishDate.Value.ToString("YYYY-MM-HH");
+                    }
+                    else
+                    {
+                        ViewBag.PublishDate = drcleaningM.PublishDate;
+                    }
+                    ViewBag.Depict = drcleaningM.Remark;
+                    ViewBag.IMG = drcleaningM.MainImage.Substring(1);
+                    ViewBag.Content = drcleaningM.Content;
+                    ViewBag.Price = drcleaningM.Price.ToString("C");
+                    ViewBag.PriceRem = drcleaningM.PriceRemark;
+                    break;
+                case 3://宠物医院
+                    var m_pethospitalModel = Factory.Get<IM_PetHospitalModel>(SystemConst.IOC_Model.M_PetHospitalModel);
+                    var pethospital = m_pethospitalModel.Get(id);
+                    ViewBag.Title = pethospital.Title;
+                    if (pethospital.IsPublish)
+                    {
+                        ViewBag.PublishDate = pethospital.PublishDate.Value.ToString("YYYY-MM-HH");
+                    }
+                    else
+                    {
+                        ViewBag.PublishDate = pethospital.PublishDate;
+                    }
+                    ViewBag.Depict = pethospital.Remark;
+                    ViewBag.IMG = pethospital.MainImage.Substring(1);
+                    ViewBag.Content = pethospital.Content;
+                    ViewBag.Price = pethospital.Price.ToString("C");
+                    ViewBag.PriceRem = pethospital.PriceRemark;
+                    break;
+                case 4://家政服务
+                    var m_domesticModel = Factory.Get<IM_DomesticModel>(SystemConst.IOC_Model.M_DomesticModel);
+                    var domestic = m_domesticModel.Get(id);
+                    ViewBag.Title = domestic.Title;
+                    if (domestic.IsPublish)
+                    {
+                        ViewBag.PublishDate = domestic.PublishDate.Value.ToString("YYYY-MM-HH");
+                    }
+                    else
+                    {
+                        ViewBag.PublishDate = domestic.PublishDate;
+                    }
+                    ViewBag.Depict = domestic.Remark;
+                    ViewBag.IMG = domestic.MainImage.Substring(1);
+                    ViewBag.Content = domestic.Content;
+                    ViewBag.Price = domestic.Price.ToString("C");
+                    ViewBag.PriceRem = domestic.PriceRemark;
+                    break;
+                case 5://教育培训
+                    var m_educationtrainModel = Factory.Get<IM_EducationTrainModel>(SystemConst.IOC_Model.M_EducationTrainModel);
+                    var educationtrain = m_educationtrainModel.Get(id);
+                    ViewBag.Title = educationtrain.Title;
+                    if (educationtrain.IsPublish)
+                    {
+                        ViewBag.PublishDate = educationtrain.PublishDate.Value.ToString("YYYY-MM-HH");
+                    }
+                    else
+                    {
+                        ViewBag.PublishDate = educationtrain.PublishDate;
+                    }
+                    ViewBag.Depict = educationtrain.Remark;
+                    ViewBag.IMG = educationtrain.MainImage.Substring(1);
+                    ViewBag.Content = educationtrain.Content;
+                    ViewBag.Price = educationtrain.Price.ToString("C");
+                    ViewBag.PriceRem = educationtrain.PriceRemark;
+                    break;
+            }
+
+
+            return View();
         }
 
         #endregion
