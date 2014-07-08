@@ -120,7 +120,7 @@ namespace Web.Controllers
                     ID = a.FirstOrDefault().MerchantID,
                     Name = a.FirstOrDefault().Merchant.Name,
                     Address = a.FirstOrDefault().Merchant.Address,
-                    Logo =SystemConst.WebUrlIP + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
+                    Logo = SystemConst.WebUrlIP + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
                     Phone = a.FirstOrDefault().Merchant.Phone,
                     Introduction = str1 + a.FirstOrDefault().Merchant.Introduction + str2
                 }).ToList();
@@ -192,7 +192,7 @@ namespace Web.Controllers
         {
             int status = (int)EnumDataStatus.Enabled;
             var unlockModel = Factory.Get<IM_UnlockModel>(SystemConst.IOC_Model.M_UnlockModel);
-            
+
             string str1 = "<html><head><meta name='viewport' content='width=device-width, user-scalable=no' /><style>.main img{max-width: 98% !important;}</style></head><body style='background-color:#F8F8F8'><div style='width: 100%;'>";
             string str2 = "</div></body></html>";
 
@@ -363,7 +363,7 @@ namespace Web.Controllers
             int status = (int)EnumDataStatus.Enabled;
             var m_tutorModel = Factory.Get<IM_TutorModel>(SystemConst.IOC_Model.M_TutorModel);
 
-            var list =m_tutorModel.List().Where(a => a.M_CommunityMappings.Any(b => b.AccountMainID == AMID) && a.EnumDataStatus == status && a.IsPublish)
+            var list = m_tutorModel.List().Where(a => a.M_CommunityMappings.Any(b => b.AccountMainID == AMID) && a.EnumDataStatus == status && a.IsPublish)
                 .OrderByDescending(a => a.PublishDate).Skip(PageIndex).Take(ListCnt).ToList()
                 .Select(a => new App_Tutor
                 {
@@ -371,16 +371,17 @@ namespace Web.Controllers
                     Title = a.Title,
                     Price = a.Price.ToString("C") + "/" + a.PriceRemark,
                     PublishDate = a.PublishDate.ToString(),
-                    ShowImage = SystemConst.WebUrlIP +a.ShowImage.Replace("~",""),
+                    ShowImage = SystemConst.WebUrlIP + a.ShowImage.Replace("~", ""),
                     Remark = a.Remark,
-                    MID=a.MerchantID,
-                    MName=a.Merchant.Name
+                    MID = a.MerchantID,
+                    MName = a.Merchant.Name,
+                    URL = SystemConst.WebUrlIP + "/Default/otherinfo?typeid=1&id=" + a.ID
                 }).ToList();
 
             var newPageIndex = PageIndex + ListCnt;
             var obj = new { ListPageIndex = newPageIndex, List = list };
             return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
-            
+
         }
         #endregion
 
@@ -408,7 +409,8 @@ namespace Web.Controllers
                     ShowImage = SystemConst.WebUrlIP + a.ShowImage.Replace("~", ""),
                     Remark = a.Remark,
                     MID = a.MerchantID,
-                    MName = a.Merchant.Name
+                    MName = a.Merchant.Name,
+                    URL = SystemConst.WebUrlIP + "/Default/otherinfo?typeid=2&id=" + a.ID
                 }).ToList();
 
             var newPageIndex = PageIndex + ListCnt;
@@ -442,7 +444,8 @@ namespace Web.Controllers
                     ShowImage = SystemConst.WebUrlIP + a.ShowImage.Replace("~", ""),
                     Remark = a.Remark,
                     MID = a.MerchantID,
-                    MName = a.Merchant.Name
+                    MName = a.Merchant.Name,
+                    URL = SystemConst.WebUrlIP + "/Default/otherinfo?typeid=5&id=" + a.ID
                 }).ToList();
 
             var newPageIndex = PageIndex + ListCnt;
@@ -476,7 +479,8 @@ namespace Web.Controllers
                     ShowImage = SystemConst.WebUrlIP + a.ShowImage.Replace("~", ""),
                     Remark = a.Remark,
                     MID = a.MerchantID,
-                    MName = a.Merchant.Name
+                    MName = a.Merchant.Name,
+                    URL = SystemConst.WebUrlIP + "/Default/otherinfo?typeid=3&id=" + a.ID
                 }).ToList();
 
             var newPageIndex = PageIndex + ListCnt;
@@ -510,7 +514,8 @@ namespace Web.Controllers
                     ShowImage = SystemConst.WebUrlIP + a.ShowImage.Replace("~", ""),
                     Remark = a.Remark,
                     MID = a.MerchantID,
-                    MName = a.Merchant.Name
+                    MName = a.Merchant.Name,
+                    URL = SystemConst.WebUrlIP + "/Default/otherinfo?typeid=4&id=" + a.ID
                 }).ToList();
 
             var newPageIndex = PageIndex + ListCnt;

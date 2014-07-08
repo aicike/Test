@@ -755,6 +755,7 @@
     <Content Include="Views\Shared\SystemMenu.cshtml" />
     <Content Include="Views\PropertyFeeInfo\Add.cshtml" />
     <Content Include="Views\ParkingFee\Add.cshtml" />
+    <Content Include="Views\Default\OtherInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\IOC.xml" />

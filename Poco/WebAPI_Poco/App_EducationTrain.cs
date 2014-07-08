@@ -56,5 +56,10 @@ namespace Poco.WebAPI_Poco
         /// 商家名称
         /// </summary>
         public string MName { get; set; }
+
+        /// <summary>
+        /// 详细地址
+        /// </summary>
+        public string URL { get; set; }
     }
 }
