@@ -124,7 +124,7 @@ namespace Web.Controllers
                     Phone = a.FirstOrDefault().Merchant.Phone,
                     Introduction = str1 + a.FirstOrDefault().Merchant.Introduction + str2
                 }).ToList();
-            var newPageIndex = PageIndex + +list.Count;
+            var newPageIndex = PageIndex + list.Count;
             var obj = new { ListPageIndex = newPageIndex, List = list };
             return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
         }
@@ -152,7 +152,7 @@ namespace Web.Controllers
                     PublishDate = a.PublishDate.ToString(),
                     Content = a.Content
                 }).ToList();
-            var newPageIndex = PageIndex + +list.Count;
+            var newPageIndex = PageIndex + list.Count;
             var obj = new { ListPageIndex = newPageIndex, List = list };
             return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
         }
@@ -208,7 +208,7 @@ namespace Web.Controllers
                     Phone = a.FirstOrDefault().Merchant.Phone,
                     Introduction = str1 + a.FirstOrDefault().Merchant.Introduction + str2
                 }).ToList();
-            var newPageIndex = PageIndex + +list.Count;
+            var newPageIndex = PageIndex + list.Count;
             var obj = new { ListPageIndex = newPageIndex, List = list };
             return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
         }
@@ -237,7 +237,7 @@ namespace Web.Controllers
                     PublishDate = a.PublishDate.ToString(),
                     Content = a.Content
                 }).ToList();
-            var newPageIndex = PageIndex + ListCnt;
+            var newPageIndex = PageIndex + list.Count;
             var obj = new { ListPageIndex = newPageIndex, List = list };
             return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
         }
@@ -293,7 +293,7 @@ namespace Web.Controllers
                     Phone = a.FirstOrDefault().Merchant.Phone,
                     Introduction = str1 + a.FirstOrDefault().Merchant.Introduction + str2
                 }).ToList();
-            var newPageIndex = PageIndex + +list.Count;
+            var newPageIndex = PageIndex + list.Count;
             var obj = new { ListPageIndex = newPageIndex, List = list };
             return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
         }
@@ -323,7 +323,7 @@ namespace Web.Controllers
                     PublishDate = a.PublishDate.ToString(),
                     Content = a.Content
                 }).ToList();
-            var newPageIndex = PageIndex + +list.Count;
+            var newPageIndex = PageIndex + list.Count;
             var obj = new { ListPageIndex = newPageIndex, List = list };
             return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
         }
@@ -377,7 +377,7 @@ namespace Web.Controllers
                     MName=a.Merchant.Name
                 }).ToList();
 
-            var newPageIndex = PageIndex + ListCnt;
+            var newPageIndex = PageIndex + list.Count;
             var obj = new { ListPageIndex = newPageIndex, List = list };
             return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
             
@@ -411,7 +411,7 @@ namespace Web.Controllers
                     MName = a.Merchant.Name
                 }).ToList();
 
-            var newPageIndex = PageIndex + ListCnt;
+            var newPageIndex = PageIndex + list.Count;
             var obj = new { ListPageIndex = newPageIndex, List = list };
             return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
 
@@ -445,7 +445,7 @@ namespace Web.Controllers
                     MName = a.Merchant.Name
                 }).ToList();
 
-            var newPageIndex = PageIndex + ListCnt;
+            var newPageIndex = PageIndex + list.Count;
             var obj = new { ListPageIndex = newPageIndex, List = list };
             return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
 
@@ -479,7 +479,7 @@ namespace Web.Controllers
                     MName = a.Merchant.Name
                 }).ToList();
 
-            var newPageIndex = PageIndex + ListCnt;
+            var newPageIndex = PageIndex + list.Count;
             var obj = new { ListPageIndex = newPageIndex, List = list };
             return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
 
@@ -513,7 +513,7 @@ namespace Web.Controllers
                     MName = a.Merchant.Name
                 }).ToList();
 
-            var newPageIndex = PageIndex + ListCnt;
+            var newPageIndex = PageIndex + list.Count;
             var obj = new { ListPageIndex = newPageIndex, List = list };
             return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
 

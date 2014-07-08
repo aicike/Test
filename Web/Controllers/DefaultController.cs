@@ -648,7 +648,7 @@ namespace Web.Controllers
                 }
                 catch { }
             }
-            return RedirectToAction("ActivityInfo", "Default", new { ActivityID_token = ActivityID.TokenEncrypt(true), ADverID = ADverID, isok = 1, AIP = aip.ID, imtimely_userid = UID });
+            return RedirectToAction("ActivityInfo", "Default", new { ActivityID_token = ActivityID.TokenEncrypt(true), ADverID = ADverID, isok = 1, AIP = aip.ID, imtimely_userid = UID, imtimely_Apptype=Utype });
         }
 
         /// <summary>
