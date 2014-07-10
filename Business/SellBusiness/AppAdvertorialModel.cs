@@ -41,6 +41,18 @@ namespace Business
             return List().Where(a => a.ID == AID && a.AccountMainID == AMID).FirstOrDefault();
         }
 
+        public new Result Add(AppAdvertorial entity)
+        {
+            //新增信息后推送
+            PushModel pushModel = new PushModel();
+
+            var result = base.Add<AppAdvertorial>(entity);
+            if (result.HasError == false)
+            {
+                pushModel.Push("news", entity.ID, entity.Title, entity.AppShowImagePath==null?"":entity.AppShowImagePath.Replace("~",""),entity.Depict, entity.AccountMainID);
+            }
+            return result;
+        }
 
         [Transaction]
         public Result AddAppAdvertorial(AppAdvertorial appadvertorial, int w, int h, int x1, int y1, int tw, int th)
@@ -62,7 +74,7 @@ namespace Business
                 var imageminiPath = string.Format("{0}\\{1}", accountPath, imageminiName);
                 var imageshowName = string.Format("{0}_{1}_{2}", token, "show", LastName);
                 var imageshowPath = string.Format("{0}\\{1}", accountPath, imageshowName);
-                
+
                 var lsImgPath = appadvertorial.MainImagPath;
                 if (!string.IsNullOrEmpty(lsImgPath))
                 {
@@ -105,7 +117,7 @@ namespace Business
             {
                 appadvertorial.ShortURL = appadvertorial.ContentURL.ConvertToShortURL();
             }
-            result = base.Add(appadvertorial);
+            result = Add(appadvertorial);
 
 
             if (appadvertorial.EnumAdverURLType == (int)EnumAdverURLType.Ordinary)
@@ -427,14 +439,14 @@ namespace Business
                     ActivitySignUrl.DeleteShortURL();
                 }
             }
-           
+
             string sql = string.Format("delete AppAdvertorial where EnumAdverURLType = {0} and UrlID={1}", EnumAdverURLType, ID);
             int cnt = base.SqlExecute(sql);
             if (cnt <= 0)
             {
                 result.HasError = true;
             }
-           
+
             return result;
         }
 

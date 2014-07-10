@@ -268,7 +268,7 @@ namespace Web.Controllers
             var activityInfoModel = Factory.Get<IActivityInfoModel>(SystemConst.IOC_Model.ActivityInfoModel);
             var main = activityInfoModel.GetActivityByID(id, LoginAccount.CurrentAccountMainID);
             appRW.Content = "";
-            appRW.ContentURL = "http://" + SystemConst.WebUrl + "/Default/ActivityInfo?ActivityID_token=" + id.TokenEncrypt();
+            appRW.ContentURL = SystemConst.WebUrlIP + "/Default/ActivityInfo?ActivityID_token=" + id.TokenEncrypt();
             appRW.EnumAdverURLType = (int)EnumAdverURLType.Activities;
             appRW.AccountMainID = LoginAccount.CurrentAccountMainID;
             if (string.IsNullOrEmpty(main.AppShowImagePath))
@@ -305,11 +305,11 @@ namespace Web.Controllers
             appRW.Title = main.Title;
             appRW.UrlID = main.ID;
             appRW.EnumAdverClass = (int)EnumAdverClass.AdverTorial;
-            appRW.ActivitySignUrl = ("http://" + SystemConst.WebUrl + "/default/ActivitySignIn?ActivityID=" + id).ConvertToShortURL();
+            appRW.ActivitySignUrl = ( SystemConst.WebUrlIP + "/default/ActivitySignIn?ActivityID=" + id).ConvertToShortURL();
 
             result = AdvertorialModel.Add(appRW);
 
-            appRW.ShortURL = string.Format("http://{0}/Default/News?id_token={1}", SystemConst.WebUrl, appRW.ID.TokenEncrypt()).ConvertToShortURL();
+            appRW.ShortURL = string.Format("{0}/Default/News?id_token={1}", SystemConst.WebUrlIP, appRW.ID.TokenEncrypt()).ConvertToShortURL();
             result = AdvertorialModel.Edit(appRW);
 
             if (result.HasError == true)

@@ -477,7 +477,7 @@ namespace Web.Controllers
             var MainModel = Factory.Get<ISurveyMainModel>(SystemConst.IOC_Model.SurveyMainModel);
             var main = MainModel.GetSurveyMainByID(id, LoginAccount.CurrentAccountMainID);
             appRW.Content = "";
-            appRW.ContentURL = string.Format("http://{0}/Default/Questionnaire?surveyMainID_token={1}", SystemConst.WebUrl, id.TokenEncrypt());
+            appRW.ContentURL = string.Format("{0}/Default/Questionnaire?surveyMainID_token={1}", SystemConst.WebUrlIP, id.TokenEncrypt());
             appRW.EnumAdverURLType = (int)EnumAdverURLType.Survey;
             appRW.AccountMainID = LoginAccount.CurrentAccountMainID;
 
@@ -517,7 +517,7 @@ namespace Web.Controllers
             appRW.EnumAdverClass = (int)EnumAdverClass.AdverTorial;
             result = AdvertorialModel.Add(appRW);
 
-            appRW.ShortURL = string.Format("http://{0}/Default/News?id_token={1}", SystemConst.WebUrl, appRW.ID.TokenEncrypt()).ConvertToShortURL();
+            appRW.ShortURL = string.Format("{0}/Default/News?id_token={1}", SystemConst.WebUrlIP, appRW.ID.TokenEncrypt()).ConvertToShortURL();
             result = AdvertorialModel.Edit(appRW);
 
             if (result.HasError == true)

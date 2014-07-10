@@ -1115,7 +1115,7 @@ namespace Web.Controllers
             StringBuilder sb = new StringBuilder();
             sb.Append("<html><head><meta name='viewport' content='width=device-width, user-scalable=no' />");
             sb.Append("<style>.main img{max-width: 98% !important;}</style></head>");
-            sb.AppendFormat("<body><div class='main' style='width: 100%; background-color: #fff'>{0}</div></body></html>", item.Content ?? "");
+            sb.AppendFormat("<body><div class='main' style='width: 100%; background-color: #fff'>{0}</div></body></html>", item==null?"":item.Content ?? "");
             return sb.ToString(); ;
         }
 

@@ -31,7 +31,7 @@ namespace Business
             Result result = new Result();
             var iosModel = Factory.Get("Push_IOS") as IPushModel;
             var androidModel = Factory.Get("Push_Getui") as IPushModel;
-            var PushIDInfo = GetClientIDs(receiveType, accountID, userIds);
+            var PushIDInfo = GetClientIDs(receiveType, accountMainID, userIds);
             //售楼部信息
             var accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             var accountMain = accountMainModel.Get(accountMainID);
@@ -128,7 +128,8 @@ namespace Business
                     break;
             }
             pushMessage.Add(rep);
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(pushMessage);
+            var obj = new PushJson() { type = 1, obj = pushMessage };
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
 
             //ios推送 用户端
 
@@ -142,6 +143,41 @@ namespace Business
             message.EnumEvent = EnumEvent.Wait;// EnumEvent.Immediately;
             message.MessageJson = json;
             result = Push_Getui.SendMessage(message, PushIDInfo.Android);
+            return result;
+        }
+
+        public class PushJson
+        {
+            public int type { get; set; }
+            public object obj { get; set; }
+        }
+
+        /// <summary>
+        /// 新闻，通知推送
+        /// </summary>
+        /// <param name="type">类型：小区通知 news</param>
+        /// <param name="accountMainID"></param>
+        /// <returns></returns>
+        public Result Push(string type, int objID, string objTitle,string objImage,string objContent,int accountMainID)
+        {
+            var PushIDInfo = GetClientIDs("all", accountMainID, null);
+            string title = "";
+            var obj = new PushJson() { type = 2, obj = new { pushType = "2", id = objID, title = objTitle, F = SystemConst.WebUrlIP + objImage ?? "",P=objContent, url = SystemConst.WebUrlIP + "/Default/News?id_token=" + objID.TokenEncrypt() } };
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+            switch (type)
+            {
+                case "news":
+                    title = "新通知";
+                    break;
+            }
+            //android推送
+            PushMessage message = new PushMessage();
+            message.Title = title;
+            message.Text = objTitle;
+            message.Logo = "ic_launcher.png";
+            message.EnumEvent = EnumEvent.Wait;// EnumEvent.Immediately;
+            message.MessageJson = json;
+            var result = Push_Getui.SendMessage(message, PushIDInfo.Android);
             return result;
         }
 
@@ -191,10 +227,10 @@ namespace Business
         /// <summary>
         /// 获取clientids
         /// </summary>
-        private PushIDInfo GetClientIDs(string receiveType, int accountID, string userIds)
+        private PushIDInfo GetClientIDs(string receiveType, int accountMainID, string userIds)
         {
             var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
-            var account_UserModel = Factory.Get<IAccount_UserModel>(SystemConst.IOC_Model.Account_UserModel);
+            var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
             string clientUserType = EnumClientUserType.User.ToString();
             string clientSystemType_android = EnumClientSystemType.Android.ToString();
             string clientSystemType_ios = EnumClientSystemType.IOS.ToString();
@@ -203,7 +239,7 @@ namespace Business
             //IOS用户
             var clientInfoList_ios = clientInfoModel.List().Where(a => a.EnumClientUserType.Token == clientUserType && a.EnumClientSystemType.Token == clientSystemType_ios);
 
-            var userIDs = account_UserModel.List().Where(a => a.AccountID == accountID).Select(a => a.UserID).ToList();
+            var userIDs = userModel.List().Where(a => a.AccountMainID == accountMainID).Select(a => a.ID).ToList();
             List<string> clientIds_android = new List<string>();
             List<string> clientIds_ios = new List<string>();
             List<int> pushUserID = null;
