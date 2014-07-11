@@ -101,6 +101,8 @@ namespace Web.Controllers
 
             //查询数据
             var advertorial = AdvertorialModel.Get(id);
+            (advertorial != null).NotAuthorizedPage();
+
             //添加数据到资讯操作表
             if (imtimely_userid.HasValue)
             {

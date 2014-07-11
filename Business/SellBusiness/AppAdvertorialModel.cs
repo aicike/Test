@@ -43,13 +43,19 @@ namespace Business
 
         public new Result Add(AppAdvertorial entity)
         {
-            //新增信息后推送
-            PushModel pushModel = new PushModel();
-
-            var result = base.Add<AppAdvertorial>(entity);
-            if (result.HasError == false)
+            var result = new Result();
+            try
             {
-                pushModel.Push("news", entity.ID, entity.Title, entity.AppShowImagePath==null?"":entity.AppShowImagePath.Replace("~",""),entity.Depict, entity.AccountMainID);
+                //新增信息后推送
+                PushModel pushModel = new PushModel();
+                result = base.Add<AppAdvertorial>(entity);
+                if (result.HasError == false)
+                {
+                    pushModel.Push("news", entity.ID, entity.Title, entity.AppShowImagePath == null ? "" : entity.AppShowImagePath.Replace("~", ""), entity.Depict, entity.AccountMainID);
+                }
+            }
+            catch (Exception ex) { 
+                
             }
             return result;
         }
@@ -279,6 +285,18 @@ namespace Business
                 }
             }
             Result result = base.Edit(appadvertorial);
+
+            if (appadvertorial.EnumAdverURLType == (int)EnumAdverURLType.Ordinary)
+            {
+                //ULR
+            }
+            else
+            {
+                //富文本，如果是富文本，则对这个URL进行短链接
+                appadvertorial.ShortURL = string.Format("http://{0}/default/News?id_token={1}", SystemConst.WebUrl, appadvertorial.ID.TokenEncrypt()).ConvertToShortURL();
+                result = base.Edit(appadvertorial);
+            }
+
             if (appadvertorial.stick != appadvertorials.stick)
             {
 

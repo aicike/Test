@@ -241,6 +241,89 @@ namespace Web.Controllers
         }
 
         /// <summary>
+        /// 物业端获取用户报修列表
+        /// </summary>
+        /// <param name="UserID">用户ID</param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public string GetRepairListByAMID(int AMID, int ID, int ListCnt)
+        {
+            var repairInfoModel = Factory.Get<IRepairInfoModel>(SystemConst.IOC_Model.RepairInfoModel);
+            var list = repairInfoModel.List(true).Where(a => a.AccountMainID == AMID).Skip(ID).Take(ListCnt).ToList();
+            var newID = ID + list.Count;
+
+
+            List<_B_RepairInfo> objs = new List<_B_RepairInfo>();
+            foreach (var item in list)
+            {
+                _B_RepairInfo ri = new _B_RepairInfo();
+                ri.date = item.RepairDate.ToString("MM-dd HH:mm");
+                ri.ImgPaths = item.ImgPath;
+                ri.ID = item.ID;
+                if (item.AccountID.HasValue)
+                {
+                    ri.AccountName = item.Account.Name;
+                    ri.AccountPhone = item.Account.Phone;
+                }
+                else
+                {
+                    ri.AccountName = "暂无";
+                    ri.AccountPhone = "暂无";
+                }
+                if (item.RepairType == 0)
+                {
+                    ri.type = "个人";
+                }
+                else
+                {
+                    ri.type = "公共";
+                }
+                switch (item.EnumRepairStatus)
+                {
+                    case (int)EnumRepairStatus.Allocated:
+                        ri.status = "已分配";
+                        break;
+                    case (int)EnumRepairStatus.Audit:
+                        ri.status = "审核中";
+                        break;
+                    case (int)EnumRepairStatus.Close:
+                        ri.status = "已关闭";
+                        break;
+                    case (int)EnumRepairStatus.completed:
+                        ri.status = "已完成";
+                        break;
+                    case (int)EnumRepairStatus.Reject:
+                        ri.status = "驳回";
+                        break;
+                }
+                switch (item.EnumRepairScore)
+                {
+                    case (int)EnumRepairScore.Dissatisfied:
+                        ri.Score = "不满意";
+                        break;
+                    case (int)Poco.Enum.EnumRepairScore.General:
+                        ri.Score = "一般";
+                        break;
+                    case (int)Poco.Enum.EnumRepairScore.NoScore:
+                        ri.Score = "未评分";
+                        break;
+                    case (int)Poco.Enum.EnumRepairScore.Satisfied:
+                        ri.Score = "满意";
+                        break;
+                    case (int)Poco.Enum.EnumRepairScore.VeryDissatisfied:
+                        ri.Score = "非常不满意";
+                        break;
+                    case (int)Poco.Enum.EnumRepairScore.VerySatisfactory:
+                        ri.Score = "非常满意";
+                        break;
+                }
+                objs.Add(ri);
+            }
+            var obj = new { LastID = newID, List = objs };
+            return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+        }
+
+        /// <summary>
         /// 提交报修
         /// </summary>
         /// <param name="UserID">用户ID</param>
@@ -453,6 +536,67 @@ namespace Web.Controllers
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(objs);
         }
+
+        /// <summary>
+        /// 物业段获取用户投诉列表
+        /// </summary>
+        /// <param name="UserID"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public string GetComplaintListByAMID(int AMID, int ID, int ListCnt)
+        {
+            var complaintModel = Factory.Get<IComplaintModel>(SystemConst.IOC_Model.ComplaintModel);
+            var list = complaintModel.List(true).Where(a => a.AccountMainID == AMID).Skip(ID).Take(ListCnt).ToList();
+            var newID = ID + list.Count;
+
+            List<_B_Complaint> objs = new List<_B_Complaint>();
+            foreach (var item in list)
+            {
+                _B_Complaint bc = new _B_Complaint();
+                bc.Contetn = item.ComplaintContetn;
+                bc.Date = item.ComplaintDate.ToString("MM-dd HH:ss");
+                bc.ID = item.ID;
+                bc.IsAnonymous = item.IsAnonymous;
+                switch (item.EnumRepairScore)
+                {
+                    case (int)EnumRepairScore.Dissatisfied:
+                        bc.Score = "不满意";
+                        break;
+                    case (int)Poco.Enum.EnumRepairScore.General:
+                        bc.Score = "一般";
+                        break;
+                    case (int)Poco.Enum.EnumRepairScore.NoScore:
+                        bc.Score = "未评分";
+                        break;
+                    case (int)Poco.Enum.EnumRepairScore.Satisfied:
+                        bc.Score = "满意";
+                        break;
+                    case (int)Poco.Enum.EnumRepairScore.VeryDissatisfied:
+                        bc.Score = "非常不满意";
+                        break;
+                    case (int)Poco.Enum.EnumRepairScore.VerySatisfactory:
+                        bc.Score = "非常满意";
+                        break;
+                }
+                switch (item.EnumComplaintStatus)
+                {
+                    case (int)EnumComplaintStatus.Audit:
+                        bc.Status = "审核中";
+                        break;
+                    case (int)EnumComplaintStatus.completed:
+                        bc.Status = "已处理";
+                        break;
+                    case (int)EnumComplaintStatus.Evaluation:
+                        bc.Status = "已评价";
+                        break;
+                }
+                objs.Add(bc);
+            }
+
+            var obj = new { LastID = newID, List = objs };
+            return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+        }
+
 
         /// <summary>
         /// 提交投诉
