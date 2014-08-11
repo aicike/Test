@@ -15,7 +15,7 @@ namespace Web.Controllers
         //
         // GET: /RentalHouse/
 
-        public ActionResult Index(int ?id)
+        public ActionResult Index(int? id)
         {
             var rentalhouseModel = Factory.Get<IRentalHouseModel>(SystemConst.IOC_Model.RentalHouseModel);
             var list = rentalhouseModel.GetList(LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 20);
@@ -66,15 +66,19 @@ namespace Web.Controllers
         {
             var rentalhouseModel = Factory.Get<IRentalHouseModel>(SystemConst.IOC_Model.RentalHouseModel);
             Result result = rentalhouseModel.EditInfo(rentalhouse, w, h, x1, y1, tw, th);
-          
-            return  RedirectToAction("Index", "RentalHouse");
+
+            return RedirectToAction("Index", "RentalHouse");
         }
 
         public ActionResult Delete(int id)
         {
             var rentalhouseModel = Factory.Get<IRentalHouseModel>(SystemConst.IOC_Model.RentalHouseModel);
-            rentalhouseModel.Delete(id,LoginAccount.CurrentAccountMainID);
-            return RedirectToAction("Index", "RentalHouse");
+            var result = rentalhouseModel.Delete(id, LoginAccount.CurrentAccountMainID);
+            if (result.HasError)
+            {
+                return Alert(new Dialog(result.Error));
+            }
+            return JavaScript("window.location.href='" + Url.Action("Index", "RentalHouse") + "'");
         }
     }
 }

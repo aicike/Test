@@ -68,7 +68,7 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
         /// <summary>
-        /// 每次打开应用时，提交的clientID
+        /// 每次打开应用时，提交的clientID(用户端)
         /// </summary>
         [HttpPost]
         [ValidateInput(false)]
@@ -76,6 +76,18 @@ namespace Web.Controllers
         {
             var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
             var result = clientInfoModel.PostClientID(clientID, accountMainID, userID, (EnumClientSystemType)systemType);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
+
+        /// <summary>
+        /// 每次打开应用时，提交的clientID(物业端)
+        /// </summary>
+        [HttpPost]
+        [ValidateInput(false)]
+        public string PostClientID_Account(string clientID, int? userID, int systemType = 1)
+        {
+            var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
+            var result = clientInfoModel.PostClientID_Account(clientID, userID, (EnumClientSystemType)systemType);
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 

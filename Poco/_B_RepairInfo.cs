@@ -43,6 +43,11 @@ namespace Poco
         public string Content { get; set; }
 
         /// <summary>
+        /// 业主信息
+        /// </summary>
+        public string UserInfo { get; set; }
+
+        /// <summary>
         /// 评分
         /// </summary>
         public string Score { get; set; }

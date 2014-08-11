@@ -22,6 +22,23 @@ namespace Business
         {
         }
 
+        public class PushJson
+        {
+            public int type { get; set; }
+            public object obj { get; set; }
+        }
+
+
+        private enum PushType
+        {
+            user_automsg = 1,   //用户_自助问答
+            user_news = 2,      //用户_通知，新闻
+            account_bx = 3,        //物业_保修
+            account_ts = 4        //物业_投诉
+        }
+
+        #region 自助问答推送
+
         /// <summary>
         /// 普通推送
         /// </summary>
@@ -31,7 +48,7 @@ namespace Business
             Result result = new Result();
             var iosModel = Factory.Get("Push_IOS") as IPushModel;
             var androidModel = Factory.Get("Push_Getui") as IPushModel;
-            var PushIDInfo = GetClientIDs(receiveType, accountMainID, userIds);
+            var PushIDInfo = GetClientIDs_user(receiveType, accountMainID, userIds);
             //售楼部信息
             var accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
             var accountMain = accountMainModel.Get(accountMainID);
@@ -128,7 +145,7 @@ namespace Business
                     break;
             }
             pushMessage.Add(rep);
-            var obj = new PushJson() { type = 1, obj = pushMessage };
+            var obj = new PushJson() { type = (int)PushType.user_automsg, obj = pushMessage };
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
 
             //ios推送 用户端
@@ -145,12 +162,9 @@ namespace Business
             result = Push_Getui.SendMessage(message, PushIDInfo.Android);
             return result;
         }
+        #endregion
 
-        public class PushJson
-        {
-            public int type { get; set; }
-            public object obj { get; set; }
-        }
+        #region 用户端，新闻、通知类推送
 
         /// <summary>
         /// 新闻，通知推送
@@ -158,11 +172,11 @@ namespace Business
         /// <param name="type">类型：小区通知 news</param>
         /// <param name="accountMainID"></param>
         /// <returns></returns>
-        public Result Push(string type, int objID, string objTitle,string objImage,string objContent,int accountMainID)
+        public Result Push(string type, int objID, string objTitle, string objImage, string objContent, int accountMainID)
         {
-            var PushIDInfo = GetClientIDs("all", accountMainID, null);
+            var PushIDInfo = GetClientIDs_user("all", accountMainID, null);
             string title = "";
-            var obj = new PushJson() { type = 2, obj = new { pushType = "2", id = objID, title = objTitle, F = SystemConst.WebUrlIP + objImage ?? "",P=objContent, url = SystemConst.WebUrlIP + "/Default/News?id_token=" + objID.TokenEncrypt() } };
+            var obj = new PushJson() { type = (int)PushType.user_news, obj = new { pushType = "2", id = objID, title = objTitle, F = SystemConst.WebUrlIP + objImage ?? "", P = objContent, url = SystemConst.WebUrlIP + "/Default/News?id_token=" + objID.TokenEncrypt() } };
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
             switch (type)
             {
@@ -180,6 +194,50 @@ namespace Business
             var result = Push_Getui.SendMessage(message, PushIDInfo.Android);
             return result;
         }
+        #endregion
+
+        #region 物业端，物业接收到保修，投诉推送
+
+        /// <summary>
+        /// 物业端，物业接收到保修，投诉推送
+        /// </summary>
+        /// <param name="accountMainID"></param>
+        /// <returns></returns>
+        public Result Push(string type, int objID, string objTitle, int accountMainID)
+        {
+            Result result = null;
+            try
+            {
+                var PushIDInfo = GetClientIDs_account("all", accountMainID, null);
+                string title = "";
+                var obj = new PushJson() { type = (int)PushType.account_bx, obj = new { id = objID, title = objTitle } };
+                var json = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+                switch (type)
+                {
+                    case "bx":
+                        title = "新通知：投诉信息";
+                        break;
+                    case "ts":
+                        title = "新通知：投诉信息";
+                        break;
+                }
+                //android推送
+                PushMessage message = new PushMessage();
+                message.Title = title;
+                message.Text = objTitle;
+                message.Logo = "ic_launcher.png";
+                message.EnumEvent = EnumEvent.Wait;// EnumEvent.Immediately;
+                message.MessageJson = json;
+                result = Push_Getui.SendMessage(message, PushIDInfo.Android);
+            }
+            catch (Exception ex)
+            {
+                result.Error = ex.Message;
+            }
+            return result;
+        }
+
+        #endregion
 
         /// <summary>
         /// 当没有在线，并且接收到消息时，调用推送方法 备注 目前只能发送用户端
@@ -227,7 +285,7 @@ namespace Business
         /// <summary>
         /// 获取clientids
         /// </summary>
-        private PushIDInfo GetClientIDs(string receiveType, int accountMainID, string userIds)
+        private PushIDInfo GetClientIDs_user(string receiveType, int accountMainID, string userIds)
         {
             var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
             var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
@@ -264,6 +322,46 @@ namespace Business
             pi.Android = clientIds_android.ToArray();
             pi.IOS = clientIds_ios.ToArray();
             pi.userIDs = pushUserID;
+            return pi;
+        }
+
+
+        /// <summary>
+        /// 获取clientids
+        /// </summary>
+        private PushIDInfo GetClientIDs_account(string receiveType, int accountMainID, string accountIds)
+        {
+            var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
+            var account_AccountMainModel = Factory.Get<IAccount_AccountMainModel>(SystemConst.IOC_Model.Account_AccountMainModel);
+            string clientUserType = EnumClientUserType.Account.ToString();
+            string clientSystemType_android = EnumClientSystemType.Android.ToString();
+            string clientSystemType_ios = EnumClientSystemType.IOS.ToString();
+            //安卓用户
+            var clientInfoList_android = clientInfoModel.List().Where(a => a.EnumClientUserType.Token == clientUserType && a.EnumClientSystemType.Token == clientSystemType_android);
+            //IOS用户
+            var clientInfoList_ios = clientInfoModel.List().Where(a => a.EnumClientUserType.Token == clientUserType && a.EnumClientSystemType.Token == clientSystemType_ios);
+
+            var accountIDs = account_AccountMainModel.List().Where(a => a.AccountMainID == accountMainID).Select(a => a.AccountID).ToList();
+            List<string> clientIds_android = new List<string>();
+            List<string> clientIds_ios = new List<string>();
+            if (receiveType == "all")
+            {
+                clientIds_android = clientInfoList_android.Where(a => accountIDs.Contains(a.EntityID.Value)).Select(a => a.ClientID).ToList();
+                clientIds_ios = clientInfoList_ios.Where(a => accountIDs.Contains(a.EntityID.Value)).Select(a => a.ClientID).ToList();
+            }
+            else if (receiveType == "user")
+            {
+                int[] temp_uids = accountIds.ConvertToIntArray(',');
+                int[] uids = temp_uids.Where(a => accountIDs.Contains(a)).Select(a => a).ToArray();
+                if (uids != null)
+                {
+                    clientIds_android = clientInfoList_android.Where(a => uids.Contains(a.EntityID.Value)).Select(a => a.ClientID).ToList();
+                    clientIds_ios = clientInfoList_ios.Where(a => uids.Contains(a.EntityID.Value)).Select(a => a.ClientID).ToList();
+                }
+            }
+            PushIDInfo pi = new PushIDInfo();
+            pi.Android = clientIds_android.ToArray();
+            pi.IOS = clientIds_ios.ToArray();
             return pi;
         }
 
@@ -314,4 +412,6 @@ namespace Business
             }
         }
     }
+
+
 }

@@ -46,5 +46,10 @@ namespace Poco
         /// 答复
         /// </summary>
         public string Reply { get; set; }
+
+        /// <summary>
+        /// 用户信息
+        /// </summary>
+        public string UserInfo { get; set; }
     }
 }

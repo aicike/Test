@@ -17,7 +17,7 @@ namespace Business
         /// User App
         /// </summary>
         [Transaction]
-        public Result PostClientID(string clientID, int accountMainID, int? userID,EnumClientSystemType sytemType)
+        public Result PostClientID(string clientID, int accountMainID, int? userID, EnumClientSystemType sytemType)
         {
             Result result = new Result();
             bool isHas = true;
@@ -61,7 +61,7 @@ namespace Business
             {
                 //保存clientID信息，临时注册
                 CommonModel com = new CommonModel();
-                
+
                 var userids = List().Where(a => a.ClientID == clientID).Select(a => a.EntityID).ToList();
                 var ulim = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
                 if (userids == null || userids.Count == 0)
@@ -78,7 +78,7 @@ namespace Business
                     userloginInfo.EnumClientSystemType = (int)sytemType;
                     userloginInfo.EnumClientUserType = (int)EnumClientUserType.User;
                     result = ulim.Register(userloginInfo);
-                  
+
                 }
                 else
                 {
@@ -122,6 +122,77 @@ namespace Business
             return result;
         }
 
+        /// <summary>
+        /// Account App
+        /// </summary>
+        [Transaction]
+        public Result PostClientID_Account(string clientID, int? userID, EnumClientSystemType sytemType)
+        {
+            Result result = new Result();
+            //添加用户和ClientInfo信息
+            var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
+            int enumClientSystemTypeID = LookupFactory.GetLookupOptionIdByToken(sytemType);//系统类型
+            int enumClientUserTypeID = LookupFactory.GetLookupOptionIdByToken(EnumClientUserType.Account);//用户类型
+            ClientInfo client = null;
+            if (userID.HasValue)
+            {
+                client = clientInfoModel.List().Where(a => a.ClientID.Equals(clientID) 
+                    && a.EntityID == userID.Value 
+                    && a.EnumClientSystemTypeID == enumClientSystemTypeID
+                    && a.EnumClientUserTypeID == enumClientUserTypeID).FirstOrDefault();
+                if (client == null)
+                {
+                    client = clientInfoModel.List().Where(a => a.ClientID.Equals(clientID)
+                        && a.EnumClientSystemTypeID == enumClientSystemTypeID
+                        && a.EnumClientUserTypeID == enumClientUserTypeID).FirstOrDefault();
+                    if (client != null)
+                    {
+                        //有clientInfo，无entityid，需要修改
+                        client.EntityID = userID.Value;
+                        clientInfoModel.Edit(client);
+                    }
+                    else
+                    {
+                        //无clientInfo，需要添加
+                        //数据库中没有client信息，需要新增
+                        ClientInfo clientInfo = new ClientInfo();
+                        clientInfo.EnumClientSystemTypeID = enumClientSystemTypeID;
+                        clientInfo.SetupTiem = DateTime.Now;
+                        clientInfo.EnumClientUserTypeID = enumClientUserTypeID;
+                        clientInfo.ClientID = clientID;
+                        clientInfo.EntityID = userID.Value;
+                        result = clientInfoModel.Add(clientInfo);
+                    }
+                }
+                else
+                {
+                    return result;
+                }
+            }
+            else
+            {
+                client = clientInfoModel.List().Where(a => a.ClientID.Equals(clientID)
+                    && a.EnumClientSystemTypeID == enumClientSystemTypeID
+                    && a.EnumClientUserTypeID == enumClientUserTypeID).FirstOrDefault();
+                if (client == null)
+                {
+                    //无clientInfo，需要添加
+                    //数据库中没有client信息，需要新增
+                    ClientInfo clientInfo = new ClientInfo();
+                    clientInfo.EnumClientSystemTypeID = enumClientSystemTypeID;
+                    clientInfo.SetupTiem = DateTime.Now;
+                    clientInfo.EnumClientUserTypeID = enumClientUserTypeID;
+                    clientInfo.ClientID = clientID;
+                    clientInfo.EntityID = 0;
+                    result = clientInfoModel.Add(clientInfo);
+                }
+                else
+                {
+                    return result;
+                }
+            }
+            return result;
+        }
 
         public ClientInfo GetByClientID(string clientID, int? userID)
         {

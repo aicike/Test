@@ -41,7 +41,7 @@
 <div class="body">
     @using (Ajax.BeginForm("DomesticInfo", "Domestic", new { HostName = ViewBag.HostName, PageID = ViewBag.PageID, Area = "Manager" }, new AjaxOptions() { UpdateTargetId = "alert" }))
     {
-        <input  type="hidden" id="DID" name="DID" value="@ViewBag.DID"/>
+        <input  type="hidden" id="DID" name="DID" value="@ViewBag.UID"/>
         <input type="hidden" id="Status" name="Status" />
         <input type="submit" id="btnSubmit" value="保存" class="button" style="display: none" />
     }

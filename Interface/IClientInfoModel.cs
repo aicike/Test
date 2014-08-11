@@ -10,6 +10,8 @@ namespace Interface
     public interface IClientInfoModel : IBaseModel<ClientInfo>
     {
         Result PostClientID(string clientID, int accountMainID, int? userID, EnumClientSystemType sytemType);
+        Result PostClientID_Account(string clientID, int? userID, EnumClientSystemType sytemType);
         ClientInfo GetByClientID(string clientID, int? userID);
+        
     }
 }

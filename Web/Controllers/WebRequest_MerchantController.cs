@@ -87,7 +87,7 @@ namespace Web.Controllers
             {
                 ID = obj.ID,
                 Name = obj.Name,
-                Address = obj.Address,
+                Address = obj.Address ?? "",
                 Phone = obj.Phone,
                 Introduction = str1 + obj.Introduction + str2
             };
@@ -119,8 +119,8 @@ namespace Web.Controllers
                 {
                     ID = a.FirstOrDefault().MerchantID,
                     Name = a.FirstOrDefault().Merchant.Name,
-                    Address = a.FirstOrDefault().Merchant.Address,
-                    Logo = SystemConst.WebUrlIP + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
+                    Address = a.FirstOrDefault().Merchant.Address??"",
+                    Logo = SystemConst.WebUrlIP + a.FirstOrDefault().Merchant.LogoImagePath.Replace("~", ""),
                     Phone = a.FirstOrDefault().Merchant.Phone,
                     Introduction = str1 + a.FirstOrDefault().Merchant.Introduction + str2
                 }).ToList();
@@ -203,8 +203,8 @@ namespace Web.Controllers
                 {
                     ID = a.FirstOrDefault().MerchantID,
                     Name = a.FirstOrDefault().Merchant.Name,
-                    Address = a.FirstOrDefault().Merchant.Address,
-                    Logo = SystemConst.WebUrlIP + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
+                    Address = a.FirstOrDefault().Merchant.Address ?? "",
+                    Logo = SystemConst.WebUrlIP + a.FirstOrDefault().Merchant.LogoImagePath.Replace("~", ""),
                     Phone = a.FirstOrDefault().Merchant.Phone,
                     Introduction = str1 + a.FirstOrDefault().Merchant.Introduction + str2
                 }).ToList();
@@ -288,8 +288,8 @@ namespace Web.Controllers
                 {
                     ID = a.FirstOrDefault().MerchantID,
                     Name = a.FirstOrDefault().Merchant.Name,
-                    Address = a.FirstOrDefault().Merchant.Address,
-                    Logo = SystemConst.WebUrlIP + a.FirstOrDefault().Merchant.LogoShow.Replace("~", ""),
+                    Address = a.FirstOrDefault().Merchant.Address ?? "",
+                    Logo = SystemConst.WebUrlIP + a.FirstOrDefault().Merchant.LogoImagePath.Replace("~", ""),
                     Phone = a.FirstOrDefault().Merchant.Phone,
                     Introduction = str1 + a.FirstOrDefault().Merchant.Introduction + str2
                 }).ToList();

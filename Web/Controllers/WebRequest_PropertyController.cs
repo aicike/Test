@@ -178,6 +178,7 @@ namespace Web.Controllers
                 ri.date = item.RepairDate.ToString("MM-dd HH:mm");
                 ri.ImgPaths = item.ImgPath;
                 ri.ID = item.ID;
+                ri.UserInfo = "业主名称：" + item.RepairName + " 电话：" + item.User.Phone;
                 if (item.AccountID.HasValue)
                 {
                     ri.AccountName = item.Account.Name;
@@ -260,6 +261,7 @@ namespace Web.Controllers
                 ri.date = item.RepairDate.ToString("MM-dd HH:mm");
                 ri.ImgPaths = item.ImgPath;
                 ri.ID = item.ID;
+                ri.UserInfo = "业主名称：" + item.RepairName + " 电话：" + item.User.Phone;
                 if (item.AccountID.HasValue)
                 {
                     ri.AccountName = item.Account.Name;
@@ -319,6 +321,7 @@ namespace Web.Controllers
                 }
                 objs.Add(ri);
             }
+            objs.AddRange(objs); objs.AddRange(objs);
             var obj = new { LastID = newID, List = objs };
             return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
         }
@@ -358,8 +361,12 @@ namespace Web.Controllers
 
             if (result.HasError == false)
             {
+                //web通知
                 var model = Factory.Get<IWebNoticeModel>(SystemConst.IOC_Model.WebNoticeModel);
                 model.Add("Token_WUYE_Repair", AMID);
+                //app通知
+                PushModel pushModel = new PushModel();
+                pushModel.Push("bx", rpinfo.ID, rpinfo.RepairContent, rpinfo.AccountMainID);
             }
 
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
@@ -389,8 +396,10 @@ namespace Web.Controllers
             }
             br.date = repair.RepairDate.ToString("MM-dd HH:mm");
             br.ID = repair.ID;
+            br.UserInfo = "姓名：" + repair.RepairName + "\r\n电话：" + repair.User.Phone;
             br.ImgPaths = repair.ImgPath;
             br.Content = repair.RepairContent;
+            
             if (repair.RepairType == 0)
             {
                 br.type = "个人";
@@ -625,6 +634,10 @@ namespace Web.Controllers
             {
                 var model = Factory.Get<IWebNoticeModel>(SystemConst.IOC_Model.WebNoticeModel);
                 model.Add("Token_WUYE_Complain", AMID);
+
+                //app通知
+                PushModel pushModel = new PushModel();
+                pushModel.Push("ts", com.ID, com.ComplaintContetn, com.AccountMainID);
             }
 
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
@@ -647,6 +660,7 @@ namespace Web.Controllers
             bc.Date = complaint.ComplaintDate.ToString("MM-dd HH:mm");
             bc.ImgPath = complaint.ImgPath;
             bc.IsAnonymous = complaint.IsAnonymous;
+            bc.UserInfo = complaint.IsAnonymous ? "业主名称：匿名" : "业主名称：" + complaint.User.Name + " 电话：" + complaint.User.Phone;
             switch (complaint.EnumRepairScore)
             {
                 case (int)EnumRepairScore.Dissatisfied:

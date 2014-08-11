@@ -105,7 +105,7 @@ namespace Web.Controllers
             var path = string.Format(SystemConst.Business.MerchantFile, merchant.ID);
             var accountPath = Server.MapPath(path);
             //判断目录是否存在
-            if (Directory.Exists(accountPath))
+            if (!Directory.Exists(accountPath))
             {
                 Directory.CreateDirectory(accountPath);
             }
