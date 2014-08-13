@@ -4,8 +4,18 @@
     ViewBag.Menu3 = Poco.SystemConst.Menu.PropertyHouse;
 }
 @section head{
+    <script>
+        $(function () {
+            $("#BuildingNum,#CellNum,#RoomNumber").keyup(function () {
+                var BuildingNum = $("#BuildingNum").val();
+                var CellNum = $("#CellNum").val();
+                var RoomNumber = $("#RoomNumber").val();
+                $("#txtShortNo").val(BuildingNum + "-" + CellNum + "-" + RoomNumber);
+            });
+        });
+    </script>
 }
-@model Poco.Property_User
+@model Poco.Property_House
 <div class="title">
     @Html.Partial("SitePath")
 </div>
@@ -20,47 +30,38 @@
                         <span class="Identification">*</span> 楼号
                     </td>
                     <td class="tdField">
-                        @Html.TextBoxFor(a => a.Property_House.BuildingNum)
+                        @Html.TextBoxFor(a => a.BuildingNum)
                         @Html.HiddenFor(a => a.ID)
-                        @Html.HiddenFor(a => a.Property_House.ID)
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.Property_House.BuildingNum)
+                    <td>@Html.ValidationMessageFor(a => a.BuildingNum)
                     </td>
                 </tr>
                 <tr>
                     <td class="tdTitle">
                         <span class="Identification">*</span> 单元
                     </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.Property_House.CellNum)
+                    <td class="tdField">@Html.TextBoxFor(a => a.CellNum)
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.Property_House.CellNum)
+                    <td>@Html.ValidationMessageFor(a => a.CellNum)
                     </td>
                 </tr>
                 <tr>
                     <td class="tdTitle">
                         <span class="Identification">*</span> 房号
                     </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.Property_House.RoomNumber)
+                    <td class="tdField">@Html.TextBoxFor(a => a.RoomNumber)
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.Property_House.RoomNumber)
-                    </td>
-                </tr>
-                <tr>
-                    <td class="tdTitle">
-                        <span class="Identification">*</span> 业主名称
-                    </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.UserName)
-                    </td>
-                    <td>@Html.ValidationMessageFor(a => a.UserName)
+                    <td>@Html.ValidationMessageFor(a => a.RoomNumber)
                     </td>
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                        <span class="Identification">*</span> 业主电话
+                        <span class="Identification">*</span> 缩写
                     </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.Phone)
+                    <td class="tdField">
+                        <input type="text" id="txtShortNo" readonly="readonly" disabled="disabled" value="@Model.BuildingNum-@Model.CellNum-@Model.RoomNumber" />
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.Phone)
+                    <td>
                     </td>
                 </tr>
             </table>

@@ -10,7 +10,8 @@ namespace Interface
     {
         IQueryable<Property_User> GetListByAccountMainID(int accountMainID);
 
-        Result Delete(int property_UserID, int userLoginInfo, int propertyHouseID);
+
+        Result DeleteByPropertyHouseID(int propertyHouseID);
 
         /// <summary>
         /// 根据房号获取物业登记的业主信息
@@ -27,6 +28,14 @@ namespace Interface
         /// <param name="roomNum"></param>
         /// <returns></returns>
         List<Property_User> GetHouseByUserPhone(int amid, string userPhone);
+
+        /// <summary>
+        /// 根据房屋ID获取业主信息
+        /// </summary>
+        /// <param name="amid"></param>
+        /// <param name="roomNum"></param>
+        /// <returns></returns>
+        List<Property_User> GetHouseByPropertyHouseID(int phid,int accountMainID);
 
         /// <summary>
         /// 修改业主所关联的账号信息

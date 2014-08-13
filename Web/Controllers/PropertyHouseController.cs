@@ -14,27 +14,33 @@ namespace Web.Controllers
 {
     public class PropertyHouseController : ManageAccountController
     {
-        public ActionResult Index(int? id, string houseNum, string userName, string userPhone)
+        public ActionResult Index(int? id, string houseNum)
         {
-            var propertyUserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
+            var property_HouseModel = Factory.Get<IProperty_HouseModel>(SystemConst.IOC_Model.Property_HouseModel);
+            var pageList = property_HouseModel.List(true).Where(a => a.AccountMainID == LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 100);
 
-            var list = propertyUserModel.GetListByAccountMainID(LoginAccount.CurrentAccountMainID);//.ToPagedList(id ?? 1, 100);
-            if (string.IsNullOrEmpty(houseNum) == false && houseNum.Length > 0)
-            {
-                list = list.Where(a => a.Property_House.RoomNumber.Contains(houseNum));
-            }
-            if (string.IsNullOrEmpty(userName) == false && userName.Length > 0)
-            {
-                list = list.Where(a => a.UserName.Contains(userName));
-            }
-            if (string.IsNullOrEmpty(userPhone) == false && userPhone.Length > 0)
-            {
-                list = list.Where(a => a.Phone.Contains(userPhone));
-            }
-            var pageList = list.ToPagedList(id ?? 1, 100);
-            //List<PropertyComplexEntity> objs = new List<PropertyComplexEntity>();
-            //var list = objs.AsQueryable().ToPagedList(id ?? 1, 100);
+            //var propertyUserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
 
+            //var list = propertyUserModel.GetListByAccountMainID(LoginAccount.CurrentAccountMainID);//.ToPagedList(id ?? 1, 100);
+            //if (string.IsNullOrEmpty(houseNum) == false && houseNum.Length > 0)
+            //{
+            //    list = list.Where(a => a.Property_House.RoomNumber.Contains(houseNum));
+            //}
+            //if (string.IsNullOrEmpty(userName) == false && userName.Length > 0)
+            //{
+            //    list = list.Where(a => a.UserName.Contains(userName));
+            //}
+            //if (string.IsNullOrEmpty(userPhone) == false && userPhone.Length > 0)
+            //{
+            //    list = list.Where(a => a.Phone.Contains(userPhone));
+            //}
+            //var pageList = list.ToPagedList(id ?? 1, 100);
+            ////List<PropertyComplexEntity> objs = new List<PropertyComplexEntity>();
+            ////var list = objs.AsQueryable().ToPagedList(id ?? 1, 100);
+
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "房屋信息", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
             //提示消息
             if (TempData["Msg"] != null)
             {
@@ -68,28 +74,24 @@ namespace Web.Controllers
             /* Property_House 房间信息
              * Property_User 用户信息
              */
-            List<Property_User> Property_User_list = new List<Property_User>();
+            List<Property_House> phlist = new List<Property_House>();
             foreach (DataRow item in data.Rows)
             {
                 var buildingNum = item["楼号"];
                 var cellNum = item["单元"];
                 var houseNum = item["房号"];
-                var userName = item["业主姓名"];
-                var userPhone = item["业主电话"];
-                if (buildingNum == null || cellNum == null || houseNum == null || userName == null || userPhone == null)
+                if (buildingNum == null || cellNum == null || houseNum == null )
                 {
-                    TempData["Msg"] = "您上传的物业用户信息表格中信息没有完善，无法导入，请先完善信息。";
+                    TempData["Msg"] = "您上传的房屋信息表格中信息没有完善，无法导入，请先完善信息。";
                     TempData["HasError"] = 1;
                     return RedirectToAction("Index", "PropertyHouse", new { HostName = LoginAccount.HostName });
                 }
                 var buildingNum_str = buildingNum.ToString().Trim();
                 var cellNum_str = cellNum.ToString().Trim();
                 var houseNum_str = houseNum.ToString().Trim();
-                var userName_str = userName.ToString().Trim();
-                var userPhone_str = userPhone.ToString().Trim();
-                if (buildingNum_str.Length <= 0 || cellNum_str.Length <= 0 || houseNum_str.Length <= 0 || userName_str.Length <= 0 || userPhone_str.Length <= 0)
+                if (buildingNum_str.Length <= 0 || cellNum_str.Length <= 0 || houseNum_str.Length <= 0 )
                 {
-                    TempData["Msg"] = "您上传的物业用户信息表格中信息没有完善，无法导入，请先完善信息。";
+                    TempData["Msg"] = "您上传的房屋信息表格中信息没有完善，无法导入，请先完善信息。";
                     TempData["HasError"] = 1;
                     return RedirectToAction("Index", "PropertyHouse", new { HostName = LoginAccount.HostName });
                 }
@@ -98,15 +100,17 @@ namespace Web.Controllers
                 ph.CellNum = cellNum_str;
                 ph.RoomNumber = houseNum_str;
                 ph.AccountMainID = LoginAccount.CurrentAccountMainID;
-                Property_User pu = new Property_User();
-                pu.AccountMainID = LoginAccount.CurrentAccountMainID;
-                pu.UserName = userName_str;
-                pu.Phone = userPhone_str;
-                pu.Property_House = ph;
-                Property_User_list.Add(pu);
+                phlist.Add(ph);
+                //Property_User pu = new Property_User();
+                //pu.AccountMainID = LoginAccount.CurrentAccountMainID;
+                //pu.UserName = userName_str;
+                //pu.Phone = userPhone_str;
+                //pu.Property_House = ph;
+                //Property_User_list.Add(pu);
             }
-            var propertyUserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
-            result = propertyUserModel.AddList(Property_User_list);
+            
+            var propertyHouseModel = Factory.Get<IProperty_HouseModel>(SystemConst.IOC_Model.Property_HouseModel);
+            result = propertyHouseModel.AddList(phlist);
             if (result.HasError)
             {
                 TempData["Msg"] = string.Format("导入失败。[{0}]", result.Error);
@@ -128,17 +132,19 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add(Property_User property_User)
+        public ActionResult Add(Property_House property_House)
         {
-            var propertyUserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
-            property_User.AccountMainID = LoginAccount.CurrentAccountMainID;
-            property_User.Property_House.AccountMainID = LoginAccount.CurrentAccountMainID;
-            var result = propertyUserModel.Add(property_User);
+            var property_HouseModel = Factory.Get<IProperty_HouseModel>(SystemConst.IOC_Model.Property_HouseModel);
+            //property_User.AccountMainID = LoginAccount.CurrentAccountMainID;
+            //property_User.Property_House.AccountMainID = LoginAccount.CurrentAccountMainID;
+            //var result = propertyUserModel.Add(property_User);
+            property_House.AccountMainID = LoginAccount.CurrentAccountMainID;
+            var result = property_HouseModel.Add(property_House);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));
             }
-            return JavaScript("window.location.href='" + Url.Action("Index", "PropertyHouse", new { HostName = LoginAccount.HostName})+"'");
+            return JavaScript("window.location.href='" + Url.Action("Index", "PropertyHouse", new { HostName = LoginAccount.HostName }) + "'");
         }
 
 
@@ -149,13 +155,13 @@ namespace Web.Controllers
         /// <returns></returns>
         public ActionResult Edit(int id)
         {
-            var propertyUserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
-            var propertyUser = propertyUserModel.Get(id);
+            var property_HouseModel = Factory.Get<IProperty_HouseModel>(SystemConst.IOC_Model.Property_HouseModel);
+            var propertyHouse = property_HouseModel.Get(id);
             ViewBag.HostName = LoginAccount.HostName;
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "修改房屋信息", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;
-            return View(propertyUser);
+            return View(propertyHouse);
         }
 
         /// <summary>
@@ -164,13 +170,11 @@ namespace Web.Controllers
         /// <param name="MainHouseInfo"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Edit(Property_User property_User)
+        public ActionResult Edit(Property_House property_House)
         {
-            var propertyUserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
-            property_User.AccountMainID = LoginAccount.CurrentAccountMainID;
-            property_User.Property_House.AccountMainID = LoginAccount.CurrentAccountMainID;
-            property_User.Property_HouseID = property_User.Property_House.ID;
-            var result = propertyUserModel.Edit(property_User);
+            var property_HouseModel = Factory.Get<IProperty_HouseModel>(SystemConst.IOC_Model.Property_HouseModel);
+            property_House.AccountMainID = LoginAccount.CurrentAccountMainID;
+            var result = property_HouseModel.Edit(property_House);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));
@@ -183,10 +187,10 @@ namespace Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Delete(int id,int phID,int userloginInfoID)
+        public ActionResult Delete(int id)
         {
-            var propertyUserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
-            var result = propertyUserModel.Delete(id,userloginInfoID, phID);
+            var property_HouseModel = Factory.Get<IProperty_HouseModel>(SystemConst.IOC_Model.Property_HouseModel);
+            var result= property_HouseModel.Delete(id);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));

@@ -5,28 +5,8 @@
 
 }
 @section head{
-    <script type="text/javascript">
-        var msg = '@ViewBag.Msg';
-        var hasError = '@ViewBag.HasError';
-        $(function () {
-            $("#fileUpload").change(function () {
-                var path = $(this).val();
-                if (path.length > 0) {
-                    $("#formFileUpload").submit();
-                }
-            });
-            $("#btnUpload").click(function () {
-                $("#fileUpload").click();
-            });
-            if (hasError == "1" && msg.length > 0) {
-                JMessage(msg, true);
-            } else if (hasError == "0") {
-                JMessage("导入成功。");
-            }
-        });
-    </script>
 }
-@model PagedList<Poco.Property_House>
+@model List<Poco.Property_User>
 <div class="title">
     <div style="float: right">
         <a href="@Url.Content("~/Download/Property/房屋信息导入模板.xlsx")" target="_blank" style=" color:#00aec8">

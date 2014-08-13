@@ -33,18 +33,19 @@ namespace Business
         }
 
         [Transaction]
-        public Result Delete(int property_UserID,int userLoginInfo, int propertyHouseID)
+        public Result DeleteByPropertyHouseID(int propertyHouseID)
         {
             Result result = new Result();
             try
             {
-                if (property_UserID > 0)
+                if (propertyHouseID > 0)
                 {
-                    string sql = "DELETE dbo.Property_User WHERE ID=" + property_UserID;
+                    var userLoginInfoIDs = List().Where(a => a.Property_HouseID == propertyHouseID).Select(a => a.UserLoginInfoID).ToList().ConvertToString(",");
+                    string sql = "DELETE dbo.Property_User WHERE Property_HouseID=" + propertyHouseID;
                     int i = base.SqlExecute(sql);
-                    if (i > 0 && propertyHouseID > 0)
+                    if (i > 0 && userLoginInfoIDs.Length > 0)
                     {
-                        sql = "DELETE dbo.Property_House WHERE ID=" + propertyHouseID + " UPDATE dbo.UserLoginInfo SET Phone=NULL ,Email =NULL WHERE ID=" + propertyHouseID;
+                        sql = " UPDATE dbo.UserLoginInfo SET Phone=NULL ,Email =NULL WHERE ID in (" + userLoginInfoIDs + ")";
                         base.SqlExecute(sql);
                     }
                 }
@@ -92,6 +93,12 @@ namespace Business
                 result.Error = ex.Message;
             }
             return result;
+        }
+
+
+        public List<Property_User> GetHouseByPropertyHouseID(int phid, int accountMainID)
+        {
+            return List().Where(a => a.Property_HouseID == phid && a.AccountMainID == accountMainID).ToList();
         }
     }
 }

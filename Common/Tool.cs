@@ -814,7 +814,7 @@ namespace Common
             if (XLSXPath == null)
             {
                 result.HasError = true;
-                result.Error = "参数值不鞥为NULL";
+                result.Error = "参数值不能为NULL";
                 return result;
             }
           

@@ -232,6 +232,7 @@
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\PropertyHouseController.cs" />
     <Compile Include="Controllers\PropertyFeeInfoController.cs" />
+    <Compile Include="Controllers\PropertyUserController.cs" />
     <Compile Include="Controllers\RentalHouseController.cs" />
     <Compile Include="Controllers\RepairchargesoController.cs" />
     <Compile Include="Controllers\RepairInfoController.cs" />
@@ -739,6 +740,7 @@
     <Content Include="Areas\Manager\Views\DryCleaning\DryCleaningInfo.cshtml" />
     <Content Include="Areas\Manager\Views\EducationTrain\EducationTrainInfo.cshtml" />
     <Content Include="Areas\Manager\Views\PetHospital\PetHospitalInfo.cshtml" />
+    <None Include="Download\Property\房屋信息导入模板.xlsx" />
     <None Include="ueditor\ueditor.all.js2" />
     <Content Include="ueditor\ueditor.all.min.js" />
     <Content Include="ueditor\ueditor.config22.js" />
@@ -756,6 +758,7 @@
     <Content Include="Views\PropertyFeeInfo\Add.cshtml" />
     <Content Include="Views\ParkingFee\Add.cshtml" />
     <Content Include="Views\Default\OtherInfo.cshtml" />
+    <Content Include="Views\PropertyUser\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\IOC.xml" />
