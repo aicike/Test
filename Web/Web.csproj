@@ -759,6 +759,8 @@
     <Content Include="Views\ParkingFee\Add.cshtml" />
     <Content Include="Views\Default\OtherInfo.cshtml" />
     <Content Include="Views\PropertyUser\Index.cshtml" />
+    <Content Include="Views\PropertyUser\Add.cshtml" />
+    <Content Include="Views\PropertyUser\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\IOC.xml" />

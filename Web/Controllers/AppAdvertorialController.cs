@@ -28,7 +28,7 @@ namespace Web.Controllers
             var list = AppAdvertorialModel.GetList(LoginAccount.CurrentAccountMainID, (int)EnumAdvertorialUType.UserEnd,(int)EnumAdverClass.AdverTorial).ToPagedList(id ?? 1, 15);
 
             var AccountserverModel = Factory.Get<IAccountMain_ServiceModel>(SystemConst.IOC_Model.AccountMain_ServiceModel);
-            var hasAPP = AccountserverModel.CheckService(EnumService.House_Service, LoginAccount.CurrentAccountMainID);
+            var hasAPP = AccountserverModel.CheckService(EnumService.Property_Service, LoginAccount.CurrentAccountMainID);
             ViewBag.HasAPP = hasAPP;
 
             string WebTitleRemark = SystemConst.WebTitleRemark;

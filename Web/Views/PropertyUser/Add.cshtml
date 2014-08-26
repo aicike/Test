@@ -1,0 +1,62 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Menu2 = Poco.SystemConst.Menu.PropertyUser;
+    ViewBag.Menu3 = Poco.SystemConst.Menu.PropertyUser;
+}
+@section head{
+}
+@model Poco.Property_User
+<div class="title">
+    @Html.Partial("SitePath")
+</div>
+<div class="body">
+    @using (Ajax.BeginForm("Add", "PropertyUser", new { HostName = ViewBag.HostName, id = ViewBag.ID }, new AjaxOptions { UpdateTargetId = "alert" }))
+    {
+        <fieldset>
+            <legend>业主信息</legend>
+            <table class="tableForm">
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 姓名
+                    </td>
+                    <td class="tdField">
+                        @Html.TextBoxFor(a => a.UserName)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.UserName)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 电话
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Phone)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Phone)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 邮箱
+                    </td>
+                    <td class="tdField">@Html.TextBoxFor(a => a.Email)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Email)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdTitle">
+                        <span class="Identification">*</span> 备注
+                    </td>
+                    <td class="tdField">
+                        @Html.TextBoxFor(a => a.Comment)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.Comment)
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="action">
+            <input type="submit" id="btnSubmit" class="button" value="保存" style="margin-right: 20px" /><input type="button" value="返回"  class="button" onclick="location.href='@ViewBag.RawUrl'" />
+        </div>
+    }
+</div>

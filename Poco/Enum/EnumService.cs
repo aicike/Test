@@ -25,6 +25,10 @@ namespace Poco.Enum
         /// <summary>
         /// 微信集成服务
         /// </summary>
-        Weixin_Service=4
+        Weixin_Service=4,
+        /// <summary>
+        /// 物业服务（App）
+        /// </summary>
+        Property_Service=5
     }
 }

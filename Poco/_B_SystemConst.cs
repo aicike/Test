@@ -176,6 +176,7 @@ namespace Poco
             public const string RentalHouse = "RentalHouse";
             public const string ExpressCollection = "ExpressCollection";
             public const string ParkingFee = "ParkingFee";
+            public const string PropertyUser = "PropertyUser";
             
             public const string AboutUS = "AboutUS";
             public const string Payment = "Payment";

@@ -147,7 +147,7 @@ namespace Web.Controllers
             {
 
                 var AccountserverModel = Factory.Get<IAccountMain_ServiceModel>(SystemConst.IOC_Model.AccountMain_ServiceModel);
-                var hasAPP = AccountserverModel.CheckService(EnumService.House_Service, advertorial.AccountMainID);
+                var hasAPP = AccountserverModel.CheckService(EnumService.Property_Service, advertorial.AccountMainID);
                 ViewBag.HasAPP = hasAPP;
                 if (hasAPP)
                 {
@@ -524,7 +524,7 @@ namespace Web.Controllers
             }
 
             var AccountserverModel = Factory.Get<IAccountMain_ServiceModel>(SystemConst.IOC_Model.AccountMain_ServiceModel);
-            var hasAPP = AccountserverModel.CheckService(EnumService.House_Service, Activity.AccountMainID);
+            var hasAPP = AccountserverModel.CheckService(EnumService.Property_Service, Activity.AccountMainID);
             ViewBag.HasAPP = hasAPP;
             if (hasAPP)
             {
