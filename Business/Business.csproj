@@ -110,6 +110,7 @@
     <Compile Include="SellBusiness\CardInfoModel.cs" />
     <Compile Include="SellBusiness\CardPrefixModel.cs" />
     <Compile Include="SellBusiness\ClassifyModel.cs" />
+    <Compile Include="SellBusiness\ExpressNoticeModel.cs" />
     <Compile Include="SellBusiness\PaymentModel.cs" />
     <Compile Include="SellBusiness\PropertyFeeInfoModel.cs" />
     <Compile Include="SellBusiness\PropertyOrderDetailModel.cs" />

@@ -27,6 +27,16 @@ namespace Web.Controllers
             ViewBag.Title = webTitle;
 
             ViewBag.PageID = id ?? 1;
+
+            var expressNoticeModel = Factory.Get<IExpressNoticeModel>(SystemConst.IOC_Model.ExpressNoticeModel);
+            var expressnotice = expressNoticeModel.getInfoByAMID(LoginAccount.CurrentAccountMainID);
+            if (expressnotice != null)
+            {
+                ViewBag.notice = expressnotice.Notice;
+            }
+            else {
+                ViewBag.notice = "";
+            }
             return View(expresscollection);
         }
 
@@ -115,6 +125,30 @@ namespace Web.Controllers
                 return "true," + ThisStatus + "," + titel;
             }
 
+        }
+
+        /// <summary>
+        /// 设置快递通知
+        /// </summary>
+        /// <param name="txt_Notice"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult SetNotice(string txt_Notice)
+        {
+            var expressNoticeModel = Factory.Get<IExpressNoticeModel>(SystemConst.IOC_Model.ExpressNoticeModel);
+            ExpressNotice en = new ExpressNotice();
+            en.AccountMainID = LoginAccount.CurrentAccountMainID;
+            en.Notice = txt_Notice;
+            var expressnotice = expressNoticeModel.getInfoByAMID(en.AccountMainID);
+            if (expressnotice != null)
+            {
+                expressNoticeModel.Edit(en);
+            }
+            else
+            {
+                expressNoticeModel.Add(en);
+            }
+            return RedirectToAction("Index", "ExpressCollection");
         }
     }
 }

@@ -12,8 +12,8 @@
             });
         });
 
-        
-        function SetStatus(id, thisstatus,a) {
+
+        function SetStatus(id, thisstatus, a) {
             var url = '@Url.Action("SetStatus", "ExpressCollection")';
             $.post(url, { ID: id, ThisStatus: thisstatus }, function (result) {
                 if (result == "false") {
@@ -25,15 +25,26 @@
                     var strs = result.split(",");
                     $(a).text(strs[2]);
                     $(a).removeAttr("onclick");
-                    $(a).unbind("click"); 
+                    $(a).unbind("click");
                     $(a).click(function () {
-                        SetStatus(id, strs[1], a) 
+                        SetStatus(id, strs[1], a)
                     });
                 }
             });
 
         }
 
+        function SetTZ() {
+            $("#dialogShowMessage").dialog({
+                resizable: false,
+                height: "280",
+                width: "620",
+                modal: true,
+                draggable: false,
+                title: "通知设置",
+                position: "center"
+            });
+        }
     </script>
 }
 @model PagedList<Poco.ExpressCollection>
@@ -43,6 +54,7 @@
 <div class="body">
     <div class="option">
         @Html.ActionLink("添加快递", "Add", "ExpressCollection", new { HostName = ViewBag.HostName }, null, true)
+        <a onclick="SetTZ()">通知</a>
     </div>
     @using (Html.BeginForm("Index", "ExpressCollection", new { HostName = ViewBag.HostName }, FormMethod.Get, new { enctype = "multipart/form-data" }))
     {
@@ -152,5 +164,22 @@
        PageIndexOutOfRangeErrorMessage = "Page index out of range.",
        ShowFirstLast = false
    })
+    </div>
+    <div id="dialogShowMessage" title="" style="display: none">
+        @using (Html.BeginForm("SetNotice", "ExpressCollection", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr id="trImg" align="center">
+                    <td>
+                        <textarea id="txt_Notice" name="txt_Notice" rows="10" cols="20" style="width: 100%">@ViewBag.notice</textarea>
+                    </td>
+                </tr>
+                <tr id="trImg2">
+                    <td>
+                        <input type="submit" id="btn_subNotice" name="btn_subNotice" class="button" value="保存" />
+                    </td>
+                </tr>
+            </table>
+        }
     </div>
 </div>

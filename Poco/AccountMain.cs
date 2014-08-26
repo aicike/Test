@@ -284,7 +284,8 @@ namespace Poco
         public virtual ICollection<PayInfo> PayInfo { get; set; }
 
         public virtual ICollection<WebNotice> WebNotices { get; set; }
+        public virtual ICollection<ExpressNotice> ExpressNotice { get; set; }
 
-
+        
     }
 }
