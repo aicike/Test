@@ -41,5 +41,14 @@ namespace Poco
         [Display(Name = "业主电话")]
         [StringLength(20, ErrorMessage = "长度小于20")]
         public string Phone { get; set; }
+
+        [Display(Name = "业主邮箱")]
+        [StringLength(50, ErrorMessage = "长度小于50")]
+        [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "请输入有效的邮箱")]
+        public string Email { get; set; }
+
+        [Display(Name = "业主备注")]
+        [StringLength(20, ErrorMessage = "长度小于20")]
+        public string Comment { get; set; }
     }
 }

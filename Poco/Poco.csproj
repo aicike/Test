@@ -288,6 +288,7 @@
     <Compile Include="XMPP_Body_SMS.cs" />
     <Compile Include="Lottery_egg.cs" />
     <Compile Include="_B_Repairchargeso.cs" />
+    <Compile Include="Property_User_Temp.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

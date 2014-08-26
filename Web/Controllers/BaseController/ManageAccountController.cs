@@ -170,7 +170,7 @@ namespace Controllers
                 if (menu != null)
                 {
                     menuList = menuModel.GetMenuByRoleID(LoginAccount.RoleIDs, menu.ParentMenuID);
-                    ViewBag.Menu3List = menuList;
+                    //ViewBag.Menu3List = menuList;
                 }
                 else
                 {

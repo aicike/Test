@@ -14,13 +14,19 @@
     <table class="tableList" cellpadding="0" cellspacing="0">
         <tr>
             <th style="width: 120px;">
-                头像
+                业主姓名
             </th>
             <th style="width: 200px;">
-                名称(备注)
+                业主电话
             </th>
-            <th style="width: 150px;">
-                电话
+            <th style="width: 50px;">
+                楼号
+            </th>            
+            <th style="width: 50px;">
+                单元
+            </th>            
+            <th style="width: 50px;">
+                房号
             </th>
             <th style="width: 100px;">
                 操作
@@ -28,32 +34,25 @@
         </tr>
         @foreach (var item in Model)
         {
+            var pu = item.UserLoginInfo.Property_Users.Where(a => a.UserLoginInfoID == item.UserLoginInfoID).FirstOrDefault();
+            if (pu == null) {
+                continue;
+            }
             <tr>
                 <td>
-                    @if (!string.IsNullOrEmpty(item.UserLoginInfo.HeadImagePath))
-                    { 
-                        <img id="imgLogo" style="max-width:80px;max-height:80px;"
-                src="@Url.Content(item.UserLoginInfo.HeadImagePath)" />
-                    }
-                    else
-                    { 
-                        <img style="max-height: 50xp; border:0px; max-width: 50px" width="50px" src="@Url.Content("~/Images/default_Avatar.png")" />
-                            
-                    }
+                    @item.UserLoginInfo.Name
                 </td>
                 <td class="operation">
-                    <label name="labCbFirst" title="沟通开始">
-                        <a  href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.ID })" target="_blank">
-                            @item.UserLoginInfo.Name
-                            @if (string.IsNullOrEmpty(item.Name) == false)
-                            {
-                                @:(@item.Name)
-                                                                             }
-                        </a>
-                    </label>
+                    @item.Phone
                 </td>
                 <td>
-                    @item.Phone
+                    @(pu==null?"":pu.Property_House.BuildingNum)
+                </td>
+                <td>
+                    @(pu==null?"":pu.Property_House.CellNum)
+                </td>
+                <td>
+                    @(pu==null?"":pu.Property_House.RoomNumber)
                 </td>
                 <td class="operation">
                     @Html.ActionLink("详细", "ViewUser", "UserManage", new { userID = item.ID }, null)

@@ -100,5 +100,18 @@ namespace Business
         {
             return List().Where(a => a.Property_HouseID == phid && a.AccountMainID == accountMainID).ToList();
         }
+
+
+        //public Result AddList(List<Property_User_Temp> userList)
+        //{
+        //    var property_HouseModel = Factory.Get<IProperty_HouseModel>(SystemConst.IOC_Model.Property_HouseModel);
+        //    foreach (var item in userList)
+        //    {
+        //        var ph= property_HouseModel.GetByHouseShortNum(item.HouseShortNum);
+        //        if (ph != null) {
+        //            item.Property_HouseID = ph.ID;
+        //        }
+        //    }
+        //}
     }
 }
