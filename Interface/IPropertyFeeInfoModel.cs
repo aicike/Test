@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Poco;
+using System.Data;
 
 namespace Interface
 {
@@ -18,7 +19,7 @@ namespace Interface
         /// <param name="OwnerName">业主姓名</param>
         /// <param name="OwnerPhone">业主电话</param>
         /// <returns></returns>
-        IQueryable<PropertyFeeInfo> GetPropertyFeeInfo(int AMID, string Date, string Unit, string RoomNumber, string OwnerName, string OwnerPhone);
+        IQueryable<PropertyFeeInfo> GetPropertyFeeInfo(int AMID, string Date, string fhsx, string IsPay );
 
 
         /// <summary>
@@ -29,6 +30,16 @@ namespace Interface
         /// <param name="Year"></param>
         /// <returns></returns>
         List<PropertyFeeInfo> GetPropertyFeeInfo(int AMID, string RoomNumber, string Phone, int Year);
+
+        /// <summary>
+        /// 根据房号 年份 获取停车费
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <param name="RoomNumber"></param>
+        /// <param name="Year"></param>
+        /// <returns></returns>
+        List<PropertyFeeInfo> GetPropertyFeeInfo_2(int AMID, string FHSX, int Year);
+
 
         /// <summary>
         /// 根据ID 获取详细信息
@@ -72,7 +83,7 @@ namespace Interface
         /// <param name="DY"></param>
         /// <param name="FH"></param>
         /// <returns></returns>
-        Result DBImportCheck(int AMID, string PayDate, string Name, string Phone, string LH, string DY, string FH);
+        Result DBImportCheck(int AMID, string PayDate, string LH, string DY, string FH);
 
         /// <summary>
         /// 获取一个月的数据
@@ -81,5 +92,19 @@ namespace Interface
         /// <param name="PayDate"></param>
         /// <returns></returns>
         List<PropertyFeeInfo> GetAllByPayDay(int AMID, string PayDate);
+
+        /// <summary>
+        /// 获取导出模板内容
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        DataTable getDtInfo(int AMID);
+
+        /// <summary>
+        /// 获取导出历史内容
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        DataTable getDtHistoryInfo(int AMID, string DcDate, string Dcfhsx);
     }
 }

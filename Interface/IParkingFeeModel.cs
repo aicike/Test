@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Poco;
+using System.Data;
 
 namespace Interface
 {
@@ -16,12 +17,10 @@ namespace Interface
         /// </summary>
         /// <param name="AMID"></param>
         /// <param name="Date">缴费日期</param>
-        /// <param name="Unit">单元</param>
-        /// <param name="RoomNumber">房号</param>
-        /// <param name="OwnerName">业主姓名</param>
-        /// <param name="OwnerPhone">业主电话</param>
+        /// <param name="fhsx">房号缩写</param>
+        /// <param name="IsPay">是否已经交费</param>
         /// <returns></returns>
-        IQueryable<ParkingFee> GetParkingFeeInfo(int AMID, string Date, string Unit, string RoomNumber, string OwnerName, string OwnerPhone);
+        IQueryable<ParkingFee> GetParkingFeeInfo(int AMID, string Date, string fhsx, string IsPay);
 
 
          /// <summary>
@@ -32,6 +31,15 @@ namespace Interface
         /// <param name="Year"></param>
         /// <returns></returns>
         List<ParkingFee> GetPropertyFeeInfo(int AMID, string PhoneNum, int Year);
+
+        /// <summary>
+        /// 根据房号 年份 获取停车费
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <param name="RoomNumber"></param>
+        /// <param name="Year"></param>
+        /// <returns></returns>
+        List<ParkingFee> GetPropertyFeeInfo_2(int AMID, string FHSX, int Year);
 
 
          /// <summary>
@@ -80,7 +88,7 @@ namespace Interface
         /// <param name="DY"></param>
         /// <param name="FH"></param>
         /// <returns></returns>
-        Result DBImportCheck(int AMID, string PayDate, string Name, string Phone, string LH, string DY, string FH);
+        Result DBImportCheck(int AMID, string PayDate, string LH, string DY, string FH);
 
         /// <summary>
         /// 获取一个月的数据
@@ -89,5 +97,15 @@ namespace Interface
         /// <param name="PayDate"></param>
         /// <returns></returns>
         List<ParkingFee> GetAllByPayDay(int AMID, string PayDate);
+
+        DataTable getDtInfo(int AMID);
+
+
+        /// <summary>
+        /// 获取导出历史内容
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        DataTable getDtHistoryInfo(int AMID, string DcDate, string Dcfhsx);
     }
 }

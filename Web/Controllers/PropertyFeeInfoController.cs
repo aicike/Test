@@ -10,6 +10,8 @@ using Poco;
 using Common;
 using System.Data;
 using Business;
+using System.IO;
+using System.Text;
 
 namespace Web.Controllers
 {
@@ -22,14 +24,10 @@ namespace Web.Controllers
         /// </summary>
         /// <param name="id">分页</param>
         /// <param name="Date">缴费月份</param>
-        /// <param name="Unit">单元</param>
-        /// <param name="RoomNumber">房号</param>
-        /// <param name="OwnerName">业主姓名</param>
-        /// <param name="OwnerPhone">业主电话</param>
-        /// <param name="IsError">导入状态 1出错 2成功 </param>
-        /// <param name="ErrorStr">消息内容</param>
+        /// <param name="fhsx">房号缩写</param>
+        /// <param name="IsPay">是否已经交费</param>
         /// <returns></returns>
-        public ActionResult Index(int? id, string Date, string Unit, string RoomNumber, string OwnerName, string OwnerPhone)
+        public ActionResult Index(int? id, string Date, string fhsx, string IsPay)
         {
             if (id.HasValue)
             {
@@ -65,40 +63,24 @@ namespace Web.Controllers
             {
                 ViewBag.Date = "";
             }
-            if (!string.IsNullOrEmpty(Unit))
+            if (!string.IsNullOrEmpty(fhsx))
             {
-                ViewBag.Unit = Unit;
+                ViewBag.fhsx = fhsx;
             }
             else
             {
-                ViewBag.Unit = "";
+                ViewBag.fhsx = "";
             }
-            if (!string.IsNullOrEmpty(RoomNumber))
+            if (!string.IsNullOrEmpty(IsPay))
             {
-                ViewBag.RoomNumber = RoomNumber;
-            }
-            else
-            {
-                ViewBag.RoomNumber = "";
-            }
-            if (!string.IsNullOrEmpty(OwnerName))
-            {
-                ViewBag.OwnerName = OwnerName;
+                ViewBag.IsPay = IsPay;
             }
             else
             {
-                ViewBag.OwnerName = "";
-            }
-            if (!string.IsNullOrEmpty(OwnerPhone))
-            {
-                ViewBag.OwnerPhone = OwnerPhone;
-            }
-            else
-            {
-                ViewBag.OwnerPhone = "";
+                ViewBag.IsPay = "";
             }
             var propertyfeemodel = Factory.Get<IPropertyFeeInfoModel>(SystemConst.IOC_Model.PropertyFeeInfoModel);
-            var propertyfee = propertyfeemodel.GetPropertyFeeInfo(LoginAccount.CurrentAccountMainID, Date, Unit, RoomNumber, OwnerName, OwnerPhone).ToPagedList(id ?? 1, 50);
+            var propertyfee = propertyfeemodel.GetPropertyFeeInfo(LoginAccount.CurrentAccountMainID, Date, fhsx, IsPay).ToPagedList(id ?? 1, 50);
 
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "物业管理-物业费管理", LoginAccount.CurrentAccountMainName, WebTitleRemark);
@@ -116,8 +98,6 @@ namespace Web.Controllers
             dttable.Columns.Add("ID", typeof(Int32));
             dttable.Columns.Add("SystemStatus", typeof(Int32));
             dttable.Columns.Add("AccountMainID", typeof(Int32));
-            dttable.Columns.Add("业主姓名");
-            dttable.Columns.Add("业主电话");
             dttable.Columns.Add("单元");
             dttable.Columns.Add("房号");
             dttable.Columns.Add("缴费月份");
@@ -131,7 +111,7 @@ namespace Web.Controllers
             dttable.Columns.Add("备注");
             dttable.Columns.Add("importDate", typeof(DateTime));
             dttable.Columns.Add("楼号");
-
+            dttable.Columns.Add("房号(缩写)");
             result = Tool.GetXLSXInfo(ImExcel, dttable);
             if (result.HasError)
             {
@@ -164,73 +144,30 @@ namespace Web.Controllers
 
                     try
                     {
-                        if (string.IsNullOrEmpty(Row["业主电话"].ToString()))
+                        string sx = Row["房号(缩写)"].ToString();
+                        var sxlist = sx.Split('-').Length;
+                        if (sxlist < 2)
                         {
                             TempData["IsError"] = 1;
-                            TempData["ErrorStr"] = "业主电话不能为空";
-                            return RedirectToAction("Index", "PropertyFeeInfo", new { id = id });
-                            //return JavaScript("window.location.href='" + Url.Action("Index", "PropertyFeeInfo", new { IsError = 1, ErrorStr = "业主电话不能为空" }) + "'");
+                            TempData["ErrorStr"] = "房号(缩写)格式不正确";
+                            return RedirectToAction("Index", "ParkingFee", new { id = id });
                         }
-                    }
-                    catch
-                    {
-                        TempData["IsError"] = 1;
-                        TempData["ErrorStr"] = "业主电话不能为空";
-                        return RedirectToAction("Index", "PropertyFeeInfo", new { id = id });
-                        //return JavaScript("window.location.href='" + Url.Action("Index", "PropertyFeeInfo", new { IsError = 1, ErrorStr = "业主电话不能为空" }) + "'");
-                    }
-                    try
-                    {
-
-                        if (string.IsNullOrEmpty(Row["业主姓名"].ToString()))
+                        if (string.IsNullOrEmpty(Row["房号(缩写)"].ToString()))
                         {
                             TempData["IsError"] = 1;
-                            TempData["ErrorStr"] = "业主姓名不能为空";
-                            return RedirectToAction("Index", "PropertyFeeInfo", new { id = id });
-                            //return JavaScript("window.location.href='" + Url.Action("Index", "PropertyFeeInfo", new { IsError = 1, ErrorStr = "业主姓名不能为空" }) + "'");
-                        }
-                    }
-                    catch
-                    {
-                        TempData["IsError"] = 1;
-                        TempData["ErrorStr"] = "业主姓名不能为空";
-                        return RedirectToAction("Index", "PropertyFeeInfo", new { id = id });
-                        //return JavaScript("window.location.href='" + Url.Action("Index", "PropertyFeeInfo", new { IsError = 1, ErrorStr = "业主姓名不能为空" }) + "'");
-                    }
-                    try
-                    {
-                        if (string.IsNullOrEmpty(Row["房号"].ToString()))
-                        {
-                            TempData["IsError"] = 1;
-                            TempData["ErrorStr"] = "房号不能为空";
-                            return RedirectToAction("Index", "PropertyFeeInfo", new { id = id });
+                            TempData["ErrorStr"] = "房号(缩写)不能为空";
+                            return RedirectToAction("Index", "ParkingFee", new { id = id });
                             //return JavaScript("window.location.href='" + Url.Action("Index", "PropertyFeeInfo", new { IsError = 1, ErrorStr = "房号不能为空" }) + "'");
                         }
                     }
                     catch
                     {
                         TempData["IsError"] = 1;
-                        TempData["ErrorStr"] = "房号不能为空";
-                        return RedirectToAction("Index", "PropertyFeeInfo", new { id = id });
+                        TempData["ErrorStr"] = "房号(缩写)不能为空";
+                        return RedirectToAction("Index", "ParkingFee", new { id = id });
                         //return JavaScript("window.location.href='" + Url.Action("Index", "PropertyFeeInfo", new { IsError = 1, ErrorStr = "房号不能为空" }) + "'");
                     }
-                    try
-                    {
-                        if (string.IsNullOrEmpty(Row["单元"].ToString()))
-                        {
-                            TempData["IsError"] = 1;
-                            TempData["ErrorStr"] = "单元不能为空";
-                            return RedirectToAction("Index", "PropertyFeeInfo", new { id = id });
-                            //return JavaScript("window.location.href='" + Url.Action("Index", "PropertyFeeInfo", new { IsError = 1, ErrorStr = "单元不能为空" }) + "'");
-                        }
-                    }
-                    catch
-                    {
-                        TempData["IsError"] = 1;
-                        TempData["ErrorStr"] = "单元不能为空";
-                        return RedirectToAction("Index", "PropertyFeeInfo", new { id = id });
-                        //return JavaScript("window.location.href='" + Url.Action("Index", "PropertyFeeInfo", new { IsError = 1, ErrorStr = "单元不能为空" }) + "'");
-                    }
+                  
                     try
                     {
                         if (string.IsNullOrEmpty(Row["是否已缴费（是/否）"].ToString()))
@@ -297,28 +234,28 @@ namespace Web.Controllers
                     {
                         try
                         {
-                            var name = Row["业主姓名"].ToString();
-                            var phone = Row["业主电话"].ToString();
-                            var LH = Row["楼号"].ToString();
-                            var DY = Row["单元"].ToString();
-                            var FH = Row["房号"].ToString();
-                            if (name == Row2["业主姓名"].ToString() && phone == Row2["业主电话"].ToString() && LH == Row2["楼号"].ToString() && DY == Row2["单元"].ToString() && FH == Row2["房号"].ToString())
+                            string sx = Row["房号(缩写)"].ToString();
+
+
+                            string sx2 = Row2["房号(缩写)"].ToString();
+
+                            if (sx == sx2)
                             {
                                 cnts = cnts + 1;
                                 if (cnts > 1)
                                 {
                                     TempData["IsError"] = 1;
                                     TempData["ErrorStr"] = "模板中有重复数据，请删除后再试";
-                                    return RedirectToAction("Index", "PropertyFeeInfo", new { id = id });
+                                    return RedirectToAction("Index", "ParkingFee", new { id = id });
                                 }
                             }
                             foreach (PropertyFeeInfo pfi in DBlist)
                             {
-                                if (name == pfi.OwnerName && phone == pfi.OwnerPhone && LH == pfi.BuildingNum && DY == pfi.Unit && FH == pfi.RoomNumber)
+                                if (sx == pfi.Abbreviation)
                                 {
                                     TempData["IsError"] = 1;
-                                    TempData["ErrorStr"] = "用户：" + name + " 电话：" + phone + " 楼号：" + LH + " 单元：" + DY + " 房号：" + FH + "在" + Row["缴费月份"].ToString() + "中的的数据已存在。请删除后再次导入。";
-                                    return RedirectToAction("Index", "PropertyFeeInfo", new { id = id });
+                                    TempData["ErrorStr"] = " 房号(缩写)：" + sx + "中的的数据已存在。请删除后再次导入。";
+                                    return RedirectToAction("Index", "ParkingFee", new { id = id });
                                 }
                             }
                             
@@ -331,7 +268,11 @@ namespace Web.Controllers
                         }
                     }
                     #endregion
-
+                    string fhsx = Row["房号(缩写)"].ToString();
+                    var fhsxlist = fhsx.Split('-');
+                    Row["楼号"] = fhsxlist[0];
+                    Row["单元"] = fhsxlist[1];
+                    Row["房号"] = fhsxlist[2];
                 }
                 CommonModel com = new CommonModel();
                 result = com.CopyDataTableToDB(dt, "PropertyFeeInfo");
@@ -400,7 +341,7 @@ namespace Web.Controllers
             var propertyfeemodel = Factory.Get<IPropertyFeeInfoModel>(SystemConst.IOC_Model.PropertyFeeInfoModel);
             propertyfeeinfo.importDate = DateTime.Now;
             propertyfeeinfo.AccountMainID = LoginAccount.CurrentAccountMainID;
-            var result = propertyfeemodel.DBImportCheck(LoginAccount.CurrentAccountMainID, propertyfeeinfo.PayDate, propertyfeeinfo.OwnerName, propertyfeeinfo.OwnerPhone, propertyfeeinfo.BuildingNum, propertyfeeinfo.Unit, propertyfeeinfo.RoomNumber);
+            var result = propertyfeemodel.DBImportCheck(LoginAccount.CurrentAccountMainID, propertyfeeinfo.PayDate, propertyfeeinfo.BuildingNum, propertyfeeinfo.Unit, propertyfeeinfo.RoomNumber);
             if (result.HasError)
             {
                 TempData["IsError"] = 1;
@@ -416,6 +357,91 @@ namespace Web.Controllers
                 return RedirectToAction("Add", "PropertyFeeInfo");
             }
             return RedirectToAction("Index", "PropertyFeeInfo");
+        }
+
+
+        /// <summary>
+        /// 导出模板
+        /// </summary>
+        /// <returns></returns>
+        public void OutExcel()
+        {
+            var propertyfeemodel = Factory.Get<IPropertyFeeInfoModel>(SystemConst.IOC_Model.PropertyFeeInfoModel);
+            List<DataTable> dts = new List<DataTable>();
+            var dt = propertyfeemodel.getDtInfo(LoginAccount.CurrentAccountMainID);
+            dts.Add(dt);
+
+            CommonModel com = new CommonModel();
+            string fileName = "物业费导入模板" + DateTime.Now.ToString("yyyyMMddhhmmssfff") + ".xlsx";
+            string file = Server.MapPath("/File/Excel/") + fileName;
+            com.Export(dts, "物业费导入模板", file);
+
+
+
+            FileStream fs = new FileStream(file, FileMode.Open);
+
+            byte[] bytes = new byte[(int)fs.Length];
+
+            fs.Read(bytes, 0, bytes.Length);
+
+            fs.Close();
+
+            Response.ContentType = "application/octet-stream";
+
+            //通知浏览器下载文件而不是打开 
+
+            Response.AddHeader("Content-Disposition", "attachment;  filename=" + HttpUtility.UrlEncode(fileName, Encoding.UTF8));
+
+            Response.BinaryWrite(bytes);
+
+            Response.Flush();
+
+            Response.End();
+            System.IO.File.Delete(file);
+            //Directory.Delete(file);
+        }
+
+        /// <summary>
+        /// 导出历史数据
+        /// </summary>
+        /// <returns></returns>
+        public void OutExcel2(string DcDate, string Dcfhsx)
+        {
+
+            var propertyfeemodel = Factory.Get<IPropertyFeeInfoModel>(SystemConst.IOC_Model.PropertyFeeInfoModel);
+            List<DataTable> dts = new List<DataTable>();
+
+            var dt = propertyfeemodel.getDtHistoryInfo(LoginAccount.CurrentAccountMainID,DcDate,Dcfhsx);
+            dts.Add(dt);
+
+            CommonModel com = new CommonModel();
+            string fileName = "物业费历史数据" + DateTime.Now.ToString("yyyyMMddhhmmssfff") + ".xlsx";
+            string file = Server.MapPath("/File/Excel/") + fileName;
+            com.Export(dts, "物业费历史数据", file);
+
+
+
+            FileStream fs = new FileStream(file, FileMode.Open);
+
+            byte[] bytes = new byte[(int)fs.Length];
+
+            fs.Read(bytes, 0, bytes.Length);
+
+            fs.Close();
+
+            Response.ContentType = "application/octet-stream";
+
+            //通知浏览器下载文件而不是打开 
+
+            Response.AddHeader("Content-Disposition", "attachment;  filename=" + HttpUtility.UrlEncode(fileName, Encoding.UTF8));
+
+            Response.BinaryWrite(bytes);
+
+            Response.Flush();
+
+            Response.End();
+            System.IO.File.Delete(file);
+            //Directory.Delete(file);
         }
     }
 }

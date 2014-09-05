@@ -34,7 +34,8 @@ namespace Business
             user_automsg = 1,   //用户_自助问答
             user_news = 2,      //用户_通知，新闻
             account_bx = 3,        //物业_保修
-            account_ts = 4        //物业_投诉
+            account_ts = 4,        //物业_投诉
+            user_kd= 5       //用户_快递
         }
 
         #region 自助问答推送
@@ -256,6 +257,32 @@ namespace Business
             return result;
         }
 
+        #endregion
+
+        #region 用户端，快递代收推送
+
+        public Result Push(string type, int objID, string objTitle, string objImage, string objContent, int accountMainID)
+        {
+            var PushIDInfo = GetClientIDs_user("all", accountMainID, null);
+            string title = "";
+            var obj = new PushJson() { type = (int)PushType.user_kd };
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+            switch (type)
+            {
+                case "news":
+                    title = "新通知-快递代收";
+                    break;
+            }
+            //android推送
+            PushMessage message = new PushMessage();
+            message.Title = title;
+            message.Text = objTitle;
+            message.Logo = "ic_launcher.png";
+            message.EnumEvent = EnumEvent.Wait;// EnumEvent.Immediately;
+            message.MessageJson = json;
+            var result = Push_Getui.SendMessage(message, PushIDInfo.Android);
+            return result;
+        }
         #endregion
 
         /// <summary>

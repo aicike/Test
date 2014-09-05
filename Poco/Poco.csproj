@@ -100,6 +100,7 @@
     <Compile Include="Enum\EnumVIPOperate.cs" />
     <Compile Include="Enum\EnumDataStatus.cs" />
     <Compile Include="ExpressCollection.cs" />
+    <Compile Include="ExpressNotice.cs" />
     <Compile Include="Feedback.cs" />
     <Compile Include="LifeSkill.cs" />
     <Compile Include="Lottery_dish.cs" />

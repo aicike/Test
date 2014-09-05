@@ -154,7 +154,8 @@
   <object id="M_ProductModel" type="Business.MerchantBusiness.M_ProductModel" parent="EFModel" singleton="false"></object>
   <object id="WebNoticeModel" type="Business.SystemBusiness.WebNoticeModel" parent="EFModel" singleton="false"></object>
 
-  
+
+  <object id="ExpressNoticeModel" type="Business.SellBusiness.ExpressNoticeModel" parent="EFModel" singleton="false"></object>
   <!--<object id="UserModel" type="NightClubBooth.Business.UserModel" parent="EFModel" singleton="false">
 		<property name="LookupOptionModel" ref="LookupOptionModel"/>
 		<property name="RoleModel" ref="RoleModel"/>

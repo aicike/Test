@@ -69,6 +69,7 @@
     <Compile Include="IConversationDetailedModel.cs" />
     <Compile Include="IConversationModel.cs" />
     <Compile Include="IExpressCollectionModel.cs" />
+    <Compile Include="IExpressNoticeModel.cs" />
     <Compile Include="IFeedbackModel.cs" />
     <Compile Include="IHolidayModel.cs" />
     <Compile Include="IKeywordAutoMessageModel.cs" />

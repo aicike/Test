@@ -1041,6 +1041,38 @@ namespace Web.Controllers
         }
 
         /// <summary>
+        /// 获取物业费列表 根据房号缩写
+        /// </summary>
+        /// <param name="FHSX">房号缩写</param>
+        /// <param name="AMID">amid</param>
+        /// <param name="Year">年份 2014</param>
+        /// <returns></returns>
+        public string GetPropertyFeeList_2(string FHSX, int AMID, int Year)
+        {
+            var propertyfeemodel = Factory.Get<IPropertyFeeInfoModel>(SystemConst.IOC_Model.PropertyFeeInfoModel);
+            var list = propertyfeemodel.GetPropertyFeeInfo_2(AMID, FHSX, Year);
+            List<_B_PropertyFee> bpfs = new List<_B_PropertyFee>();
+            foreach (var item in list)
+            {
+                _B_PropertyFee pf = new _B_PropertyFee();
+                pf.AMID = item.AccountMainID;
+                pf.IsPay = item.IsPay;
+                pf.PayDate = item.PayDate;
+                pf.PID = item.ID;
+                if (item.Total.HasValue)
+                {
+                    pf.Total = item.Total.Value;
+                }
+                else
+                {
+                    pf.Total = 0;
+                }
+                bpfs.Add(pf);
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(bpfs);
+        }
+
+        /// <summary>
         /// 获取物业费详细信息
         /// </summary>
         /// <param name="PID">物业费ID</param>
@@ -1261,10 +1293,12 @@ namespace Web.Controllers
 
         #region-------------------停车费接口-------------------------
 
+
+
         /// <summary>
-        /// 获取停车费列表
+        /// 获取停车费列表 根据电话
         /// </summary>
-        /// <param name="RoomNumber">房号</param>
+        /// <param name="PhoneNum">电话</param>
         /// <param name="AMID">amid</param>
         /// <param name="Year">年份 2014</param>
         /// <returns></returns>
@@ -1272,6 +1306,39 @@ namespace Web.Controllers
         {
             var propertyfeemodel = Factory.Get<IParkingFeeModel>(SystemConst.IOC_Model.ParkingFeeModel);
             var list = propertyfeemodel.GetPropertyFeeInfo(AMID, PhoneNum, Year);
+            List<_B_PropertyFee> bpfs = new List<_B_PropertyFee>();
+            foreach (var item in list)
+            {
+                _B_PropertyFee pf = new _B_PropertyFee();
+                pf.AMID = item.AccountMainID;
+                pf.IsPay = item.IsPay;
+                pf.PayDate = item.PayDate;
+                pf.PID = item.ID;
+                pf.plates = item.plates;
+                if (item.ParkingFees != 0)
+                {
+                    pf.Total = item.ParkingFees;
+                }
+                else
+                {
+                    pf.Total = 0;
+                }
+                bpfs.Add(pf);
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(bpfs);
+        }
+
+        /// <summary>
+        /// 获取停车费列表 根据房号缩写
+        /// </summary>
+        /// <param name="FHSX">房号缩写</param>
+        /// <param name="AMID">amid</param>
+        /// <param name="Year">年份 2014</param>
+        /// <returns></returns>
+        public string GetParkingFeeList_2(string FHSX, int AMID, int Year)
+        {
+            var propertyfeemodel = Factory.Get<IParkingFeeModel>(SystemConst.IOC_Model.ParkingFeeModel);
+            var list = propertyfeemodel.GetPropertyFeeInfo_2(AMID, FHSX, Year);
             List<_B_PropertyFee> bpfs = new List<_B_PropertyFee>();
             foreach (var item in list)
             {
@@ -1312,7 +1379,8 @@ namespace Web.Controllers
             pf.PID = item.ID;
             pf.Unit = item.Unit;
             pf.RoomNumber = item.RoomNumber;
-            pf.Remarks = item.Remarks;
+            pf.ParkingType = item.ParkingType;
+            pf.Abbreviation = item.Abbreviation;
             pf.plates = item.plates;
             pf.BuildingNum = item.BuildingNum;
             if (item.ParkingFees != 0)
