@@ -12,10 +12,17 @@
             //                $(this).tipTip({ activation: "hover", delay: 3, defaultPosition: "bottom" });
             //            });
             $("#Date").val('@ViewBag.Date');
-            $("#Unit").val('@ViewBag.Unit');
-            $("#RoomNumber").val('@ViewBag.RoomNumber');
-            $("#OwnerName").val('@ViewBag.OwnerName');
-            $("#OwnerPhone").val('@ViewBag.OwnerPhone');
+            $("#fhsx").val('@ViewBag.fhsx');
+            $("#IsPay").val('@ViewBag.IsPay');
+
+
+
+            $("#DcDate").val('@ViewBag.Date');
+            $("#Dcfhsx").val('@ViewBag.fhsx');
+
+            if (($("#Date").val() != null && $("#Date").val() != undefined && $("#Date").val() != "") || ($("#fhsx").val() != null && $("#fhsx").val() != undefined && $("#fhsx").val() != "")) {
+                $("#btndcan").removeAttr("disabled");
+            }
 
             $("#Date").datepicker({
                 changeMonth: true,
@@ -112,7 +119,7 @@
             }
         }
     </script>
-   <style>
+    <style>
         .main
         {
             width: 1111px !important;
@@ -120,18 +127,18 @@
     </style>
 }
 @model PagedList<Poco.ParkingFee>
-<div class="title"  style="width: 900px">
+<div class="title" style="width: 900px">
     <div style="float: right">
-        <a href="@Url.Content("~/Download/Property/物业停车费导入模板.xlsx")" target="_blank" style=" color:#00aec8">
-            下载物业停车费导入模板</a></div>
+        @Html.ActionLink("下载物业停车费导入模板", "OutExcel", "ParkingFee", new { HostName = ViewBag.HostName },new{ style="color:#00aec8"})
+    </div>
     @Html.Partial("Menu3")
     <div style="clear: both">
     </div>
 </div>
-<div class="body"  style="width: 900px">
+<div class="body" style="width: 900px">
     @using (Html.BeginForm("Index", "ParkingFee", new { HostName = ViewBag.HostName }, FormMethod.Get, new { enctype = "multipart/form-data" }))
     {
-        <table width="800px">
+        <table width="900px">
             <tr>
                 <td>
                     费用月份：
@@ -140,42 +147,39 @@
                     <input type="text" id="Date" name="Date" />
                 </td>
                 <td>
-                    单元：
+                    房号缩写：
                 </td>
                 <td>
-                    <input type="text" id="Unit" name="Unit" />
+                    <input type="text" id="fhsx" name="fhsx" />
                 </td>
                 <td>
-                    房号:
+                    是否已缴费:
                 </td>
                 <td>
-                    <input type="text" id="RoomNumber" name="RoomNumber" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    业主姓名：
-                </td>
-                <td>
-                    <input type="text" id="OwnerName" name="OwnerName" />
-                </td>
-                <td>
-                    业主电话：
-                </td>
-                <td>
-                    <input type="text" id="OwnerPhone" name="OwnerPhone" />
-                </td>
-                <td>
+                    <select id="IsPay" name="IsPay">
+                        <option value="0">全部</option>
+                        <option value="True">已缴费</option>
+                        <option value="False">未缴费</option>
+                    </select>
                 </td>
                 <td>
                     <input type="submit" id="btnSubmit" value="查询" class="button" style="" />
+
+                     <input type="button" id="btndcan" value="数据导出" class="button" onclick="$('#btndc').click()" disabled="disabled"style=" margin-left:10px;" />
+                     <span style=" color:Red; font-size:10px">查询后才可导出</span>
                 </td>
             </tr>
         </table>
     }
+    @using (Html.BeginForm("OutExcel2", "ParkingFee", new { HostName = ViewBag.HostName }, FormMethod.Get, new { enctype = "multipart/form-data" }))
+    {
+        <input type="hidden" id="DcDate" name="DcDate" />
+        <input type="hidden" id="Dcfhsx" name="Dcfhsx" />
+         <input type="submit" id="btndc" value="数据导出" class="button" style="display:none" />
+    }
     <table style="width: 900px">
         <tr>
-            <td  class="option">
+            <td class="option">
                 @Html.ActionLink("添加", "Add", "ParkingFee", new { HostName = ViewBag.HostName }, null, true)
                 <input type="button" id="btnImport" value="导入" onclick="Showimport()" class="button"
                     style="margin-left: 20px" />
@@ -185,7 +189,7 @@
     </table>
     @using (Html.BeginForm("DellInfo", "ParkingFee", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <input type="submit" id="dell" name="dell" style=" display:none" />
+        <input type="submit" id="dell" name="dell" style="display: none" />
         <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
             <tr>
                 <th width="50px">
@@ -193,19 +197,7 @@
                     <input type="checkbox" id="ckbAll" name="ckbAll" />
                 </th>
                 <th>
-                    业主姓名
-                </th>
-                <th>
-                    业主电话
-                </th>
-                <th>
-                    楼号
-                </th>
-                <th>
-                    单元
-                </th>
-                <th>
-                    房号
+                    房号缩写
                 </th>
                 <th>
                     车牌号
@@ -214,13 +206,13 @@
                     费用月份
                 </th>
                 <th>
+                    停车类型
+                </th>
+                <th>
                     固定停车费
                 </th>
                 <th style="width: 85px">
                     是否已缴费
-                </th>
-                <th style="width: 150px">
-                    备注
                 </th>
             </tr>
             @foreach (var item in Model)
@@ -230,25 +222,16 @@
                         <input type="checkbox" id="ckbOK" name="ckbOK" value="@item.ID" />
                     </td>
                     <td>
-                        @item.OwnerName
-                    </td>
-                    <td>
-                        @item.OwnerPhone
-                    </td>
-                    <td>
-                        @item.BuildingNum
-                    </td>
-                    <td>
-                        @item.Unit
-                    </td>
-                    <td>
-                        @item.RoomNumber
+                        @item.Abbreviation
                     </td>
                     <td>
                         @item.plates
                     </td>
                     <td>
                         @item.PayDate
+                    </td>
+                    <td>
+                        @item.ParkingType
                     </td>
                     <td>
                         @item.ParkingFees
@@ -262,11 +245,6 @@
                         {
                             <span style="color: Red">未缴费</span>
                         }
-                    </td>
-                    <td>
-                        <div style="width: 150px; word-break: keep-all;">
-                            @item.Remarks
-                        </div>
                     </td>
                 </tr>
             }

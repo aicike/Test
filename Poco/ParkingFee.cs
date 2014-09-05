@@ -22,20 +22,6 @@ namespace Poco
         public virtual AccountMain AccountMain { get; set; }
 
         /// <summary>
-        /// 业主姓名
-        /// </summary>
-        [Display(Name = "业主姓名")]
-        [Required(ErrorMessage = "请输入业主姓名")]
-        public string OwnerName { get; set; }
-
-        /// <summary>
-        /// 业主电话
-        /// </summary>
-        [Display(Name = "业主电话")]
-        [Required(ErrorMessage = "请输入业主电话")]
-        public string OwnerPhone { get; set; }
-
-        /// <summary>
         /// 单元
         /// </summary>
         [Display(Name = "单元")]
@@ -60,6 +46,7 @@ namespace Poco
         /// 停车费
         /// </summary>
         [Display(Name = "停车费")]
+        [Required(ErrorMessage = "请输入停车费")]
         public double ParkingFees { get; set; }
 
         /// <summary>
@@ -70,12 +57,6 @@ namespace Poco
 
 
         /// <summary>
-        /// 备注
-        /// </summary>
-        [Display(Name = "备注")]
-        public string Remarks { get; set; }
-
-        /// <summary>
         /// 导入日期
         /// </summary>
         [Display(Name = "导入日期")]
@@ -84,6 +65,7 @@ namespace Poco
         /// <summary>
         /// 车牌号
         /// </summary>
+        [Required(ErrorMessage = "请输入车牌号")]
         public string plates { get; set; }
 
 
@@ -93,6 +75,21 @@ namespace Poco
         [Display(Name = "楼号")]
         [Required(ErrorMessage = "请输入楼号")]
         public string BuildingNum { get; set; }
+
+        /// <summary>
+        /// 缩写
+        /// </summary>
+        [Display(Name = "缩写")]
+        [Required(ErrorMessage = "请输入缩写")]
+        public string Abbreviation { get; set; }
+
+        /// <summary>
+        /// 停车类型
+        /// </summary>
+        [Display(Name = "停车类型")]
+        [Required(ErrorMessage = "请输入停车类型")]
+        public string ParkingType { get; set; }
+        
         
         public virtual ICollection<PropertyOrderDetail> PropertyOrderDetail { get; set; }
 

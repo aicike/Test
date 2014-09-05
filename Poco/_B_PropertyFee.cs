@@ -86,5 +86,15 @@ namespace Poco
         /// 楼号
         /// </summary>
         public string BuildingNum { get; set; }
+
+        /// <summary>
+        /// 缩写
+        /// </summary>
+        public string Abbreviation { get; set; }
+
+        /// <summary>
+        /// 停车类型
+        /// </summary>
+        public string ParkingType { get; set; }
     }
 }

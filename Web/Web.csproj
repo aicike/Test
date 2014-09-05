@@ -933,6 +933,7 @@
     <Folder Include="File\1\Account\" />
     <Folder Include="File\1\Base\" />
     <Folder Include="File\1\FileLibrary\" />
+    <Folder Include="File\Excel\" />
     <Folder Include="File\Merchant\" />
     <Folder Include="File\PlatformFile\" />
     <Folder Include="File\Temporary\" />

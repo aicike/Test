@@ -113,5 +113,17 @@ namespace Business
         //        }
         //    }
         //}
+
+        /// <summary>
+        /// 根据电话获取用户信息
+        /// </summary>
+        /// <param name="Phone"></param>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public Property_User getHoust_ByPhone(string Phone, int AMID)
+        {
+            var item = List().Where(a => a.AccountMainID == AMID && a.Phone==Phone).FirstOrDefault();
+            return item;
+        }
     }
 }

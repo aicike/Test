@@ -21,19 +21,6 @@ namespace Poco
         public int AccountMainID { get; set; }
         public virtual AccountMain AccountMain { get; set; }
 
-        /// <summary>
-        /// 业主姓名
-        /// </summary>
-        [Display(Name = "业主姓名")]
-        [Required(ErrorMessage = "请输入业主姓名")]
-        public string OwnerName { get; set; }
-
-        /// <summary>
-        /// 业主电话
-        /// </summary>
-        [Display(Name = "业主电话")]
-        [Required(ErrorMessage = "请输入业主电话")]
-        public string OwnerPhone { get; set; }
 
         /// <summary>
         /// 单元
@@ -119,6 +106,14 @@ namespace Poco
         [Display(Name = "楼号")]
         [Required(ErrorMessage = "请输入楼号")]
         public string BuildingNum { get; set; }
+
+
+        /// <summary>
+        /// 缩写
+        /// </summary>
+        [Display(Name = "缩写")]
+        [Required(ErrorMessage = "请输入缩写")]
+        public string Abbreviation { get; set; }
 
 
         public virtual ICollection<PropertyOrderDetail> PropertyOrderDetail { get; set; }

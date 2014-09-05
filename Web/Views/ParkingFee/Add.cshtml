@@ -43,24 +43,7 @@
         <fieldset style="font-size: 14px">
             <legend>添加停车费</legend>
             <table style="width: 100%;">
-                <tr>
-                    <td class="tdTitle" style="width: 150px">
-                        <span class="Identification">*</span> 业主姓名
-                    </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.OwnerName, new { style = "width:300px" })
-                    </td>
-                    <td>@Html.ValidationMessageFor(a => a.OwnerName)
-                    </td>
-                </tr>
-                <tr>
-                    <td class="tdTitle" style="width: 150px">
-                        <span class="Identification">*</span> 业主电话
-                    </td>
-                    <td class="tdField">@Html.TextBoxFor(a => a.OwnerPhone, new { style = "width:300px" })
-                    </td>
-                    <td>@Html.ValidationMessageFor(a => a.OwnerPhone)
-                    </td>
-                </tr>
+                
                 <tr>
                     <td class="tdTitle">
                         <span class="Identification">*</span> 费用月份
@@ -103,7 +86,7 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                         车牌号
+                         <span class="Identification">*</span> 车牌号
                     </td>
                     <td>
                         @Html.TextBoxFor(a => a.plates)
@@ -113,7 +96,7 @@
                 </tr>
                 <tr>
                     <td class="tdTitle">
-                         停车费
+                         <span class="Identification">*</span> 停车费
                     </td>
                     <td>
                         @Html.TextBoxFor(a => a.ParkingFees)
@@ -121,7 +104,16 @@
                     <td>@Html.ValidationMessageFor(a => a.ParkingFees)
                     </td>
                 </tr>
-                
+                <tr>
+                    <td class="tdTitle">
+                         <span class="Identification">*</span> 停类型
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(a => a.ParkingType)
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.ParkingType)
+                    </td>
+                </tr>
                 <tr>
                     <td class="tdTitle">
                          是否已缴费
@@ -133,16 +125,6 @@
                         </select>
                     </td>
                     <td>
-                    </td>
-                </tr>
-                <tr >
-                    <td class="tdTitle" valign="top">
-                         备注
-                    </td>
-                    <td>
-                        @Html.TextAreaFor(a => a.Remarks, new { style = "width:300px" })
-                    </td>
-                    <td>@Html.ValidationMessageFor(a => a.Remarks)
                     </td>
                 </tr>
             </table>

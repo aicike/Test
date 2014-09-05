@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Interface;
 using Poco;
+using Injection;
+using System.Data;
 
 namespace Business
 {
@@ -17,12 +19,10 @@ namespace Business
         /// </summary>
         /// <param name="AMID"></param>
         /// <param name="Date">缴费日期</param>
-        /// <param name="Unit">单元</param>
-        /// <param name="RoomNumber">房号</param>
-        /// <param name="OwnerName">业主姓名</param>
-        /// <param name="OwnerPhone">业主电话</param>
+        /// <param name="fhsx">房号缩写</param>
+        /// <param name="IsPay">是否已经交费</param>
         /// <returns></returns>
-        public IQueryable<ParkingFee> GetParkingFeeInfo(int AMID, string Date, string Unit, string RoomNumber, string OwnerName, string OwnerPhone)
+        public IQueryable<ParkingFee> GetParkingFeeInfo(int AMID, string Date, string fhsx, string IsPay)
         {
             var list = List().Where(a => a.AccountMainID == AMID);
             if (!string.IsNullOrEmpty(Date))
@@ -47,22 +47,43 @@ namespace Business
                 }
                 list = list.Where(a => a.PayDate == Date || a.PayDate == Date2);
             }
-            if (!string.IsNullOrEmpty(Unit))
+            if (!string.IsNullOrEmpty(fhsx))
             {
-                list = list.Where(a => a.Unit.Contains(Unit.Trim()));
+                list = list.Where(a => a.Abbreviation.Contains(fhsx.Trim()));
             }
-            if (!string.IsNullOrEmpty(RoomNumber))
+            if (!string.IsNullOrEmpty(IsPay))
             {
-                list = list.Where(a => a.RoomNumber.Contains(RoomNumber.Trim()));
+                if (IsPay != "0")
+                {
+                    var pay = bool.Parse(IsPay);
+                    list = list.Where(a => a.IsPay == pay);
+                }
             }
-            if (!string.IsNullOrEmpty(OwnerName))
-            {
-                list = list.Where(a => a.OwnerName.Contains(OwnerName.Trim()));
-            }
-            if (!string.IsNullOrEmpty(OwnerPhone))
-            {
-                list = list.Where(a => a.OwnerPhone.Contains(OwnerPhone.Trim()));
-            }
+            //if (!string.IsNullOrEmpty(OwnerName))
+            //{
+            //    list = list.Where(a => a.OwnerName.Contains(OwnerName.Trim()));
+            //}
+            //if (!string.IsNullOrEmpty(OwnerPhone))
+            //{
+            //    list = list.Where(a => a.OwnerPhone.Contains(OwnerPhone.Trim()));
+            //}
+            return list;
+        }
+
+        /// <summary>
+        /// 根据电话 年份 获取停车费
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <param name="RoomNumber"></param>
+        /// <param name="Year"></param>
+        /// <returns></returns>
+        public List<ParkingFee> GetPropertyFeeInfo(int AMID, string PhoneNum, int Year)
+        {
+            var property_userModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
+            var property_house = property_userModel.getHoust_ByPhone(PhoneNum, AMID).Property_House;
+
+            string year = Year.ToString();
+            var list = List().Where(a => a.AccountMainID == AMID && a.PayDate.Contains(year) && a.BuildingNum == property_house.BuildingNum && a.RoomNumber == property_house.RoomNumber & a.Unit == property_house.CellNum).ToList(); //&& a.OwnerPhone == PhoneNum
             return list;
         }
 
@@ -73,11 +94,13 @@ namespace Business
         /// <param name="RoomNumber"></param>
         /// <param name="Year"></param>
         /// <returns></returns>
-        public List<ParkingFee> GetPropertyFeeInfo(int AMID, string PhoneNum, int Year)
+        public List<ParkingFee> GetPropertyFeeInfo_2(int AMID, string FHSX, int Year)
         {
+
             string year = Year.ToString();
-            var list = List().Where(a => a.AccountMainID == AMID && a.OwnerPhone == PhoneNum && a.PayDate.Contains(year)).ToList();
+            var list = List().Where(a => a.AccountMainID == AMID && a.PayDate.Contains(year) && a.Abbreviation == FHSX).ToList(); //&& a.OwnerPhone == PhoneNum
             return list;
+
         }
 
         /// <summary>
@@ -153,16 +176,16 @@ namespace Business
         /// <param name="DY"></param>
         /// <param name="FH"></param>
         /// <returns></returns>
-        public Result DBImportCheck(int AMID, string PayDate, string Name, string Phone, string LH, string DY, string FH)
+        public Result DBImportCheck(int AMID, string PayDate, string LH, string DY, string FH)
         {
             Result result = new Result();
-            string sql = string.Format("select count(ID) from ParkingFee where AccountMainID={0} and PayDate='{1}' and OwnerName='{2}'and OwnerPhone='{3}'and BuildingNum='{4}'and Unit='{5}'and RoomNumber='{6}'",
-                                      AMID, PayDate, Name, Phone, LH, DY, FH);
+            string sql = string.Format("select count(ID) from ParkingFee where AccountMainID={0} and PayDate='{1}' and BuildingNum='{2}'and Unit='{3}'and RoomNumber='{4}'",
+                                      AMID, PayDate, LH, DY, FH);
             var cnt = Context.Database.SqlQuery<int>(sql).FirstOrDefault();
             if (cnt > 0)
             {
                 result.HasError = true;
-                result.Error = "用户：" + Name + " 电话：" + Phone + " 楼号：" + LH + " 单元：" + DY + " 房号：" + FH + "在" + PayDate + "中的的数据已存在。请删除后再次导入。";
+                result.Error = " 楼号：" + LH + " 单元：" + DY + " 房号：" + FH + "在" + PayDate + "中的的数据已存在。请删除后再次导入。";
             }
             return result;
         }
@@ -177,6 +200,109 @@ namespace Business
         {
             var list = List().Where(a => a.AccountMainID == AMID && a.PayDate == PayDate).ToList();
             return list;
+        }
+
+        /// <summary>
+        /// 获取导出模板内容
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public DataTable getDtInfo(int AMID)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("房号(缩写)");
+            dt.Columns.Add("缴费月份");
+            dt.Columns.Add("车牌号");
+            dt.Columns.Add("停车费");
+            dt.Columns.Add("停车类型");
+            dt.Columns.Add("是否已缴费（是/否）");
+            var property_houseModel = Factory.Get<IProperty_HouseModel>(SystemConst.IOC_Model.Property_HouseModel);
+            var Property_House = property_houseModel.List().Where(a => a.AccountMainID == AMID).OrderBy(a => a.BuildingNum).OrderBy(a => a.CellNum).OrderBy(a => a.RoomNumber);
+            var i = 0;
+            foreach (var item in Property_House)
+            {
+                DataRow row = dt.NewRow();
+                row["房号(缩写)"] = item.BuildingNum + "-" + item.CellNum + "-" + item.RoomNumber;
+                if (i == 0)
+                {
+                    row["缴费月份"] = DateTime.Now.Year.ToString() + "-" + DateTime.Now.Month.ToString();
+                    row["车牌号"] = "陕A 12345";
+                    row["停车费"] = "300.00";
+                    row["停车类型"] = "地上，地下，其他";
+                    row["是否已缴费（是/否）"] = "是";
+
+                }
+                if (i == 0)
+                {
+                    row["缴费月份"] = DateTime.Now.Year.ToString() + "-" + DateTime.Now.Month.ToString();
+                    row["车牌号"] = "陕A 54321";
+                    row["停车费"] = "300.00";
+                    row["停车类型"] = "地上，地下，其他";
+                    row["是否已缴费（是/否）"] = "否";
+
+                }
+                dt.Rows.Add(row);
+                i++;
+            }
+            return dt;
+        }
+
+        /// <summary>
+        /// 获取导出历史内容
+        /// </summary>
+        /// <param name="AMID"></param>
+        /// <returns></returns>
+        public DataTable getDtHistoryInfo(int AMID, string DcDate, string Dcfhsx)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("房号(缩写)");
+            dt.Columns.Add("缴费月份");
+            dt.Columns.Add("车牌号");
+            dt.Columns.Add("停车费");
+            dt.Columns.Add("停车类型");
+            dt.Columns.Add("是否已缴费（是/否）");
+            var Propertyfee = this.List().Where(a => a.AccountMainID == AMID);
+            if (DcDate != null && DcDate != "")
+            {
+                string year = DcDate.Split('-')[0];
+                string day = DcDate.Split('-')[1];
+                string Date2 = "";
+                if (day.Length > 1)
+                {
+                    if (day.Substring(0, 1) == "0")
+                    {
+                        Date2 = year + "-" + day.Substring(1, 1);
+                    }
+                    else
+                    {
+                        Date2 = DcDate;
+                    }
+                }
+                else
+                {
+                    Date2 = year + "-0" + day.Substring(1, 1);
+                }
+                Propertyfee = Propertyfee.Where(a => a.PayDate == DcDate || a.PayDate == Date2);
+            }
+            if (Dcfhsx != null && Dcfhsx != "")
+            {
+                Propertyfee = Propertyfee.Where(a => a.Abbreviation.Contains(Dcfhsx));
+            }
+            Propertyfee = Propertyfee.OrderBy(a => a.BuildingNum).OrderBy(a => a.Unit).OrderBy(a => a.RoomNumber);
+            foreach (var item in Propertyfee)
+            {
+                DataRow row = dt.NewRow();
+                row["房号(缩写)"] = item.BuildingNum + "-" + item.Unit + "-" + item.RoomNumber;
+
+                row["缴费月份"] =item.PayDate;
+                row["车牌号"] = item.plates;
+                row["停车费"] = item.ParkingFees;
+                row["停车类型"] = item.ParkingType;
+                row["是否已缴费（是/否）"] = item.IsPay ? "是" : "否";
+
+                dt.Rows.Add(row);
+            }
+            return dt;
         }
     }
 }
