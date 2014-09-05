@@ -14,6 +14,7 @@ namespace Interface
 
         Result DeleteByPropertyHouseID(int propertyHouseID);
 
+
         /// <summary>
         /// 根据房号获取物业登记的业主信息
         /// </summary>

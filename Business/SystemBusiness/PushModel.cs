@@ -43,11 +43,30 @@ namespace Business
         /// 普通推送
         /// </summary>
         [Transaction]
-        public Result Push(EnumMessageType msgType, int? libraryID, string url, string content, string receiveType, int accountID, string userIds, int accountMainID)
+        public Result Push(EnumMessageType msgType, int? libraryID, string url, string content, string receiveType, int accountID, string houseIds, int accountMainID)
         {
             Result result = new Result();
             var iosModel = Factory.Get("Push_IOS") as IPushModel;
             var androidModel = Factory.Get("Push_Getui") as IPushModel;
+
+            //根据HouseID获取userID
+            string userIds = "";
+            if (receiveType == "user")
+            {
+                var property_UserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
+                var houseList = houseIds.ConvertToIntArray(',');
+                var UserLoginInfoList = property_UserModel.List().Where(a => houseList.Contains(a.Property_HouseID)).Select(a => a.UserLoginInfo).ToList();
+                if (UserLoginInfoList != null)
+                {
+                    foreach (var item in UserLoginInfoList)
+                    {
+                        if (item != null)
+                        {
+                            userIds += item.Users.Select(a => a.ID).ToList().ConvertToString(",");
+                        }
+                    }
+                }
+            }
             var PushIDInfo = GetClientIDs_user(receiveType, accountMainID, userIds);
             //售楼部信息
             var accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);

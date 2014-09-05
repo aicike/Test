@@ -14,29 +14,44 @@ namespace Web.Controllers
 {
     public class PropertyHouseController : ManageAccountController
     {
-        public ActionResult Index(int? id, string houseNum)
+        public ActionResult Index(int? id, string houseShortNo)
+        {
+            var property_HouseModel = Factory.Get<IProperty_HouseModel>(SystemConst.IOC_Model.Property_HouseModel);
+            var list = property_HouseModel.List(true).Where(a => a.AccountMainID == LoginAccount.CurrentAccountMainID);
+
+            if (!string.IsNullOrEmpty(houseShortNo))
+            {
+                var tempValue = houseShortNo.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
+                if (tempValue.Length == 3)
+                {
+                    string BuildingNum = tempValue[0];
+                    string CellNum = tempValue[1];
+                    string RoomNumber = tempValue[2];
+                    list = list.Where(a => a.BuildingNum == BuildingNum && a.CellNum == CellNum && a.RoomNumber == RoomNumber);
+                }
+            }
+            var pageList = list.ToPagedList(id ?? 1, 100);
+            string WebTitleRemark = SystemConst.WebTitleRemark;
+            string webTitle = string.Format(SystemConst.Business.WebTitle, "房屋信息", LoginAccount.CurrentAccountMainName, WebTitleRemark);
+            ViewBag.Title = webTitle;
+            //提示消息
+            if (TempData["Msg"] != null)
+            {
+                var msg = TempData["Msg"].ToString();
+                ViewBag.Msg = msg;
+                ViewBag.HasError = 1;
+            }
+            if (TempData["HasError"] != null)
+            {
+                ViewBag.HasError = TempData["HasError"].ToString();
+            }
+            return View(pageList);
+        }
+
+        public ActionResult _Index(int? id, string houseNum)
         {
             var property_HouseModel = Factory.Get<IProperty_HouseModel>(SystemConst.IOC_Model.Property_HouseModel);
             var pageList = property_HouseModel.List(true).Where(a => a.AccountMainID == LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 100);
-
-            //var propertyUserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
-
-            //var list = propertyUserModel.GetListByAccountMainID(LoginAccount.CurrentAccountMainID);//.ToPagedList(id ?? 1, 100);
-            //if (string.IsNullOrEmpty(houseNum) == false && houseNum.Length > 0)
-            //{
-            //    list = list.Where(a => a.Property_House.RoomNumber.Contains(houseNum));
-            //}
-            //if (string.IsNullOrEmpty(userName) == false && userName.Length > 0)
-            //{
-            //    list = list.Where(a => a.UserName.Contains(userName));
-            //}
-            //if (string.IsNullOrEmpty(userPhone) == false && userPhone.Length > 0)
-            //{
-            //    list = list.Where(a => a.Phone.Contains(userPhone));
-            //}
-            //var pageList = list.ToPagedList(id ?? 1, 100);
-            ////List<PropertyComplexEntity> objs = new List<PropertyComplexEntity>();
-            ////var list = objs.AsQueryable().ToPagedList(id ?? 1, 100);
 
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "房屋信息", LoginAccount.CurrentAccountMainName, WebTitleRemark);
@@ -80,7 +95,7 @@ namespace Web.Controllers
                 var buildingNum = item["楼号"];
                 var cellNum = item["单元"];
                 var houseNum = item["房号"];
-                if (buildingNum == null || cellNum == null || houseNum == null )
+                if (buildingNum == null || cellNum == null || houseNum == null)
                 {
                     TempData["Msg"] = "您上传的房屋信息表格中信息没有完善，无法导入，请先完善信息。";
                     TempData["HasError"] = 1;
@@ -89,7 +104,7 @@ namespace Web.Controllers
                 var buildingNum_str = buildingNum.ToString().Trim();
                 var cellNum_str = cellNum.ToString().Trim();
                 var houseNum_str = houseNum.ToString().Trim();
-                if (buildingNum_str.Length <= 0 || cellNum_str.Length <= 0 || houseNum_str.Length <= 0 )
+                if (buildingNum_str.Length <= 0 || cellNum_str.Length <= 0 || houseNum_str.Length <= 0)
                 {
                     TempData["Msg"] = "您上传的房屋信息表格中信息没有完善，无法导入，请先完善信息。";
                     TempData["HasError"] = 1;
@@ -108,7 +123,7 @@ namespace Web.Controllers
                 //pu.Property_House = ph;
                 //Property_User_list.Add(pu);
             }
-            
+
             var propertyHouseModel = Factory.Get<IProperty_HouseModel>(SystemConst.IOC_Model.Property_HouseModel);
             result = propertyHouseModel.AddList(phlist);
             if (result.HasError)
@@ -190,7 +205,7 @@ namespace Web.Controllers
         public ActionResult Delete(int id)
         {
             var property_HouseModel = Factory.Get<IProperty_HouseModel>(SystemConst.IOC_Model.Property_HouseModel);
-            var result= property_HouseModel.Delete(id);
+            var result = property_HouseModel.Delete(id);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));
