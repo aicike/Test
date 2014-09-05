@@ -1,53 +1,35 @@
 ﻿@{
-    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
     ViewBag.Menu2 = Poco.SystemConst.Menu.PropertyHouse;
     ViewBag.Menu3 = Poco.SystemConst.Menu.PropertyHouse;
 
 }
 @section head{
     <script type="text/javascript">
-        var msg = '@ViewBag.Msg';
-        var hasError = '@ViewBag.HasError';
         $(function () {
-            $("#fileUpload").change(function () {
-                var path = $(this).val();
-                if (path.length > 0) {
-                    $("#formFileUpload").submit();
+            $(".cbHID").change(function () {
+                var currentValue = $(this).val();
+                var hids = $("#hidHIDs", parent.document).val();
+                if ($(this).attr("checked") == "checked") {
+                    hids += currentValue + ",";
+                } else {
+                    re = new RegExp(currentValue + ",", "g");
+                    hids = hids.replace(re, "");
                 }
+                $("#hidHIDs", parent.document).val(hids);
             });
-            $("#btnUpload").click(function () {
-                $("#fileUpload").click();
-            });
-            if (hasError == "1" && msg.length > 0) {
-                JMessage(msg, true);
-            } else if (hasError == "0") {
-                JMessage("导入成功。");
-            }
         });
     </script>
 }
 @model PagedList<Poco.Property_House>
-<div class="title">
-    <div style="float: right">
-        <a href="@Url.Content("~/Download/Property/房屋信息导入模板.xlsx")" target="_blank" style=" color:#00aec8">
-            下载房屋信息导入模板</a></div>
-    @Html.Partial("Menu3")
-    <div style="clear: both">
-    </div>
-</div>
 <div class="body">
-    <div class="option">
+    @* <div class="option">
         @using (Html.BeginForm("Index", "PropertyHouse", new { HostName = ViewBag.HostName }, FormMethod.Get))
         {
             <table style="width: 100%">
                 <tr>
-                    <td colspan="2" style="text-align: left">@Html.ActionLink("添加", "Add", "PropertyHouse", new { HostName = ViewBag.HostName }, null, true)<a
-                        href="#" id="btnUpload" class="button" style="margin: 10px">导入</a>
-                    </td>
-                </tr>
-                <tr>
                     <td>
-                        缩写：
+                        房号缩写：
                         <input type="text" id="houseShortNo" name="houseShortNo" />
                     </td>
                     <td style="text-align: right">
@@ -56,10 +38,8 @@
                 </tr>
             </table>
         }
-    </div>
+    </div>*@
     <div style="margin-top: 10px;">
-        <div style="float: left">
-            总房屋数 @Model.TotalItemCount </div>
         <div class="pages" style="margin-bottom: 10px; float: right">
             @Html.Pager(Model, new PagerOptions
    {
@@ -78,30 +58,31 @@
        ShowFirstLast = false
    })
         </div>
-        <div style="clear: both">
-        </div>
     </div>
     <table class="tableList" cellpadding="0" cellspacing="0" style="font-size: 14px">
         <tr>
-            <th style="width: 80px;">
+            <th style="width: 50px;">
+                选择
+            </th>
+            <th style="width: 50px;">
                 楼号
             </th>
-            <th style="width: 80px;">
+            <th style="width: 50px;">
                 单元
             </th>
-            <th style="width: 80px;">
+            <th style="width: 50px;">
                 房号
             </th>
-            <th style="width: 80px;">
+            <th style="width: 50px;">
                 缩写
-            </th>
-            <th style="width: 120px;">
-                操作
             </th>
         </tr>
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    <input type="checkbox" value="@item.ID" class="cbHID" />
+                </td>
                 <td>
                     @item.BuildingNum
                 </td>
@@ -113,11 +94,6 @@
                 </td>
                 <td>
                     @item.BuildingNum-@item.CellNum-@item.RoomNumber
-                </td>
-                <td class="operation">
-                    @Html.ActionLink("业主信息", "Index", "PropertyUser", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
-                    @Html.ActionLink("修改", "Edit", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID }, null, true)
-                    @Ajax.ActionLink("删除", "Delete", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID}, new AjaxOptions() { UpdateTargetId = "alert", OnBegin = "return AppDelete('确定删除?删除此项将会删除其关联的所有数据！','" + Url.Action("Delete", "PropertyHouse", new { HostName = ViewBag.HostName, id = item.ID }) + "',null)" }, true)
                 </td>
             </tr>
         }
@@ -140,8 +116,4 @@
        ShowFirstLast = false
    })
     </div>
-    @using (Html.BeginForm("Upload", "PropertyHouse", new { HostName = ViewBag.HostName }, FormMethod.Post, new { enctype = "multipart/form-data", id = "formFileUpload" }))
-    {  
-        <input type="file" style="visibility: hidden" id="fileUpload" name="file" />
-    }
 </div>

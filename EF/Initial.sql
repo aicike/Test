@@ -211,8 +211,8 @@ INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [C
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (24,'Token_User_Msg', 0, N'人工回答', N'人工回答', NULL, N'InstantMes', N'Index', 2, 3,0,2)
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (25,'Token_User_SM', 1, N'人员与用户管理', N'人员与用户管理', NULL, N'SalesMessage', N'Index', 3, 3,0,2)
 
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (34,'Token_Keyword', 0, N'关键词自动回复', N'关键词自动回复', NULL, N'KeywordMessage', N'Index', 1, 4,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (26,'Token_Message_N', 0, N'自助问答', N'自助问答', NULL, N'Message', N'Index', 2, 4,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (34,'Token_Keyword', 0, N'自动回复', N'自动回复', NULL, N'KeywordMessage', N'Index', 1, 4,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (26,'Token_Message_N', 0, N'消息推送', N'消息推送', NULL, N'Message', N'Index', 2, 4,0,2)
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (27,'Token_Message_H', 0, N'已发送', N'已发送', NULL, N'Message', N'History', 3, 4,0,2)
 
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (28,'Token_Library_I', 0, N'图片素材', N'图片素材', NULL, N'LibraryImage', N'Index', 1, 5,0,2)

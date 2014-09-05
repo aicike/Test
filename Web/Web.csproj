@@ -761,6 +761,7 @@
     <Content Include="Views\PropertyUser\Index.cshtml" />
     <Content Include="Views\PropertyUser\Add.cshtml" />
     <Content Include="Views\PropertyUser\Edit.cshtml" />
+    <Content Include="Views\PropertyHouse\_Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\IOC.xml" />
@@ -1384,13 +1385,13 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>16123</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://tllhs.imtimely.com/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>True</UseCustomServer>
+          <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>http://192.168.1.138</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>

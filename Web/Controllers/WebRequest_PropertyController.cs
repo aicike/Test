@@ -105,13 +105,55 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
+        public string GetBuildingNum(int amid)
+        {
+            var property_HouseModel = Factory.Get<IProperty_HouseModel>(SystemConst.IOC_Model.Property_HouseModel);
+            var list = property_HouseModel.GetBuildingNum(amid);
+            if (list != null)
+            {
+                return Newtonsoft.Json.JsonConvert.SerializeObject(list);
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        public string GetCellNum(int amid, string buildingNum)
+        {
+            var property_HouseModel = Factory.Get<IProperty_HouseModel>(SystemConst.IOC_Model.Property_HouseModel);
+            var list = property_HouseModel.GetCellNum(amid, buildingNum);
+            if (list != null)
+            {
+                return Newtonsoft.Json.JsonConvert.SerializeObject(list);
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        public string GetRoomNumber(int amid, string buildingNum, string cellNum)
+        {
+            var property_HouseModel = Factory.Get<IProperty_HouseModel>(SystemConst.IOC_Model.Property_HouseModel);
+            var list = property_HouseModel.GetRoomNumber(amid, buildingNum, cellNum);
+            if (list != null)
+            {
+                return Newtonsoft.Json.JsonConvert.SerializeObject(list);
+            }
+            else
+            {
+                return "";
+            }
+        }
+        /*
         /// <summary>
-        /// 业主注册
+        /// 业主注册(之前物业录入数据后注册方法)
         /// </summary>
         /// <param name="userID"></param>
         /// <param name="field"></param>
         /// <param name="value"></param>
-        public string Register(int userID, string userName, string phone, string pwd,string email)
+        public string Register(int userID, string userName, string phone, string pwd, string email)
         {
             Result result = new Result();
             var um = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
@@ -155,9 +197,75 @@ namespace Web.Controllers
             var property_UserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
             result = property_UserModel.EditUserLoginInfoID(phone, user.AccountMainID, userLoginInfo.ID);
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }*/
+
+        /// <summary>
+        /// 业主注册(业主自己选择房号注册方法)
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="field"></param>
+        /// <param name="value"></param>
+        public string Register(int userID, string userName, string phone, string pwd, string email, string shortHouseNo)
+        {
+            Result result = new Result();
+            var um = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+            var user = um.Get(userID);
+            if (user == null)
+            {
+                result.Error = "请求错误，请稍后重试。";
+                return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            }
+            user.Name = userName;
+            user.Phone = phone;
+            user.Email = email;
+            result = um.Edit(user);
+            if (user == null)
+            {
+                result.Error = "请求错误，请稍后重试。";
+                return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            }
+            var ulim = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
+            var userLoginInfo = ulim.Get(user.UserLoginInfoID);
+
+            //CommonModel model = Factory.Get(SystemConst.IOC_Model.CommonModel) as CommonModel;
+            //var isOk = model.CheckIsUnique("UserLoginInfo", "Phone", phone, userLoginInfo.ID);
+            //if (isOk == false)
+            //{
+            //    result.Error = "该电话已被其他账号使用。";
+            //    result.HasError = true;
+            //    return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            //}
+            userLoginInfo.Name = userName;
+            userLoginInfo.Phone = phone;
+            userLoginInfo.LoginPwd = DESEncrypt.Encrypt(pwd);
+            userLoginInfo.LoginPwdPage = "000000";
+            userLoginInfo.Email = email;
+            result = ulim.Edit(userLoginInfo);
+            if (result.HasError)
+            {
+                return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            }
+            //修改Property_User 
+            var property_UserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
+            var property_HouseModel = Factory.Get<IProperty_HouseModel>(SystemConst.IOC_Model.Property_HouseModel);
+            var ph = property_HouseModel.GetByShortNo(shortHouseNo);
+            if (ph == null)
+            {
+                result.Error = "未找到相应的房屋。";
+            }
+            if (!result.HasError)
+            {
+                Property_User property_User = new Property_User();
+                property_User.AccountMainID = user.AccountMainID;
+                property_User.Property_HouseID = ph.ID;
+                property_User.UserLoginInfoID = userLoginInfo.ID;
+                property_User.UserName = userName;
+                property_User.Phone = phone;
+                property_User.Email = email;
+                result = property_UserModel.Add(property_User);
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
-
-
 
 
         #region-------------------报修接口---------------------------
@@ -399,7 +507,7 @@ namespace Web.Controllers
             br.UserInfo = "姓名：" + repair.RepairName + "\r\n电话：" + repair.User.Phone;
             br.ImgPaths = repair.ImgPath;
             br.Content = repair.RepairContent;
-            
+
             if (repair.RepairType == 0)
             {
                 br.type = "个人";
@@ -1001,7 +1109,7 @@ namespace Web.Controllers
             {
                 pf.ManagerFee = 0;
             }
-            
+
             if (item.ElevatorFee.HasValue)
             {
                 pf.ElevatorFee = item.ElevatorFee.Value;
@@ -1185,6 +1293,8 @@ namespace Web.Controllers
 
         #region-------------------停车费接口-------------------------
 
+
+
         /// <summary>
         /// 获取停车费列表 根据电话
         /// </summary>
@@ -1339,7 +1449,7 @@ namespace Web.Controllers
             StringBuilder sb = new StringBuilder();
             sb.Append("<html><head><meta name='viewport' content='width=device-width, user-scalable=no' />");
             sb.Append("<style>.main img{max-width: 98% !important;}</style></head>");
-            sb.AppendFormat("<body><div class='main' style='width: 100%; background-color: #fff'>{0}</div></body></html>", item==null?"":item.Content ?? "");
+            sb.AppendFormat("<body><div class='main' style='width: 100%; background-color: #fff'>{0}</div></body></html>", item == null ? "" : item.Content ?? "");
             return sb.ToString(); ;
         }
 

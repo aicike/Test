@@ -12,7 +12,7 @@ namespace Web.Controllers
 {
     public class UserManageController : ManageAccountController
     {
-        public ActionResult Index(int? id,int? groupID)
+        public ActionResult Index(int? id, int? groupID)
         {
             var groupModel = Factory.Get<IGroupModel>(SystemConst.IOC_Model.GroupModel);
             var groupList = groupModel.GetGroupListByAccountID(LoginAccount.ID, null);
@@ -53,7 +53,7 @@ namespace Web.Controllers
                 return AlertJS_NoTag(new Dialog(result.Error));
             }
 
-            
+
             return string.Format("location.href='{0}'", Url.Action("Index", "UserManage", new { HostName = LoginAccount.HostName, groupID = currentGroupID }));
         }
 
@@ -110,7 +110,7 @@ namespace Web.Controllers
             accountModel.CheckHasPermissions_User(LoginAccount.ID, user.ID).NotAuthorizedPage();
 
             var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
-            var result= userModel.UpdateUserInfo(user);
+            var result = userModel.UpdateUserInfo(user);
             if (result.HasError)
             {
                 return Alert(new Dialog(result.Error));
@@ -141,12 +141,46 @@ namespace Web.Controllers
         /// 查看所有用户
         /// </summary>
         /// <returns></returns>
-        public ActionResult AllUser(int ?id)
+        public ActionResult AllUser(int? id, string houseShortNum, string houseName, string housePhone)
         {
             var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
-            var userList = userModel.GetAllUser(LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 15);
+            var property_UserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
 
+            bool isSelect = false;
+            var propertyUserList = property_UserModel.GetListByAccountMainID(LoginAccount.CurrentAccountMainID);
+            if (!string.IsNullOrEmpty(houseShortNum))
+            {
+                var tempValue = houseShortNum.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
+                if (tempValue.Length == 3)
+                {
+                    string BuildingNum = tempValue[0];
+                    string CellNum = tempValue[1];
+                    string RoomNumber = tempValue[2];
+                    propertyUserList = propertyUserList.Where(a => a.Property_House.BuildingNum == BuildingNum && a.Property_House.CellNum == CellNum && a.Property_House.RoomNumber == RoomNumber);
+                    isSelect = true;
 
+                }
+            }
+            if (!string.IsNullOrEmpty(houseName))
+            {
+                propertyUserList = propertyUserList.Where(a => a.UserName.Contains(houseName));
+                isSelect = true;
+            }
+            if (!string.IsNullOrEmpty(housePhone))
+            {
+                propertyUserList = propertyUserList.Where(a => a.Phone.Contains(housePhone));
+                isSelect = true;
+            }
+            PagedList<User> userList = null;
+            if (isSelect)
+            {
+                var userLoginInfoIDs = propertyUserList.Select(a => a.UserLoginInfoID).ToList();
+                userList = userModel.GetAllUser(LoginAccount.CurrentAccountMainID).Where(a => userLoginInfoIDs.Contains(a.UserLoginInfoID)).ToPagedList(id ?? 1, 15);
+            }
+            else
+            {
+                userList = userModel.GetAllUser(LoginAccount.CurrentAccountMainID).ToPagedList(id ?? 1, 15);
+            }
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "用户管理-全部用户", LoginAccount.CurrentAccountMainName, WebTitleRemark);
             ViewBag.Title = webTitle;

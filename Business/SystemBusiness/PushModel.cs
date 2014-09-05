@@ -34,7 +34,8 @@ namespace Business
             user_automsg = 1,   //用户_自助问答
             user_news = 2,      //用户_通知，新闻
             account_bx = 3,        //物业_保修
-            account_ts = 4        //物业_投诉
+            account_ts = 4,        //物业_投诉
+            user_kd= 5       //用户_快递
         }
 
         #region 自助问答推送
@@ -43,11 +44,30 @@ namespace Business
         /// 普通推送
         /// </summary>
         [Transaction]
-        public Result Push(EnumMessageType msgType, int? libraryID, string url, string content, string receiveType, int accountID, string userIds, int accountMainID)
+        public Result Push(EnumMessageType msgType, int? libraryID, string url, string content, string receiveType, int accountID, string houseIds, int accountMainID)
         {
             Result result = new Result();
             var iosModel = Factory.Get("Push_IOS") as IPushModel;
             var androidModel = Factory.Get("Push_Getui") as IPushModel;
+
+            //根据HouseID获取userID
+            string userIds = "";
+            if (receiveType == "user")
+            {
+                var property_UserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
+                var houseList = houseIds.ConvertToIntArray(',');
+                var UserLoginInfoList = property_UserModel.List().Where(a => houseList.Contains(a.Property_HouseID)).Select(a => a.UserLoginInfo).ToList();
+                if (UserLoginInfoList != null)
+                {
+                    foreach (var item in UserLoginInfoList)
+                    {
+                        if (item != null)
+                        {
+                            userIds += item.Users.Select(a => a.ID).ToList().ConvertToString(",");
+                        }
+                    }
+                }
+            }
             var PushIDInfo = GetClientIDs_user(receiveType, accountMainID, userIds);
             //售楼部信息
             var accountMainModel = Factory.Get<IAccountMainModel>(SystemConst.IOC_Model.AccountMainModel);
@@ -237,6 +257,32 @@ namespace Business
             return result;
         }
 
+        #endregion
+
+        #region 用户端，快递代收推送
+
+        public Result Push(string type, int objID, string objTitle, string objImage, string objContent, int accountMainID)
+        {
+            var PushIDInfo = GetClientIDs_user("all", accountMainID, null);
+            string title = "";
+            var obj = new PushJson() { type = (int)PushType.user_kd };
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+            switch (type)
+            {
+                case "news":
+                    title = "新通知-快递代收";
+                    break;
+            }
+            //android推送
+            PushMessage message = new PushMessage();
+            message.Title = title;
+            message.Text = objTitle;
+            message.Logo = "ic_launcher.png";
+            message.EnumEvent = EnumEvent.Wait;// EnumEvent.Immediately;
+            message.MessageJson = json;
+            var result = Push_Getui.SendMessage(message, PushIDInfo.Android);
+            return result;
+        }
         #endregion
 
         /// <summary>

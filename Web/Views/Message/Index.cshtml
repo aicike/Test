@@ -23,17 +23,13 @@
                     case "user":
                         $("#dialogUser").dialog({
                             resizable: false,
-                            height: 600,
+                            height: 700,
                             width: 800,
                             modal: true,
                             buttons: {
                                 "确定": function () {
-                                    var uids="";
-                                    $.each($("#dialogUser").find(":checked"),function(i,n){
-                                        uids+=$(n).val()+",";
-                                    });
-                                    if(uids.length>0){
-                                        $("#hidUserID").val(uids);
+                                    var hids=$("#hidHIDs").val();
+                                    if(hids.length>0){
                                         $(this).dialog("close");
                                     }else{
                                         JAlert({
@@ -44,10 +40,8 @@
                                     }
                                 },
                                 "取消": function () {
-                                    var l= $("#hidUserID").val().length;
-                                    if(l<=0){
-                                         $("#selectUser").val("all");
-                                    }
+                                    $("#hidHIDs").val("");
+                                    $("#selectUser").val("all");
                                     $(this).dialog("close");
                                 }
                             }
@@ -61,9 +55,9 @@
             });
             $("#btnSend").click(function () {
                 var su= $("#selectUser").val();
-                var uids=$("#hidUserID").val();
                 if(su=="user"){
-                    if(uids.length<=0){
+                    var hids=$("#hidHIDs").val();
+                    if(hids.length<=0){
                         JAlert({
                             Message: "未指定用户",
                             DialogType: "Ok",
@@ -87,7 +81,7 @@
                         $("#btnSend").attr("disabled","disabled");
                         $.ajax({
                             type: "post",
-                            data: { libraryID:0,url:"",content: content,type:"text",sendType:su,uids:uids},
+                            data: { libraryID:0,url:"",content: content,type:"text",sendType:su,hids:hids},
                             url: urlText,
                             success: function (result) {
                                 if (result != undefined && result != null && result.length > 0) {
@@ -120,7 +114,7 @@
                         var title=$("#hidImage").attr("title");
                         $.ajax({
                             type: "post",
-                            data: { libraryID:libraryID,url:url,content: title,type:"image",sendType:su,uids:uids},
+                            data: { libraryID:libraryID,url:url,content: title,type:"image",sendType:su,hids:hids},
                             url: urlText,
                             success: function (result) {
                                 if (result != undefined && result != null && result.length > 0) {
@@ -153,7 +147,7 @@
                         var title=$("#hidVoice").attr("title");
                         $.ajax({
                             type: "post",
-                            data: { libraryID:libraryID,url:url,content: title,type:"voice",sendType:su,uids:uids},
+                            data: { libraryID:libraryID,url:url,content: title,type:"voice",sendType:su,hids:hids},
                             url: urlText,
                             success: function (result) {
                                 if (result != undefined && result != null && result.length > 0) {
@@ -186,7 +180,7 @@
                         var title=$("#hidVideo").attr("title");
                         $.ajax({
                             type: "post",
-                            data: { libraryID:libraryID,url:url,content: title,type:"video",sendType:su,uids:uids},
+                            data: { libraryID:libraryID,url:url,content: title,type:"video",sendType:su,hids:hids},
                             url: urlText,
                             success: function (result) {
                                 if (result != undefined && result != null && result.length > 0) {
@@ -219,7 +213,7 @@
                         var title=$("#hidImageText").attr("title");
                         $.ajax({
                             type: "post",
-                            data: { libraryID:libraryID,url:url,content: title,type:"imagetext",sendType:su,uids:uids},
+                            data: { libraryID:libraryID,url:url,content: title,type:"imagetext",sendType:su,hids:hids},
                             url: urlText,
                             success: function (result) {
                                 if (result != undefined && result != null && result.length > 0) {
@@ -342,6 +336,7 @@
     <div class="option">
         发送对象：<select id="selectUser">
             <option value="all">全部用户</option>
+            <option value="user">指定用户</option>
         </select>
     </div>
     <div class="tableList" id="tabs_o">
@@ -373,10 +368,7 @@
 <div style="clear: both">
 </div>
 <div id="dialogUser" title="选择用户" style="display: none">
-    <ul class="ulUser">
-        @foreach (var item in groupList)
-        {
-            <li>
+    @* <li>
                 <div class="ulUserTitle">@item.GroupName</div>
                 <div class="ulUserList">
                     @foreach (var user in item.Account_Users)
@@ -384,11 +376,12 @@
                         <input type="checkbox" id="cb_@user.UserID" value="@user.UserID" /><label for="cb_@user.UserID">@user.User.Name</label>
                     }
                 </div>
-            </li>
-        }
-    </ul>
+            </li>*@
+    <iframe id="iframeHouse" src="@Url.Action("_Index", "PropertyHouse")" style="width:750px;height:680px;border:none;overflow-x:hidden;">
+    
+    </iframe>    
+    <input type="hidden" id="hidHIDs" />
 </div>
-<input type="hidden" id="hidUserID" />
 <div id="dialogFile" title="选择素材" style="display: none">
     <iframe id="iframeLibrary" src="" style="width: 800px; height: 530px; border: none;
         overflow: hidden"></iframe>
