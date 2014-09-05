@@ -261,7 +261,7 @@ namespace Business
 
         #region 用户端，快递代收推送
 
-        public Result Push(string type, int accountMainID, string phone)
+        public Result Push(string type, int accountMainID, string phone,string msg)
         {
             var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
             var userIDs = userModel.List().Where(a => a.AccountMainID == accountMainID && a.Phone == phone).Select(a => a.ID).ToList().ConvertToString(",");
@@ -275,7 +275,7 @@ namespace Business
             //android推送
             PushMessage message = new PushMessage();
             message.Title = "新通知-快递代收";
-            message.Text = "您有一个快递";
+            message.Text = msg;
             message.Logo = "ic_launcher.png";
             message.EnumEvent = EnumEvent.Wait;// EnumEvent.Immediately;
             message.MessageJson = json;

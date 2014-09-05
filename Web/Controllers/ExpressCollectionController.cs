@@ -58,11 +58,19 @@ namespace Web.Controllers
             ec.EntryDate = DateTime.Now;
             ec.AccountMainID = LoginAccount.CurrentAccountMainID;
             var expresscollectionModel = Factory.Get<IExpressCollectionModel>(SystemConst.IOC_Model.ExpressCollectionModel);
+
             var result = expresscollectionModel.Add(ec);
             if (result.HasError == false)
             {
                 PushModel pushModel = new PushModel();
-                pushModel.Push("user", LoginAccount.CurrentAccountMainID, ec.Phone);
+                var expressNoticeModel = Factory.Get<IExpressNoticeModel>(SystemConst.IOC_Model.ExpressNoticeModel);
+                var notice = expressNoticeModel.getInfoByAMID(LoginAccount.CurrentAccountMainID);
+                string msg = "";
+                if (notice != null)
+                {
+                    msg = notice.Notice ?? "";
+                }
+                pushModel.Push("user", LoginAccount.CurrentAccountMainID, ec.Phone, msg);
             }
             return JavaScript("window.location.href='" + Url.Action("Index", "ExpressCollection", new { HostName = LoginAccount.HostName }) + "'");
         }
