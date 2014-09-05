@@ -8,6 +8,7 @@ using Injection;
 using Interface;
 using Poco;
 using Poco.Enum;
+using Business;
 
 namespace Web.Controllers
 {
@@ -34,7 +35,8 @@ namespace Web.Controllers
             {
                 ViewBag.notice = expressnotice.Notice;
             }
-            else {
+            else
+            {
                 ViewBag.notice = "";
             }
             return View(expresscollection);
@@ -57,6 +59,11 @@ namespace Web.Controllers
             ec.AccountMainID = LoginAccount.CurrentAccountMainID;
             var expresscollectionModel = Factory.Get<IExpressCollectionModel>(SystemConst.IOC_Model.ExpressCollectionModel);
             var result = expresscollectionModel.Add(ec);
+            if (result.HasError == false)
+            {
+                PushModel pushModel = new PushModel();
+                pushModel.Push("user", LoginAccount.CurrentAccountMainID, ec.Phone);
+            }
             return JavaScript("window.location.href='" + Url.Action("Index", "ExpressCollection", new { HostName = LoginAccount.HostName }) + "'");
         }
 
@@ -115,7 +122,7 @@ namespace Web.Controllers
                 ThisStatus = (int)EnumExpressStatus.Not;
                 titel = "未领取";
             }
-            Result result = expresscollectionModel.UpdStatus(ID,LoginAccount.CurrentAccountMainID,ThisStatus);
+            Result result = expresscollectionModel.UpdStatus(ID, LoginAccount.CurrentAccountMainID, ThisStatus);
             if (result.HasError)
             {
                 return "false";

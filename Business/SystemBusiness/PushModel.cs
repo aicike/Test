@@ -35,7 +35,7 @@ namespace Business
             user_news = 2,      //用户_通知，新闻
             account_bx = 3,        //物业_保修
             account_ts = 4,        //物业_投诉
-            user_kd= 5       //用户_快递
+            user_kd = 5       //用户_快递
         }
 
         #region 自助问答推送
@@ -261,22 +261,21 @@ namespace Business
 
         #region 用户端，快递代收推送
 
-        public Result Push(string type, int objID, string objTitle, string objImage, string objContent, int accountMainID)
+        public Result Push(string type, int accountMainID, string phone)
         {
-            var PushIDInfo = GetClientIDs_user("all", accountMainID, null);
-            string title = "";
+            var userModel = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+            var userIDs = userModel.List().Where(a => a.AccountMainID == accountMainID && a.Phone == phone).Select(a => a.ID).ToList().ConvertToString(",");
+            if (userIDs == null || userIDs.Length == 0)
+            {
+                return new Result();
+            }
+            var PushIDInfo = GetClientIDs_user("user", accountMainID, userIDs);
             var obj = new PushJson() { type = (int)PushType.user_kd };
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
-            switch (type)
-            {
-                case "news":
-                    title = "新通知-快递代收";
-                    break;
-            }
             //android推送
             PushMessage message = new PushMessage();
-            message.Title = title;
-            message.Text = objTitle;
+            message.Title = "新通知-快递代收";
+            message.Text = "您有一个快递";
             message.Logo = "ic_launcher.png";
             message.EnumEvent = EnumEvent.Wait;// EnumEvent.Immediately;
             message.MessageJson = json;
