@@ -860,7 +860,7 @@ namespace Common
         /// </summary>
         /// <param name="XLSXPath">HttpPostedFileBase</param>
         /// <returns></returns>
-        public static Result GetXLSXInfo(System.Web.HttpPostedFileBase XLSXPath,DataTable dt)
+        public static Result GetXLSXInfo(System.Web.HttpPostedFileBase XLSXPath,DataTable dt,string tabName)
         {
             Result result = new Result();
             if (XLSXPath == null)
@@ -879,7 +879,7 @@ namespace Common
             XLSXPath.SaveAs(PATH);
             string strConn = "Provider=Microsoft.Ace.OleDb.12.0;Data Source=" + PATH + ";Extended Properties='Excel 12.0;HDR=Yes;IMEX=1'";
 
-            OleDbDataAdapter da = new OleDbDataAdapter("SELECT *  FROM [Sheet1$]", strConn);
+            OleDbDataAdapter da = new OleDbDataAdapter("SELECT *  FROM [" + tabName + "]", strConn);
            
             try
             {

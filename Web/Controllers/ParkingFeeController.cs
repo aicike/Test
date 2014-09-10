@@ -109,7 +109,7 @@ namespace Web.Controllers
             dttable.Columns.Add("楼号");
             dttable.Columns.Add("房号(缩写)");
             dttable.Columns.Add("停车类型");
-            result = Tool.GetXLSXInfo(ImExcel, dttable);
+            result = Tool.GetXLSXInfo(ImExcel, dttable,"1");
             if (result.HasError)
             {
                 //导入出错
