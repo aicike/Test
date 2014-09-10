@@ -472,11 +472,12 @@ namespace Business
         /// 查询是否已经生产资讯
         /// </summary>
         /// <param name="id">活动 或调查 ID</param>
-        /// <param name="client">咨询url类型 EnumAdvertorialUType </param>
+        /// <param name="client">客户端类型 EnumAdvertorialUType </param>
+        /// <param name="URLType">咨询url类型 EnumAdverURLType </param>
         /// <returns></returns>
-        public bool CKAppadverBy_clientAndID(int id, int client)
+        public bool CKAppadverBy_clientAndID(int id, int client,int URLType)
         {
-            var appadver = List().Where(a => a.EnumAdvertorialUType == client && a.UrlID == id).FirstOrDefault();
+            var appadver = List().Where(a => a.EnumAdvertorialUType == client && a.UrlID == id && a.EnumAdverURLType == URLType).FirstOrDefault();
 
             if (appadver != null)
             {

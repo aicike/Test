@@ -64,13 +64,16 @@ namespace Interface
         /// <returns></returns>
         Result DelAppadvertorial_byUrlType(int EnumAdverURLType, int ID);
 
+
+
         /// <summary>
         /// 查询是否已经生产资讯
         /// </summary>
         /// <param name="id">活动 或调查 ID</param>
-        /// <param name="client">咨询url类型 EnumAdvertorialUType </param>
+        /// <param name="client">客户端类型 EnumAdvertorialUType </param>
+        /// <param name="URLType">咨询url类型 EnumAdverURLType </param>
         /// <returns></returns>
-        bool CKAppadverBy_clientAndID(int id, int client);
+        bool CKAppadverBy_clientAndID(int id, int client, int URLType);
 
          /// <summary>
         /// 获取生成的资讯信息

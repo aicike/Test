@@ -260,7 +260,7 @@ namespace Web.Controllers
             AppAdvertorial appRW = new AppAdvertorial();
             Result result = new Result();
             var AdvertorialModel = Factory.Get<IAppAdvertorialModel>(SystemConst.IOC_Model.AppAdvertorialModel);
-            if (AdvertorialModel.CKAppadverBy_clientAndID(id, client))
+            if (AdvertorialModel.CKAppadverBy_clientAndID(id, client, (int)EnumAdverURLType.Activities))
             {
                 return "T";
             }

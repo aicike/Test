@@ -112,7 +112,7 @@ namespace Web.Controllers
             dttable.Columns.Add("importDate", typeof(DateTime));
             dttable.Columns.Add("楼号");
             dttable.Columns.Add("房号(缩写)");
-            result = Tool.GetXLSXInfo(ImExcel, dttable);
+            result = Tool.GetXLSXInfo(ImExcel, dttable,"1");
             if (result.HasError)
             {
                 //导入出错
@@ -339,6 +339,8 @@ namespace Web.Controllers
         public ActionResult Add(PropertyFeeInfo propertyfeeinfo)
         {
             var propertyfeemodel = Factory.Get<IPropertyFeeInfoModel>(SystemConst.IOC_Model.PropertyFeeInfoModel);
+
+            propertyfeeinfo.Abbreviation = propertyfeeinfo.BuildingNum + "-" + propertyfeeinfo.Unit + "-" + propertyfeeinfo.RoomNumber;
             propertyfeeinfo.importDate = DateTime.Now;
             propertyfeeinfo.AccountMainID = LoginAccount.CurrentAccountMainID;
             var result = propertyfeemodel.DBImportCheck(LoginAccount.CurrentAccountMainID, propertyfeeinfo.PayDate, propertyfeeinfo.BuildingNum, propertyfeeinfo.Unit, propertyfeeinfo.RoomNumber);
