@@ -46,7 +46,7 @@ namespace Interface
         /// <param name="amid"></param>
         /// <param name="userLoginInfoID"></param>
         /// <returns></returns>
-        Result EditUserLoginInfoID(string phone, int amid, int userLoginInfoID);
+        Result EditUserLoginInfoID(int amid, int userLoginInfoID,Property_User pu);
 
         /// <summary>
         /// 根据电话获取用户信息
