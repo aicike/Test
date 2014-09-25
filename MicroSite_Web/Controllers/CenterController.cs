@@ -45,7 +45,7 @@ namespace MicroSite_Web.Controllers
             //已结束
             ViewBag.Complete = list_complete;
             //UserID
-            ViewBag.UserID = userID.Value;
+            ViewBag.UserID = userID;
             return View(list);
         }
 
