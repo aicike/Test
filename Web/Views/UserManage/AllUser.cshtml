@@ -64,8 +64,11 @@
                 continue;
             }
             <tr>
-                <td>
+                <td class="operation">
+                 <a  href="@Url.Action("Index", "SingleChat", new { HostName = ViewBag.HostName, id = 1, userID = item.ID })" target="_blank">
+
                     @item.UserLoginInfo.Name
+                     </a>
                 </td>
                 <td class="operation">
                     @item.Phone
