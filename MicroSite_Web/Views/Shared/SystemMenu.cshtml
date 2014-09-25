@@ -1,0 +1,168 @@
+﻿@{
+    var systemUser = Session[Poco.SystemConst.Session.LoginSystemUser] as Poco.SystemUser;
+    List<Poco.SystemUserMenu> menuList = new List<Poco.SystemUserMenu>();
+    var systemUserMenuModel = Injection.Factory.Get<Interface.ISystemUserMenuModel>(Poco.SystemConst.IOC_Model.SystemUserMenuModel);
+    if (systemUser != null)
+    {
+        menuList = systemUserMenuModel.GetMenuByRoleID(systemUser.SystemUserRoleID);
+    }
+}
+@{
+    <ul class="menu">
+        @foreach (var item in menuList)
+        {
+            var menu2s = item.SystemUserMenus.OrderBy(a => a.Order);
+
+            if (menu2s == null || menu2s.Count() == 0)
+            {
+                if (ViewBag.Menu == item.Controller)
+                {
+            <li><a href="http://www.@(Poco.SystemConst.WebUrl)@(Url.Action(item.Action, item.Controller, new { Area = item.Area }, null))">
+                @item.Name
+            </a>
+                <script>
+                    $(function () {
+                        $('#submenu_@item.ID').prev("a").find("img").attr("src", '@Url.Content("/images/shouqi_2.png")');
+                        $('#submenu_@item.ID').prev("a").find("img").attr("t_val", "1");
+                        $('#submenu_@item.ID').show();
+                    }); 
+                </script>
+            </li>
+                }
+                else
+                {
+            <li><a href="http://www.@(Poco.SystemConst.WebUrl)@(Url.Action(item.Action, item.Controller, new { Area = item.Area }, null))">
+                @item.Name
+            </a></li>
+                }
+            }
+            else
+            { <li><a class="menu1">
+                @item.Name
+                <img style=" float:right; width:14px ;margin-right:10px; margin-top:14px" t_val="0"
+                src="@Url.Content("/images/zhankai_2.png")" />
+            </a>
+                <ul class="submenu" id="submenu_@item.ID">
+                    @foreach (var menu2 in menu2s)
+                    {
+                        if (ViewBag.Menu == menu2.Controller)
+                        { 
+                        <li class="select"><a href="http://www.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                            @menu2.Name
+                        </a>
+                            <script>
+                                $(function () {
+                                    $('#submenu_@item.ID').prev("a").find("img").attr("src", '@Url.Content("/images/shouqi_2.png")');
+                                    $('#submenu_@item.ID').prev("a").find("img").attr("t_val", "1");
+                                    $('#submenu_@item.ID').show();
+                                }); 
+                            </script>
+                        </li>
+                        }
+                        else
+                        { 
+                        <li><a href="http://www.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                            @menu2.Name
+                        </a></li>
+                        }
+                    }
+                </ul>
+            </li>
+            }
+        }
+    </ul>
+}
+<script>
+    $(function () {
+        $(".menu1").click(function () {
+            $(this).next(".submenu").slideToggle('fast');
+            var iszk = $(this).find("img").attr("t_val"); //0合并 1展开
+            if (iszk == 0) {
+                $(this).find("img").attr("src", '@Url.Content("/images/shouqi_2.png")');
+                $(this).find("img").attr("t_val", "1");
+            } else {
+                $(this).find("img").attr("src", '@Url.Content("/images/zhankai_2.png")');
+                $(this).find("img").attr("t_val", "0");
+            }
+        });
+
+        $(".menu").attr("style", "min-height:" + $(".main").height() + "px");
+    });
+</script>
+<style>
+
+.menu
+{
+    margin: 0 auto;
+    padding: 0;
+    /*background-color: #fbfbfb;*/
+    /*min-height: 700px;*/
+    border-right: 1px solid #d1d1d1;
+ 
+    
+}
+.menu li
+{
+    width: 100%;
+    list-style-type: none;
+    display: block;
+    line-height: 40px;
+    font-size: 15px;
+    min-height: 40px;
+    color: black;
+    border-bottom: 1px solid #d1d1d1;
+    
+}
+.menu li:first-child
+{
+    border-top: none;
+}
+
+.menu > li > a
+{
+    display: block;
+    cursor: pointer;
+    text-align: left;
+    padding-left: 15px;
+    background: -webkit-linear-gradient(top, #e9e9e9, #f3f3f3);
+    background: -moz-linear-gradient(top, #dedede, #f3f3f3);
+    background: -o-linear-gradient(top, #dedede, #f3f3f3);
+    background: -ms-linear-gradient(top, #dedede, #f3f3f3);
+    background: linear-gradient(top, #dedede, #f3f3f3);
+}
+.menu li.select
+{
+    background-color: #00aec8;
+    color:#ffffff;
+}
+.submenu
+{
+    margin: 0 auto;
+    padding: 0;
+    display: none;
+    background-color:#ffffff;
+}
+.submenu li
+{
+    border: none;
+}
+.submenu li a:hover
+{
+    background-color:#C0E9F0;
+}
+.submenu > li:last-child
+{
+    /*border-bottom: 1px solid #d1d1d1;*/
+}
+.submenu > li:first-child
+{
+    border-top: 1px solid #d1d1d1;
+}
+.submenu > li > a
+{
+    display: block;
+    cursor: pointer;
+    text-align: left;
+    padding-left: 25px;
+}
+</style>

@@ -214,6 +214,7 @@
     <Content Include="Content\homeStyle.css" />
     <Content Include="Content\Icon\glyphicons.png" />
     <Content Include="Content\Icon\Icon.css" />
+    <Content Include="Content\News.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Style.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
@@ -237,6 +238,7 @@
     <Content Include="Content\themes\base\images\ui-bg_highlight-soft_60_000_1x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_inset-soft_100_f4f0ec_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_c47a23_256x240.png" />
@@ -689,6 +691,11 @@
     <None Include="Service References\RefPassport\TokenService21.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Shared\_LayoutMerchant.cshtml" />
+    <Content Include="Views\Shared\_LayoutUser2.cshtml" />
+    <Content Include="Views\Shared\_MerchantHead.cshtml" />
+    <Content Include="Views\Shared\Community.cshtml" />
+    <Content Include="Views\Shared\SystemMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

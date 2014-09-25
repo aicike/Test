@@ -35,7 +35,35 @@ namespace AcceptanceServer.DataOperate
                 
             };
 
+            try
+            {
+                //web页面通知
+                if (mg.ToAccountID.HasValue && mg.ToAccountID.Value != 0)
+                {
+                    string sql_webNotice_sel = "select count,AccountMainID from WebNotice where menuID=40 and accountmainID=(SELECT TOP 1 AccountMainID FROM dbo.Account_AccountMain where AccountID=" + mg.ToAccountID.Value + ")";
 
+                    var data = SqlHelper.ExecuteDataset(sql, sp);
+                    int NoticeCount = 0;
+                    if (data.Tables[0] != null && data.Tables[0].Rows.Count > 0)
+                    {
+                        NoticeCount = Convert.ToInt32(data.Tables[0].Rows[0][0].ToString()) + 1;
+                        int AccountMainID = Convert.ToInt32(data.Tables[0].Rows[0][1].ToString());
+                        //修改
+                        string sql_webNotice_edit = " UPDATE dbo.WebNotice SET Count=" + NoticeCount + " WHERE MenuID=40 AND AccountMainID=" + AccountMainID;
+                        SqlHelper.ExecuteNonQuery(sql_webNotice_edit);
+                    }
+                    else
+                    {
+                        //新增
+                        string sql_webNotice_add = "INSERT INTO dbo.WebNotice ( SystemStatus ,MenuID ,Count ,AccountMainID) VALUES  ( 0 ,40 ,1 ,(SELECT TOP 1 AccountMainID FROM dbo.Account_AccountMain WHERE AccountID=" + mg.ToAccountID.Value + "))";
+                        SqlHelper.ExecuteNonQuery(sql_webNotice_add);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                
+            }
             return SqlHelper.ExecuteDataset(sql, sp);
         }
 
@@ -46,10 +74,10 @@ namespace AcceptanceServer.DataOperate
         /// <returns></returns>
         public static int InsertMessageGroupChat(MessageGroupChat mgc)
         {
-            string sql = string.Format("insert into MessageGroupChat(systemStatus,MessageID,UserID,UserType,SID) values(0,{0},{1},{2},{3})",mgc.MessageID,mgc.UserID,mgc.UserType,mgc.SID);
+            string sql = string.Format("insert into MessageGroupChat(systemStatus,MessageID,UserID,UserType,SID) values(0,{0},{1},{2},{3})", mgc.MessageID, mgc.UserID, mgc.UserType, mgc.SID);
 
             return SqlHelper.ExecuteNonQuery(sql);
-            
+
         }
 
         /// <summary>
@@ -197,7 +225,7 @@ namespace AcceptanceServer.DataOperate
         /// <returns></returns>
         public static int DelMessGroupChat(int userID, int UserType, int SID)
         {
-            string sql = string.Format("delete MessageGroupChat where SID = {0} and UserID={1} and UserType={2}",SID,userID,UserType);
+            string sql = string.Format("delete MessageGroupChat where SID = {0} and UserID={1} and UserType={2}", SID, userID, UserType);
 
             return SqlHelper.ExecuteNonQuery(sql);
         }

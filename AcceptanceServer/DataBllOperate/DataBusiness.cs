@@ -36,6 +36,8 @@ namespace AcceptanceServer.DataBllOperate
             {
                 Pmg.LibraryImageTextsID = int.Parse(Np.ImgTextID);
             }
+
+
             //售楼人员对购房者发送消息
             if (Np.MSD == ((int)EnumMessageSendDirection.Account_User).ToString())
             {

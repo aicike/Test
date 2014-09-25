@@ -1,99 +1,336 @@
 ﻿@{
     var account = Session[Poco.SystemConst.Session.LoginAccount] as Poco.Account;
+    //var accountMainOrganization = Session[Poco.SystemConst.Session.LoginAccountOrganization] as Poco.AccountMainOrganization;
     List<Poco.Menu> menuList = new List<Poco.Menu>();
+    var menuModel = Injection.Factory.Get<Interface.IMenuModel>(Poco.SystemConst.IOC_Model.MenuModel);
+    string HostName = null;
     if (account != null)
     {
-        if (account.IsSuperAdmin)
+        menuList = menuModel.GetMenuByRoleID(account.RoleIDs);
+        HostName = account.HostName;
+    }
+    var accountMainModel = Injection.Factory.Get<Interface.IAccountMainModel>(Poco.SystemConst.IOC_Model.AccountMainModel);
+    var accountMainID = 0;
+    if (account != null)
+    {
+        accountMainID = account.CurrentAccountMainID;
+        var accountMain = accountMainModel.Get(account.CurrentAccountMainID);
+        if (accountMain != null && accountMain.IsOrganization.HasValue && accountMain.IsOrganization.Value)
         {
-            menuList = Injection.Factory.Get<Interface.IMenuModel>(Poco.SystemConst.IOC_Model.MenuModel).GetMenuBySuperAdmin();
-        }
-        else
-        {
-            menuList = Injection.Factory.Get<Interface.IMenuModel>(Poco.SystemConst.IOC_Model.MenuModel).GetMenuByRoleID(account.RoleIDs);
+            /*
+             * 集团权限
+             * ----------服务---------
+             * 1web基本服务，2售楼部服务 ,3微商城
+             * ----------菜单---------
+             * 1首页，
+             * 5项目，21项目管理
+             * 8设置，29账号信息
+             * -----------------------
+             */
+
+            string[] menuTokenArray = new string[] { "Token_Home", "Token_Project", "Token_Set", "Token_Project_M2", "Token_Account_I" };
+            int[] menuIDArray = menuModel.List().Where(a => menuTokenArray.Contains(a.Token)).Select(a => a.ID).ToArray();
+            var list = menuList.Where(a => menuIDArray.Contains(a.ID)).ToList();
+            foreach (var item in list)
+            {
+                item.Menus = item.Menus.Where(a => menuIDArray.Contains(a.ID)).ToList();
+            }
+            menuList = list;
         }
     }
+    var list1 = menuList.Where(a => a.Type == 1).ToList();
+    var list2 = menuList.Where(a => a.Type == 2).ToList();
+    var list3 = menuList.Where(a => a.Type == 3).ToList();
+    
 }
 @{
-    if (account != null)
-    {
-    <ul class="menu">
-        @foreach (var item in menuList)
-        {
-            if (item.IsAppMenu == false)
-            {
-            <li><a class="menu1">
-                @item.Name
-                <img style=" float:right; width:14px ;margin-right:10px; margin-top:14px" t_val="0" src="@Url.Content("/images/zhankai_2.png")" />
-            </a>
-                <ul class="submenu" id="submenu_@item.ID">
-                    @{var menu2s = item.Menus.OrderBy(a => a.Order);}
-                    @foreach (var menu2 in menu2s)
+    <ul class="mainMenu">
+        <li>
+            <div>
+                功能</div>
+            <ul class="menu jquerymenu" jquerymenu="1">
+                @foreach (var item in list1)
+                {
+                    if (item.IsAppMenu == false)
                     {
-                        if (ViewBag.Menu2 == menu2.Controller)
-                        { 
-                        <li class="select">
-                            @if (menu2.ParentMenu != null && menu2.ParentMenu.Service != null && menu2.ParentMenu.Service.IsIndependentSite)
-                            {
-                                <a href="http://microsite.@(Poco.SystemConst.IntegrationWebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
-                                @menu2.Name
-                                </a>
-                            }
-                            else
-                            { 
-                                <a href="http://@(account.HostName).@(Poco.SystemConst.IntegrationWebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
-                                @menu2.Name
-                                </a>
-                            }
-                            <script>
-                                $(function () {
-                                    $('#submenu_@item.ID').prev("a").find("img").attr("src", '@Url.Content("/images/shouqi_2.png")');
-                                    $('#submenu_@item.ID').prev("a").find("img").attr("t_val", "1");
-                                    $('#submenu_@item.ID').show();
-                                });                            
-                            </script>
-                        </li>
+                    <li>
+                        @if (item.Controller != null)
+                        {            
+                            <a class="menu1 menu_link" menuID="@item.ID" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(item.Action, item.Controller, new { Area = item.Area }, null))">
+                                @item.Name
+                            </a>
                         }
                         else
-                        { 
-                        <li>
-                            @if (menu2.ParentMenu != null && menu2.ParentMenu.Service != null && menu2.ParentMenu.Service.IsIndependentSite)
-                            {
-                                <a href="http://microsite.@(Poco.SystemConst.IntegrationWebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
-                                @menu2.Name
-                                </a>
-                            }
-                            else
-                            { 
-                                <a href="http://@(account.HostName).@(Poco.SystemConst.IntegrationWebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
-                                @menu2.Name
-                                </a>
-                            }
-                        </li>
+                        {                
+                            <a class="menu1 menu_link" menuID="@item.ID">
+                                @item.Name
+                            </a>
                         }
+                        <ul class="submenu" id="submenu_@item.ID">
+                            @{var menu2s = item.Menus.OrderBy(a => a.Order);}
+                            @foreach (var menu2 in menu2s)
+                            {
+                                if (ViewBag.Menu2 == menu2.Controller)
+                                { 
+                                <li class="select">
+                                    @if (menu2.ParentMenu != null && menu2.ParentMenu.Service != null && menu2.ParentMenu.Service.IsIndependentSite)
+                                    {
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                            @menu2.Name
+                                        </a>
+                                    }
+                                    else
+                                    { 
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                            @menu2.Name
+                                        </a>
+                                    }
+                                    <script>
+                                        $(function () {
+                                            $('#submenu_@item.ID').show();
+                                        });                            
+                                    </script>
+                                </li>
+                                }
+                                else
+                                { 
+                                <li>
+                                    @if (menu2.ParentMenu != null && menu2.ParentMenu.Service != null && menu2.ParentMenu.Service.IsIndependentSite)
+                                    {
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                            @menu2.Name
+                                        </a>
+                                    }
+                                    else
+                                    { 
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                            @menu2.Name
+                                        </a>
+                                    }
+                                </li>
+                                }
+                            }
+                        </ul>
+                    </li>
                     }
-                </ul>
-            </li>
-            }
-        }
+                }
+            </ul>
+        </li>
+        <li>
+            <div>
+                管理</div>
+            <ul class="menu jquerymenu" jquerymenu="2">
+                @foreach (var item in list2)
+                {
+                    if (item.IsAppMenu == false)
+                    {
+                    <li>
+                        @if (item.Controller != null)
+                        {            
+                            <a class="menu1 menu_link" menuID="@item.ID" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(item.Action, item.Controller, new { Area = item.Area }, null))">
+                                @item.Name
+                            </a>
+                        }
+                        else
+                        {                
+                            <a class="menu1 menu_link" menuID="@item.ID">
+                                @item.Name
+                            </a>
+                        }
+                        <ul class="submenu" id="submenu_@item.ID">
+                            @{var menu2s = item.Menus.OrderBy(a => a.Order);}
+                            @foreach (var menu2 in menu2s)
+                            {
+                                if (ViewBag.Menu2 == menu2.Controller)
+                                { 
+                                <li class="select">
+                                    @if (menu2.ParentMenu != null && menu2.ParentMenu.Service != null && menu2.ParentMenu.Service.IsIndependentSite)
+                                    {
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                            @menu2.Name
+                                        </a>
+                                    }
+                                    else
+                                    { 
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                            @menu2.Name
+                                        </a>
+                                    }
+                                    <script>
+                                        $(function () {
+                                            $('#submenu_@item.ID').show();
+                                        });                            
+                                    </script>
+                                </li>
+                                }
+                                else
+                                { 
+                                <li>
+                                    @if (menu2.ParentMenu != null && menu2.ParentMenu.Service != null && menu2.ParentMenu.Service.IsIndependentSite)
+                                    {
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                            @menu2.Name
+                                        </a>
+                                    }
+                                    else
+                                    { 
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                            @menu2.Name
+                                        </a>
+                                    }
+                                </li>
+                                }
+                            }
+                        </ul>
+                    </li>
+                    }
+                }
+            </ul>
+        </li>
+        <li>
+            <div>
+                设置</div>
+            <ul class="menu jquerymenu" jquerymenu="3">
+                @foreach (var item in list3)
+                {
+                    if (item.IsAppMenu == false)
+                    {
+                    <li>
+                        @if (item.Controller != null)
+                        {            
+                            <a class="menu1 menu_link" menuID="@item.ID" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(item.Action, item.Controller, new { Area = item.Area }, null))">
+                                @item.Name
+                            </a>
+                        }
+                        else
+                        {                
+                            <a class="menu1 menu_link" menuID="@item.ID">
+                                @item.Name
+                            </a>
+                        }
+                        <ul class="submenu" id="submenu_@item.ID">
+                            @{var menu2s = item.Menus.OrderBy(a => a.Order);}
+                            @foreach (var menu2 in menu2s)
+                            {
+                                if (ViewBag.Menu2 == menu2.Controller)
+                                { 
+                                <li class="select">
+                                    @if (menu2.ParentMenu != null && menu2.ParentMenu.Service != null && menu2.ParentMenu.Service.IsIndependentSite)
+                                    {
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                            @menu2.Name
+                                        </a>
+                                    }
+                                    else
+                                    { 
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                            @menu2.Name
+                                        </a>
+                                    }
+                                    <script>
+                                        $(function () {
+                                            $('#submenu_@item.ID').show();
+                                        });                            
+                                    </script>
+                                </li>
+                                }
+                                else
+                                { 
+                                <li>
+                                    @if (menu2.ParentMenu != null && menu2.ParentMenu.Service != null && menu2.ParentMenu.Service.IsIndependentSite)
+                                    {
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://microsite.@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                            @menu2.Name
+                                        </a>
+                                    }
+                                    else
+                                    { 
+                                        <a class="menu_link" menuID="@menu2.ID" href="http://@(HostName).@(Poco.SystemConst.WebUrl)@(Url.Action(menu2.Action, menu2.Controller, new { Area = menu2.Area }, null))">
+                                            @menu2.Name
+                                        </a>
+                                    }
+                                </li>
+                                }
+                            }
+                        </ul>
+                    </li>
+                    }
+                }
+            </ul>
+        </li>
     </ul>
-    }
 }
+<style>
+    .mainMenu
+    {
+        margin: 0 auto;
+        padding: 0;
+        border-right: 1px solid #d1d1d1;
+    }
+    .mainMenu li
+    {
+        width: 100%;
+        list-style-type: none;
+        display: block;
+        font-size: 15px;
+        color: black;
+        padding-top: 5px;
+        padding-bottom: 15px;
+    }
+    
+    .mainMenu li > div
+    {
+        margin-left: 10px;
+        margin-bottom: 5px;
+    }
+    .notice
+    {
+        width: 8px;
+        height: 8px;
+        float: right;
+        margin-top: 14px;
+    }
+</style>
 <script>
     $(function () {
-        $(".menu1").click(function () {
-            $(this).next(".submenu").slideToggle('fast');
-            var iszk = $(this).find("img").attr("t_val"); //0合并 1展开
-            if (iszk == 0) {
-                $(this).find("img").attr("src", '@Url.Content("/images/shouqi_2.png")');
-                $(this).find("img").attr("t_val", "1");
-            } else {
-                $(this).find("img").attr("src", '@Url.Content("/images/zhankai_2.png")');
-                $(this).find("img").attr("t_val", "0");
-            }
-        });
+        $(".jquerymenu").menu();
+        $(".mainMenu").attr("style", "min-height:" + $(".main").height() + "px");
 
-        $(".menu").attr("style", "min-height:" + $(".main").height() + "px");
+        $(".jquerymenu").mouseover(function () {
+            var obj = parseInt($(this).attr("jquerymenu"));
+            $(".jquerymenu[jquerymenu!=" + obj + "]").menu("collapseAll", null, true);
+        });
+        GetWebNotice();
+        window.setInterval(GetWebNotice,5000);
     });
+
+    var getWebNoticeUrl = '@Url.Action("GetWebNoticeByAccountMainID", "Ajax")';
+
+    function GetWebNotice() {
+            
+            $.get(getWebNoticeUrl, {accountMainID:@accountMainID},function(noticeMenuIDs){
+                $(".menu_link").find("img").remove();
+                $(".menu_link").each(function (m, n) {
+                    var obj = $(this);
+                    if (noticeMenuIDs != null) {
+                        var menuID = obj.attr("menuID")
+                        $.each(noticeMenuIDs, function (i, j) {
+                            if (menuID == j) {
+                                obj.find("img").remove();
+                                obj.append('<img class="notice" src="/Images/web_notice.png" />');
+                                var parent = $(".menu1").parent().has(".menu_link[menuID='" + menuID + "']").find(".menu1");
+                                parent.find("img").remove();
+                                parent.append('<img class="notice" src="/Images/web_notice.png" />');
+                                return;
+                            }
+                        });
+                    } else {
+                        return;
+                    }
+                });
+            },"json");
+        
+    }
 
 
 </script>

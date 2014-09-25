@@ -172,7 +172,7 @@ INSERT [dbo].[SystemUser] ([SystemStatus], [Name], [Email], [LoginPwd], [Phone],
 SET IDENTITY_INSERT [dbo].[Service] ON
 INSERT INTO dbo.Service ( [ID],SystemStatus, NAME, IsIndependentSite) VALUES  (1, 0, N'WEB基本服务',0)
 INSERT INTO dbo.Service ( [ID],SystemStatus, Name, IsIndependentSite) VALUES  (2, 1, N'售楼部服务',0)
-INSERT INTO dbo.Service ( [ID],SystemStatus, NAME, IsIndependentSite) VALUES  (3, 1, N'微网站服务',1)
+INSERT INTO dbo.Service ( [ID],SystemStatus, NAME, IsIndependentSite) VALUES  (3, 0, N'微网站服务',1)
 INSERT INTO dbo.Service ( [ID],SystemStatus, NAME, IsIndependentSite) VALUES  (4, 1, N'微信集成服务',1)
 INSERT INTO dbo.Service ( [ID],SystemStatus, NAME, IsIndependentSite) VALUES  (5, 0, N'物业服务',0)
 SET IDENTITY_INSERT [dbo].[Service] OFF
@@ -190,7 +190,7 @@ INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [C
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level],ServiceID,[Type]) VALUES (6,'Token_Account', 0, N'系统角色与人员管理', N'系统角色与人员管理', NULL, NULL,NULL, 7, NULL,0,1,1,2)
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level],ServiceID,[Type]) VALUES (7,'Token_AppSet', 0, N'App设置', N'App设置', NULL, NULL, NULL, 8, NULL,0,1,1,3)
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level],ServiceID,[Type]) VALUES (8,'Token_Account_I', 0, N'我的账号', N'我的账号', NULL, N'Set', N'Index',9, NULL,0,1,1,3)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level],ServiceID,[Type]) VALUES (41,'Token_Shop', 0, N'商城管理', N'商城管理', NULL, NULL,NULL,6, NULL,0,1,1,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level],ServiceID,[Type]) VALUES (43,'Token_Shop', 0, N'商城管理', N'商城管理', NULL, NULL,NULL,6, NULL,0,1,3,2)
 --二级
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (9,'Token_Property_I', 0, N'物业信息', N'物业信息', NULL, N'BasisSet', N'Index', 1, 1,0,2)
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (10,'Token_WUYE_AboutUS', 0, N'关于我们', N'关于我们（物业）', NULL, N'AboutUS', N'Index',10, 1,0,2)
@@ -208,34 +208,34 @@ INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [C
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (21,'Token_News_Su', 0, N'调查问卷', N'调查问卷', NULL, N'SurveyMain', N'IndexMain', 3, 2,0,2)
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (22,'Token_News_A', 0, N'活动', N'活动', NULL, N'ActivityInfo', N'Index', 4, 2,0,2)
 
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (23,'Token_User_M', 1, N'用户管理', N'用户管理', NULL, N'UserManage', N'Index', 1, 3,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (24,'Token_User_Msg', 0, N'人工回答', N'人工回答', NULL, N'InstantMes', N'Index', 2, 3,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (25,'Token_User_SM', 1, N'人员与用户管理', N'人员与用户管理', NULL, N'SalesMessage', N'Index', 3, 3,0,2)
+--INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (23,'Token_User_M', 1, N'用户管理', N'用户管理', NULL, N'UserManage', N'Index', 1, 3,0,2)
+--INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (25,'Token_User_SM', 1, N'人员与用户管理', N'人员与用户管理', NULL, N'SalesMessage', N'Index', 3, 3,0,2)
 
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (34,'Token_Keyword', 0, N'自动回复', N'自动回复', NULL, N'KeywordMessage', N'Index', 1, 4,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (26,'Token_Message_N', 0, N'消息推送', N'消息推送', NULL, N'Message', N'Index', 2, 4,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (27,'Token_Message_H', 0, N'已发送', N'已发送', NULL, N'Message', N'History', 3, 4,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (23,'Token_Keyword', 0, N'自动回复', N'自动回复', NULL, N'KeywordMessage', N'Index', 1, 4,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (24,'Token_Message_N', 0, N'消息推送', N'消息推送', NULL, N'Message', N'Index', 2, 4,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (25,'Token_Message_H', 0, N'已发送', N'已发送', NULL, N'Message', N'History', 3, 4,0,2)
 
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (28,'Token_Library_I', 0, N'图片素材', N'图片素材', NULL, N'LibraryImage', N'Index', 1, 5,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (29,'Token_Library_Vo', 0, N'语音素材', N'语音素材', NULL, N'LibraryVoice', N'Index', 2, 5,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (30,'Token_Library_Vi', 0, N'视频素材', N'视频素材', NULL, N'LibraryVideo', N'Index', 3, 5,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (31,'Token_Library_IT', 0, N'图文素材', N'图文素材', NULL, N'LibraryImageText', N'Index', 4, 5,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (26,'Token_Library_I', 0, N'图片素材', N'图片素材', NULL, N'LibraryImage', N'Index', 1, 5,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (27,'Token_Library_Vo', 0, N'语音素材', N'语音素材', NULL, N'LibraryVoice', N'Index', 2, 5,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (28,'Token_Library_Vi', 0, N'视频素材', N'视频素材', NULL, N'LibraryVideo', N'Index', 3, 5,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (29,'Token_Library_IT', 0, N'图文素材', N'图文素材', NULL, N'LibraryImageText', N'Index', 4, 5,0,2)
 
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (32,'Token_Account_R', 0, N'角色管理', N'角色管理', NULL, N'Character', N'Index', 1, 6,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (33,'Token_Account_M', 0, N'人员管理', N'人员管理', NULL, N'Account', N'Index', 2, 6,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (30,'Token_Account_R', 0, N'角色管理', N'角色管理', NULL, N'Character', N'Index', 1, 6,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (31,'Token_Account_M', 0, N'人员管理', N'人员管理', NULL, N'Account', N'Index', 2, 6,0,2)
 
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (35,'Token_Waitpage', 0, N'App等待画面', N'App等待画面', NULL, N'AppWaitImg', N'Index',1, 7,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (36,'Token_AutoMessage_Reply', 1, N'被添加时自动回复', N'被添加自动回复', NULL, N'AutoMessageReply', N'Index', 2, 7,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (37,'Token_Payment', 0, N'支付配置', N'支付配置', NULL, N'Payment', N'Index',3, 7,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (32,'Token_Waitpage', 0, N'App等待画面', N'App等待画面', NULL, N'AppWaitImg', N'Index',1, 7,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (33,'Token_AutoMessage_Reply', 1, N'被添加时自动回复', N'被添加自动回复', NULL, N'AutoMessageReply', N'Index', 2, 7,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (34,'Token_Payment', 0, N'支付配置', N'支付配置', NULL, N'Payment', N'Index',3, 7,0,2)
 
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (42,'Token_Shop_S', 0, N'商城设置', N'商城设置', NULL, N'MicroSiteSet', N'Index', 1, 9,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (43,'Token_Shop_T', 0, N'类别管理', N'类别管理', NULL, N'Classify', N'Index', 2, 9,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (44,'Token_Shop_M', 0, N'产品管理', N'产品管理', NULL, N'Product', N'Index', 3, 9,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (45,'Token_Shop_O1', 0, N'订单管理', N'订单管理(微商城)', NULL, N'MicroOrder', N'Index', 4, 9,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (35,'Token_Shop_S', 0, N'商城设置', N'商城设置', NULL, N'MicroSiteSet', N'Index', 1, 43,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (36,'Token_Shop_T', 0, N'类别管理', N'类别管理', NULL, N'Classify', N'Index', 2, 43,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (37,'Token_Shop_M', 0, N'产品管理', N'产品管理', NULL, N'Product', N'Index', 3, 43,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (38,'Token_Shop_O1', 0, N'订单管理', N'订单管理(微商城)', NULL, N'MicroOrder', N'Index', 43, 9,0,2)
 --三级
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (38,'Token_User_ALL', 0, N'全部用户', N'全部用户', NULL, N'UserManage', N'AllUser', 4, 3,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (39,'Token_Chat', 0, N'聊天窗口', N'聊天窗口', NULL, N'SingleChat', N'Index', 1, 38,0,3)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (40,'Token_Property_User', 0, N'业主信息', N'业主信息', NULL, N'PropertyUser', N'Index',1, 11,0,3)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (39,'Token_User_ALL', 0, N'全部用户', N'全部用户', NULL, N'UserManage', N'AllUser', 1, 3,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (40,'Token_User_Msg', 0, N'人工回答', N'人工回答', NULL, N'InstantMes', N'Index', 2, 3,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (41,'Token_Chat', 0, N'聊天窗口', N'聊天窗口', NULL, N'SingleChat', N'Index', 1, 39,0,3)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (42,'Token_Property_User', 0, N'业主信息', N'业主信息', NULL, N'PropertyUser', N'Index',1, 11,0,3)
 /**/
 /*
 --2级
@@ -308,18 +308,18 @@ SET IDENTITY_INSERT [dbo].[Menu] OFF
 --INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,17,'订单列表','Index',1)
 --INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,17,'取消订单','Cancel',2)
 
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,33,'人员列表','Index',1)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,33,'添加人员','Add',2)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,33,'修改人员','Edit',3)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,33,'删除人员','Delete',4)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,33,'启用/禁用人员','SetAccountMainStatus',5)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,33,'重置密码','ResetPwd',6)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,31,'人员列表','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,31,'添加人员','Add',2)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,31,'修改人员','Edit',3)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,31,'删除人员','Delete',4)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,31,'启用/禁用人员','SetAccountMainStatus',5)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,31,'重置密码','ResetPwd',6)
 
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,32,'角色列表','Index',1)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,32,'添加角色','Add',2)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,32,'修改角色','Edit',3)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,32,'删除角色','Delete',4)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,32,'权限设置','Power',4)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,30,'角色列表','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,30,'添加角色','Add',2)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,30,'修改角色','Edit',3)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,30,'删除角色','Delete',4)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,30,'权限设置','Power',4)
 
 --INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,20,'项目列表','Index',1)
 --INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,20,'查看项目详细信息','Select',2)
@@ -388,22 +388,22 @@ INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  (
 
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,9,'基础设置','Index',1)
 
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,34,'关键词自动回复','Index',1)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,34,'保存关键词自动回复','Add',2)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,34,'修改关键词自动回复','Edit',3)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,34,'删除关键词自动回复','Delete',4)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,23,'关键词自动回复','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,23,'保存关键词自动回复','Add',2)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,23,'修改关键词自动回复','Edit',3)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,23,'删除关键词自动回复','Delete',4)
 
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,35,'App等待画面','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,32,'App等待画面','Index',1)
 
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,8,'我的账号','Index',1)
 
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,31,'查看图文','Index',1)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,31,'新建单图文','Add',2)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,31,'新建多图文','MoreAdd',3)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,31,'修改图文','Edit',4)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,31,'删除图文','Delete',5)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,29,'查看图文','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,29,'新建单图文','Add',2)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,29,'新建多图文','MoreAdd',3)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,29,'修改图文','Edit',4)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,29,'删除图文','Delete',5)
 
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,34,'编辑','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,33,'编辑','Index',1)
 
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,22,'详细信息','ViewUser',1)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,22,'修改','EditUser',2)
@@ -424,10 +424,11 @@ INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  (
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,11,'新增','Add',2)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,11,'编辑','Edit',3)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,11,'删除','Delete',4)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,40,'业主信息','Index',1)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,40,'新增','Add',2)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,40,'编辑','Edit',3)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,40,'删除','Delete',4)
+
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,42,'业主信息','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,42,'新增','Add',2)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,42,'编辑','Edit',3)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,42,'删除','Delete',4)
 
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,12,'物业费列表','Index',1)
 
@@ -459,7 +460,7 @@ INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  (
 
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,10,'关于我们','Index',1)
 
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,37,'支付配置','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,34,'支付配置','Index',1)
 
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,23,'用户列表','Index',1)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,23,'新建用户分组','AddGroup',2)
@@ -469,44 +470,45 @@ INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  (
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,23,'修改用户信息','EditUser',6)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,23,'查看用户信息','ViewUser',7)
 
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,24,'详细','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,40,'列表','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,41,'详细','Index',1)
 
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,25,'详细','Index',1)
 
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,26,'新增推送','Index',1)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,27,'历史推送','History',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,24,'新增推送','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,25,'历史推送','History',1)
 
 
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,28,'查看图片','Index',1)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,28,'上传图片','Upload',2)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,26,'查看图片','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,26,'上传图片','Upload',2)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,26,'修改标题','ReName',3)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,26,'删除图片','Delete',4)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,27,'查看语音','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,27,'上传语音','Upload',2)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,27,'修改标题','ReName',3)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,27,'删除语音','Delete',4)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,28,'查看视频','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,28,'上传视频','Upload',2)
 INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,28,'修改标题','ReName',3)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,28,'删除图片','Delete',4)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,29,'查看语音','Index',1)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,29,'上传语音','Upload',2)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,29,'修改标题','ReName',3)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,29,'删除语音','Delete',4)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,30,'查看视频','Index',1)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,30,'上传视频','Upload',2)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,30,'修改标题','ReName',3)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,30,'删除视频','Delete',4)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,28,'删除视频','Delete',4)
 
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,38,'列表','AllUser',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,39,'列表','AllUser',1)
 
 --商城
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,42,'设置','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,35,'设置','Index',1)
 
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,43,'分类列表','Index',1)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,43,'添加分类','Add',2)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,43,'修改分类','Edit',3)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,43,'删除分类','Delete',4)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,36,'分类列表','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,36,'添加分类','Add',2)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,36,'修改分类','Edit',3)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,36,'删除分类','Delete',4)
 
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,44,'产品列表','Index',1)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,44,'添加产品','Add',2)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,44,'修改产品','Edit',3)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,44,'删除产品','Delete',4)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,37,'产品列表','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,37,'添加产品','Add',2)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,37,'修改产品','Edit',3)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,37,'删除产品','Delete',4)
 
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,45,'订单列表','Index',1)
-INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,45,'取消订单','Cancel',2)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,38,'订单列表','Index',1)
+INSERT INTO dbo.MenuOption (SystemStatus, MenuID,Name,ACTION,[Order] ) VALUES  ( 0,38,'取消订单','Cancel',2)
 
 
 

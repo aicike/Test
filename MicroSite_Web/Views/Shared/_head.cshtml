@@ -1,6 +1,5 @@
 ﻿@{
     var account = Session[Poco.SystemConst.Session.LoginAccount] as Poco.Account;
-
 }
 <style>
     .homeMenu
@@ -39,15 +38,16 @@
 <div class="head">
     <div id="logo" style="width: 1002px; margin: 0px auto 0px auto;">
         <div class="logo" style="margin-top: 6px;">
-                
-                @if (account!=null&&account.LogoPath != null && account.LogoPath.Length > 0)
-                { 
-                <a href="@Url.Action("Index", "Home")"><img src="@Url.Content(account.LogoThumbnailPath,"/Images/logo.png")" /></a>
-                }
-                else
-                { 
-                <a href="@Url.Action("Index", "Home")"><img alt="" src="@Url.Content("~/Images/logo.png")" /></a>
-                }
+            @if (account != null && account.LogoPath != null && account.LogoPath.Length > 0)
+            { 
+                <a href="@Url.Action("Index", "Home")">
+                    <img src="@Url.Content(account.LogoThumbnailPath, "/Images/logo.png")" style=" height:58px" /></a>
+            }
+            else
+            { 
+                <a href="@Url.Action("Index", "Home")">
+                    <img alt="" src="@Url.Content("/Images/logo.png")" /></a>
+            }
         </div>
         @*<div class="homeMenu">
             @if (ViewBag.HomeSelect == "1")
@@ -78,20 +78,20 @@
                 帮助中心
             </div>
         </div>*@
-        <div style="float: right; margin-top: 35px;">
+        <div style="float: right; margin-top: 20px; font-size: 14px;">
             @if (account != null)
             {   
-                @*<a href="@Url.Action("index","Set")">
-                    @if (string.IsNullOrEmpty(account.HeadImagePath))
-                    { 
-                        <img src="@Url.Content("/Images/default_Avatar.png")" title="账号信息" style=" border:0px; width:56px"/>
-                    }
+                <a href="@Url.Action("index", "Set")" style="display: inline-block;margin-right:14px">
+                    @if (account.HeadImagePath != null && account.HeadImagePath.Length > 0)
+                    {<img src="@Url.Content(account.HeadImagePath)" style="width:38px;height:38px;margin-right:7px;margin-bottom:-5px;" />}
                     else
                     { 
-                        <img src="@Url.Content(account.HeadImagePath)" title="账号信息"  style=" border:0px; width:56px"/>
+                        <img src="@Url.Content("/Images/default_Avatar.png")" style="width:38px;height:38px;margin-right:7px;margin-bottom:-5px;" />
                     }
-                </a>*@
-                <a id="btnLogOut" type="user">退出</a>
+                    <label>@account.Name</label></a>
+                <a id="btnLogOut" type="user" style="display: inline-block; padding-left: 14px; box-shadow: inset 1px 0 0 0 #fff;
+                    -moz-box-shadow: inset 1px 0 0 0 #fff; -webkit-box-shadow: inset 1px 0 0 0 #fff;
+                    border-left: 1px solid #adadad;">退出</a>
             }
         </div>
         <div style="clear: both;">
