@@ -88,7 +88,7 @@ namespace Interface
         /// <param name="DY"></param>
         /// <param name="FH"></param>
         /// <returns></returns>
-        Result DBImportCheck(int AMID, string PayDate, string LH, string DY, string FH);
+        Result DBImportCheck(int AMID, string PayDate, string LH, string DY, string FH, string carnumber);
 
         /// <summary>
         /// 获取一个月的数据

@@ -176,16 +176,16 @@ namespace Business
         /// <param name="DY"></param>
         /// <param name="FH"></param>
         /// <returns></returns>
-        public Result DBImportCheck(int AMID, string PayDate, string LH, string DY, string FH)
+        public Result DBImportCheck(int AMID, string PayDate, string LH, string DY, string FH, string carnumber)
         {
             Result result = new Result();
-            string sql = string.Format("select count(ID) from ParkingFee where AccountMainID={0} and PayDate='{1}' and BuildingNum='{2}'and Unit='{3}'and RoomNumber='{4}'",
-                                      AMID, PayDate, LH, DY, FH);
+            string sql = string.Format("select count(ID) from ParkingFee where AccountMainID={0} and PayDate='{1}' and BuildingNum='{2}'and Unit='{3}'and RoomNumber='{4}' and plates='{5}'",
+                                      AMID, PayDate, LH, DY, FH, carnumber);
             var cnt = Context.Database.SqlQuery<int>(sql).FirstOrDefault();
             if (cnt > 0)
             {
                 result.HasError = true;
-                result.Error = " 楼号：" + LH + " 单元：" + DY + " 房号：" + FH + "在" + PayDate + "中的的数据已存在。请删除后再次导入。";
+                result.Error = " 楼号：" + LH + " 单元：" + DY + " 房号：" + FH + "车牌号：" + carnumber + " 在" + PayDate + "中的的数据已存在。请删除后再次导入。";
             }
             return result;
         }
@@ -294,7 +294,7 @@ namespace Business
                 DataRow row = dt.NewRow();
                 row["房号(缩写)"] = item.BuildingNum + "-" + item.Unit + "-" + item.RoomNumber;
 
-                row["缴费月份"] =item.PayDate;
+                row["缴费月份"] = item.PayDate;
                 row["车牌号"] = item.plates;
                 row["停车费"] = item.ParkingFees;
                 row["停车类型"] = item.ParkingType;

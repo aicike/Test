@@ -80,7 +80,7 @@ namespace Web.Controllers
                 ViewBag.IsPay = "";
             }
             var parkingpropertyfeemodel = Factory.Get<IParkingFeeModel>(SystemConst.IOC_Model.ParkingFeeModel);
-            var propertyfee = parkingpropertyfeemodel.GetParkingFeeInfo(LoginAccount.CurrentAccountMainID, Date, fhsx, IsPay ).ToPagedList(id ?? 1, 50);
+            var propertyfee = parkingpropertyfeemodel.GetParkingFeeInfo(LoginAccount.CurrentAccountMainID, Date, fhsx, IsPay).ToPagedList(id ?? 1, 50);
 
             string WebTitleRemark = SystemConst.WebTitleRemark;
             string webTitle = string.Format(SystemConst.Business.WebTitle, "物业管理-停车费管理", LoginAccount.CurrentAccountMainName, WebTitleRemark);
@@ -109,11 +109,11 @@ namespace Web.Controllers
             dttable.Columns.Add("楼号");
             dttable.Columns.Add("房号(缩写)");
             dttable.Columns.Add("停车类型");
-            result = Tool.GetXLSXInfo(ImExcel, dttable,"1");
+            result = Tool.GetXLSXInfo(ImExcel, dttable, "1");
             if (result.HasError)
             {
                 //导入出错
-                TempData["IsError"]  = 1;
+                TempData["IsError"] = 1;
                 TempData["ErrorStr"] = result.Error;
                 return RedirectToAction("Index", "ParkingFee", new { id = id });
                 //return JavaScript("window.location.href='" + Url.Action("Index", "PropertyFeeInfo", new { IsError = 1, ErrorStr = result.Error }) + "'");
@@ -136,9 +136,9 @@ namespace Web.Controllers
                     return RedirectToAction("Index", "PropertyFeeInfo", new { id = id });
                 }
                 var DBlist = parkingpropertyfeemodel.GetAllByPayDay(LoginAccount.CurrentAccountMainID, dt.Rows[0]["缴费月份"].ToString());
-                foreach (DataRow  Row  in dt.Rows)
+                foreach (DataRow Row in dt.Rows)
                 {
-                    
+
                     try
                     {
                         string sx = Row["房号(缩写)"].ToString();
@@ -164,7 +164,7 @@ namespace Web.Controllers
                         return RedirectToAction("Index", "ParkingFee", new { id = id });
                         //return JavaScript("window.location.href='" + Url.Action("Index", "PropertyFeeInfo", new { IsError = 1, ErrorStr = "房号不能为空" }) + "'");
                     }
-                  
+
                     try
                     {
                         if (string.IsNullOrEmpty(Row["是否已缴费（是/否）"].ToString()))
@@ -174,12 +174,14 @@ namespace Web.Controllers
                             return RedirectToAction("Index", "ParkingFee", new { id = id });
                             //return JavaScript("window.location.href='" + Url.Action("Index", "PropertyFeeInfo", new { IsError = 1, ErrorStr = "单元不能为空" }) + "'");
                         }
-                        else {
+                        else
+                        {
                             if (Row["是否已缴费（是/否）"].ToString() == "是")
                             {
                                 Row["是否已缴费（是/否）"] = "True";
                             }
-                            else {
+                            else
+                            {
                                 Row["是否已缴费（是/否）"] = "False";
                             }
                         }
@@ -229,11 +231,11 @@ namespace Web.Controllers
                         try
                         {
                             string sx = Row["房号(缩写)"].ToString();
-                           
+                            string cph = Row["车牌号"].ToString();
 
                             string sx2 = Row2["房号(缩写)"].ToString();
-
-                            if (sx == sx2)
+                            string cph2 = Row["车牌号"].ToString();
+                            if (sx == sx2 && cph == cph2)
                             {
                                 cnts = cnts + 1;
                                 if (cnts > 1)
@@ -245,14 +247,14 @@ namespace Web.Controllers
                             }
                             foreach (ParkingFee pfi in DBlist)
                             {
-                                if (sx == pfi.Abbreviation)
+                                if (sx == pfi.Abbreviation && cph == pfi.plates)
                                 {
                                     TempData["IsError"] = 1;
                                     TempData["ErrorStr"] = " 房号(缩写)：" + sx + "中的的数据已存在。请删除后再次导入。";
                                     return RedirectToAction("Index", "ParkingFee", new { id = id });
                                 }
                             }
-                            
+
                         }
                         catch
                         {
@@ -336,7 +338,7 @@ namespace Web.Controllers
             parkingfee.Abbreviation = parkingfee.BuildingNum + "-" + parkingfee.Unit + "-" + parkingfee.RoomNumber;
             parkingfee.importDate = DateTime.Now;
             parkingfee.AccountMainID = LoginAccount.CurrentAccountMainID;
-            var result = parkingpropertyfeemodel.DBImportCheck(LoginAccount.CurrentAccountMainID, parkingfee.PayDate, parkingfee.BuildingNum, parkingfee.Unit, parkingfee.RoomNumber);
+            var result = parkingpropertyfeemodel.DBImportCheck(LoginAccount.CurrentAccountMainID, parkingfee.PayDate, parkingfee.BuildingNum, parkingfee.Unit, parkingfee.RoomNumber, parkingfee.plates);
             if (result.HasError)
             {
                 TempData["IsError"] = 1;
@@ -365,7 +367,7 @@ namespace Web.Controllers
             dts.Add(dt);
 
             CommonModel com = new CommonModel();
-            string fileName =  "物业停车费导入模板" + DateTime.Now.ToString("yyyyMMddhhmmssfff") + ".xlsx";
+            string fileName = "物业停车费导入模板" + DateTime.Now.ToString("yyyyMMddhhmmssfff") + ".xlsx";
             string file = Server.MapPath("/File/Excel/") + fileName;
             com.Export(dts, "物业停车费导入模板", file);
 
@@ -402,7 +404,7 @@ namespace Web.Controllers
         {
             var parkingpropertyfeemodel = Factory.Get<IParkingFeeModel>(SystemConst.IOC_Model.ParkingFeeModel);
             List<DataTable> dts = new List<DataTable>();
-            var dt = parkingpropertyfeemodel.getDtHistoryInfo(LoginAccount.CurrentAccountMainID,DcDate,Dcfhsx);
+            var dt = parkingpropertyfeemodel.getDtHistoryInfo(LoginAccount.CurrentAccountMainID, DcDate, Dcfhsx);
             dts.Add(dt);
 
             CommonModel com = new CommonModel();
