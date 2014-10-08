@@ -37,6 +37,9 @@ namespace Web.Controllers
             var TemporayList = commonModel.getSessionList(LoginAccount.ID, 0,LoginAccount.CurrentAccountMainID);
 
 
+            var webNoticeModel = Factory.Get<IWebNoticeModel>(SystemConst.IOC_Model.WebNoticeModel);
+            webNoticeModel.ClearWebNotice(LoginAccount.CurrentAccountMainID, "Token_User_Msg");
+
             return View(TemporayList.ToPagedList(id ?? 1, 15));
 
         }

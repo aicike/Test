@@ -42,7 +42,8 @@ namespace AcceptanceServer.DataOperate
                 {
                     string sql_webNotice_sel = "select count,AccountMainID from WebNotice where menuID=40 and accountmainID=(SELECT TOP 1 AccountMainID FROM dbo.Account_AccountMain where AccountID=" + mg.ToAccountID.Value + ")";
 
-                    var data = SqlHelper.ExecuteDataset(sql, sp);
+                    var data = SqlHelper.ExecuteDataset(sql_webNotice_sel, sp);
+
                     int NoticeCount = 0;
                     if (data.Tables[0] != null && data.Tables[0].Rows.Count > 0)
                     {
