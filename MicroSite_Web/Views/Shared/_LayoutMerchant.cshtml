@@ -1,0 +1,287 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section head{
+    @RenderSection("head", required: false)
+    <script type="text/javascript">
+
+        //展示请稍后信息提示
+        function ShowLayout_Later(Title, Text) {
+            $("#Laypit_LaterText").text(Text);
+            $("#Layout_Later").dialog({
+                resizable: false,
+                height: 100,
+                width: 260,
+                modal: true,
+                draggable: false,
+                title: Title,
+                position: "center"
+            });
+            $(".ui-dialog-titlebar").hide();
+        }
+        //关闭请稍后信息提示
+        function CloseLayout_Later() {
+            $("#Layout_Later").dialog("close");
+            $(".ui-dialog-titlebar").show();
+        }
+      
+    </script>
+}
+@{
+    var account = Session[Poco.SystemConst.Session.LoginAccount] as Poco.Account;
+}
+@Html.Partial("_MerchantHead")
+<div class="main">
+    <div style="width: 190px; float: left;">
+        <ul class="menu">
+            <li><a class="menu1">商户服务
+                <img style=" float:right; width:14px ;margin-right:10px; margin-top:14px" t_val="0" src="@Url.Content("/images/zhankai_2.png")" />
+            </a>
+                @if (ViewBag.Menu >= 1 && ViewBag.Menu <= 12)
+                { 
+                    <script>
+                        $(function () {
+                            $('#submenu_1').prev("a").find("img").attr("src", '@Url.Content("/images/shouqi_2.png")');
+                            $('#submenu_1').prev("a").find("img").attr("t_val", "1");
+                            $('#submenu_1').show();
+                        }); 
+                    </script>
+                }
+                <ul class="submenu" id="submenu_1">
+                    @if (ViewBag.Menu == 1)
+                    {
+                        <li class="select"><a href="@(Url.Action("Index", "M_TakeOut", new { Area = "Merchant" }, null))">
+                            周边外卖</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@(Url.Action("Index", "M_TakeOut", new { Area = "Merchant" }, null))">周边外卖</a></li>
+                    }
+                    @if (ViewBag.Menu == 2)
+                    {
+                        <li class="select"><a href="">周边团购 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="">周边团购 </a></li>
+                    }
+                    @if (ViewBag.Menu == 3)
+                    {
+                        <li class="select"><a href="@(Url.Action("Index", "M_Product", new { Area = "Merchant" }, null))">
+                            商家促销</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@(Url.Action("Index", "M_Product", new { Area = "Merchant" }, null))">商家促销</a></li>
+                    }
+                    @if (ViewBag.Menu == 4)
+                    {
+                        <li class="select"><a href="/Merchant/M_Tutor">家教 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="/Merchant/M_Tutor">家教 </a></li>
+                    }
+                    @if (ViewBag.Menu == 5)
+                    {
+                        <li class="select"><a href="/Merchant/M_DryCleaning">干洗服务 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="/Merchant/M_DryCleaning">干洗服务 </a></li>
+                    }
+                    @if (ViewBag.Menu == 6)
+                    {
+                        <li class="select"><a href="/Merchant/M_EducationTrain">教育培训 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="/Merchant/M_EducationTrain">教育培训 </a></li>
+                    }
+                    @if (ViewBag.Menu == 7)
+                    {
+                        <li class="select"><a href="/Merchant/M_PetHospital">宠物医院 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="/Merchant/M_PetHospital">宠物医院 </a></li>
+                    }
+                    @if (ViewBag.Menu == 8)
+                    {
+                        <li class="select"><a href="">家电维修 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="">家电维修 </a></li>
+                    }
+                    @if (ViewBag.Menu == 9)
+                    {
+                        <li class="select"><a href="/Merchant/M_Domestic">家政服务 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="/Merchant/M_Domestic">家政服务 </a></li>
+                    }
+                    @if (ViewBag.Menu == 10)
+                    {
+                        <li class="select"><a href="/Merchant/M_Unlock">开锁换锁 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="/Merchant/M_Unlock">开锁换锁 </a></li>
+                    }
+                    @if (ViewBag.Menu == 11)
+                    {
+                        <li class="select"><a href="/Merchant/M_Move">搬家 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="/Merchant/M_Move">搬家 </a></li>
+                    }
+                    @if (ViewBag.Menu == 12)
+                    {
+                        <li class="select"><a href="/Merchant/M_PipelineDredge">管道疏通 </a></li>
+                    }
+                    else
+                    {
+                        <li><a href="/Merchant/M_PipelineDredge">管道疏通 </a></li>
+                    }
+                </ul>
+            </li>
+            <li><a class="menu1">基本信息
+                <img style=" float:right; width:14px ;margin-right:10px; margin-top:14px" t_val="0" src="@Url.Content("/images/zhankai_2.png")" />
+            </a>
+                <ul class="submenu" id="submenu_2">
+                    @if (ViewBag.Menu == 13)
+                    {
+                        <li class="select"><a href="/Merchant/MerchantHome/MerchantsInfo">基本信息 </a></li>
+                        <script>
+                            $(function () {
+                                $('#submenu_2').prev("a").find("img").attr("src", '@Url.Content("/images/shouqi_2.png")');
+                                $('#submenu_2').prev("a").find("img").attr("t_val", "1");
+                                $('#submenu_2').show();
+                            }); 
+                        </script>
+                    }
+                    else
+                    {
+                        <li><a href="/Merchant/MerchantHome/MerchantsInfo">基本信息 </a></li>
+                    }
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div style="width: 810px; float: left">@RenderBody()
+    </div>
+    <div style="clear: both">
+    </div>
+</div>
+<div id="Layout_Later" title="" style="display: none; background-color: #fafafa">
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 5px;">
+        <tr id="trImg" align="center" style="">
+            <td>
+                <img src="/Images/ImgSH2.gif" />
+            </td>
+        </tr>
+        <tr align="center">
+            <td>
+                <span style="color: #606060; font-weight: bold" id="Laypit_LaterText"></span>
+            </td>
+        </tr>
+    </table>
+</div>
+<script>
+    $(function () {
+        $(".menu1").click(function () {
+            $(this).next(".submenu").slideToggle('fast');
+            var iszk = $(this).find("img").attr("t_val"); //0合并 1展开
+            if (iszk == 0) {
+                $(this).find("img").attr("src", '@Url.Content("/images/shouqi_2.png")');
+                $(this).find("img").attr("t_val", "1");
+            } else {
+                $(this).find("img").attr("src", '@Url.Content("/images/zhankai_2.png")');
+                $(this).find("img").attr("t_val", "0");
+            }
+        });
+
+        $(".menu").attr("style", "min-height:" + $(".main").height() + "px");
+        //        $(".menu1").click();
+    });
+</script>
+<style>
+
+.menu
+{
+    margin: 0 auto;
+    padding: 0;
+    /*background-color: #fbfbfb;*/
+    /*min-height: 700px;*/
+    border-right: 1px solid #d1d1d1;
+ 
+    
+}
+.menu li
+{
+    width: 100%;
+    list-style-type: none;
+    display: block;
+    line-height: 40px;
+    font-size: 15px;
+    min-height: 40px;
+    color: black;
+    border-bottom: 1px solid #d1d1d1;
+    
+}
+.menu li:first-child
+{
+    border-top: none;
+}
+
+.menu > li > a
+{
+    display: block;
+    cursor: pointer;
+    text-align: left;
+    padding-left: 15px;
+    background: -webkit-linear-gradient(top, #e9e9e9, #f3f3f3);
+    background: -moz-linear-gradient(top, #dedede, #f3f3f3);
+    background: -o-linear-gradient(top, #dedede, #f3f3f3);
+    background: -ms-linear-gradient(top, #dedede, #f3f3f3);
+    background: linear-gradient(top, #dedede, #f3f3f3);
+}
+.menu li.select
+{
+    background-color: #00aec8;
+    color:#ffffff;
+}
+.submenu
+{
+    margin: 0 auto;
+    padding: 0;
+    display: none;
+    background-color:#ffffff;
+}
+.submenu li
+{
+    border: none;
+}
+.submenu li a:hover
+{
+    background-color:#C0E9F0;
+}
+.submenu > li:last-child
+{
+    /*border-bottom: 1px solid #d1d1d1;*/
+}
+.submenu > li:first-child
+{
+    border-top: 1px solid #d1d1d1;
+}
+.submenu > li > a
+{
+    display: block;
+    cursor: pointer;
+    text-align: left;
+    padding-left: 25px;
+}
+</style>

@@ -142,6 +142,7 @@ a img
     display: none;
     background-color:#ffffff;
     z-index: 10;
+    min-width:100px;
 }
 .submenu li
 {

@@ -80,12 +80,12 @@ namespace Business
         }
 
         [Transaction]
-        public Result EditUserLoginInfoID(string phone, int amid, int userLoginInfoID)
+        public Result EditUserLoginInfoID(int amid, int userLoginInfoID, Property_User pu)
         {
             Result result = new Result();
             try
             {
-                string sql = string.Format("UPDATE dbo.Property_User SET UserLoginInfoID={0} WHERE Phone='{1}' AND AccountMainID={2}", userLoginInfoID, phone, amid);
+                string sql = string.Format("UPDATE dbo.Property_User SET UserLoginInfoID={0},UserName='{1}',Email='{2}' WHERE Phone='{3}' AND AccountMainID={4}", userLoginInfoID,pu.UserName, pu.Email,pu.Phone, amid);
                 base.SqlExecute(sql);
             }
             catch (Exception ex)
@@ -125,5 +125,6 @@ namespace Business
             var item = List().Where(a => a.AccountMainID == AMID && a.Phone==Phone).FirstOrDefault();
             return item;
         }
+
     }
 }

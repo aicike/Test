@@ -44,6 +44,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net40\EntityFramework.Core.dll</HintPath>
+    </Reference>
     <Reference Include="GetuiServerApiSDK">
       <HintPath>..\packages\Getui\GetuiServerApiSDK.dll</HintPath>
     </Reference>

@@ -28,35 +28,12 @@
     </script>
 }
 @{
-    var loginSystemUser = Session[Poco.SystemConst.Session.LoginSystemUser] as Poco.SystemUser;
+    var account = Session[Poco.SystemConst.Session.LoginAccount] as Poco.Account;
 }
-    <div class="head">
-        <div style="width: 1002px;margin: 0px auto 0px auto;">
-
-             <div class="logo" style="margin-top: 6px;">
-                
-              
-                <a href="@Url.Action("Index", "SystemUserHome")"><img alt="" src="@Url.Content("~/Images/logo.png")" /></a>
-              
-            </div>
-            <div style="float: right; margin-top: 40px;">
-                @if (loginSystemUser != null)
-                { 
-                    <a id="btnLogOut" type="sysUser">退出</a>
-                }
-            </div>
-            <div style="clear:both"></div>
-        </div>
-    </div>
-
+@Html.Partial("_head")
 <div class="main">
-    <div style="width: 190px; float: left;">
-        @Html.Partial("SystemMenu")
-    </div>
-    <div style="width: 810px; float: left">
+    <div style="width: 770px;">
         @RenderBody()
-    </div>
-    <div style="clear: both">
     </div>
 </div>
 <div id="Layout_Later" title="" style="display: none; background-color: #fafafa">

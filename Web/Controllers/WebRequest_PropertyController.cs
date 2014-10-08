@@ -66,6 +66,7 @@ namespace Web.Controllers
                     ap.RoomNum = item.Property_House.RoomNumber;
                     ap.BuildingNum = item.Property_House.BuildingNum;
                     ap.CellNum = item.Property_House.CellNum;
+                    ap.Email = item.Email;
                     objs.Add(ap);
                 }
             }
@@ -97,6 +98,7 @@ namespace Web.Controllers
                     ap.RoomNum = item.Property_House.RoomNumber;
                     ap.BuildingNum = item.Property_House.BuildingNum;
                     ap.CellNum = item.Property_House.CellNum;
+                    ap.Email = item.Email;
                     objs.Add(ap);
                 }
             }
@@ -245,7 +247,6 @@ namespace Web.Controllers
             {
                 return Newtonsoft.Json.JsonConvert.SerializeObject(result);
             }
-            //修改Property_User 
             var property_UserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
             var property_HouseModel = Factory.Get<IProperty_HouseModel>(SystemConst.IOC_Model.Property_HouseModel);
             var ph = property_HouseModel.GetByShortNo(shortHouseNo);
@@ -255,14 +256,23 @@ namespace Web.Controllers
             }
             if (!result.HasError)
             {
-                Property_User property_User = new Property_User();
-                property_User.AccountMainID = user.AccountMainID;
-                property_User.Property_HouseID = ph.ID;
-                property_User.UserLoginInfoID = userLoginInfo.ID;
-                property_User.UserName = userName;
-                property_User.Phone = phone;
-                property_User.Email = email;
-                result = property_UserModel.Add(property_User);
+                //判断有没有PropertyUser,有则修改
+                var puList = property_UserModel.GetHouseByUserPhone(user.AccountMainID, phone);
+                if (puList != null && puList.Count > 0)
+                {
+                    result = property_UserModel.EditUserLoginInfoID(user.AccountMainID, userLoginInfo.ID, new Property_User() { UserName = userName,Phone=phone, Email = email });
+                }
+                else
+                {
+                    Property_User property_User = new Property_User();
+                    property_User.AccountMainID = user.AccountMainID;
+                    property_User.Property_HouseID = ph.ID;
+                    property_User.UserLoginInfoID = userLoginInfo.ID;
+                    property_User.UserName = userName;
+                    property_User.Phone = phone;
+                    property_User.Email = email;
+                    result = property_UserModel.Add(property_User);
+                }
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }

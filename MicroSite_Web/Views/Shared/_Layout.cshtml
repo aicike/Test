@@ -1,65 +1,66 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width" />
-	<title>@ViewBag.Title</title>
-	@Styles.Render("~/Content/css")
-	<link href="@Url.Content("~/Content/themes/base/jquery-ui-1.10.2.custom.min.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Content/Style.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Content/Icon/Icon.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Scripts/ToolTip/tipTip.css")" rel="stylesheet" type="text/css" />
-	@Scripts.Render("~/bundles/modernizr")
-	<script src="@Url.Content("~/Scripts/jquery-1.8.3.min.js")" type="text/javascript"></script>
-	<script src="@Url.Content("~/Scripts/jquery-ui-1.10.3.custom.min.js")" type="text/javascript"></script>
-	<script src="@Url.Content("~/Scripts/jquery/jquery.ui.core.min.js")" type="text/javascript"></script>
-	<script src="@Url.Content("~/Scripts/jquery/jquery.ui.widget.min.js")" type="text/javascript"></script>
-	<script src="@Url.Content("~/Scripts/jquery/jquery.ui.datepicker.min.js")" type="text/javascript"></script>
-	<script src="@Url.Content("~/Scripts/jquery/i18n/jquery.ui.datepicker-zh-CN.js")" type="text/javascript"></script>
-	<script src="@Url.Content("~/Scripts/ToolTip/jquery.tipTip.minified.js")" type="text/javascript"></script>
-	<script src="@Url.Content("~/Scripts/topbar/juery.topbar.js")" type="text/javascript"></script>
-	@Scripts.Render("~/bundles/jqueryval")
-	<script>
-		var provinceUrl = '@Url.Action("ProvinceSelectList", "Ajax", new { Area = "" })';
-		var cityUrl = '@Url.Action("CitySelectList", "Ajax", new { Area = "" })';
-		var districtUrl = '@Url.Action("DistrictSelectList", "Ajax", new { Area = "" })';
-		var checkIsUniqueUrl = '@Url.Action("CheckIsUnique", "Ajax", new { Area = "" })';
-		var exitUrl = '@Url.Action("Index", "Exit", new { Area = "" })';
-		//logout
-		$(function () {
-			$("#btnLogOut").click(function () {
-				var type = $("#btnLogOut").attr("type");
-				var newExitUrl = exitUrl + "?type=" + type;
-				console.log(newExitUrl);
-				JAlert({
-					Message: "你确定要退出吗?",
-					DialogType: "confirm",
-					BtnOk: "确定",
-					BtnOkClick: "window.location.href = '" + newExitUrl + "'",
-					BtnCancel: "取消",
-					BtnCancelClick: "$(this).dialog('close');"
-				});
-			});
-		});
-	</script>
-	<script src="@Url.Content("~/Scripts/common.js")" type="text/javascript"></script>
-	@RenderSection("head", required: false)
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    <link href="@Url.Content("~/Content/themes/base/jquery-ui-1.10.2.custom.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Style.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Icon/Icon.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Scripts/ToolTip/tipTip.css")" rel="stylesheet" type="text/css" />
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="@Url.Content("~/Scripts/jquery-1.8.3.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.10.3.custom.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery/jquery.ui.core.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery/jquery.ui.widget.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery/jquery.ui.datepicker.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery/i18n/jquery.ui.datepicker-zh-CN.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/ToolTip/jquery.tipTip.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/topbar/juery.topbar.js")" type="text/javascript"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        var provinceUrl = '@Url.Action("ProvinceSelectList", "Ajax", new { Area = "" })';
+        var cityUrl = '@Url.Action("CitySelectList", "Ajax", new { Area = "" })';
+        var districtUrl = '@Url.Action("DistrictSelectList", "Ajax", new { Area = "" })';
+        var checkIsUniqueUrl = '@Url.Action("CheckIsUnique", "Ajax", new { Area = "" })';
+        var exitUrl = '@Url.Action("Index", "Exit", new { Area = "" })';
+        //logout
+        $(function () {
+            $("#btnLogOut").click(function () {
+                var type = $("#btnLogOut").attr("type");
+                var newExitUrl = exitUrl + "?type=" + type;
+                console.log(newExitUrl);
+                JAlert({
+                    Message: "你确定要退出吗?",
+                    DialogType: "confirm",
+                    BtnOk: "确定",
+                    BtnOkClick: "window.location.href = '" + newExitUrl + "'",
+                    BtnCancel: "取消",
+                    BtnCancelClick: "$(this).dialog('close');"
+                });
+            });
+        });
+    </script>
+    <script src="@Url.Content("~/Scripts/common.js")" type="text/javascript"></script>
+    @RenderSection("head", required: false)
 </head>
 <body>
-	@RenderBody()
-	<div style="background-color: #727171; height: 80px;min-width: 960px;">
-		<div style="width: 960px; margin: 0px auto 0px auto;">
-			<div class="bottom">
-				<a target="_blank" href="@Url.Action("ContactUs", "Default", new { v = "aboutus" ,Area="" })">关于 ImTimely</a>&nbsp;|&nbsp;<a target="_blank" href="@Url.Action("ContactUs", "Default", new { v = "agreement", Area = "" })">服务协议</a>&nbsp;|&nbsp;<a target="_blank" href="@Url.Action("ContactUs", "Default", new { Area=""})">联系我们</a>&nbsp;|&nbsp;<span>Copyright
-					© 2012-2013 ImTimely. All Rights Reserved.</span>
-			</div>
-		</div>
-	</div>
-	<div id="dialog">
-	</div>
-	<div id="alert">
-	</div>
-	<div id="jmessage" style="display: none;">
-	</div>
+    @RenderBody()
+    <div style="background-color: #727171; height: 80px; min-width: 960px;">
+        <div style="width: 960px; margin: 0px auto 0px auto;">
+            <div class="bottom">
+                <a target="_blank" href="@Url.Action("ContactUs", "Default", new { v = "aboutus", Area = "" })">
+                    关于我们</a>&nbsp;|&nbsp;<a target="_blank" href="@Url.Action("ContactUs", "Default", new { v = "agreement", Area = "" })">服务协议</a>&nbsp;|&nbsp;<a target="_blank" href="@Url.Action("ContactUs", "Default", new { Area = "" })">联系我们</a>&nbsp;|&nbsp;<span>Copyright
+                        © 2012-2014 L.D.net inc. All Rights Reserved&nbsp;&nbsp;&nbsp;陕ICP备14003858</span>
+            </div>
+        </div>
+    </div>
+    <div id="dialog">
+    </div>
+    <div id="alert">
+    </div>
+    <div id="jmessage" style="display: none;">
+    </div>
 </body>
 </html>

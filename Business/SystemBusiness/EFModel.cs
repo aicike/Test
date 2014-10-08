@@ -16,6 +16,11 @@ namespace Business
     {
         public BaseContext Context;
 
+        public EFModel()
+        {
+            EntityFramework.Core.Core.SetInitializer(SystemConst.WebUrlIP);
+        }
+
         public T Get<T>(int id) where T : class, IBaseEntity
         {
             return Context.Set<T>().Where(a => a.ID == id && a.SystemStatus == (int)EnumSystemStatus.Active).AsNoTracking().FirstOrDefault();

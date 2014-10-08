@@ -21,5 +21,7 @@ namespace Poco.WebAPI_Poco
         public string BuildingNum { get; set; }
 
         public string CellNum { get; set; }
+
+        public string Email { get; set; }
     }
 }
