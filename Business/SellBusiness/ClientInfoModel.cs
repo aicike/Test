@@ -14,7 +14,7 @@ namespace Business
     public class ClientInfoModel : BaseModel<ClientInfo>, IClientInfoModel
     {
         /// <summary>
-        /// User App
+        /// User App(销售)
         /// </summary>
         [Transaction]
         public Result PostClientID(string clientID, int accountMainID, int? userID, EnumClientSystemType sytemType)
@@ -122,6 +122,7 @@ namespace Business
             return result;
         }
 
+
         /// <summary>
         /// Account App
         /// </summary>
@@ -136,8 +137,8 @@ namespace Business
             ClientInfo client = null;
             if (userID.HasValue)
             {
-                client = clientInfoModel.List().Where(a => a.ClientID.Equals(clientID) 
-                    && a.EntityID == userID.Value 
+                client = clientInfoModel.List().Where(a => a.ClientID.Equals(clientID)
+                    && a.EntityID == userID.Value
                     && a.EnumClientSystemTypeID == enumClientSystemTypeID
                     && a.EnumClientUserTypeID == enumClientUserTypeID).FirstOrDefault();
                 if (client == null)

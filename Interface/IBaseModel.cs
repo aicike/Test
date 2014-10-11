@@ -23,5 +23,7 @@ namespace Interface
         T Get(int id);
 
         IQueryable<T> SqlQuery(string sql);
+
+        int SqlExecute(string sql, params object[] parameters);
     }
 }

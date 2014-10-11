@@ -167,7 +167,8 @@ namespace Business
                     }
                     string headImg = null;
                     headImg = SystemConst.WebUrlIP + "".DefaultHeadImage().Replace("~", "");
-                    result.Entity = new App_User() { ID = user.ID, Phone = userLoginInfo.Phone == null ? "" : userLoginInfo.Phone, Name = userLoginInfo.Name, Email = "", Pwd = userLoginInfo.Pwd, HeadImagePath = headImg };
+                    //result.Entity = new App_User() { ID = user.ID, Phone = userLoginInfo.Phone == null ? "" : userLoginInfo.Phone, Name = userLoginInfo.Name, Email = "", Pwd = userLoginInfo.Pwd, HeadImagePath = headImg };
+                    result.Entity = new App_User() { Phone = userLoginInfo.Phone == null ? "" : userLoginInfo.Phone, Name = userLoginInfo.Name, Email = "", Pwd = userLoginInfo.Pwd, HeadImagePath = headImg };
                     return result;
                 }
                 if (string.IsNullOrEmpty(userLoginInfo.Phone) == false && userLoginInfoID != 0)
@@ -319,10 +320,10 @@ namespace Business
 
             User user = null;
             UserLoginInfo userLoginInfo = null;
+            var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
             if (string.IsNullOrEmpty(app_UserLoginInfo.Email) && app_UserLoginInfo.Pwd == "pass123!" ||
                 string.IsNullOrEmpty(app_UserLoginInfo.Phone) && app_UserLoginInfo.Pwd == "pass123!")
             {
-                var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
                 var clientInfo = clientInfoModel.List().Where(a => a.ClientID == app_UserLoginInfo.ClientID).FirstOrDefault();
                 if (clientInfo == null)
                 {
@@ -375,7 +376,6 @@ namespace Business
                     return result;
                 }
                 //判断有没有ClientInfo表数据，没有则创建(创建ClientInfo)
-                var clientInfoModel = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
                 var hasUserTable = clientInfoModel.List().Any(a => a.ClientID == app_UserLoginInfo.ClientID && a.EntityID == user.ID);
                 if (hasUserTable == false)
                 {
@@ -391,6 +391,20 @@ namespace Business
                     result = clientInfoModel.Add(ci);
                 }
             }
+
+            if (result.HasError == false)
+            {
+                //修改或删除原key
+                var enumClientUserTypeID = LookupFactory.GetLookupOptionIdByToken(EnumClientUserType.User);
+                var clientIDList = clientInfoModel.List().Where(a => a.ClientID == app_UserLoginInfo.ClientID && a.EnumClientUserTypeID == enumClientUserTypeID).ToList();
+                if (clientIDList != null)
+                {
+                    string sql = "UPDATE ClientInfo SET EntityID= " + user.ID + " WHERE ClientID='" + app_UserLoginInfo.ClientID + "'";
+                    SqlExecute(sql);
+                }
+            }
+
+
             App_User appuser = new App_User();
             appuser.ID = user.ID;
             appuser.Name = userLoginInfo.Name == null ? "" : userLoginInfo.Name;

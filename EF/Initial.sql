@@ -230,7 +230,7 @@ INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [C
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (35,'Token_Shop_S', 0, N'商城设置', N'商城设置', NULL, N'MicroSiteSet', N'Index', 1, 43,0,2)
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (36,'Token_Shop_T', 0, N'类别管理', N'类别管理', NULL, N'Classify', N'Index', 2, 43,0,2)
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (37,'Token_Shop_M', 0, N'产品管理', N'产品管理', NULL, N'Product', N'Index', 3, 43,0,2)
-INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (38,'Token_Shop_O1', 0, N'订单管理', N'订单管理(微商城)', NULL, N'MicroOrder', N'Index', 43, 9,0,2)
+INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (38,'Token_Shop_O1', 0, N'订单管理', N'订单管理(微商城)', NULL, N'MicroOrder', N'Index', 4, 43,0,2)
 --三级
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (39,'Token_User_ALL', 0, N'全部用户', N'全部用户', NULL, N'UserManage', N'AllUser', 1, 3,0,2)
 INSERT [dbo].[Menu] ([ID],[Token], [SystemStatus], [Name],[ShowName], [Area], [Controller], [Action], [Order], [ParentMenuID],[IsAppMenu],[Level]) VALUES (40,'Token_User_Msg', 0, N'人工回答', N'人工回答', NULL, N'InstantMes', N'Index', 2, 3,0,2)

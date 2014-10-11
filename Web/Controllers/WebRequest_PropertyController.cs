@@ -113,6 +113,7 @@ namespace Web.Controllers
             var list = property_HouseModel.GetBuildingNum(amid);
             if (list != null)
             {
+                list = list.OrderBy(a => a).ToList();
                 return Newtonsoft.Json.JsonConvert.SerializeObject(list);
             }
             else
@@ -127,6 +128,7 @@ namespace Web.Controllers
             var list = property_HouseModel.GetCellNum(amid, buildingNum);
             if (list != null)
             {
+                list = list.OrderBy(a => a).ToList();
                 return Newtonsoft.Json.JsonConvert.SerializeObject(list);
             }
             else
@@ -141,6 +143,7 @@ namespace Web.Controllers
             var list = property_HouseModel.GetRoomNumber(amid, buildingNum, cellNum);
             if (list != null)
             {
+                list = list.OrderBy(a => a).ToList();
                 return Newtonsoft.Json.JsonConvert.SerializeObject(list);
             }
             else
@@ -202,7 +205,7 @@ namespace Web.Controllers
         }*/
 
         /// <summary>
-        /// 业主注册(业主自己选择房号注册方法)
+        /// 业主注册(业主自己选择房号注册方法)旧方法
         /// </summary>
         /// <param name="userID"></param>
         /// <param name="field"></param>
@@ -260,7 +263,7 @@ namespace Web.Controllers
                 var puList = property_UserModel.GetHouseByUserPhone(user.AccountMainID, phone);
                 if (puList != null && puList.Count > 0)
                 {
-                    result = property_UserModel.EditUserLoginInfoID(user.AccountMainID, userLoginInfo.ID, new Property_User() { UserName = userName,Phone=phone, Email = email });
+                    result = property_UserModel.EditUserLoginInfoID(user.AccountMainID, userLoginInfo.ID, new Property_User() { UserName = userName, Phone = phone, Email = email });
                 }
                 else
                 {
@@ -277,6 +280,112 @@ namespace Web.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(result);
         }
 
+        /// <summary>
+        /// 业主注册(业主自己选择房号注册方法)新方法
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="field"></param>
+        /// <param name="value"></param>
+        //systemTypeID 10：Android   9：IOS
+        public string Register_2(string userName, string phone, string pwd, string email, string shortHouseNo, int accountMainID, string clientID, int systemTypeID)
+        {
+            Result result = new Result();
+            var um = Factory.Get<IUserModel>(SystemConst.IOC_Model.UserModel);
+            var ulim = Factory.Get<IUserLoginInfoModel>(SystemConst.IOC_Model.UserLoginInfoModel);
+            var LoginPwd = DESEncrypt.Encrypt(pwd);
+            //var userloginInfo = ulim.List().Where(a => (a.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase) && a.LoginPwd.Equals(LoginPwd, StringComparison.CurrentCultureIgnoreCase))
+            //    || (a.Phone.Equals(phone, StringComparison.CurrentCultureIgnoreCase) && a.LoginPwd.Equals(LoginPwd, StringComparison.CurrentCultureIgnoreCase))).FirstOrDefault();
+            var users = um.List().Where(a => (a.UserLoginInfo.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase) &&
+                a.UserLoginInfo.LoginPwd.Equals(LoginPwd, StringComparison.CurrentCultureIgnoreCase)) ||
+            (a.UserLoginInfo.Phone.Equals(phone, StringComparison.CurrentCultureIgnoreCase) && a.UserLoginInfo.LoginPwd.Equals(LoginPwd, StringComparison.CurrentCultureIgnoreCase))).ToList();
+            if (users != null)
+            {
+                if (users.Any(a => a.AccountMainID == accountMainID))
+                {
+                    result.Error = "电话或邮箱已存在。";
+                    return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+                }
+            }
+
+
+            var property_UserModel = Factory.Get<IProperty_UserModel>(SystemConst.IOC_Model.Property_UserModel);
+            var property_HouseModel = Factory.Get<IProperty_HouseModel>(SystemConst.IOC_Model.Property_HouseModel);
+            var ph = property_HouseModel.GetByShortNo(shortHouseNo);
+            if (ph == null)
+            {
+                result.Error = "未找到相应的房屋。";
+                return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            }
+
+
+
+
+            //注册
+
+            UserLoginInfo userLoginInfo = new UserLoginInfo();
+            userLoginInfo.Name = userName;
+            userLoginInfo.Phone = phone;
+            userLoginInfo.LoginPwd = DESEncrypt.Encrypt(pwd);
+            userLoginInfo.LoginPwdPage = "000000";
+            userLoginInfo.Email = email;
+            User user = new Poco.User();
+            user.UserLoginInfo = userLoginInfo;
+            user.Name = userName;
+            user.Phone = phone;
+            user.AccountStatusID = LookupFactory.GetLookupOptionIdByToken(EnumAccountStatus.Enabled);
+            user.AccountMainID = accountMainID;
+            user.CreateDate = DateTime.Now;
+
+            result = um.Add(user);
+            if (result.HasError)
+            {
+                return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            }
+
+            var cim = Factory.Get<IClientInfoModel>(SystemConst.IOC_Model.ClientInfoModel);
+            //修改或删除原key
+            var enumClientUserTypeID = LookupFactory.GetLookupOptionIdByToken(EnumClientUserType.User);
+            var clientIDList = cim.List().Where(a => a.ClientID == clientID && a.EnumClientUserTypeID == enumClientUserTypeID && a.EnumClientSystemTypeID == systemTypeID).ToList();
+            if (clientIDList != null)
+            {
+                string sql = "UPDATE ClientInfo SET EntityID= " + user.ID + " WHERE ClientID='" + clientID + "'";
+                cim.SqlExecute(sql);
+            }
+            else
+            {
+                ClientInfo ci = new ClientInfo();
+                ci.EnumClientSystemTypeID = systemTypeID;
+                ci.SetupTiem = DateTime.Now;
+                ci.EnumClientUserTypeID = LookupFactory.GetLookupOptionIdByToken(EnumClientUserType.User);
+                ci.ClientID = clientID;
+                ci.EntityID = user.ID;
+                result = cim.Add(ci);
+            }
+            if (result.HasError)
+            {
+                return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+            }
+
+
+            //判断有没有PropertyUser,有则修改
+            var puList = property_UserModel.GetHouseByUserPhone(accountMainID, phone);
+            if (puList != null && puList.Count > 0)
+            {
+                result = property_UserModel.EditUserLoginInfoID(accountMainID, userLoginInfo.ID, new Property_User() { UserName = userName, Phone = phone, Email = email });
+            }
+            else
+            {
+                Property_User property_User = new Property_User();
+                property_User.AccountMainID = user.AccountMainID;
+                property_User.Property_HouseID = ph.ID;
+                property_User.UserLoginInfoID = userLoginInfo.ID;
+                property_User.UserName = userName;
+                property_User.Phone = phone;
+                property_User.Email = email;
+                result = property_UserModel.Add(property_User);
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(result);
+        }
 
         #region-------------------报修接口---------------------------
         /// <summary>

@@ -18,7 +18,7 @@ namespace Business
 
         public EFModel()
         {
-            EntityFramework.Core.Core.SetInitializer(SystemConst.WebUrlIP);
+            //EntityFramework.Core.Core.SetInitializer(SystemConst.WebUrlIP);
         }
 
         public T Get<T>(int id) where T : class, IBaseEntity
