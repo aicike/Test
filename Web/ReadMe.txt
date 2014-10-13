@@ -56,3 +56,6 @@ http://themeroller.jquerymobile.com/
         binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IShortURLService"
         contract="Imtimely_ShortURL.IShortURLService" name="BasicHttpBinding_IShortURLService" />
     </client>
+---------8.部署时手动创建文件夹
+一。File目录下的
+   1.Excel
