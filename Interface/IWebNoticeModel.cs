@@ -10,7 +10,7 @@ namespace Interface
     {
         Result Add(int menuID, int accountMainID);
         Result Add(string menuToken, int accountMainID);
-        List<int> GetMenuIDByAccountMainID(int accountMainID);
+        List<int> GetMenuIDByAccountMainID(int accountMainID, int accountID);
         void ClearWebNotice(int accountMainID, string menuToken);
         int GetMenuIDByToken(string token);
     }

@@ -11,9 +11,11 @@
     }
     var accountMainModel = Injection.Factory.Get<Interface.IAccountMainModel>(Poco.SystemConst.IOC_Model.AccountMainModel);
     var accountMainID = 0;
+    var accountID = 0;
     if (account != null)
     {
         accountMainID = account.CurrentAccountMainID;
+        accountID = account.ID;
         var accountMain = accountMainModel.Get(account.CurrentAccountMainID);
         if (accountMain != null && accountMain.IsOrganization.HasValue && accountMain.IsOrganization.Value)
         {
@@ -311,7 +313,7 @@
 
     function GetWebNotice() {
             
-            $.get(getWebNoticeUrl, {accountMainID:@accountMainID},function(noticeMenuIDs){
+            $.get(getWebNoticeUrl, {accountMainID:@accountMainID,accountID:@accountID},function(noticeMenuIDs){
                 $(".menu_link").find("img").remove();
                 $(".menu_link").each(function (m, n) {
                     var obj = $(this);

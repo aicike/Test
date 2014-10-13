@@ -233,10 +233,10 @@ namespace Web.Controllers
         }
 
         //获取web网站通知
-        public string GetWebNoticeByAccountMainID(int accountMainID)
+        public string GetWebNoticeByAccountMainID(int accountMainID,int accountID)
         {
             var noticeModel = Injection.Factory.Get<Interface.IWebNoticeModel>(Poco.SystemConst.IOC_Model.WebNoticeModel);
-            var noticeMenuIDs = noticeModel.GetMenuIDByAccountMainID(accountMainID).ObjectToJson();
+            var noticeMenuIDs = noticeModel.GetMenuIDByAccountMainID(accountMainID, accountID).ObjectToJson();
             return noticeMenuIDs;
         }
     }

@@ -41,9 +41,24 @@ namespace Business.SystemBusiness
             return List().Where(a => a.MenuID == menuID && a.AccountMainID == accountMainID).FirstOrDefault();
         }
 
-        public List<int> GetMenuIDByAccountMainID(int accountMainID)
+        public List<int> GetMenuIDByAccountMainID(int accountMainID, int accountID)
         {
-            return List().Where(a => a.AccountMainID == accountMainID && a.Count > 0).Select(a => a.MenuID.Value).ToList();
+            var messageModel = Factory.Get<IMessageModel>(SystemConst.IOC_Model.MessageModel);
+
+
+            var list = List().Where(a => a.AccountMainID == accountMainID && a.Count > 0).Select(a => a.MenuID.Value).ToList();
+            if (accountID != 0)
+            {
+                int i = messageModel.List().Where(a => a.ToAccountID == accountID && a.IsReceive == false).Count();
+
+                if (i > 0)
+                {
+                    var menuID = GetMenuIDByToken("Token_User_Msg");
+                    list.Add(menuID);
+                }
+            }
+
+            return list;
         }
 
 
@@ -62,5 +77,6 @@ namespace Business.SystemBusiness
             var menuModel = Factory.Get<IMenuModel>(SystemConst.IOC_Model.MenuModel);
             return menuModel.GetMenuIDByToken(token);
         }
+
     }
 }

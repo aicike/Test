@@ -53,12 +53,12 @@ namespace AcceptanceServer.DataOperate
                         string sql_webNotice_edit = " UPDATE dbo.WebNotice SET Count=" + NoticeCount + " WHERE MenuID=40 AND AccountMainID=" + AccountMainID;
                         SqlHelper.ExecuteNonQuery(sql_webNotice_edit);
                     }
-                    else
-                    {
-                        //新增
-                        string sql_webNotice_add = "INSERT INTO dbo.WebNotice ( SystemStatus ,MenuID ,Count ,AccountMainID) VALUES  ( 0 ,40 ,1 ,(SELECT TOP 1 AccountMainID FROM dbo.Account_AccountMain WHERE AccountID=" + mg.ToAccountID.Value + "))";
-                        SqlHelper.ExecuteNonQuery(sql_webNotice_add);
-                    }
+                    //else
+                    //{
+                    //    //新增
+                    //    string sql_webNotice_add = "INSERT INTO dbo.WebNotice ( SystemStatus ,MenuID ,Count ,AccountMainID) VALUES  ( 0 ,40 ,1 ,(SELECT TOP 1 AccountMainID FROM dbo.Account_AccountMain WHERE AccountID=" + mg.ToAccountID.Value + "))";
+                    //    SqlHelper.ExecuteNonQuery(sql_webNotice_add);
+                    //}
                 }
             }
             catch (Exception)
