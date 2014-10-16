@@ -105,7 +105,7 @@
         <br />
         沟通零距离
     </div>
-    <a id="iphone" class="aIphone" href="@Model.IOSDownloadPath">
+    <a id="iphone" class="aIphone" href="@Model.IOSDownloadPath_plist">
         <img src="/Images/iphone.png" />
     </a><a id="android" class="aandroid" href="@(Model.AndroidDownloadPath)#mp.weixin.qq.com">
         <img src="/Images/android.png" />
@@ -114,7 +114,7 @@
 <script>
 
     (function () {
-        var IPHONEURL = "@Model.IOSDownloadPath";
+        var IPHONEURL = "@Model.IOSDownloadPath_plist";
         var ANDROIDURL = "@Model.AndroidDownloadPath";
         var page = {};
         page.init = function () {

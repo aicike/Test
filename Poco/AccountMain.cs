@@ -104,15 +104,21 @@ namespace Poco
         [RegularExpression("^((?!<!).)*", ErrorMessage = "{0}中含有非法字符。")]
         public string Lat { get; set; }
 
-        [Display(Name = "IOS用户端下载地址")]
+        [Display(Name = "IOS用户端安装包")]
         public string IOSDownloadPath { get; set; }
+
+        [Display(Name = "IOS用户端plist文件")]
+        public string IOSDownloadPath_plist { get; set; }
 
         [Display(Name = "IOS用户端端版本号")]
         [RegularExpression(@"^\d{1,3}.\d.\d$", ErrorMessage = "版本号格式：x.x.x")]
         public string IOSVersion { get; set; }
 
-        [Display(Name = "IOS销售端下载地址")]
+        [Display(Name = "IOS销售端安装包")]
         public string IOSSellDownloadPath { get; set; }
+
+        [Display(Name = "IOS销售端plist文件")]
+        public string IOSSellDownloadPath_plist { get; set; }
 
         [Display(Name = "IOS销售端端版本号")]
         [RegularExpression(@"^\d{1,3}.\d.\d$", ErrorMessage = "版本号格式：x.x.x")]
@@ -169,18 +175,16 @@ namespace Poco
 
         public int? ParentAccountMainID { get; set; }
 
+        public virtual AccountMain ParentAccountMain { get; set; }
+
+        #endregion
+
         [Display(Name = "IOS 用户端证书")]
         public string IOSClientCertificate { get; set; }
 
         [Display(Name = "IOS 销售端证书")]
         public string IOSSalestCertificate { get; set; }
 
-
-
-
-        public virtual AccountMain ParentAccountMain { get; set; }
-
-        #endregion
 
         public virtual ICollection<AccountMain> AccountMains { get; set; }
 

@@ -244,6 +244,8 @@ namespace Web.Controllers
             var AccountModel = AccountMainModel.Get(AMID);
             if (AccountModel.AndroidDownloadPath != null)
                 AccountModel.AndroidDownloadPath = "http://" + SystemConst.WebUrl + Url.Content(AccountModel.AndroidDownloadPath ?? "");
+            if (AccountModel.IOSDownloadPath_plist != null)
+                AccountModel.IOSDownloadPath_plist = "itms-services://?action=download-manifest&url=http://" + SystemConst.WebUrl + Url.Content(AccountModel.IOSDownloadPath_plist ?? "");
 
             ViewBag.Title = "用户端二维码 - " + SystemConst.PlatformName + " - 沟通零距离";
             return View(AccountModel);
@@ -259,6 +261,8 @@ namespace Web.Controllers
             var AccountModel = AccountMainModel.Get(AMID);
             if (AccountModel.AndroidSellDownloadPath != null)
                 AccountModel.AndroidSellDownloadPath = "http://" + SystemConst.WebUrl + Url.Content(AccountModel.AndroidSellDownloadPath ?? "");
+            if (AccountModel.AndroidSellDownloadPath != null)
+                AccountModel.IOSSellDownloadPath_plist = "itms-services://?action=download-manifest&url=http://" + SystemConst.WebUrl + Url.Content(AccountModel.IOSSellDownloadPath_plist ?? "");
             ViewBag.Title = "销售端二维码 - " + SystemConst.PlatformName + " - 沟通零距离";
             return View(AccountModel);
         }

@@ -64,7 +64,7 @@ namespace Business
         /// 平台添加方法
         /// </summary>
         [Transaction]
-        public Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, HttpPostedFileBase IOSClientCertificateFile, HttpPostedFileBase IOSSalestCertificateFile)
+        public Result Add(AccountMain accountMain, HttpPostedFileBase LogoImagePath, int createUserID, HttpPostedFileBase IOSPathFile, HttpPostedFileBase IOSPathFilePlist, HttpPostedFileBase IOSSellPathFile, HttpPostedFileBase IOSSellPathFilePlist, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, HttpPostedFileBase IOSClientCertificateFile, HttpPostedFileBase IOSSalestCertificateFile)
         {
             accountMain.SystemUserID = createUserID;
             accountMain.CreateTime = DateTime.Now;
@@ -119,6 +119,64 @@ namespace Business
                     else
                     {
                         accountMain.LogoImageThumbnailPath = string.Format(SystemConst.Business.PathBase, accountMain.ID) + imageName;
+                    }
+
+                    if (IOSPathFile != null)
+                    {
+                        var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
+                        var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, IOSPathFile.FileName.GetFileName());
+                        if (Directory.Exists(androidPath) == false)
+                        {
+                            Directory.CreateDirectory(androidPath);
+                        }
+                        var Downpath = string.Format("~/Download/{0}", accountMain.ID);
+                        var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, IOSPathFile.FileName.GetFileName());
+                        IOSPathFile.SaveAs(androidPathDown);
+                        accountMain.IOSDownloadPath = Downpath2;
+                    }
+
+
+                    if (IOSPathFilePlist != null)
+                    {
+                        var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
+                        var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, IOSPathFilePlist.FileName.GetFileName());
+                        if (Directory.Exists(androidPath) == false)
+                        {
+                            Directory.CreateDirectory(androidPath);
+                        }
+                        var Downpath = string.Format("~/Download/{0}", accountMain.ID);
+                        var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, IOSPathFilePlist.FileName.GetFileName());
+                        IOSPathFilePlist.SaveAs(androidPathDown);
+                        accountMain.IOSDownloadPath_plist = Downpath2;
+                    }
+
+                    if (IOSSellPathFile != null)
+                    {
+                        var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
+                        var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, IOSSellPathFile.FileName.GetFileName());
+                        if (Directory.Exists(androidPath) == false)
+                        {
+                            Directory.CreateDirectory(androidPath);
+                        }
+                        var Downpath = string.Format("~/Download/{0}", accountMain.ID);
+                        var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, IOSSellPathFile.FileName.GetFileName());
+                        IOSSellPathFile.SaveAs(androidPathDown);
+                        accountMain.IOSSellDownloadPath = Downpath2;
+                    }
+
+
+                    if (IOSSellPathFilePlist != null)
+                    {
+                        var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
+                        var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, IOSSellPathFilePlist.FileName.GetFileName());
+                        if (Directory.Exists(androidPath) == false)
+                        {
+                            Directory.CreateDirectory(androidPath);
+                        }
+                        var Downpath = string.Format("~/Download/{0}", accountMain.ID);
+                        var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, IOSSellPathFilePlist.FileName.GetFileName());
+                        IOSSellPathFilePlist.SaveAs(androidPathDown);
+                        accountMain.IOSSellDownloadPath_plist = Downpath2;
                     }
 
                     if (AndroidPathFile != null)
@@ -373,7 +431,7 @@ namespace Business
         /// 平台添加方法
         /// </summary>
         [Transaction]
-        public Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, HttpPostedFileBase IOSClientCertificateFile, HttpPostedFileBase IOSSalestCertificateFile, int loginSystemUserID = 0)
+        public Result Edit_Permission(AccountMain accountMain, HttpPostedFileBase LogoImagePath, HttpPostedFileBase IOSPathFile, HttpPostedFileBase IOSPathFilePlist, HttpPostedFileBase IOSSellPathFile, HttpPostedFileBase IOSSellPathFilePlist, HttpPostedFileBase AndroidPathFile, HttpPostedFileBase AndroidSellPathFile, HttpPostedFileBase AppLogoImageFile, HttpPostedFileBase IOSClientCertificateFile, HttpPostedFileBase IOSSalestCertificateFile, int loginSystemUserID = 0)
         {
             if (!CheckHasPermissions(loginSystemUserID, accountMain.ID))
             {
@@ -460,6 +518,98 @@ namespace Business
             }
             try
             {
+                if (result.HasError == false && IOSPathFile != null)
+                {
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    //删除原路径
+                    var androidAbsolutePath = HttpContext.Current.Server.MapPath(accountMain.IOSDownloadPath);
+                    if (File.Exists(androidAbsolutePath))
+                    {
+                        File.Delete(androidAbsolutePath);
+                    }
+                    var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
+                    var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, IOSPathFile.FileName.GetFileName());
+                    if (Directory.Exists(androidPath) == false)
+                    {
+                        Directory.CreateDirectory(androidPath);
+                    }
+                    var Downpath = string.Format("~/Download/{0}", accountMain.ID);
+                    var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, IOSPathFile.FileName.GetFileName());
+
+                    IOSPathFile.SaveAs(androidPathDown);
+                    accountMain.IOSDownloadPath = Downpath2;
+                }
+
+                if (result.HasError == false && IOSPathFilePlist != null)
+                {
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    //删除原路径
+                    var androidAbsolutePath = HttpContext.Current.Server.MapPath(accountMain.IOSDownloadPath_plist);
+                    if (File.Exists(androidAbsolutePath))
+                    {
+                        File.Delete(androidAbsolutePath);
+                    }
+                    var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
+                    var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, IOSPathFilePlist.FileName.GetFileName());
+                    if (Directory.Exists(androidPath) == false)
+                    {
+                        Directory.CreateDirectory(androidPath);
+                    }
+                    var Downpath = string.Format("~/Download/{0}", accountMain.ID);
+                    var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, IOSPathFilePlist.FileName.GetFileName());
+
+                    IOSPathFilePlist.SaveAs(androidPathDown);
+                    accountMain.IOSDownloadPath_plist = Downpath2;
+                }
+
+
+                if (result.HasError == false && IOSSellPathFile != null)
+                {
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    //删除原路径
+                    var androidAbsolutePath = HttpContext.Current.Server.MapPath(accountMain.IOSSellDownloadPath);
+                    if (File.Exists(androidAbsolutePath))
+                    {
+                        File.Delete(androidAbsolutePath);
+                    }
+                    var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
+                    var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, IOSSellPathFile.FileName.GetFileName());
+                    if (Directory.Exists(androidPath) == false)
+                    {
+                        Directory.CreateDirectory(androidPath);
+                    }
+                    var Downpath = string.Format("~/Download/{0}", accountMain.ID);
+                    var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, IOSSellPathFile.FileName.GetFileName());
+
+                    IOSSellPathFile.SaveAs(androidPathDown);
+                    accountMain.IOSSellDownloadPath = Downpath2;
+                }
+
+
+
+                if (result.HasError == false && IOSSellPathFilePlist != null)
+                {
+                    var token = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    //删除原路径
+                    var androidAbsolutePath = HttpContext.Current.Server.MapPath(accountMain.IOSSellDownloadPath_plist);
+                    if (File.Exists(androidAbsolutePath))
+                    {
+                        File.Delete(androidAbsolutePath);
+                    }
+                    var androidPath = HttpContext.Current.Server.MapPath(string.Format("~/Download/{0}", accountMain.ID));
+                    var androidPathDown = string.Format("{0}/{1}_{2}", androidPath, token, IOSSellPathFilePlist.FileName.GetFileName());
+                    if (Directory.Exists(androidPath) == false)
+                    {
+                        Directory.CreateDirectory(androidPath);
+                    }
+                    var Downpath = string.Format("~/Download/{0}", accountMain.ID);
+                    var Downpath2 = string.Format("{0}/{1}_{2}", Downpath, token, IOSSellPathFilePlist.FileName.GetFileName());
+
+                    IOSSellPathFilePlist.SaveAs(androidPathDown);
+                    accountMain.IOSSellDownloadPath_plist = Downpath2;
+                }
+
+
                 if (result.HasError == false && AndroidPathFile != null)
                 {
                     var token = DateTime.Now.ToString("yyyyMMddHHmmss");

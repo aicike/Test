@@ -214,16 +214,27 @@
             <table class="tableForm">
                 <tr>
                     <td  width="200px">
-                        IOS用户端下载地址：
-                        <br />
-                        例：http://www.xxx.com
+                        IOS用户端安装包：
                     </td>
-                    <td>@Html.TextBoxFor(a => a.IOSDownloadPath)
+                    <td>@(string.IsNullOrEmpty(Model.IOSDownloadPath) ? "" : "http://" + Poco.SystemConst.WebUrl + Model.IOSDownloadPath.Replace("~",""))
+                        @Html.HiddenFor(a => a.IOSDownloadPath) 
+                        <br/><input type="file" id="IOSPathFile" name="IOSPathFile" />
                     </td>
                     <td>@Html.ValidationMessageFor(a => a.IOSDownloadPath)
                     </td>
                 </tr>
-                  <tr>
+                <tr>
+                    <td  width="200px">
+                        IOS用户端安装包：
+                    </td>
+                    <td>@(string.IsNullOrEmpty(Model.IOSDownloadPath_plist) ? "" : "http://" + Poco.SystemConst.WebUrl + Model.IOSDownloadPath_plist.Replace("~", ""))
+                        @Html.HiddenFor(a => a.IOSDownloadPath_plist) 
+                        <br/><input type="file" id="IOSPathFilePlist" name="IOSPathFilePlist" />
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.IOSDownloadPath_plist)
+                    </td>
+                </tr>
+                <tr style="display:none">
                     <td>
                          IOS用户端证书：
                     </td>
@@ -235,7 +246,7 @@
                     <td>
                     </td>
                 </tr>
-                <tr>
+                <tr style="display:none">
                     <td>
                         IOS用户端App版本号：
                     </td>
@@ -251,18 +262,29 @@
         <fieldset>
             <legend>IOS销售端信息</legend>
             <table class="tableForm">
-                <tr>
+                 <tr>
                     <td  width="200px">
-                        IOS销售端下载地址：
-                        <br />
-                        例：http://www.xxx.com
+                        IOS物业端安装包：
                     </td>
-                    <td>@Html.TextBoxFor(a => a.IOSSellDownloadPath)
+                    <td>@(string.IsNullOrEmpty(Model.IOSSellDownloadPath) ? "" : "http://" + Poco.SystemConst.WebUrl + Model.IOSSellDownloadPath.Replace("~", ""))
+                        @Html.HiddenFor(a => a.IOSSellDownloadPath) 
+                        <br/><input type="file" id="IOSSellPathFile" name="IOSSellPathFile" />
                     </td>
-                    <td>@Html.ValidationMessageFor(a => a.IOSDownloadPath)
+                    <td>@Html.ValidationMessageFor(a => a.IOSSellDownloadPath)
                     </td>
                 </tr>
-                 <tr>
+                <tr>
+                    <td  width="200px">
+                        IOS用户端安装包：
+                    </td>
+                    <td>@(string.IsNullOrEmpty(Model.IOSSellDownloadPath_plist) ? "" : "http://" + Poco.SystemConst.WebUrl + Model.IOSSellDownloadPath_plist.Replace("~", ""))
+                        @Html.HiddenFor(a => a.IOSSellDownloadPath_plist) 
+                        <br/><input type="file" id="IOSSellPathFilePlist" name="IOSSellPathFilePlist" />
+                    </td>
+                    <td>@Html.ValidationMessageFor(a => a.IOSSellDownloadPath_plist)
+                    </td>
+                </tr>
+                <tr style="display:none">
                     <td>
                          IOS销售端证书：
                     </td>
@@ -274,7 +296,7 @@
                     <td>
                     </td>
                 </tr>
-                <tr>
+                <tr style="display:none">
                     <td>
                         IOS销售端App版本号：
                     </td>
