@@ -225,7 +225,7 @@
                 </tr>
                 <tr>
                     <td  width="200px">
-                        IOS用户端安装包：
+                        IOS用户端plist：
                     </td>
                     <td>@(string.IsNullOrEmpty(Model.IOSDownloadPath_plist) ? "" : "http://" + Poco.SystemConst.WebUrl + Model.IOSDownloadPath_plist.Replace("~", ""))
                         @Html.HiddenFor(a => a.IOSDownloadPath_plist) 
@@ -275,7 +275,7 @@
                 </tr>
                 <tr>
                     <td  width="200px">
-                        IOS用户端安装包：
+                        IOS物业端plist：
                     </td>
                     <td>@(string.IsNullOrEmpty(Model.IOSSellDownloadPath_plist) ? "" : "http://" + Poco.SystemConst.WebUrl + Model.IOSSellDownloadPath_plist.Replace("~", ""))
                         @Html.HiddenFor(a => a.IOSSellDownloadPath_plist) 
